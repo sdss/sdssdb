@@ -1,0 +1,8 @@
+[run]
+branch = true
+
+[report]
+omit =
+    python/sdssdb/etc/*
+    python/sdssdb/misc/*
+    python/sdssdb/tests/*
