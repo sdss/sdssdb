@@ -1,0 +1,10 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+# run with source (pgpass works in that case)
+
+
+for file in /scratch/general/lustre/u0449727/gaiaTgasCSV/TgasSource*.csv; do
+   echo "on file $file"
+   psql -h db.sdss.utah.edu -U sdssdb_admin -p 5432 sdss5db -c "COPY catalogdb.gaia_dr1_tgas FROM '$file' WITH DELIMITER ',' CSV HEADER NULL 'NULL';"
+done

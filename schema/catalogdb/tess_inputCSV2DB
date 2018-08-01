@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+
+ls /uufs/chpc.utah.edu/common/home/sdss/sdsswork/tess/tic_v6/csv/*.csv.gz | parallel -j25 "psql -U sdss sdss5db -c \"\copy catalogdb.tess_input_v6 FROM program 'zcat {}' WITH CSV;\""
