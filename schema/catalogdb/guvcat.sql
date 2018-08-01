@@ -200,7 +200,7 @@ CREATE TABLE catalogdb.guvcat(
     NGRANKDIST bigint,
     PRIMGIDDIST bigint,
     GROUPGIDDIST text,
-    GROUPGIDTOT bigint,
+    GROUPGIDTOT text,
     DIFFFUV real,
     DIFFNUV real,
     DIFFFUVDIST real,
