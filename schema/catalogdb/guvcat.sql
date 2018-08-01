@@ -199,7 +199,7 @@ CREATE TABLE catalogdb.guvcat(
     GRANKDIST smallint,
     NGRANKDIST bigint,
     PRIMGIDDIST bigint,
-    GROUPGIDDIST bigint,
+    GROUPGIDDIST text,
     GROUPGIDTOT bigint,
     DIFFFUV real,
     DIFFNUV real,
