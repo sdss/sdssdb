@@ -2,4 +2,4 @@
 # encoding: utf-8
 
 
-ls /scratch/general/lustre/u0449727/guvcat/*.csv | parallel -j25 "psql -U sdss sdss5db -c '\copy catalogdb.guvcat FROM {} WITH CSV HEADER;'"
+ls /scratch/general/lustre/u0449727/guvcat/GUVCat*.csv | parallel -j25 "psql -U sdss sdss5db -c '\copy catalogdb.guvcat FROM {} WITH CSV HEADER;'"
