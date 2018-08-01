@@ -195,7 +195,7 @@ CREATE TABLE catalogdb.guvcat(
     GRANK smallint,
     NGRANK smallint,
     PRIMGID bigint,
-    GROUPGID bigint,
+    GROUPGID text,
     GRANKDIST smallint,
     NGRANKDIST bigint,
     PRIMGIDDIST bigint,
