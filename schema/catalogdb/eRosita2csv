@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+
+import os
+import sys
+import glob
+import multiprocessing
+import cStringIO
+import re
+
+from astropy.table import Table
+from astropy.io import ascii
+
+
+EROSITA_DIR = "/scratch/general/lustre/u0449727/eRosita"
+
+
+def writeCSV(fitsFile):
+    # cant pass out dir using multiprocessing?
+    table = Table.read(fitsFile)
+    filename = os.path.split(fitsFile)[-1]
+    csvfilename = filename.strip("fits") + "csv"
+    fullpath = os.path.join(EROSITA_DIR, csvfilename)
+    outStrBuffer = cStringIO.StringIO()
+    ascii.write(table, outStrBuffer, format="csv")
+    outStr = outStrBuffer.getvalue()
+    replNan = re.sub("nan", "NULL", outStr)
+    with open(fullpath, "w") as f:
+        f.write(replNan)
+
+
+if __name__ == "__main__":
+    # usage gaia_source2csv tgas | source
+    fitsFiles = glob.glob(EROSITA_DIR+"/*.fits")
+    for file in fitsFiles:
+        writeCSV(file)
+
