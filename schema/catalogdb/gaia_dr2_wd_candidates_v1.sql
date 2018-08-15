@@ -25,7 +25,7 @@ CREATE TABLE catalogdb.gaia_dr2_wd_candidates_v1 (
     parallax double precision,
     parallax_error double precision,
     pmra double precision,
-    pmra_error double precision
+    pmra_error double precision,
     pmdec double precision,
     pmdec_error double precision,
     astrometric_excess_noise double precision,
@@ -68,5 +68,5 @@ CREATE TABLE catalogdb.gaia_dr2_wd_candidates_v1 (
     elog_g_He double precision,
     mass_He double precision,
     emass_He double precision,
-    chisq_He double precision,
+    chisq_He double precision
     );
