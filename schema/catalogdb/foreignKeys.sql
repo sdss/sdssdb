@@ -10,4 +10,4 @@ https://www.postgresql.org/docs/8.2/static/sql-altertable.html
 */
 
 
-ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour ADD CONSTRAINT tmass_oid_fk FOREIGN KEY (tmass_oid) REFERENCES catalogdb.twomass_psc (pts_key) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour ADD CONSTRAINT original_ext_source_id_fk FOREIGN KEY (original_ext_source_id) REFERENCES catalogdb.twomass_psc (designation) ON UPDATE CASCADE ON DELETE CASCADE;
