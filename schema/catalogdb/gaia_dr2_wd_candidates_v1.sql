@@ -42,7 +42,7 @@ CREATE TABLE catalogdb.gaia_dr2_wd_candidates_v1 (
     phot_bp_rp_excess_factor double precision,
     l double precision,
     b double precision,
-    density integer,
+    density double precision,
     AG double precision,
     SDSS_name text,
     umag double precision,
