@@ -1,9 +1,7 @@
 #! /usr/bin/bash
 # encoding: utf-8
 
- catalogdb | erosita_agn_mock               | table | sdss
- catalogdb | erosita_clusters_mock
+psql -U sdss sdss5db -c "\copy catalogdb.erosita_agn_mock FROM /scratch/general/lustre/u0449727/eRosita/ummary_eRASS3_agn_SDSS_V_format.csv WITH CSV HEADER NULL 'NULL';"
 
-psql -U sdss sdss5db -c "\copy catalogdb.erosita_agn_mock FROM /scratch/general/lustre/u0449727/eRosita/ummary_eRASS3_agn_SDSS_V_format.csv WITH CSV HEADER;"
+psql -U sdss sdss5db -c "\copy catalogdb.erosita_clusters_mock FROM /scratch/general/lustre/u0449727/eRosita/ummary_eRASS3_clusters_SDSS_V_format.csv WITH CSV HEADER NULL 'NULL';"
 
-psql -U sdss sdss5db -c "\copy catalogdb.erosita_clusters_mock FROM /scratch/general/lustre/u0449727/eRosita/ummary_eRASS3_clusters_SDSS_V_format.csv WITH CSV HEADER;"
