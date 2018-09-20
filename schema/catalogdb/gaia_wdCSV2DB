@@ -1,5 +1,0 @@
-#! /usr/bin/bash
-# encoding: utf-8
-
-
-psql -U sdss sdss5db -c "\copy catalogdb.gaia_dr2_wd_candidates_v1 FROM /scratch/general/lustre/u0449727/gaiaWD/gaia_dr2_wd_candidates_v1.0.csv WITH CSV HEADER;"

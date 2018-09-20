@@ -1,0 +1,27 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+# run with source (pgpass works in that case)
+
+# The kic.txt.gz file is a "|" delimited gzipped ASCII file
+# containing the complete 13,161,029 row Kepler Input Catalog
+# (version 10). The column names and the contents of the 43
+# columns are descibed at:
+# http://archive.stsci.edu/kepler/kic10/help/quickcol.html
+
+# Note the following three fields were added by MAST:
+
+# kic_degree_ra - RA in decimal degrees rather than decimal hours,
+
+# kic_tm_designation - 2MASS catalog ID (the original integer
+# designated kic_tmid field is still included as well)
+
+# kic_fov_flag - a MAST-derived flag with 3 possible values:
+# 0 - target is not near the Kepler field of view,
+# 1 - target is roughly near the Kepler field of view,
+# 2 - target is listed in the Kepler Target Catalog that was available
+#     at the time the file was generated.
+
+psql -U sdss sdss5db -c "\copy catalogdb.kepler_input_10 FROM '$CATALOGDB_DIR/kic/v10/src/kic.txt' WITH DELIMITER '|' CSV HEADER;"
+
+

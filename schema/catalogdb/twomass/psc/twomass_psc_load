@@ -1,0 +1,6 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+
+ls $CATALOGDB_DIR/twomass/psc/src/* | parallel -j25 "psql -U sdss sdss5db -c \"\copy catalogdb.twomass_psc FROM '{}' WITH DELIMITER '|' NULL '\N' CSV;;\""
+

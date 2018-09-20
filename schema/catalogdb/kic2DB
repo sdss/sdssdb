@@ -1,8 +1,0 @@
-#! /usr/bin/bash
-# encoding: utf-8
-
-# run with source (pgpass works in that case)
-
-psql -U sdss sdss5db -c "\copy catalogdb.kepler_input_10 FROM '/scratch/general/lustre/u0449727/kepler_kic/kic.txt' WITH DELIMITER '|' CSV HEADER;"
-
-
