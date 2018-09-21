@@ -18,6 +18,12 @@ CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (decl);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (j_m);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (h_m);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (k_m);
+create index on catalogdb.twomass_psc (q3c_ang2ipix(ra, decl));
+CLUSTER twomass_psc_q3c_ang2ipix_idx on catalogdb.twomass_psc;
+analyze catalogdb.twomass_psc;
+
+ALTER TABLE catalogdb.twomass_psc ADD CONSTRAINT twomass_psc_desig_unique UNIQUE (designation);
+
 
 
 

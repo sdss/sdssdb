@@ -24,3 +24,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_source using BTREE (phot_g_mean_
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_source using BTREE (solution_id);
 
 
+create index on catalogdb.gaia_dr2_source (q3c_ang2ipix(ra, dec));
+CLUSTER gaia_dr2_source_q3c_ang2ipix_idx on catalogdb.gaia_dr2_source;
+analyze catalogdb.gaia_dr2_source;

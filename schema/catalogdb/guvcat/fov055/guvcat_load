@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+
+ls $CATALOGDB_DIR/guvcat/fov055/src/GUVCat*.csv | parallel -j25 "psql -U sdss sdss5db -c '\copy catalogdb.guvcat FROM {} WITH CSV HEADER;'"
