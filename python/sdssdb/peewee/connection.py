@@ -37,7 +37,7 @@ class DatabaseConnection(PostgresqlDatabase):
 
         if self.DATABASE_NAME is not None and autoconnect:
             try:
-                self.autoconnect()
+                self.connect()
             except:
                 pass
 
@@ -74,14 +74,6 @@ class DatabaseConnection(PostgresqlDatabase):
                 if hostname.endswith(profile['domain']):
                     self.profile = profile
                     break
-
-    def autoconnect(self, dbname=None):
-        """Tries to select the best possible connection to the db."""
-
-        dbname = dbname or self.DATABASE_NAME
-        assert dbname is not None, 'database name not defined or passed.'
-
-        self.connect(profile=self.profile, dbname=dbname)
 
     def connect(self, dbname=None, profile=None):
         """Initialises the database from a profile in the config file."""
