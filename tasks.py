@@ -9,8 +9,10 @@
 # @Copyright: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import, unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
+
 from invoke import Collection, task
 
 
@@ -20,43 +22,53 @@ from invoke import Collection, task
 
 @task
 def clean_docs(ctx):
-    ''' Cleans up the Sphinx docs '''
+    """Cleans up the docs"""
     print('Cleaning the docs')
     ctx.run("rm -rf docs/sphinx/_build")
 
 
-@task(clean_docs)
-def build_docs(ctx):
-    ''' Builds the Sphinx docs '''
+@task
+def build_docs(ctx, clean=False):
+    """Builds the Sphinx docs"""
+
+    if clean:
+        print('Cleaning the docs')
+        ctx.run("rm -rf docs/sphinx/_build")
+
     print('Building the docs')
     os.chdir('docs/sphinx')
-    ctx.run("make html")
+    ctx.run("make html", pty=True)
 
 
-@task(build_docs)
+@task
 def show_docs(ctx):
     """Shows the Sphinx docs"""
     print('Showing the docs')
-    os.chdir('_build/html')
+    os.chdir('docs/sphinx/_build/html')
     ctx.run('open ./index.html')
 
 
 @task
 def clean(ctx):
-    ''' Cleans up the crap before a Pip build '''
+    """Cleans up the crap before a Pip build"""
+
     print('Cleaning')
-    ctx.run("rm -rf htmlcov")
-    ctx.run("rm -rf build")
-    ctx.run("rm -rf dist")
+    ctx.run('rm -rf htmlcov')
+    ctx.run('rm -rf build')
+    ctx.run('rm -rf dist')
+    ctx.run('rm -rf *.egg-info')
+    ctx.run('rm -rf python/*.egg-info')
 
 
 @task(clean)
 def deploy(ctx):
-    ''' Deploy the project to pypi '''
+    """Deploy the project to pypi"""
     print('Deploying to Pypi!')
-    ctx.run("python setup.py sdist bdist_wheel --universal")
-    ctx.run("twine upload dist/*")
+    ctx.run('python setup.py sdist bdist_wheel --universal')
+    ctx.run('twine upload dist/*')
 
+
+os.chdir(os.path.dirname(__file__))
 
 # create a collection of tasks
 ns = Collection(clean, deploy)
