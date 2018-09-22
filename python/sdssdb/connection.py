@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 16:00:42
+# @Last modified time: 2018-09-22 16:03:03
 
 
 from __future__ import absolute_import, division, print_function
@@ -158,7 +158,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     @abc.abstractproperty
     def connection_params(self):
-        """Returns a dictionary with the connection parameters."""
+        """Returns a dictionary with the connection parameters.
+
+        Returns
+        -------
+        connection_params : dict
+            A dictionary with the ``user``, ``host``, and ``part`` of the
+            current connection. E.g.,
+            ``{'user': 'sdssdb', 'host': 'sdss4-db', 'port': 5432}``
+
+        """
 
         pass
 
