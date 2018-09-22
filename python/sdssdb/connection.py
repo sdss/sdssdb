@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 14:28:43
+# @Last modified time: 2018-09-22 14:51:16
 
 
 from __future__ import absolute_import, division, print_function
@@ -123,7 +123,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert profile is not None, 'profile not set.'
 
         # Gets the necessary configuration values from the profile
-        db_configuration = {item: config[profile][item] for item in ['user', 'host', 'port']}
+        db_configuration = {item: config[profile][item]
+                            if item in config[profile] else None
+                            for item in ['user', 'host', 'port']}
 
         dbname = dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'

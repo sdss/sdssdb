@@ -15,8 +15,4 @@ lco:
     domain: lco.cl
 
 local:
-    user: sdssdb
-    admin: sdssdb_admin
-    host: localhost
-    port: 5432
     domain: null
