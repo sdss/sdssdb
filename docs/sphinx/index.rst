@@ -23,11 +23,11 @@ Reference
 .. toctree::
    :maxdepth: 1
 
-   api
+   peewee
 
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`

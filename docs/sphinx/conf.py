@@ -13,6 +13,10 @@
 # serve to show the default.
 
 import sphinx_bootstrap_theme
+from pkg_resources import parse_version
+
+from sdssdb import __version__
+
 
 # Importing matplotlib here with agg to prevent tkinter error in readthedocs
 # import matplotlib
@@ -22,8 +26,6 @@ import sphinx_bootstrap_theme
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-from sdssdb import __version__
-from pkg_resources import parse_version
 
 
 # -- General configuration ------------------------------------------------
@@ -111,7 +113,8 @@ todo_include_todos = False
 # Intersphinx mappings
 intersphinx_mapping = {'python': ('https://docs.python.org/3.6', None),
                        'astropy': ('http://docs.astropy.org/en/latest', None),
-                       'numpy': ('http://docs.scipy.org/doc/numpy/', None)}
+                       'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+                       'peewee': ('http://docs.peewee-orm.com/en/latest/', None)}
 
 autodoc_mock_imports = ['_tkinter']
 autodoc_member_order = 'groupwise'
@@ -121,7 +124,6 @@ napoleon_use_ivar = True
 
 rst_epilog = """
 .. |numpy_array| replace:: Numpy array
-.. |HDUList| replace:: :class:`~astropy.io.fits.HDUList`
 """
 
 
