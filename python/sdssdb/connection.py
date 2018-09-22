@@ -7,27 +7,34 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 11:02:01
+# @Last modified time: 2018-09-22 14:28:43
 
 
 from __future__ import absolute_import, division, print_function
 
+import abc
 import socket
-import warnings
 
-from peewee import Model, OperationalError, PostgresqlDatabase
+import six
 
-from sdssdb import config
-
-
-__all__ = ['DatabaseConnection', 'BaseModel']
+from sdssdb import config, log
 
 
-class DatabaseConnection(PostgresqlDatabase):
+try:
+    from peewee import OperationalError, PostgresqlDatabase
+    _peewee = True
+except ImportError:
+    _peewee = False
+
+
+__all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection']
+
+
+class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     """A PostgreSQL database connection with profile and autoconnect features.
 
-    Provides a base class for PostgreSQL connections based on peewee's
-    `.PostgresqlDatabase`. The parameters for the connection can be
+    Provides a base class for PostgreSQL connections for either peewee_ or
+    SQLAlchemy_. The parameters for the connection can be
     passed directly (see `.connect_from_parameters`) or, more conveniently, a
     profile can be used. By default `.DATABASE_NAME` is left undefined and
     needs to be passed when initiating the connection. This is useful for
@@ -47,38 +54,27 @@ class DatabaseConnection(PostgresqlDatabase):
         Whether to autoconnect to the database using the profile parameters.
         Requites `.DATABASE_NAME` to be set.
 
+    .. _peewee: http://docs.peewee-orm.com/en/latest/
+    .. _SQLAlchemy: http://www.sqlalchemy.org
+
     """
 
     #: The default database name.
     DATABASE_NAME = None
 
-    def __init__(self, profile=None, autoconnect=True):
+    def __init__(self, profile=None, dbname=None, autoconnect=True):
 
-        super(DatabaseConnection, self).__init__(None)
+        #: Reports whether the connection is active.
         self.connected = False
         self.profile = None
 
         self.set_profile(profile=profile)
 
-        if self.DATABASE_NAME is not None and autoconnect:
+        if autoconnect:
             try:
-                self.connect()
+                self.connect(profile=profile, dbname=dbname)
             except:
                 pass
-
-    def _test_connection(self):
-        """Checks whether the connection is correct."""
-
-        try:
-            super(DatabaseConnection, self).connect()
-            self.connected = True
-        except OperationalError:
-
-            warnings.warn('failed to connect to database {0}. '
-                          'Setting database to None.'.format(self.database),
-                          UserWarning)
-            self.init(None)
-            self.connected = False
 
     def set_profile(self, profile=None):
         """Determines observatory profile."""
@@ -100,6 +96,18 @@ class DatabaseConnection(PostgresqlDatabase):
                     self.profile = profile
                     break
 
+    @abc.abstractmethod
+    def _conn(self, dbname, **params):
+        """Actually initialises the database connection.
+
+        This method should be overridden depending on the ORM library being
+        used. At the end, `.connected` should be set to True if the connection
+        was successful.
+
+        """
+
+        pass
+
     def connect(self, dbname=None, profile=None):
         """Initialises the database from a profile in the config file.
         Parameters
@@ -120,8 +128,7 @@ class DatabaseConnection(PostgresqlDatabase):
         dbname = dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
-        self.init(dbname, **db_configuration)
-        self._test_connection()
+        self.connect_from_parameters(dbname=dbname, **db_configuration)
 
     def connect_from_parameters(self, dbname=None, **params):
         """Initialises the database from a dictionary of parameters.
@@ -139,21 +146,7 @@ class DatabaseConnection(PostgresqlDatabase):
         dbname = dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
-        self.init(dbname, **params)
-        self._test_connection()
-
-    def check_connection(self):
-        """Checks whether the connection is open or can be connected."""
-
-        if self.connected and self.connection().closed == 0:
-            return True
-
-        try:
-            self.connect()
-            self.connected = True
-            return True
-        except OperationalError:
-            return False
+        self._conn(dbname, **params)
 
     @staticmethod
     def list_profiles():
@@ -161,25 +154,26 @@ class DatabaseConnection(PostgresqlDatabase):
 
         return config.keys()
 
+    @abc.abstractproperty
+    def connection_params(self):
+        """Returns a dictionary with the connection parameters."""
+
+        pass
+
     def become(self, user):
         """Change the connection to a certain user."""
 
         if not self.connected:
             raise RuntimeError('DB has not been initialised.')
 
-        dsn_params = self.connect_params
+        dsn_params = self.connection_params
         if dsn_params is None:
             raise RuntimeError('cannot determine the DSN parameters. '
                                'The DB may be disconnected.')
 
-        try:
-            dsn_params['user'] = user
-            dbname = self.database
-            self.init(dbname, **dsn_params)
-            super(DatabaseConnection, self).connect()
-        except OperationalError:
-            raise RuntimeError('cannot connect to database with '
-                               'user {0}'.format(user))
+        dsn_params['user'] = user
+        dbname = self.database
+        self.connect_from_parameters(dbname, **dsn_params)
 
     def become_admin(self):
         """Becomes the admin user."""
@@ -198,27 +192,31 @@ class DatabaseConnection(PostgresqlDatabase):
         self.become(config[self.profile]['user'])
 
 
-class BaseModel(Model):
+if _peewee:
 
-    print_fields = []
+    class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
+        """Peewee database connection implementation."""
 
-    def __str__(self):
-        """A custom repr for observatory models.
+        def __init__(self, *args, **kwargs):
 
-        By default it always prints pk, name, and label, if found. Models can
-        define they own ``print_fields`` as a list of field to be output in the
-        repr.
+            PostgresqlDatabase.__init__(self, None)
+            DatabaseConnection.__init__(self, *args, **kwargs)
 
-        """
+        @property
+        def connection_params(self):
+            """Returns a dictionary with the connection parameters."""
 
-        fields = ['pk={0!r}'.format(self.get_id())]
+            return self.connect_params
 
-        for extra_field in ['label']:
-            if extra_field not in self.print_fields:
-                self.print_fields.append(extra_field)
+        def _conn(self, dbname, **params):
+            """Connects to the DB and tests the connection."""
 
-        for ff in self.print_fields:
-            if hasattr(self, ff):
-                fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
+            PostgresqlDatabase.init(self, dbname, **params)
 
-        return '{0}'.format(', '.join(fields))
+            try:
+                self.connected = PostgresqlDatabase.connect(self)
+            except OperationalError:
+                log.warning('failed to connect to database {0}. '
+                            'Setting database to None.'.format(self.database), UserWarning)
+                PostgresqlDatabase.init(self, None)
+                self.connected = False

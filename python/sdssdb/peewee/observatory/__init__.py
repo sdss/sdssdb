@@ -1,9 +1,10 @@
 # flake8: noqa
 
-from sdssdb.peewee.connection import BaseModel, DatabaseConnection
+from sdssdb.connection import PeeweeDatabaseConnection
+from sdssdb.peewee import BaseModel
 
 
-database = DatabaseConnection(autoconnect=False)
+database = PeeweeDatabaseConnection(autoconnect=False)
 
 
 # Create a new base model class for the observatory and bind the database

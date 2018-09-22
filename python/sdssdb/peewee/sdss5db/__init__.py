@@ -1,9 +1,10 @@
 # flake8: noqa
 
-from sdssdb.peewee.connection import BaseModel, DatabaseConnection
+from sdssdb.connection import PeeweeDatabaseConnection
+from sdssdb.peewee import BaseModel
 
 
-class SDSS5DatabaseConnection(DatabaseConnection):
+class SDSS5DatabaseConnection(PeeweeDatabaseConnection):
     DATABASE_NAME = 'sdss5db'
 
 

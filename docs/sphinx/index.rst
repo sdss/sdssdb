@@ -23,7 +23,7 @@ Reference
 .. toctree::
    :maxdepth: 1
 
-   peewee
+   api
 
 
 Indices and tables
