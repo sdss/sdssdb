@@ -27,13 +27,13 @@ class DatabaseConnection(PostgresqlDatabase):
 
     DATABASE_NAME = None
 
-    def __init__(self, location=None, autoconnect=True):
+    def __init__(self, profile=None, autoconnect=True):
 
         super(DatabaseConnection, self).__init__(None)
         self.connected = False
         self.profile = None
 
-        self.set_location(location=location)
+        self.set_profile(profile=profile)
 
         if self.DATABASE_NAME is not None and autoconnect:
             try:
@@ -55,11 +55,11 @@ class DatabaseConnection(PostgresqlDatabase):
             self.init(None)
             self.connected = False
 
-    def set_location(self, location=None):
-        """Determines observatory location."""
+    def set_profile(self, profile=None):
+        """Determines observatory profile."""
 
-        if location is not None:
-            self.location = location
+        if profile is not None:
+            self.profile = profile
             return
 
         # Get hostname
