@@ -1,15 +1,9 @@
 
-.. _api:
 
-sdssdb Reference
-=========================
+Database connections
+====================
 
-.. _api-main:
-
-Main
-----
-
-.. automodule:: sdssdb.main
-   :members:
+.. automodule:: sdssdb.connection
+   :members: DatabaseConnection, PeeweeDatabaseConnection
    :undoc-members:
    :show-inheritance:

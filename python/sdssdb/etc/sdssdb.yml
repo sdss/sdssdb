@@ -1,9 +1,18 @@
 ---
 
-option1:
-    suboption1: 1
-    suboption2: "some text"
-    suboption3:
-        subsuboption1: [1, 2, 3]
+apo:
+    user: sdssdb
+    admin: sdssdb_admin
+    host: sdss4-db
+    port: 5432
+    domain: apo.nmsu.edu
 
-option2: 2.0
+lco:
+    user: sdssdb
+    admin: sdssdb_admin
+    host: sdss4-db
+    port: 5432
+    domain: lco.cl
+
+local:
+    domain: null
