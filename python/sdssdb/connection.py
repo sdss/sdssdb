@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 14:51:16
+# @Last modified time: 2018-09-22 16:00:42
 
 
 from __future__ import absolute_import, division, print_function
@@ -183,7 +183,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        self.become(config[self.profile]['admin'])
+        profile = config[self.profile]
+        assert 'admin' in profile, 'admin user not defined in profile'
+
+        self.become(profile['admin'])
 
     def become_user(self):
         """Becomes the read-only user."""
@@ -191,7 +194,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        self.become(config[self.profile]['user'])
+        profile = config[self.profile]
+        user = profile['user'] if 'user' in profile else None
+
+        self.become(user)
 
 
 if _peewee:
