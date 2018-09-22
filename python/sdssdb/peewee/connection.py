@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 10:06:13
+# @Last modified time: 2018-09-22 10:49:51
 
 
 from __future__ import absolute_import, division, print_function
@@ -24,7 +24,31 @@ __all__ = ['DatabaseConnection', 'BaseModel']
 
 
 class DatabaseConnection(PostgresqlDatabase):
+    """A PostgreSQL database connection with profile and autoconnect features.
 
+    Provides a base class for PostgreSQL connections. The parameters for the
+    connection can be passed directly (see `.connect_from_parameters`) or, more
+    conveniently, a profile can be used. By default `.DATABASE_NAME` is left
+    undefined and needs to be passed when initiating the connection. This is
+    useful for databases such as ``apodb/lcodb`` for which the model classes
+    are identical but the database name is not. For databases for which the
+    database name is fixed (e.g., ``sdss5db``), this class can be subclassed
+    and `.DATABASE_NAME` overridden.
+
+    Parameters
+    ----------
+    profile : str
+        The configuration profile to use. The profile defines the default
+        user, database server hostname, and port for a given location. If
+        not provided, the profile is automatically determined based on the
+        current domain, or defaults to ``local``.
+    autoconnect : bool
+        Whether to autoconnect to the database using the profile parameters.
+        Requites `.DATABASE_NAME` to be set.
+
+    """
+
+    #: The default database name.
     DATABASE_NAME = None
 
     def __init__(self, profile=None, autoconnect=True):
@@ -76,7 +100,15 @@ class DatabaseConnection(PostgresqlDatabase):
                     break
 
     def connect(self, dbname=None, profile=None):
-        """Initialises the database from a profile in the config file."""
+        """Initialises the database from a profile in the config file.
+        Parameters
+        ----------
+        dbname : `str` or `None`
+            The database name. If `None`, defaults to `.DATABASE_NAME`.
+        profile : `str` or `None`
+            The connection profile to use. If `None`, uses the default profile.
+
+        """
 
         profile = profile or self.profile
         assert profile is not None, 'profile not set.'
@@ -91,7 +123,17 @@ class DatabaseConnection(PostgresqlDatabase):
         self._test_connection()
 
     def connect_from_parameters(self, dbname=None, **params):
-        """Initialises the database from a dictionary of parameters."""
+        """Initialises the database from a dictionary of parameters.
+
+        Parameters
+        ----------
+        dbname : `str` or `None`
+            The database name. If `None`, defaults to `.DATABASE_NAME`.
+        params : dict
+            A dictionary of parameters, which should include ``user``,
+            ``host``, and ``port``.
+
+        """
 
         dbname = dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
