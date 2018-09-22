@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 09:58:11
+# @Last modified time: 2018-09-22 15:40:43
 
 
 from __future__ import absolute_import, division, print_function
@@ -187,11 +187,13 @@ class Plate(ObservatoryModel):
                                through_model=PlateStatusThroughModel,
                                backref='plates')
 
-    # @property
-    # def mangadb_plate(self):
-    #     """One-to-one backref for mangadb.plate.platedb_plate."""
+    @property
+    def mangadb_plate(self):
+        """One-to-one backref for mangadb.plate.platedb_plate."""
 
-    #     return mangadb.Plate.get_or_none(platedb_plate_pk=self.pk)
+        from sdssdb.peewee.observatory import mangadb
+
+        return mangadb.Plate.get_or_none(platedb_plate_pk=self.pk)
 
     class Meta:
         db_table = 'plate'
