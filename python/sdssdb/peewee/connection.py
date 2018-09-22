@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 10:49:51
+# @Last modified time: 2018-09-22 11:02:01
 
 
 from __future__ import absolute_import, division, print_function
@@ -26,14 +26,15 @@ __all__ = ['DatabaseConnection', 'BaseModel']
 class DatabaseConnection(PostgresqlDatabase):
     """A PostgreSQL database connection with profile and autoconnect features.
 
-    Provides a base class for PostgreSQL connections. The parameters for the
-    connection can be passed directly (see `.connect_from_parameters`) or, more
-    conveniently, a profile can be used. By default `.DATABASE_NAME` is left
-    undefined and needs to be passed when initiating the connection. This is
-    useful for databases such as ``apodb/lcodb`` for which the model classes
-    are identical but the database name is not. For databases for which the
-    database name is fixed (e.g., ``sdss5db``), this class can be subclassed
-    and `.DATABASE_NAME` overridden.
+    Provides a base class for PostgreSQL connections based on peewee's
+    `.PostgresqlDatabase`. The parameters for the connection can be
+    passed directly (see `.connect_from_parameters`) or, more conveniently, a
+    profile can be used. By default `.DATABASE_NAME` is left undefined and
+    needs to be passed when initiating the connection. This is useful for
+    databases such as ``apodb/lcodb`` for which the model classes are identical
+    but the database name is not. For databases for which the database name is
+    fixed (e.g., ``sdss5db``), this class can be subclassed and
+    `.DATABASE_NAME` overridden.
 
     Parameters
     ----------
