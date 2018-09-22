@@ -1,16 +1,14 @@
 # encoding: utf-8
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
+
 import yaml
 
 # Inits the logging system. Only shell logging, and exception and warning catching.
 # File logging can be started by calling log.start_file_logger(name).
-from .misc import log
+from .misc import log  # noqa
 
 
 def merge(user, default):
