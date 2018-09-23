@@ -67,12 +67,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         #: Reports whether the connection is active.
         self.connected = False
         self.profile = None
+        self.dbname = dbname
 
         self.set_profile(profile=profile)
 
         if autoconnect:
             try:
-                self.connect(profile=profile, dbname=dbname)
+                self.connect(profile=profile, dbname=self.dbname)
             except:
                 pass
 
@@ -127,7 +128,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                             if item in config[profile] else None
                             for item in ['user', 'host', 'port']}
 
-        dbname = dbname or self.DATABASE_NAME
+        dbname = dbname or self.dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
         self.connect_from_parameters(dbname=dbname, **db_configuration)
@@ -145,7 +146,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        dbname = dbname or self.DATABASE_NAME
+        dbname = dbname or self.dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
         self._conn(dbname, **params)
@@ -232,6 +233,7 @@ if _peewee:
 
             try:
                 self.connected = PostgresqlDatabase.connect(self)
+                self.dbname = dbname
             except OperationalError:
                 log.warning('failed to connect to database {0}. '
                             'Setting database to None.'.format(self.database), UserWarning)
