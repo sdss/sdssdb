@@ -4,15 +4,15 @@ from sdssdb.connection import PeeweeDatabaseConnection
 from sdssdb.peewee import BaseModel
 
 
-class SDSS5DatabaseConnection(PeeweeDatabaseConnection):
+class SDSS5dbDatabaseConnection(PeeweeDatabaseConnection):
     DATABASE_NAME = 'sdss5db'
 
 
-database = SDSS5DatabaseConnection(autoconnect=True)
+database = SDSS5dbDatabaseConnection(autoconnect=True)
 
 
 # Create a new base model class for the observatory and bind the database
-class SDSS5Model(BaseModel):
+class SDSS5dbModel(BaseModel):
 
     print_fields = []
 
