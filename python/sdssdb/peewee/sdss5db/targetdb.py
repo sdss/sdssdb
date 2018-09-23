@@ -13,7 +13,7 @@ from peewee import (AutoField, BigIntegerField, DateTimeField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 from playhouse.postgres_ext import ArrayField
 
-from . import SDSS5Model, database  # noqa
+from . import SDSS5dbModel, database  # noqa
 
 
 class UnknownField(object):
@@ -21,7 +21,7 @@ class UnknownField(object):
         pass
 
 
-class ActuatorStatus(SDSS5Model):
+class ActuatorStatus(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -30,7 +30,7 @@ class ActuatorStatus(SDSS5Model):
         schema = 'targetdb'
 
 
-class ActuatorType(SDSS5Model):
+class ActuatorType(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -39,7 +39,7 @@ class ActuatorType(SDSS5Model):
         schema = 'targetdb'
 
 
-class FPSLayout(SDSS5Model):
+class FPSLayout(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -48,7 +48,7 @@ class FPSLayout(SDSS5Model):
         schema = 'targetdb'
 
 
-class Actuator(SDSS5Model):
+class Actuator(SDSS5dbModel):
     id = IntegerField(null=True)
     pk = AutoField()
     xcen = FloatField(null=True)
@@ -76,7 +76,7 @@ class Actuator(SDSS5Model):
         schema = 'targetdb'
 
 
-class Simulation(SDSS5Model):
+class Simulation(SDSS5dbModel):
     comments = TextField(null=True)
     date = DateTimeField(null=True)
     id = IntegerField(null=True)
@@ -87,7 +87,7 @@ class Simulation(SDSS5Model):
         schema = 'targetdb'
 
 
-class Tile(SDSS5Model):
+class Tile(SDSS5dbModel):
     deccen = FloatField(null=True)
     pk = AutoField()
     racen = FloatField(null=True)
@@ -103,7 +103,7 @@ class Tile(SDSS5Model):
         schema = 'targetdb'
 
 
-class Weather(SDSS5Model):
+class Weather(SDSS5dbModel):
     pk = AutoField()
     cloud_cover = FloatField(null=True)
     transparency = FloatField(null=True)
@@ -114,7 +114,7 @@ class Weather(SDSS5Model):
         schema = 'targetdb'
 
 
-class Exposure(SDSS5Model):
+class Exposure(SDSS5dbModel):
     duration = FloatField(null=True)
     pk = AutoField()
     sn2_median = FloatField(null=True)
@@ -140,7 +140,7 @@ class Exposure(SDSS5Model):
         schema = 'targetdb'
 
 
-class FiberStatus(SDSS5Model):
+class FiberStatus(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -149,7 +149,7 @@ class FiberStatus(SDSS5Model):
         schema = 'targetdb'
 
 
-class Spectrograph(SDSS5Model):
+class Spectrograph(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -164,7 +164,7 @@ class Spectrograph(SDSS5Model):
         return TargetCadence.select().where(TargetCadence.spectrograph_pk.contains_any(self.pk))
 
 
-class Fiber(SDSS5Model):
+class Fiber(SDSS5dbModel):
     actuator = ForeignKeyField(column_name='actuator_pk',
                                field='pk',
                                model=Actuator,
@@ -189,7 +189,7 @@ class Fiber(SDSS5Model):
         schema = 'targetdb'
 
 
-class TargetCadence(SDSS5Model):
+class TargetCadence(SDSS5dbModel):
     pk = AutoField()
     name = TextField(null=False)
     nexposures = IntegerField(null=True)
@@ -210,7 +210,7 @@ class TargetCadence(SDSS5Model):
         return Spectrograph.select().where(Spectrograph.pk << self.spectrograph_pk)
 
 
-class Survey(SDSS5Model):
+class Survey(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -219,7 +219,7 @@ class Survey(SDSS5Model):
         schema = 'targetdb'
 
 
-class Program(SDSS5Model):
+class Program(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
     survey = ForeignKeyField(column_name='survey_pk',
@@ -233,7 +233,7 @@ class Program(SDSS5Model):
         schema = 'targetdb'
 
 
-class StellarParams(SDSS5Model):
+class StellarParams(SDSS5dbModel):
     age = FloatField(null=True)
     distance = FloatField(null=True)
     logg = FloatField(null=True)
@@ -247,7 +247,7 @@ class StellarParams(SDSS5Model):
         schema = 'targetdb'
 
 
-class Magnitude(SDSS5Model):
+class Magnitude(SDSS5dbModel):
     bp_mag = FloatField(null=True)
     g_mag = FloatField(null=True)
     h_mag = FloatField(null=True)
@@ -260,7 +260,7 @@ class Magnitude(SDSS5Model):
         schema = 'targetdb'
 
 
-class TargetCompletion(SDSS5Model):
+class TargetCompletion(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -269,7 +269,7 @@ class TargetCompletion(SDSS5Model):
         schema = 'targetdb'
 
 
-class Field(SDSS5Model):
+class Field(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -278,7 +278,7 @@ class Field(SDSS5Model):
         schema = 'targetdb'
 
 
-class File(SDSS5Model):
+class File(SDSS5dbModel):
     filename = TextField(null=True)
     pk = AutoField()
 
@@ -287,7 +287,7 @@ class File(SDSS5Model):
         schema = 'targetdb'
 
 
-class Lunation(SDSS5Model):
+class Lunation(SDSS5dbModel):
     max_lunation = FloatField(null=True)
     pk = AutoField()
 
@@ -296,7 +296,7 @@ class Lunation(SDSS5Model):
         schema = 'targetdb'
 
 
-class TargetType(SDSS5Model):
+class TargetType(SDSS5dbModel):
     label = TextField(null=True)
     pk = AutoField()
 
@@ -305,7 +305,7 @@ class TargetType(SDSS5Model):
         schema = 'targetdb'
 
 
-class Target(SDSS5Model):
+class Target(SDSS5dbModel):
     dec = FloatField(null=True)
     field = ForeignKeyField(column_name='field_pk',
                             field='pk',
@@ -371,7 +371,7 @@ class Target(SDSS5Model):
         schema = 'targetdb'
 
 
-class FiberConfiguration(SDSS5Model):
+class FiberConfiguration(SDSS5dbModel):
     fiber = ForeignKeyField(column_name='fiber_pk',
                             field='pk',
                             model=Fiber,
@@ -392,7 +392,7 @@ class FiberConfiguration(SDSS5Model):
         schema = 'targetdb'
 
 
-class Spectrum(SDSS5Model):
+class Spectrum(SDSS5dbModel):
     exposure = ForeignKeyField(column_name='exposure_pk',
                                field='pk',
                                model=Exposure,

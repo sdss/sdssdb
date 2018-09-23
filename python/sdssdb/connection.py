@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by:   Brian Cherinka
-# @Last modified time: 2018-09-22 14:51:16
+# @Last modified time: 2018-09-22 16:03:03
 
 
 from __future__ import absolute_import, division, print_function
@@ -61,9 +61,6 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Whether to autoconnect to the database using the profile parameters.
         Requites `.DATABASE_NAME` to be set.
 
-    .. _peewee: http://docs.peewee-orm.com/en/latest/
-    .. _SQLAlchemy: http://www.sqlalchemy.org
-
     """
 
     #: The default database name.
@@ -74,14 +71,20 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         #: Reports whether the connection is active.
         self.connected = False
         self.profile = None
+        self.dbname = dbname
 
         self.set_profile(profile=profile)
 
         if autoconnect:
             try:
-                self.connect(profile=profile, dbname=dbname)
+                self.connect(profile=profile, dbname=self.dbname)
             except:
                 pass
+
+    def __repr__(self):
+        return '<{} (dbname={!r}, connected={})>'.format(
+            self.__class__.__name__, self.dbname or self.DATABASE_NAME,
+            self.connected)
 
     def set_profile(self, profile=None):
         """Determines observatory profile."""
@@ -134,7 +137,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                             if item in config[profile] else None
                             for item in ['user', 'host', 'port']}
 
-        dbname = dbname or self.DATABASE_NAME
+        dbname = dbname or self.dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
         self.connect_from_parameters(dbname=dbname, **db_configuration)
@@ -152,7 +155,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        dbname = dbname or self.DATABASE_NAME
+        dbname = dbname or self.dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
         self._conn(dbname, **params)
@@ -165,7 +168,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     @abc.abstractproperty
     def connection_params(self):
-        """Returns a dictionary with the connection parameters."""
+        """Returns a dictionary with the connection parameters.
+
+        Returns
+        -------
+        connection_params : dict
+            A dictionary with the ``user``, ``host``, and ``part`` of the
+            current connection. E.g.,
+            ``{'user': 'sdssdb', 'host': 'sdss4-db', 'port': 5432}``
+
+        """
 
         pass
 
@@ -190,7 +202,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        self.become(config[self.profile]['admin'])
+        profile = config[self.profile]
+        assert 'admin' in profile, 'admin user not defined in profile'
+
+        self.become(profile['admin'])
 
     def become_user(self):
         """Becomes the read-only user."""
@@ -198,7 +213,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        self.become(config[self.profile]['user'])
+        profile = config[self.profile]
+        user = profile['user'] if 'user' in profile else None
+
+        self.become(user)
 
 
 if _peewee:
@@ -224,6 +242,7 @@ if _peewee:
 
             try:
                 self.connected = PostgresqlDatabase.connect(self)
+                self.dbname = dbname
             except OperationalError:
                 log.warning('failed to connect to database {0}. '
                             'Setting database to None.'.format(self.database), UserWarning)

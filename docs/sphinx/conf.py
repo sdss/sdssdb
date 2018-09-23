@@ -26,8 +26,6 @@ from sdssdb import __version__
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -124,6 +122,8 @@ napoleon_use_ivar = True
 
 rst_epilog = """
 .. |numpy_array| replace:: Numpy array
+.. _peewee: http://docs.peewee-orm.com/en/latest/
+.. _SQLAlchemy: http://www.sqlalchemy.org/
 """
 
 
