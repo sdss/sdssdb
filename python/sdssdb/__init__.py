@@ -35,5 +35,7 @@ custom_config_fn = os.path.expanduser('~/.{0}/{0}.yml'.format(NAME))
 if os.path.exists(custom_config_fn):
     config = merge(yaml.load(open(custom_config_fn)), config)
 
+# from sdssdb.sqlalchemy import db
+# config['db'] = db
 
 __version__ = '0.1.0dev'

@@ -6,7 +6,7 @@
 # @Filename: database.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
-# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
+# @Last modified by:   Brian Cherinka
 # @Last modified time: 2018-09-22 14:51:16
 
 
@@ -18,6 +18,7 @@ import socket
 import six
 
 from sdssdb import config, log
+from pgpasslib import getpass
 
 
 try:
@@ -25,6 +26,12 @@ try:
     _peewee = True
 except ImportError:
     _peewee = False
+
+try:
+    from sqlalchemy import create_engine, MetaData
+    _sqla = True
+except ImportError:
+    _sqla = False
 
 
 __all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection']
@@ -222,3 +229,61 @@ if _peewee:
                             'Setting database to None.'.format(self.database), UserWarning)
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
+
+
+if _sqla:
+
+    class SQLADatabaseConnection(DatabaseConnection):
+
+        def __init__(self, *args, **kwargs):
+            DatabaseConnection.__init__(self, *args, **kwargs)
+
+        @property
+        def connection_params(self):
+            """Returns a dictionary with the connection parameters."""
+
+            return self.connect_params
+
+        def _get_password(self, **params):
+            ''' '''
+            if 'password' not in params:
+                try:
+                    password = getpass(params['host'], params['port'], params['database'], params['user'])
+                except KeyError as e:
+                    raise RuntimeError('ERROR: invalid server configuration')
+            return password
+
+        def _conn(self, dbname, **params):
+            """Connects to the DB and tests the connection."""
+
+            print(dbname, params)
+            if self.profile == 'local':
+                db_connection_string = f"postgresql+psycopg2:///{dbname}"
+            else:
+                params['database'] = dbname
+                params['password'] = self._get_password(**params)
+                db_connection_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'.format(**params)
+            print(db_connection_string)
+            self.connect_params = params
+            assert False
+            print('params', params)
+            self.engine = create_engine(db_connection_string, echo=echo,
+                                pool_size=poolsize, pool_recycle=recycle)
+            self.metadata = MetaData(self.engine, schema='public')
+            print('here')
+            try:
+                self.metadata.reflect()
+            except OperationalError as e:
+                log.warning('Failed to connect to database {0}'.format(self.database))
+                self.metadata = None
+                self.engine.dispose()
+                self.engine = None
+                self.connected = False
+            else:
+                print('success')
+                self.connected = True
+
+
+
+
+

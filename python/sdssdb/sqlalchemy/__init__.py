@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:02:19
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-09-22 10:34:56
+# @Last Modified time: 2018-09-22 15:59:51
 
 from __future__ import print_function, division, absolute_import
 
@@ -38,8 +38,8 @@ def get_db_conn(config_name=None, config_file=None, host=None,
         if not config_file:
             # use default config file
             path = os.path.abspath(os.path.dirname(__file__))
-            configpath = os.path.abspath(os.path.join(path, os.pardir))
-            config_file = os.path.join(configpath, 'dbconfig.ini')
+            config_file = os.path.abspath(os.path.join(path, os.pardir, 'etc/sdssdb.yml'))
+            #config_file = os.path.join(configpath, 'dbconfig.ini')
 
         dbdict = read_config_file(config_file)
         if config_name not in dbdict:
@@ -64,6 +64,9 @@ def get_db_conn(config_name=None, config_file=None, host=None,
         except KeyError as e:
             raise RuntimeError('ERROR: invalid server configuration')
 
+    assert database is not None, 'Must specify a database to connect to'
+    dbinfo['database'] = database
+
     # build the database connection string
     if dbinfo["host"] == 'localhost':
         db_connection_string = f"postgresql+psycopg2:///{dbinfo['database']}"
@@ -76,6 +79,7 @@ def get_db_conn(config_name=None, config_file=None, host=None,
     return db
 
 
+#db = get_db_conn('local', database='manga')
 
 
 
