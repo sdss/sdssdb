@@ -8,8 +8,8 @@ class BaseModel(Model):
 
     print_fields = []
 
-    def __str__(self):
-        """A custom repr for observatory models.
+    def __repr__(self):
+        """A custom repr for targetdb models.
 
         By default it always prints pk, name, and label, if found. Models can
         define they own ``print_fields`` as a list of field to be output in the
@@ -17,17 +17,23 @@ class BaseModel(Model):
 
         """
 
-        fields = ['pk={0!r}'.format(self.get_id())]
+        reg = re.match('.*\'.*.(.*)\'.', str(self.__class__))
 
-        for extra_field in ['label']:
-            if extra_field not in self.print_fields:
-                self.print_fields.append(extra_field)
+        if reg is not None:
 
-        for ff in self.print_fields:
-            if hasattr(self, ff):
-                fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
+            fields = ['pk={0!r}'.format(self.get_id())]
 
-        return '{0}'.format(', '.join(fields))
+            for extra_field in ['label']:
+                if extra_field not in self.print_fields:
+                    self.print_fields.append(extra_field)
+
+            for ff in self.print_fields:
+                if hasattr(self, ff):
+                    fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
+
+            return '<{0}: {1}>'.format(reg.group(1), ', '.join(fields))
+
+        return super(BaseModel, self).__repr__()
 
     @hybrid_method
     def cone_search(self, ra, dec, a, b=None, pa=None):
