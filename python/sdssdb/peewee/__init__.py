@@ -5,17 +5,19 @@ from playhouse.hybrid import hybrid_method
 
 
 class BaseModel(Model):
+    """A custom peewee `.Model` with enhanced representation and methods.
 
+    By default it always prints ``pk``, ``name``, and ``label``, if found.
+    Models can define they own `.print_fields` as a list of field to be output
+    in the representation.
+
+    """
+
+    #: A list of fields (as strings) to be included in the ``__repr__```
     print_fields = []
 
     def __repr__(self):
-        """A custom repr for targetdb models.
-
-        By default it always prints pk, name, and label, if found. Models can
-        define they own ``print_fields`` as a list of field to be output in the
-        repr.
-
-        """
+        """A custom repr for targetdb models."""
 
         reg = re.match('.*\'.*.(.*)\'.', str(self.__class__))
 
@@ -37,7 +39,21 @@ class BaseModel(Model):
 
     @hybrid_method
     def cone_search(self, ra, dec, a, b=None, pa=None):
-        """Returns a filtered query with the rows inside a region on the sky.
+        """Returns a query with the rows inside a region on the sky."""
+
+        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+            'this model class does not have ra/dec columns.'
+
+        if b is None:
+            return fn.q3c_radial_query(self.ra, self.dec, ra, dec, a)
+        else:
+            pa = pa or 0.0
+            ratio = b / a
+            return fn.q3c_ellipse_query(self.ra, self.dec, ra, dec, a, ratio, pa)
+
+    @cone_search.expression
+    def cone_search(cls, ra, dec, a, b=None, pa=None):
+        """Returns a query with the rows inside a region on the sky.
 
         Defines a sky ellipse and returns the targets within. Assumes that the
         table contains two columns ``ra`` and ``dec``. All units are assumed
@@ -61,16 +77,8 @@ class BaseModel(Model):
 
         """
 
-        if b is None:
-            return fn.q3c_radial_query(self.ra, self.dec, ra, dec, a)
-        else:
-            pa = pa or 0.0
-            ratio = b / a
-            return fn.q3c_ellipse_query(self.ra, self.dec, ra, dec, a, ratio, pa)
-
-    @cone_search.expression
-    def cone_search(cls, ra, dec, a, b=None, pa=None):
-        """SQL expression for cone search"""
+        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+            'this model class does not have ra/dec columns.'
 
         if b is None:
             return fn.q3c_radial_query(cls.ra, cls.dec, ra, dec, a)
