@@ -124,6 +124,8 @@ napoleon_use_ivar = True
 
 rst_epilog = """
 .. |numpy_array| replace:: Numpy array
+.. _peewee: http://docs.peewee-orm.com/en/latest/
+.. _SQLAlchemy: http://www.sqlalchemy.org/
 """
 
 

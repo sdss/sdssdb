@@ -54,9 +54,6 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Whether to autoconnect to the database using the profile parameters.
         Requites `.DATABASE_NAME` to be set.
 
-    .. _peewee: http://docs.peewee-orm.com/en/latest/
-    .. _SQLAlchemy: http://www.sqlalchemy.org
-
     """
 
     #: The default database name.
