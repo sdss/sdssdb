@@ -77,6 +77,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             except:
                 pass
 
+    def __repr__(self):
+        return '<{} (dbname={!r}, connected={})>'.format(
+            self.__class__.__name__, self.dbname or self.DATABASE_NAME,
+            self.connected)
+
     def set_profile(self, profile=None):
         """Determines observatory profile."""
 
