@@ -29,6 +29,8 @@ except ImportError:
 
 try:
     from sqlalchemy import create_engine, MetaData
+    from sqlalchemy.exc import OperationalError as OpError
+    from sqlalchemy.orm import sessionmaker, scoped_session
     _sqla = True
 except ImportError:
     _sqla = False
@@ -78,8 +80,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         if autoconnect:
             try:
                 self.connect(profile=profile, dbname=self.dbname)
-            except:
-                pass
+            except Exception as e:
+                raise(e)
 
     def __repr__(self):
         return '<{} (dbname={!r}, connected={})>'.format(
@@ -253,6 +255,8 @@ if _peewee:
 if _sqla:
 
     class SQLADatabaseConnection(DatabaseConnection):
+        engine = None
+        base = None
 
         def __init__(self, *args, **kwargs):
             DatabaseConnection.__init__(self, *args, **kwargs)
@@ -261,46 +265,81 @@ if _sqla:
         def connection_params(self):
             """Returns a dictionary with the connection parameters."""
 
-            return self.connect_params
+            return self._connect_params
 
         def _get_password(self, **params):
-            ''' '''
-            if 'password' not in params:
+            ''' Get a db password from a pgpass file'''
+            password = params.get('password', None)
+            if not password:
                 try:
                     password = getpass(params['host'], params['port'], params['database'], params['user'])
                 except KeyError as e:
                     raise RuntimeError('ERROR: invalid server configuration')
             return password
 
-        def _conn(self, dbname, **params):
-            """Connects to the DB and tests the connection."""
-
-            print(dbname, params)
+        def _make_connection_string(self, dbname, **params):
+            ''' Build a db connection string '''
             if self.profile == 'local':
                 db_connection_string = f"postgresql+psycopg2:///{dbname}"
             else:
                 params['database'] = dbname
                 params['password'] = self._get_password(**params)
                 db_connection_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'.format(**params)
-            print(db_connection_string)
-            self.connect_params = params
-            assert False
-            print('params', params)
-            self.engine = create_engine(db_connection_string, echo=echo,
-                                pool_size=poolsize, pool_recycle=recycle)
-            self.metadata = MetaData(self.engine, schema='public')
-            print('here')
+            self._connect_params = params
+            return db_connection_string
+
+        def _conn(self, dbname, **params):
+            '''Connects to the DB and tests the connection.'''
+
+            # get connection string
+            db_connection_string = self._make_connection_string(dbname, **params)
+
             try:
-                self.metadata.reflect()
-            except OperationalError as e:
-                log.warning('Failed to connect to database {0}'.format(self.database))
-                self.metadata = None
+                self.create_engine(db_connection_string, echo=False,
+                                   pool_size=10, pool_recycle=1800)
+                self.engine.connect()
+            except OpError as e:
+                log.warning('Failed to connect to database {0}'.format(dbname))
                 self.engine.dispose()
                 self.engine = None
                 self.connected = False
             else:
-                print('success')
                 self.connected = True
+                self.prepare_base()
+
+        def reset_engine(self):
+            ''' Reset the engine, metadata, and session '''
+
+            if self.engine:
+                self.engine.dispose()
+                self.engine = None
+                self.metadata = None
+                self.Session.close()
+                self.Session = None
+
+        def create_engine(self, db_connection_string=None, echo=False, pool_size=10, pool_recycle=1800,
+                          expire_on_commit=True):
+            ''' Create a new database engine '''
+
+            self.reset_engine()
+
+            if not db_connection_string:
+                dbname = self.dbname or self.DATABASE_NAME
+                #dbname = self.connection_params.get('database', self.DATABASE_NAME)
+                db_connection_string = self._make_connection_string(dbname, **self.connection_params)
+
+            self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size, pool_recycle=pool_recycle)
+            self.metadata = MetaData(bind=self.engine)
+            self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
+                                                       expire_on_commit=expire_on_commit))
+
+        def prepare_base(self, base=None):
+            ''' Prepare a Model Base '''
+
+            base = base or self.base
+            if base:
+                base.prepare(self.engine)
+
 
 
 
