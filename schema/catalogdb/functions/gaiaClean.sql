@@ -1,5 +1,5 @@
 \timing
-SELECT source_id into gaia_dr2_clean FROM catalogdb.gaia_dr2_source
+SELECT source_id into catalogdb.gaia_dr2_clean FROM catalogdb.gaia_dr2_source
    WHERE parallax_over_error > 10
    AND phot_g_mean_flux_over_error>50
    AND phot_rp_mean_flux_over_error>20
