@@ -1,4 +1,5 @@
-SELECT source_id FROM catalogdb.gaia_dr2_source
+\timing
+SELECT source_id into gaia_dr2_clean FROM catalogdb.gaia_dr2_source
    WHERE parallax_over_error > 10
    AND phot_g_mean_flux_over_error>50
    AND phot_rp_mean_flux_over_error>20
@@ -8,3 +9,4 @@ SELECT source_id FROM catalogdb.gaia_dr2_source
    AND visibility_periods_used>8
    AND astrometric_chi2_al/(astrometric_n_good_obs_al-5)<1.44*greatest(1,exp(-0.4*(phot_g_mean_mag-19.5)))
    limit 10
+\timing
