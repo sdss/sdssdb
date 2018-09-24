@@ -1,5 +1,5 @@
 \timing
-SELECT pts_key, designation, ra, decl, h_m catalogdb.twomass_clean FROM catalogdb.twomass_psc
+SELECT pts_key, designation, ra, decl, h_m into catalogdb.twomass_clean FROM catalogdb.twomass_psc
     WHERE h_m < 11
     and (ph_qual like '_A_' or ph_qual like '_B_')
     and cc_flg like '_0_'
