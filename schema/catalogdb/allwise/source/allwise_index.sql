@@ -17,4 +17,8 @@ CREATE INDEX CONCURRENTLY ON catalogdb.allwise using BTREE (dec);
 CREATE INDEX CONCURRENTLY ON catalogdb.allwise using BTREE (glat);
 CREATE INDEX CONCURRENTLY ON catalogdb.allwise using BTREE (glon);
 
+create index on catalogdb.allwise (q3c_ang2ipix(ra, dec));
+CLUSTER allwise_q3c_ang2ipix_idx on catalogdb.allwise;
+analyze catalogdb.allwise;
+
 
