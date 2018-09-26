@@ -1,6 +1,6 @@
 \timing
 select
-    pts_key, designation, ra, decl, h_m into catalogdb.twomamss_clean_noNeighbor from catalogdb.twoamss_clean
+    pts_key, designation, ra, decl, h_m into catalogdb.twomass_clean_noNeighbor from catalogdb.twomass_clean
 where exists (select twomassBrightNeighbor(catalogdb.twomass_clean.ra, catalogdb.twomass_clean.decl, catalogdb.twomass_clean.designation, catalogdb.twomass_clean.targH));
 alter table catalogdb.twomass_clean_noNeighbor add primary key(designation);
 
