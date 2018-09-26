@@ -1,12 +1,10 @@
-\timing
-select
-    pts_key, designation, ra, decl, h_m into catalogdb.twomass_clean_noNeighbor from catalogdb.twomass_clean
-where exists (select twomassBrightNeighbor(catalogdb.twomass_clean.ra, catalogdb.twomass_clean.decl, catalogdb.twomass_clean.designation, catalogdb.twomass_clean.h_m));
-alter table catalogdb.twomass_clean_noNeighbor add primary key(designation);
+--takes 12826.228 ms for first select
 
-ALTER TABLE catalogdb.twomass_clean_noNeighbor ADD CONSTRAINT twomass_clean_noNeighbor_desig_unique UNIQUE (designation);
-CREATE INDEX CONCURRENTLY ON catalogdb.twomass_clean_noNeighbor using BTREE (h_m);
-create index concurrently on catalogdb.twomass_clean_noNeighbor (q3c_ang2ipix(ra, decl));
-CLUSTER twomass_clean_noNeighbor_q3c_ang2ipix_idx on catalogdb.twomass_clean_noNeighbor;
-analyze catalogdb.twomass_clean_noNeighbor;
+\timing
+
+select twomassBrightNeighbor(ra, decl, designation, h_m) as bright_neighbor from catalogdb.twomass_clean into catalogdb.twomass_clean;
+
+create index concurrently on catalogdb.twomass_clean using btree (bright_neighbor);
+
+analyze catalogdb.twomass_clean;
 \timing
