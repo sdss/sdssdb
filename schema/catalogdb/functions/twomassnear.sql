@@ -2,6 +2,8 @@
 
 \timing
 
+alter table catalogdb.twomass_clean add column bright_neighbor bool;
+
 insert into catalogdb.twomass_clean select twomassBrightNeighbor(ra, decl, designation, h_m) as bright_neighbor from catalogdb.twomass_clean;
 
 create index concurrently on catalogdb.twomass_clean using btree (bright_neighbor);
