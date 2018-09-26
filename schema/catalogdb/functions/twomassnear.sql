@@ -2,7 +2,7 @@
 
 \timing
 
-alter table catalogdb.twomass_clean add column bright_neighbor bool;
+-- alter table catalogdb.twomass_clean add column bright_neighbor bool;
 
 insert into catalogdb.twomass_clean.bright_neighbor select twomassBrightNeighbor(ra, decl, designation, h_m) as bright_neighbor from catalogdb.twomass_clean;
 
