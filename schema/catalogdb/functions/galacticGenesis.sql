@@ -1,26 +1,8 @@
+\timing
+select gaia_dr2_clean.source_id, gaia_dr2_clean.ra, gaia_dr2_clean.dec, gaia_dr2_clean.phot_g_mean_mag, twomass_clean.h_m
+from gaia_dr2_clean, twomass_clean, gaiadr2_tmass_best_neighbor
+inner join gaia_dr2_clean.source_id on gaiadr2_tmass_best_neighbor.source_id
+inner join gaiadr2_tmass_best_neighbor.original_ext_source_id on twomass_clean.designation
+limit 10;
 
-select
-    subq.designation, subq.ra, subq.decl, twomassBrightNeighbor(subq.ra, subq.decl, subq.designation, subq.h_m)
-    from
-        (
-            select * from catalogdb.twomass_psc as tm
-            where
-                tm.h_m<11 and
-                (tm.ph_qual like '_A_' or tm.ph_qual like '_B_') and
-                tm.cc_flg like '_0_' and
-                tm.gal_contam = '0' and
-                (tm.rd_flg like '_1_' or tm.rd_flg like '_2_')
-        ) as subq;
-
-
-# gaia from here: https://arxiv.org/pdf/1804.09378.pdf
-
-SELECT TOP 5 phot_g_mean_mag+5*log10(parallax)-10 AS mg, bp_rp FROM catalogdb.gaia_dr2_source
-   WHERE parallax_over_error > 10
-   AND phot_g_mean_flux_over_error>50
-   AND phot_rp_mean_flux_over_error>20
-   AND phot_bp_mean_flux_over_error>20
-   AND phot_bp_rp_excess_factor < 1.3+0.06*power(phot_bp_mean_mag-phot_rp_mean_mag,2)
-   AND phot_bp_rp_excess_factor > 1.0+0.015*power(phot_bp_mean_mag-phot_rp_mean_mag,2)
-   AND visibility_periods_used>8
-   AND astrometric_chi2_al/(astrometric_n_good_obs_al-5)<1.44*greatest(1,exp(-0.4*(phot_g_mean_mag-19.5)))
+\timing
