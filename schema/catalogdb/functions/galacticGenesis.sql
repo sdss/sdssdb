@@ -4,7 +4,7 @@ select a.source_id as gaiaid, b.original_ext_source_id as twomassid, c.ra, c.dec
 from catalogdb.gaia_dr2_clean a
 inner join catalogdb.gaiadr2_tmass_best_neighbour b on b.source_id = a.source_id
 inner join catalogdb.gaia_dr2_source c on c.source_id = a.source_id
-inner join catalogdb.twomass_psc d on b.original_ext_source_id = d.designation
+inner join catalogdb.twomass_clean d on b.original_ext_source_id = d.designation
 limit 10;
 
 \timing
