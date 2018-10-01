@@ -1,3 +1,4 @@
+-- 29930316.978
 \timing
 
 select a.source_id as gaiaid, b.original_ext_source_id as twomass_desig, c.ra as g_ra, c.dec as g_dec, d.ra as t_ra, d.decl as t_dec, c.phot_g_mean_mag, d.h_m

@@ -1,4 +1,5 @@
 -- takes 12195064.824 ms for select?
+# gaia from here: https://arxiv.org/pdf/1804.09378.pdf
 \timing
 SELECT source_id into catalogdb.gaia_dr2_clean FROM catalogdb.gaia_dr2_source
    WHERE parallax_over_error > 10
