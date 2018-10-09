@@ -260,6 +260,8 @@ if _sqla:
 
         def __init__(self, *args, **kwargs):
             DatabaseConnection.__init__(self, *args, **kwargs)
+            self.metadata = None
+            self.Session = None
 
         @property
         def connection_params(self):
@@ -280,7 +282,7 @@ if _sqla:
         def _make_connection_string(self, dbname, **params):
             ''' Build a db connection string '''
             if self.profile == 'local':
-                db_connection_string = f"postgresql+psycopg2:///{dbname}"
+                db_connection_string = "postgresql+psycopg2:///{0}".format(dbname)
             else:
                 params['database'] = dbname
                 params['password'] = self._get_password(**params)
@@ -305,6 +307,7 @@ if _sqla:
                 self.connected = False
             else:
                 self.connected = True
+                self.dbname = dbname
                 self.prepare_base()
 
         def reset_engine(self):
@@ -325,7 +328,6 @@ if _sqla:
 
             if not db_connection_string:
                 dbname = self.dbname or self.DATABASE_NAME
-                #dbname = self.connection_params.get('database', self.DATABASE_NAME)
                 db_connection_string = self._make_connection_string(dbname, **self.connection_params)
 
             self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size, pool_recycle=pool_recycle)

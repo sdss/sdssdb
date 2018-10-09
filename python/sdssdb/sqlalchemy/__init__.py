@@ -6,83 +6,101 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:02:19
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-09-22 15:59:51
+# @Last Modified time: 2018-10-08 19:10:55
 
 from __future__ import print_function, division, absolute_import
 
-import os
-import yaml
-from pgpasslib import getpass
-from sdssdb.sqlalchemy.DatabaseConnection import DatabaseConnection
+from sqlalchemy.ext.declarative import declared_attr
+
+#SCHEMA = None
 
 
-def read_config_file(filename):
-    ''' Read a config file '''
+def get_field(parent, child):
+    ''' Recursively get a field name from a parent
 
-    try:
-        with open(filename, 'r') as ff:
-            rawfile = ff.read()
+    Allows addition of fields from relationships into
+    parent repr. E.g. 'bintype.name' or 'pipeline.version.version'
 
-    except IOError as e:
-        raise RuntimeError('IOError: Could not open dbconfigfile {0}:{1}'.format(dbconfigfile, e))
-    dbdict = yaml.load(rawfile)
-    return dbdict
+    Parameters:
+        parent (obj):
+            the instance object to check attributes on
+        child (str):
+            The child string attribute name
 
+    Returns:
+        A tuple of string base parameter name and value
+    '''
 
-def get_db_conn(config_name=None, config_file=None, host=None,
-                user=None, password=None, port=None, database=None, dbinfo=None):
-    ''' Get a database connection '''
-
-    # load db info by config
-    if config_name:
-        if not config_file:
-            # use default config file
-            path = os.path.abspath(os.path.dirname(__file__))
-            config_file = os.path.abspath(os.path.join(path, os.pardir, 'etc/sdssdb.yml'))
-            #config_file = os.path.join(configpath, 'dbconfig.ini')
-
-        dbdict = read_config_file(config_file)
-        if config_name not in dbdict:
-            raise KeyError(f'{config_name} not found in list of available configs')
-        dbinfo = dbdict[config_name]
-
-    # load db info by manual input
-    if not config_file and not config_name:
-        assert dbinfo or all([host, database]), 'Must specify manual db connection info'
-        if host != 'localhost':
-            assert all([user, port]), 'Must also specify a db user and port'
-
-        if not dbinfo:
-            dbinfo = dict(host=host, user=user, port=port, database=database)
-            if password:
-                dbinfo['password'] = password
-
-    # check for the password
-    if 'password' not in dbinfo:
-        try:
-            dbinfo['password'] = getpass(dbinfo['host'], dbinfo['port'], dbinfo['database'], dbinfo['user'])
-        except KeyError as e:
-            raise RuntimeError('ERROR: invalid server configuration')
-
-    assert database is not None, 'Must specify a database to connect to'
-    dbinfo['database'] = database
-
-    # build the database connection string
-    if dbinfo["host"] == 'localhost':
-        db_connection_string = f"postgresql+psycopg2:///{dbinfo['database']}"
+    if hasattr(parent, child):
+        return child, getattr(parent, child)
+    elif '.' in child:
+        base, value = child.split('.', 1)
+        if hasattr(parent, base):
+            base_obj = getattr(parent, base)
+            return get_field(base_obj, value)
     else:
-        db_connection_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'.format(**dbinfo)
-
-    # load a DatabaseConnection
-    db = DatabaseConnection(database_connection_string=db_connection_string)
-
-    return db
+        return None, None
 
 
-#db = get_db_conn('local', database='manga')
+class BaseModel(object):
+    ''' A custom sqlalchemy declarative Base '''
+    _schema = None
+    #: A list of fields (as strings) to be included in the ``__repr__```
+    print_fields = []
 
+    # def __new__(cls, *args, **kwargs):
+    #     global SCHEMA
+    #     print('new', args, kwargs, SCHEMA, cls._schema)
+    #     return super(BaseModel, cls).__new__(cls, *args, **kwargs)
 
+    def __repr__(self):
+        """A custom repr for models."""
 
+        reg = str(self.__class__.__name__)
+        if reg is not None:
+
+            fields = ['pk={0!r}'.format(self.get_id())]
+
+            for extra_field in ['label', 'name']:
+                if extra_field not in self.print_fields:
+                    self.print_fields.append(extra_field)
+
+            for ff in self.print_fields:
+                base, value = get_field(self, ff)
+                if base:
+                    fields.append('{0}={1!r}'.format(base, value))
+
+            return '<{0} ({1})>'.format(reg, ', '.join(fields))
+
+        return super(BaseModel, self).__repr__()
+
+    def get_id(self):
+        ''' get the pk '''
+        return self.pk if hasattr(self, 'pk') else None
+
+    # @declared_attr
+    # def __table_args__(cls):
+    #     return {'schema': SCHEMA}
+
+    # @classmethod
+    # def update_schema(cls, schema=None):
+    #     cls._schema = schema or SCHEMA
+
+    # @classmethod
+    # def _set_schema(cls, schema):
+    #     cls._schema = schema
+    #     # ta = cls.__table_args__.copy()
+    #     # ta.update({'schema': schema})
+    #     cls.__table_args__ = ta
+    #
+
+# class Schema(object):
+#     #_schema = SCHEMA
+#     global SCHEMA
+
+#     @declared_attr
+#     def __table_args__(cls):
+#         return {'schema': SCHEMA}
 
 
 
