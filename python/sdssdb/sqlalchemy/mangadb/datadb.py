@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:08
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-09 22:47:43
+# @Last Modified time: 2018-10-10 11:21:16
 
 from __future__ import absolute_import, division, print_function
 
@@ -17,43 +17,32 @@ from operator import eq, ge, gt, le, lt, ne
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import db, MangaBase#, sampledb
+from sdssdb.sqlalchemy.mangadb import MangaBase, db
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.engine import reflection
+from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.orm import deferred, relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.sql import column
 from sqlalchemy.types import Float, Integer, String
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr, DeclarativeMeta
 
-SCHEMA = 'mangadatadb'
-
-
-class Schema(object):
-    _schema = SCHEMA
+class Base(AbstractConcreteBase, MangaBase):
+    __abstract__ = True
+    _schema = 'mangadatadb'
 
     @declared_attr
     def __table_args__(cls):
         return {'schema': cls._schema}
 
-# class Schema(object):
-#     __table_args__ = {'schema': SCHEMA}
-
-Base = type('Base', (Schema, MangaBase,), {})
-
-#Base = MangaBase
-#Base = declarative_base(cls=(Schema, MangaBase,))
-#Base = (Schema, MangaBase)
 
 class ArrayOps(object):
     ''' this class adds array functionality '''
 
     __table__ = None
     __tablename__ = 'arrayops'
-    __table_args__ = {'extend_existing': True}
 
     @property
     def cols(self):
@@ -729,9 +718,6 @@ Cube.carts = relationship(Cart, secondary=CartToCube.__table__, backref="cubes")
 Cube.wcs = relationship(Wcs, backref='cube', uselist=False)
 Cube.shape = relationship(CubeShape, backref='cubes', uselist=False)
 Cube.obsinfo = relationship(ObsInfo, backref='cube', uselist=False)
-
-# from SampleDB
-#Cube.target = relationship(sampledb.MangaTarget, backref='cubes')
 
 Sample.cube = relationship(Cube, backref="sample", uselist=False)
 

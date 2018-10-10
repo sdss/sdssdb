@@ -6,22 +6,24 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:50
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-09 17:25:12
+# @Last Modified time: 2018-10-10 11:21:27
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
 
 import itertools
 import math
 import shutil
 
 import numpy as np
-
-from sqlalchemy import Float, ForeignKeyConstraint, case, cast, func
+from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, db
+from sqlalchemy import Float, ForeignKey, ForeignKeyConstraint, case, cast, func
+from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.inspection import inspect as sa_inspect
 from sqlalchemy.orm import backref, relationship
+from sqlalchemy.schema import Column
+from sqlalchemy.types import Integer
 
-from sdssdb.sqlalchemy.mangadb import db, MangaBase, datadb
 
 try:
     import cStringIO as StringIO
@@ -29,18 +31,17 @@ except ImportError:
     from io import StringIO
 
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr
-
 
 SCHEMA = 'mangasampledb'
 
 
-class Schema(object):
+class Base(AbstractConcreteBase, MangaBase):
+    __abstract__ = True
     _schema = SCHEMA
 
     @declared_attr
     def __table_args__(cls):
-        return ({'schema': cls._schema},)
+        return {'schema': cls._schema}
 
     @classmethod
     def add_constraints(cls, constraints):
@@ -50,10 +51,9 @@ class Schema(object):
 
         if cls.__table__.columns.keys():
             for con in constraints:
+                assert isinstance(con, ForeignKeyConstraint), 'constraint must be a ForeignKeyConstraint'
                 cls.__table__.append_constraint(con)
 
-
-Base = declarative_base(cls=(Schema, MangaBase,))
 
 # The softening parameter for asinh magnitudes
 bb = {'u': 1.4e-10,
@@ -67,8 +67,8 @@ class MangaTarget(Base):
     __tablename__ = 'manga_target'
     print_fields = ['mangaid']
 
-    #Cube.target = relationship(sampledb.MangaTarget, backref='cubes')
     cubes = relationship(datadb.Cube, backref='target')
+
 
 class Anime(Base):
     __tablename__ = 'anime'
@@ -116,9 +116,14 @@ class NSA(Base):
     __tablename__ = 'nsa'
     print_fields = ['nsaid']
 
+    catalogue_pk = Column(Integer, ForeignKey('mangasampledb.catalogue.pk'))
+
 
 class MangaTargetToNSA(Base):
     __tablename__ = 'manga_target_to_nsa'
+
+    nsa_pk = Column(Integer, ForeignKey('mangasampledb.nsa.pk'))
+    manga_target_pk = Column(Integer, ForeignKey('mangasampledb.manga_target.pk'))
 
 
 def HybridMag(flux_parameter, band, index=None):
@@ -260,11 +265,11 @@ NSA.mangaTargets = relationship(
     MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
 
 # Add ForeignKeyConstraints
-NSA.add_constraints(ForeignKeyConstraint(['catalogue_pk'], ['mangasampledb.catalogue.pk']))
+#NSA.add_constraints(ForeignKeyConstraint(['catalogue_pk'], ['mangasampledb.catalogue.pk']))
 
 fks = [ForeignKeyConstraint(['manga_target_pk'],['mangasampledb.manga_target.pk']),
        ForeignKeyConstraint(['nsa_pk'],['mangasampledb.nsa.pk'])]
-MangaTargetToNSA.add_constraints(fks)
+#MangaTargetToNSA.add_constraints(fks)
 
 
 
@@ -283,7 +288,27 @@ def ClassFactory(name, tableName, BaseClass=Base, fks=None):
 
     return newclass
 
-# Now we create the remaining tables.
+def add_catalogue(classname, tablename, has_manga_target=None):
+    ''' Add a catalogue model class and connect it to manga_target table '''
+
+    catfks = [('catalogue_pk', 'mangasampledb.catalogue.pk')]
+    new_class = ClassFactory(className, tablename, fks=catfks)
+    new_class.catalogue = relationship(Catalogue, backref='{0}_objects'.format(tablename))
+    globals()[classname] = new_class
+
+    if has_manga_target:
+        relfks = [('manga_target_pk', 'mangasampledb.manga_target.pk'),
+                  ('{0}_pk'.format(tablename), 'mangasampledb.{0}.pk'.format(tablename))]
+        relationalTableName = 'manga_target_to_{0}'.format(tablename)
+        relationalClassName = 'MangaTargetTo{0}'.format(tablename.upper())
+        new_relationalclass = ClassFactory(relationalClassName, relationalTableName,
+                                           fks=relfks)
+        globals()[relationalClassName] = new_relationalclass
+
+        new_class.mangaTargets = relationship(MangaTarget, backref='{0}_objects'.format(tablename),
+                                              secondary=new_relationalclass.__table__)
+
+# Now we create any remaining catalogue tables.
 insp = sa_inspect(db.engine)
 allTables = insp.get_table_names(schema=SCHEMA)
 
@@ -293,27 +318,12 @@ for tableName in allTables:
         continue
     className = str(tableName).upper()
 
-    newClass = ClassFactory(
-        className, tableName,
-        fks=[('catalogue_pk', 'mangasampledb.catalogue.pk')])
-    newClass.catalogue = relationship(
-        Catalogue, backref='{0}_objects'.format(tableName))
-    locals()[className] = newClass
+    # create a new catalogue model class and optional manga_target_to_catalogue relational model
+    relational_tablename = 'manga_target_to_{0}'.format(tableName)
+    has_manga_target = relational_tablename in allTables
+    add_catalogue(className, tableName, has_manga_target=has_manga_target)
+
+    # add catalog to list of dones
     done_names.append(SCHEMA + '.' + tableName)
-
-    if 'manga_target_to_' + tableName in allTables:
-        relationalTableName = 'manga_target_to_' + tableName
-        relationalClassName = 'MangaTargetTo' + tableName.upper()
-        newRelationalClass = ClassFactory(
-            relationalClassName, relationalTableName,
-            fks=[('manga_target_pk', 'mangasampledb.manga_target.pk'),
-                 ('nsa_pk', 'mangasampledb.nsa.pk')])
-
-        locals()[relationalClassName] = newRelationalClass
-        done_names.append(SCHEMA + '.' + relationalTableName)
-
-        newClass.mangaTargets = relationship(
-            MangaTarget, backref='{0}_objects'.format(tableName),
-            secondary=newRelationalClass.__table__)
-
-
+    if has_manga_target:
+        done_names.append(SCHEMA + '.' + relational_tablename)

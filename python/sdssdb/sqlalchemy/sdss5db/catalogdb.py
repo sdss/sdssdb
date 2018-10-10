@@ -6,28 +6,24 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:06:50
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-09 23:51:11
+# @Last Modified time: 2018-10-10 11:22:11
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5Base, db
+from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr
 
-SCHEMA = 'catalogdb'
-
-class Schema(object):
-    _schema = SCHEMA
+class Base(AbstractConcreteBase, SDSS5Base):
+    __abstract__ = True
+    _schema = 'catalogdb'
 
     @declared_attr
     def __table_args__(cls):
         return {'schema': cls._schema}
-
-
-Base = declarative_base(cls=(Schema, SDSS5Base,))
 
 
 class AllWise(Base):
@@ -194,4 +190,3 @@ class TwoMassPsc(Base):
 
 
 Base.prepare(db.engine)
-

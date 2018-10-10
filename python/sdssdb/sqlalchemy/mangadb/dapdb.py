@@ -6,32 +6,31 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:15
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-09 17:51:40
+# @Last Modified time: 2018-10-10 11:21:08
 
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import db, datadb, MangaBase
+from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, db
 from sqlalchemy import Column, Float, and_, case, cast, select
 from sqlalchemy.engine import reflection
+from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr
 
 SCHEMA = 'mangadapdb'
 
 
-class Schema(object):
+class Base(AbstractConcreteBase, MangaBase):
+    __abstract__ = True
     _schema = SCHEMA
 
     @declared_attr
     def __table_args__(cls):
         return {'schema': cls._schema}
-
-Base = declarative_base(cls=(Schema, MangaBase,))
 
 
 class File(Base):

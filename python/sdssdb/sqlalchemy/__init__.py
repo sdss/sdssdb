@@ -6,13 +6,9 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:02:19
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-09 12:48:00
+# @Last Modified time: 2018-10-10 11:23:02
 
 from __future__ import print_function, division, absolute_import
-
-from sqlalchemy.ext.declarative import declared_attr
-
-#SCHEMA = None
 
 
 def get_field(parent, child):
@@ -44,14 +40,9 @@ def get_field(parent, child):
 
 class BaseModel(object):
     ''' A custom sqlalchemy declarative Base '''
-    _schema = None
+
     #: A list of fields (as strings) to be included in the ``__repr__```
     print_fields = []
-
-    # def __new__(cls, *args, **kwargs):
-    #     global SCHEMA
-    #     print('new', args, kwargs, SCHEMA, cls._schema)
-    #     return super(BaseModel, cls).__new__(cls, *args, **kwargs)
 
     def __repr__(self):
         """A custom repr for models."""
@@ -77,32 +68,6 @@ class BaseModel(object):
     def get_id(self):
         ''' get the pk '''
         return self.pk if hasattr(self, 'pk') else None
-
-    # @declared_attr
-    # def __table_args__(cls):
-    #     return {'schema': SCHEMA}
-
-    # @classmethod
-    # def update_schema(cls, schema=None):
-    #     cls._schema = schema or SCHEMA
-
-    # @classmethod
-    # def _set_schema(cls, schema):
-    #     cls._schema = schema
-    #     # ta = cls.__table_args__.copy()
-    #     # ta.update({'schema': schema})
-    #     cls.__table_args__ = ta
-    #
-
-# class Schema(object):
-#     #_schema = SCHEMA
-#     global SCHEMA
-
-#     @declared_attr
-#     def __table_args__(cls):
-#         return {'schema': SCHEMA}
-
-
 
 
 
