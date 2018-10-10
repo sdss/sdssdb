@@ -28,5 +28,15 @@ jhu:
     port: 5432
     domain: jhu.edu
 
+sdssadmin:
+    user: sdss
+    host: sdssadmin
+    port: 5432
+    domain: sdssadmin.wasatch.peaks
 
+manga:
+    user: sdss
+    host: manga.wasatch.peaks
+    port: 5432
+    domain: manga.wasatch.peaks
 
