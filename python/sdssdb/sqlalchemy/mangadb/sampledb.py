@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:50
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-10 11:21:27
+# @Last Modified time: 2018-10-10 16:04:08
 
 from __future__ import absolute_import, division, print_function
 
@@ -15,7 +15,7 @@ import math
 import shutil
 
 import numpy as np
-from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, db
 from sqlalchemy import Float, ForeignKey, ForeignKeyConstraint, case, cast, func
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
@@ -29,7 +29,6 @@ try:
     import cStringIO as StringIO
 except ImportError:
     from io import StringIO
-
 
 
 SCHEMA = 'mangasampledb'
@@ -66,8 +65,6 @@ bb = {'u': 1.4e-10,
 class MangaTarget(Base):
     __tablename__ = 'manga_target'
     print_fields = ['mangaid']
-
-    cubes = relationship(datadb.Cube, backref='target')
 
 
 class Anime(Base):
@@ -264,13 +261,9 @@ Base.prepare(db.engine)
 NSA.mangaTargets = relationship(
     MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
 
-# Add ForeignKeyConstraints
-#NSA.add_constraints(ForeignKeyConstraint(['catalogue_pk'], ['mangasampledb.catalogue.pk']))
-
-fks = [ForeignKeyConstraint(['manga_target_pk'],['mangasampledb.manga_target.pk']),
-       ForeignKeyConstraint(['nsa_pk'],['mangasampledb.nsa.pk'])]
-#MangaTargetToNSA.add_constraints(fks)
-
+#
+# This section still needs work and does not quite work yet.
+#
 
 
 # class factory
@@ -287,6 +280,7 @@ def ClassFactory(name, tableName, BaseClass=Base, fks=None):
         newclass.add_constraints(tableArgs)
 
     return newclass
+
 
 def add_catalogue(classname, tablename, has_manga_target=None):
     ''' Add a catalogue model class and connect it to manga_target table '''
