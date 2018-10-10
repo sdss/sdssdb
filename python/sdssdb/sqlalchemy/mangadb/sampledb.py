@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:50
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-10 16:04:08
+# @Last Modified time: 2018-10-10 16:07:58
 
 from __future__ import absolute_import, division, print_function
 
@@ -43,8 +43,17 @@ class Base(AbstractConcreteBase, MangaBase):
         return {'schema': cls._schema}
 
     @classmethod
-    def add_constraints(cls, constraints):
-        ''' add foreign key constraints '''
+    def add_table_constraints(cls, constraints):
+        ''' Add foreign key constraints
+
+        Appends foreign key constraints to the underlying db table
+
+        Parameters:
+            constraints (list):
+                A list of ForeignKeyConstraints to add to the table
+
+        '''
+
         if not isinstance(constraints, (list, tuple)):
             constraints = [constraints]
 
@@ -277,7 +286,7 @@ def ClassFactory(name, tableName, BaseClass=Base, fks=None):
     newclass = type(name, (BaseClass,), {'__tablename__': tableName})
     # add any constraints
     if fks:
-        newclass.add_constraints(tableArgs)
+        newclass.add_table_constraints(tableArgs)
 
     return newclass
 
