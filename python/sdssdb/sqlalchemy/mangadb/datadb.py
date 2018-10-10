@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:08
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-10 11:21:16
+# @Last Modified time: 2018-10-10 14:43:05
 
 from __future__ import absolute_import, division, print_function
 
@@ -17,7 +17,7 @@ from operator import eq, ge, gt, le, lt, ne
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import MangaBase, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, db, sampledb
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.engine import reflection
@@ -29,9 +29,12 @@ from sqlalchemy.sql import column
 from sqlalchemy.types import Float, Integer, String
 
 
+SCHEMA = 'mangadatadb'
+
+
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
-    _schema = 'mangadatadb'
+    _schema = SCHEMA
 
     @declared_attr
     def __table_args__(cls):
@@ -186,6 +189,9 @@ class Cube(ArrayOps, Base):
     specresd = deferred(Column(ARRAY(Float, zero_indexes=True)))
     prespecres = deferred(Column(ARRAY(Float, zero_indexes=True)))
     prespecresd = deferred(Column(ARRAY(Float, zero_indexes=True)))
+
+    target = relationship(sampledb.MangaTarget, backref='cubes')
+    carts = relationship('Cart', secondary='{0}.cart_to_cube'.format(SCHEMA), backref="cubes")
 
     @property
     def header(self):
@@ -714,7 +720,7 @@ db.prepare_base(Base)
 Cube.pipelineInfo = relationship(PipelineInfo, backref="cubes")
 Cube.wavelength = relationship(Wavelength, backref="cube")
 Cube.ifu = relationship(IFUDesign, backref="cubes")
-Cube.carts = relationship(Cart, secondary=CartToCube.__table__, backref="cubes")
+#Cube.carts = relationship(Cart, secondary=CartToCube.__table__, backref="cubes")
 Cube.wcs = relationship(Wcs, backref='cube', uselist=False)
 Cube.shape = relationship(CubeShape, backref='cubes', uselist=False)
 Cube.obsinfo = relationship(ObsInfo, backref='cube', uselist=False)
