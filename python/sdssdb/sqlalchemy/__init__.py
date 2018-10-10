@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:02:19
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-10 11:23:02
+# @Last Modified time: 2018-10-10 16:38:45
 
 from __future__ import print_function, division, absolute_import
 
@@ -39,7 +39,13 @@ def get_field(parent, child):
 
 
 class BaseModel(object):
-    ''' A custom sqlalchemy declarative Base '''
+    ''' A custom sqlalchemy declarative Base
+
+    By default it always prints ``pk``, ``name``, and ``label``, if found.
+    Models can define they own `.print_fields` as a list of field to be output
+    in the representation.  Works with field names nested inside other models as well.
+
+    '''
 
     #: A list of fields (as strings) to be included in the ``__repr__```
     print_fields = []

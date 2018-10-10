@@ -14,7 +14,7 @@ Introduction
 
 A description of the package can go here.
 
-* :ref:`What's new in sdssdb? <changelog>`
+* :ref:`What's new in sdssdb? <CHANGELOG>`
 * :ref:`Introduction to sdssdb <intro>`
 
 Reference

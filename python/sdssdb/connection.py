@@ -36,7 +36,7 @@ except ImportError:
     _sqla = False
 
 
-__all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection']
+__all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
 
 
 class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
@@ -255,6 +255,8 @@ if _peewee:
 if _sqla:
 
     class SQLADatabaseConnection(DatabaseConnection):
+        ''' SQLAlchemy database connection implementation '''
+
         engine = None
         base = None
         Session = None
@@ -270,7 +272,17 @@ if _sqla:
             return self._connect_params
 
         def _get_password(self, **params):
-            ''' Get a db password from a pgpass file'''
+            ''' Get a db password from a pgpass file
+
+            Parameters:
+                params (dict):
+                    A dictionary of database connection parameters
+
+            Returns:
+                The database password for a given set of connection parameters
+
+            '''
+
             password = params.get('password', None)
             if not password:
                 try:
@@ -280,7 +292,19 @@ if _sqla:
             return password
 
         def _make_connection_string(self, dbname, **params):
-            ''' Build a db connection string '''
+            ''' Build a db connection string
+
+            Parameters:
+                dbname (str):
+                    The name of the database to connect to
+                params (dict):
+                    A dictionary of database connection parameters
+
+            Returns:
+                A database connection string
+
+            '''
+
             if self.profile == 'local':
                 db_connection_string = "postgresql+psycopg2:///{0}".format(dbname)
             else:
@@ -322,7 +346,12 @@ if _sqla:
 
         def create_engine(self, db_connection_string=None, echo=False, pool_size=10, pool_recycle=1800,
                           expire_on_commit=True):
-            ''' Create a new database engine '''
+            ''' Create a new database engine
+
+            Resets and creates a new sqlalchemy database engine.  Also creates and binds
+            engine metadata and a new scoped session.
+
+            '''
 
             self.reset_engine()
 
@@ -336,7 +365,12 @@ if _sqla:
                                                        expire_on_commit=expire_on_commit))
 
         def prepare_base(self, base=None):
-            ''' Prepare a Model Base '''
+            ''' Prepare a Model Base
+
+            Prepares a SQLalchemy Base for reflection.  This binds a database engine
+            to a specific Base which maps to a set of ModelClasses
+
+            '''
 
             base = base or self.base
             if base:
