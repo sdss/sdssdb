@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:15
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-08 19:16:54
+# @Last Modified time: 2018-10-09 17:51:40
 
 from __future__ import absolute_import, division, print_function
 
@@ -19,13 +19,10 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr, as_declarative
-from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
-from sdssdb.sqlalchemy import BaseModel
-
-#MangaBase = declarative_base(cls=(DeferredReflection, BaseModel,))
+from sqlalchemy.ext.declarative import declarative_base, declared_attr
 
 SCHEMA = 'mangadapdb'
+
 
 class Schema(object):
     _schema = SCHEMA
@@ -36,29 +33,6 @@ class Schema(object):
 
 Base = declarative_base(cls=(Schema, MangaBase,))
 
-#Base = declarative_base(cls=(DataBase, MangaBase,))
-#SCHEMA = 'mangadatadb'
-
-# class DapBase(object):
-#     _schema = SCHEMA
-
-#     @declared_attr
-#     def __table_args__(cls):
-#         return {'schema': cls._schema}
-
-# @as_declarative(cls=MangaBase)
-# class Base(object):
-#     _schema = 'mangadapdb'
-
-#     @declared_attr
-#     def __table_args__(cls):
-#         return {'schema': cls._schema}
-
-
-#Base = declarative_base(cls=(DapBase, MangaBase,))
-#MangaBase._set_schema(SCHEMA)
-#MangaBase.update_schema(SCHEMA)
-#Base = MangaBase
 
 class File(Base):
     __tablename__ = 'file'

@@ -257,11 +257,11 @@ if _sqla:
     class SQLADatabaseConnection(DatabaseConnection):
         engine = None
         base = None
+        Session = None
+        metadata = None
 
         def __init__(self, *args, **kwargs):
             DatabaseConnection.__init__(self, *args, **kwargs)
-            self.metadata = None
-            self.Session = None
 
         @property
         def connection_params(self):

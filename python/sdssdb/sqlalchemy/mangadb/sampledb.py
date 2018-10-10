@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:50
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-08 19:20:12
+# @Last Modified time: 2018-10-09 17:25:12
 
 from __future__ import print_function, division, absolute_import
 
@@ -21,7 +21,7 @@ from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.inspection import inspect as sa_inspect
 from sqlalchemy.orm import backref, relationship
 
-from sdssdb.sqlalchemy.mangadb import db, MangaBase
+from sdssdb.sqlalchemy.mangadb import db, MangaBase, datadb
 
 try:
     import cStringIO as StringIO
@@ -40,7 +40,17 @@ class Schema(object):
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return ({'schema': cls._schema},)
+
+    @classmethod
+    def add_constraints(cls, constraints):
+        ''' add foreign key constraints '''
+        if not isinstance(constraints, (list, tuple)):
+            constraints = [constraints]
+
+        if cls.__table__.columns.keys():
+            for con in constraints:
+                cls.__table__.append_constraint(con)
 
 
 Base = declarative_base(cls=(Schema, MangaBase,))
@@ -53,24 +63,12 @@ bb = {'u': 1.4e-10,
       'z': 7.4e-10}
 
 
-def ClassFactory(name, tableName, BaseClass=Base, fks=None):
-    tableArgs = [{'autoload': True, 'schema': 'mangasampledb'}]
-    if fks:
-        for fk in fks:
-            tableArgs.insert(0, ForeignKeyConstraint([fk[0]], [fk[1]]))
-
-    newclass = type(
-        name, (BaseClass,),
-        {'__tablename__': tableName,
-         '__table_args__': tuple(tableArgs)})
-
-    return newclass
-
-
 class MangaTarget(Base):
     __tablename__ = 'manga_target'
     print_fields = ['mangaid']
 
+    #Cube.target = relationship(sampledb.MangaTarget, backref='cubes')
+    cubes = relationship(datadb.Cube, backref='target')
 
 class Anime(Base):
     __tablename__ = 'anime'
@@ -117,57 +115,10 @@ class MangaTargetToMangaTarget(Base):
 class NSA(Base):
     __tablename__ = 'nsa'
     print_fields = ['nsaid']
-    __table_args__ = (
-        ForeignKeyConstraint(['catalogue_pk'], ['mangasampledb.catalogue.pk']),
-        {'autoload': True, 'schema': 'mangasampledb'})
 
 
 class MangaTargetToNSA(Base):
     __tablename__ = 'manga_target_to_nsa'
-    __table_args__ = (
-        ForeignKeyConstraint(['manga_target_pk'],
-                             ['mangasampledb.manga_target.pk']),
-        ForeignKeyConstraint(['nsa_pk'], ['mangasampledb.nsa.pk']),
-        {'autoload': True, 'schema': 'mangasampledb'})
-
-
-# Relationship between NSA and MangaTarget
-NSA.mangaTargets = relationship(
-    MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
-
-# Now we create the remaining tables.
-insp = sa_inspect(db.engine)
-schemaName = 'mangasampledb'
-allTables = insp.get_table_names(schema=schemaName)
-
-done_names = list(db.Base.metadata.tables.keys())
-for tableName in allTables:
-    if schemaName + '.' + tableName in done_names:
-        continue
-    className = str(tableName).upper()
-
-    newClass = ClassFactory(
-        className, tableName,
-        fks=[('catalogue_pk', 'mangasampledb.catalogue.pk')])
-    newClass.catalogue = relationship(
-        Catalogue, backref='{0}_objects'.format(tableName))
-    locals()[className] = newClass
-    done_names.append(schemaName + '.' + tableName)
-
-    if 'manga_target_to_' + tableName in allTables:
-        relationalTableName = 'manga_target_to_' + tableName
-        relationalClassName = 'MangaTargetTo' + tableName.upper()
-        newRelationalClass = ClassFactory(
-            relationalClassName, relationalTableName,
-            fks=[('manga_target_pk', 'mangasampledb.manga_target.pk'),
-                 ('nsa_pk', 'mangasampledb.nsa.pk')])
-
-        locals()[relationalClassName] = newRelationalClass
-        done_names.append(schemaName + '.' + relationalTableName)
-
-        newClass.mangaTargets = relationship(
-            MangaTarget, backref='{0}_objects'.format(tableName),
-            secondary=newRelationalClass.__table__)
 
 
 def HybridMag(flux_parameter, band, index=None):
@@ -303,5 +254,66 @@ setattr(NSA, 'sersic_logmass', logmass('sersic_mass'))
 
 
 Base.prepare(db.engine)
+
+# Relationship between NSA and MangaTarget
+NSA.mangaTargets = relationship(
+    MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
+
+# Add ForeignKeyConstraints
+NSA.add_constraints(ForeignKeyConstraint(['catalogue_pk'], ['mangasampledb.catalogue.pk']))
+
+fks = [ForeignKeyConstraint(['manga_target_pk'],['mangasampledb.manga_target.pk']),
+       ForeignKeyConstraint(['nsa_pk'],['mangasampledb.nsa.pk'])]
+MangaTargetToNSA.add_constraints(fks)
+
+
+
+# class factory
+def ClassFactory(name, tableName, BaseClass=Base, fks=None):
+    tableArgs = []
+    if fks:
+        for fk in fks:
+            tableArgs.insert(0, ForeignKeyConstraint([fk[0]], [fk[1]]))
+
+    # define new class
+    newclass = type(name, (BaseClass,), {'__tablename__': tableName})
+    # add any constraints
+    if fks:
+        newclass.add_constraints(tableArgs)
+
+    return newclass
+
+# Now we create the remaining tables.
+insp = sa_inspect(db.engine)
+allTables = insp.get_table_names(schema=SCHEMA)
+
+done_names = list(Base.metadata.tables.keys())
+for tableName in allTables:
+    if SCHEMA + '.' + tableName in done_names:
+        continue
+    className = str(tableName).upper()
+
+    newClass = ClassFactory(
+        className, tableName,
+        fks=[('catalogue_pk', 'mangasampledb.catalogue.pk')])
+    newClass.catalogue = relationship(
+        Catalogue, backref='{0}_objects'.format(tableName))
+    locals()[className] = newClass
+    done_names.append(SCHEMA + '.' + tableName)
+
+    if 'manga_target_to_' + tableName in allTables:
+        relationalTableName = 'manga_target_to_' + tableName
+        relationalClassName = 'MangaTargetTo' + tableName.upper()
+        newRelationalClass = ClassFactory(
+            relationalClassName, relationalTableName,
+            fks=[('manga_target_pk', 'mangasampledb.manga_target.pk'),
+                 ('nsa_pk', 'mangasampledb.nsa.pk')])
+
+        locals()[relationalClassName] = newRelationalClass
+        done_names.append(SCHEMA + '.' + relationalTableName)
+
+        newClass.mangaTargets = relationship(
+            MangaTarget, backref='{0}_objects'.format(tableName),
+            secondary=newRelationalClass.__table__)
 
 

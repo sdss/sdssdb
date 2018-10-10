@@ -6,7 +6,7 @@
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:08
 # @Last modified by:   Brian Cherinka
-# @Last Modified time: 2018-10-08 19:18:18
+# @Last Modified time: 2018-10-09 22:47:43
 
 from __future__ import absolute_import, division, print_function
 
@@ -17,7 +17,7 @@ from operator import eq, ge, gt, le, lt, ne
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import db, MangaBase#, db#, sampledb
+from sdssdb.sqlalchemy.mangadb import db, MangaBase#, sampledb
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.engine import reflection
@@ -27,7 +27,7 @@ from sqlalchemy.schema import Column
 from sqlalchemy.sql import column
 from sqlalchemy.types import Float, Integer, String
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr
+from sqlalchemy.ext.declarative import declarative_base, declared_attr, DeclarativeMeta
 
 SCHEMA = 'mangadatadb'
 
@@ -39,8 +39,14 @@ class Schema(object):
     def __table_args__(cls):
         return {'schema': cls._schema}
 
-Base = declarative_base(cls=(Schema, MangaBase,))
+# class Schema(object):
+#     __table_args__ = {'schema': SCHEMA}
 
+Base = type('Base', (Schema, MangaBase,), {})
+
+#Base = MangaBase
+#Base = declarative_base(cls=(Schema, MangaBase,))
+#Base = (Schema, MangaBase)
 
 class ArrayOps(object):
     ''' this class adds array functionality '''
@@ -183,7 +189,7 @@ class ArrayOps(object):
         return indices
 
 
-class Cube(Base, ArrayOps):
+class Cube(ArrayOps, Base):
     __tablename__ = 'cube'
     print_fields = ['plateifu', 'pipelineInfo.version.version']
 
@@ -421,7 +427,7 @@ class Wavelength(Base):
         return '<Wavelength (pk={0})>'.format(self.pk)
 
 
-class Spaxel(Base, ArrayOps):
+class Spaxel(ArrayOps, Base):
     __tablename__ = 'spaxel'
     print_fields = ['x', 'y']
 
@@ -441,7 +447,7 @@ class Spaxel(Base, ArrayOps):
         return select([func.sum(column('totalflux'))]).select_from(func.unnest(cls.flux).alias('totalflux'))
 
 
-class RssFiber(Base, ArrayOps):
+class RssFiber(ArrayOps, Base):
     __tablename__ = 'rssfiber'
     print_fields = ['exposure_no', 'mjd', 'fiber.fiberid']
 
