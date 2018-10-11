@@ -29,6 +29,7 @@ except ImportError:
 
 try:
     from sqlalchemy import create_engine, MetaData
+    from sqlalchemy.engine import url
     from sqlalchemy.exc import OperationalError as OpError
     from sqlalchemy.orm import sessionmaker, scoped_session
     _sqla = True
@@ -195,7 +196,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'The DB may be disconnected.')
 
         dsn_params['user'] = user
-        dbname = self.database
+        dbname = self.dbname
         self.connect_from_parameters(dbname, **dsn_params)
 
     def become_admin(self):
@@ -263,6 +264,7 @@ if _sqla:
         metadata = None
 
         def __init__(self, *args, **kwargs):
+            self._connect_params = None
             DatabaseConnection.__init__(self, *args, **kwargs)
 
         @property
@@ -286,7 +288,8 @@ if _sqla:
             password = params.get('password', None)
             if not password:
                 try:
-                    password = getpass(params['host'], params['port'], params['database'], params['user'])
+                    password = getpass(params['host'], params['port'], params['database'],
+                                       params['username'])
                 except KeyError as e:
                     raise RuntimeError('ERROR: invalid server configuration')
             return password
@@ -305,12 +308,15 @@ if _sqla:
 
             '''
 
-            if self.profile == 'local':
-                db_connection_string = "postgresql+psycopg2:///{0}".format(dbname)
-            else:
-                params['database'] = dbname
-                params['password'] = self._get_password(**params)
-                db_connection_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'.format(**params)
+            db_params = params.copy()
+            db_params['drivername'] = 'postgresql+psycopg2'
+            db_params['database'] = dbname
+            db_params['username'] = db_params.pop('user', None)
+            db_params['host'] = db_params.pop('host', 'localhost')
+            db_params['port'] = db_params.pop('port', 5432)
+            if db_params['username']:
+                db_params['password'] = self._get_password(**db_params)
+            db_connection_string = url.URL(**db_params)
             self._connect_params = params
             return db_connection_string
 

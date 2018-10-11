@@ -12,9 +12,7 @@ This is the Sphinx documentation for the SDSS Python product sdssdb
 Introduction
 ------------
 
-A description of the package can go here.
-
-* :ref:`What's new in sdssdb? <CHANGELOG>`
+* :ref:`What's new in sdssdb? <sdssdb-changelog>`
 * :ref:`Introduction to sdssdb <intro>`
 
 Reference
