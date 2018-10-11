@@ -4,11 +4,7 @@
 Introduction to sdssdb
 ===============================
 
-``sdssdb`` provides general utilities and functionality for connecting to all SDSS databases.  For now, ``sdssdb`` supports two Python ORM libraries for mapping between database tables and Python classess:  `Peewee <http://docs.peewee-orm.com/en/latest/>`_ and `SQLAlchemy <https://www.sqlalchemy.org/>`_.  The package hiearchy is organized as:
-
-* mapping library
-    * database name
-        * schema modelclass .py file
+``sdssdb`` provides general utilities and functionality for connecting to all SDSS databases.  For now, ``sdssdb`` supports two Python ORM libraries for mapping between database tables and Python classess:  `Peewee <http://docs.peewee-orm.com/en/latest/>`_ and `SQLAlchemy <https://www.sqlalchemy.org/>`_.
 
 
 Supported Databases and Schema/Models
@@ -113,5 +109,13 @@ Some databases have been prepared ahead of time to facilitiate immediate queryin
     gaia = session.query(catalogdb.GaiaSource).first()
 
 
+Adding your own database connection
+-----------------------------------
+
+The package hiearchy is organized as:
+
+* mapping library
+    * database name
+        * schema modelclass .py file
 
 
