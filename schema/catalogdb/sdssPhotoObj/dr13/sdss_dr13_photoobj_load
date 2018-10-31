@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+
+ls $CATALOGDB_DIR/sdssPhotoObj/dr13/prepCSV/*.csv | parallel -j25 "psql -U sdss sdss5db -c '\copy catalogdb.sdss_dr13_photoobj FROM {} WITH CSV HEADER;'"

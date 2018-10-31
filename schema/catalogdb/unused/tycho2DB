@@ -1,0 +1,7 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+# run with source (pgpass works in that case)
+
+#SCN in one file
+psql -h db.sdss.utah.edu -U sdssdb_admin -p 5432 sdss5db -c "COPY catalogdb.tycho2 FROM '/scratch/general/lustre/u0449727/tycho2/modcat.dat' WITH DELIMITER '|' NULL 'NULL' CSV;"

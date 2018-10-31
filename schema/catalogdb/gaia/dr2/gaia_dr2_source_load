@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+
+ls $CATALOGDB_DIR/gaia/dr2/src/*.csv.gz | parallel -j25 "psql -U sdss sdss5db -c \"\copy catalogdb.gaia_dr2_source FROM program 'zcat {}' WITH CSV HEADER;\""
