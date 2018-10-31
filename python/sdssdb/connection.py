@@ -6,8 +6,8 @@
 # @Filename: database.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
-# @Last modified by:   Brian Cherinka
-# @Last modified time: 2018-09-22 16:03:03
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
+# @Last modified time: 2018-10-31 10:51:20
 
 
 from __future__ import absolute_import, division, print_function
@@ -16,9 +16,9 @@ import abc
 import socket
 
 import six
+from pgpasslib import getpass
 
 from sdssdb import config, log
-from pgpasslib import getpass
 
 
 try:
@@ -290,7 +290,7 @@ if _sqla:
                 try:
                     password = getpass(params['host'], params['port'], params['database'],
                                        params['username'])
-                except KeyError as e:
+                except KeyError:
                     raise RuntimeError('ERROR: invalid server configuration')
             return password
 
@@ -350,8 +350,8 @@ if _sqla:
                 self.Session.close()
                 self.Session = None
 
-        def create_engine(self, db_connection_string=None, echo=False, pool_size=10, pool_recycle=1800,
-                          expire_on_commit=True):
+        def create_engine(self, db_connection_string=None, echo=False, pool_size=10,
+                          pool_recycle=1800, expire_on_commit=True):
             ''' Create a new database engine
 
             Resets and creates a new sqlalchemy database engine.  Also creates and binds
@@ -363,9 +363,11 @@ if _sqla:
 
             if not db_connection_string:
                 dbname = self.dbname or self.DATABASE_NAME
-                db_connection_string = self._make_connection_string(dbname, **self.connection_params)
+                db_connection_string = self._make_connection_string(dbname,
+                                                                    **self.connection_params)
 
-            self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size, pool_recycle=pool_recycle)
+            self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size,
+                                        pool_recycle=pool_recycle)
             self.metadata = MetaData(bind=self.engine)
             self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
                                                        expire_on_commit=expire_on_commit))
@@ -381,9 +383,3 @@ if _sqla:
             base = base or self.base
             if base:
                 base.prepare(self.engine)
-
-
-
-
-
-
