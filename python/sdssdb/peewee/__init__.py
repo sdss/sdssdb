@@ -1,112 +1,88 @@
-#!/usr/bin/env python
-# encoding: utf-8
-#
-# @Authors: José Sánchez-Gallego, Jennifer Sobeck
-# @Notes: Copy from Observesim/db; Modifications to come
-# @Date: August 2018
-# @Filename: __init__.py
-# @License: BSD 3-Clause
-# @Copyright: José Sánchez-Gallego
+# flake8: noqa
+
+from peewee import Model, fn
+from playhouse.hybrid import hybrid_method
 
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import absolute_import
+class BaseModel(Model):
+    """A custom peewee `.Model` with enhanced representation and methods.
 
-import socket
-import warnings
-
-from peewee import PostgresqlDatabase, OperationalError
-
-from observesim import log, config
-
-
-__all__ = ['database', 'DatabaseConnection']
-
-
-class DatabaseConnection(PostgresqlDatabase):
-    """Customised `PostgresqlDatabase` connection.
-
-    If ``autoconnect=True``, tries to determine the correct connection
-    parameters based on the hostname. If a valid connection cannot be
-    established, a null connection will be created. Connections can be
-    (re-)initiated using the `.connect_from_parameters` method.
-
-    Alternatively, a ``profile`` name can be passed, that must mach and entry
-    in the configuration file under the ``database`` section.
+    By default it always prints ``pk``, ``name``, and ``label``, if found.
+    Models can define they own `.print_fields` as a list of field to be output
+    in the representation.
 
     """
 
-    def __init__(self, autoconnect=True, profile=None):
+    #: A list of fields (as strings) to be included in the ``__repr__```
+    print_fields = []
 
-        super(DatabaseConnection, self).__init__(None)
-        self.connected = False
+    def __repr__(self):
+        """A custom repr for targetdb models."""
 
-        if autoconnect:
+        reg = re.match('.*\'.*.(.*)\'.', str(self.__class__))
 
-            log.debug('autoconnecting to database ...')
+        if reg is not None:
 
-            hostname = socket.getfqdn()
-            if hostname.endswith('sdss.org') or hostname.endswith('utah.edu'):
-                profile = 'utah'
-                log.debug(f'found a Utah hostname. Trying {profile!r} profile')
-                self.connect_from_config(profile)
-            else:
-                for profile in sorted(config['database'].keys()):
-                    log.debug(f'trying profile {profile!r}')
-                    self.connect_from_config(profile, warn_on_fail=False)
-                    if self.connected is True:
-                        log.info(f'connected to database {self.database!r} '
-                                 f'using profile {profile!r}')
-                        return
-                    else:
-                        log.debug(f'failed to connect with profile {profile!r}')
+            fields = ['pk={0!r}'.format(self.get_id())]
 
-        if profile:
-            self.connect_from_config(profile)
+            for extra_field in ['label']:
+                if extra_field not in self.print_fields:
+                    self.print_fields.append(extra_field)
 
-    def _test_connection(self, warn_on_fail=None):
-        """Checks whether the connection is correct."""
+            for ff in self.print_fields:
+                if hasattr(self, ff):
+                    fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
 
-        try:
-            self.connect()
-            self.connected = True
-        except OperationalError:
+            return '<{0}: {1}>'.format(reg.group(1), ', '.join(fields))
 
-            if warn_on_fail in (None, True):
-                warnings.warn('failed to connect to database {0}. '
-                              'Setting database to None.'.format(self.database),
-                              UserWarning)
-                self.init(None)
-                self.connected = False
+        return super(BaseModel, self).__repr__()
 
-    def connect_from_config(self, profile, warn_on_fail=None):
-        """Initialises the database from the config file."""
+    @hybrid_method
+    def cone_search(self, ra, dec, a, b=None, pa=None):
+        """Returns a query with the rows inside a region on the sky."""
 
-        db_configuration = config['database'][profile].copy()
+        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+            'this model class does not have ra/dec columns.'
 
-        dbname = db_configuration.pop('dbname')
-        self.init(dbname, **db_configuration)
-        self._test_connection(warn_on_fail=warn_on_fail)
+        if b is None:
+            return fn.q3c_radial_query(self.ra, self.dec, ra, dec, a)
+        else:
+            pa = pa or 0.0
+            ratio = b / a
+            return fn.q3c_ellipse_query(self.ra, self.dec, ra, dec, a, ratio, pa)
 
-    def connect_from_parameters(self, dbname, **params):
-        """Initialises the database from parameters. See `psycopg2.connect`."""
+    @cone_search.expression
+    def cone_search(cls, ra, dec, a, b=None, pa=None):
+        """Returns a query with the rows inside a region on the sky.
 
-        self.init(dbname, **params)
-        self._test_connection()
+        Defines a sky ellipse and returns the targets within. Assumes that the
+        table contains two columns ``ra`` and ``dec``. All units are assumed
+        to be degrees.
 
-    def check_connection(self):
-        """Checks whether the connection is open or can be connected."""
+        Parameters
+        ----------
+        ra : float
+            The R.A. of the centre of the ellipse.
+        dec : float
+            The declination of the centre of the ellipse.
+        a : float
+            Defines the semi-major axis of the ellipse for the cone search. If
+            ``b=None``, a circular search will be done with ``a`` as the
+            radius.
+        b : `float` or `None`
+            The semi-minor axis of the ellipse. If `None`, a circular cone
+            search will be run. In that case, ``pa`` is ignored.
+        pa : `float` or `None`
+            The parallactic angle of the ellipse.
 
-        if self.connected and self.get_conn().closed == 0:
-            return True
+        """
 
-        try:
-            self.connect()
-            self.connected = True
-            return True
-        except OperationalError:
-            return False
+        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+            'this model class does not have ra/dec columns.'
 
-
-database = DatabaseConnection()
+        if b is None:
+            return fn.q3c_radial_query(cls.ra, cls.dec, ra, dec, a)
+        else:
+            pa = pa or 0.0
+            ratio = b / a
+            return fn.q3c_ellipse_query(cls.ra, cls.dec, ra, dec, a, ratio, pa)
