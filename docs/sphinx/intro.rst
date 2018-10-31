@@ -27,13 +27,16 @@ Supported Databases and Schema/Models
 Supported Profiles
 ------------------
 
-* **localhost** - a generic localhost profile
+The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.sdssdb/sdssdb.yml``.
+
+* **local** - a generic localhost profile. Used if the hostname does not match any other profile.
 * **apo** - a user on the APO machines
 * **lco** - a user on the LCO machines
 * **manga** - a user on the Utah manga machine
 * **sdssadmin** - a user on the Utah sdssadmin machine
 * **lore** - a user on the Utah lore machine
 
+.. _conn-db:
 
 Connecting to a Database
 ------------------------
@@ -41,11 +44,13 @@ Connecting to a Database
 There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatabaseConnection``, one for each mapping library. Each database connection has two keyword arguments: a user/machine profile, a database name.  The connection will automatically attempt to connect to the specified database with the profile unless the ``autoconnect`` keyword is set to `False`.
 ::
 
-    # load a database connection with the Utah manga machine profile and connect to the manga database
+    # load a database connection with the Utah manga machine profile and connect to the manga database. To create a Peewee conenction replace with PeeweeDatabaseConnection.
     from sdssdb.connection import SQLADatabaseConnection
-    db = SQLADatabaseConnection('manga', dbname='manga')
+    db = SQLADatabaseConnection(profile='manga', dbname='manga')
 
-You can switch to other databases on using the same profile.
+If you don't specify a ``profile``, the database connection will try to use the profile that matches your current hostname or will fallback to the ``local`` profile.
+
+You can switch to other databases while using the same profile.
 ::
 
     # switch/connect to separate database
@@ -92,7 +97,7 @@ If you connect to a different database, you must recreate the database session.
 Prepared Database Connections
 -----------------------------
 
-Some databases have been prepared ahead of time to facilitiate immediate querying.  We can access both the models and a connection for a database by importing them both together.   Let's access and query from catalogdb on the sdss5 database on the Utah sdssadmin machine.
+Some databases have been prepared ahead of time to facilitate immediate querying.  We can access both the models and a connection for a database by importing them both together.   Let's access and query from catalogdb on the sdss5 database on the Utah sdssadmin machine.
 ::
 
     # import the db and models for catalogdb
@@ -117,5 +122,3 @@ The package hiearchy is organized as:
 * mapping library
     * database name
         * schema modelclass .py file
-
-
