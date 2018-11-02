@@ -77,7 +77,7 @@ class BaseModel(Model):
 
         """
 
-        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+        assert hasattr(cls, 'ra') and hasattr(cls, 'dec'), \
             'this model class does not have ra/dec columns.'
 
         if b is None:
