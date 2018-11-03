@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-10-31 10:51:20
+# @Last modified time: 2018-11-02 22:20:51
 
 
 from __future__ import absolute_import, division, print_function
@@ -118,7 +118,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         pass
 
-    def connect(self, dbname=None, profile=None):
+    def connect(self, dbname=None, profile=None, silent_on_fail=False):
         """Initialises the database from a profile in the config file.
         Parameters
         ----------
@@ -126,6 +126,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             The database name. If `None`, defaults to `.DATABASE_NAME`.
         profile : `str` or `None`
             The connection profile to use. If `None`, uses the default profile.
+        silent_on_fail : `bool`
+            If `True`, does not show a warning if the connection fails.
 
         """
 
@@ -140,7 +142,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         dbname = dbname or self.dbname or self.DATABASE_NAME
         assert dbname is not None, 'database name not defined or passed.'
 
-        self.connect_from_parameters(dbname=dbname, **db_configuration)
+        self.connect_from_parameters(dbname=dbname,
+                                     silent_on_fail=silent_on_fail,
+                                     **db_configuration)
 
     def connect_from_parameters(self, dbname=None, **params):
         """Initialises the database from a dictionary of parameters.
@@ -239,6 +243,8 @@ if _peewee:
                 return dsn
 
             return None
+
+        def _conn(self, dbname, silent_on_fail=False, **params):
             """Connects to the DB and tests the connection."""
 
             PostgresqlDatabase.init(self, dbname, **params)
@@ -247,8 +253,10 @@ if _peewee:
                 self.connected = PostgresqlDatabase.connect(self)
                 self.dbname = dbname
             except OperationalError:
-                log.warning('failed to connect to database {0}. '
-                            'Setting database to None.'.format(self.database), UserWarning)
+                if not silent_on_fail:
+                    log.warning('failed to connect to database {0}. '
+                                'Setting database to None.'.format(self.database),
+                                UserWarning)
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
 
@@ -320,7 +328,7 @@ if _sqla:
             self._connect_params = params
             return db_connection_string
 
-        def _conn(self, dbname, **params):
+        def _conn(self, dbname, silent_on_fail=False, **params):
             '''Connects to the DB and tests the connection.'''
 
             # get connection string
@@ -330,8 +338,9 @@ if _sqla:
                 self.create_engine(db_connection_string, echo=False,
                                    pool_size=10, pool_recycle=1800)
                 self.engine.connect()
-            except OpError as e:
-                log.warning('Failed to connect to database {0}'.format(dbname))
+            except OpError:
+                if not silent_on_fail:
+                    log.warning('Failed to connect to database {0}'.format(dbname))
                 self.engine.dispose()
                 self.engine = None
                 self.connected = False
