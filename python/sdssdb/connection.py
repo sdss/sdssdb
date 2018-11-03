@@ -79,10 +79,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         self.set_profile(profile=profile)
 
         if autoconnect:
-            try:
-                self.connect(profile=profile, dbname=self.dbname)
-            except Exception as e:
-                raise(e)
+            self.connect(profile=profile, dbname=self.dbname, silent_on_fail=True)
 
     def __repr__(self):
         return '<{} (dbname={!r}, connected={})>'.format(
