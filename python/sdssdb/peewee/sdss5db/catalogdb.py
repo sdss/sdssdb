@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-11-02 16:59:12
+# @Last modified time: 2018-11-02 16:59:53
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -577,7 +577,7 @@ class Gaiadr2Sdssdr9BestNeighbour(SDSS5dbModel):
 
 class TwomassPsc(SDSS5dbModel):
     ra = FloatField(index=True, null=True)
-    dec = FloatField(column_name='dec', index=True, null=True)
+    dec = FloatField(column_name='decl', index=True, null=True)
     decl = FloatField(index=True, null=True)
     err_maj = FloatField(null=True)
     err_min = FloatField(null=True)
