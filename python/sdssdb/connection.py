@@ -236,9 +236,12 @@ if _peewee:
         def connection_params(self):
             """Returns a dictionary with the connection parameters."""
 
-            return self.connect_params
+            if self.connected:
+                dsn = self.connection().get_dsn_parameters()
+                dsn.update({'dbname': self.dbname})
+                return dsn
 
-        def _conn(self, dbname, **params):
+            return None
             """Connects to the DB and tests the connection."""
 
             PostgresqlDatabase.init(self, dbname, **params)
