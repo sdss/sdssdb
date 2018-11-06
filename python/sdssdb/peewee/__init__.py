@@ -1,5 +1,7 @@
 # flake8: noqa
 
+import re
+
 from peewee import Model, fn
 from playhouse.hybrid import hybrid_method
 
