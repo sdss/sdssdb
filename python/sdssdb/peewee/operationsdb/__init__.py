@@ -8,6 +8,6 @@ database = PeeweeDatabaseConnection(autoconnect=False)
 
 
 # Create a new base model class for the observatory and bind the database
-class ObservatoryModel(BaseModel):
+class OperationsDBModel(BaseModel):
     class Meta:
         database = database

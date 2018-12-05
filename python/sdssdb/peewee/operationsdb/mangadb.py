@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 09:58:20
+# @Last modified time: 2018-12-05 15:17:38
 
 
 from __future__ import absolute_import, division, print_function
@@ -15,7 +15,7 @@ from __future__ import absolute_import, division, print_function
 from peewee import (BooleanField, FloatField, ForeignKeyField,
                     IntegerField, PrimaryKeyField, TextField)
 
-from . import ObservatoryModel, database  # noqa
+from . import OperationsDBModel, database  # noqa
 from .platedb import Exposure as PlatedbExposure
 from .platedb import Plate as PlatedbPlate
 
@@ -26,7 +26,7 @@ class UnknownField(object):
         pass
 
 
-class CurrentStatus(ObservatoryModel):
+class CurrentStatus(OperationsDBModel):
     camera = TextField(null=True)
     exposure_no = IntegerField(null=True)
     flavor = TextField(null=True)
@@ -39,7 +39,7 @@ class CurrentStatus(ObservatoryModel):
         schema = 'mangadb'
 
 
-class Plate(ObservatoryModel):
+class Plate(OperationsDBModel):
     all_sky_plate = BooleanField(null=True)
     comment = TextField(null=True)
     commissioning_plate = BooleanField(null=True)
@@ -58,7 +58,7 @@ class Plate(ObservatoryModel):
         schema = 'mangadb'
 
 
-class DataCube(ObservatoryModel):
+class DataCube(OperationsDBModel):
     b1_sn2 = FloatField(null=True)
     b2_sn2 = FloatField(null=True)
     pk = PrimaryKeyField()
@@ -74,7 +74,7 @@ class DataCube(ObservatoryModel):
         schema = 'mangadb'
 
 
-class ExposureStatus(ObservatoryModel):
+class ExposureStatus(OperationsDBModel):
     label = TextField(null=True)
     pk = PrimaryKeyField()
 
@@ -83,7 +83,7 @@ class ExposureStatus(ObservatoryModel):
         schema = 'mangadb'
 
 
-class SetStatus(ObservatoryModel):
+class SetStatus(OperationsDBModel):
     label = TextField(null=True)
     pk = PrimaryKeyField()
 
@@ -92,7 +92,7 @@ class SetStatus(ObservatoryModel):
         schema = 'mangadb'
 
 
-class Set(ObservatoryModel):
+class Set(OperationsDBModel):
     comment = TextField(null=True)
     name = TextField(null=True)
     pk = PrimaryKeyField()
@@ -106,7 +106,7 @@ class Set(ObservatoryModel):
         schema = 'mangadb'
 
 
-class Exposure(ObservatoryModel):
+class Exposure(OperationsDBModel):
     comment = TextField(null=True)
     data_cube = ForeignKeyField(column_name='data_cube_pk',
                                 null=True,
@@ -141,7 +141,7 @@ class Exposure(ObservatoryModel):
         schema = 'mangadb'
 
 
-class ExposureToDataCube(ObservatoryModel):
+class ExposureToDataCube(OperationsDBModel):
     data_cube = ForeignKeyField(column_name='data_cube_pk',
                                 null=True,
                                 model=DataCube,
@@ -157,7 +157,7 @@ class ExposureToDataCube(ObservatoryModel):
         schema = 'mangadb'
 
 
-class Filelist(ObservatoryModel):
+class Filelist(OperationsDBModel):
     name = TextField(null=True)
     path = TextField(null=True)
     pk = PrimaryKeyField()
@@ -167,7 +167,7 @@ class Filelist(ObservatoryModel):
         schema = 'mangadb'
 
 
-class Sn2Values(ObservatoryModel):
+class Sn2Values(OperationsDBModel):
     b1_sn2 = FloatField(null=True)
     b2_sn2 = FloatField(null=True)
     exposure = ForeignKeyField(column_name='exposure_pk',
@@ -185,7 +185,7 @@ class Sn2Values(ObservatoryModel):
         schema = 'mangadb'
 
 
-class Spectrum(ObservatoryModel):
+class Spectrum(OperationsDBModel):
     data_cube = ForeignKeyField(column_name='data_cube_pk',
                                 null=True,
                                 model=DataCube,

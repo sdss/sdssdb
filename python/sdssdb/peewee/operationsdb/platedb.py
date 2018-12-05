@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 15:40:43
+# @Last modified time: 2018-12-05 15:17:46
 
 
 from __future__ import absolute_import, division, print_function
@@ -16,7 +16,7 @@ from peewee import (BigIntegerField, BooleanField, CharField, CompositeKey, Date
                     DateTimeField, DeferredThroughModel, FloatField, ForeignKeyField,
                     IntegerField, ManyToManyField, PrimaryKeyField, TextField)
 
-from . import ObservatoryModel, database  # noqa
+from . import OperationsDBModel, database  # noqa
 
 
 class UnknownField(object):
@@ -25,7 +25,7 @@ class UnknownField(object):
         pass
 
 
-class Cartridge(ObservatoryModel):
+class Cartridge(OperationsDBModel):
     broken_fibers = TextField(null=True)
     guide_fiber_throughput = FloatField(null=True)
     number = IntegerField(null=True, unique=True)
@@ -37,7 +37,7 @@ class Cartridge(ObservatoryModel):
         schema = 'platedb'
 
 
-class Design(ObservatoryModel):
+class Design(OperationsDBModel):
     comment = TextField(null=True)
     pk = PrimaryKeyField()
 
@@ -56,7 +56,7 @@ class Design(ObservatoryModel):
                                           (DesignValue.field == design_field)).first()
 
 
-class PlateCompletionStatus(ObservatoryModel):
+class PlateCompletionStatus(OperationsDBModel):
     label = TextField(null=True)
     pk = PrimaryKeyField()
 
@@ -65,7 +65,7 @@ class PlateCompletionStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateLocation(ObservatoryModel):
+class PlateLocation(OperationsDBModel):
     label = TextField(unique=True)
     pk = PrimaryKeyField()
 
@@ -74,7 +74,7 @@ class PlateLocation(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateRun(ObservatoryModel):
+class PlateRun(OperationsDBModel):
     label = TextField(null=True, unique=True)
     pk = PrimaryKeyField()
     year = IntegerField(null=True)
@@ -84,7 +84,7 @@ class PlateRun(ObservatoryModel):
         schema = 'platedb'
 
 
-class TileStatus(ObservatoryModel):
+class TileStatus(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -93,7 +93,7 @@ class TileStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class Tile(ObservatoryModel):
+class Tile(OperationsDBModel):
     pk = PrimaryKeyField()
     id = IntegerField()
     tile_status = ForeignKeyField(column_name='tile_status_pk',
@@ -106,7 +106,7 @@ class Tile(ObservatoryModel):
         schema = 'platedb'
 
 
-class SurveyMode(ObservatoryModel):
+class SurveyMode(OperationsDBModel):
     definition_label = TextField(null=True)
     label = TextField(null=True, unique=True)
     pk = PrimaryKeyField()
@@ -116,7 +116,7 @@ class SurveyMode(ObservatoryModel):
         schema = 'platedb'
 
 
-class Survey(ObservatoryModel):
+class Survey(OperationsDBModel):
     label = TextField(null=True, unique=True)
     pk = PrimaryKeyField()
     plateplan_name = TextField()
@@ -126,7 +126,7 @@ class Survey(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateStatus(ObservatoryModel):
+class PlateStatus(OperationsDBModel):
     label = TextField(null=True, unique=True)
     pk = PrimaryKeyField()
 
@@ -139,7 +139,7 @@ PlateSurveyThroughModel = DeferredThroughModel()
 PlateStatusThroughModel = DeferredThroughModel()
 
 
-class Plate(ObservatoryModel):
+class Plate(OperationsDBModel):
 
     print_fields = ['plate_id']
 
@@ -200,7 +200,7 @@ class Plate(ObservatoryModel):
         schema = 'platedb'
 
 
-class PluggingStatus(ObservatoryModel):
+class PluggingStatus(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -209,7 +209,7 @@ class PluggingStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class Instrument(ObservatoryModel):
+class Instrument(OperationsDBModel):
     label = TextField(null=True, unique=True)
     pk = PrimaryKeyField()
     short_label = TextField(null=True)
@@ -222,7 +222,7 @@ class Instrument(ObservatoryModel):
 PluggingInstrumentDeferred = DeferredThroughModel()
 
 
-class Plugging(ObservatoryModel):
+class Plugging(OperationsDBModel):
     cartridge = ForeignKeyField(column_name='cartridge_pk',
                                 null=True,
                                 model=Cartridge,
@@ -249,7 +249,7 @@ class Plugging(ObservatoryModel):
         schema = 'platedb'
 
 
-class ActivePlugging(ObservatoryModel):
+class ActivePlugging(OperationsDBModel):
     pk = PrimaryKeyField()
     plugging = ForeignKeyField(column_name='plugging_pk', model=Plugging,
                                backref='active_plugging',
@@ -260,7 +260,7 @@ class ActivePlugging(ObservatoryModel):
         schema = 'platedb'
 
 
-class ApogeeThreshold(ObservatoryModel):
+class ApogeeThreshold(OperationsDBModel):
     pk = PrimaryKeyField()
 
     class Meta:
@@ -268,7 +268,7 @@ class ApogeeThreshold(ObservatoryModel):
         schema = 'platedb'
 
 
-class BossPluggingInfo(ObservatoryModel):
+class BossPluggingInfo(OperationsDBModel):
     first_dr = TextField(null=True)
     pk = PrimaryKeyField()
     plugging = ForeignKeyField(column_name='plugging_pk', model=Plugging,
@@ -279,7 +279,7 @@ class BossPluggingInfo(ObservatoryModel):
         schema = 'platedb'
 
 
-class Camera(ObservatoryModel):
+class Camera(OperationsDBModel):
     instrument = ForeignKeyField(column_name='instrument_pk', null=True,
                                  model=Instrument,
                                  backref='cameras', field='pk')
@@ -291,7 +291,7 @@ class Camera(ObservatoryModel):
         schema = 'platedb'
 
 
-class BossSn2Threshold(ObservatoryModel):
+class BossSn2Threshold(OperationsDBModel):
     camera = ForeignKeyField(column_name='camera_pk', model=Camera,
                              backref='boss_sn2_thresholds', field='pk')
     min_exposures = IntegerField(null=True)
@@ -305,7 +305,7 @@ class BossSn2Threshold(ObservatoryModel):
         schema = 'platedb'
 
 
-class ExposureFlavor(ObservatoryModel):
+class ExposureFlavor(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -314,7 +314,7 @@ class ExposureFlavor(ObservatoryModel):
         schema = 'platedb'
 
 
-class ExposureStatus(ObservatoryModel):
+class ExposureStatus(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -323,7 +323,7 @@ class ExposureStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class Pointing(ObservatoryModel):
+class Pointing(OperationsDBModel):
     center_dec = FloatField(null=True)
     center_ra = FloatField(null=True)
     design = ForeignKeyField(column_name='design_pk', model=Design,
@@ -336,7 +336,7 @@ class Pointing(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlatePointing(ObservatoryModel):
+class PlatePointing(OperationsDBModel):
     ha_observable_max = FloatField(null=True)
     ha_observable_min = FloatField(null=True)
     hour_angle = FloatField(null=True)
@@ -357,7 +357,7 @@ class PlatePointing(ObservatoryModel):
         schema = 'platedb'
 
 
-class ObservationStatus(ObservatoryModel):
+class ObservationStatus(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -366,7 +366,7 @@ class ObservationStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class Observation(ObservatoryModel):
+class Observation(OperationsDBModel):
     comment = TextField(null=True)
     mjd = FloatField(null=True)
     observation_status = ForeignKeyField(column_name='observation_status_pk',
@@ -385,7 +385,7 @@ class Observation(ObservatoryModel):
         schema = 'platedb'
 
 
-class Exposure(ObservatoryModel):
+class Exposure(OperationsDBModel):
     camera = ForeignKeyField(column_name='camera_pk', null=True,
                              model=Camera, backref='exposures', field='pk')
     comment = TextField(null=True)
@@ -415,7 +415,7 @@ class Exposure(ObservatoryModel):
         schema = 'platedb'
 
 
-class CameraFrame(ObservatoryModel):
+class CameraFrame(OperationsDBModel):
     camera = ForeignKeyField(column_name='camera_pk', model=Camera,
                              backref='camera_frames', field='pk')
     comment = TextField(null=True)
@@ -429,7 +429,7 @@ class CameraFrame(ObservatoryModel):
         schema = 'platedb'
 
 
-# class CartridgeToSurvey(ObservatoryModel):
+# class CartridgeToSurvey(OperationsDBModel):
 #     cartridge_pk = ForeignKeyField(column_name='cartridge_pk', model=Cartridge,
 #                                    backref='cartridge_cartridge_pk_set', field='pk')
 #     survey_pk = ForeignKeyField(column_name='survey_pk', model=Survey,
@@ -444,7 +444,7 @@ class CameraFrame(ObservatoryModel):
 #         primary_key = CompositeKey('cartridge_pk', 'survey_pk')
 
 
-class CmmMeas(ObservatoryModel):
+class CmmMeas(OperationsDBModel):
     cmmfilename = TextField(null=True)
     date = DateField(null=True)
     fitoffsetx = FloatField(null=True)
@@ -462,7 +462,7 @@ class CmmMeas(ObservatoryModel):
         schema = 'platedb'
 
 
-class Constants(ObservatoryModel):
+class Constants(OperationsDBModel):
     name = CharField(primary_key=True)
     value = CharField(null=True)
 
@@ -471,7 +471,7 @@ class Constants(ObservatoryModel):
         schema = 'platedb'
 
 
-class DesignField(ObservatoryModel):
+class DesignField(OperationsDBModel):
     label = TextField(unique=True)
     pk = PrimaryKeyField()
 
@@ -480,7 +480,7 @@ class DesignField(ObservatoryModel):
         schema = 'platedb'
 
 
-class DesignValue(ObservatoryModel):
+class DesignValue(OperationsDBModel):
     field = ForeignKeyField(column_name='design_field_pk',
                             null=True, model=DesignField, field='pk')
     design = ForeignKeyField(column_name='design_pk', null=True,
@@ -500,7 +500,7 @@ class DesignValue(ObservatoryModel):
                                                                                 self.value)
 
 
-class ExposureHeaderKeyword(ObservatoryModel):
+class ExposureHeaderKeyword(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -509,7 +509,7 @@ class ExposureHeaderKeyword(ObservatoryModel):
         schema = 'platedb'
 
 
-class ExposureHeaderValue(ObservatoryModel):
+class ExposureHeaderValue(OperationsDBModel):
     comment = TextField(null=True)
     exposure_header_keyword = ForeignKeyField(column_name='exposure_header_keyword_pk',
                                               model=ExposureHeaderKeyword,
@@ -525,7 +525,7 @@ class ExposureHeaderValue(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlPlugmapM(ObservatoryModel):
+class PlPlugmapM(OperationsDBModel):
     checked_in = BooleanField(null=True)
     dirname = TextField(null=True)
     file = TextField(null=True)
@@ -543,7 +543,7 @@ class PlPlugmapM(ObservatoryModel):
         schema = 'platedb'
 
 
-class ObjectType(ObservatoryModel):
+class ObjectType(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -552,7 +552,7 @@ class ObjectType(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateHoleType(ObservatoryModel):
+class PlateHoleType(OperationsDBModel):
     label = TextField()
     pk = PrimaryKeyField()
 
@@ -561,7 +561,7 @@ class PlateHoleType(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateHolesFile(ObservatoryModel):
+class PlateHolesFile(OperationsDBModel):
     filename = TextField()
     pk = PrimaryKeyField()
     plate = ForeignKeyField(column_name='plate_pk', model=Plate,
@@ -572,7 +572,7 @@ class PlateHolesFile(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateHole(ObservatoryModel):
+class PlateHole(OperationsDBModel):
     apogee_target1 = IntegerField(null=True)
     apogee_target2 = IntegerField(null=True)
     catalog_object_pk = IntegerField(index=True, null=True)
@@ -600,7 +600,7 @@ class PlateHole(ObservatoryModel):
         schema = 'platedb'
 
 
-class Fiber(ObservatoryModel):
+class Fiber(OperationsDBModel):
     fiber = IntegerField(column_name='fiber_id')
     pk = PrimaryKeyField()
     pl_plugmap_m = ForeignKeyField(column_name='pl_plugmap_m_pk',
@@ -613,7 +613,7 @@ class Fiber(ObservatoryModel):
         schema = 'platedb'
 
 
-class Gprobe(ObservatoryModel):
+class Gprobe(OperationsDBModel):
     cartridge = ForeignKeyField(column_name='cartridge_pk', null=True, model=Cartridge,
                                 backref='gprobes', field='pk')
     exists = IntegerField(null=True)
@@ -633,7 +633,7 @@ class Gprobe(ObservatoryModel):
         schema = 'platedb'
 
 
-class HoleMeas(ObservatoryModel):
+class HoleMeas(OperationsDBModel):
     cmm_meas = ForeignKeyField(column_name='cmm_meas_pk', null=True,
                                model=CmmMeas, field='pk')
     diaerr = FloatField(null=True)
@@ -657,7 +657,7 @@ class HoleMeas(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateCompletionStatusHistory(ObservatoryModel):
+class PlateCompletionStatusHistory(OperationsDBModel):
     comment = TextField()
     first_name = TextField(null=True)
     last_name = TextField(null=True)
@@ -675,7 +675,7 @@ class PlateCompletionStatusHistory(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateInput(ObservatoryModel):
+class PlateInput(OperationsDBModel):
     comment = TextField(null=True)
     design = ForeignKeyField(column_name='design_pk', null=True,
                              model=Design, backref='inputs', field='pk')
@@ -690,7 +690,7 @@ class PlateInput(ObservatoryModel):
         schema = 'platedb'
 
 
-# class PlatePointingToPointingStatus(ObservatoryModel):
+# class PlatePointingToPointingStatus(OperationsDBModel):
 #     pk = BigIntegerField(primary_key=True)
 #     plate_pointing_pk = ForeignKeyField(column_name='plate_pointing_pk',
 #                                         null=True,
@@ -708,7 +708,7 @@ class PlateInput(ObservatoryModel):
 #         schema = 'platedb'
 
 
-class PlateRunToDesign(ObservatoryModel):
+class PlateRunToDesign(OperationsDBModel):
     design_pk = BigIntegerField(null=True)
     pk = PrimaryKeyField()
     plate_run_pk = BigIntegerField(null=True)
@@ -721,7 +721,7 @@ class PlateRunToDesign(ObservatoryModel):
         schema = 'platedb'
 
 
-# class PlateToInstrument(ObservatoryModel):
+# class PlateToInstrument(OperationsDBModel):
 #     instrument_pk = ForeignKeyField(column_name='instrument_pk', null=True, model=Instrument,
 #                                     backref='instrument_instrument_pk_set', field='pk')
 #     pk = BigIntegerField(primary_key=True)
@@ -736,7 +736,7 @@ class PlateRunToDesign(ObservatoryModel):
 #         schema = 'platedb'
 
 
-class PlateToPlateStatus(ObservatoryModel):
+class PlateToPlateStatus(OperationsDBModel):
     pk = PrimaryKeyField()
     plate = ForeignKeyField(column_name='plate_pk', null=True,
                             model=Plate,
@@ -752,7 +752,7 @@ class PlateToPlateStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class PlateToSurvey(ObservatoryModel):
+class PlateToSurvey(OperationsDBModel):
     pk = PrimaryKeyField()
     plate = ForeignKeyField(column_name='plate_pk', null=True, model=Plate,
                             field='pk')
@@ -767,7 +767,7 @@ class PlateToSurvey(ObservatoryModel):
         schema = 'platedb'
 
 
-class PluggingToBossSn2Threshold(ObservatoryModel):
+class PluggingToBossSn2Threshold(OperationsDBModel):
     boss_sn2_threshold_version = IntegerField()
     plugging_pk = IntegerField()
 
@@ -780,7 +780,7 @@ class PluggingToBossSn2Threshold(ObservatoryModel):
         primary_key = CompositeKey('boss_sn2_threshold_version', 'plugging_pk')
 
 
-class PluggingToInstrument(ObservatoryModel):
+class PluggingToInstrument(OperationsDBModel):
     instrument = ForeignKeyField(column_name='instrument_pk', null=True, model=Instrument,
                                  field='pk')
     pk = PrimaryKeyField()
@@ -795,7 +795,7 @@ class PluggingToInstrument(ObservatoryModel):
         schema = 'platedb'
 
 
-class PointingStatus(ObservatoryModel):
+class PointingStatus(OperationsDBModel):
     label = TextField(null=True, unique=True)
     pk = PrimaryKeyField()
 
@@ -804,7 +804,7 @@ class PointingStatus(ObservatoryModel):
         schema = 'platedb'
 
 
-class ProfTolerances(ObservatoryModel):
+class ProfTolerances(OperationsDBModel):
     pk = PrimaryKeyField()
     r1_high = FloatField()
     r1_low = FloatField()
@@ -825,7 +825,7 @@ class ProfTolerances(ObservatoryModel):
         schema = 'platedb'
 
 
-class Profilometry(ObservatoryModel):
+class Profilometry(OperationsDBModel):
     comment = TextField(null=True)
     pk = PrimaryKeyField()
     plugging = ForeignKeyField(column_name='plugging_pk', model=Plugging,
@@ -839,7 +839,7 @@ class Profilometry(ObservatoryModel):
         schema = 'platedb'
 
 
-class ProfMeasurement(ObservatoryModel):
+class ProfMeasurement(OperationsDBModel):
     number = IntegerField()
     pk = PrimaryKeyField()
     profilometry = ForeignKeyField(column_name='profilometry_pk',
@@ -856,7 +856,7 @@ class ProfMeasurement(ObservatoryModel):
         schema = 'platedb'
 
 
-class Test(ObservatoryModel):
+class Test(OperationsDBModel):
     label = TextField(null=True)
     pk = PrimaryKeyField()
 
@@ -865,7 +865,7 @@ class Test(ObservatoryModel):
         schema = 'platedb'
 
 
-class TileStatusHistory(ObservatoryModel):
+class TileStatusHistory(OperationsDBModel):
     comment = TextField()
     first_name = TextField(null=True)
     last_name = TextField(null=True)
