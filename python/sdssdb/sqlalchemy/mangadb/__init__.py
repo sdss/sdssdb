@@ -5,7 +5,7 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-23 16:06:18
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:25:13
 
 from __future__ import print_function, division, absolute_import
@@ -19,9 +19,8 @@ MangaBase = declarative_base(cls=(DeferredReflection, BaseModel,))
 
 
 class MANGAdbDatabaseConnection(SQLADatabaseConnection):
-    DATABASE_NAME = 'manga'
+    dbname = 'manga'
     base = MangaBase
 
 
 db = MANGAdbDatabaseConnection(autoconnect=True)
-

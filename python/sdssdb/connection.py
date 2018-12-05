@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-05 15:20:00
+# @Last modified time: 2018-12-05 15:48:46
 
 
 from __future__ import absolute_import, division, print_function
@@ -44,14 +44,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     """A PostgreSQL database connection with profile and autoconnect features.
 
     Provides a base class for PostgreSQL connections for either peewee_ or
-    SQLAlchemy_. The parameters for the connection can be
-    passed directly (see `.connect_from_parameters`) or, more conveniently, a
-    profile can be used. By default `.DATABASE_NAME` is left undefined and
-    needs to be passed when initiating the connection. This is useful for
-    databases such as ``apodb/lcodb`` for which the model classes are identical
-    but the database name is not. For databases for which the database name is
-    fixed (e.g., ``sdss5db``), this class can be subclassed and
-    `.DATABASE_NAME` overridden.
+    SQLAlchemy_. The parameters for the connection can be passed directly (see
+    `.connect_from_parameters`) or, more conveniently, a profile can be used.
+    By default `.dbname` is left undefined and needs to be passed when
+    initiating the connection. This is useful for databases such as
+    ``apodb/lcodb`` for which the model classes are identical but the database
+    name is not. For databases for which the database name is fixed (e.g.,
+    ``sdss5db``), this class can be subclassed and `.dbname` overridden.
 
     Parameters
     ----------
@@ -60,14 +59,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         user, database server hostname, and port for a given location. If
         not provided, the profile is automatically determined based on the
         current domain, or defaults to ``local``.
+    dbname : str
+        The database name.
     autoconnect : bool
         Whether to autoconnect to the database using the profile parameters.
-        Requites `.DATABASE_NAME` to be set.
+        Requites `.dbname` to be set.
 
     """
 
-    #: The default database name.
-    DATABASE_NAME = None
+    #: The database name.
+    dbname = None
 
     def __init__(self, profile=None, dbname=None, autoconnect=True):
 
@@ -127,9 +128,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Parameters
         ----------
         dbname : `str` or `None`
-            The database name. If `None`, defaults to `.DATABASE_NAME`.
-        profile : `str` or `None`
-            The connection profile to use. If `None`, uses the default profile.
+            The database name. If `None`, defaults to `.dbname`.
         silent_on_fail : `bool`
             If `True`, does not show a warning if the connection fails.
 
@@ -145,8 +144,12 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                             if item in config[self.profile] else None
                             for item in ['user', 'host', 'port']}
 
-        dbname = dbname or self.dbname or self.DATABASE_NAME
-        assert dbname is not None, 'database name not defined or passed.'
+        dbname = dbname or self.dbname
+        if dbname is None:
+            raise RuntimeError('the database name was not set when '
+                               'DatabaseConnection was instantiated. '
+                               'To set it in runtime change the dbname '
+                               'attribute.')
 
         self.connect_from_parameters(dbname=dbname,
                                      silent_on_fail=silent_on_fail,
@@ -158,7 +161,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Parameters
         ----------
         dbname : `str` or `None`
-            The database name. If `None`, defaults to `.DATABASE_NAME`.
+            The database name. If `None`, defaults to `.dbname`.
         params : dict
             A dictionary of parameters, which should include ``user``,
             ``host``, and ``port``.

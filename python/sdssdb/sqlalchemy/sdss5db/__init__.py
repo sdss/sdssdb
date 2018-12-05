@@ -5,7 +5,7 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-10-09 12:21:23
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:25:27
 
 from __future__ import print_function, division, absolute_import
@@ -19,9 +19,8 @@ SDSS5Base = declarative_base(cls=(DeferredReflection, BaseModel,))
 
 
 class SDSS5dbDatabaseConnection(SQLADatabaseConnection):
-    DATABASE_NAME = 'sdss5db'
+    dbname = 'sdss5db'
     base = SDSS5Base
 
 
 db = SDSS5dbDatabaseConnection(autoconnect=True)
-
