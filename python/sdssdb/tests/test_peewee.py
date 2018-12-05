@@ -8,7 +8,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import sdssdb.peewee.targetdb as targetdb
+import sdssdb.peewee.sdss5db.targetdb as targetdb
 
 
 class TestPeewee(object):
