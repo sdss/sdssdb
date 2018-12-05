@@ -122,8 +122,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         pass
 
-    def connect(self, dbname=None, profile=None, silent_on_fail=False):
-        """Initialises the database from a profile in the config file.
+    def connect(self, dbname=None, silent_on_fail=False):
+        """Initialises the database using the profile information.
 
         Parameters
         ----------
@@ -136,12 +136,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        profile = profile or self.profile
-        assert profile is not None, 'profile not set.'
+        if self.profile is None:
+            raise RuntimeError('the profile was not set when '
+                               'DatabaseConnection was instantiated. Use '
+                               'set_profile to set the profile in runtime.')
 
         # Gets the necessary configuration values from the profile
-        db_configuration = {item: config[profile][item]
-                            if item in config[profile] else None
+        db_configuration = {item: config[self.profile][item]
+                            if item in config[self.profile] else None
                             for item in ['user', 'host', 'port']}
 
         dbname = dbname or self.dbname or self.DATABASE_NAME
