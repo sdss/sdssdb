@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-05 11:28:42
+# @Last modified time: 2018-12-05 15:20:00
 
 
 from __future__ import absolute_import, division, print_function
@@ -124,6 +124,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     def connect(self, dbname=None, profile=None, silent_on_fail=False):
         """Initialises the database from a profile in the config file.
+
         Parameters
         ----------
         dbname : `str` or `None`
