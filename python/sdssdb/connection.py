@@ -164,8 +164,19 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        dbname = dbname or self.dbname or self.DATABASE_NAME
-        assert dbname is not None, 'database name not defined or passed.'
+        # Make hostname an alias of host.
+        if 'hostname' in params:
+            if 'host' not in params:
+                params['host'] = params.pop('hostname')
+            else:
+                raise KeyError('cannot use hostname and host at the same time.')
+
+        dbname = dbname or self.dbname
+        if dbname is None:
+            raise RuntimeError('the database name was not set when '
+                               'DatabaseConnection was instantiated. '
+                               'To set it in runtime change the dbname '
+                               'attribute.')
 
         self._conn(dbname, **params)
 
