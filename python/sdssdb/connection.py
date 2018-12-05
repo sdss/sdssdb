@@ -82,9 +82,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             self.connect(profile=profile, dbname=self.dbname, silent_on_fail=True)
 
     def __repr__(self):
-        return '<{} (dbname={!r}, connected={})>'.format(
-            self.__class__.__name__, self.dbname or self.DATABASE_NAME,
-            self.connected)
+        return '<{} (dbname={!r}, profile={!r}, connected={})>'.format(
+            self.__class__.__name__, self.dbname, self.profile, self.connected)
 
     def set_profile(self, profile=None):
         """Sets the profile from the configuration file.
