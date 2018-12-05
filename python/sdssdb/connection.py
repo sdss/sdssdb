@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-11-02 22:20:51
+# @Last modified time: 2018-12-05 11:28:42
 
 
 from __future__ import absolute_import, division, print_function
@@ -87,7 +87,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             self.connected)
 
     def set_profile(self, profile=None):
-        """Determines observatory profile."""
+        """Sets the profile from the configuration file.
+
+        If ``profile=None``, uses the domain name to determine the profile.
+
+        """
 
         if profile is not None:
             self.profile = profile
