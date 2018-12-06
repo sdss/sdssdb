@@ -7,12 +7,13 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 14:06:53
+# @Last modified time: 2018-12-06 15:25:42
 
 
 from __future__ import absolute_import, division, print_function
 
 import abc
+import importlib
 import socket
 
 import six
@@ -288,7 +289,7 @@ if _sqla:
         ''' SQLAlchemy database connection implementation '''
 
         engine = None
-        base = None
+        bases = []
         Session = None
         metadata = None
 
@@ -368,7 +369,7 @@ if _sqla:
             else:
                 self.connected = True
                 self.dbname = dbname
-                self.prepare_base()
+                self.prepare_bases()
 
         def reset_engine(self):
             ''' Reset the engine, metadata, and session '''
@@ -402,14 +403,39 @@ if _sqla:
             self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
                                                        expire_on_commit=expire_on_commit))
 
-        def prepare_base(self, base=None):
-            ''' Prepare a Model Base
+        def add_base(self, base, prepare=True):
+            """Binds a base to this connection."""
 
-            Prepares a SQLalchemy Base for reflection.  This binds a database engine
-            to a specific Base which maps to a set of ModelClasses
+            if base not in self.bases:
+                self.bases.append(base)
 
-            '''
+            if prepare and self.connected:
+                self.prepare_bases(base=base)
 
-            base = base or self.base
-            if base:
+        def prepare_bases(self, base=None):
+            """Prepare a Model Base
+
+            Prepares a SQLalchemy Base for reflection. This binds a database
+            engine to a specific Base which maps to a set of ModelClasses.
+            If ``base` is passed only that base will be prepared. Otherwise,
+            all the bases bound to this database connection will be prepared.
+
+            """
+
+            do_bases = [base] if base else self.bases
+
+            for base in do_bases:
                 base.prepare(self.engine)
+
+                # If the base has an attribute _relations that's the function
+                # to call to set up the relationships once the engine has been
+                # bound to the base.
+                if hasattr(base, '_relations'):
+                    if isinstance(base._relations, str):
+                        module = importlib.import_module(base.__module__)
+                        relations_func = getattr(module, base._relations)
+                        relations_func()
+                    elif callable(base._relations):
+                        base._relations()
+                    else:
+                        pass
