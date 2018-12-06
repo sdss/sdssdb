@@ -23,4 +23,4 @@ class SDSS5dbDatabaseConnection(SQLADatabaseConnection):
     base = SDSS5Base
 
 
-db = SDSS5dbDatabaseConnection(autoconnect=True)
+database = SDSS5dbDatabaseConnection(autoconnect=True)

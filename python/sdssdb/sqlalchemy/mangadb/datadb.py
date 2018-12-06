@@ -5,7 +5,7 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:08
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 14:43:05
 
 from __future__ import absolute_import, division, print_function
@@ -17,7 +17,7 @@ from operator import eq, ge, gt, le, lt, ne
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import MangaBase, db, sampledb
+from sdssdb.sqlalchemy.mangadb import MangaBase, database, sampledb
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.engine import reflection
@@ -711,7 +711,7 @@ class Plate(object):
         return cubes
 
 
-db.prepare_base(Base)
+database.prepare_base(Base)
 
 
 # Define relationships

@@ -5,12 +5,12 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:06:50
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:22:11
 
 from __future__ import absolute_import, division, print_function
 
-from sdssdb.sqlalchemy.sdss5db import SDSS5Base, db
+from sdssdb.sqlalchemy.sdss5db import SDSS5Base, database
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
@@ -189,4 +189,4 @@ class TwoMassPsc(Base):
     designation = Column(String, unique=True)
 
 
-Base.prepare(db.engine)
+Base.prepare(database.engine)

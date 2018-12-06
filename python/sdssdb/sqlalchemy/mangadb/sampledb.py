@@ -5,7 +5,7 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:50
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 16:07:58
 
 from __future__ import absolute_import, division, print_function
@@ -15,7 +15,7 @@ import math
 import shutil
 
 import numpy as np
-from sdssdb.sqlalchemy.mangadb import MangaBase, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, database
 from sqlalchemy import Float, ForeignKey, ForeignKeyConstraint, case, cast, func
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
@@ -311,8 +311,9 @@ def add_catalogue(classname, tablename, has_manga_target=None):
         new_class.mangaTargets = relationship(MangaTarget, backref='{0}_objects'.format(tablename),
                                               secondary=new_relationalclass.__table__)
 
+
 # Now we create any remaining catalogue tables.
-insp = sa_inspect(db.engine)
+insp = sa_inspect(database.engine)
 allTables = insp.get_table_names(schema=SCHEMA)
 
 done_names = list(Base.metadata.tables.keys())

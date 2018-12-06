@@ -5,14 +5,14 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:15
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:21:08
 
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, database
 from sqlalchemy import Column, Float, and_, case, cast, select
 from sqlalchemy.engine import reflection
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
@@ -308,7 +308,7 @@ class DapAll(Base):
 
 
 # prepare the base
-db.prepare_base(Base)
+database.prepare_base(Base)
 
 # setup relationships after preparation
 File.cube = relationship(datadb.Cube, backref='dapfiles')
