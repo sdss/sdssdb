@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-05 15:48:46
+# @Last modified time: 2018-12-05 16:24:09
 
 
 from __future__ import absolute_import, division, print_function
@@ -94,6 +94,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         """
 
         if profile is not None:
+            assert profile in config, 'profile not found in configuration file.'
             self.profile = profile
             return
 
@@ -105,8 +106,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         # Tries to find a profile whose domain matches the hostname
         for profile in config:
-            if 'domain' in profile and profile['domain'] is not None:
-                if hostname.endswith(profile['domain']):
+            if 'domain' in config[profile] and config[profile]['domain'] is not None:
+                if hostname.endswith(config[profile]['domain']):
                     self.profile = profile
                     break
 
