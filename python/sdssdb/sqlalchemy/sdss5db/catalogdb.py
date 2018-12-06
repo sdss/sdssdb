@@ -189,4 +189,4 @@ class TwoMassPsc(Base):
     designation = Column(String, unique=True)
 
 
-Base.prepare(database.engine)
+database.add_base(Base)

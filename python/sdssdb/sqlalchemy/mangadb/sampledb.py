@@ -37,6 +37,7 @@ SCHEMA = 'mangasampledb'
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
     _schema = SCHEMA
+    _relations = 'define_relations'
 
     @declared_attr
     def __table_args__(cls):
@@ -264,16 +265,16 @@ setattr(NSA, 'elpetro_logmass', logmass('elpetro_mass'))
 setattr(NSA, 'sersic_logmass', logmass('sersic_mass'))
 
 
-Base.prepare(database.engine)
+def define_relations():
+    """Setup relationships after preparation."""
 
-# Relationship between NSA and MangaTarget
-NSA.mangaTargets = relationship(
-    MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
+    NSA.mangaTargets = relationship(
+        MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
+
 
 #
 # This section still needs work and does not quite work yet.
 #
-
 
 # class factory
 def ClassFactory(name, tableName, BaseClass=Base, fks=None):
@@ -331,3 +332,7 @@ for tableName in allTables:
     done_names.append(SCHEMA + '.' + tableName)
     if has_manga_target:
         done_names.append(SCHEMA + '.' + relational_tablename)
+
+
+# prepare the base
+database.add_base(Base)

@@ -45,4 +45,4 @@ class MaskBit(Base):
     print_fields = ['flag', 'bit', 'label']
 
 
-Base.prepare(database.engine)
+database.add_base(Base)
