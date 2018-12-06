@@ -264,7 +264,7 @@ setattr(NSA, 'elpetro_logmass', logmass('elpetro_mass'))
 setattr(NSA, 'sersic_logmass', logmass('sersic_mass'))
 
 
-Base.prepare(db.engine)
+Base.prepare(database.engine)
 
 # Relationship between NSA and MangaTarget
 NSA.mangaTargets = relationship(
