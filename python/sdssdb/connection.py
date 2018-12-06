@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-05 16:24:09
+# @Last modified time: 2018-12-06 14:06:53
 
 
 from __future__ import absolute_import, division, print_function
@@ -75,7 +75,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         #: Reports whether the connection is active.
         self.connected = False
         self.profile = None
-        self.dbname = dbname
+        self.dbname = dbname if dbname else self.dbname
 
         self.set_profile(profile=profile)
 
