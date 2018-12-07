@@ -5,10 +5,13 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:02:19
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 16:38:45
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
+
+from sqlalchemy.ext.hybrid import hybrid_method
+from sqlalchemy.sql.expression import func
 
 
 def get_field(parent, child):
@@ -75,5 +78,52 @@ class BaseModel(object):
         ''' get the pk '''
         return self.pk if hasattr(self, 'pk') else None
 
+    @hybrid_method
+    def cone_search(self, ra, dec, a, b=None, pa=None):
+        """Returns a query with the rows inside a region on the sky."""
 
+        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+            'this model class does not have ra/dec columns.'
 
+        if b is None:
+            return func.q3c_radial_query(self.ra, self.dec, ra, dec, a)
+        else:
+            pa = pa or 0.0
+            ratio = b / a
+            return func.q3c_ellipse_query(self.ra, self.dec, ra, dec, a, ratio, pa)
+
+    @cone_search.expression
+    def cone_search(cls, ra, dec, a, b=None, pa=None):
+        """Returns a query with the rows inside a region on the sky.
+
+        Defines a sky ellipse and returns the targets within. Assumes that the
+        table contains two columns ``ra`` and ``dec``. All units are assumed
+        to be degrees.
+
+        Parameters
+        ----------
+        ra : float
+            The R.A. of the centre of the ellipse.
+        dec : float
+            The declination of the centre of the ellipse.
+        a : float
+            Defines the semi-major axis of the ellipse for the cone search. If
+            ``b=None``, a circular search will be done with ``a`` as the
+            radius.
+        b : `float` or `None`
+            The semi-minor axis of the ellipse. If `None`, a circular cone
+            search will be run. In that case, ``pa`` is ignored.
+        pa : `float` or `None`
+            The parallactic angle of the ellipse.
+
+        """
+
+        assert hasattr(cls, 'ra') and hasattr(cls, 'dec'), \
+            'this model class does not have ra/dec columns.'
+
+        if b is None:
+            return func.q3c_radial_query(cls.ra, cls.dec, ra, dec, a)
+        else:
+            pa = pa or 0.0
+            ratio = b / a
+            return func.q3c_ellipse_query(cls.ra, cls.dec, ra, dec, a, ratio, pa)
