@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 18:11:50
+# @Last modified time: 2018-12-06 18:14:44
 
 
 from __future__ import absolute_import, division, print_function
@@ -108,22 +108,24 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         previous_profile = self.profile
 
         if profile is not None:
+
             assert profile in config, 'profile not found in configuration file.'
             self.profile = profile
-            return
 
-        # Get hostname
-        hostname = socket.getfqdn()
+        else:
 
-        # Initially set location to local.
-        self.profile = 'local'
+            # Get hostname
+            hostname = socket.getfqdn()
 
-        # Tries to find a profile whose domain matches the hostname
-        for profile in config:
-            if 'domain' in config[profile] and config[profile]['domain'] is not None:
-                if hostname.endswith(config[profile]['domain']):
-                    self.profile = profile
-                    break
+            # Initially set location to local.
+            self.profile = 'local'
+
+            # Tries to find a profile whose domain matches the hostname
+            for profile in config:
+                if 'domain' in config[profile] and config[profile]['domain'] is not None:
+                    if hostname.endswith(config[profile]['domain']):
+                        self.profile = profile
+                        break
 
         if connect:
             if self.connected and self.profile == previous_profile:
