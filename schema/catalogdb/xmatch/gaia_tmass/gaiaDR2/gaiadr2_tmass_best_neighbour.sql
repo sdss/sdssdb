@@ -23,3 +23,4 @@ CREATE TABLE catalogdb.gaiadr2_tmass_best_neighbour(
 alter table catalogdb.gaiadr2_tmass_best_neighbour add primary key(source_id);
 
 CREATE INDEX CONCURRENTLY gaiadr2_tmass_best_neighbour_tmass_oid_index ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_oid);
+CREATE INDEX CONCURRENTLY gaiadr2_tmass_best_neighbour_tmass_original_ext_source_id_index ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (original_ext_source_id);
