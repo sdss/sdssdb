@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 17:59:09
+# @Last modified time: 2018-12-06 18:11:50
 
 
 from __future__ import absolute_import, division, print_function
@@ -87,12 +87,25 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         return '<{} (dbname={!r}, profile={!r}, connected={})>'.format(
             self.__class__.__name__, self.dbname, self.profile, self.connected)
 
-    def set_profile(self, profile=None):
+    def set_profile(self, profile=None, connect=True):
         """Sets the profile from the configuration file.
 
-        If ``profile=None``, uses the domain name to determine the profile.
+        Parameters
+        -----------
+        profile : str
+            The profile to set. If `None`, uses the domain name to
+            determine the profile.
+        connect : bool
+            If True, tries to connect to the database using the new profile.
+
+        Returns
+        -------
+        connected : bool
+            Returns True if the database is connected.
 
         """
+
+        previous_profile = self.profile
 
         if profile is not None:
             assert profile in config, 'profile not found in configuration file.'
@@ -111,6 +124,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                 if hostname.endswith(config[profile]['domain']):
                     self.profile = profile
                     break
+
+        if connect:
+            if self.connected and self.profile == previous_profile:
+                pass
+            elif self.dbname is not None:
+                self.connect(silent_on_fail=True)
+
+        return self.connected
 
     @abc.abstractmethod
     def _conn(self, dbname, **params):
@@ -133,6 +154,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             The database name. If `None`, defaults to `.dbname`.
         silent_on_fail : `bool`
             If `True`, does not show a warning if the connection fails.
+
+        Returns
+        -------
+        connected : bool
+            Returns True if the database is connected.
 
         """
 
@@ -167,6 +193,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         params : dict
             A dictionary of parameters, which should include ``user``,
             ``host``, and ``port``.
+
+        Returns
+        -------
+        connected : bool
+            Returns True if the database is connected.
 
         """
 
