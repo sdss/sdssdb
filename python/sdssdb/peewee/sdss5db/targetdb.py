@@ -7,9 +7,10 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 16:21:30
+# @Last modified time: 2018-12-06 17:28:41
 
-from peewee import (AutoField, BigIntegerField, DateTimeField, FloatField,
+from peewee import (AutoField, BigIntegerField, DateTimeField,
+                    DeferredForeignKey, DeferredThroughModel, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 from playhouse.postgres_ext import ArrayField
 
@@ -305,6 +306,31 @@ class TargetType(SDSS5dbModel):
         schema = 'targetdb'
 
 
+class TargetToTile(SDSS5dbModel):
+
+    pk = AutoField()
+    xdefault = FloatField(null=True)
+    ydefault = FloatField(null=True)
+    tile = ForeignKeyField(column_name='tile_pk',
+                           field='pk',
+                           backref='target_to_tiles',
+                           model=Tile,
+                           null=True)
+    target = DeferredForeignKey('Target',
+                                column_name='target_pk',
+                                backref='target_to_tiles',
+                                field='pk',
+                                null=True)
+    fiber_pk = IntegerField(null=True)
+
+    class Meta:
+        table_name = 'target_to_tile'
+        schema = 'targetdb'
+
+
+TargetToTileDeferred = DeferredThroughModel()
+
+
 class Target(SDSS5dbModel):
     dec = FloatField(null=True)
     field = ForeignKeyField(column_name='field_pk',
@@ -359,7 +385,7 @@ class Target(SDSS5dbModel):
                                model=Lunation,
                                null=True,
                                backref='targets')
-    tiles = ManyToManyField(Tile, backref='targets')
+    tiles = ManyToManyField(model=Tile, through_model=TargetToTileDeferred, backref='targets')
     target_type = ForeignKeyField(column_name='target_type_pk',
                                   field='pk',
                                   model=TargetType,
@@ -409,3 +435,6 @@ class Spectrum(SDSS5dbModel):
     class Meta:
         table_name = 'spectrum'
         schema = 'targetdb'
+
+
+TargetToTileDeferred.set_model(TargetToTile)
