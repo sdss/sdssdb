@@ -198,7 +198,7 @@ class Cube(ArrayOps, Base):
     def header(self):
         '''Returns an astropy header'''
 
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         data = session.query(FitsHeaderKeyword.label, FitsHeaderValue.value,
                              FitsHeaderValue.comment).join(FitsHeaderValue).filter(
             FitsHeaderValue.cube == self).all()
@@ -232,7 +232,7 @@ class Cube(ArrayOps, Base):
 
     def getFlags(self, bits, name):
         from sdssdb.sqlalchemy.mangadb.auxdb import MaskBit
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
 
         # if bits not a digit, return None
         if not str(bits).isdigit():
@@ -347,8 +347,8 @@ class Cube(ArrayOps, Base):
         if model_cubes:
             mc = sum(model_cubes, [])
             if mc:
-                from marvin.db.models.DapModelClasses import ModelSpaxel
-                session = db.Session.object_session(mc[0])
+                from marvin.database.models.DapModelClasses import ModelSpaxel
+                session = database.Session.object_session(mc[0])
                 ms = session.query(ModelSpaxel).filter_by(modelcube_pk=mc[0].pk).first()
                 has_ms = True if ms else False
         return has_ms
