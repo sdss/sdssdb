@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 15:25:42
+# @Last modified time: 2018-12-06 17:59:09
 
 
 from __future__ import absolute_import, division, print_function
@@ -153,9 +153,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'To set it in runtime change the dbname '
                                'attribute.')
 
-        self.connect_from_parameters(dbname=dbname,
-                                     silent_on_fail=silent_on_fail,
-                                     **db_configuration)
+        return self.connect_from_parameters(dbname=dbname,
+                                            silent_on_fail=silent_on_fail,
+                                            **db_configuration)
 
     def connect_from_parameters(self, dbname=None, **params):
         """Initialises the database from a dictionary of parameters.
@@ -184,7 +184,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'To set it in runtime change the dbname '
                                'attribute.')
 
-        self._conn(dbname, **params)
+        return self._conn(dbname, **params)
 
     @staticmethod
     def list_profiles():
@@ -282,6 +282,8 @@ if _peewee:
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
 
+            return self.connected
+
 
 if _sqla:
 
@@ -370,6 +372,8 @@ if _sqla:
                 self.connected = True
                 self.dbname = dbname
                 self.prepare_bases()
+
+            return self.connected
 
         def reset_engine(self):
             ''' Reset the engine, metadata, and session '''
