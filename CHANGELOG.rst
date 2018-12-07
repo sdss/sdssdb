@@ -13,8 +13,6 @@ This document records the main changes to the sdssdb code.
 
 Added
 ^^^^^
-* PeeWee support for targetdb and apo/lco databases
-* SQLAlchemy support for catalogdb and the mangadb
-* Implemented database connection switching in SQLalchemy
-* Some basic introduction documentation
-
+* Support for sdss5db, operationsdb (apodb/lcodb), and the mangadb (only in SQLA).
+* Implemented database connection switching in SQLAlchemy.
+* Some basic introduction documentation.
