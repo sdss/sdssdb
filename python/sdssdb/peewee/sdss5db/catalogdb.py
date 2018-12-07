@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-07 14:45:16
+# @Last modified time: 2018-12-07 15:01:25
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -454,7 +454,7 @@ class TwoMassPsc(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-GaiaDR2TmassBestNeighbourDeferred = DeferredThroughModel()
+_GaiaDR2TmassBestNeighbourDeferred = DeferredThroughModel()
 
 
 class GaiaDR2Source(SDSS5dbModel):
@@ -554,7 +554,7 @@ class GaiaDR2Source(SDSS5dbModel):
     lum_percentile_upper = FloatField(null=True)
 
     tmass_best_sources = ManyToManyField(TwoMassPsc,
-                                         through_model=GaiaDR2TmassBestNeighbourDeferred,
+                                         through_model=_GaiaDR2TmassBestNeighbourDeferred,
                                          backref='gaia_best_sources')
 
     class Meta:
@@ -1779,4 +1779,4 @@ class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
+_GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
