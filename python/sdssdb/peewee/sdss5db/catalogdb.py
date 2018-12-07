@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-07 11:20:18
+# @Last modified time: 2018-12-07 14:45:16
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -17,7 +17,7 @@ from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, Char
 from . import SDSS5dbModel, database  # noqa
 
 
-class Allwise(SDSS5dbModel):
+class AllWise(SDSS5dbModel):
     designation = CharField(null=True)
     ra = DecimalField(index=True, null=True)
     dec = DecimalField(index=True, null=True)
@@ -323,7 +323,7 @@ class Allwise(SDSS5dbModel):
         primary_key = False
 
 
-class ErositaAgnMock(SDSS5dbModel):
+class ErositaAGNMock(SDSS5dbModel):
     ero_detuid = TextField(null=True)
     ero_souuid = TextField(null=True)
     ero_ra = FloatField(index=True, null=True)
@@ -572,7 +572,7 @@ class GaiaDR2Clean(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class GaiaDR2WdCandidatesV1(SDSS5dbModel):
+class GaiaDR2WDCandidatesV1(SDSS5dbModel):
     white_dwarf_name = TextField(null=True)
     pwd = FloatField(null=True)
     pwd_correction = FloatField(null=True)
@@ -638,7 +638,7 @@ class GaiaDR2WdCandidatesV1(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class GaiaDR2Sdssdr9BestNeighbour(SDSS5dbModel):
+class GaiaDR2SDSSDR9BestNeighbour(SDSS5dbModel):
     sdssdr9_oid = BigIntegerField(index=True, null=True)
     number_of_neighbours = IntegerField(null=True)
     number_of_mates = IntegerField(null=True)
@@ -683,7 +683,7 @@ class GalacticGenesisBig(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class Guvcat(SDSS5dbModel):
+class GUVCat(SDSS5dbModel):
     objid = BigAutoField()
     photoextractid = BigIntegerField(null=True)
     mpstype = TextField(null=True)
@@ -836,7 +836,7 @@ class KeplerInput10(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr13Photoobj(SDSS5dbModel):
+class SDSSDR13Photoobj(SDSS5dbModel):
     objid = BigAutoField()
     run = IntegerField(null=True)
     rerun = IntegerField(null=True)
@@ -1056,7 +1056,7 @@ class SdssDr13Photoobj(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Apogeestar(SDSS5dbModel):
+class SDSSDR14APOGEEStar(SDSS5dbModel):
     apstar_id = CharField(primary_key=True)
     target_id = CharField(null=True)
     reduction_id = CharField(null=True)
@@ -1112,7 +1112,7 @@ class SdssDr14Apogeestar(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Apogeestarvisit(SDSS5dbModel):
+class SDSSDR14APOGEEStarVisit(SDSS5dbModel):
     visit_id = CharField(primary_key=True)
     apstar_id = CharField(index=True, null=True)
 
@@ -1121,7 +1121,7 @@ class SdssDr14Apogeestarvisit(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Apogeevisit(SDSS5dbModel):
+class SDSSDR14APOGEEVisit(SDSS5dbModel):
     visit_id = CharField(primary_key=True)
     apred_version = CharField(null=True)
     apogee_id = CharField(null=True)
@@ -1178,7 +1178,7 @@ class SdssDr14Apogeevisit(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Ascapstar(SDSS5dbModel):
+class SDSSDR14ASCAPStar(SDSS5dbModel):
     apstar_id = CharField(primary_key=True)
     target_id = CharField(index=True, null=True)
     aspcap_id = CharField(null=True)
@@ -1345,7 +1345,7 @@ class SdssDr14Ascapstar(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Cannonstar(SDSS5dbModel):
+class SDSSDR14CannonStar(SDSS5dbModel):
     apogee_id = CharField(index=True, null=True)
     cannon_id = CharField(primary_key=True)
     filename = CharField(null=True)
@@ -1431,7 +1431,7 @@ class SdssDr14Cannonstar(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Specobj(SDSS5dbModel):
+class SDSSDR14SpecObj(SDSS5dbModel):
     specobjid = DecimalField(primary_key=True)
     bestobjid = BigIntegerField(index=True, null=True)
     fluxobjid = BigIntegerField(index=True, null=True)
@@ -1744,7 +1744,7 @@ class TwoMassClean(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class TwoMassCleanNoneighbor(SDSS5dbModel):
+class TwoMassCleanNoNeighbor(SDSS5dbModel):
     pts_key = IntegerField(null=True)
     designation = CharField(primary_key=True)
     ra = FloatField(null=True)
