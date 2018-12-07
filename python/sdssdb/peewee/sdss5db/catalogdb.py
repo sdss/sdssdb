@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 23:14:56
+# @Last modified time: 2018-12-07 11:20:18
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -555,7 +555,7 @@ class GaiaDR2Source(SDSS5dbModel):
 
     tmass_best_sources = ManyToManyField(TwoMassPsc,
                                          through_model=GaiaDR2TmassBestNeighbourDeferred,
-                                         backref='gaia_dr2_sources')
+                                         backref='gaia_best_sources')
 
     class Meta:
         table_name = 'gaia_dr2_source'
