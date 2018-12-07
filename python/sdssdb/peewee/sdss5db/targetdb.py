@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-09-22 14:49:20
+# @Last modified time: 2018-12-06 16:21:30
 
 from peewee import (AutoField, BigIntegerField, DateTimeField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
@@ -376,7 +376,7 @@ class FiberConfiguration(SDSS5dbModel):
                             field='pk',
                             model=Fiber,
                             null=True,
-                            backref='fiber_configuration')
+                            backref='fiber_configurations')
     pk = AutoField()
     target = ForeignKeyField(backref='fiber_configurations',
                              column_name='target_pk',
@@ -402,7 +402,7 @@ class Spectrum(SDSS5dbModel):
                                           field='pk',
                                           model=FiberConfiguration,
                                           null=True,
-                                          backref='spectrum')
+                                          backref='spectra')
     pk = AutoField()
     sn2 = FloatField(null=True)
 
