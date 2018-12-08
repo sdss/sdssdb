@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-07 15:01:25
+# @Last modified time: 2018-12-07 23:10:53
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -565,7 +565,7 @@ class GaiaDR2Source(SDSS5dbModel):
 class GaiaDR2Clean(SDSS5dbModel):
 
     source_id = BigAutoField(column_name='source_id')
-    source = ForeignKeyField(GaiaDR2Source, column_name='source_id', backref='+')
+    source = ForeignKeyField(GaiaDR2Source, column_name='source_id', backref='gaia_clean')
 
     class Meta:
         table_name = 'gaia_dr2_clean'
@@ -1737,7 +1737,7 @@ class TwoMassClean(SDSS5dbModel):
     twomassbrightneighbor = BooleanField(index=True, null=True)
 
     psc = ForeignKeyField(TwoMassPsc, field='designation',
-                          column_name='designation', backref='+')
+                          column_name='designation', backref='tmass_clean')
 
     class Meta:
         table_name = 'twomass_clean'
