@@ -10,11 +10,11 @@
 
 from __future__ import absolute_import, division, print_function
 
-from sdssdb.sqlalchemy.sdss5db import SDSS5Base, database
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
-from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String
+
+from sdssdb.sqlalchemy.sdss5db import SDSS5Base, database
 
 
 class Base(AbstractConcreteBase, SDSS5Base):
@@ -48,18 +48,20 @@ class ErositaClustersMock(Base):
     pk = Column(Integer, primary_key=True)
 
 
-class GaiaDR2Clean(Base):
-    __tablename__ = 'gaia_dr2_clean'
-    print_fields = ['source_id']
-
-    source_id = Column(Integer, primary_key=True)
-
-
 class GaiaDR2Source(Base):
     __tablename__ = 'gaia_dr2_source'
     print_fields = ['source_id']
 
     source_id = Column(Integer, primary_key=True)
+
+
+class GaiaDR2Clean(Base):
+    __tablename__ = 'gaia_dr2_clean'
+    print_fields = ['source_id']
+
+    source_id = Column(Integer,
+                       ForeignKey('catalogdb.gaia_dr2_source.source_id'),
+                       primary_key=True)
 
 
 class GaiaDR2WDCandidatesV1(Base):
@@ -163,11 +165,21 @@ class TessInput(Base):
     id = Column(Integer, primary_key=True)
 
 
+class TwoMassPsc(Base):
+    __tablename__ = 'twomass_psc'
+    print_fields = ['pts_key']
+
+    pts_key = Column(Integer, primary_key=True)
+    designation = Column(String, unique=True)
+
+
 class TwoMassClean(Base):
     __tablename__ = 'twomass_clean'
     print_fields = ['designation']
 
-    designation = Column(String, primary_key=True)
+    designation = Column(String,
+                         ForeignKey('catalogdb.twomass_psc.designation'),
+                         primary_key=True)
 
 
 class TwoMassCleanNoNeighbor(Base):
@@ -177,15 +189,17 @@ class TwoMassCleanNoNeighbor(Base):
     designation = Column(String, primary_key=True)
 
 
-class TwoMassPsc(Base):
-    __tablename__ = 'twomass_psc'
-    print_fields = ['pts_key']
-
-    pts_key = Column(Integer, primary_key=True)
-    designation = Column(String, unique=True)
-
-
 def define_relations():
+
+    GaiaDR2Clean.source = relationship(
+        GaiaDR2Source,
+        # primaryjoin='GaiaDR2Source.source_id == GaiaDR2Clean.source_id',
+        backref='gaia_clean')
+
+    TwoMassClean.psc = relationship(
+        TwoMassPsc,
+        # primaryjoin='TwoMassClean.designation == TwoMassClean.designation',
+        backref='tmass_clean')
 
     GaiaDR2Source.tmass_best_sources = relationship(
         TwoMassPsc, secondary=GaiaDR2TmassBestNeighbour.__table__,
