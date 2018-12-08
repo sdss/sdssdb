@@ -235,6 +235,44 @@ If you connect to a different database, you must recreate the database session :
     session = database.Session()
 
 
+The case of ``operationsdb``
+----------------------------
+
+If you are familiar with the SDSS databases you will know that there is no ``operationsdb``. Instead, there is ``apodb`` and ``lcodb``, two databases that share the same schemas but are located on computers are APO and LCO respectively. Instead of creating different sets of identical model classes for both databases, the models and database connections can be found under the ``operationsdb`` submodule (``sdssdb.peewee.operationsdb`` or ``sdssdb.sqlalchemy.operationsdb``).
+
+When you import the database connection it will try use the profile name to decide to which database to connect. For example, if you are at APO the ``apo`` profile will be used by default and the database connection will try to connect to ``apodb`` ::
+
+    >>> from sdssdb.peewee.operationsdb import database
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='apo', connected=True)>
+
+If that fails, you will need to define the database name and profile. In the following example the user has ``apodb`` available locally ::
+
+    >>> from sdssdb.peewee.operationsdb import database
+    >>> database
+    <PeeweeDatabaseConnection (dbname=None, profile='local', connected=True)>
+    >>> database.connect('apodb')
+    True
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
+
+If both ``apodb`` and ``lcodb`` are available we can which from one to the other in runtime ::
+
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
+    >>> from sdssdb.peewee.operationsdb import platedb
+    >>> plate_10k = platedb.Plate.get(plate_id=10000)
+    >>> plate_10k.plate_run.label
+    '2015.08.z.eboss'
+    >>> database.connect('lcodb')
+    True
+    >>> database
+    <PeeweeDatabaseConnection (dbname='lcodb', profile='local', connected=True)>
+    >>> plate_9781 = platedb.Plate.get(plate_id=9781)
+    >>> plate_9781.plate_run.label
+    '2017.03.b.apogee2s.south'
+
+
 Where to go from here?
 ----------------------
 
