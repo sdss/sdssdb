@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
-* Support for sdss5db, operationsdb (apodb/lcodb), and the mangadb (only in SQLAlchemy).
+* ``DatabaseConnection`` class with Peewee and SQLA subclasses.
+* Support for sdss5db, operationsdb (apodb/lcodb), and manga (only in SQLAlchemy).
 * Implemented database connection switching in SQLAlchemy.
-* Some basic introduction documentation.
+* Basic documentation.
