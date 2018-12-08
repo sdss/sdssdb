@@ -37,7 +37,7 @@ from sdssdb import __version__
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.mathjax',
-              'sphinx.ext.intersphinx']
+              'sphinx.ext.intersphinx', 'releases']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -125,6 +125,10 @@ rst_epilog = """
 .. _peewee: http://docs.peewee-orm.com/en/latest/
 .. _SQLAlchemy: http://www.sqlalchemy.org/
 """
+
+releases_github_path = 'sdss/sdssdb'
+releases_document_name = ['CHANGELOG']
+releases_unstable_prehistory = True
 
 
 # -- Options for HTML output ----------------------------------------------
