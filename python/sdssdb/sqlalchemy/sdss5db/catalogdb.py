@@ -20,6 +20,7 @@ from sqlalchemy.types import Integer, String
 class Base(AbstractConcreteBase, SDSS5Base):
     __abstract__ = True
     _schema = 'catalogdb'
+    _relations = 'define_relations'
 
     @declared_attr
     def __table_args__(cls):
@@ -47,40 +48,35 @@ class ErositaClustersMock(Base):
     pk = Column(Integer, primary_key=True)
 
 
-class GaiaClean(Base):
+class GaiaDR2Clean(Base):
     __tablename__ = 'gaia_dr2_clean'
     print_fields = ['source_id']
 
     source_id = Column(Integer, primary_key=True)
 
 
-class GaiaSource(Base):
+class GaiaDR2Source(Base):
     __tablename__ = 'gaia_dr2_source'
     print_fields = ['source_id']
 
     source_id = Column(Integer, primary_key=True)
 
 
-class GaiaWD(Base):
+class GaiaDR2WDCandidatesV1(Base):
     __tablename__ = 'gaia_dr2_wd_candidates_v1'
     print_fields = ['source_id']
 
-    gaia_source = relationship(GaiaSource, backref='wd')
 
-
-class GaiaSDSSBest(Base):
+class GaiaDR2SDSSDR9BestNeighbour(Base):
     __tablename__ = 'gaiadr2_sdssdr9_best_neighbour'
     print_fields = ['source_id']
 
     source_id = Column(Integer, primary_key=True)
 
 
-class GaiaTmassBest(Base):
+class GaiaDR2TmassBestNeighbour(Base):
     __tablename__ = 'gaiadr2_tmass_best_neighbour'
     print_fields = ['source_id']
-
-    gaia_source = relationship('GaiaSource', backref='tmassbest')
-    twomass_psc = relationship('TwoMassPsc', backref='tmassbest')
 
 
 class GalacticGenesis(Base):
@@ -97,14 +93,14 @@ class GalacticGenesisBig(Base):
     gaiaid = Column(Integer, primary_key=True)
 
 
-class GuvCat(Base):
+class GUVCat(Base):
     __tablename__ = 'guvcat'
     print_fields = ['objid']
 
     objid = Column(Integer, primary_key=True)
 
 
-class KeplerInput(Base):
+class KeplerInput10(Base):
     __tablename__ = 'kepler_input_10'
     print_fields = ['kic_kepler_id']
 
@@ -139,7 +135,7 @@ class SDSSDR14ApogeeVisit(Base):
     visitid = Column(Integer, primary_key=True)
 
 
-class SDSSDR14AscapStar(Base):
+class SDSSDR14ASCAPStar(Base):
     __tablename__ = 'sdss_dr14_ascapstar'
     print_fields = ['apstar_id']
 
@@ -187,6 +183,21 @@ class TwoMassPsc(Base):
 
     pts_key = Column(Integer, primary_key=True)
     designation = Column(String, unique=True)
+
+
+def define_relations():
+
+    GaiaDR2Source.tmass_best_sources = relationship(
+        TwoMassPsc, secondary=GaiaDR2TmassBestNeighbour.__table__,
+        backref='gaia_best_sources')
+
+    GaiaDR2TmassBestNeighbour.gaia_source = relationship(
+        'GaiaDR2Source', backref='tmass_best_neighbour')
+    GaiaDR2TmassBestNeighbour.tmass_source = relationship(
+        'TwoMassPsc', backref='gaia_best_neighbour')
+
+    GaiaDR2WDCandidatesV1.gaia_source = relationship(
+        GaiaDR2Source, backref='gaia_dr2_wd_candidate')
 
 
 database.add_base(Base)
