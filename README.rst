@@ -1,21 +1,12 @@
 sdssdb
-==============================
+======
 
-Central SDSS product for database management
+SDSS product for database management.
 
-Database setup, configuration, and interaction for SDSS (core SDSS products utilizing databases will utilize sdssdb).
+|docs|
 
-| |Build Status|
-| |Coverage Status|
 
-------------
-
-This README describes the sdssdb Python package. 
-It should include things like a general description, installation instructions, and requirements. 
-It should also include information badges for other services or packages used, e.g., Travis-CI and Coveralls, ReadtheDocs, Astropy, etc.
-
-.. |Build Status| image:: https://travis-ci.org/jsobeck/sdssdb.svg?branch=master
-   :target: https://travis-ci.org/jsobeck/sdssdb
-
-.. |Coverage Status| image:: https://coveralls.io/repos/github/jsobeck/sdssdb/badge.svg?branch=master
-   :target: https://coveralls.io/github/jsobeck/sdssdb?branch=master
+.. |docs| image:: https://readthedocs.org/projects/sdssdb/badge/?version=latest
+    :alt: Documentation Status
+    :scale: 100%
+    :target: https://sdssdb.readthedocs.io/en/latest/?badge=latest
