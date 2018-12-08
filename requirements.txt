@@ -1,7 +1,2 @@
-
-# numpy
-# astropy
 pyyaml
 pygments
-sdss-tree>=2.15.2
-sdss-access>=0.2.3
