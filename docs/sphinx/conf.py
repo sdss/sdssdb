@@ -57,8 +57,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'sdssdb'
-copyright = '{0}, {1}'.format('2018', 'Jen Sobeck')
-author = 'Jen Sobeck'
+copyright = '{0}, {1}'.format('2018', 'José Sánchez-Gallego')
+author = 'José Sánchez-Gallego, Brian Cherinka, Jen Sobeck'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
