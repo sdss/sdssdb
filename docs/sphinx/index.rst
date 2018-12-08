@@ -7,21 +7,29 @@
 
 .. rubric:: :header_no_toc:`Welcome to sdssdb's documentation!`
 
-This is the Sphinx documentation for the SDSS Python product sdssdb
+This page contains the documentation for the SDSS Python product ``sdssdb``. This product provides ORM access to the databases used for SDSS operations, data reductions, and target selection.
 
-Introduction
-------------
 
-* :ref:`What's new in sdssdb? <sdssdb-changelog>`
-* :ref:`Introduction to sdssdb <intro>`
+User documentation
+------------------
+
+.. toctree::
+    :maxdepth: 2
+
+    installation
+    intro
+    example
+    contributing
+
 
 Reference
 ---------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    api
+   CHANGELOG
 
 
 Indices and tables
