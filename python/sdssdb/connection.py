@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 19:44:23
+# @Last modified time: 2018-12-07 16:14:21
 
 
 from __future__ import absolute_import, division, print_function
@@ -55,13 +55,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     Parameters
     ----------
+    dbname : str
+        The database name.
     profile : str
         The configuration profile to use. The profile defines the default
         user, database server hostname, and port for a given location. If
         not provided, the profile is automatically determined based on the
         current domain, or defaults to ``local``.
-    dbname : str
-        The database name.
     autoconnect : bool
         Whether to autoconnect to the database using the profile parameters.
         Requites `.dbname` to be set.
@@ -71,7 +71,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     #: The database name.
     dbname = None
 
-    def __init__(self, profile=None, dbname=None, autoconnect=True):
+    def __init__(self, dbname=None, profile=None, autoconnect=True):
 
         #: Reports whether the connection is active.
         self.connected = False
