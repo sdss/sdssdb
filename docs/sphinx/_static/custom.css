@@ -43,6 +43,10 @@ a.reference {
     color: #4c72b0 !important;
 }
 
+a.external {
+    text-decoration: underline !important;
+}
+
 blockquote p {
     font-size: 14px !important;
 }
