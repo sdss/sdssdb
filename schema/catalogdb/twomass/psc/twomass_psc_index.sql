@@ -28,7 +28,4 @@ CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (ph_qual);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (cc_flg);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (gal_contam);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (rd_flg);
-
-
-
-
+CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc using BTREE (designation);
