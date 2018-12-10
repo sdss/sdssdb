@@ -34,7 +34,7 @@ conflict $product
 # modify the part in quotes if you really need to, but most products should
 # leave this alone.
 #
-module-whatis Sets up $product/$version in your environment.
+module-whatis "Sets up $product/$version in your environment."
 #
 # DEPENDENCIES SECTION
 #
