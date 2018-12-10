@@ -53,14 +53,14 @@ Note that we don't need to write the expression again. We can take the previous 
 
 The ``SELECT`` statement for this query is ``GaiaDR2Source``, which are returned as model class instances. From there we can navigate to all the relevant information, as we did to get ``h_m`` from the 2MASS table. To generate a list of targets to observe we are interested in only a few of the parameters (RA, declination, magnitude). We can select only those values and return the results as a list of tuples ::
 
-    >>> selection_list = GaiaDR2Source.select(
+    >>> galactic_genesis = GaiaDR2Source.select(
         GaiaDR2Source.source_id,
         TwoMassPsc.designation,
         GaiaDR2Source.ra,
         GaiaDR2Source.dec,
         GaiaDR2Source.phot_g_mean_mag,
-        TwoMassPsc.h_m).join(GaiaDR2Clean).switch(GaiaDR2Source).join(GaiaDR2TmassBestNeighbour).join(TwoMassPsc).join(TwoMassClean).where(TwoMassPsc.h_m < 11, (GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5, TwoMassClean.twomassbrightneighbor == False).limit(100).tuples()
-    >>> list(selection_list)
+        TwoMassPsc.h_m).join(GaiaDR2Clean).switch(GaiaDR2Source).join(GaiaDR2TmassBestNeighbour).join(TwoMassPsc).join(TwoMassClean).where(TwoMassPsc.h_m < 11, (GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5, TwoMassClean.twomassbrightneighbor == False)
+    >>> list(galactic_genesis.limit(100).tuples())
     [(1866735487144411648,
       '21002432+3525317 ',
       315.101337448339,
@@ -97,12 +97,25 @@ The previous example used the Peewee submodule. The same query can be performed 
 
     >>> from sdssdb.sqlalchemy.sdss5db.catalogdb import *
     >>> session = database.Session()
-    >>> selection_list = session.query(
+    >>> galactic_genesis = session.query(
             GaiaDR2Source.source_id,
             TwoMassPsc.designation,
             GaiaDR2Source.ra,
             GaiaDR2Source.dec,
             GaiaDR2Source.phot_g_mean_mag,
-            TwoMassPsc.h_m).join(GaiaDR2Clean, GaiaDR2TmassBestNeighbour, TwoMassPsc, TwoMassClean).filter(TwoMassPsc.h_m < 11, (GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5, TwoMassClean.twomassbrightneighbor == False).limit(100)
+            TwoMassPsc.h_m).join(GaiaDR2Clean, GaiaDR2TmassBestNeighbour, TwoMassPsc, TwoMassClean).filter(TwoMassPsc.h_m < 11, (GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5, TwoMassClean.twomassbrightneighbor == False)
 
 Note that in SQLAlchemy there is no need to use the ``switch`` method.
+
+
+Cone searches
+-------------
+
+``sdssdb`` provides a simple way of performing elliptical cone searches using `q3c <https://github.com/segasai/q3c>`__. Using the ``galactic_genesis`` query defined above, let's now get the targets within 1.5 degrees of :math:`(200, 40)` degrees ::
+
+    >>> cone = galactic_genesis.where(GaiaDR2Source.cone_search(200, 40, 1.5))
+    >>> list(cone)
+    [<GaiaDR2Source: 1524783316445526016>,
+     <GaiaDR2Source: 1524577913928477568>,
+     <GaiaDR2Source: 1524637493714681216>,
+     <GaiaDR2Source: 1525140554643949568>]
