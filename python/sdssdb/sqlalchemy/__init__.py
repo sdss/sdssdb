@@ -50,7 +50,7 @@ class BaseModel(object):
 
     '''
 
-    #: A list of fields (as strings) to be included in the ``__repr__```
+    #: A list of fields (as strings) to be included in the ``__repr__``
     print_fields = []
 
     def __repr__(self):
