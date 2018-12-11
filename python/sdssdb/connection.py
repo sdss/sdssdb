@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-10 16:18:08
+# @Last modified time: 2018-12-10 16:39:58
 
 
 from __future__ import absolute_import, division, print_function
@@ -220,10 +220,21 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         return self._conn(dbname, **params)
 
     @staticmethod
-    def list_profiles():
-        """Returns a list of profiles."""
+    def list_profiles(profile=None):
+        """Returns a list of profiles.
 
-        return config.keys()
+        Parameters
+        ----------
+        profile : `str` or `None`
+            If `None`, returns a list of profile keys. If profile is not `None`
+            returns the parameters for the given profile.
+
+        """
+
+        if profile is None:
+            return config.keys()
+
+        return config[profile]
 
     @abc.abstractproperty
     def connection_params(self):
