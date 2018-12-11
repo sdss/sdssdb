@@ -278,6 +278,6 @@ If both ``apodb`` and ``lcodb`` are available we can which from one to the other
 Where to go from here?
 ----------------------
 
-Once the connection has been created and the model classes imported you can use them as you would with any Peewee or SQLALchemy model. It is beyond the purpose of this documentation to explain how to use those libraries. Instead, refer to the peewee_ or SQLAlchemy documentation.
+Once the connection has been created and the model classes imported you can use them as you would with any Peewee or SQLALchemy model. It is beyond the purpose of this documentation to explain how to use those libraries. Instead, refer to the peewee_ or SQLAlchemy_ documentation.
 
 The :ref:`target-selection-example` section provides a detailed example of how to use ``sdssdb`` that highlights the advantages of the ORM approach.
