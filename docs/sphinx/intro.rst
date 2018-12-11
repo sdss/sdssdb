@@ -110,7 +110,7 @@ Note that the level of readiness is not necessarily identical in both Peewee and
 Connecting to a Database
 ------------------------
 
-The `~sdssdb.connection.DatabaseConnection` abstract class allows to connect to a PostgreSQL database using a :ref:`profile` or connection parameters. In most cases, the user will need to use either `~sdssdb.connection.PeeweeDatabaseConnection` or `~sdssdb.connection.SQLADatabaseConnection` depending on the backend library used. Regarding the implementation details, their behaviour is identical. To open a connection to the database ``manga`` we can do ::
+The `~sdssdb.connection.DatabaseConnection` abstract class allows to connect to a PostgreSQL database using a profile (see the :ref:`profile`) or a custom set of connection parameters. In most cases, the user will need to use either `~sdssdb.connection.PeeweeDatabaseConnection` or `~sdssdb.connection.SQLADatabaseConnection` depending on the backend library used. Regarding the implementation details, their behaviour is identical. To open a connection to the database ``manga`` we can do ::
 
     >>> from sdssdb.connection import SQLADatabaseConnection
     >>> db = SQLADatabaseConnection('manga')
@@ -177,6 +177,8 @@ A note about passwords
 
 where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of parameters.
 
+
+.. _profile:
 
 Supported Profiles
 ------------------
