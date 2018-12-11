@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-07 16:14:21
+# @Last modified time: 2018-12-10 16:18:08
 
 
 from __future__ import absolute_import, division, print_function
@@ -452,7 +452,7 @@ if _sqla:
 
             Prepares a SQLalchemy Base for reflection. This binds a database
             engine to a specific Base which maps to a set of ModelClasses.
-            If ``base` is passed only that base will be prepared. Otherwise,
+            If ``base`` is passed only that base will be prepared. Otherwise,
             all the bases bound to this database connection will be prepared.
 
             """
