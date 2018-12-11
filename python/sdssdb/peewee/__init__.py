@@ -86,7 +86,7 @@ class BaseModel(Model):
 
         """
 
-        assert hasattr(cls, 'ra') and hasattr(cls, 'dec'), \
+        assert hasattr(cls, ra_col) and hasattr(cls, dec_col), \
             'this model class does not have ra/dec columns.'
 
         ra_attr = getattr(cls, ra_col)

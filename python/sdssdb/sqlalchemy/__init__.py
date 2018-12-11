@@ -125,15 +125,15 @@ class BaseModel(object):
 
         """
 
-        assert hasattr(cls, 'ra') and hasattr(cls, 'dec'), \
+        assert hasattr(cls, ra_col) and hasattr(cls, dec_col), \
             'this model class does not have ra/dec columns.'
 
         ra_attr = getattr(cls, ra_col)
         dec_attr = getattr(cls, dec_col)
 
         if b is None:
-            return fn.q3c_radial_query(ra_attr, dec_attr, ra, dec, a)
+            return func.q3c_radial_query(ra_attr, dec_attr, ra, dec, a)
         else:
             pa = pa or 0.0
             ratio = b / a
-            return fn.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)
+            return func.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)
