@@ -79,26 +79,29 @@ class BaseModel(object):
         return self.pk if hasattr(self, 'pk') else None
 
     @hybrid_method
-    def cone_search(self, ra, dec, a, b=None, pa=None):
+    def cone_search(self, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):
         """Returns a query with the rows inside a region on the sky."""
 
-        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+        assert hasattr(self, ra_col) and hasattr(self, dec_col), \
             'this model class does not have ra/dec columns.'
 
+        ra_attr = getattr(self, ra_col)
+        dec_attr = getattr(self, dec_col)
+
         if b is None:
-            return func.q3c_radial_query(self.ra, self.dec, ra, dec, a)
+            return fn.q3c_radial_query(ra_attr, dec_attr, ra, dec, a)
         else:
             pa = pa or 0.0
             ratio = b / a
-            return func.q3c_ellipse_query(self.ra, self.dec, ra, dec, a, ratio, pa)
+            return fn.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)
 
     @cone_search.expression
-    def cone_search(cls, ra, dec, a, b=None, pa=None):
+    def cone_search(cls, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):
         """Returns a query with the rows inside a region on the sky.
 
-        Defines a sky ellipse and returns the targets within. Assumes that the
-        table contains two columns ``ra`` and ``dec``. All units are assumed
-        to be degrees.
+        Defines a sky ellipse and returns the targets within. By default it
+        assumes that the table contains two columns ``ra`` and ``dec``. All
+        units are expected to be in degrees.
 
         Parameters
         ----------
@@ -115,15 +118,22 @@ class BaseModel(object):
             search will be run. In that case, ``pa`` is ignored.
         pa : `float` or `None`
             The parallactic angle of the ellipse.
+        ra_col : str
+            The name of the column with the RA value.
+        dec_col : str
+            The name of the column with the Dec value.
 
         """
 
         assert hasattr(cls, 'ra') and hasattr(cls, 'dec'), \
             'this model class does not have ra/dec columns.'
 
+        ra_attr = getattr(cls, ra_col)
+        dec_attr = getattr(cls, dec_col)
+
         if b is None:
-            return func.q3c_radial_query(cls.ra, cls.dec, ra, dec, a)
+            return fn.q3c_radial_query(ra_attr, dec_attr, ra, dec, a)
         else:
             pa = pa or 0.0
             ratio = b / a
-            return func.q3c_ellipse_query(cls.ra, cls.dec, ra, dec, a, ratio, pa)
+            return fn.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)
