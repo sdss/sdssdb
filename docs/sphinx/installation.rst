@@ -22,7 +22,7 @@ If you are working from Utah, ``sdssdb`` is installed as a module and you should
 
 and follow the instructions above to be sure it has been loaded. Remember that ``sdssdb`` is Python 3-only so you may need to load the Python 3 module (e.g., ``module switch python python/3.6.3`` or similar). Alternatively you can use `sdss_install <https://github.com/sdss/sdss_install>`__ to checkout a local copy in your unit or local machine ::
 
-    sdss_install --github sdssdb
+    sdss_install --github sdssdb <version>
 
 or for a development version ::
 
