@@ -14,7 +14,8 @@ CREATE TABLE catalogdb.gaiadr2_tmass_best_neighbour(
     source_id bigint,
     original_ext_source_id character(17),
     angular_distance double precision,
-    gaia_astrometric_params integer
+    gaia_astrometric_params integer,
+    tmass_pts_key integer
 );
 
 

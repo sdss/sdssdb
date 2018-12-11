@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-07 23:10:53
+# @Last modified time: 2018-12-10 18:38:11
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -1763,6 +1763,7 @@ class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
     best_neighbour_multiplicity = IntegerField(null=True)
     source_id = BigAutoField(primary_key=True)
     original_ext_source_id = CharField(null=True)
+    tmass_pts_key = IntegerField(null=True)
     angular_distance = FloatField(null=True)
     gaia_astrometric_params = IntegerField(null=True)
 
