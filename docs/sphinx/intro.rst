@@ -4,7 +4,7 @@
 Getting started with sdssdb
 ===========================
 
-``sdssdb`` provides general utilities and functionality for connecting to SDSS databases using `Object-relational Mapping <https://en.wikipedia.org/wiki/Object-relational_mapping>`__ (ORM).  ``sdssdb`` supports two Python ORM libraries for mapping between database tables and Python classes:  `Peewee <http://docs.peewee-orm.com/en/latest/>`_ and `SQLAlchemy <https://www.sqlalchemy.org/>`_.
+``sdssdb`` provides general utilities and functionality for connecting to SDSS databases using `Object-relational Mapping <https://en.wikipedia.org/wiki/Object-relational_mapping>`__ (ORM).  ``sdssdb`` supports two Python ORM libraries for mapping between database tables and Python classes:  Peewee_ and SQLAlchemy_.
 
 
 Making a simple query with ``sdssdb``
@@ -278,6 +278,10 @@ If both ``apodb`` and ``lcodb`` are available we can which from one to the other
 Where to go from here?
 ----------------------
 
-Once the connection has been created and the model classes imported you can use them as you would with any Peewee or SQLALchemy model. It is beyond the purpose of this documentation to explain how to use those libraries. Instead, refer to the peewee_ or SQLAlchemy_ documentation.
+Once the connection has been created and the model classes imported you can use them as you would with any Peewee or SQLALchemy model. It is beyond the purpose of this documentation to explain how to use those libraries. Instead, refer to the Peewee_ or SQLAlchemy_ documentation.
 
 The :ref:`target-selection-example` section provides a detailed example of how to use ``sdssdb`` that highlights the advantages of the ORM approach.
+
+
+.. _Peewee: http://docs.peewee-orm.com/en/latest/
+.. _SQLAlchemy: http://www.sqlalchemy.org/
