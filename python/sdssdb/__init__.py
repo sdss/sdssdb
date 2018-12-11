@@ -44,3 +44,6 @@ warnings.filterwarnings(
 
 
 __version__ = '0.1.0dev'
+
+
+from .connection import *  # noqa
