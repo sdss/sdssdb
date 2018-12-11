@@ -242,7 +242,7 @@ The case of ``operationsdb``
 
 If you are familiar with the SDSS databases you will know that there is no ``operationsdb``. Instead, there is ``apodb`` and ``lcodb``, two databases that share the same schemas but are located on computers are APO and LCO respectively. Instead of creating different sets of identical model classes for both databases, the models and database connections can be found under the ``operationsdb`` submodule (``sdssdb.peewee.operationsdb`` or ``sdssdb.sqlalchemy.operationsdb``).
 
-When you import the database connection it will try use the profile name to decide to which database to connect. For example, if you are at APO the ``apo`` profile will be used by default and the database connection will try to connect to ``apodb`` ::
+When you import the database connection ``sdssdb`` will try use the profile name to decide to which database to connect. For example, if you are at APO the ``apo`` profile will be used by default and the database connection will try to connect to ``apodb`` ::
 
     >>> from sdssdb.peewee.operationsdb import database
     >>> database
@@ -252,7 +252,7 @@ If that fails, you will need to define the database name and profile. In the fol
 
     >>> from sdssdb.peewee.operationsdb import database
     >>> database
-    <PeeweeDatabaseConnection (dbname=None, profile='local', connected=True)>
+    <PeeweeDatabaseConnection (dbname=None, profile='local', connected=False)>
     >>> database.connect('apodb')
     True
     >>> database
