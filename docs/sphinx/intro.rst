@@ -192,6 +192,19 @@ The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssd
 * **sdssadmin**: a user on the Utah sdssadmin machine.
 * **lore**: a user on the Utah lore machine.
 
+A list of available profiles (including custom ones) can also be accessed via de `~sdssdb.connection.DatabaseConnection.list_profiles` classmethod ::
+
+    >>> import sdssdb
+    >>> profiles = sdssdb.DatabaseConnection.list_profiles()
+    >>> profiles
+    dict_keys(['apo', 'lco', 'local', 'lore', 'jhu', 'sdssadmin', 'manga'])
+    >>> sdssdb.DatabaseConnection.list_profiles('apo')
+    {'user': 'sdssdb',
+     'admin': 'sdssdb_admin',
+     'host': 'sdss4-db',
+     'port': 5432,
+     'domain': 'apo.nmsu.edu'}
+
 
 Accessing the model classes
 ---------------------------
