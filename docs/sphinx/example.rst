@@ -119,3 +119,5 @@ Cone searches
      <GaiaDR2Source: 1524577913928477568>,
      <GaiaDR2Source: 1524637493714681216>,
      <GaiaDR2Source: 1525140554643949568>]
+
+Refer to the `~sdssdb.peewee.BaseModel.cone_search` documentation for more details.
