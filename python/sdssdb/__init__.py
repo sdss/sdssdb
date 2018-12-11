@@ -43,7 +43,7 @@ warnings.filterwarnings(
     'ignore', '.*Skipped unsupported reflection of expression-based index .*q3c.*')
 
 
-__version__ = '0.1.0dev'
+__version__ = '0.1.0'
 
 
 from .connection import *  # noqa

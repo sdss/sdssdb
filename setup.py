@@ -19,7 +19,7 @@ import sys
 # The NAME variable should be of the format "sdss-sdssdb".
 # Please check your NAME adheres to that format.
 NAME = 'sdssdb'
-VERSION = '0.1.0dev'
+VERSION = '0.1.0'
 RELEASE = 'dev' in VERSION
 
 
