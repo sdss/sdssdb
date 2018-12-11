@@ -38,6 +38,7 @@ def run(packages, install_requires):
           packages=packages,
           install_requires=install_requires,
           package_dir={'': 'python'},
+          python_requires='>=3.6',
           scripts=['bin/sdssdb'],
           classifiers=[
               'Development Status :: 4 - Beta',
