@@ -6,7 +6,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-06 15:28:03
+# @Last modified time: 2018-12-11 16:10:58
 
 
 import datetime
@@ -1143,14 +1143,15 @@ def define_relations():
 
     """
 
-    PlateRun.plates = relation(Plate, order_by='Plate.plate_id', backref='platerun')
-    Plate.design = relation(Design, primaryjoin='Plate.design_pk == Design.pk', backref='plate')
+    PlateRun.plates = relation(Plate, order_by=Plate.plate_id, backref='platerun')
+
+    Plate.design = relation(Design, primaryjoin=(Plate.design_pk == Design.pk), backref='plate')
     Plate.location = relation(PlateLocation, backref='plates')
     Plate.surveys = relation(Survey, secondary=PlateToSurvey.__table__, backref='plates')
-    Plate.pluggings = relation(Plugging, order_by='Plugging.fscan_mjd', backref='plate')
+    Plate.pluggings = relation(Plugging, order_by=Plugging.fscan_mjd, backref='plate')
     Plate.cmmMeasurements = relation(CmmMeas, backref='plate')
     Plate.currentSurveyMode = relation(SurveyMode,
-                                       primaryjoin='Plate.current_survey_mode_pk == SurveyMode.pk',
+                                       primaryjoin=(Plate.current_survey_mode_pk == SurveyMode.pk),
                                        backref='plates')
 
     PlatePointing.plate = relation(Plate, backref='plate_pointings')
@@ -1167,7 +1168,7 @@ def define_relations():
     PlateCompletionStatusHistory.completionStatus = relation(
         PlateCompletionStatus, backref='completionStatusHistory')
 
-    Tile.plates = relation(Plate, order_by='Plate.plate_id', backref='tile')
+    Tile.plates = relation(Plate, order_by=Plate.plate_id, backref='tile')
     Tile.status = relation(TileStatus, backref='tiles')
 
     TileStatusHistory.tile = relation(Tile, backref='statusHistory')
@@ -1194,7 +1195,7 @@ def define_relations():
     Observation.status = relation(ObservationStatus, backref='observations')
     Observation.exposures = relation(Exposure,
                                      backref='observation',
-                                     order_by='Exposure.start_time, Exposure.exposure_no')
+                                     order_by=(Exposure.start_time, Exposure.exposure_no))
 
     Exposure.camera = relation(Camera, backref='exposures')
     Exposure.survey = relation(Survey, backref='exposures')

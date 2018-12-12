@@ -6,6 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * Fixed command line example about how to install with ``sdss_install``.
+* Added ``mangadb`` schema for SQLA.
 * :release:`0.1.1 <2018-12-10>`
 * Set ``python_requires='>=3.6'``.
 * :release:`0.1.0 <2018-12-10>`

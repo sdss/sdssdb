@@ -63,7 +63,7 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td></td>
             <td class="active">mangadb</td>
             <td class="success"></td>
-            <td class="danger"></td>
+            <td class="success"></td>
         </tr>
         <tr>
             <td class="active">manga</td>
