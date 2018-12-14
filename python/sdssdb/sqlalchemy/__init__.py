@@ -59,13 +59,17 @@ class BaseModel(object):
         reg = str(self.__class__.__name__)
         if reg is not None:
 
-            fields = ['pk={0!r}'.format(self.get_id())]
+            pk_field = self.__class__.__mapper__.primary_key[0].name
+            pk_value = getattr(self, pk_field)
+            fields = ['{0}={1!r}'.format(pk_field, pk_value)]
 
             for extra_field in ['label', 'name']:
                 if extra_field not in self.print_fields:
                     self.print_fields.append(extra_field)
 
             for ff in self.print_fields:
+                if ff == pk_field:
+                    continue
                 base, value = get_field(self, ff)
                 if base:
                     fields.append('{0}={1!r}'.format(base, value))
