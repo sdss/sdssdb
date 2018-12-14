@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-13 16:22:10
+# @Last modified time: 2018-12-13 18:12:45
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -1736,8 +1736,8 @@ class TwoMassClean(SDSS5dbModel):
     h_m = FloatField(index=True, null=True)
     twomassbrightneighbor = BooleanField(index=True, null=True)
 
-    psc = ForeignKeyField(TwoMassPsc, field='designation',
-                          column_name='designation', backref='tmass_clean')
+    psc = ForeignKeyField(TwoMassPsc, field='pts_key',
+                          column_name='pts_key', backref='tmass_clean')
 
     class Meta:
         table_name = 'twomass_clean'

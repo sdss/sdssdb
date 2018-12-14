@@ -177,6 +177,7 @@ class TwoMassClean(Base):
     __tablename__ = 'twomass_clean'
     print_fields = ['designation']
 
+    pts_key = Column(Integer, ForeignKey('catalogdb.twomass_psc.pts_key'))
     designation = Column(String,
                          ForeignKey('catalogdb.twomass_psc.designation'),
                          primary_key=True)
@@ -198,7 +199,7 @@ def define_relations():
 
     TwoMassClean.psc = relationship(
         TwoMassPsc,
-        # primaryjoin='TwoMassClean.designation == TwoMassClean.designation',
+        foreign_keys=[TwoMassClean.pts_key],
         backref='tmass_clean')
 
     GaiaDR2Source.tmass_best_sources = relationship(
