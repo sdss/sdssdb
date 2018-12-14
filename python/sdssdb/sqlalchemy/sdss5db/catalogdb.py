@@ -78,7 +78,7 @@ class GaiaDR2SDSSDR9BestNeighbour(Base):
 
 class GaiaDR2TmassBestNeighbour(Base):
     __tablename__ = 'gaiadr2_tmass_best_neighbour'
-    print_fields = ['source_id']
+    print_fields = ['source_id', 'tmass_pts_key']
 
 
 class GalacticGenesis(Base):
@@ -202,13 +202,20 @@ def define_relations():
         backref='tmass_clean')
 
     GaiaDR2Source.tmass_best_sources = relationship(
-        TwoMassPsc, secondary=GaiaDR2TmassBestNeighbour.__table__,
+        TwoMassPsc,
+        secondary=GaiaDR2TmassBestNeighbour.__table__,
+        primaryjoin='GaiaDR2Source.source_id == GaiaDR2TmassBestNeighbour.source_id',
+        secondaryjoin='GaiaDR2TmassBestNeighbour.tmass_pts_key == TwoMassPsc.pts_key',
         backref='gaia_best_sources')
 
     GaiaDR2TmassBestNeighbour.gaia_source = relationship(
-        'GaiaDR2Source', backref='tmass_best_neighbour')
+        GaiaDR2Source,
+        foreign_keys=[GaiaDR2TmassBestNeighbour.source_id],
+        backref='tmass_best_neighbour')
     GaiaDR2TmassBestNeighbour.tmass_source = relationship(
-        'TwoMassPsc', backref='gaia_best_neighbour')
+        TwoMassPsc,
+        foreign_keys=[GaiaDR2TmassBestNeighbour.tmass_pts_key],
+        backref='gaia_best_neighbour')
 
     GaiaDR2WDCandidatesV1.gaia_source = relationship(
         GaiaDR2Source, backref='gaia_dr2_wd_candidate')

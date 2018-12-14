@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-10 18:38:11
+# @Last modified time: 2018-12-13 16:22:10
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
@@ -1771,8 +1771,8 @@ class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
                                   column_name='source_id',
                                   backref='tmass_best_neighbour')
     tmass_source = ForeignKeyField(TwoMassPsc,
-                                   column_name='original_ext_source_id',
-                                   field='designation',
+                                   column_name='tmass_pts_key',
+                                   field='pts_key',
                                    backref='gaia_best_neighbour')
 
     class Meta:
