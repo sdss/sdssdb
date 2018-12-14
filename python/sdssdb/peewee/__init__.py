@@ -18,26 +18,23 @@ class BaseModel(Model):
     #: A list of fields (as strings) to be included in the ``__repr__``
     print_fields = []
 
-    def __repr__(self):
-        """A custom repr for targetdb models."""
+    def __str__(self):
+        """A custom str for the model repr."""
 
-        reg = re.match('.*\'.*.(.*)\'.', str(self.__class__))
+        pk_field = self._meta.primary_key.name
+        fields = ['{0}={1!r}'.format(pk_field, self.get_id())]
 
-        if reg is not None:
+        for extra_field in ['label', 'name']:
+            if extra_field not in self.print_fields:
+                self.print_fields.append(extra_field)
 
-            fields = ['pk={0!r}'.format(self.get_id())]
+        for ff in self.print_fields:
+            if ff == pk_field:
+                continue
+            if hasattr(self, ff):
+                fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
 
-            for extra_field in ['label']:
-                if extra_field not in self.print_fields:
-                    self.print_fields.append(extra_field)
-
-            for ff in self.print_fields:
-                if hasattr(self, ff):
-                    fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
-
-            return '<{0}: {1}>'.format(reg.group(1), ', '.join(fields))
-
-        return super(BaseModel, self).__repr__()
+        return ', '.join(fields)
 
     @hybrid_method
     def cone_search(self, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):
