@@ -12,10 +12,22 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import importlib
+import os
+import shutil
+import warnings
+
 import sphinx_bootstrap_theme
 from pkg_resources import parse_version
 
 from sdssdb import __version__
+from sdssdb.utils import create_schema_graph
+
+
+try:
+    import peewee
+except ImportError:
+    peewee = None
 
 
 # Importing matplotlib here with agg to prevent tkinter error in readthedocs
@@ -270,3 +282,46 @@ texinfo_documents = [
      author, project, 'One line description of project.',
      'Miscellaneous'),
 ]
+
+
+def generate_schema_graphs():
+    """Generates schema graphs for a series of schemas."""
+
+    if not peewee:
+        warnings.warn('peewee is not installed. Cannot generate schema graphs.',
+                      UserWarning)
+        return
+
+    schemas = ['sdss5db.targetdb', 'sdss5db.catalogdb', 'operationsdb.platedb',
+               'operationsdb.mangadb']
+
+    output_dir = os.path.join(os.path.dirname(__file__),
+                              '_static/schema_graphs/auto')
+
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir)
+
+    os.makedirs(output_dir)
+
+    for schema in schemas:
+
+        __, schema_name = schema.split('.')
+
+        module = importlib.import_module('sdssdb.peewee.' + schema)
+
+        models = []
+        for attr in dir(module):
+            obj = getattr(module, attr)
+
+            if not isinstance(obj, peewee.ModelBase):
+                continue
+
+            models.append(obj)
+
+        if len(models) > 0:
+            graph = create_schema_graph(models, schema=schema_name)
+            graph.write_pdf(os.path.join(output_dir, schema + '.pdf'))
+
+
+def setup(app):
+    generate_schema_graphs()

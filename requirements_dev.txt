@@ -5,3 +5,4 @@ pytest-sugar>=0.8.0
 peewee>=3.7.0
 SQLAlchemy>=1.2.12
 pgpasslib>=1.1.0
+pydot>=1.4.1

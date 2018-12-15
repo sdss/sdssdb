@@ -113,3 +113,7 @@ h6 { font-size: 80%; }
 li > dl > dt {
     font-weight: 400;
 }
+
+.table > tbody > tr > td {
+    border: 0px;
+}
