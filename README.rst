@@ -8,9 +8,9 @@ SDSS product for database management.
 Useful links
 ------------
 
-GitHub: https://github.com/sdss/sdssdb
-Documentation: https://sdssdb.readthedocs.org
-Issues: https://github.com/sdss/sdssdb/issues
+- GitHub: https://github.com/sdss/sdssdb
+- Documentation: https://sdssdb.readthedocs.org
+- Issues: https://github.com/sdss/sdssdb/issues
 
 How to use
 ----------
