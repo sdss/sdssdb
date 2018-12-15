@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :feature:`7` Added `~sdssdb.utils.create_schema_graph` function to generate schema graphs and use it to auto-generate graphs in the documentation for the supported databases.
 * Fixed command line example about how to install with ``sdss_install``.
 * Added ``mangadb`` schema for SQLA.
 * Use ``tmass_pts_key`` for fk relationship between ``GaiaDR2TmassBestNeighbour`` and ``TwoMassPsc``.
