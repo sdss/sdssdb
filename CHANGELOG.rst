@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.2.0 <2018-12-14>`
 * Removed some unused files from the template.
 * :feature:`7` Added `~sdssdb.utils.create_schema_graph` function to generate schema graphs and use it to auto-generate graphs in the documentation for the supported databases.
 * Fixed command line example about how to install with ``sdss_install``.
