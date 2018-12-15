@@ -39,17 +39,18 @@ Currently, we support the following databases and schemas:
     * *catalogdb*: schema for source catalogues used for target selection.
     * *targetdb*: schema with the results of the target selection and positioner information.
 
-Note that the level of readiness is not necessarily identical in both Peewee and SQLAlchemy. This table summarises what schemas are available for each library. Green indicates fully supported, yellow partial support, and red means that there are currently not model classes available for that schema.
+Note that the level of readiness is not necessarily identical in both Peewee and SQLAlchemy. This table summarises what schemas are available for each library. Green indicates fully supported, yellow partial support, and red means that there are currently not model classes available for that schema. You can download the graph visualisation of the schema, showing the tables, columns, and relations between tables.
 
 .. raw:: html
 
-    <table class="table" style="width: 60%">
+    <table class="table" style="width: 80%">
         <thead>
         <tr>
             <th style="width: 30%">Database</th>
             <th style="width: 20%">Schema</th>
             <th style="width: 25%">Peewee</th>
             <th style="width: 25%">SQLAlchemy</th>
+            <th style="width: 20%">Graph</th>
         </tr>
         </thead>
         <tbody>
@@ -58,48 +59,57 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">platedb</td>
             <td class="success"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.platedb.pdf"></a></td>
+
         </tr>
         <tr>
             <td></td>
             <td class="active">mangadb</td>
             <td class="success"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.mangadb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">manga</td>
             <td class="active">auxdb</td>
             <td class="danger"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangaauxdb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">dapdb</td>
             <td class="danger"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangadapdb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">datadb</td>
             <td class="danger"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangadatadb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">sampledb</td>
             <td class="danger"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangasampledb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">sdss5db</td>
             <td class="active">catalogdb</td>
             <td class="success"></td>
             <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.catalogdb.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
             <td class="warning"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.targetdb.pdf"></a></td>
         </tr>
         </tbody>
     </table>
