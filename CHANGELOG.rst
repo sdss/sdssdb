@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Added ``operationsdb`` SQL schemas.
 * Improved descriptions in ``setup.py`` and ``README.rst``.
 * :release:`0.2.1 <2018-12-14>`
 * :bug:`-` Remove ``bin/sdssdb`` from the list of scripts to install. This was making the build process fail.
