@@ -25,3 +25,9 @@ SQLAlchemy
 .. autoclass:: sdssdb.sqlalchemy.BaseModel
    :members:
    :show-inheritance:
+
+
+Utils
+-----
+
+.. autofunction:: sdssdb.utils.create_schema_graph
