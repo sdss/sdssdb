@@ -1,2 +1,2 @@
-pyyaml
+pyyaml>=5.1
 pygments
