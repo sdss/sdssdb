@@ -7,16 +7,17 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-11-02 16:59:53
+# @Last modified time: 2018-12-13 18:12:45
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
-                    DateField, DecimalField, FloatField, IntegerField, TextField)
+                    DateField, DecimalField, DeferredThroughModel, FloatField,
+                    ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
 from . import SDSS5dbModel, database  # noqa
 
 
-class Allwise(SDSS5dbModel):
+class AllWise(SDSS5dbModel):
     designation = CharField(null=True)
     ra = DecimalField(index=True, null=True)
     dec = DecimalField(index=True, null=True)
@@ -322,7 +323,7 @@ class Allwise(SDSS5dbModel):
         primary_key = False
 
 
-class ErositaAgnMock(SDSS5dbModel):
+class ErositaAGNMock(SDSS5dbModel):
     ero_detuid = TextField(null=True)
     ero_souuid = TextField(null=True)
     ero_ra = FloatField(index=True, null=True)
@@ -385,15 +386,78 @@ class ErositaClustersMock(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class GaiaDr2Clean(SDSS5dbModel):
-    source = BigAutoField(column_name='source_id')
+class TwoMassPsc(SDSS5dbModel):
+    ra = FloatField(index=True, null=True)
+    dec = FloatField(column_name='decl', index=True, null=True)
+    decl = FloatField(index=True, null=True)
+    err_maj = FloatField(null=True)
+    err_min = FloatField(null=True)
+    err_ang = IntegerField(null=True)
+    designation = CharField(null=True, unique=True)
+    j_m = FloatField(index=True, null=True)
+    j_cmsig = FloatField(null=True)
+    j_msigcom = FloatField(null=True)
+    j_snr = FloatField(null=True)
+    h_m = FloatField(index=True, null=True)
+    h_cmsig = FloatField(null=True)
+    h_msigcom = FloatField(null=True)
+    h_snr = FloatField(null=True)
+    k_m = FloatField(index=True, null=True)
+    k_cmsig = FloatField(null=True)
+    k_msigcom = FloatField(null=True)
+    k_snr = FloatField(null=True)
+    ph_qual = CharField(index=True, null=True)
+    rd_flg = CharField(index=True, null=True)
+    bl_flg = CharField(null=True)
+    cc_flg = CharField(index=True, null=True)
+    ndet = CharField(null=True)
+    prox = FloatField(null=True)
+    pxpa = IntegerField(null=True)
+    pxcntr = IntegerField(null=True)
+    gal_contam = IntegerField(index=True, null=True)
+    mp_flg = IntegerField(null=True)
+    pts_key = AutoField()
+    hemis = CharField(null=True)
+    date = DateField(null=True)
+    scan = IntegerField(null=True)
+    glon = FloatField(null=True)
+    glat = FloatField(null=True)
+    x_scan = FloatField(null=True)
+    jdate = FloatField(null=True)
+    j_psfchi = FloatField(null=True)
+    h_psfchi = FloatField(null=True)
+    k_psfchi = FloatField(null=True)
+    j_m_stdap = FloatField(null=True)
+    j_msig_stdap = FloatField(null=True)
+    h_m_stdap = FloatField(null=True)
+    h_msig_stdap = FloatField(null=True)
+    k_m_stdap = FloatField(null=True)
+    k_msig_stdap = FloatField(null=True)
+    dist_edge_ns = IntegerField(null=True)
+    dist_edge_ew = IntegerField(null=True)
+    dist_edge_flg = CharField(null=True)
+    dup_src = IntegerField(null=True)
+    use_src = IntegerField(null=True)
+    a = CharField(null=True)
+    dist_opt = FloatField(null=True)
+    phi_opt = IntegerField(null=True)
+    b_m_opt = FloatField(null=True)
+    vr_m_opt = FloatField(null=True)
+    nopt_mchs = IntegerField(null=True)
+    ext_key = IntegerField(null=True)
+    scan_key = IntegerField(null=True)
+    coadd_key = IntegerField(null=True)
+    coadd = IntegerField(null=True)
 
     class Meta:
-        table_name = 'gaia_dr2_clean'
+        table_name = 'twomass_psc'
         schema = 'catalogdb'
 
 
-class GaiaDr2Source(SDSS5dbModel):
+_GaiaDR2TmassBestNeighbourDeferred = DeferredThroughModel()
+
+
+class GaiaDR2Source(SDSS5dbModel):
     solution_id = BigIntegerField(index=True, null=True)
     designation = TextField(null=True)
     source_id = BigAutoField(primary_key=True)
@@ -489,12 +553,26 @@ class GaiaDr2Source(SDSS5dbModel):
     lum_percentile_lower = FloatField(null=True)
     lum_percentile_upper = FloatField(null=True)
 
+    tmass_best_sources = ManyToManyField(TwoMassPsc,
+                                         through_model=_GaiaDR2TmassBestNeighbourDeferred,
+                                         backref='gaia_best_sources')
+
     class Meta:
         table_name = 'gaia_dr2_source'
         schema = 'catalogdb'
 
 
-class GaiaDr2WdCandidatesV1(SDSS5dbModel):
+class GaiaDR2Clean(SDSS5dbModel):
+
+    source_id = BigAutoField(column_name='source_id')
+    source = ForeignKeyField(GaiaDR2Source, column_name='source_id', backref='gaia_clean')
+
+    class Meta:
+        table_name = 'gaia_dr2_clean'
+        schema = 'catalogdb'
+
+
+class GaiaDR2WDCandidatesV1(SDSS5dbModel):
     white_dwarf_name = TextField(null=True)
     pwd = FloatField(null=True)
     pwd_correction = FloatField(null=True)
@@ -553,14 +631,14 @@ class GaiaDr2WdCandidatesV1(SDSS5dbModel):
     chisq_he = FloatField(null=True)
 
     def gaia_source(self):
-        return GaiaDr2Source.select().get_id(self.source_id)
+        return GaiaDR2Source.select().get_id(self.source_id)
 
     class Meta:
         table_name = 'gaia_dr2_wd_candidates_v1'
         schema = 'catalogdb'
 
 
-class Gaiadr2Sdssdr9BestNeighbour(SDSS5dbModel):
+class GaiaDR2SDSSDR9BestNeighbour(SDSS5dbModel):
     sdssdr9_oid = BigIntegerField(index=True, null=True)
     number_of_neighbours = IntegerField(null=True)
     number_of_mates = IntegerField(null=True)
@@ -572,96 +650,6 @@ class Gaiadr2Sdssdr9BestNeighbour(SDSS5dbModel):
 
     class Meta:
         table_name = 'gaiadr2_sdssdr9_best_neighbour'
-        schema = 'catalogdb'
-
-
-class TwomassPsc(SDSS5dbModel):
-    ra = FloatField(index=True, null=True)
-    dec = FloatField(column_name='decl', index=True, null=True)
-    decl = FloatField(index=True, null=True)
-    err_maj = FloatField(null=True)
-    err_min = FloatField(null=True)
-    err_ang = IntegerField(null=True)
-    designation = CharField(null=True, unique=True)
-    j_m = FloatField(index=True, null=True)
-    j_cmsig = FloatField(null=True)
-    j_msigcom = FloatField(null=True)
-    j_snr = FloatField(null=True)
-    h_m = FloatField(index=True, null=True)
-    h_cmsig = FloatField(null=True)
-    h_msigcom = FloatField(null=True)
-    h_snr = FloatField(null=True)
-    k_m = FloatField(index=True, null=True)
-    k_cmsig = FloatField(null=True)
-    k_msigcom = FloatField(null=True)
-    k_snr = FloatField(null=True)
-    ph_qual = CharField(index=True, null=True)
-    rd_flg = CharField(index=True, null=True)
-    bl_flg = CharField(null=True)
-    cc_flg = CharField(index=True, null=True)
-    ndet = CharField(null=True)
-    prox = FloatField(null=True)
-    pxpa = IntegerField(null=True)
-    pxcntr = IntegerField(null=True)
-    gal_contam = IntegerField(index=True, null=True)
-    mp_flg = IntegerField(null=True)
-    pts_key = AutoField()
-    hemis = CharField(null=True)
-    date = DateField(null=True)
-    scan = IntegerField(null=True)
-    glon = FloatField(null=True)
-    glat = FloatField(null=True)
-    x_scan = FloatField(null=True)
-    jdate = FloatField(null=True)
-    j_psfchi = FloatField(null=True)
-    h_psfchi = FloatField(null=True)
-    k_psfchi = FloatField(null=True)
-    j_m_stdap = FloatField(null=True)
-    j_msig_stdap = FloatField(null=True)
-    h_m_stdap = FloatField(null=True)
-    h_msig_stdap = FloatField(null=True)
-    k_m_stdap = FloatField(null=True)
-    k_msig_stdap = FloatField(null=True)
-    dist_edge_ns = IntegerField(null=True)
-    dist_edge_ew = IntegerField(null=True)
-    dist_edge_flg = CharField(null=True)
-    dup_src = IntegerField(null=True)
-    use_src = IntegerField(null=True)
-    a = CharField(null=True)
-    dist_opt = FloatField(null=True)
-    phi_opt = IntegerField(null=True)
-    b_m_opt = FloatField(null=True)
-    vr_m_opt = FloatField(null=True)
-    nopt_mchs = IntegerField(null=True)
-    ext_key = IntegerField(null=True)
-    scan_key = IntegerField(null=True)
-    coadd_key = IntegerField(null=True)
-    coadd = IntegerField(null=True)
-
-    class Meta:
-        table_name = 'twomass_psc'
-        schema = 'catalogdb'
-
-
-class Gaiadr2TmassBestNeighbour(SDSS5dbModel):
-    tmass_oid = BigIntegerField(index=True, null=True)
-    number_of_neighbours = IntegerField(null=True)
-    number_of_mates = IntegerField(null=True)
-    best_neighbour_multiplicity = IntegerField(null=True)
-    source_id = BigAutoField(primary_key=True)
-    original_ext_source_id = CharField(null=True)
-    angular_distance = FloatField(null=True)
-    gaia_astrometric_params = IntegerField(null=True)
-
-    def gaia_source(self):
-        return GaiaDr2Source.select().get_id(self.source_id)
-
-    def original_ext_source(self):
-        return TwomassPsc.select().where(
-            TwomassPsc.designation == self.original_ext_source_id).first()
-
-    class Meta:
-        table_name = 'gaiadr2_tmass_best_neighbour'
         schema = 'catalogdb'
 
 
@@ -695,7 +683,7 @@ class GalacticGenesisBig(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class Guvcat(SDSS5dbModel):
+class GUVCat(SDSS5dbModel):
     objid = BigAutoField()
     photoextractid = BigIntegerField(null=True)
     mpstype = TextField(null=True)
@@ -848,7 +836,7 @@ class KeplerInput10(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr13Photoobj(SDSS5dbModel):
+class SDSSDR13Photoobj(SDSS5dbModel):
     objid = BigAutoField()
     run = IntegerField(null=True)
     rerun = IntegerField(null=True)
@@ -1068,7 +1056,7 @@ class SdssDr13Photoobj(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Apogeestar(SDSS5dbModel):
+class SDSSDR14APOGEEStar(SDSS5dbModel):
     apstar_id = CharField(primary_key=True)
     target_id = CharField(null=True)
     reduction_id = CharField(null=True)
@@ -1124,7 +1112,7 @@ class SdssDr14Apogeestar(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Apogeestarvisit(SDSS5dbModel):
+class SDSSDR14APOGEEStarVisit(SDSS5dbModel):
     visit_id = CharField(primary_key=True)
     apstar_id = CharField(index=True, null=True)
 
@@ -1133,7 +1121,7 @@ class SdssDr14Apogeestarvisit(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Apogeevisit(SDSS5dbModel):
+class SDSSDR14APOGEEVisit(SDSS5dbModel):
     visit_id = CharField(primary_key=True)
     apred_version = CharField(null=True)
     apogee_id = CharField(null=True)
@@ -1190,7 +1178,7 @@ class SdssDr14Apogeevisit(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Ascapstar(SDSS5dbModel):
+class SDSSDR14ASCAPStar(SDSS5dbModel):
     apstar_id = CharField(primary_key=True)
     target_id = CharField(index=True, null=True)
     aspcap_id = CharField(null=True)
@@ -1357,7 +1345,7 @@ class SdssDr14Ascapstar(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Cannonstar(SDSS5dbModel):
+class SDSSDR14CannonStar(SDSS5dbModel):
     apogee_id = CharField(index=True, null=True)
     cannon_id = CharField(primary_key=True)
     filename = CharField(null=True)
@@ -1443,7 +1431,7 @@ class SdssDr14Cannonstar(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class SdssDr14Specobj(SDSS5dbModel):
+class SDSSDR14SpecObj(SDSS5dbModel):
     specobjid = DecimalField(primary_key=True)
     bestobjid = BigIntegerField(index=True, null=True)
     fluxobjid = BigIntegerField(index=True, null=True)
@@ -1740,7 +1728,7 @@ class TessInputV6(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class TwomassClean(SDSS5dbModel):
+class TwoMassClean(SDSS5dbModel):
     pts_key = IntegerField(null=True)
     designation = CharField(primary_key=True)
     ra = FloatField(null=True)
@@ -1748,12 +1736,15 @@ class TwomassClean(SDSS5dbModel):
     h_m = FloatField(index=True, null=True)
     twomassbrightneighbor = BooleanField(index=True, null=True)
 
+    psc = ForeignKeyField(TwoMassPsc, field='pts_key',
+                          column_name='pts_key', backref='tmass_clean')
+
     class Meta:
         table_name = 'twomass_clean'
         schema = 'catalogdb'
 
 
-class TwomassCleanNoneighbor(SDSS5dbModel):
+class TwoMassCleanNoNeighbor(SDSS5dbModel):
     pts_key = IntegerField(null=True)
     designation = CharField(primary_key=True)
     ra = FloatField(null=True)
@@ -1763,3 +1754,30 @@ class TwomassCleanNoneighbor(SDSS5dbModel):
     class Meta:
         table_name = 'twomass_clean_noneighbor'
         schema = 'catalogdb'
+
+
+class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
+    tmass_oid = BigIntegerField(index=True, null=True)
+    number_of_neighbours = IntegerField(null=True)
+    number_of_mates = IntegerField(null=True)
+    best_neighbour_multiplicity = IntegerField(null=True)
+    source_id = BigAutoField(primary_key=True)
+    original_ext_source_id = CharField(null=True)
+    tmass_pts_key = IntegerField(null=True)
+    angular_distance = FloatField(null=True)
+    gaia_astrometric_params = IntegerField(null=True)
+
+    gaia_source = ForeignKeyField(GaiaDR2Source,
+                                  column_name='source_id',
+                                  backref='tmass_best_neighbour')
+    tmass_source = ForeignKeyField(TwoMassPsc,
+                                   column_name='tmass_pts_key',
+                                   field='pts_key',
+                                   backref='gaia_best_neighbour')
+
+    class Meta:
+        table_name = 'gaiadr2_tmass_best_neighbour'
+        schema = 'catalogdb'
+
+
+_GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)

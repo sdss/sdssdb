@@ -1,45 +1,172 @@
 
-.. _intro:
+.. _getting-started:
 
-Introduction to sdssdb
-===============================
+Getting started with sdssdb
+===========================
 
-``sdssdb`` provides general utilities and functionality for connecting to all SDSS databases.  For now, ``sdssdb`` supports two Python ORM libraries for mapping between database tables and Python classess:  `Peewee <http://docs.peewee-orm.com/en/latest/>`_ and `SQLAlchemy <https://www.sqlalchemy.org/>`_.
+``sdssdb`` provides general utilities and functionality for connecting to SDSS databases using `Object-relational Mapping <https://en.wikipedia.org/wiki/Object-relational_mapping>`__ (ORM).  ``sdssdb`` supports two Python ORM libraries for mapping between database tables and Python classes:  Peewee_ and SQLAlchemy_.
 
 
-Supported Databases and Schema/Models
+Making a simple query with ``sdssdb``
 -------------------------------------
 
-* **observatory** -  The APO (apodb) and LCO (lcodb) operations database
-    * **mangadb** - Models associated with the MaNGA observations and metadata
-    * **platedb** - Models associated with the plate observations and metadata
+Imagine that you want to query ``catalogdb`` (the schema containing all the catalogues used for target selection in SDSS-V) and get all the Gaia targets within a range of magnitudes. In most cases this only requires a couple lines of code ::
 
-* **mangadb** - The SDSS-IV MaNGA database
-    * **datadb** - Models associated with the MaNGA DRP data products
-    * **dapdb** - Models associated with the MaNGA DAP data products
-    * **sampledb** - Models associated with the MaNGA target sample
-    * **auxdb** - Models associated with auxillary information for MaNGA
+    >>> from sdssdb.peewee.sdss5db.catalogdb import GaiaDR2Source
+    >>> targets = GaiaDR2Source.select().where((GaiaDR2Source.phot_g_mean_mag > 15) & (GaiaDR2Source.phot_g_mean_mag < 16)).limit(10)
 
-* **sdss5db** - The SDSS-V development database
-    * **catalogdb** - Models associated with the source catalogs used for target selection
+This will returns the first 10 results from Gaia DR2 with g magnitude in the range :math:`(15, 16)`. Simple. The previous example uses peewee but the equivalent for SQLAlchemy is quite similar ::
+
+    >>> from sdssdb.sqlalchemy.sdss5db.catalogdb import GaiaDR2Source, database
+    >>> session = database.Session()
+    >>> targets = session.query(GaiaDR2Source).filter((GaiaDR2Source.phot_g_mean_mag > 15) & (GaiaDR2Source.phot_g_mean_mag < 16)).limit(10).all()
 
 
-Supported Profiles
-------------------
+Available databases
+-------------------
 
-The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.sdssdb/sdssdb.yml``.
+Currently, we support the following databases and schemas:
 
-* **local** - a generic localhost profile. Used if the hostname does not match any other profile.
-* **apo** - a user on the APO machines
-* **lco** - a user on the LCO machines
-* **manga** - a user on the Utah manga machine
-* **sdssadmin** - a user on the Utah sdssadmin machine
-* **lore** - a user on the Utah lore machine
+* **operationsdb**: a global name for the APO (``apodb``) and LCO (``lcodb``) operations database.
+    * *platedb*: schema for plate observations and metadata.
+    * *mangadb*: schema for MaNGA observations and metadata.
+* **mangadb**: the SDSS-IV MaNGA database.
+    * *datadb*: schema for MaNGA DRP data products.
+    * *dapdb*: schema for MaNGA DAP data products.
+    * *sampledb*: schema for MaNGA target sample.
+    * *auxdb*: schema for auxiliary information for MaNGA.
+* **sdss5db**: the SDSS-V development database.
+    * *catalogdb*: schema for source catalogues used for target selection.
+    * *targetdb*: schema with the results of the target selection and positioner information.
+
+Note that the level of readiness is not necessarily identical in both Peewee and SQLAlchemy. This table summarises what schemas are available for each library. Green indicates fully supported, yellow partial support, and red means that there are currently not model classes available for that schema. You can download the graph visualisation of the schema, showing the tables, columns, and relations between tables.
+
+.. raw:: html
+
+    <table class="table" style="width: 80%">
+        <thead>
+        <tr>
+            <th style="width: 30%">Database</th>
+            <th style="width: 20%">Schema</th>
+            <th style="width: 25%">Peewee</th>
+            <th style="width: 25%">SQLAlchemy</th>
+            <th style="width: 20%">Graph</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="active">operationsdb</td>
+            <td class="active">platedb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.platedb.pdf"></a></td>
+
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">mangadb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.mangadb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td class="active">manga</td>
+            <td class="active">auxdb</td>
+            <td class="danger"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangaauxdb_schema.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">dapdb</td>
+            <td class="danger"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangadapdb_schema.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">datadb</td>
+            <td class="danger"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangadatadb_schema.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">sampledb</td>
+            <td class="danger"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangasampledb_schema.pdf"></a></td>
+        </tr>
+        <tr>
+            <td class="active">sdss5db</td>
+            <td class="active">catalogdb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.catalogdb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">targetdb</td>
+            <td class="success"></td>
+            <td class="warning"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.targetdb.pdf"></a></td>
+        </tr>
+        </tbody>
+    </table>
+
 
 .. _conn-db:
 
 Connecting to a Database
 ------------------------
+
+The `~sdssdb.connection.DatabaseConnection` abstract class allows to connect to a PostgreSQL database using a profile (see the :ref:`profile`) or a custom set of connection parameters. In most cases, the user will need to use either `~sdssdb.connection.PeeweeDatabaseConnection` or `~sdssdb.connection.SQLADatabaseConnection` depending on the backend library used. Regarding the implementation details, their behaviour is identical. To open a connection to the database ``manga`` we can do ::
+
+    >>> from sdssdb.connection import SQLADatabaseConnection
+    >>> db = SQLADatabaseConnection('manga')
+    >>> db
+    <SQLADatabaseConnection (dbname='manga', profile='local', connected=True)>
+
+What happened here? `~sdssdb.connection.SQLADatabaseConnection` connected to the ``manga`` database using the ``local`` profile. A profile is simply a set of username, hostname, and port on which to look for a PostgreSQL server. ``sdssdb`` tries to be smart and select a profile that matches the machine on which you are working. That may not always work. For example, imagine that you are working on ``manga.wasatch.peaks`` but trying to connect to ``sdss5db`` which is running on ``sdssadmin.wasatch.peaks`` ::
+
+    >>> from sdssdb.connection import PeeweeDatabaseConnection
+    >>> db = PeeweeDatabaseConnection('sdss5db')
+    <PeeweeDatabaseConnection (dbname='sdss5db', profile='manga', connected=False)>
+
+In this case the profile is not the appropriate for connecting to ``sdss5db`` and the connection fails. We can fix that by connecting with the correct profile ::
+
+    >>> db.set_profile('sdssadmin')
+    True
+    >>> db
+    <PeeweeDatabaseConnection (dbname='sdss5db', profile='sdssadmin', connected=True)>
+
+Or we could have connected to the database passing it a full set of parameters ::
+
+    >>> db.connect_from_parameters(user='sdss', host='sdssadmin.wasatch.peaks', port=5432)
+    True
+
+In other cases you may have several databases running on the same server. You can prepare a connection using the appropriate profile and then connect to a specific database ::
+
+    >>> local_db = PeeWeeDatabaseConnection(profile='local')
+    >>> local_db.connect('apodb')
+
+`~sdssdb.connection.DatabaseConnection.connect` will try to use the current profile to connect to the given database.
+
+In general you will not usually create database connections directly. Each database schema is bound to a database connection which will try to connect to the correct database. For example ::
+
+    >>> from sdssdb.peewee.operationsdb import database
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='apo', connected=True)>
+
+Now imagine the case in which you are running ``sdssdb`` from your local computer and are trying to connect to ``apodb`` at APO. You do not have the database locally but have created a tunnel connection to ``sdss4-db.apo.nmsu.edu`` and redirected it to your localhost port 6666. To connect to that tunnel you do ::
+
+    >>> from sdssdb.peewee.operationsdb import database
+    >>> database
+    <PeeweeDatabaseConnection (dbname=None, profile='local', connected=False)>
+    >>> database.connect_from_parameters(dbname='apodb', host='localhost', port=6666, user='sdssdb')
+    True
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
 
 There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatabaseConnection``, one for each mapping library. Each database connection has two keyword arguments: a user/machine profile, a database name.  The connection will automatically attempt to connect to the specified database with the profile unless the ``autoconnect`` keyword is set to `False`.
 ::
@@ -48,77 +175,136 @@ There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatab
     from sdssdb.connection import SQLADatabaseConnection
     db = SQLADatabaseConnection(profile='manga', dbname='manga')
 
-If you don't specify a ``profile``, the database connection will try to use the profile that matches your current hostname or will fallback to the ``local`` profile.
 
-You can switch to other databases while using the same profile.
-::
+A note about passwords
+----------------------
 
-    # switch/connect to separate database
-    db.connect('other-mangadb')
+``sdssdb`` does not allow you to pass plaintext passwords when creating a connection, or to store them in the profiles. Instead, you should use `pgpass <https://www.postgresql.org/docs/9.3/libpq-pgpass.html>`__ to set your passwords. A typical ``~/.pgpass`` file looks something like ::
 
-You can change the profile of the user or machine you are connecting to
-::
+    *:*:apodb:sdssdb:XXXX
+    localhost:5432:sdss5db:sdss:YYYY
+    sdssadmin.wasatch.peaks:5432:sdss5db:sdss:ZZZZ
 
-    # switch to the sdssadmin machine profile and connect to the sdss5 database
-    db.set_profile('sdssadmin')
-    db.connect('sdss5db')
-
-You can connect to a database by manually specifying parameters as well.
-::
-
-    # manually connect via parameters
-    db.connect_from_parameters('sdss5db', user='sdss', host='sdssadmin', port=5432)
+where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of parameters.
 
 
+.. _profile:
 
-SQLAlchemy Specifics
-^^^^^^^^^^^^^^^^^^^^
+Supported Profiles
+------------------
 
-The database handling with SQLAlchemy is mostly the same as with PeeWee.  The main difference is the need to create a database session before connecting and querying
-::
+The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.sdssdb/sdssdb.yml`` with the same structure.
+
+* **local**: a generic localhost profile. Used if the hostname does not match any other profile.
+* **apo**: a user on the APO machines.
+* **lco**: a user on the LCO machines.
+* **manga**: a user on the Utah manga machine.
+* **sdssadmin**: a user on the Utah sdssadmin machine.
+* **lore**: a user on the Utah lore machine.
+
+A list of available profiles (including custom ones) can also be accessed via de `~sdssdb.connection.DatabaseConnection.list_profiles` classmethod ::
+
+    >>> import sdssdb
+    >>> profiles = sdssdb.DatabaseConnection.list_profiles()
+    >>> profiles
+    dict_keys(['apo', 'lco', 'local', 'lore', 'jhu', 'sdssadmin', 'manga'])
+    >>> sdssdb.DatabaseConnection.list_profiles('apo')
+    {'user': 'sdssdb',
+     'admin': 'sdssdb_admin',
+     'host': 'sdss4-db',
+     'port': 5432,
+     'domain': 'apo.nmsu.edu'}
+
+
+Accessing the model classes
+---------------------------
+
+A model class is a Python class that abstracts a database table so that it can be accessed by the ORM libraries. In ``sdssdb`` the model class for a given table can always be found under ``sdssdb.XXX.YYY.ZZZ`` where ``XXX`` is either ``peewee`` or ``sqlalchemy`` depending on the library you want to use, ``YYY`` is the database name, and ``ZZZ`` is the schema name. For instance, if you want to use peewee to query the ``target`` table in the ``targetdb`` schema in ``sdss5db``, you need to import ::
+
+    from sdssdb.peewee.sdss5db.targetdb import Target
+
+Note that we use the standard of capitalising class names. Frequently, you'll want to import the whole schema as ::
+
+    from sdssdb.peewee.sdss5db import targetdb
+
+which gives you access to all the model classes for that schema. The database bound to those model classes can be accessed from the submodule containing the database or from the schema ::
+
+    >>> from sdssdb.peewee.sdss5db import database
+    >>> from sdssdb.peewee.sdss5db import targetdb
+    >>> database
+    <SDSS5dbDatabaseConnection (dbname='sdss5db', profile='local', connected=True)>
+    >>> targetdb.database
+    <SDSS5dbDatabaseConnection (dbname='sdss5db', profile='local', connected=True)>
+    >>> targetdb.database == database
+    True
+
+
+SQLAlchemy specifics
+--------------------
+
+The database handling with SQLAlchemy is mostly the same as with Peewee. The main difference is the need to create a database session before connecting and querying ::
 
     # connecting to the manga database
-    from sdssdb.sqlalchemy.mangadb import db, datadb
+    from sdssdb.sqlalchemy.mangadb import database, datadb
 
     # start a session
-    session = db.Session()
+    session = database.Session()
 
     # write a query
     cube = session.query(datadb.Cube).first()
 
-If you connect to a different database, you must recreate the database session.
-::
+If you connect to a different database, you must recreate the database session ::
 
     # connect to a separate database
-    db.connect('other-mangadb')
-    session = db.Session()
+    database.connect('other-mangadb')
+    session = database.Session()
 
 
-Prepared Database Connections
------------------------------
+The case of ``operationsdb``
+----------------------------
 
-Some databases have been prepared ahead of time to facilitate immediate querying.  We can access both the models and a connection for a database by importing them both together.   Let's access and query from catalogdb on the sdss5 database on the Utah sdssadmin machine.
-::
+If you are familiar with the SDSS databases you will know that there is no ``operationsdb``. Instead, there is ``apodb`` and ``lcodb``, two databases that share the same schemas but are located on computers are APO and LCO respectively. Instead of creating different sets of identical model classes for both databases, the models and database connections can be found under the ``operationsdb`` submodule (``sdssdb.peewee.operationsdb`` or ``sdssdb.sqlalchemy.operationsdb``).
 
-    # import the db and models for catalogdb
-    from sdssdb.sqlalchemy.sdss5db import db, catalogdb
+When you import the database connection ``sdssdb`` will try use the profile name to decide to which database to connect. For example, if you are at APO the ``apo`` profile will be used by default and the database connection will try to connect to ``apodb`` ::
 
-    # set the profile to the sdssadmin machine and reconnect to the database
-    db.set_profile('sdssadmin')
-    db.connect('sdss5db')
+    >>> from sdssdb.peewee.operationsdb import database
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='apo', connected=True)>
 
-    # create a session
-    session = db.Session()
+If that fails, you will need to define the database name and profile. In the following example the user has ``apodb`` available locally ::
 
-    # get the first entry in the Gaia source catalog
-    gaia = session.query(catalogdb.GaiaSource).first()
+    >>> from sdssdb.peewee.operationsdb import database
+    >>> database
+    <PeeweeDatabaseConnection (dbname=None, profile='local', connected=False)>
+    >>> database.connect('apodb')
+    True
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
+
+If both ``apodb`` and ``lcodb`` are available we can which from one to the other in runtime ::
+
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
+    >>> from sdssdb.peewee.operationsdb import platedb
+    >>> plate_10k = platedb.Plate.get(plate_id=10000)
+    >>> plate_10k.plate_run.label
+    '2015.08.z.eboss'
+    >>> database.connect('lcodb')
+    True
+    >>> database
+    <PeeweeDatabaseConnection (dbname='lcodb', profile='local', connected=True)>
+    >>> plate_9781 = platedb.Plate.get(plate_id=9781)
+    >>> plate_9781.plate_run.label
+    '2017.03.b.apogee2s.south'
 
 
-Adding your own database connection
------------------------------------
+Where to go from here?
+----------------------
 
-The package hiearchy is organized as:
+Once the connection has been created and the model classes imported you can use them as you would with any Peewee or SQLALchemy model. It is beyond the purpose of this documentation to explain how to use those libraries. Instead, refer to the Peewee_ or SQLAlchemy_ documentation.
 
-* mapping library
-    * database name
-        * schema modelclass .py file
+The :ref:`target-selection-example` section provides a detailed example of how to use ``sdssdb`` that highlights the advantages of the ORM approach.
+
+
+.. _Peewee: http://docs.peewee-orm.com/en/latest/
+.. _SQLAlchemy: http://www.sqlalchemy.org/

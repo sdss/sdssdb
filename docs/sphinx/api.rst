@@ -1,7 +1,9 @@
 
+API
+===
 
 Database connections
-====================
+--------------------
 
 .. automodule:: sdssdb.connection
    :members: DatabaseConnection, PeeweeDatabaseConnection, SQLADatabaseConnection
@@ -10,7 +12,7 @@ Database connections
 
 
 Peewee
-======
+------
 
 .. autoclass:: sdssdb.peewee.BaseModel
    :members:
@@ -18,8 +20,14 @@ Peewee
 
 
 SQLAlchemy
-==========
+----------
 
 .. autoclass:: sdssdb.sqlalchemy.BaseModel
    :members:
    :show-inheritance:
+
+
+Utils
+-----
+
+.. autofunction:: sdssdb.utils.create_schema_graph

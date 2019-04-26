@@ -5,7 +5,7 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:08
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 14:43:05
 
 from __future__ import absolute_import, division, print_function
@@ -17,7 +17,7 @@ from operator import eq, ge, gt, le, lt, ne
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import MangaBase, db, sampledb
+from sdssdb.sqlalchemy.mangadb import MangaBase, database, sampledb
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.engine import reflection
@@ -35,6 +35,7 @@ SCHEMA = 'mangadatadb'
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
     _schema = SCHEMA
+    _relations = 'define_relations'
 
     @declared_attr
     def __table_args__(cls):
@@ -197,7 +198,7 @@ class Cube(ArrayOps, Base):
     def header(self):
         '''Returns an astropy header'''
 
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         data = session.query(FitsHeaderKeyword.label, FitsHeaderValue.value,
                              FitsHeaderValue.comment).join(FitsHeaderValue).filter(
             FitsHeaderValue.cube == self).all()
@@ -231,7 +232,7 @@ class Cube(ArrayOps, Base):
 
     def getFlags(self, bits, name):
         from sdssdb.sqlalchemy.mangadb.auxdb import MaskBit
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
 
         # if bits not a digit, return None
         if not str(bits).isdigit():
@@ -302,7 +303,7 @@ class Cube(ArrayOps, Base):
 
         """
 
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         spaxels = session.query(getattr(Spaxel, extension)).filter(
             Spaxel.cube_pk == self.pk).order_by(Spaxel.x, Spaxel.y).all()
 
@@ -346,8 +347,8 @@ class Cube(ArrayOps, Base):
         if model_cubes:
             mc = sum(model_cubes, [])
             if mc:
-                from marvin.db.models.DapModelClasses import ModelSpaxel
-                session = db.Session.object_session(mc[0])
+                from marvin.database.models.DapModelClasses import ModelSpaxel
+                session = database.Session.object_session(mc[0])
                 ms = session.query(ModelSpaxel).filter_by(modelcube_pk=mc[0].pk).first()
                 has_ms = True if ms else False
         return has_ms
@@ -634,7 +635,7 @@ class CubeShape(Base):
 
     @y.expression
     def y(cls):
-        s = db.Session.object_session(cls)
+        s = database.Session.object_session(cls)
         arrunnest = func.unnest(cls.indices)
         xarr = (func.unnest(cls.indices) / cls.size).label('xarrind')
         arrind = (arrunnest - xarr * cls.size).label('yarrind')
@@ -702,7 +703,7 @@ class Plate(object):
     def cubes(self):
         ''' Get all cubes on this plate '''
 
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         if self.drpver:
             cubes = session.query(Cube).join(PipelineInfo, PipelineVersion).\
                 filter(Cube.plate == self.id, PipelineVersion.version == self.drpver).all()
@@ -711,41 +712,41 @@ class Plate(object):
         return cubes
 
 
-db.prepare_base(Base)
+def define_relations():
+    """Setup relationships after preparation."""
+
+    Cube.pipelineInfo = relationship(PipelineInfo, backref="cubes")
+    Cube.wavelength = relationship(Wavelength, backref="cube")
+    Cube.ifu = relationship(IFUDesign, backref="cubes")
+    # Cube.carts = relationship(Cart, secondary=CartToCube.__table__, backref="cubes")
+    Cube.wcs = relationship(Wcs, backref='cube', uselist=False)
+    Cube.shape = relationship(CubeShape, backref='cubes', uselist=False)
+    Cube.obsinfo = relationship(ObsInfo, backref='cube', uselist=False)
+
+    Sample.cube = relationship(Cube, backref="sample", uselist=False)
+
+    FitsHeaderValue.cube = relationship(Cube, backref="headervals")
+    FitsHeaderValue.keyword = relationship(FitsHeaderKeyword, backref="value")
+
+    IFUDesign.blocks = relationship(SlitBlock, secondary=IFUToBlock.__table__, backref='ifus')
+    Fibers.ifu = relationship(IFUDesign, backref="fibers")
+    Fibers.fibertype = relationship(FiberType, backref="fibers")
+    Fibers.targettype = relationship(TargetType, backref="fibers")
+
+    insp = reflection.Inspector.from_engine(database.engine)
+    fks = insp.get_foreign_keys(Spaxel.__table__.name, schema='mangadatadb')
+    if fks:
+        Spaxel.cube = relationship(Cube, backref='spaxels')
+    fks = insp.get_foreign_keys(RssFiber.__table__.name, schema='mangadatadb')
+    if fks:
+        RssFiber.cube = relationship(Cube, backref='rssfibers')
+        RssFiber.fiber = relationship(Fibers, backref='rssfibers')
+
+    PipelineInfo.name = relationship(PipelineName, backref="pipeinfo")
+    PipelineInfo.stage = relationship(PipelineStage, backref="pipeinfo")
+    PipelineInfo.version = relationship(PipelineVersion, backref="pipeinfo")
+    PipelineInfo.completionStatus = relationship(PipelineCompletionStatus, backref="pipeinfo")
 
 
-# Define relationships
-# ========================
-
-Cube.pipelineInfo = relationship(PipelineInfo, backref="cubes")
-Cube.wavelength = relationship(Wavelength, backref="cube")
-Cube.ifu = relationship(IFUDesign, backref="cubes")
-#Cube.carts = relationship(Cart, secondary=CartToCube.__table__, backref="cubes")
-Cube.wcs = relationship(Wcs, backref='cube', uselist=False)
-Cube.shape = relationship(CubeShape, backref='cubes', uselist=False)
-Cube.obsinfo = relationship(ObsInfo, backref='cube', uselist=False)
-
-Sample.cube = relationship(Cube, backref="sample", uselist=False)
-
-FitsHeaderValue.cube = relationship(Cube, backref="headervals")
-FitsHeaderValue.keyword = relationship(FitsHeaderKeyword, backref="value")
-
-IFUDesign.blocks = relationship(SlitBlock, secondary=IFUToBlock.__table__, backref='ifus')
-Fibers.ifu = relationship(IFUDesign, backref="fibers")
-Fibers.fibertype = relationship(FiberType, backref="fibers")
-Fibers.targettype = relationship(TargetType, backref="fibers")
-
-insp = reflection.Inspector.from_engine(db.engine)
-fks = insp.get_foreign_keys(Spaxel.__table__.name, schema='mangadatadb')
-if fks:
-    Spaxel.cube = relationship(Cube, backref='spaxels')
-fks = insp.get_foreign_keys(RssFiber.__table__.name, schema='mangadatadb')
-if fks:
-    RssFiber.cube = relationship(Cube, backref='rssfibers')
-    RssFiber.fiber = relationship(Fibers, backref='rssfibers')
-
-
-PipelineInfo.name = relationship(PipelineName, backref="pipeinfo")
-PipelineInfo.stage = relationship(PipelineStage, backref="pipeinfo")
-PipelineInfo.version = relationship(PipelineVersion, backref="pipeinfo")
-PipelineInfo.completionStatus = relationship(PipelineCompletionStatus, backref="pipeinfo")
+# prepare the base
+database.add_base(Base)

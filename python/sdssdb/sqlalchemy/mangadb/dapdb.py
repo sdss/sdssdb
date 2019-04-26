@@ -5,14 +5,14 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:15
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:21:08
 
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
 from astropy.io import fits
-from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, database
 from sqlalchemy import Column, Float, and_, case, cast, select
 from sqlalchemy.engine import reflection
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
@@ -27,6 +27,7 @@ SCHEMA = 'mangadapdb'
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
     _schema = SCHEMA
+    _relations = 'define_relations'
 
     @declared_attr
     def __table_args__(cls):
@@ -307,44 +308,53 @@ class DapAll(Base):
     print_fields = ['file_pk']
 
 
-# prepare the base
-db.prepare_base(Base)
+def define_relations():
+    """Setup relationships after preparation."""
 
-# setup relationships after preparation
-File.cube = relationship(datadb.Cube, backref='dapfiles')
-File.pipelineinfo = relationship(datadb.PipelineInfo, backref='dapfiles')
-File.filetype = relationship(FileType, backref='files')
-File.structure = relationship(Structure, backref='files')
-CurrentDefault.file = relationship(File, uselist=False, backref='current_default')
-Hdu.file = relationship(File, backref='hdus')
-Hdu.extname = relationship(ExtName, backref='hdus')
-Hdu.exttype = relationship(ExtType, backref='hdus')
-Hdu.extcols = relationship(ExtCol, secondary=HduToExtCol.__table__, backref='hdus')
-Hdu.header_values = relationship(HeaderValue, secondary=HduToHeaderValue.__table__, backref='hdus')
-HeaderValue.keyword = relationship(HeaderKeyword, backref='values')
-DapAll.file = relationship(File, uselist=False, backref='dapall')
+    File.cube = relationship(datadb.Cube, backref='dapfiles')
+    File.pipelineinfo = relationship(datadb.PipelineInfo, backref='dapfiles')
+    File.filetype = relationship(FileType, backref='files')
+    File.structure = relationship(Structure, backref='files')
+    CurrentDefault.file = relationship(File, uselist=False, backref='current_default')
+    Hdu.file = relationship(File, backref='hdus')
+    Hdu.extname = relationship(ExtName, backref='hdus')
+    Hdu.exttype = relationship(ExtType, backref='hdus')
+    Hdu.extcols = relationship(ExtCol, secondary=HduToExtCol.__table__, backref='hdus')
+    Hdu.header_values = relationship(HeaderValue,
+                                     secondary=HduToHeaderValue.__table__,
+                                     backref='hdus')
+    HeaderValue.keyword = relationship(HeaderKeyword, backref='values')
+    DapAll.file = relationship(File, uselist=False, backref='dapall')
 
-# necessary manual foreign key relationship
-Structure.template_kin = relationship(Template, foreign_keys=[Structure.template_kin_pk], backref='structures_kin')
-Structure.template_pop = relationship(Template, foreign_keys=[Structure.template_pop_pk], backref='structures_pop')
+    # necessary manual foreign key relationship
+    Structure.template_kin = relationship(Template,
+                                          foreign_keys=[Structure.template_kin_pk],
+                                          backref='structures_kin')
+    Structure.template_pop = relationship(Template,
+                                          foreign_keys=[Structure.template_pop_pk],
+                                          backref='structures_pop')
 
-# add foreign key relationships on (Clean)SpaxelProp classses to File
-spaxel_tables = {k: v for k, v in locals().items() if 'SpaxelProp' in k or 'CleanSpaxelProp' in k}
-for classname, class_model in spaxel_tables.items():
-    fks = insp.get_foreign_keys(class_model.__table__.name, schema=SCHEMA)
+    # add foreign key relationships on (Clean)SpaxelProp classses to File
+    spaxel_tables = {k: v for k, v in locals().items()
+                     if 'SpaxelProp' in k or 'CleanSpaxelProp' in k}
+    for classname, class_model in spaxel_tables.items():
+        fks = insp.get_foreign_keys(class_model.__table__.name, schema=SCHEMA)
+        if fks:
+            backname = classname.lower().replace('prop', 'props')
+            class_model.file = relationship(File, backref=backname)
+
+    fks = insp.get_foreign_keys(ModelCube.__table__.name, schema=SCHEMA)
     if fks:
-        backname = classname.lower().replace('prop', 'props')
-        class_model.file = relationship(File, backref=backname)
+        ModelCube.file = relationship(File, backref='modelcube', uselist=False)
+
+    fks = insp.get_foreign_keys(ModelSpaxel.__table__.name, schema=SCHEMA)
+    if fks:
+        ModelSpaxel.modelcube = relationship(ModelCube, backref='modelspaxels')
+
+    fks = insp.get_foreign_keys(RedCorr.__table__.name, schema=SCHEMA)
+    if fks:
+        RedCorr.modelcube = relationship(ModelCube, backref='redcorr')
 
 
-fks = insp.get_foreign_keys(ModelCube.__table__.name, schema=SCHEMA)
-if fks:
-    ModelCube.file = relationship(File, backref='modelcube', uselist=False)
-
-fks = insp.get_foreign_keys(ModelSpaxel.__table__.name, schema=SCHEMA)
-if fks:
-    ModelSpaxel.modelcube = relationship(ModelCube, backref='modelspaxels')
-
-fks = insp.get_foreign_keys(RedCorr.__table__.name, schema=SCHEMA)
-if fks:
-    RedCorr.modelcube = relationship(ModelCube, backref='redcorr')
+# prepare the base
+database.add_base(Base)

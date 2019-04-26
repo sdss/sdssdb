@@ -12,10 +12,22 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import importlib
+import os
+import shutil
+import warnings
+
 import sphinx_bootstrap_theme
 from pkg_resources import parse_version
 
 from sdssdb import __version__
+from sdssdb.utils import create_schema_graph
+
+
+try:
+    import peewee
+except ImportError:
+    peewee = None
 
 
 # Importing matplotlib here with agg to prevent tkinter error in readthedocs
@@ -37,7 +49,7 @@ from sdssdb import __version__
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.mathjax',
-              'sphinx.ext.intersphinx']
+              'sphinx.ext.intersphinx', 'releases']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -57,8 +69,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'sdssdb'
-copyright = '{0}, {1}'.format('2018', 'Jen Sobeck')
-author = 'Jen Sobeck'
+copyright = '{0}, {1}'.format('2018', 'José Sánchez-Gallego')
+author = 'José Sánchez-Gallego, Brian Cherinka, Jen Sobeck'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -112,7 +124,8 @@ todo_include_todos = False
 intersphinx_mapping = {'python': ('https://docs.python.org/3.6', None),
                        'astropy': ('http://docs.astropy.org/en/latest', None),
                        'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-                       'peewee': ('http://docs.peewee-orm.com/en/latest/', None)}
+                       'peewee': ('http://docs.peewee-orm.com/en/latest/', None),
+                       'sqlalchemy': ('https://docs.sqlalchemy.org/en/latest/', None)}
 
 autodoc_mock_imports = ['_tkinter']
 autodoc_member_order = 'groupwise'
@@ -122,9 +135,11 @@ napoleon_use_ivar = True
 
 rst_epilog = """
 .. |numpy_array| replace:: Numpy array
-.. _peewee: http://docs.peewee-orm.com/en/latest/
-.. _SQLAlchemy: http://www.sqlalchemy.org/
 """
+
+releases_github_path = 'sdss/sdssdb'
+releases_document_name = ['CHANGELOG']
+releases_unstable_prehistory = True
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -267,3 +282,46 @@ texinfo_documents = [
      author, project, 'One line description of project.',
      'Miscellaneous'),
 ]
+
+
+def generate_schema_graphs():
+    """Generates schema graphs for a series of schemas."""
+
+    if not peewee:
+        warnings.warn('peewee is not installed. Cannot generate schema graphs.',
+                      UserWarning)
+        return
+
+    schemas = ['sdss5db.targetdb', 'sdss5db.catalogdb', 'operationsdb.platedb',
+               'operationsdb.mangadb']
+
+    output_dir = os.path.join(os.path.dirname(__file__),
+                              '_static/schema_graphs/auto')
+
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir)
+
+    os.makedirs(output_dir)
+
+    for schema in schemas:
+
+        __, schema_name = schema.split('.')
+
+        module = importlib.import_module('sdssdb.peewee.' + schema)
+
+        models = []
+        for attr in dir(module):
+            obj = getattr(module, attr)
+
+            if not isinstance(obj, peewee.ModelBase):
+                continue
+
+            models.append(obj)
+
+        if len(models) > 0:
+            graph = create_schema_graph(models, schema=schema_name)
+            graph.write_pdf(os.path.join(output_dir, schema + '.pdf'))
+
+
+def setup(app):
+    generate_schema_graphs()

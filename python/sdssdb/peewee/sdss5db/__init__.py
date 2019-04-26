@@ -5,7 +5,7 @@ from sdssdb.peewee import BaseModel
 
 
 class SDSS5dbDatabaseConnection(PeeweeDatabaseConnection):
-    DATABASE_NAME = 'sdss5db'
+    dbname = 'sdss5db'
 
 
 database = SDSS5dbDatabaseConnection(autoconnect=True)

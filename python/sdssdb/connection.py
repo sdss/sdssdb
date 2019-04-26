@@ -7,12 +7,13 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-11-02 22:20:51
+# @Last modified time: 2018-12-10 16:39:58
 
 
 from __future__ import absolute_import, division, print_function
 
 import abc
+import importlib
 import socket
 
 import six
@@ -44,17 +45,18 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     """A PostgreSQL database connection with profile and autoconnect features.
 
     Provides a base class for PostgreSQL connections for either peewee_ or
-    SQLAlchemy_. The parameters for the connection can be
-    passed directly (see `.connect_from_parameters`) or, more conveniently, a
-    profile can be used. By default `.DATABASE_NAME` is left undefined and
-    needs to be passed when initiating the connection. This is useful for
-    databases such as ``apodb/lcodb`` for which the model classes are identical
-    but the database name is not. For databases for which the database name is
-    fixed (e.g., ``sdss5db``), this class can be subclassed and
-    `.DATABASE_NAME` overridden.
+    SQLAlchemy_. The parameters for the connection can be passed directly (see
+    `.connect_from_parameters`) or, more conveniently, a profile can be used.
+    By default `.dbname` is left undefined and needs to be passed when
+    initiating the connection. This is useful for databases such as
+    ``apodb/lcodb`` for which the model classes are identical but the database
+    name is not. For databases for which the database name is fixed (e.g.,
+    ``sdss5db``), this class can be subclassed and `.dbname` overridden.
 
     Parameters
     ----------
+    dbname : str
+        The database name.
     profile : str
         The configuration profile to use. The profile defines the default
         user, database server hostname, and port for a given location. If
@@ -62,49 +64,76 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         current domain, or defaults to ``local``.
     autoconnect : bool
         Whether to autoconnect to the database using the profile parameters.
-        Requites `.DATABASE_NAME` to be set.
+        Requites `.dbname` to be set.
 
     """
 
-    #: The default database name.
-    DATABASE_NAME = None
+    #: The database name.
+    dbname = None
 
-    def __init__(self, profile=None, dbname=None, autoconnect=True):
+    def __init__(self, dbname=None, profile=None, autoconnect=True):
 
         #: Reports whether the connection is active.
         self.connected = False
         self.profile = None
-        self.dbname = dbname
+        self.dbname = dbname if dbname else self.dbname
 
         self.set_profile(profile=profile)
 
-        if autoconnect:
-            self.connect(profile=profile, dbname=self.dbname, silent_on_fail=True)
+        if autoconnect and self.dbname:
+            self.connect(dbname=self.dbname, silent_on_fail=True)
 
     def __repr__(self):
-        return '<{} (dbname={!r}, connected={})>'.format(
-            self.__class__.__name__, self.dbname or self.DATABASE_NAME,
-            self.connected)
+        return '<{} (dbname={!r}, profile={!r}, connected={})>'.format(
+            self.__class__.__name__, self.dbname, self.profile, self.connected)
 
-    def set_profile(self, profile=None):
-        """Determines observatory profile."""
+    def set_profile(self, profile=None, connect=True):
+        """Sets the profile from the configuration file.
+
+        Parameters
+        -----------
+        profile : str
+            The profile to set. If `None`, uses the domain name to
+            determine the profile.
+        connect : bool
+            If True, tries to connect to the database using the new profile.
+
+        Returns
+        -------
+        connected : bool
+            Returns True if the database is connected.
+
+        """
+
+        previous_profile = self.profile
 
         if profile is not None:
+
+            assert profile in config, 'profile not found in configuration file.'
             self.profile = profile
-            return
 
-        # Get hostname
-        hostname = socket.getfqdn()
+        else:
 
-        # Initially set location to local.
-        self.profile = 'local'
+            # Get hostname
+            hostname = socket.getfqdn()
 
-        # Tries to find a profile whose domain matches the hostname
-        for profile in config:
-            if 'domain' in profile and profile['domain'] is not None:
-                if hostname.endswith(profile['domain']):
-                    self.profile = profile
-                    break
+            # Initially set location to local.
+            self.profile = 'local'
+
+            # Tries to find a profile whose domain matches the hostname
+            for profile in config:
+                if 'domain' in config[profile] and config[profile]['domain'] is not None:
+                    if hostname.endswith(config[profile]['domain']):
+                        self.profile = profile
+                        break
+
+        if connect:
+            if self.connected and self.profile == previous_profile:
+                pass
+            elif self.dbname is not None:
+                self.connect(silent_on_fail=True)
+
+        return self.connected
 
     @abc.abstractmethod
     def _conn(self, dbname, **params):
@@ -118,33 +147,43 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         pass
 
-    def connect(self, dbname=None, profile=None, silent_on_fail=False):
-        """Initialises the database from a profile in the config file.
+    def connect(self, dbname=None, silent_on_fail=False):
+        """Initialises the database using the profile information.
+
         Parameters
         ----------
         dbname : `str` or `None`
-            The database name. If `None`, defaults to `.DATABASE_NAME`.
-        profile : `str` or `None`
-            The connection profile to use. If `None`, uses the default profile.
+            The database name. If `None`, defaults to `.dbname`.
         silent_on_fail : `bool`
             If `True`, does not show a warning if the connection fails.
 
+        Returns
+        -------
+        connected : bool
+            Returns True if the database is connected.
+
         """
 
-        profile = profile or self.profile
-        assert profile is not None, 'profile not set.'
+        if self.profile is None:
+            raise RuntimeError('the profile was not set when '
+                               'DatabaseConnection was instantiated. Use '
+                               'set_profile to set the profile in runtime.')
 
         # Gets the necessary configuration values from the profile
-        db_configuration = {item: config[profile][item]
-                            if item in config[profile] else None
+        db_configuration = {item: config[self.profile][item]
+                            if item in config[self.profile] else None
                             for item in ['user', 'host', 'port']}
 
-        dbname = dbname or self.dbname or self.DATABASE_NAME
-        assert dbname is not None, 'database name not defined or passed.'
+        dbname = dbname or self.dbname
+        if dbname is None:
+            raise RuntimeError('the database name was not set when '
+                               'DatabaseConnection was instantiated. '
+                               'To set it in runtime change the dbname '
+                               'attribute.')
 
-        self.connect_from_parameters(dbname=dbname,
-                                     silent_on_fail=silent_on_fail,
-                                     **db_configuration)
+        return self.connect_from_parameters(dbname=dbname,
+                                            silent_on_fail=silent_on_fail,
+                                            **db_configuration)
 
     def connect_from_parameters(self, dbname=None, **params):
         """Initialises the database from a dictionary of parameters.
@@ -152,23 +191,50 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Parameters
         ----------
         dbname : `str` or `None`
-            The database name. If `None`, defaults to `.DATABASE_NAME`.
+            The database name. If `None`, defaults to `.dbname`.
         params : dict
             A dictionary of parameters, which should include ``user``,
             ``host``, and ``port``.
 
+        Returns
+        -------
+        connected : bool
+            Returns True if the database is connected.
+
         """
 
-        dbname = dbname or self.dbname or self.DATABASE_NAME
-        assert dbname is not None, 'database name not defined or passed.'
+        # Make hostname an alias of host.
+        if 'hostname' in params:
+            if 'host' not in params:
+                params['host'] = params.pop('hostname')
+            else:
+                raise KeyError('cannot use hostname and host at the same time.')
 
-        self._conn(dbname, **params)
+        dbname = dbname or self.dbname
+        if dbname is None:
+            raise RuntimeError('the database name was not set when '
+                               'DatabaseConnection was instantiated. '
+                               'To set it in runtime change the dbname '
+                               'attribute.')
+
+        return self._conn(dbname, **params)
 
     @staticmethod
-    def list_profiles():
-        """Returns a list of profiles."""
+    def list_profiles(profile=None):
+        """Returns a list of profiles.
 
-        return config.keys()
+        Parameters
+        ----------
+        profile : `str` or `None`
+            If `None`, returns a list of profile keys. If profile is not `None`
+            returns the parameters for the given profile.
+
+        """
+
+        if profile is None:
+            return config.keys()
+
+        return config[profile]
 
     @abc.abstractproperty
     def connection_params(self):
@@ -254,11 +320,11 @@ if _peewee:
                 self.dbname = dbname
             except OperationalError:
                 if not silent_on_fail:
-                    log.warning('failed to connect to database {0}. '
-                                'Setting database to None.'.format(self.database),
-                                UserWarning)
+                    log.warning(f'failed to connect to {self.database!r}.', UserWarning)
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
+
+            return self.connected
 
 
 if _sqla:
@@ -267,7 +333,7 @@ if _sqla:
         ''' SQLAlchemy database connection implementation '''
 
         engine = None
-        base = None
+        bases = []
         Session = None
         metadata = None
 
@@ -347,7 +413,9 @@ if _sqla:
             else:
                 self.connected = True
                 self.dbname = dbname
-                self.prepare_base()
+                self.prepare_bases()
+
+            return self.connected
 
         def reset_engine(self):
             ''' Reset the engine, metadata, and session '''
@@ -381,14 +449,39 @@ if _sqla:
             self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
                                                        expire_on_commit=expire_on_commit))
 
-        def prepare_base(self, base=None):
-            ''' Prepare a Model Base
+        def add_base(self, base, prepare=True):
+            """Binds a base to this connection."""
 
-            Prepares a SQLalchemy Base for reflection.  This binds a database engine
-            to a specific Base which maps to a set of ModelClasses
+            if base not in self.bases:
+                self.bases.append(base)
 
-            '''
+            if prepare and self.connected:
+                self.prepare_bases(base=base)
 
-            base = base or self.base
-            if base:
+        def prepare_bases(self, base=None):
+            """Prepare a Model Base
+
+            Prepares a SQLalchemy Base for reflection. This binds a database
+            engine to a specific Base which maps to a set of ModelClasses.
+            If ``base`` is passed only that base will be prepared. Otherwise,
+            all the bases bound to this database connection will be prepared.
+
+            """
+
+            do_bases = [base] if base else self.bases
+
+            for base in do_bases:
                 base.prepare(self.engine)
+
+                # If the base has an attribute _relations that's the function
+                # to call to set up the relationships once the engine has been
+                # bound to the base.
+                if hasattr(base, '_relations'):
+                    if isinstance(base._relations, str):
+                        module = importlib.import_module(base.__module__)
+                        relations_func = getattr(module, base._relations)
+                        relations_func()
+                    elif callable(base._relations):
+                        base._relations()
+                    else:
+                        pass

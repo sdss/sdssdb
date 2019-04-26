@@ -1,21 +1,30 @@
 sdssdb
-==============================
+======
 
-Central SDSS product for database management
+|python| |docs|
 
-Database setup, configuration, and interaction for SDSS (core SDSS products utilizing databases will utilize sdssdb).
+SDSS product for database management.
 
-| |Build Status|
-| |Coverage Status|
-
+Useful links
 ------------
 
-This README describes the sdssdb Python package. 
-It should include things like a general description, installation instructions, and requirements. 
-It should also include information badges for other services or packages used, e.g., Travis-CI and Coveralls, ReadtheDocs, Astropy, etc.
+- GitHub: https://github.com/sdss/sdssdb
+- Documentation: https://sdssdb.readthedocs.org
+- Issues: https://github.com/sdss/sdssdb/issues
 
-.. |Build Status| image:: https://travis-ci.org/jsobeck/sdssdb.svg?branch=master
-   :target: https://travis-ci.org/jsobeck/sdssdb
+How to use
+----------
+::
 
-.. |Coverage Status| image:: https://coveralls.io/repos/github/jsobeck/sdssdb/badge.svg?branch=master
-   :target: https://coveralls.io/github/jsobeck/sdssdb?branch=master
+    >>> from sdssdb.peewee.sdss5db import catalogdb
+    >>> targets = catalogdb.GaiaDR2Source.select().where(catalogdb.GaiaDR2Source.phot_g_mean_mag < 15)
+
+
+.. |python| image:: https://img.shields.io/badge/python-3.6%2B-green.svg
+    :alt: Requires Python 3.6+
+    :scale: 100%
+
+.. |docs| image:: https://readthedocs.org/projects/sdssdb/badge/?version=latest
+    :alt: Documentation Status
+    :scale: 100%
+    :target: https://sdssdb.readthedocs.io/en/latest/?badge=latest

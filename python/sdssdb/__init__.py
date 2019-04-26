@@ -3,6 +3,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
+import warnings
 
 import yaml
 
@@ -38,4 +39,11 @@ if os.path.exists(custom_config_fn):
 # from sdssdb.sqlalchemy import db
 # config['db'] = db
 
-__version__ = '0.1.0dev'
+warnings.filterwarnings(
+    'ignore', '.*Skipped unsupported reflection of expression-based index .*q3c.*')
+
+
+__version__ = '0.2.2dev'
+
+
+from .connection import *  # noqa

@@ -1,4 +1,4 @@
-body { color: #444444 !important; font-size: 14px}
+body { color: #444444 !important; font-size: 15px}
 
 div.custom-warning {
     background-color: #f7c589;
@@ -41,6 +41,10 @@ footer a{
 }
 a.reference {
     color: #4c72b0 !important;
+}
+
+a.external {
+    text-decoration: underline !important;
 }
 
 blockquote p {
@@ -105,3 +109,11 @@ h3 { font-size: 150%; }
 h4 { font-size: 120%; }
 h5 { font-size: 90%; }
 h6 { font-size: 80%; }
+
+li > dl > dt {
+    font-weight: 400;
+}
+
+.table > tbody > tr > td {
+    border: 0px;
+}

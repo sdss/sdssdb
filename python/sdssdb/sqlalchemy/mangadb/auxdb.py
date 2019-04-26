@@ -5,12 +5,12 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:57
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:20:57
 
 from __future__ import absolute_import, division, print_function
 
-from sdssdb.sqlalchemy.mangadb import MangaBase, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, database
 from sdssdb.sqlalchemy.mangadb.datadb import Cube
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
@@ -45,4 +45,4 @@ class MaskBit(Base):
     print_fields = ['flag', 'bit', 'label']
 
 
-Base.prepare(db.engine)
+database.add_base(Base)

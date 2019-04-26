@@ -14,7 +14,8 @@ CREATE TABLE catalogdb.gaiadr2_tmass_best_neighbour(
     source_id bigint,
     original_ext_source_id character(17),
     angular_distance double precision,
-    gaia_astrometric_params integer
+    gaia_astrometric_params integer,
+    tmass_pts_key integer
 );
 
 
@@ -23,3 +24,4 @@ CREATE TABLE catalogdb.gaiadr2_tmass_best_neighbour(
 alter table catalogdb.gaiadr2_tmass_best_neighbour add primary key(source_id);
 
 CREATE INDEX CONCURRENTLY gaiadr2_tmass_best_neighbour_tmass_oid_index ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_oid);
+CREATE INDEX CONCURRENTLY gaiadr2_tmass_best_neighbour_tmass_original_ext_source_id_index ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (original_ext_source_id);

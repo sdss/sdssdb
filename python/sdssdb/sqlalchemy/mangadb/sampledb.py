@@ -5,7 +5,7 @@
 #
 # @Author: Brian Cherinka
 # @Date:   2018-09-22 09:07:50
-# @Last modified by:   Brian Cherinka
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 16:07:58
 
 from __future__ import absolute_import, division, print_function
@@ -15,7 +15,7 @@ import math
 import shutil
 
 import numpy as np
-from sdssdb.sqlalchemy.mangadb import MangaBase, db
+from sdssdb.sqlalchemy.mangadb import MangaBase, database
 from sqlalchemy import Float, ForeignKey, ForeignKeyConstraint, case, cast, func
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
@@ -37,6 +37,7 @@ SCHEMA = 'mangasampledb'
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
     _schema = SCHEMA
+    _relations = 'define_relations'
 
     @declared_attr
     def __table_args__(cls):
@@ -264,16 +265,16 @@ setattr(NSA, 'elpetro_logmass', logmass('elpetro_mass'))
 setattr(NSA, 'sersic_logmass', logmass('sersic_mass'))
 
 
-Base.prepare(db.engine)
+def define_relations():
+    """Setup relationships after preparation."""
 
-# Relationship between NSA and MangaTarget
-NSA.mangaTargets = relationship(
-    MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
+    NSA.mangaTargets = relationship(
+        MangaTarget, backref='NSA_objects', secondary=MangaTargetToNSA.__table__)
+
 
 #
 # This section still needs work and does not quite work yet.
 #
-
 
 # class factory
 def ClassFactory(name, tableName, BaseClass=Base, fks=None):
@@ -311,8 +312,9 @@ def add_catalogue(classname, tablename, has_manga_target=None):
         new_class.mangaTargets = relationship(MangaTarget, backref='{0}_objects'.format(tablename),
                                               secondary=new_relationalclass.__table__)
 
+
 # Now we create any remaining catalogue tables.
-insp = sa_inspect(db.engine)
+insp = sa_inspect(database.engine)
 allTables = insp.get_table_names(schema=SCHEMA)
 
 done_names = list(Base.metadata.tables.keys())
@@ -330,3 +332,7 @@ for tableName in allTables:
     done_names.append(SCHEMA + '.' + tableName)
     if has_manga_target:
         done_names.append(SCHEMA + '.' + relational_tablename)
+
+
+# prepare the base
+database.add_base(Base)

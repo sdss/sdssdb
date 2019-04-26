@@ -1,5 +1,7 @@
 # flake8: noqa
 
+import re
+
 from peewee import Model, fn
 from playhouse.hybrid import hybrid_method
 
@@ -13,51 +15,51 @@ class BaseModel(Model):
 
     """
 
-    #: A list of fields (as strings) to be included in the ``__repr__```
+    #: A list of fields (as strings) to be included in the ``__repr__``
     print_fields = []
 
-    def __repr__(self):
-        """A custom repr for targetdb models."""
+    def __str__(self):
+        """A custom str for the model repr."""
 
-        reg = re.match('.*\'.*.(.*)\'.', str(self.__class__))
+        pk_field = self._meta.primary_key.name
+        fields = ['{0}={1!r}'.format(pk_field, self.get_id())]
 
-        if reg is not None:
+        for extra_field in ['label', 'name']:
+            if extra_field not in self.print_fields:
+                self.print_fields.append(extra_field)
 
-            fields = ['pk={0!r}'.format(self.get_id())]
+        for ff in self.print_fields:
+            if ff == pk_field:
+                continue
+            if hasattr(self, ff):
+                fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
 
-            for extra_field in ['label']:
-                if extra_field not in self.print_fields:
-                    self.print_fields.append(extra_field)
-
-            for ff in self.print_fields:
-                if hasattr(self, ff):
-                    fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
-
-            return '<{0}: {1}>'.format(reg.group(1), ', '.join(fields))
-
-        return super(BaseModel, self).__repr__()
+        return ', '.join(fields)
 
     @hybrid_method
-    def cone_search(self, ra, dec, a, b=None, pa=None):
+    def cone_search(self, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):
         """Returns a query with the rows inside a region on the sky."""
 
-        assert hasattr(self, 'ra') and hasattr(self, 'dec'), \
+        assert hasattr(self, ra_col) and hasattr(self, dec_col), \
             'this model class does not have ra/dec columns.'
 
+        ra_attr = getattr(self, ra_col)
+        dec_attr = getattr(self, dec_col)
+
         if b is None:
-            return fn.q3c_radial_query(self.ra, self.dec, ra, dec, a)
+            return fn.q3c_radial_query(ra_attr, dec_attr, ra, dec, a)
         else:
             pa = pa or 0.0
             ratio = b / a
-            return fn.q3c_ellipse_query(self.ra, self.dec, ra, dec, a, ratio, pa)
+            return fn.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)
 
     @cone_search.expression
-    def cone_search(cls, ra, dec, a, b=None, pa=None):
+    def cone_search(cls, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):
         """Returns a query with the rows inside a region on the sky.
 
-        Defines a sky ellipse and returns the targets within. Assumes that the
-        table contains two columns ``ra`` and ``dec``. All units are assumed
-        to be degrees.
+        Defines a sky ellipse and returns the targets within. By default it
+        assumes that the table contains two columns ``ra`` and ``dec``. All
+        units are expected to be in degrees.
 
         Parameters
         ----------
@@ -74,15 +76,22 @@ class BaseModel(Model):
             search will be run. In that case, ``pa`` is ignored.
         pa : `float` or `None`
             The parallactic angle of the ellipse.
+        ra_col : str
+            The name of the column with the RA value.
+        dec_col : str
+            The name of the column with the Dec value.
 
         """
 
-        assert hasattr(cls, 'ra') and hasattr(cls, 'dec'), \
+        assert hasattr(cls, ra_col) and hasattr(cls, dec_col), \
             'this model class does not have ra/dec columns.'
 
+        ra_attr = getattr(cls, ra_col)
+        dec_attr = getattr(cls, dec_col)
+
         if b is None:
-            return fn.q3c_radial_query(cls.ra, cls.dec, ra, dec, a)
+            return fn.q3c_radial_query(ra_attr, dec_attr, ra, dec, a)
         else:
             pa = pa or 0.0
             ratio = b / a
-            return fn.q3c_ellipse_query(cls.ra, cls.dec, ra, dec, a, ratio, pa)
+            return fn.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)

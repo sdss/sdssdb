@@ -19,7 +19,7 @@ import sys
 # The NAME variable should be of the format "sdss-sdssdb".
 # Please check your NAME adheres to that format.
 NAME = 'sdssdb'
-VERSION = '0.1.0dev'
+VERSION = '0.2.2dev'
 RELEASE = 'dev' in VERSION
 
 
@@ -28,17 +28,22 @@ def run(packages, install_requires):
     setup(name=NAME,
           version=VERSION,
           license='BSD3',
-          description='Description of your project.',
+          description='SDSS product for database management.',
           long_description=open('README.rst').read(),
-          author='Jen Sobeck',
-          author_email='jsobeck@uw.edu',
-          keywords='astronomy software',
+          author='Jose Sanchez-Gallego',
+          author_email='gallegoj@uw.edu',
+          keywords='astronomy software database',
           url='https://github.com/sdss/sdssdb',
           include_package_data=True,
           packages=packages,
           install_requires=install_requires,
           package_dir={'': 'python'},
-          scripts=['bin/sdssdb'],
+          python_requires='>=3.6',
+          scripts=[],
+          project_urls={
+              'Documentation': 'https://sdssdb.readthedocs.org',
+              'Source': 'https://github.com/sdss/sdssdb',
+              'Issues': 'https://github.com/sdss/sdssdb/issues'},
           classifiers=[
               'Development Status :: 4 - Beta',
               'Intended Audience :: Science/Research',
@@ -46,8 +51,7 @@ def run(packages, install_requires):
               'Natural Language :: English',
               'Operating System :: OS Independent',
               'Programming Language :: Python',
-              'Programming Language :: Python :: 2.6',
-              'Programming Language :: Python :: 2.7',
+              'Programming Language :: Python :: 3.6',
               'Topic :: Documentation :: Sphinx',
               'Topic :: Software Development :: Libraries :: Python Modules',
           ],
