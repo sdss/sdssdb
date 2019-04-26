@@ -194,7 +194,7 @@ class TargetCadence(SDSS5dbModel):
     name = TextField(null=False)
     nexposures = IntegerField(null=True)
     delta = ArrayField(field_class=FloatField, null=True)
-    lunation = ArrayField(field_class=FloatField, null=True)
+    skybrightness = ArrayField(field_class=FloatField, null=True)
     delta_max = ArrayField(field_class=FloatField, null=True)
     delta_min = ArrayField(field_class=FloatField, null=True)
     spectrograph_pk = ArrayField(field_class=IntegerField, null=False)
@@ -287,12 +287,12 @@ class File(SDSS5dbModel):
         schema = 'targetdb'
 
 
-class Lunation(SDSS5dbModel):
-    max_lunation = FloatField(null=True)
+class Skybrightness(SDSS5dbModel):
+    max_skybrightness = FloatField(null=True)
     pk = AutoField()
 
     class Meta:
-        table_name = 'lunation'
+        table_name = 'skybrightness'
         schema = 'targetdb'
 
 
@@ -328,6 +328,7 @@ class Target(SDSS5dbModel):
     pmdec = FloatField(null=True)
     pmra = FloatField(null=True)
     priority = IntegerField(null=True)
+    value = FloatField(null=True)
     program = ForeignKeyField(column_name='program_pk',
                               field='pk',
                               model=Program,
@@ -354,11 +355,11 @@ class Target(SDSS5dbModel):
                                         model=TargetCompletion,
                                         null=True,
                                         backref='targets')
-    lunation = ForeignKeyField(column_name='lunation_pk',
-                               field='pk',
-                               model=Lunation,
-                               null=True,
-                               backref='targets')
+    skybrightness = ForeignKeyField(column_name='skybrightness_pk',
+                                    field='pk',
+                                    model=Skybrightness,
+                                    null=True,
+                                    backref='targets')
     tiles = ManyToManyField(Tile, backref='targets')
     target_type = ForeignKeyField(column_name='target_type_pk',
                                   field='pk',
