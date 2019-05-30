@@ -41,7 +41,7 @@ manga:
     domain: manga.wasatch.peaks
 
 utahdb:
-    user: sdss
+    user: sdssdb_admin
     host: db.sdss.utah.edu
     port: 5432
     domain: db.sdss.utah.edu
