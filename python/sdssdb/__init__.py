@@ -1,4 +1,5 @@
 # encoding: utf-8
+# flake8: noqa
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -54,4 +55,24 @@ warnings.filterwarnings(
 __version__ = '0.2.2dev'
 
 
-from .connection import *  # noqa
+try:
+    import peewee
+    _peewee = True
+except ImportError:
+    _peewee = False
+
+try:
+    import sqlalchemy
+    _sqla = True
+except ImportError:
+    _sqla = False
+    if _peewee is False:
+        raise ImportError('neither SQLAlchemy nor Peewee are installed.')
+
+
+from .connection import DatabaseConnection
+
+if _peewee:
+    from .connection import PeeweeDatabaseConnection
+if _sqla:
+    from .connection import SQLADatabaseConnection

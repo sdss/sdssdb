@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-10 16:39:58
+# @Last modified time: 2019-07-24 07:07:56
 
 
 from __future__ import absolute_import, division, print_function
@@ -19,23 +19,17 @@ import socket
 import six
 from pgpasslib import getpass
 
-from sdssdb import config, log
+from sdssdb import config, log, _peewee, _sqla
 
 
-try:
+if _peewee:
     from peewee import OperationalError, PostgresqlDatabase
-    _peewee = True
-except ImportError:
-    _peewee = False
 
-try:
+if _sqla:
     from sqlalchemy import create_engine, MetaData
     from sqlalchemy.engine import url
     from sqlalchemy.exc import OperationalError as OpError
     from sqlalchemy.orm import sessionmaker, scoped_session
-    _sqla = True
-except ImportError:
-    _sqla = False
 
 
 __all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
