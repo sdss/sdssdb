@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Fixed import of database connections when Peewee or SQLAlchemy are not available.
 * Added ``operationsdb`` SQL schemas.
 * Improved descriptions in ``setup.py`` and ``README.rst``.
 * Update ``PyYAML`` requirement to 5.1 and use explicit loader.
