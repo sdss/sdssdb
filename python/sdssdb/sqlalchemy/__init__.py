@@ -10,6 +10,12 @@
 
 from __future__ import absolute_import, division, print_function
 
+from sdssdb import _sqla
+
+if _sqla is False:
+    raise ImportError('SQLAlchemy must be installed to use this module.')
+
+
 from sqlalchemy.ext.hybrid import hybrid_method
 from sqlalchemy.sql.expression import func
 

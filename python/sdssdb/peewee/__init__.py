@@ -1,5 +1,11 @@
 # flake8: noqa
 
+from sdssdb import _peewee
+
+if _peewee is False:
+    raise ImportError('Peewee must be installed to use this module.')
+
+
 import re
 
 from peewee import Model, fn

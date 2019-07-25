@@ -67,7 +67,8 @@ try:
 except ImportError:
     _sqla = False
     if _peewee is False:
-        raise ImportError('neither SQLAlchemy nor Peewee are installed.')
+        raise ImportError('neither SQLAlchemy nor Peewee are installed. '
+                          'Install at least one of them to use sdssdb.')
 
 
 from .connection import DatabaseConnection
