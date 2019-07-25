@@ -14,7 +14,7 @@ then you can check that it works by running a python terminal and doing ::
 
     >>> import sdssdb
     >>> sdssdb.__version__
-    0.2.2dev
+    0.2.2
 
 If you are working from Utah, ``sdssdb`` is installed as a module and you should be able to do ::
 
