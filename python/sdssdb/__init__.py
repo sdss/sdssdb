@@ -52,7 +52,7 @@ warnings.filterwarnings(
     'ignore', '.*Skipped unsupported reflection of expression-based index .*q3c.*')
 
 
-__version__ = '0.2.3dev'
+__version__ = '0.3.0dev'
 
 
 try:
