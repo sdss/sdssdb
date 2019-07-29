@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Added ``TIC v8``.
 * :release:`0.2.2 <2019-07-24>`
 * Fixed import of database connections when Peewee or SQLAlchemy are not available.
 * Added ``operationsdb`` SQL schemas.
