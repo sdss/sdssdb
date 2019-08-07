@@ -158,13 +158,6 @@ class SDSSDR14SpecObj(Base):
     specobjid = Column(Integer, primary_key=True)
 
 
-class TIC_v6(Base):
-    __tablename__ = 'tess_input_v6'
-    print_fields = ['id']
-
-    id = Column(Integer, primary_key=True)
-
-
 class TIC_v8(Base):
     __tablename__ = 'tic_v8'
     print_fields = ['id']
