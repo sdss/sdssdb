@@ -18,7 +18,7 @@ from sdssdb.sqlalchemy import BaseModel
 ArchiveBase = declarative_base(cls=(DeferredReflection, BaseModel,))
 
 class ArchiveDatabaseConnection(SQLADatabaseConnection):
-    dbname = 'archive'
+    dbname = 'archive_20190507'
     base = ArchiveBase
 
 database = ArchiveDatabaseConnection(autoconnect=True)
