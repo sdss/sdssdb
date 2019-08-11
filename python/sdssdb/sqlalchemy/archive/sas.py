@@ -37,6 +37,9 @@ class Tree(Base):
 class Env(Base):
     __tablename__ = 'env'
 
+class Directory(Base):
+    __tablename__ = 'directory'
+
 class File(Base):
     __tablename__ = 'file'
 
