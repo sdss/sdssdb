@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-07-24 07:07:56
+# @Last modified time: 2019-09-12 11:23:19
 
 
 from __future__ import absolute_import, division, print_function
@@ -314,7 +314,7 @@ if _peewee:
                 self.dbname = dbname
             except OperationalError:
                 if not silent_on_fail:
-                    log.warning(f'failed to connect to {self.database!r}.', UserWarning)
+                    log.warning(f'failed to connect to database {self.database!r}.', UserWarning)
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
 
