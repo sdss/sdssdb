@@ -101,12 +101,14 @@ def define_relations():
     File.env = relationship(Env, backref='files')
 
     # class Symlink_directory
-    SymlinkDirectory.directory = relationship(Directory, backref='symdir')
-    SymlinkDirectory.root = relationship(Root, backref='symdirs', foreign_keys='SymlinkDirectory.root_id')
+    SymlinkDirectory.directory = relationship(
+        Directory, backref='symdir', foreign_keys='SymlinkDirectory.directory_id')
+    SymlinkDirectory.root = relationship(Root, backref='symdirs')
     SymlinkDirectory.tree = relationship(Tree, backref='symdirs', foreign_keys='SymlinkDirectory.tree_id', 
                                          primaryjoin='and_(SymlinkDirectory.tree_id==Tree.id)')
     SymlinkDirectory.env = relationship(Env, backref='symdirs')
-    SymlinkDirectory.real_dir = relationship(SymlinkDirectory, remote_side=['SymlinkDirectory.directory_id'], backref='symdir')
+    SymlinkDirectory.real_dir = relationship(SymlinkDirectory, 
+                                             remote_side=['SymlinkDirectory.directory_id'], backref='symdir')
     SymlinkDirectory.real_tree = relationship(SymlinkDirectory, remote_side=[
                                               'SymlinkDirectory.tree_id'], backref='symdir')
 
