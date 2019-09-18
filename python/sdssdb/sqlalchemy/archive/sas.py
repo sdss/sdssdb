@@ -81,7 +81,7 @@ def define_relations():
     Checksum.directory = relationship(Directory, backref='checksums')
     
     # class Checksumfile
-    ChecksumFile.tree = relationship(Tree, backref='checksumfile')
+    ChecksumFile.tree = relationship(Tree, backref='checksumfiles')
     ChecksumFile.env = relationship(Env, backref='checksumfile')
     ChecksumFile.directory = relationship(Directory, backref='checksumfile')
     ChecksumFile.file = relationship(File, backref='checksumfile')
@@ -92,8 +92,8 @@ def define_relations():
     Directory.env = relationship(Env, backref='directories')
 
     # class Env
-    #Env.tree = relationship(Tree, backref='env')
-    Env.real_env = relationship(Env, backref='env')
+    # specify remote_side when foreign key points to itself
+    Env.real_env = relationship(Env, remote_side=['Env.id'], backref='env')
 
     # class File
     File.root = relationship(Root, backref='files')
@@ -101,14 +101,25 @@ def define_relations():
     File.env = relationship(Env, backref='files')
 
     # class Symlink_directory
-    SymlinkDirectory.root = relationship(Root, backref='symdirs', foreign_keys=['root_id'])
-    SymlinkDirectory.tree = relationship(Tree, backref='symdirs', foreign_keys=['tree_id'])
+    SymlinkDirectory.directory = relationship(Directory, backref='symdir')
+    SymlinkDirectory.root = relationship(Root, backref='symdirs', foreign_keys='SymlinkDirectory.root_id')
+    SymlinkDirectory.tree = relationship(Tree, backref='symdirs', foreign_keys='SymlinkDirectory.tree_id', 
+                                         primaryjoin='and_(SymlinkDirectory.tree_id==Tree.id)')
     SymlinkDirectory.env = relationship(Env, backref='symdirs')
+    SymlinkDirectory.real_dir = relationship(SymlinkDirectory, remote_side=['SymlinkDirectory.directory_id'], backref='symdir')
+    SymlinkDirectory.real_tree = relationship(SymlinkDirectory, remote_side=[
+                                              'SymlinkDirectory.tree_id'], backref='symdir')
+
 
     # class Symlink_file
-    SymlinkFile.root = relationship(Root, backref='symlinks', foreign_keys=['root_id'])
-    SymlinkFile.tree = relationship(Tree, backref='symlinks', foreign_keys=['tree_id'])
+    SymlinkFile.directory = relationship(Directory, backref='symlinks')
+    SymlinkFile.root = relationship(Root, backref='symlinks', foreign_keys='SymlinkFile.root_id')
+    SymlinkFile.tree = relationship(Tree, backref='symlinks', foreign_keys='SymlinkFile.tree_id',
+                                    primaryjoin='and_(SymlinkDirectory.tree_id==Tree.id)')
     SymlinkFile.env = relationship(Env, backref='symlinks')
+    SymlinkFile.real_tree = relationship(SymlinkFile, remote_side=[
+                                         'SymlinkFile.tree_id'], backref='symlinks')
+    SymlinkFile.real_file = relationship(File, backref='symlinks')
 
 
 # prepare the base
