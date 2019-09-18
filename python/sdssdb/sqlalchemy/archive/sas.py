@@ -87,13 +87,12 @@ def define_relations():
     ChecksumFile.file = relationship(File, backref='checksumfile')
 
     # class Directory
-    #Directory.root = relationship(Root, backref='directory')
     Directory.tree = relationship(Tree, backref='directories')
     Directory.env = relationship(Env, backref='directories')
 
     # class Env
-    # specify remote_side when foreign key points to itself
-    Env.real_env = relationship(Env, remote_side=['Env.id'], backref='env')
+    # need to specify remote_side when foreign key points to itself
+    Env.real_env = relationship(Env, remote_side='Env.id', backref='env')
 
     # class File
     File.root = relationship(Root, backref='files')
@@ -101,14 +100,16 @@ def define_relations():
     File.env = relationship(Env, backref='files')
 
     # class Symlink_directory
+    SymlinkDirectory.env = relationship(Env, backref='symdirs')
+    SymlinkDirectory.root = relationship(Root, backref='symdirs')
+    # need to specify foreign_keys when multiple columns points to same key
+    # need to specify primaryjoin when there are multiple ways to join the tables
     SymlinkDirectory.directory = relationship(
         Directory, backref='symdir', foreign_keys='SymlinkDirectory.directory_id')
-    SymlinkDirectory.root = relationship(Root, backref='symdirs')
+    SymlinkDirectory.real_dir = relationship(Directory, backref='realsymdir',
+                                             primaryjoin='and_(SymlinkDirectory.real_directory_id==Directory.id)')
     SymlinkDirectory.tree = relationship(Tree, backref='symdirs', foreign_keys='SymlinkDirectory.tree_id',
                                          primaryjoin='and_(SymlinkDirectory.tree_id==Tree.id)')
-    SymlinkDirectory.env = relationship(Env, backref='symdirs')
-    SymlinkDirectory.real_dir = relationship(Directory, backref='realsymdir', 
-                                             primaryjoin='and_(SymlinkDirectory.real_directory_id==Directory.id)')
     SymlinkDirectory.real_tree = relationship(
         Tree, backref='realsymdir', primaryjoin='and_(SymlinkDirectory.real_tree_id==Tree.id)')
 
