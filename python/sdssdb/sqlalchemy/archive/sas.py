@@ -51,15 +51,15 @@ class File(Base):
     __tablename__ = 'file'
 
 
-class Symlink_file(Base):
+class SymlinkFile(Base):
     __tablename__ = 'symlink_file'
 
 
-class Symlink_directory(Base):
+class SymlinkDirectory(Base):
     __tablename__ = 'symlink_directory'
 
 
-class Checksumfile(Base):
+class ChecksumFile(Base):
     __tablename__ = 'checksumfile'
 
 
@@ -71,68 +71,44 @@ def define_relations():
     """Setup relationships after preparation."""
     
     # model relationships
-    #directories = relationship("Directory", backref='root')
-    #envs = relationship("Env", backref='tree')
     Root.directories = relationship(Directory, backref='root')
     Tree.envs = relationship(Env, backref='tree')
     
-    #class Checksum
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #checksumfile_id = db.Column(db.Integer, db.ForeignKey('%s.checksumfile.id' % schema), nullable=False)
-    #file_id = db.Column(db.Integer, db.ForeignKey('%s.file.id' % schema))
-    #directory_id = db.Column(db.Integer, db.ForeignKey('%s.directory.id' % schema), nullable=False)
-    Checksum.tree = relationship(Tree, backref='checksum')
-    Checksum.checksumfile = relationship(Checksumfile, backref='checksum')
-    Checksum.file = relationship(File, backref='checksum')
-    Checksum.directory = relationship(Directory, backref='checksum')
+    # class Checksum
+    Checksum.tree = relationship(Tree, backref='checksums')
+    Checksum.checksumfile = relationship(ChecksumFile, backref='checksums')
+    Checksum.file = relationship(File, backref='checksums')
+    Checksum.directory = relationship(Directory, backref='checksums')
     
-    #class Checksumfile
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #env_id = db.Column(db.Integer, db.ForeignKey('%s.env.id' % schema))
-    #directory_id = db.Column(db.Integer, db.ForeignKey('%s.directory.id' % schema), nullable=False)
-    #file_id = db.Column(db.Integer, db.ForeignKey('%s.file.id' % schema), nullable=False)
-    Checksumfile.tree = relationship(Tree, backref='checksumfile')
-    Checksumfile.env = relationship(Env, backref='checksumfile')
-    Checksumfile.directory = relationship(Directory, backref='checksumfile')
-    Checksumfile.file = relationship(File, backref='checksumfile')
+    # class Checksumfile
+    ChecksumFile.tree = relationship(Tree, backref='checksumfile')
+    ChecksumFile.env = relationship(Env, backref='checksumfile')
+    ChecksumFile.directory = relationship(Directory, backref='checksumfile')
+    ChecksumFile.file = relationship(File, backref='checksumfile')
 
-    #class Directory
-    #root_id = db.Column(db.Integer, db.ForeignKey('%s.root.id' % schema), nullable = False)
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #env_id = db.Column(db.Integer, db.ForeignKey('%s.env.id' % schema))
-    Directory.root = relationship(Root, backref='directory')
-    Directory.tree = relationship(Tree, backref='directory')
-    Directory.env = relationship(Env, backref='directory')
+    # class Directory
+    #Directory.root = relationship(Root, backref='directory')
+    Directory.tree = relationship(Tree, backref='directories')
+    Directory.env = relationship(Env, backref='directories')
 
-    #class Env
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #real_env_id = db.Column(db.Integer, db.ForeignKey('%s.env.id' % schema))
-    Env.tree = relationship(Tree, backref='env')
-    Env.real_env = relationship(Env)
+    # class Env
+    #Env.tree = relationship(Tree, backref='env')
+    Env.real_env = relationship(Env, backref='env')
 
-    #class File
-    #root_id = db.Column(db.Integer, db.ForeignKey('%s.root.id' % schema), nullable = False)
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #env_id = db.Column(db.Integer, db.ForeignKey('%s.env.id' % schema))
-    File.root = relationship(Root, backref='file')
-    File.tree = relationship(Tree, backref='file')
-    File.env = relationship(Env, backref='file')
+    # class File
+    File.root = relationship(Root, backref='files')
+    File.tree = relationship(Tree, backref='files')
+    File.env = relationship(Env, backref='files')
 
-    #class Symlink_directory
-    #root_id = db.Column(db.Integer, db.ForeignKey('%s.root.id' % schema), nullable = False)
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #env_id = db.Column(db.Integer, db.ForeignKey('%s.env.id' % schema))
-    Symlink_directory.root = relationship(Root, backref='symlink_directory')
-    Symlink_directory.tree = relationship(Tree, backref='symlink_directory')
-    Symlink_directory.env = relationship(Env, backref='symlink_directory')
+    # class Symlink_directory
+    SymlinkDirectory.root = relationship(Root, backref='symdirs', foreign_keys=['root_id'])
+    SymlinkDirectory.tree = relationship(Tree, backref='symdirs', foreign_keys=['tree_id'])
+    SymlinkDirectory.env = relationship(Env, backref='symdirs')
 
-    #class Symlink_file
-    #root_id = db.Column(db.Integer, db.ForeignKey('%s.root.id' % schema), nullable = False)
-    #tree_id = db.Column(db.Integer, db.ForeignKey('%s.tree.id' % schema))
-    #env_id = db.Column(db.Integer, db.ForeignKey('%s.env.id' % schema))
-    Symlink_file.root = relationship(Root, backref='symlink_file')
-    Symlink_file.tree = relationship(Tree, backref='symlink_file')
-    Symlink_file.env = relationship(Env, backref='symlink_file')
+    # class Symlink_file
+    SymlinkFile.root = relationship(Root, backref='symlinks', foreign_keys=['root_id'])
+    SymlinkFile.tree = relationship(Tree, backref='symlinks', foreign_keys=['tree_id'])
+    SymlinkFile.env = relationship(Env, backref='symlinks')
 
 
 # prepare the base
