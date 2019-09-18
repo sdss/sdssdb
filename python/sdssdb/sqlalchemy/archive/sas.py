@@ -33,10 +33,12 @@ class Base(AbstractConcreteBase, ArchiveBase):
 
 class Root(Base):
     __tablename__ = 'root'
+    print_fields = ['identifier']
 
 
 class Tree(Base):
     __tablename__ = 'tree'
+    print_fields = ['version']
 
 
 class Env(Base):
@@ -45,22 +47,27 @@ class Env(Base):
 
 class Directory(Base):
     __tablename__ = 'directory'
+    print_fields = ['location']
 
 
 class File(Base):
     __tablename__ = 'file'
+    print_fields = ['location']
 
 
 class SymlinkFile(Base):
     __tablename__ = 'symlink_file'
+    print_fields = ['location']
 
 
 class SymlinkDirectory(Base):
     __tablename__ = 'symlink_directory'
+    print_fields = ['location']
 
 
 class ChecksumFile(Base):
     __tablename__ = 'checksumfile'
+    print_fields = ['filename']
 
 
 class Checksum(Base):
