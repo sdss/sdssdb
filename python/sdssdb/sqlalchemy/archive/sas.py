@@ -109,7 +109,7 @@ def define_relations():
     File.root = relationship(Root, backref='files')
     File.tree = relationship(Tree, backref='files')
     File.env = relationship(Env, backref='files')
-    File.env = relationship(Directory, backref='files')
+    File.directory = relationship(Directory, backref='files')
 
     # class Symlink_directory
     SymlinkDirectory.env = relationship(Env, backref='symlink_directories')
