@@ -52,7 +52,11 @@ class Directory(Base):
 
 class File(Base):
     __tablename__ = 'file'
-    print_fields = ['location']
+    print_fields = ['name']
+
+    @property
+    def name(self):
+        return self.location.rsplit('/', 1)[-1]
 
 
 class SymlinkFile(Base):
@@ -105,6 +109,7 @@ def define_relations():
     File.root = relationship(Root, backref='files')
     File.tree = relationship(Tree, backref='files')
     File.env = relationship(Env, backref='files')
+    File.env = relationship(Directory, backref='files')
 
     # class Symlink_directory
     SymlinkDirectory.env = relationship(Env, backref='symlink_directories')
