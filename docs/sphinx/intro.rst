@@ -118,8 +118,8 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">sas</td>
             <td class="danger"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="#"></a></td>
-        </tr> 
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="schema/archive/archive_sas.pdf"></a></td>
+        </tr>
         </tbody>
     </table>
 
