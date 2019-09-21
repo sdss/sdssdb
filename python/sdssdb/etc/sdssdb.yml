@@ -14,6 +14,8 @@ lco:
     domain: lco.cl
 
 local:
+    host: localhost
+    port: 5432
     domain: null
 
 lore:
