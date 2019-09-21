@@ -293,7 +293,7 @@ def generate_schema_graphs():
         return
 
     schemas = ['sdss5db.targetdb', 'sdss5db.catalogdb', 'operationsdb.platedb',
-               'operationsdb.mangadb']
+               'operationsdb.mangadb', 'operationsdb.apogeeqldb']
 
     output_dir = os.path.join(os.path.dirname(__file__),
                               '_static/schema_graphs/auto')

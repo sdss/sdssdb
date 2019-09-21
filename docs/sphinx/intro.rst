@@ -30,6 +30,7 @@ Currently, we support the following databases and schemas:
 * **operationsdb**: a global name for the APO (``apodb``) and LCO (``lcodb``) operations database.
     * *platedb*: schema for plate observations and metadata.
     * *mangadb*: schema for MaNGA observations and metadata.
+    * *apogeeqldb*: schema for APOGEE observations and quick reductions.
 * **mangadb**: the SDSS-IV MaNGA database.
     * *datadb*: schema for MaNGA DRP data products.
     * *dapdb*: schema for MaNGA DAP data products.
@@ -68,6 +69,13 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="success"></td>
             <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.mangadb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">apogeeqldb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.apogeeqldb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">manga</td>
@@ -281,21 +289,31 @@ If that fails, you will need to define the database name and profile. In the fol
     >>> database
     <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
 
-If both ``apodb`` and ``lcodb`` are available we can which from one to the other in runtime ::
+If both ``apodb`` and ``lcodb`` are available the ``local`` profile will **not** connect to either of them automatically ::
 
+    >>> from sdssdb.peewee.operationsdb import database
     >>> database
-    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
-    >>> from sdssdb.peewee.operationsdb import platedb
-    >>> plate_10k = platedb.Plate.get(plate_id=10000)
-    >>> plate_10k.plate_run.label
-    '2015.08.z.eboss'
+    <OperationsDBConnection (dbname=None, profile='local', connected=False)>
     >>> database.connect('lcodb')
     True
     >>> database
+    <OperationsDBConnection (dbname='lcodb', profile='local', connected=True)>
+
+We can switch from one to the other in runtime ::
+
+    >>> database
     <PeeweeDatabaseConnection (dbname='lcodb', profile='local', connected=True)>
+    >>> from sdssdb.peewee.operationsdb import platedb
     >>> plate_9781 = platedb.Plate.get(plate_id=9781)
     >>> plate_9781.plate_run.label
     '2017.03.b.apogee2s.south'
+    >>> database.connect('apodb')
+    True
+    >>> database
+    <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
+    >>> plate_10k = platedb.Plate.get(plate_id=10000)
+    >>> plate_10k.plate_run.label
+    '2015.08.z.eboss'
 
 
 Where to go from here?
