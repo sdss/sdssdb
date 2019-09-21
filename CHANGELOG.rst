@@ -8,6 +8,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Removed ``TIC v6``.
 * Added ``TIC v8``.
 * Updated schema for ``mangadb.Plate``.
+* `~.DatabaseConnection.connect` now accepts ``user``, ``host``, and ``port`` to override the default profile parameters.
 
 * :release:`0.2.2 <2019-07-24>`
 * Fixed import of database connections when Peewee or SQLAlchemy are not available.

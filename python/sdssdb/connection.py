@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-09-12 11:23:19
+# @Last modified time: 2019-09-17 17:09:02
 
 
 from __future__ import absolute_import, division, print_function
@@ -141,13 +141,20 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         pass
 
-    def connect(self, dbname=None, silent_on_fail=False):
+    def connect(self, dbname=None, user=None, host=None, port=None,
+                silent_on_fail=False):
         """Initialises the database using the profile information.
 
         Parameters
         ----------
         dbname : `str` or `None`
             The database name. If `None`, defaults to `.dbname`.
+        user : str
+            Overrides the profile database user.
+        host : str
+            Overrides the profile database host.
+        port : str
+            Overrides the profile database port.
         silent_on_fail : `bool`
             If `True`, does not show a warning if the connection fails.
 
@@ -164,9 +171,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'set_profile to set the profile in runtime.')
 
         # Gets the necessary configuration values from the profile
-        db_configuration = {item: config[self.profile][item]
-                            if item in config[self.profile] else None
-                            for item in ['user', 'host', 'port']}
+        db_configuration = {}
+        for item in ['user', 'host', 'port']:
+            db_configuration[item] = eval(item) or config[self.profile].get(item, None)
 
         dbname = dbname or self.dbname
         if dbname is None:
