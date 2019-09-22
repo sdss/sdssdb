@@ -3,7 +3,9 @@ sdssdb
 
 |python| |docs|
 
-SDSS product for database management.
+`SDSS <https://sdss.org>`__ product for database management.
+
+**sdssdb is in active development. Although the code is stable and can be used production, the implementation of existing features may be changed without previous notice. This will change when we reach version 1.0.0.**
 
 Useful links
 ------------
