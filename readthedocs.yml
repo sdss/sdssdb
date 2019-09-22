@@ -11,7 +11,3 @@ python:
         extra_requirements:
             - dev
             - docs
-
-# Don't build any extra formats
-formats:
-    - none
