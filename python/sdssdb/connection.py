@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-09-17 17:09:02
+# @Last modified time: 2019-09-21 23:09:51
 
 
 from __future__ import absolute_import, division, print_function
@@ -72,7 +72,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         self.profile = None
         self.dbname = dbname if dbname else self.dbname
 
-        self.set_profile(profile=profile)
+        self.set_profile(profile=profile, connect=autoconnect)
 
         if autoconnect and self.dbname:
             self.connect(dbname=self.dbname, silent_on_fail=True)
