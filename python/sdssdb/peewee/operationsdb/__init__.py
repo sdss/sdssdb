@@ -22,3 +22,8 @@ if database_name:
 class OperationsDBModel(BaseModel):
     class Meta:
         database = database
+
+
+from . import platedb
+from . import mangadb
+from . import apogeeqldb

@@ -9,6 +9,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Added ``TIC v8``.
 * Updated schema for ``mangadb.Plate``.
 * `~.DatabaseConnection.connect` now accepts ``user``, ``host``, and ``port`` to override the default profile parameters.
+* Add support for schema ``apogeeqldb`` in ``operationsdb``.
 * Changed the package internals to use ``setup.cfg``.
 
 * :release:`0.2.2 <2019-07-24>`
