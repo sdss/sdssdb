@@ -3,8 +3,7 @@
 Changelog
 =========
 
-This document records the main changes to the ``sdssdb`` code.
-
+* :release:`0.3.0 <2019-09-23>`
 * Removed ``TIC v6``.
 * Added ``TIC v8``.
 * Updated schema for ``mangadb.Plate``.
@@ -13,7 +12,6 @@ This document records the main changes to the ``sdssdb`` code.
 * :feature:`16` Changed the package internals to use ``setup.cfg``.
 * :feature:`14` Add support for table ``DR14Q_v4_4`` in ``catalogdb``.
 * :feature:`15` New CLI ``file2db`` and associated :ref:`tools <api-utils>` to create and load a table from a file. Also added Numpy adaptors.
-
 
 * :release:`0.2.2 <2019-07-24>`
 * Fixed import of database connections when Peewee or SQLAlchemy are not available.
