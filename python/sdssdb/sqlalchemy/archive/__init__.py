@@ -17,8 +17,10 @@ from sdssdb.sqlalchemy import BaseModel
 # we need a shared common Base when joining across multiple schema
 ArchiveBase = declarative_base(cls=(DeferredReflection, BaseModel,))
 
+
 class ArchiveDatabaseConnection(SQLADatabaseConnection):
     dbname = 'archive_20190507'
     base = ArchiveBase
+
 
 database = ArchiveDatabaseConnection(autoconnect=True)
