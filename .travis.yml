@@ -27,7 +27,6 @@ branches:
 install:
 - pip install -U pip wheel --quiet
 - pip install --upgrade setuptools --quiet
-- pip install -r requirements.txt --quiet
 - pip install pytest
 - pip install pytest-coverage
 - pip install coveralls
