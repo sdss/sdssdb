@@ -9,9 +9,9 @@ This document records the main changes to the ``sdssdb`` code.
 * Added ``TIC v8``.
 * Updated schema for ``mangadb.Plate``.
 * `~.DatabaseConnection.connect` now accepts ``user``, ``host``, and ``port`` to override the default profile parameters.
-* Add support for schema ``apogeeqldb`` in ``operationsdb``.
-* Changed the package internals to use ``setup.cfg``.
-* Add support for table ``DR14Q_v4_4`` in ``catalogdb``.
+* :feature:`13` Add support for schema ``apogeeqldb`` in ``operationsdb``.
+* :feature:`16` Changed the package internals to use ``setup.cfg``.
+* :feature:`14` Add support for table ``DR14Q_v4_4`` in ``catalogdb``.
 * :feature:`15` New CLI ``file2db`` and associated :ref:`tools <api-utils>` to create and load a table from a file. Also added Numpy adaptors.
 
 
