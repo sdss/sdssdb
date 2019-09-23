@@ -7,12 +7,13 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-08-09 18:51:11
+# @Last modified time: 2019-09-23 00:54:42
 
 
 from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
                     DateField, DecimalField, DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField, ManyToManyField, TextField)
+from playhouse.postgres_ext import ArrayField
 
 from . import SDSS5dbModel, database  # noqa
 
@@ -1829,6 +1830,120 @@ class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
 
     class Meta:
         table_name = 'gaiadr2_tmass_best_neighbour'
+        schema = 'catalogdb'
+
+
+class DR14QV44(SDSS5dbModel):
+
+    pk = AutoField(null=False, primary_key=True)
+    ancillary_target1 = BigIntegerField(null=True)
+    ancillary_target2 = BigIntegerField(null=True)
+    bi_civ = FloatField(null=True)
+    boss_target1 = BigIntegerField(null=True)
+    cc_flags = CharField(null=True)
+    col_number = IntegerField(null=True)
+    dec = FloatField(null=True)
+    eboss_target0 = BigIntegerField(null=True)
+    eboss_target1 = BigIntegerField(null=True)
+    eboss_target2 = BigIntegerField(null=True)
+    err_bi_civ = FloatField(null=True)
+    err_hmag = FloatField(null=True)
+    err_jmag = FloatField(null=True)
+    err_kmag = FloatField(null=True)
+    err_psfmag = ArrayField(null=True)  # ARRAY
+    err_w1mag = FloatField(null=True)
+    err_w2mag = FloatField(null=True)
+    err_w3mag = FloatField(null=True)
+    err_w4mag = FloatField(null=True)
+    fiberid = IntegerField(null=True)
+    fiberid_duplicate = ArrayField(field_class=IntegerField, null=True)
+    field_number = IntegerField(null=True)
+    first_flux = FloatField(null=True)
+    first_matched = IntegerField(null=True)
+    first_snr = FloatField(null=True)
+    flux_0_2_12_0kev = FloatField(column_name='flux_0.2_12.0kev', null=True)
+    flux_0_2_12_0kev_err = FloatField(column_name='flux_0.2_12.0kev_err', null=True)
+    flux_0_2_2_0kev = FloatField(column_name='flux_0.2_2.0kev', null=True)
+    flux_0_2_2_0kev_err = FloatField(column_name='flux_0.2_2.0kev_err', null=True)
+    flux_2_0_12_0kev = FloatField(column_name='flux_2.0_12.0kev', null=True)
+    flux_2_0_12_0kev_err = FloatField(column_name='flux_2.0_12.0kev_err', null=True)
+    fuv = FloatField(null=True)
+    fuv_ivar = FloatField(null=True)
+    gal_ext = ArrayField(null=True)  # ARRAY
+    galex_matched = FloatField(null=True)
+    hflux = FloatField(null=True)
+    hflux_err = FloatField(null=True)
+    hmag = FloatField(null=True)
+    hrdflag = IntegerField(null=True)
+    hsnr = FloatField(null=True)
+    ivar_psfflux = ArrayField(null=True)  # ARRAY
+    jflux = FloatField(null=True)
+    jflux_err = FloatField(null=True)
+    jmag = FloatField(null=True)
+    jrdflag = IntegerField(null=True)
+    jsnr = FloatField(null=True)
+    kflux = FloatField(null=True)
+    kflux_err = FloatField(null=True)
+    kmag = FloatField(null=True)
+    krdflag = IntegerField(null=True)
+    ksnr = FloatField(null=True)
+    lum_0_2_12_0kev = FloatField(column_name='lum_0.2_12.0kev', null=True)
+    mi = FloatField(null=True)
+    mjd = IntegerField(null=True)
+    mjd_duplicate = ArrayField(field_class=IntegerField, null=True)
+    n_spec = IntegerField(null=True)
+    n_spec_boss = IntegerField(null=True)
+    n_spec_sdss = IntegerField(null=True)
+    nuv = FloatField(null=True)
+    nuv_ivar = FloatField(null=True)
+    obj_id = CharField(null=True)
+    ph_flags = CharField(null=True)
+    plate = IntegerField(null=True)
+    plate_duplicate = ArrayField(field_class=IntegerField, null=True)
+    psfflux = ArrayField(null=True)  # ARRAY
+    psfmag = ArrayField(null=True)  # ARRAY
+    ra = FloatField(null=True)
+    rass_counts = FloatField(null=True)
+    rass_counts_snr = FloatField(null=True)
+    rerun_number = CharField(null=True)
+    run_number = IntegerField(null=True)
+    sdss2first_sep = FloatField(null=True)
+    sdss2mass_sep = FloatField(null=True)
+    sdss2rosat_sep = FloatField(null=True)
+    sdss2wise_sep = FloatField(null=True)
+    sdss2xmm_sep = FloatField(null=True)
+    sdss_name = CharField(null=True)
+    source_z = CharField(null=True)
+    spectro = CharField(null=True)
+    spectro_duplicate = ArrayField(field_class=CharField, null=True)
+    thing_id = IntegerField(null=True)
+    ukidss_matched = FloatField(null=True)
+    w1chi2 = FloatField(null=True)
+    w1mag = FloatField(null=True)
+    w1snr = FloatField(null=True)
+    w2chi2 = FloatField(null=True)
+    w2mag = FloatField(null=True)
+    w2snr = FloatField(null=True)
+    w3chi2 = FloatField(null=True)
+    w3mag = FloatField(null=True)
+    w3snr = FloatField(null=True)
+    w4chi2 = FloatField(null=True)
+    w4mag = FloatField(null=True)
+    w4snr = FloatField(null=True)
+    yflux = FloatField(null=True)
+    yflux_err = FloatField(null=True)
+    z = FloatField(null=True)
+    z_err = FloatField(null=True)
+    z_mgii = FloatField(null=True)
+    z_pca = FloatField(null=True)
+    z_pca_er = FloatField(null=True)
+    z_pipe = FloatField(null=True)
+    z_pipe_err = FloatField(null=True)
+    z_vi = FloatField(null=True)
+    zwarning = IntegerField(null=True)
+
+    class Meta:
+        table_name = 'dr14q_v4_4'
         schema = 'catalogdb'
 
 

@@ -190,6 +190,10 @@ class TwoMassCleanNoNeighbor(Base):
     designation = Column(String, primary_key=True)
 
 
+class DR14QV44(Base):
+    __tablename__ = 'dr14q_v4_4'
+
+
 def define_relations():
 
     GaiaDR2Clean.source = relationship(
