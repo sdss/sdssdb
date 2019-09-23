@@ -10,13 +10,9 @@
 
 from __future__ import absolute_import, division, print_function
 
-from sdssdb.sqlalchemy.archive import database, ArchiveBase, sas
-from sqlalchemy import Column, Float, and_, case, cast, select
-from sqlalchemy.engine import reflection
+from sdssdb.sqlalchemy.archive import database, ArchiveBase
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import Integer
 
 SCHEMA = 'sas'
 
@@ -119,20 +115,25 @@ def define_relations():
     SymlinkDirectory.directory = relationship(
         Directory, backref='symlink_directories', foreign_keys='SymlinkDirectory.directory_id')
     SymlinkDirectory.real_directory = relationship(Directory, backref='linked_symlink_directories',
-                                                   primaryjoin='and_(SymlinkDirectory.real_directory_id==Directory.id)')
+                                                   primaryjoin=('and_(SymlinkDirectory.'
+                                                                'real_directory_id==Directory.id)'))
 
-    SymlinkDirectory.tree = relationship(Tree, backref='symlink_directories', foreign_keys='SymlinkDirectory.tree_id',
+    SymlinkDirectory.tree = relationship(Tree, backref='symlink_directories',
+                                         foreign_keys='SymlinkDirectory.tree_id',
                                          primaryjoin='and_(SymlinkDirectory.tree_id==Tree.id)')
     SymlinkDirectory.real_tree = relationship(
-        Tree, backref='linked_symlink_directories', primaryjoin='and_(SymlinkDirectory.real_tree_id==Tree.id)')
+        Tree, backref='linked_symlink_directories',
+        primaryjoin='and_(SymlinkDirectory.real_tree_id==Tree.id)')
 
     # class Symlink_file
     SymlinkFile.directory = relationship(Directory, backref='symlink_files')
     SymlinkFile.env = relationship(Env, backref='symlink_files')
     SymlinkFile.real_file = relationship(File, backref='symlink_files')
-    SymlinkFile.root = relationship(Root, backref='symlink_files', foreign_keys='SymlinkFile.root_id')
+    SymlinkFile.root = relationship(Root, backref='symlink_files',
+                                    foreign_keys='SymlinkFile.root_id')
 
-    SymlinkFile.tree = relationship(Tree, backref='symlink_files', foreign_keys='SymlinkFile.tree_id',
+    SymlinkFile.tree = relationship(Tree, backref='symlink_files',
+                                    foreign_keys='SymlinkFile.tree_id',
                                     primaryjoin='and_(SymlinkFile.tree_id==Tree.id)')
     SymlinkFile.real_tree = relationship(
         Tree, backref='linked_symlink_files', primaryjoin='and_(SymlinkFile.real_tree_id==Tree.id)')
