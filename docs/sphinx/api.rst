@@ -27,6 +27,8 @@ SQLAlchemy
    :show-inheritance:
 
 
+.. _api-utils:
+
 Utils
 -----
 

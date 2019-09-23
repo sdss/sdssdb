@@ -12,6 +12,8 @@ This document records the main changes to the ``sdssdb`` code.
 * Add support for schema ``apogeeqldb`` in ``operationsdb``.
 * Changed the package internals to use ``setup.cfg``.
 * Add support for table ``DR14Q_v4_4`` in ``catalogdb``.
+* :feature:`15` New CLI ``file2db`` and associated :ref:`tools <api-utils>` to create and load a table from a file. Also added Numpy adaptors.
+
 
 * :release:`0.2.2 <2019-07-24>`
 * Fixed import of database connections when Peewee or SQLAlchemy are not available.
