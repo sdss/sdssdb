@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-05 15:17:38
+# @Last modified time: 2019-09-12 11:37:09
 
 
 from __future__ import absolute_import, division, print_function
@@ -52,6 +52,10 @@ class Plate(OperationsDBModel):
                                     field='pk',
                                     unique=True)
     special_plate = BooleanField(null=True)
+    ha_min = FloatField(null=True)
+    ha_max = FloatField(null=True)
+    field_name = TextField(null=True)
+    completion_factor = FloatField(null=True)
 
     class Meta:
         db_table = 'plate'

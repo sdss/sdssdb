@@ -1,5 +1,0 @@
--r requirements_dev.txt
-
-Sphinx>=1.8.0
-sphinx_bootstrap_theme>=0.4.12
-releases>=1.6.1

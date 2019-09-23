@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-14 20:46:43
+# @Last modified time: 2019-08-09 18:47:14
 
 # The following functions are adapted from the sqlalchemy_schemadisplay by
 # Florian Schulze (https://github.com/fschulze/sqlalchemy_schemadisplay).
@@ -17,6 +17,26 @@ from peewee import ForeignKeyField
 
 
 __all__ = ['create_schema_graph', 'show_schema_graph']
+
+field_type_psql = {'AUTO': 'SERIAL',
+                   'BIGAUTO': 'BIGSERIAL',
+                   'BIGINT': 'BIGINT',
+                   'BLOB': 'BYTEA',
+                   'BOOL': 'BOOLEAN',
+                   'CHAR': 'CHAR',
+                   'DATE': 'DATE',
+                   'DATETIME': 'TIMESTAMP',
+                   'DECIMAL': 'NUMERIC',
+                   'DEFAULT': '',
+                   'DOUBLE': 'DOUBLE PRECISION',
+                   'FLOAT': 'REAL',
+                   'INT': 'INTEGER',
+                   'SMALLINT': 'SMALLINT',
+                   'TEXT': 'TEXT',
+                   'TIME': 'TIME',
+                   'UUID': 'UUID',
+                   'UUIDB': 'BYTEA',
+                   'VARCHAR': 'VARCHAR'}
 
 
 def _render_table_html(model, show_indices=True, show_datatypes=True):
@@ -57,7 +77,10 @@ def _render_table_html(model, show_indices=True, show_datatypes=True):
         suffix = ' (' + ', '.join(suffixes) + ')' if len(suffixes) > 0 else ''
 
         if show_datatypes:
-            return f'- {column_name}{suffix} : {field.field_type}'
+            field_type = field.field_type
+            if field_type in field_type_psql:
+                field_type = field_type_psql[field_type]
+            return f'- {column_name}{suffix} : {field_type}'
         else:
             return f'- {column_name}{suffix}'
 
