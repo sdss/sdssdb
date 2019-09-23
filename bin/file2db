@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# @Author: José Sánchez-Gallego (gallegoj@uw.edu)
+# @Date: 2019-09-21
+# @Filename: file2db
+# @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
+#
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
+# @Last modified time: 2019-09-23 11:30:21
+
+import os
+
+import astropy.table
+import click
+
+from sdssdb.connection import PeeweeDatabaseConnection
+from sdssdb.utils.database import file_to_db, table_exists, drop_table
+
+
+try:
+    import progressbar
+except ImportError:
+    progressbar = False
+
+
+@click.command()
+@click.argument('file', type=click.Path(exists=True, dir_okay=False))
+@click.argument('dbname', type=str)
+@click.option('--table', '-t', type=str, help='name of the table, otherwise the '
+                                              'name of the file without the extension.')
+@click.option('--format', '-f', type=str, default=None,
+              help='one of the astropy.table.Table.read formats. '
+                   'If none is provided uses autodetection, if possible.')
+@click.option('--lowercase', '-l', is_flag=True, help='convert column names to lowercase.')
+@click.option('--create', '-C', is_flag=True, help='if the table does not exist, create it.')
+@click.option('--drop', '-d', is_flag=True, help='drop the table and recreate it.')
+@click.option('--cascade', '-c', is_flag=True, help='drop associated tables in cascade.')
+@click.option('--truncate', '-T', is_flag=True, help='truncate the table before adding data.')
+@click.option('--yes', '-Y', is_flag=True, help='yes to all. Do not ask for confirmation.')
+@click.option('--profile', '-p', type=str, default=None)
+@click.option('--user', '-u', type=str, default=None)
+@click.option('--host', '-h', type=str, default=None)
+@click.option('--port', '-p', type=int, default=None)
+@click.option('--schema', '-s', type=str, default=None)
+@click.option('--no-load', '-L', is_flag=True, help='only create the table but do not load data.')
+@click.option('--chunk-size', '-S', type=int, default=100000,
+              show_default=True, help='how many rows to load at once.')
+@click.option('--primary-key', '-k', type=str, default=None,
+              help='the column to design as primary key.')
+def file2db(file, dbname, table, format, lowercase, create, drop, cascade,
+            truncate, yes, profile, user, host, port, schema, no_load, chunk_size,
+            primary_key):
+    """Loads a table from a file to a DB."""
+
+    connection = PeeweeDatabaseConnection(profile=profile, autoconnect=False)
+    connection.connect(dbname, user=user, host=host, port=port)
+
+    if connection.connected is False:
+        raise RuntimeError('connection to database failed.')
+
+    table_name = table or os.path.splitext(os.path.basename(file))[0]
+
+    data = astropy.table.Table.read(file, format=format)
+
+    if drop:
+        create = True
+        if table_exists(table_name, connection, schema=schema):
+            if not yes and not click.confirm('Are you sure you want to drop the table?'):
+                click.Abort()
+            drop_table(table_name, connection, schema=schema, cascade=cascade)
+
+    if truncate:
+        if not yes and not click.confirm('Are you sure you want to truncate the table?'):
+            click.Abort()
+
+    show_progress = True if progressbar else False
+
+    file_to_db(data, connection, table_name, schema=schema, lowercase=lowercase, create=create,
+               drop=False, truncate=truncate, load_data=not no_load, chunk_size=chunk_size,
+               primary_key=primary_key, show_progress=show_progress)
+
+    return
+
+
+if __name__ == '__main__':
+    file2db()

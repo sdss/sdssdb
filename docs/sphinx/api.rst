@@ -27,7 +27,13 @@ SQLAlchemy
    :show-inheritance:
 
 
+.. _api-utils:
+
 Utils
 -----
+
+.. automodule:: sdssdb.utils.database
+    :members:
+    :show-inheritance:
 
 .. autofunction:: sdssdb.utils.create_schema_graph
