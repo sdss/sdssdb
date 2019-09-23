@@ -7,7 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-09-22 23:34:04
+# @Last modified time: 2019-09-23 11:47:00
 
 import io
 import os
@@ -64,7 +64,7 @@ def drop_table(table_name, connection, cascade=False, schema=None):
     connection : .PeeweeDatabaseConnection
         The Peewee database connection to use.
     cascade : bool
-        Whether to drop related tables using `CASCADE`.
+        Whether to drop related tables using ``CASCADE``.
     schema : str
         The schema in which the table lives.
 
@@ -87,7 +87,7 @@ def drop_table(table_name, connection, cascade=False, schema=None):
 
 def create_model_from_table(table_name, table, schema=None, lowercase=False,
                             primary_key=None):
-    """Returns a `~peewee.Model` from the columns in a table.
+    """Returns a `~peewee:Model` from the columns in a table.
 
     Parameters
     ----------
@@ -167,7 +167,7 @@ def create_model_from_table(table_name, table, schema=None, lowercase=False,
 
 def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
               show_progress=False):
-    """Loads data into a DB table using COPY.
+    """Loads data into a DB table using ``COPY``.
 
     Parameters
     ----------
@@ -183,8 +183,9 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
     chunk_size : int
         How many rows to load at once.
     show_progress : bool
-        If `True`, shows a progress bar. Requires the ``progressbar2`` module
-        to be installed.
+        If `True`, shows a progress bar. Requires the
+        `progressbar2 <https://progressbar-2.readthedocs.io/en/latest/>`__
+        module to be installed.
 
     """
 
@@ -255,14 +256,15 @@ def bulk_insert(data, connection, model, chunk_size=100000, show_progress=False)
         An astropy table with the data to insert.
     connection : .PeeweeDatabaseConnection
         The Peewee database connection to use.
-    model : ~peewee.Model
+    model : ~peewee:Model
         The model representing the database table into which to insert
         the data.
     chunk_size : int
         How many rows to load at once.
     show_progress : bool
-        If `True`, shows a progress bar. Requires the ``progressbar2`` module
-        to be installed.
+        If `True`, shows a progress bar. Requires the
+        `progressbar2 <https://progressbar-2.readthedocs.io/en/latest/>`__
+        module to be installed.
 
     """
 
@@ -298,7 +300,7 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
     ``create=True`` a new table will be created, with column types matching
     the table ones. All columns are initially defined as ``NULL``.
 
-    By default, the data are loaded using the `COPY` method to optimise
+    By default, the data are loaded using the ``COPY`` method to optimise
     performance. This can be disabled if needed.
 
     Parameters
@@ -320,7 +322,7 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
         Creates the table if it does not exist.
     drop : bool
         Drops the table before recreating it. Implies ``create=True``. Note
-        that a `CASCADE` drop will be executed. Use with caution.
+        that a ``CASCADE`` drop will be executed. Use with caution.
     truncate : bool
         Truncates the table before loading the data but maintains the existing
         columns.
@@ -331,7 +333,7 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
         If `True`, loads the data from the table; otherwise just creates the
         table in the database.
     use_copy : bool
-        When `True` (recommended) uses the SQL `COPY` command to load the data
+        When `True` (recommended) uses the SQL ``COPY`` command to load the data
         from a CSV stream.
     chunk_size : int
         How many rows to load at once.
@@ -341,7 +343,7 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
 
     Returns
     -------
-    model : ~peewee.Model
+    model : ~peewee:Model
         The model for the table created.
 
     """
