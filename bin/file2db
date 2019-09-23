@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# @Author: José Sánchez-Gallego (gallegoj@uw.edu)
+# @Date: 2019-09-21
+# @Filename: file2db
+# @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
+#
+# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
+# @Last modified time: 2019-09-21 23:23:40
+
+import os
+
+import astropy.table
+import click
+
+from sdssdb.connection import PeeweeDatabaseConnection
+from sdssdb.utils.database import file_to_db
+
+
+@click.command()
+@click.argument('file', type=click.Path(exists=True, dir_okay=False))
+@click.argument('dbname', type=str)
+@click.option('--table', '-t', type=str, help='name of the table, otherwise the '
+                                              'name of the file without the extension.')
+@click.option('--format', '-f', type=str, default=None,
+              help='one of the astropy.table.Table.read formats. '
+                   'If none is provided uses autodetection, if possible.')
+@click.option('--lowercase', '-l', is_flag=True, help='convert column names to lowercase.')
+@click.option('--create', '-c', is_flag=True, help='if the table does not exist, create it.')
+@click.option('--drop', '-d', is_flag=True, help='drop the table and recreate it.')
+@click.option('--truncate', '-T', is_flag=True, help='truncate the table before adding data.')
+@click.option('--yes', '-Y', is_flag=True, help='yes to all. Do not ask for confirmation.')
+@click.option('--profile', '-p', type=str, default=None)
+@click.option('--user', '-u', type=str, default=None)
+@click.option('--host', '-h', type=str, default=None)
+@click.option('--port', '-p', type=int, default=None)
+@click.option('--schema', '-s', type=str, default=None)
+def file2db(file, dbname, table, format, lowercase, create, drop, truncate,
+            yes, profile, user, host, port, schema):
+    """Loads a table from a file to a DB."""
+
+    connection = PeeweeDatabaseConnection(profile=profile, autoconnect=False)
+    connection.connect(dbname, user=user, host=host, port=port)
+
+    if connection.connected is False:
+        raise RuntimeError('connection to database failed.')
+
+    table_name = table or os.path.basename(file)
+
+
+
+
+if __name__ == '__main__':
+    file2db()
