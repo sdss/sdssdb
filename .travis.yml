@@ -16,6 +16,8 @@ os:
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - python: '2.7'
 
 notifications:
   email: false
