@@ -6,6 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * Added ``archive`` database with ``sas`` schema.
+* :bug:`18` Fixed Travis built after migration to using ``setup.cfg``.
 
 * :release:`0.3.0 <2019-09-23>`
 * Removed ``TIC v6``.
