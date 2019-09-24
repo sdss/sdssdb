@@ -10,12 +10,16 @@ python:
 - '2.7'
 - '3.5'
 - '3.6'
+- '3.7'
 
 os:
 - linux
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - python: '2.7'
+    - python: '3.5'
 
 notifications:
   email: false
@@ -27,7 +31,6 @@ branches:
 install:
 - pip install -U pip wheel --quiet
 - pip install --upgrade setuptools --quiet
-- pip install -r requirements.txt --quiet
 - pip install pytest
 - pip install pytest-coverage
 - pip install coveralls

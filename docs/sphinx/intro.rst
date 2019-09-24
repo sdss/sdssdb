@@ -39,6 +39,8 @@ Currently, we support the following databases and schemas:
 * **sdss5db**: the SDSS-V development database.
     * *catalogdb*: schema for source catalogues used for target selection.
     * *targetdb*: schema with the results of the target selection and positioner information.
+* **archive**: the SDSS science archive database.
+    * *sas*: schema for SAS.
 
 Note that the level of readiness is not necessarily identical in both Peewee and SQLAlchemy. This table summarises what schemas are available for each library. Green indicates fully supported, yellow partial support, and red means that there are currently not model classes available for that schema. You can download the graph visualisation of the schema, showing the tables, columns, and relations between tables.
 
@@ -118,6 +120,13 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="success"></td>
             <td class="warning"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.targetdb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td class="active">archive</td>
+            <td class="active">sas</td>
+            <td class="danger"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="../../../../schema/archive/archive_sas.pdf"></a></td>
         </tr>
         </tbody>
     </table>

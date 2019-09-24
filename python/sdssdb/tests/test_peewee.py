@@ -9,6 +9,13 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
+import pytest
+
+
+@pytest.fixture(scope='session', autouse=True)
+def skipdb():
+    if targetdb.database.connected is False:
+        pytest.skip('no targetdb found')
 
 
 class TestPeewee(object):

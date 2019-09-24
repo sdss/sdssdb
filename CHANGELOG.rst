@@ -3,6 +3,10 @@
 Changelog
 =========
 
+This document records the main changes to the ``sdssdb`` code.
+
+* Added ``archive`` database with ``sas`` schema.
+
 * :release:`0.3.0 <2019-09-23>`
 * Removed ``TIC v6``.
 * Added ``TIC v8``.
