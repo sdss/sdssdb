@@ -34,6 +34,12 @@ sdssadmin:
     port: 5432
     domain: sdssadmin.wasatch.peaks
 
+operations-test:
+    user: sdss
+    host: operations-test
+    port: 5432
+    domain: operations-test.sdss.utah.edu
+
 manga:
     user: sdss
     host: manga.wasatch.peaks
