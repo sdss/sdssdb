@@ -224,7 +224,7 @@ A list of available profiles (including custom ones) can also be accessed via de
     >>> import sdssdb
     >>> profiles = sdssdb.DatabaseConnection.list_profiles()
     >>> profiles
-    dict_keys(['apo', 'lco', 'local', 'lore', 'jhu', 'sdssadmin', 'manga'])
+    dict_keys(['apo', 'lco', 'operations-test', 'local', 'lore', 'jhu', 'sdssadmin', 'manga'])
     >>> sdssdb.DatabaseConnection.list_profiles('apo')
     {'user': 'sdssdb',
      'admin': 'sdssdb_admin',
