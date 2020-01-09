@@ -144,7 +144,7 @@ The `~sdssdb.connection.DatabaseConnection` abstract class allows to connect to 
     >>> db
     <SQLADatabaseConnection (dbname='manga', profile='local', connected=True)>
 
-What happened here? `~sdssdb.connection.SQLADatabaseConnection` connected to the ``manga`` database using the ``local`` profile. A profile is simply a set of username, hostname, and port on which to look for a PostgreSQL server. ``sdssdb`` tries to be smart and select a profile that matches the machine on which you are working. That may not always work. For example, imagine that you are working on ``manga.wasatch.peaks`` but trying to connect to ``sdss5db`` which is running on ``sdssadmin.wasatch.peaks`` ::
+What happened here? `~sdssdb.connection.SQLADatabaseConnection` connected to the ``manga`` database using the ``local`` profile. A profile is simply a set of username, hostname, and port on which to look for a PostgreSQL server. ``sdssdb`` tries to be smart and select a profile that matches the machine on which you are working. That may not always work. For example, imagine that you are working on ``manga.wasatch.peaks`` but trying to connect to ``sdss5db`` which is running on ``operations-test.sdss.utah.edu`` ::
 
     >>> from sdssdb.connection import PeeweeDatabaseConnection
     >>> db = PeeweeDatabaseConnection('sdss5db')
@@ -152,14 +152,14 @@ What happened here? `~sdssdb.connection.SQLADatabaseConnection` connected to the
 
 In this case the profile is not the appropriate for connecting to ``sdss5db`` and the connection fails. We can fix that by connecting with the correct profile ::
 
-    >>> db.set_profile('sdssadmin')
+    >>> db.set_profile('operations-test')
     True
     >>> db
-    <PeeweeDatabaseConnection (dbname='sdss5db', profile='sdssadmin', connected=True)>
+    <PeeweeDatabaseConnection (dbname='sdss5db', profile='operations-test', connected=True)>
 
 Or we could have connected to the database passing it a full set of parameters ::
 
-    >>> db.connect_from_parameters(user='sdss', host='sdssadmin.wasatch.peaks', port=5432)
+    >>> db.connect_from_parameters(user='sdss', host='operations-test.sdss.utah.edu', port=5432)
     True
 
 In other cases you may have several databases running on the same server. You can prepare a connection using the appropriate profile and then connect to a specific database ::
@@ -200,7 +200,7 @@ A note about passwords
 
     *:*:apodb:sdssdb:XXXX
     localhost:5432:sdss5db:sdss:YYYY
-    sdssadmin.wasatch.peaks:5432:sdss5db:sdss:ZZZZ
+    operations-test.sdss.utah.edu:5432:sdss5db:sdss:ZZZZ
 
 where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of parameters.
 
@@ -216,6 +216,7 @@ The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssd
 * **apo**: a user on the APO machines.
 * **lco**: a user on the LCO machines.
 * **manga**: a user on the Utah manga machine.
+* **operations-test**: a user on the Utah sdssadmin machine.
 * **sdssadmin**: a user on the Utah sdssadmin machine.
 * **lore**: a user on the Utah lore machine.
 
