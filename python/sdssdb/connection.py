@@ -313,7 +313,8 @@ if _peewee:
 
         def _conn(self, dbname, silent_on_fail=False, **params):
             """Connects to the DB and tests the connection."""
-
+            
+            PostgresqlDatabase.__init__(self, None)
             PostgresqlDatabase.init(self, dbname, **params)
 
             try:
