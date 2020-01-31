@@ -141,8 +141,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         pass
 
-    def connect(self, dbname=None, user=None, host=None, port=None,
-                silent_on_fail=False):
+    def connect(self, dbname=None, silent_on_fail=False, **connection_params):
         """Initialises the database using the profile information.
 
         Parameters
@@ -173,7 +172,20 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         # Gets the necessary configuration values from the profile
         db_configuration = {}
         for item in ['user', 'host', 'port']:
-            db_configuration[item] = eval(item) or config[self.profile].get(item, None)
+            if item in connection_params and connection_params[item] is not None:
+                db_configuration[item] = connection_params[item]
+            else:
+                profile_value = config[self.profile].get(item, None)
+
+                # If the hostname is the same as the domain, do not specify
+                # the host. This helps with the configuration of the PSQL
+                # security at Utah.
+                if item == 'host':
+                    domain = config[self.profile].get('domain', None)
+                    if profile_value == domain:
+                        continue
+
+                db_configuration[item] = profile_value
 
         dbname = dbname or self.dbname
         if dbname is None:
@@ -313,7 +325,7 @@ if _peewee:
 
         def _conn(self, dbname, silent_on_fail=False, **params):
             """Connects to the DB and tests the connection."""
-            
+
             PostgresqlDatabase.__init__(self, None)
             PostgresqlDatabase.init(self, dbname, **params)
 
