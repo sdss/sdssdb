@@ -177,11 +177,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             else:
                 profile_value = config[self.profile].get(item, None)
 
-                # If the hostname is the same as the domain, do not specify
-                # the host. This helps with the configuration of the PSQL
-                # security at Utah.
+                # If the hostname is the same as the current domain,
+                # do not specify the host. This helps with the configuration
+                # of the PSQL security at Utah.
                 if item == 'host':
-                    domain = config[self.profile].get('domain', None)
+                    domain = socket.getfqdn()
                     if profile_value == domain:
                         continue
 
