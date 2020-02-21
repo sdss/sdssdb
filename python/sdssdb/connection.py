@@ -276,8 +276,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'The DB may be disconnected.')
 
         dsn_params['user'] = user
-        dbname = self.dbname
-        self.connect_from_parameters(dbname, **dsn_params)
+        if 'dbname' not in dsn_params:
+            dsn_params['dbname'] = self.dbname
+
+        self.connect_from_parameters(**dsn_params)
 
     def become_admin(self):
         """Becomes the admin user."""
