@@ -191,7 +191,7 @@ class Plate(OperationsDBModel):
     def mangadb_plate(self):
         """One-to-one backref for mangadb.plate.platedb_plate."""
 
-        from sdssdb.peewee.observatory import mangadb
+        from sdssdb.peewee.operationsdb import mangadb
 
         return mangadb.Plate.get_or_none(platedb_plate_pk=self.pk)
 
