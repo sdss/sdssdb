@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.3.1 <2020-02-24>`
 * Added ``archive`` database with ``sas`` schema.
 * :bug:`18` Fixed Travis built after migration to using ``setup.cfg``.
 * Fix import of ``mangadb`` schema in ``Plate.mangadb_plate``.
