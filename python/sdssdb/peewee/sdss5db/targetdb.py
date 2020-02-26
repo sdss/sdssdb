@@ -6,35 +6,15 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from peewee import (AutoField, BigIntegerField, DoubleField, FloatField, ForeignKeyField,
-                    IntegerField, ManyToManyField, SmallIntegerField, TextField)
+from peewee import (AutoField, BigIntegerField, DeferredThroughModel, DoubleField, FloatField,
+                    ForeignKeyField, IntegerField, ManyToManyField, SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from . import SDSS5dbModel, catalogdb, database  # noqa
 
 
-class Assignment(SDSS5dbModel):
-    design_pk = IntegerField(null=False)
-    instrument_pk = SmallIntegerField(null=False)
-    pk = AutoField()
-    positioner_pk = SmallIntegerField(null=False)
-    target = BigIntegerField(null=False)
-
-    class Meta:
-        table_name = 'assignment'
-        schema = 'targetdb'
-
-
-class ProgramToTarget(SDSS5dbModel):
-    cadence_pk = SmallIntegerField()
-    lambda_eff = FloatField(null=True)
-    pk = AutoField()
-    program_pk = SmallIntegerField(null=False)
-    target_pk = BigIntegerField(null=False)
-
-    class Meta:
-        table_name = 'program_to_target'
-        schema = 'targetdb'
+AssignmentDeferred = DeferredThroughModel()
+ProgramToTargetDeferred = DeferredThroughModel()
 
 
 class Cadence(SDSS5dbModel):
@@ -213,12 +193,50 @@ class Target(SDSS5dbModel):
                               field='pk',
                               model=Version,
                               null=True)
-    designs = ManyToManyField(Design, through_model=Assignment, backref='targets')
-    positioners = ManyToManyField(Positioner, through_model=Assignment, backref='targets')
-    instruments = ManyToManyField(Instrument, through_model=Assignment, backref='targets')
-    programs = ManyToManyField(Program, through_model=ProgramToTarget, backref='targets')
-    cadences = ManyToManyField(Cadence, through_model=ProgramToTarget, backref='targets')
+    designs = ManyToManyField(Design,
+                              through_model=AssignmentDeferred,
+                              backref='targets')
+    positioners = ManyToManyField(Positioner,
+                                  through_model=AssignmentDeferred,
+                                  backref='targets')
+    instruments = ManyToManyField(Instrument,
+                                  through_model=AssignmentDeferred,
+                                  backref='targets')
+    programs = ManyToManyField(Program,
+                               through_model=ProgramToTargetDeferred,
+                               backref='targets')
+    cadences = ManyToManyField(Cadence,
+                               through_model=ProgramToTargetDeferred,
+                               backref='targets')
 
     class Meta:
         table_name = 'target'
         schema = 'targetdb'
+
+
+class Assignment(SDSS5dbModel):
+    design_pk = ForeignKeyField(Design)
+    instrument_pk = ForeignKeyField(Instrument)
+    pk = AutoField()
+    positioner_pk = ForeignKeyField(Positioner)
+    target_pk = ForeignKeyField(Target)
+
+    class Meta:
+        table_name = 'assignment'
+        schema = 'targetdb'
+
+
+class ProgramToTarget(SDSS5dbModel):
+    cadence_pk = ForeignKeyField(Cadence)
+    lambda_eff = FloatField(null=True)
+    pk = AutoField()
+    program_pk = ForeignKeyField(Program)
+    target_pk = ForeignKeyField(Target)
+
+    class Meta:
+        table_name = 'program_to_target'
+        schema = 'targetdb'
+
+
+AssignmentDeferred.set_model(Assignment)
+ProgramToTargetDeferred.set_model(ProgramToTarget)
