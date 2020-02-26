@@ -8,104 +8,75 @@
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-09-22 09:07:27
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5Base, database
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
 
+from . import catalogdb
+
 
 class Base(AbstractConcreteBase, SDSS5Base):
     __abstract__ = True
     _schema = 'targetdb'
+    _relations = 'define_relations'
 
     @declared_attr
     def __table_args__(cls):
         return {'schema': cls._schema}
 
 
-class ActuatorStatus(Base):
-    __tablename__ = 'actuator_status'
+class Cadence(Base):
+    __tablename__ = 'cadence'
 
 
-class ActuatorType(Base):
-    __tablename__ = 'actuator_type'
+class Observatory(Base):
+    __tablename__ = 'observatory'
 
 
-class FPSLayout(Base):
-    __tablename__ = 'fps_layout'
+class Field(Base):
+    __tablename__ = 'field'
 
 
-class Actuator(Base):
-
-    __tablename__ = 'actuator'
-
-    actuator_status = relationship(ActuatorStatus, backref='actuators')
-    actuator_type = relationship(ActuatorType, backref='actuators')
-    fps_layout = relationship(FPSLayout, backref='actuators')
+class Design(Base):
+    __tablename__ = 'design'
 
 
-class Simulation(Base):
-    __tablename__ = 'simulation'
+class Instrument(Base):
+    __tablename__ = 'instrument'
 
 
-class Tile(Base):
-
-    __tablename__ = 'tile'
-
-    simulation = relationship(Simulation, backref='tiles')
+class PositionerStatus(Base):
+    __tablename__ = 'positioner_status'
 
 
-class Weather(Base):
-    __tablename__ = 'weather'
+class PositionerType(Base):
+    __tablename__ = 'positioner_type'
 
 
-class Exposure(Base):
-
-    __tablename__ = 'exposure'
-
-    tile = relationship(Tile, backref='exposures')
-    weather = relationship(Weather, backref='exposures')
-    simulation = relationship(Simulation, backref='exposures')
+class Positioner(Base):
+    __tablename__ = 'positioner'
 
 
-class FiberStatus(Base):
-    __tablename__ = 'fiber_status'
+class Magnitude(Base):
+    __tablename__ = 'magnitude'
 
 
-class Spectrograph(Base):
-
-    __tablename__ = 'spectrograph'
-
-    @property
-    def target_cadences(self):
-        """Returns target cadences associated with this spectrograph."""
-
-        session = database.Session.object_session(self)
-
-        return session.query(TargetCadence).filter(TargetCadence.spectrograph_pk.in_(self.pk))
+class Version(Base):
+    __tablename__ = 'version'
 
 
-class Fiber(Base):
-
-    __tablename__ = 'fiber'
-
-    actuator = relationship(Actuator, backref='fibers')
-    fiber_status = relationship(FiberStatus, backref='fibers')
-    spectrograph = relationship(Spectrograph, backref='fibers')
+class Target(Base):
+    __tablename__ = 'target'
 
 
-class TargetCadence(Base):
+class Assignment(Base):
+    __tablename__ = 'assignment'
 
-    __tablename__ = 'target_cadence'
 
-    @property
-    def spectrographs(self):
-        """Returns a list of spectrographs associated with this cadence."""
-
-        session = database.Session.object_session(self)
-
-        return session.query(Spectrograph).filter(Spectrograph.pk.in_(self.spectrograph_pk))
+class Category(Base):
+    __tablename__ = 'category'
 
 
 class Survey(Base):
@@ -113,79 +84,41 @@ class Survey(Base):
 
 
 class Program(Base):
-
     __tablename__ = 'program'
 
-    survey = relationship(Survey, backref='programs')
+
+class ProgramToTarget(Base):
+    __tablename__ = 'program_to_target'
 
 
-class StellarParams(Base):
-    __tablename__ = 'stellar_params'
+def define_relations():
 
+    Field.cadence = relationship(Cadence, backref='fields')
+    Field.observatory = relationship(Observatory, backref='fields')
 
-class Magnitude(Base):
-    __tablename__ = 'magnitude'
+    Design.field = relationship(Field, backref='designs')
 
+    Program.cadences = relationship(Cadence,
+                                    secondary=ProgramToTarget,
+                                    backref='programs')
+    Program.targets = relationship(Target,
+                                   secondary=ProgramToTarget,
+                                   backref='programs')
 
-class TargetCompletion(Base):
-    __tablename__ = 'target_completion'
+    Program.category = relationship(Category, backref='programs')
+    Program.survey = relationship(Survey, backref='programs')
 
+    Target.magnitude = relationship(Magnitude, backref='targets')
+    Target.catalog = relationship(catalogdb.GaiaDR2Source, backref='targets')
+    Target.version = relationship(Version, backref='targets')
 
-class Field(Base):
-    __tablename__ = 'field'
+    Target.designs = relationship(Design, backref='targets', secondary=Assignment)
+    Target.instruments = relationship(Instrument, backref='targets', secondary=Assignment)
+    Target.positioners = relationship(Positioner, backref='targets', secondary=Assignment)
 
-
-class File(Base):
-    __tablename__ = 'file'
-
-
-class Lunation(Base):
-    __tablename__ = 'lunation'
-
-
-class TargetType(Base):
-    __tablename__ = 'target_type'
-
-
-class TargetToTile(Base):
-
-    __tablename__ = 'target_to_tile'
-
-    target = relationship('Target')
-    tile = relationship(Tile)
-
-
-class Target(Base):
-
-    __tablename__ = 'target'
-
-    field = relationship(Field, backref='targets')
-    file = relationship(File, backref='targets')
-    magnitude = relationship(Magnitude, backref='targets')
-    program = relationship(Program, backref='targets')
-    spectrograph = relationship(Spectrograph, backref='targets')
-    stellar_params = relationship(StellarParams, backref='targets')
-    target_cadence = relationship(TargetCadence, backref='targets')
-    target_completion = relationship(TargetCompletion, backref='targets')
-    lunation = relationship(Lunation, backref='targets')
-    tiles = relationship(Tile, secondary=TargetToTile.__table__, backref='targets')
-    target_type = relationship(TargetType, backref='targets')
-
-
-class FiberConfiguration(Base):
-
-    __tablename__ = 'fiber_configuration'
-
-    fiber = relationship(Fiber, backref='fiber_configurations')
-    target = relationship(Target, backref='fiber_configurations')
-
-
-class Spectrum(Base):
-
-    __tablename__ = 'spectrum'
-
-    exposure = relationship(Exposure, backref='spectra')
-    fiber_configuration = relationship(FiberConfiguration, backref='spectra')
+    Positioner.status = relationship(PositionerStatus, backref='positioners')
+    Positioner.type = relationship(PositionerType, backref='positioners')
+    Positioner.observatory = relationship(Observatory, backref='positioners')
 
 
 # Prepare the base

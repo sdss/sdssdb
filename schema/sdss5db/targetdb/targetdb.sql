@@ -1,222 +1,134 @@
 /*
 
-targetDB schema version v0.3.5
+targetDB schema version v0.4.0
 
 Created Jan 2018 - J. Sánchez-Gallego
+Updated Feb 2020 - J. Sánchez-Gallego
 
 */
-
 
 CREATE SCHEMA targetdb;
 
 SET search_path TO targetdb;
 
 CREATE TABLE targetdb.target (
-	pk serial PRIMARY KEY NOT NULL,
-	ra REAL,
-	dec REAL,
+	pk SERIAL PRIMARY KEY NOT NULL,
+	ra DOUBLE PRECISION,
+	dec DOUBLE PRECISION,
 	pmra REAL,
 	pmdec REAL,
-	lambda_eff REAL,
-	file_pk INTEGER,
-	file_index BIGINT,
-	field_pk INTEGER,
-	target_type_pk SMALLINT,
-	target_completion_pk SMALLINT,
+	epoch REAL,
 	magnitude_pk BIGINT,
-	stellar_params_pk BIGINT,
-	program_pk SMALLINT,
-	priority SMALLINT,
-	spectrograph_pk SMALLINT,
-	target_cadence_pk SMALLINT,
-	lunation_pk SMALLINT,
-	catalog_pk BIGINT);
+	version_pk SMALLINT,
+	catalogid BIGINT);
 
-CREATE TABLE targetdb.target_type (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.version (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
-
-CREATE TABLE targetdb.lunation (
-	pk serial PRIMARY KEY NOT NULL,
-	max_lunation REAL);
 
 CREATE TABLE targetdb.magnitude (
-	pk serial PRIMARY KEY NOT NULL,
-	g_mag REAL,
-	h_mag REAL,
-	i_mag REAL,
-	bp_mag REAL,
-	rp_mag REAL);
-
-CREATE TABLE targetdb.stellar_params (
-	pk serial PRIMARY KEY NOT NULL,
-	distance REAL,
-	teff REAL,
-	logg REAL,
-	mass REAL,
-	spectral_type TEXT,
-	age REAL);
-
-CREATE TABLE targetdb.field (
-	pk serial PRIMARY KEY NOT NULL,
-	label TEXT);
-
-CREATE TABLE targetdb.file (
-	pk serial PRIMARY KEY NOT NULL,
-	filename TEXT);
+	pk SERIAL PRIMARY KEY NOT NULL,
+	g REAL,
+	r REAL,
+	i REAL,
+	h REAL,
+	bp REAL,
+	rp REAL);
 
 CREATE TABLE targetdb.program (
-	pk serial PRIMARY KEY NOT NULL,
-	label TEXT,
-	survey_pk SMALLINT);
+	pk SERIAL PRIMARY KEY NOT NULL,
+	survey_pk SMALLINT,
+	category_pk SMALLINT,
+	label TEXT);
 
 CREATE TABLE targetdb.survey (
-	pk serial PRIMARY KEY NOT NULL,
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
-CREATE TABLE targetdb.target_completion (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.category (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
-CREATE TABLE targetdb.target_cadence (
-    pk integer PRIMARY KEY NOT NULL,
-    name text,
-    nexposures integer,
-    delta real[],
-    lunation real[],
-    delta_max real[],
-    delta_min real[],
-    spectrograph_pk integer[]);
+CREATE TABLE targetdb.program_to_target (
+	pk SERIAL PRIMARY KEY NOT NULL,
+	lambda_eff REAL,
+	program_pk SMALLINT,
+	target_pk BIGINT,
+	cadence_pk SMALLINT);
 
-CREATE TABLE targetdb.spectrograph (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.cadence (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    label TEXT,
+    nexposures SMALLINT,
+    delta REAL[],
+    skybrightness REAL[],
+    delta_max REAL[],
+    delta_min REAL[],
+    instrument_pk INTEGER[]);
+
+CREATE TABLE targetdb.instrument (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
-CREATE TABLE targetdb.fiber (
-	pk serial PRIMARY KEY NOT NULL,
-	fiberid INTEGER,
-	throughput REAL,
-	spectrograph_pk SMALLINT,
-	fiber_status_pk SMALLINT,
-	actuator_pk SMALLINT);
-
-CREATE TABLE targetdb.actuator (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.positioner (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	id INTEGER,
 	xcen REAL,
 	ycen REAL,
-	actuator_status_pk SMALLINT NOT NULL,
-	actuator_type_pk SMALLINT NOT NULL,
-	fps_layout_pk SMALLINT NOT NULL);
+	positioner_status_pk SMALLINT NOT NULL,
+	positioner_type_pk SMALLINT NOT NULL,
+	observatory_pk SMALLINT NOT NULL);
 
-CREATE TABLE targetdb.fiber_configuration (
-	pk serial PRIMARY KEY NOT NULL,
-	fiber_pk SMALLINT,
-	tile_pk INTEGER,
-	xfocal REAL,
-	yfocal REAL,
-	target_pk INTEGER);
-
-CREATE TABLE targetdb.fiber_status (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.positioner_status (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
-CREATE TABLE targetdb.actuator_status (
-	pk serial PRIMARY KEY NOT NULL,
-	label TEXT);
-
-CREATE TABLE targetdb.actuator_type (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.positioner_type (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT NOT NULL);
 
-CREATE TABLE targetdb.fps_layout (
-	pk serial PRIMARY KEY NOT NULL,
+CREATE TABLE targetdb.observatory (
+	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT NOT NULL);
 
-CREATE TABLE targetdb.spectrum (
-	pk serial PRIMARY KEY NOT NULL,
-	exposure_pk INTEGER,
-	fiber_configuration_pk INTEGER,
-	sn2 REAL);
+CREATE TABLE targetdb.assignment (
+	pk SERIAL PRIMARY KEY NOT NULL,
+	target_pk BIGINT,
+	positioner_pk SMALLINT,
+	instrument_pk SMALLINT,
+	design_pk INTEGER);
 
-CREATE TABLE targetdb.simulation (
-	pk serial PRIMARY KEY NOT NULL,
-	id INTEGER,
-	date TIMESTAMP,
-	comments TEXT);
+CREATE TABLE targetdb.design (
+	pk SERIAL PRIMARY KEY NOT NULL,
+	field_pk INTEGER);
 
-CREATE TABLE targetdb.exposure (
-	pk serial PRIMARY KEY NOT NULL,
-	tile_pk INTEGER,
-	start_mjd INTEGER,
-	duration REAL,
-	sn2_median REAL,
-	weather_pk INTEGER,
-	simulation_pk INTEGER);
-
-CREATE TABLE targetdb.weather (
-	pk serial PRIMARY KEY NOT NULL,
-	cloud_cover REAL,
-	humidity REAL,
-	temperature REAL);
-
-CREATE TABLE targetdb.tile (
-	pk serial PRIMARY KEY NOT NULL,
-	racen REAL,
-	deccen REAL,
-	rotation REAL,
-	simulation_pk INTEGER);
-
-CREATE TABLE targetdb.target_to_tile (
-	pk serial PRIMARY KEY NOT NULL,
-	xdefault REAL,
-	ydefault REAL,
-	tile_pk INTEGER,
-	target_pk INTEGER,
-	fiber_pk INTEGER);
+CREATE TABLE targetdb.field (
+	pk SERIAL PRIMARY KEY NOT NULL,
+	racen DOUBLE PRECISION,
+	deccen DOUBLE PRECISION,
+	version TEXT,
+	cadence_pk SMALLINT,
+	observatory_pk SMALLINT);
 
 
 -- Table data
 
-INSERT INTO targetdb.spectrograph VALUES (0, 'BOSS'), (1, 'APOGEE');
+INSERT INTO targetdb.instrument VALUES (0, 'BOSS'), (1, 'APOGEE');
 
-INSERT INTO targetdb.target_type VALUES
-	(0, 'Science'), (1, 'Standard'), (2, 'Sky'), (3, 'Guide');
-
-INSERT INTO targetdb.target_completion VALUES
-	(0, 'Automatic'), (1, 'Complete'), (2, 'Incomplete'), (3, 'Force Complete'),
-	(4, 'Force Incomplete');
+INSERT INTO targetdb.category VALUES
+	(0, 'science'), (1, 'standard_apogee'), (2, 'standard_boss'),
+	(3, 'guide'), (4, 'sky_apogee'), (5, 'sky_boss');
 
 INSERT INTO targetdb.survey VALUES (0, 'MWM'), (1, 'BHM');
 
-INSERT INTO targetdb.fiber_status VALUES (0, 'OK'), (1, 'Broken');
+INSERT INTO targetdb.positioner_type VALUES (0, 'Positioner'), (1, 'Fiducial');
 
-INSERT INTO targetdb.actuator_status VALUES (0, 'OK'), (1, 'KO');
+INSERT INTO targetdb.positioner_status VALUES (0, 'OK'), (1, 'KO');
 
-INSERT INTO targetdb.actuator_type VALUES (0, 'Robot'), (1, 'Fiducial');
+INSERT INTO targetdb.observatory VALUES (0, 'APO'), (1, 'LCO');
 
 
 -- Foreign keys
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT file_fk
-    FOREIGN KEY (file_pk) REFERENCES targetdb.file(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT target_type_fk
-    FOREIGN KEY (target_type_pk) REFERENCES targetdb.target_type(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT target_completion_fk
-    FOREIGN KEY (target_completion_pk) REFERENCES targetdb.target_completion(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT magnitude_fk
@@ -224,33 +136,13 @@ ALTER TABLE ONLY targetdb.target
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT stellar_params_fk
-    FOREIGN KEY (stellar_params_pk) REFERENCES targetdb.stellar_params(pk)
+    ADD CONSTRAINT catalogid_fk
+    FOREIGN KEY (catalogid) REFERENCES catalogdb.gaia_dr2_source(source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT program_fk
-    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT spectrograph_fk
-    FOREIGN KEY (spectrograph_pk) REFERENCES targetdb.spectrograph(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT target_cadence_fk
-    FOREIGN KEY (target_cadence_pk) REFERENCES targetdb.target_cadence(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT lunation_fk
-    FOREIGN KEY (lunation_pk) REFERENCES targetdb.lunation(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT catalog_fk
-    FOREIGN KEY (catalog_pk) REFERENCES catalogdb.gaia_dr2_source(source_id)
+    ADD CONSTRAINT version_pk_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program
@@ -258,126 +150,104 @@ ALTER TABLE ONLY targetdb.program
     FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.target_to_tile
-    ADD CONSTRAINT target_to_tile_target_fk
+ALTER TABLE ONLY targetdb.program
+    ADD CONSTRAINT category_fk
+    FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.program_to_target
+    ADD CONSTRAINT program_fk
+    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.program_to_target
+    ADD CONSTRAINT target_fk
     FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.target_to_tile
-    ADD CONSTRAINT target_to_tile_tile_fk
-    FOREIGN KEY (tile_pk) REFERENCES targetdb.tile(pk)
+ALTER TABLE ONLY targetdb.program_to_target
+    ADD CONSTRAINT cadence_fk
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.tile
-    ADD CONSTRAINT tile_simulation_fk
-    FOREIGN KEY (simulation_pk) REFERENCES targetdb.simulation(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.exposure
-    ADD CONSTRAINT exposure_tile_fk
-    FOREIGN KEY (tile_pk) REFERENCES targetdb.tile(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.exposure
-    ADD CONSTRAINT weather_fk
-    FOREIGN KEY (weather_pk) REFERENCES targetdb.weather(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.exposure
-    ADD CONSTRAINT tile_simulation_fk
-    FOREIGN KEY (simulation_pk) REFERENCES targetdb.simulation(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.spectrum
-    ADD CONSTRAINT exposure_fk
-    FOREIGN KEY (exposure_pk) REFERENCES targetdb.exposure(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.spectrum
-    ADD CONSTRAINT fiber_configuration_fk
-    FOREIGN KEY (fiber_configuration_pk) REFERENCES targetdb.fiber_configuration(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.fiber_configuration
-    ADD CONSTRAINT fiber_fk
-    FOREIGN KEY (fiber_pk) REFERENCES targetdb.fiber(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.fiber_configuration
-    ADD CONSTRAINT target_to_tile_target_fk
+ALTER TABLE ONLY targetdb.assignment
+    ADD CONSTRAINT target_fk
     FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.fiber_configuration
-    ADD CONSTRAINT fiber_configuration_tile_fk
-    FOREIGN KEY (tile_pk) REFERENCES targetdb.tile(pk)
+ALTER TABLE ONLY targetdb.assignment
+    ADD CONSTRAINT positioner_fk
+    FOREIGN KEY (positioner_pk) REFERENCES targetdb.positioner(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.fiber
-    ADD CONSTRAINT actuator_fk
-    FOREIGN KEY (actuator_pk) REFERENCES targetdb.actuator(pk)
+ALTER TABLE ONLY targetdb.assignment
+    ADD CONSTRAINT instrument_fk
+    FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.fiber
-    ADD CONSTRAINT spectrograph_fk
-    FOREIGN KEY (spectrograph_pk) REFERENCES targetdb.spectrograph(pk)
+ALTER TABLE ONLY targetdb.assignment
+    ADD CONSTRAINT design_fk
+    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.fiber
-    ADD CONSTRAINT fiber_status_fk
-    FOREIGN KEY (fiber_status_pk) REFERENCES targetdb.fiber_status(pk)
+ALTER TABLE ONLY targetdb.design
+    ADD CONSTRAINT field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.actuator
-    ADD CONSTRAINT actuator_status_fk
-    FOREIGN KEY (actuator_status_pk) REFERENCES targetdb.actuator_status(pk)
+ALTER TABLE ONLY targetdb.field
+    ADD CONSTRAINT cadence_fk
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.actuator
-    ADD CONSTRAINT actuator_type_fk
-    FOREIGN KEY (actuator_type_pk) REFERENCES targetdb.actuator_type(pk)
+ALTER TABLE ONLY targetdb.field
+    ADD CONSTRAINT observatory_fk
+    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.actuator
-    ADD CONSTRAINT fps_layout_fk
-    FOREIGN KEY (fps_layout_pk) REFERENCES targetdb.fps_layout(pk)
+ALTER TABLE ONLY targetdb.positioner
+    ADD CONSTRAINT positioner_status_fk
+    FOREIGN KEY (positioner_status_pk) REFERENCES targetdb.positioner_status(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.positioner
+    ADD CONSTRAINT positioner_type_fk
+    FOREIGN KEY (positioner_type_pk) REFERENCES targetdb.positioner_type(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.positioner
+    ADD CONSTRAINT observatory_fk
+    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 -- Indices
-CREATE INDEX CONCURRENTLY file_pk_idx ON targetdb.target using BTREE(file_pk);
-CREATE INDEX CONCURRENTLY field_pk_idx ON targetdb.target using BTREE(field_pk);
-CREATE INDEX CONCURRENTLY target_type_pk_idx ON targetdb.target using BTREE(target_type_pk);
-CREATE INDEX CONCURRENTLY target_completion_pk_idx ON targetdb.target using BTREE(target_completion_pk);
+
 CREATE INDEX CONCURRENTLY magnitude_pk_idx ON targetdb.target using BTREE(magnitude_pk);
-CREATE INDEX CONCURRENTLY stellar_params_pk_idx ON targetdb.target using BTREE(stellar_params_pk);
-CREATE INDEX CONCURRENTLY program_pk_idx ON targetdb.target using BTREE(program_pk);
-CREATE INDEX CONCURRENTLY target_spectrograph_pk_idx ON targetdb.target using BTREE(spectrograph_pk);
-CREATE INDEX CONCURRENTLY target_cadence_pk_idx ON targetdb.target using BTREE(target_cadence_pk);
-CREATE INDEX CONCURRENTLY lunation_pk_idx ON targetdb.target using BTREE(lunation_pk);
+CREATE INDEX CONCURRENTLY catalogid_idx ON targetdb.target using BTREE(catalogid);
+CREATE INDEX CONCURRENTLY version_pk_idx ON targetdb.target using BTREE(version_pk);
+
+CREATE INDEX ON targetdb.target (q3c_ang2ipix(ra, dec));
+CLUSTER target_q3c_ang2ipix_idx on targetdb.target;
+ANALYZE targetdb.target;
 
 CREATE INDEX CONCURRENTLY survey_pk_idx ON targetdb.program using BTREE(survey_pk);
+CREATE INDEX CONCURRENTLY category_pk_idx ON targetdb.program using BTREE(category_pk);
 
-CREATE INDEX CONCURRENTLY target_to_tile_target_pk_idx ON targetdb.target_to_tile using BTREE(target_pk);
-CREATE INDEX CONCURRENTLY target_to_tile_tile_pk_idx ON targetdb.target_to_tile using BTREE(tile_pk);
+CREATE INDEX CONCURRENTLY program_pk_idx ON targetdb.program_to_target using BTREE(program_pk);
+CREATE INDEX CONCURRENTLY target_pk_idx ON targetdb.program_to_target using BTREE(target_pk);
+CREATE INDEX CONCURRENTLY cadence_pk_idx ON targetdb.program_to_target using BTREE(cadence_pk);
 
-CREATE INDEX CONCURRENTLY tile_simulation_pk_idx ON targetdb.tile using BTREE(simulation_pk);
+CREATE INDEX CONCURRENTLY assignment_target_pk_idx ON targetdb.assignment using BTREE(target_pk);
+CREATE INDEX CONCURRENTLY positioner_pk_idx ON targetdb.assignment using BTREE(positioner_pk);
+CREATE INDEX CONCURRENTLY instrument_pk_idx ON targetdb.assignment using BTREE(instrument_pk);
+CREATE INDEX CONCURRENTLY design_pk_idx ON targetdb.assignment using BTREE(design_pk);
 
-CREATE INDEX CONCURRENTLY exposure_tile_pk_idx ON targetdb.exposure using BTREE(tile_pk);
-CREATE INDEX CONCURRENTLY weather_pk_idx ON targetdb.exposure using BTREE(weather_pk);
-CREATE INDEX CONCURRENTLY exposure_simulation_pk_idx ON targetdb.exposure using BTREE(simulation_pk);
+CREATE INDEX CONCURRENTLY field_pk_idx ON targetdb.design using BTREE(field_pk);
 
-CREATE INDEX CONCURRENTLY exposure_pk_idx ON targetdb.spectrum using BTREE(exposure_pk);
-CREATE INDEX CONCURRENTLY fiber_configuration_pk_idx ON targetdb.spectrum using BTREE(fiber_configuration_pk);
+CREATE INDEX CONCURRENTLY field_cadence_pk_idx ON targetdb.field using BTREE(cadence_pk);
+CREATE INDEX CONCURRENTLY observatory_pk_idx ON targetdb.field using BTREE(observatory_pk);
 
-CREATE INDEX CONCURRENTLY fiber_pk_idx ON targetdb.fiber_configuration using BTREE(fiber_pk);
-CREATE INDEX CONCURRENTLY fiber_configuration_tile_pk_idx ON targetdb.fiber_configuration using BTREE(tile_pk);
-CREATE INDEX CONCURRENTLY fiber_configuration_target_pk_idx ON targetdb.fiber_configuration using BTREE(target_pk);
-
-CREATE INDEX CONCURRENTLY fiber_status_pk_idx ON targetdb.fiber using BTREE(fiber_status_pk);
-CREATE INDEX CONCURRENTLY fiber_spectrograph_pk_idx ON targetdb.fiber using BTREE(spectrograph_pk);
-CREATE INDEX CONCURRENTLY actuator_pk_idx ON targetdb.fiber using BTREE(actuator_pk);
-
-CREATE INDEX CONCURRENTLY actuator_status_pk_idx ON targetdb.actuator using BTREE(actuator_status_pk);
-CREATE INDEX CONCURRENTLY actuator_type_pk_idx ON targetdb.actuator using BTREE(actuator_type_pk);
-CREATE INDEX CONCURRENTLY fps_layout_pk_idx ON targetdb.actuator using BTREE(fps_layout_pk);
+CREATE INDEX CONCURRENTLY positioner_status_pk_idx ON targetdb.positioner using BTREE(positioner_status_pk);
+CREATE INDEX CONCURRENTLY positioner_type_pk_idx ON targetdb.positioner using BTREE(positioner_type_pk);
+CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx ON targetdb.positioner using BTREE(observatory_pk);
