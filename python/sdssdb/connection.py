@@ -59,18 +59,25 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     autoconnect : bool
         Whether to autoconnect to the database using the profile parameters.
         Requites `.dbname` to be set.
+    dbversion : str
+        A database version.  If specified, appends to dbname as "dbname_dbversion"
+        and becomes the dbname used for connection strings.
 
     """
 
     #: The database name.
     dbname = None
+    dbversion = None
 
-    def __init__(self, dbname=None, profile=None, autoconnect=True):
+    def __init__(self, dbname=None, profile=None, autoconnect=True, dbversion=None):
 
         #: Reports whether the connection is active.
         self.connected = False
         self.profile = None
         self.dbname = dbname if dbname else self.dbname
+        self.dbversion = dbversion or self.dbversion
+        if self.dbversion:
+            self.dbname = f'{self.dbname}_{self.dbversion}' 
 
         self.set_profile(profile=profile, connect=autoconnect)
 
@@ -302,6 +309,18 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         user = profile['user'] if 'user' in profile else None
 
         self.become(user)
+
+    def change_version(self, dbversion):
+        ''' Change database version and attempt to reconnect
+        
+        Parameters:
+            dbversion (str):
+                A database version 
+        '''
+        self.dbversion = dbversion
+        dbname, *dbver = self.dbname.split('_')
+        self.dbname = f'{dbname}_{self.dbversion}'
+        self.connect(dbname=self.dbname, silent_on_fail=True)
 
 
 if _peewee:
