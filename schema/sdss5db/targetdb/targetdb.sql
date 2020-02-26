@@ -29,7 +29,7 @@ CREATE TABLE targetdb.target (
 	priority SMALLINT,
 	spectrograph_pk SMALLINT,
 	target_cadence_pk SMALLINT,
-	lunation_pk SMALLINT
+	lunation_pk SMALLINT,
 	catalog_pk BIGINT);
 
 CREATE TABLE targetdb.target_type (
