@@ -248,7 +248,7 @@ ALTER TABLE ONLY targetdb.target
     FOREIGN KEY (lunation_pk) REFERENCES targetdb.lunation(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.catalog_pk
+ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalog_fk
     FOREIGN KEY (catalog_pk) REFERENCES catalogdb.gaia_dr2_source(source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
