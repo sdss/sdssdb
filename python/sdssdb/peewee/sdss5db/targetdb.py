@@ -14,7 +14,7 @@ from peewee import (AutoField, BigIntegerField, DateTimeField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 from playhouse.postgres_ext import ArrayField
 
-from . import SDSS5dbModel, database  # noqa
+from . import SDSS5dbModel, catalogdb, database  # noqa
 
 
 class UnknownField(object):
@@ -392,6 +392,11 @@ class Target(SDSS5dbModel):
                                   model=TargetType,
                                   null=True,
                                   backref='targets')
+    catalog = ForeignKeyField(column_name='catalog_pk',
+                              model=catalogdb.GaiaDR2Source,
+                              field='source_id',
+                              backref='targets',
+                              unique=True)
 
     class Meta:
         table_name = 'target'
