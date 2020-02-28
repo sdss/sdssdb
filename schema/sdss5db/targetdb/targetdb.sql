@@ -132,8 +132,7 @@ INSERT INTO targetdb.observatory VALUES (0, 'APO'), (1, 'LCO');
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT magnitude_fk
-    FOREIGN KEY (magnitude_pk) REFERENCES targetdb.magnitude(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (magnitude_pk) REFERENCES targetdb.magnitude(pk);
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk

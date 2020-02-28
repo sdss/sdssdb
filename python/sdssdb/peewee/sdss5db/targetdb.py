@@ -184,7 +184,8 @@ class Target(SDSS5dbModel):
     magnitude = ForeignKeyField(column_name='magnitude_pk',
                                 field='pk',
                                 model=Magnitude,
-                                null=True)
+                                null=True,
+                                backref='targets')
     pk = AutoField()
     pmdec = FloatField(null=True)
     pmra = FloatField(null=True)
@@ -192,7 +193,9 @@ class Target(SDSS5dbModel):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version,
-                              null=True)
+                              null=True,
+                              on_delete='CASCADE',
+                              backref='targets')
     designs = ManyToManyField(Design,
                               through_model=AssignmentDeferred,
                               backref='targets')
@@ -215,11 +218,19 @@ class Target(SDSS5dbModel):
 
 
 class Assignment(SDSS5dbModel):
-    design_pk = ForeignKeyField(Design)
-    instrument_pk = ForeignKeyField(Instrument)
+    design = ForeignKeyField(Design,
+                             column_name='design_pk',
+                             field='pk')
+    instrument = ForeignKeyField(Instrument,
+                                 column_name='instrument_pk',
+                                 field='pk')
     pk = AutoField()
-    positioner_pk = ForeignKeyField(Positioner)
-    target_pk = ForeignKeyField(Target)
+    positioner = ForeignKeyField(Positioner,
+                                 column_name='positioner_pk',
+                                 field='pk')
+    target = ForeignKeyField(Target,
+                             column_name='target_pk',
+                             field='pk')
 
     class Meta:
         table_name = 'assignment'
@@ -227,11 +238,18 @@ class Assignment(SDSS5dbModel):
 
 
 class ProgramToTarget(SDSS5dbModel):
-    cadence_pk = ForeignKeyField(Cadence)
+    cadence = ForeignKeyField(Cadence,
+                              column_name='cadence_pk',
+                              field='pk')
     lambda_eff = FloatField(null=True)
     pk = AutoField()
-    program_pk = ForeignKeyField(Program)
-    target_pk = ForeignKeyField(Target)
+    program = ForeignKeyField(Program,
+                              column_name='program_pk',
+                              field='pk')
+    target = ForeignKeyField(Target,
+                             column_name='target_pk',
+                             field='pk',
+                             on_delete='CASCADE')
 
     class Meta:
         table_name = 'program_to_target'
