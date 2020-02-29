@@ -190,12 +190,6 @@ class Target(SDSS5dbModel):
     pmdec = FloatField(null=True)
     pmra = FloatField(null=True)
     ra = DoubleField(null=True)
-    version = ForeignKeyField(column_name='version_pk',
-                              field='pk',
-                              model=Version,
-                              null=True,
-                              on_delete='CASCADE',
-                              backref='targets')
     designs = ManyToManyField(Design,
                               through_model=AssignmentDeferred,
                               backref='targets')
@@ -209,6 +203,9 @@ class Target(SDSS5dbModel):
                                through_model=ProgramToTargetDeferred,
                                backref='targets')
     cadences = ManyToManyField(Cadence,
+                               through_model=ProgramToTargetDeferred,
+                               backref='targets')
+    versions = ManyToManyField(Version,
                                through_model=ProgramToTargetDeferred,
                                backref='targets')
 
@@ -250,6 +247,11 @@ class ProgramToTarget(SDSS5dbModel):
                              column_name='target_pk',
                              field='pk',
                              on_delete='CASCADE')
+    version = ForeignKeyField(Version,
+                              column_name='version_pk',
+                              field='pk',
+                              null=True,
+                              on_delete='CASCADE')
 
     class Meta:
         table_name = 'program_to_target'

@@ -19,7 +19,6 @@ CREATE TABLE targetdb.target (
 	pmdec REAL,
 	epoch REAL,
 	magnitude_pk BIGINT,
-	version_pk SMALLINT,
 	catalogid BIGINT);
 
 CREATE TABLE targetdb.version (
@@ -54,6 +53,7 @@ CREATE TABLE targetdb.program_to_target (
 	lambda_eff REAL,
 	program_pk SMALLINT,
 	target_pk BIGINT,
+    version_pk SMALLINT,
 	cadence_pk SMALLINT);
 
 CREATE TABLE targetdb.cadence (
@@ -139,11 +139,6 @@ ALTER TABLE ONLY targetdb.target
     FOREIGN KEY (catalogid) REFERENCES catalogdb.gaia_dr2_source(source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT version_pk_fk
-    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT survey_fk
     FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk)
@@ -167,6 +162,11 @@ ALTER TABLE ONLY targetdb.program_to_target
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT cadence_fk
     FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.program_to_target
+    ADD CONSTRAINT version_pk_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.assignment
@@ -224,7 +224,6 @@ ALTER TABLE ONLY targetdb.positioner
 
 CREATE INDEX CONCURRENTLY magnitude_pk_idx ON targetdb.target using BTREE(magnitude_pk);
 CREATE INDEX CONCURRENTLY catalogid_idx ON targetdb.target using BTREE(catalogid);
-CREATE INDEX CONCURRENTLY version_pk_idx ON targetdb.target using BTREE(version_pk);
 
 CREATE INDEX ON targetdb.target (q3c_ang2ipix(ra, dec));
 CLUSTER target_q3c_ang2ipix_idx on targetdb.target;
@@ -236,6 +235,7 @@ CREATE INDEX CONCURRENTLY category_pk_idx ON targetdb.program using BTREE(catego
 CREATE INDEX CONCURRENTLY program_pk_idx ON targetdb.program_to_target using BTREE(program_pk);
 CREATE INDEX CONCURRENTLY target_pk_idx ON targetdb.program_to_target using BTREE(target_pk);
 CREATE INDEX CONCURRENTLY cadence_pk_idx ON targetdb.program_to_target using BTREE(cadence_pk);
+CREATE INDEX CONCURRENTLY version_pk_idx ON targetdb.program_to_target using BTREE(version_pk);
 
 CREATE INDEX CONCURRENTLY assignment_target_pk_idx ON targetdb.assignment using BTREE(target_pk);
 CREATE INDEX CONCURRENTLY positioner_pk_idx ON targetdb.assignment using BTREE(positioner_pk);

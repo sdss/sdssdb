@@ -104,17 +104,21 @@ def define_relations():
     Program.targets = relationship(Target,
                                    secondary=ProgramToTarget,
                                    backref='programs')
+    Program.version = relationship(Version,
+                                   secondary=ProgramToTarget,
+                                   backref='programs')
 
     Program.category = relationship(Category, backref='programs')
     Program.survey = relationship(Survey, backref='programs')
 
     Target.magnitude = relationship(Magnitude, backref='targets')
     Target.catalog = relationship(catalogdb.GaiaDR2Source, backref='targets')
-    Target.version = relationship(Version, backref='targets')
-
     Target.designs = relationship(Design, backref='targets', secondary=Assignment)
     Target.instruments = relationship(Instrument, backref='targets', secondary=Assignment)
     Target.positioners = relationship(Positioner, backref='targets', secondary=Assignment)
+    Target.versions = relationship(Version,
+                                   secondary=ProgramToTarget,
+                                   backref='targets')
 
     Positioner.status = relationship(PositionerStatus, backref='positioners')
     Positioner.type = relationship(PositionerType, backref='positioners')
