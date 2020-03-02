@@ -65,6 +65,7 @@ class Design(SDSS5dbModel):
                             field='pk',
                             model=Field,
                             null=True)
+    exposure = BigIntegerField(null=True)
     pk = AutoField()
 
     class Meta:

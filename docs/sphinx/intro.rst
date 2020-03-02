@@ -118,7 +118,7 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
-            <td class="warning"></td>
+            <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.targetdb.pdf"></a></td>
         </tr>
         <tr>
