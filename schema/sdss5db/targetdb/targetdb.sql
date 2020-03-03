@@ -83,9 +83,11 @@ CREATE TABLE targetdb.positioner_status (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
-CREATE TABLE targetdb.positioner_type (
+CREATE TABLE targetdb.positioner_info (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	label TEXT NOT NULL);
+	apogee BOOLEAN NOT NULL,
+    boss BOOLEAN NOT NULL,
+    fiducal BOOLEAN NOT NULL);
 
 CREATE TABLE targetdb.observatory (
 	pk SERIAL PRIMARY KEY NOT NULL,
@@ -137,8 +139,7 @@ ALTER TABLE ONLY targetdb.target
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk
-    FOREIGN KEY (catalogid) REFERENCES catalogdb.gaia_dr2_source(source_id)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (catalogid) REFERENCES catalogdb.gaia_dr2_source(source_id);
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT survey_fk

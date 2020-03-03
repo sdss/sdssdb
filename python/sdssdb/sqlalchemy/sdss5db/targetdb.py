@@ -51,8 +51,8 @@ class PositionerStatus(Base):
     __tablename__ = 'positioner_status'
 
 
-class PositionerType(Base):
-    __tablename__ = 'positioner_type'
+class PositionerInfo(Base):
+    __tablename__ = 'positioner_info'
 
 
 class Positioner(Base):
@@ -121,7 +121,7 @@ def define_relations():
                                    backref='targets')
 
     Positioner.status = relationship(PositionerStatus, backref='positioners')
-    Positioner.type = relationship(PositionerType, backref='positioners')
+    Positioner.info = relationship(PositionerInfo, backref='positioners')
     Positioner.observatory = relationship(Observatory, backref='positioners')
 
 

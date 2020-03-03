@@ -6,8 +6,9 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from peewee import (AutoField, BigIntegerField, DeferredThroughModel, DoubleField, FloatField,
-                    ForeignKeyField, IntegerField, ManyToManyField, SmallIntegerField, TextField)
+from peewee import (AutoField, BigIntegerField, BooleanField, DeferredThroughModel,
+                    DoubleField, FloatField, ForeignKeyField, IntegerField,
+                    ManyToManyField, SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from . import SDSS5dbModel, catalogdb, database  # noqa
@@ -91,12 +92,14 @@ class PositionerStatus(SDSS5dbModel):
         schema = 'targetdb'
 
 
-class PositionerType(SDSS5dbModel):
-    label = TextField()
+class PositionerInfo(SDSS5dbModel):
+    apogee = BooleanField(null=False)
+    boss = BooleanField(null=False)
+    fiducial = BooleanField(null=False)
     pk = AutoField()
 
     class Meta:
-        table_name = 'positioner_type'
+        table_name = 'positioner_info'
         schema = 'targetdb'
 
 
@@ -109,9 +112,9 @@ class Positioner(SDSS5dbModel):
     status = ForeignKeyField(column_name='positioner_status_pk',
                              field='pk',
                              model=PositionerStatus)
-    type = ForeignKeyField(column_name='positioner_type_pk',
+    info = ForeignKeyField(column_name='positioner_type_pk',
                            field='pk',
-                           model=PositionerType)
+                           model=PositionerInfo)
     xcen = FloatField(null=True)
     ycen = FloatField(null=True)
 
