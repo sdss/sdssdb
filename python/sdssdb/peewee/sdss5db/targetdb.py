@@ -112,7 +112,7 @@ class Positioner(SDSS5dbModel):
     status = ForeignKeyField(column_name='positioner_status_pk',
                              field='pk',
                              model=PositionerStatus)
-    info = ForeignKeyField(column_name='positioner_type_pk',
+    info = ForeignKeyField(column_name='positioner_info_pk',
                            field='pk',
                            model=PositionerInfo)
     xcen = FloatField(null=True)

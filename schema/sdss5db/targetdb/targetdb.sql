@@ -76,7 +76,7 @@ CREATE TABLE targetdb.positioner (
 	xcen REAL,
 	ycen REAL,
 	positioner_status_pk SMALLINT NOT NULL,
-	positioner_type_pk SMALLINT NOT NULL,
+	positioner_info_pk SMALLINT NOT NULL,
 	observatory_pk SMALLINT NOT NULL);
 
 CREATE TABLE targetdb.positioner_status (
@@ -124,7 +124,8 @@ INSERT INTO targetdb.category VALUES
 
 INSERT INTO targetdb.survey VALUES (0, 'MWM'), (1, 'BHM');
 
-INSERT INTO targetdb.positioner_type VALUES (0, 'Robot'), (1, 'Fiducial');
+INSERT INTO targetdb.positioner_info VALUES
+    (0, true, true, false), (1, false, true, false), (2, false, false, true);
 
 INSERT INTO targetdb.positioner_status VALUES (0, 'OK'), (1, 'KO');
 
@@ -212,8 +213,8 @@ ALTER TABLE ONLY targetdb.positioner
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT positioner_type_fk
-    FOREIGN KEY (positioner_type_pk) REFERENCES targetdb.positioner_type(pk)
+    ADD CONSTRAINT positioner_info_fk
+    FOREIGN KEY (positioner_info_pk) REFERENCES targetdb.positioner_info(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.positioner
