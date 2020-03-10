@@ -20,7 +20,7 @@ ArchiveBase = declarative_base(cls=(DeferredReflection, BaseModel,))
 
 class ArchiveDatabaseConnection(SQLADatabaseConnection):
     dbname = 'archive'
-    dbversion = '20200203'
+    dbversion = '20200302'
     base = ArchiveBase
 
 
