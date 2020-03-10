@@ -13,6 +13,8 @@ from __future__ import absolute_import, division, print_function
 from sdssdb.sqlalchemy.archive import database, ArchiveBase
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import func
 
 SCHEMA = 'sas'
 
@@ -50,9 +52,13 @@ class File(Base):
     __tablename__ = 'file'
     print_fields = ['name']
 
-    @property
+    @hybrid_property
     def name(self):
         return self.location.rsplit('/', 1)[-1]
+
+    @name.expression
+    def name(cls):
+        return func.reverse(func.split_part(func.reverse(cls.location), '/', 1))
 
 
 class SymlinkFile(Base):
