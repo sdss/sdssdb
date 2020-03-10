@@ -310,16 +310,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         self.become(user)
 
-    def change_version(self, dbversion):
+    def change_version(self, dbversion=None):
         ''' Change database version and attempt to reconnect
         
         Parameters:
             dbversion (str):
-                A database version 
+                A database version
         '''
         self.dbversion = dbversion
         dbname, *dbver = self.dbname.split('_')
-        self.dbname = f'{dbname}_{self.dbversion}'
+        self.dbname = f'{dbname}_{self.dbversion}' if dbversion else dbname
         self.connect(dbname=self.dbname, silent_on_fail=True)
 
 
@@ -455,6 +455,7 @@ if _sqla:
         def reset_engine(self):
             ''' Reset the engine, metadata, and session '''
 
+            self.bases = []
             if self.engine:
                 self.engine.dispose()
                 self.engine = None
