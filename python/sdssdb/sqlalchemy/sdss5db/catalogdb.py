@@ -193,6 +193,9 @@ class TwoMassCleanNoNeighbor(Base):
 class DR14QV44(Base):
     __tablename__ = 'dr14q_v4_4'
 
+    sdss_name = Column(String, primary_key=True)
+
+
 
 def define_relations():
 
