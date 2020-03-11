@@ -1947,4 +1947,95 @@ class DR14QV44(SDSS5dbModel):
         schema = 'catalogdb'
 
 
+
+# The following model (BhmSpidersGenericSuperset) does not need to be represented as a table in the database
+# it is used only as the parent class of BhmSpidersAGNSuperset, BhmSpidersClustersSuperset
+# which are real database tables. Am assuming that PeeWee can handle such a scheme without issues.
+
+class BhmSpidersGenericSuperset(SDSS5dbModel):
+
+    pk = BigAutoField()
+
+    # Parameters derived from eROSITA eSASS catalogue
+    # Chosen to match X-ray columns defined in eROSITA/SDSS-V MoU (v2.0, April 2019)
+    ero_version = TextField(index=True, null==True)     # string identifying this eROSITA data reduction version
+    ero_souuid = TextField(index=True, null=True)       # string identifying this X-ray source
+    ero_xray_flux = FloatField(null=True)               # X-ray flux, 0.5-8keV band, erg/cm2/s
+    ero_xray_flux_err = FloatField(null=True)           # X-ray flux uncertainty, 0.5-8keV band, erg/cm2/s
+    ero_ext = FloatField(null=True)                     # X-ray extent parameter - arcsec
+    ero_ext_err = FloatField(null=True)                 # X-ray extent parameter uncertainty - arcsec
+    ero_ext_like = FloatField(null=True)                # X-ray extent likelihood
+    ero_det_like = FloatField(null=True)                # X-ray detection likelihood
+    ero_ra = DoubleField(index=True, null=True)         # X-ray position, RA, ICRS, degrees
+    ero_dec = DoubleField(index=True, null=True)        # X-ray position, Dec, ICRS, degrees
+    ero_radec_err = FloatField(null=True)               # X-ray position uncertainty, arcsec
+
+    # Parameters describing the cross-matching of X-ray to optical/IR catalogue(s)
+    xmatch_method = TextField(null=True)                # 'ML+NWAY', 'LR' , 'SDSS_REDMAPPER', 'LS_REDMAPPER', 'HSC_REDMAPPER', 'MCMF' etc
+    xmatch_version = TextField(null=True)               # version identifier for cross-matching algorithm
+    xmatch_dist_arcsec = FloatField(null=True)          # separation between X-ray position and opt positions - arcsec
+    xmatch_qual_metric = FloatField(null=True)          # measure of quality of xmatch (e.g. p_any for Nway, LR)
+    xmatch_qual_flags = IntegerField(null=True)         # e.g. NWAY match_flag - treat as bitmask
+
+    # Parameters that describe the sub-class + priority rank of the object
+    target_class    = IntegerField(null=True)           # TBD, but e.g. 1=AGN candidate, 2=Stellar candidate,
+                                                        # 3=TDE candidate, 4=Compact object, Cluster BCG=11, Cluster member-galaxy=12, low-z galaxy=13 etc
+    target_priority = IntegerField(null=True)           # allows priority ranking based on info not available in catalogdb
+    target_has_spec = IntegerField(null=True)           # (bitmask) allows flagging of targets that have a redshift from a catalogue that is not listed in catalogdb
+
+    # Parameters derived from the cross-matched opt/IR catalogue
+    best_opt = TextField(index=True, null=True)         # which optical catalogue(and version) provided this counterpart, e.g. 'ls_dr8', 'ps1_dr2' ...
+                                                        # will also be the origin of the photometry columns below
+
+    ls_id = BigIntegerField(index=True, null=True)      # arithmetically derived from ls_release, ls_brickid and ls_objid
+                                                        # ls_id = ls_objid + ls_brickid * 2**16 + ls_release * 2**40
+                                                        #  - make sure that we have a common definition within CatalogDB
+
+    ps1_dr2_objid = BigIntegerField(index=True,         # Pan-STARRS1-DR2 object id (= ObjectThin.ObjID = StackObjectThin.ObjID)
+                                    null=True)          #
+
+    gaia_dr2_source_id = BigIntegerField(index=True,    # derived from legacysurvey sweeps OPT_REF_ID when OPT_REF_CAT='G2'
+                                         null=True)     # - SPIDERS team can also pre-match this for photometry from non-LS catalogues
+
+
+    opt_ra = DoubleField(index=True, null=True)         # included for convenience, but are copied from columns in other tables
+    opt_dec = DoubleField(index=True, null=True)
+    opt_pmra = FloatField(null=True)
+    opt_pmdec = FloatField(null=True)
+    opt_epoch = FloatField(null=True)
+
+    # For convenience we send a subset of magnitude columns over to the database
+    # - the full set of columns is available via a database JOIN to e.g. main ls_dr8 catalogue
+    # Note to self: Be careful with use of modelflux, fiberflux, fiber2flux etc!
+    opt_modelflux_g      = FloatField(null=True)
+    opt_modelflux_ivar_g = FloatField(null=True)
+    opt_modelflux_r      = FloatField(null=True)
+    opt_modelflux_ivar_r = FloatField(null=True)
+    opt_modelflux_r      = FloatField(null=True)
+    opt_modelflux_ivar_r = FloatField(null=True)
+    opt_modelflux_i      = FloatField(null=True)
+    opt_modelflux_ivar_i = FloatField(null=True)
+    opt_modelflux_z      = FloatField(null=True)
+    opt_modelflux_ivar_z = FloatField(null=True)
+
+
+    class Meta:
+        table_name = 'bhm_spiders_generic_superset'
+        schema = 'catalogdb'
+
+
+# Note that following models are currently identical in form, but may well diverge in the future
+
+class BhmSpidersAgnSuperset(BhmSpidersGenericSuperset):
+    class Meta:
+        table_name = 'bhm_spiders_agn_superset'
+
+class BhmSpidersClustersSuperset(BhmSpidersGenericSuperset):
+    class Meta:
+        table_name = 'bhm_spiders_clusters_superset'
+
+
+
+
+
 _GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
