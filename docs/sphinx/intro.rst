@@ -216,7 +216,7 @@ The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssd
 * **apo**: a user on the APO machines.
 * **lco**: a user on the LCO machines.
 * **manga**: a user on the Utah manga machine.
-* **operations-test**: a user on the Utah sdssadmin machine.
+* **operations**: a user on the Utah operations machine.
 * **sdssadmin**: a user on the Utah sdssadmin machine.
 * **lore**: a user on the Utah lore machine.
 
