@@ -8,6 +8,7 @@
 
 
 import glob
+import multiprocessing
 
 from astropy import table
 
@@ -35,6 +36,6 @@ def unWISE_to_CSV(filename):
 if __name__ == '__main__':
 
     files = glob.glob('./*.fits')
-    for nn, file_ in enumerate(files):
-        print(f'Converting {file_} ({nn+1}/{len(files)})')
-        unWISE_to_CSV(file_)
+
+    pool = multiprocessing.Pool(25)
+    pool.map(unWISE_to_CSV, files)
