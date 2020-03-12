@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+ls ./*.csv | parallel -j25 "psql -U sdss sdss5db -c \"\copy catalogdb.unwise FROM '{}' WITH DELIMITER ',' NULL '\N' CSV;;\""
