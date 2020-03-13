@@ -31,9 +31,6 @@ def unWISE_to_CSV(filename):
 
     new_table.write(filename + '.csv', format='ascii.fast_no_header',
                     delimiter=',', overwrite=True)
-    # pandas = new_table.to_pandas()
-    # print(pandas['unwise_objid'])
-    # pandas.to_csv(filename + '.csv', header=False, index=False)
 
 
 if __name__ == '__main__':
