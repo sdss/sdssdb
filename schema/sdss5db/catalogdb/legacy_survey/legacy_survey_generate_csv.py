@@ -12,11 +12,7 @@ import multiprocessing
 import astropy.table
 import progressbar
 
-from sdssdb.peewee.sdss5db import database
 from sdssdb.utils.ingest import to_csv
-
-
-assert database.connected, 'database is not connected'
 
 
 def convert_to_csv(file_):
