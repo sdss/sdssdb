@@ -49,7 +49,7 @@ except ImportError:
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.mathjax',
-              'sphinx.ext.intersphinx', 'releases']
+              'sphinx.ext.intersphinx', 'sdsstools.releases']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -133,7 +133,8 @@ autodoc_member_order = 'groupwise'
 napoleon_use_rtype = False
 napoleon_use_ivar = True
 
-rst_epilog = """
+rst_epilog = f"""
+.. |sdssdb_version| replace:: {__version__}
 .. |numpy_array| replace:: Numpy array
 """
 
