@@ -10,7 +10,7 @@ CREATE TABLE catalogdb.legacy_survey (
     release INTEGER,
     brickid BIGINT,
     brickname TEXT,
-    objid BIGINT PRIMARY KEY,
+    objid BIGINT,
     type TEXT,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
@@ -128,3 +128,7 @@ CREATE TABLE catalogdb.legacy_survey (
     pmdec_ivar REAL,
     maskbits INTEGER
 ) WITHOUT OIDS;
+
+
+-- Add the serial PK after copying the data.
+ALTER TABLE catalogdb.legacy_survey ADD COLUMN pk BIGSERIAL PRIMARY KEY;
