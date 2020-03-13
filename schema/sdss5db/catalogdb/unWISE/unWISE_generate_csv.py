@@ -29,13 +29,16 @@ def unWISE_to_CSV(filename):
             w2 = table.Column(column[:, 1], colname + '_w2')
             new_table.add_columns([w1, w2])
 
-    pandas = new_table.to_pandas()
-    pandas.to_csv(filename + '.csv', header=False, index=False)
+    new_table.write(filename + '.csv', format='ascii.fast_no_header',
+                    delimiter=',', overwrite=True)
+    # pandas = new_table.to_pandas()
+    # print(pandas['unwise_objid'])
+    # pandas.to_csv(filename + '.csv', header=False, index=False)
 
 
 if __name__ == '__main__':
 
-    files = glob.glob('./*.fits')
+    files = glob.glob('./*.cat.fits')
 
     pool = multiprocessing.Pool(25)
     pool.map(unWISE_to_CSV, files)
