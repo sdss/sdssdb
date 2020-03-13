@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     files = glob.glob('sweep*.fits')
 
-    pool = multiprocessing.Pool(1)
+    pool = multiprocessing.Pool(25)
 
     for _ in progressbar.progressbar(pool.imap_unordered(convert_to_csv, files),
                                      max_value=len(files)):
