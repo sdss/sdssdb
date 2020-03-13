@@ -31,7 +31,7 @@ if __name__ == '__main__':
     pool = multiprocessing.Pool(10)
 
     for _ in progressbar.progressbar(pool.imap_unordered(convert_to_csv, files),
-                                     max_value=len(files)):
+                                     max_value=len(files), poll_interval=1):
         pass
 
     pool.close()
