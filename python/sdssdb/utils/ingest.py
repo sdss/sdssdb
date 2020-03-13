@@ -3,7 +3,7 @@
 #
 # @Author: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Date: 2019-09-21
-# @Filename: load.py
+# @Filename: ingest.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
@@ -214,7 +214,6 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
 
         row = data[ii]
 
-        # Adds the pk
         row_data = []
 
         for col_value in row:
