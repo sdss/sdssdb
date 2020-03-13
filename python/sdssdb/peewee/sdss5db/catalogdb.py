@@ -2133,4 +2133,51 @@ class LegacySurvey(SDSS5dbModel):
         primary_key = False
 
 
+class GaiaUnwiseAgn(SDSS5dbModel):
+
+    gaia_sourceid = BigAutoField(primary_key=True)
+    ra = DoubleField(null=True)
+    dec = DoubleField(null=True)
+    plx = DoubleField(null=True)
+    plx_err = DoubleField(null=True)
+    pmra = DoubleField(null=True)
+    pmra_err = DoubleField(null=True)
+    pmdec = DoubleField(null=True)
+    pmdec_err = DoubleField(null=True)
+    plxsig = DoubleField(null=True)
+    pmsig = DoubleField(null=True)
+    ebv = DoubleField(null=True)
+    n_obs = IntegerField(null=True)
+    g = DoubleField(null=True)
+    bp = DoubleField(null=True)
+    rp = DoubleField(null=True)
+    w1 = DoubleField(null=True)
+    w2 = DoubleField(null=True)
+    bp_g = DoubleField(null=True)
+    bp_rp = DoubleField(null=True)
+    g_rp = DoubleField(null=True)
+    g_w1 = DoubleField(null=True)
+    gw_sep = DoubleField(null=True)
+    w1_w2 = DoubleField(null=True)
+    g_var = DoubleField(null=True)
+    bprp_ef = DoubleField(null=True)
+    aen = DoubleField(null=True)
+    gof = DoubleField(null=True)
+    cnt1 = IntegerField(null=True)
+    cnt2 = IntegerField(null=True)
+    cnt4 = IntegerField(null=True)
+    cnt8 = IntegerField(null=True)
+    cnt16 = IntegerField(null=True)
+    cnt32 = IntegerField(null=True)
+    phot_z = DoubleField(null=True)
+    prob_rf = DoubleField(null=True)
+
+    unwise = ForeignKeyField(unWISE, column_name='unwise_objid')
+    gaia = ForeignKeyField(GaiaDR2Source)
+
+    class Meta:
+        table_name = 'gaia_unwise_agn'
+        schema = 'catalogdb'
+
+
 _GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
