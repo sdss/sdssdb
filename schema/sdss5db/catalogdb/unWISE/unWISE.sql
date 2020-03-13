@@ -42,9 +42,9 @@ CREATE TABLE catalogdb.unwise (
     ra12_w2 double precision,
     dec12_w1 double precision,
     dec12_w2 double precision,
-    coadd_id bytea,
-    unwise_detid_w1 bytea,
-    unwise_detid_w2 bytea,
+    coadd_id TEXT,
+    unwise_detid_w1 TEXT,
+    unwise_detid_w2 TEXT,
     nm_w1 integer,
     nm_w2 integer,
     primary12_w1 integer,
@@ -56,5 +56,5 @@ CREATE TABLE catalogdb.unwise (
     ra double precision,
     dec double precision,
     primary_status integer,
-    unwise_objid bytea
+    unwise_objid TEXT
 ) WITHOUT OIDS;
