@@ -7,9 +7,9 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 import glob
-import multiprocessing
 
 import astropy.table
+from progressbar import progressbar
 
 from sdssdb.peewee.sdss5db import database
 from sdssdb.utils.ingest import copy_data
@@ -27,5 +27,5 @@ if __name__ == '__main__':
 
     files = glob.glob('sweep*.fits')
 
-    pool = multiprocessing.Pool(25)
-    pool.map(ingest, files)
+    for file_ in progressbar(files):
+        ingest(file_)
