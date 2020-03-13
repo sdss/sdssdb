@@ -37,6 +37,45 @@ DTYPE_TO_FIELD = {
 }
 
 
+def to_csv(table, path, header=True, convert_arrays=True, **kwargs):
+    """Creates a PostgreSQL-valid CSV file from a table, handling arrays.
+
+    Parameters
+    ----------
+    table : astropy.table.Table
+        The table to convert.
+    path : str
+        The path to which to write the CSV file.
+    header : bool
+        Whether to add a header with the column names.
+    convert_arrays : bool
+        If `True`, the arrays in the table are converted into a
+        PostgreSQL-valid string.
+    kwargs : dict
+        Other arguments to pass to `~astropy.table.Table.write`.
+
+    """
+
+    if convert_arrays:
+        columns = [col for col in table.colnames if table[col].ndim > 1]
+        for col in columns:
+            index = table.index_column(col)
+            col_str = ['{' + ','.join(map(str, xx)) + '}' for xx in table[col]]
+            table.remove_column(col)
+            table.add_column(astropy.table.Column(col_str, col), index)
+
+    if header:
+        write_kwargs = {'format': 'csv', 'fast_writer': True}
+    else:
+        write_kwargs = {'format': 'ascii.no_header',
+                        'delimiter': ',',
+                        'fast_writer': True}
+
+    write_kwargs.update(kwargs)
+
+    table.write(path, **write_kwargs)
+
+
 def table_exists(table_name, connection, schema=None):
     """Returns `True` if a table exists in a database.
 
