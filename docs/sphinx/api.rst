@@ -32,7 +32,7 @@ SQLAlchemy
 Utils
 -----
 
-.. automodule:: sdssdb.utils.database
+.. automodule:: sdssdb.utils.ingest
     :members:
     :show-inheritance:
 
