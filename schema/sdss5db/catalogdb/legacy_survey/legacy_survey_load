@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# encoding: utf-8
+
+ls ./*.fits.csv | parallel -j25 "psql -U sdss sdss5db -c \"\copy catalogdb.legacy_survey FROM '{}' WITH HEADER DELIMITER ',' NULL '\N' CSV;;\""
