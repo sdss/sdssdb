@@ -21,13 +21,14 @@ def convert_to_csv(file_):
     data.meta = {}
     data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
     to_csv(data, file_ + '.csv', header=True, convert_arrays=True, overwrite=True)
+    del data
 
 
 if __name__ == '__main__':
 
     files = glob.glob('sweep*.fits')
 
-    pool = multiprocessing.Pool(25)
+    pool = multiprocessing.Pool(10)
 
     for _ in progressbar.progressbar(pool.imap_unordered(convert_to_csv, files),
                                      max_value=len(files)):
