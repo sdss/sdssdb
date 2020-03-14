@@ -26,7 +26,9 @@ def main():
     del data
 
     cursor = database.cursor()
-    cursor.copy_from(open(file_ + '.csv'), 'catalogdb.gaia_unwise_agn', sep=',')
+    fileobj = open(file_ + '.csv')
+    fileobj.readline()  # Read header
+    cursor.copy_from(fileobj, 'catalogdb.gaia_unwise_agn', sep=',')
 
 
 if __name__ == '__main__':
