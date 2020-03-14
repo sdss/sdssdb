@@ -25,7 +25,8 @@ def main():
     to_csv(data, file_ + '.csv', header=True, overwrite=True)
     del data
 
-
+    cursor = database.cursor()
+    cursor.copy_from(open(file_ + '.csv'), 'catalogdb.gaia_unwise_agn', sep=',')
 
 
 if __name__ == '__main__':
