@@ -1649,6 +1649,13 @@ class SDSSDR14SpecObj(SDSS5dbModel):
         schema = 'catalogdb'
 
 
+class SDSSDR16SpecObj(SDSSDR14SpecObj):
+
+    class Meta:
+        table_name = 'sdss_dr16_specobj'
+        schema = 'catalogdb'
+
+
 class TIC_v8(SDSS5dbModel):
 
     allwise = CharField(index=True, null=True)
