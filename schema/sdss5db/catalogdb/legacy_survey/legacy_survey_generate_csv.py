@@ -8,6 +8,7 @@
 
 import glob
 import multiprocessing
+import sys
 
 import astropy.table
 import progressbar
@@ -25,6 +26,10 @@ def convert_to_csv(file_):
 
 
 if __name__ == '__main__':
+
+    if len(sys.argv) > 1:
+        convert_to_csv(sys.argv[1])
+        sys.exit(0)
 
     files = glob.glob('sweep*.fits')
 
