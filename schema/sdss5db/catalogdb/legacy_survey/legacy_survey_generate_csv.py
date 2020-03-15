@@ -18,7 +18,7 @@ from sdssdb.utils.ingest import to_csv
 
 def convert_to_csv(file_):
 
-    data = astropy.table.Table.read(file_)
+    data = astropy.table.Table.read(file_, memmap=True)
     data.meta = {}
     data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
     to_csv(data, file_ + '.csv', header=True, convert_arrays=True, overwrite=True)
