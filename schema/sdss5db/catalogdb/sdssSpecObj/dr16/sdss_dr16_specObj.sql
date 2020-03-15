@@ -402,7 +402,7 @@ CREATE TABLE catalogdb.sdss_dr16_specobj(
 );
 
 
-\copy catalogdb.sdss_dr16_specobj FROM program 'bzcat ./sqlSpecObj.csv.bz2' WITH CSV HEADER;
+\copy catalogdb.sdss_dr16_specobj FROM program 'bzcat /uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssSpecObj/dr16/src/sqlSpecObj.csv.bz2' WITH CSV HEADER;
 
 alter table catalogdb.sdss_dr16_specobj add primary key(specObjID);
 
