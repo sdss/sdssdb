@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# encoding: utf-8
-
-ls ./*.fits | parallel -j25 "python $SDSSDB_DIR/schema/sdss5db/catalogdb/legacy_survey/legacy_survey_generate_csv.py {}"

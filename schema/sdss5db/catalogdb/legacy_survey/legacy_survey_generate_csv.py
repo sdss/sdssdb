@@ -6,9 +6,12 @@
 # @Filename: legacy_survey_load.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-import sys
+import glob
+import multiprocessing
+from contextlib import closing
 
 import astropy.table
+import progressbar
 
 from sdssdb.utils.ingest import to_csv
 
@@ -24,5 +27,10 @@ def convert_to_csv(file_):
 
 if __name__ == '__main__':
 
-    file_ = sys.argv[1]
-    convert_to_csv(file_)
+    files = glob.glob('sweep*.fits')
+
+    with multiprocessing.Pool(10) as pool:
+
+        for _ in progressbar.progressbar(pool.imap_unordered(convert_to_csv, files),
+                                         max_value=len(files), poll_interval=1):
+            pass
