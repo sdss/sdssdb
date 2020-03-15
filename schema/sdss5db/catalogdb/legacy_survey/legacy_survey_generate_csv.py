@@ -8,7 +8,6 @@
 
 import glob
 import multiprocessing
-from contextlib import closing
 
 import astropy.table
 import progressbar
