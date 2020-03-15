@@ -252,5 +252,5 @@ CREATE INDEX CONCURRENTLY field_cadence_pk_idx ON targetdb.field using BTREE(cad
 CREATE INDEX CONCURRENTLY observatory_pk_idx ON targetdb.field using BTREE(observatory_pk);
 
 CREATE INDEX CONCURRENTLY positioner_status_pk_idx ON targetdb.positioner using BTREE(positioner_status_pk);
-CREATE INDEX CONCURRENTLY positioner_type_pk_idx ON targetdb.positioner using BTREE(positioner_type_pk);
+CREATE INDEX CONCURRENTLY positioner_info_pk_idx ON targetdb.positioner using BTREE(positioner_info_pk);
 CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx ON targetdb.positioner using BTREE(observatory_pk);
