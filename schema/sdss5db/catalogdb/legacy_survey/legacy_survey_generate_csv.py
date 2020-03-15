@@ -6,10 +6,9 @@
 # @Filename: legacy_survey_load.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-import glob
+import sys
 
 import astropy.table
-import progressbar
 
 from sdssdb.utils.ingest import to_csv
 
@@ -25,7 +24,5 @@ def convert_to_csv(file_):
 
 if __name__ == '__main__':
 
-    files = glob.glob('sweep*.fits')
-
-    for file_ in progressbar.progressbar(files, poll_interval=1):
-        convert_to_csv(file_)
+    file_ = sys.argv[1]
+    convert_to_csv(file_)
