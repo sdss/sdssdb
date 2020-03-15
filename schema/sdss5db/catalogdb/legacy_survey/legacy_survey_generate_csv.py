@@ -7,8 +7,6 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 import glob
-import multiprocessing
-from contextlib import closing
 
 import astropy.table
 import progressbar
@@ -29,8 +27,5 @@ if __name__ == '__main__':
 
     files = glob.glob('sweep*.fits')
 
-    with closing(multiprocessing.Pool(15)) as pool:
-
-        for _ in progressbar.progressbar(pool.imap_unordered(convert_to_csv, files),
-                                         max_value=len(files), poll_interval=1):
-            pass
+    for file_ in progressbar.progressbar(files, poll_interval=1):
+        convert_to_csv(file_)
