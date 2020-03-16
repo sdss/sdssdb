@@ -17,7 +17,7 @@ assert database.connected
 
 def main():
 
-    path = '/uufs/chpc.utah.edu/common/home/sdss/ebosswork/eboss/target/ebosstarget/v0005/'
+    path = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/ebosstarget/v0005'
     files = ['ebosstarget-v0005-qso.fits', 'ebosstarget-v0005-std.fits']
 
     for file_ in files:
