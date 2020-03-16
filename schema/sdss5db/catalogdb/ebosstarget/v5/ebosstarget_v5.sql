@@ -12,9 +12,9 @@ CREATE TABLE catalogdb.ebosstarget_v5 (
     field INTEGER,
     id INTEGER,
     rerun TEXT,
-    fibermag REAL[2],
-    fiber2mag REAL[2],
-    calib_status INTEGER[2],
+    fibermag REAL[],
+    fiber2mag REAL[],
+    calib_status INTEGER[],
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
     epoch REAL,
@@ -29,18 +29,18 @@ CREATE TABLE catalogdb.ebosstarget_v5 (
     objc_flags2 INTEGER,
     flags INTEGER,
     flags2 INTEGER,
-    psf_fwhm REAL[2],
-    psfflux REAL[2],
-    psfflux_ivar REAL[2],
-    extinction REAL[2],
-    fiberflux REAL[2],
-    fiberflux_ivar REAL[2],
-    fiber2flux REAL[2],
-    fiber2flux_ivar REAL[2],
-    modelflux REAL[2],
-    modelflux_ivar REAL[2],
-    modelmag REAL[2],
-    modelmag_ivar REAL[2],
+    psf_fwhm REAL[],
+    psfflux REAL[],
+    psfflux_ivar REAL[],
+    extinction REAL[],
+    fiberflux REAL[],
+    fiberflux_ivar REAL[],
+    fiber2flux REAL[],
+    fiber2flux_ivar REAL[],
+    modelflux REAL[],
+    modelflux_ivar REAL[],
+    modelmag REAL[],
+    modelmag_ivar REAL[],
     resolve_status INTEGER,
     w1_mag REAL,
     w1_mag_err REAL,
@@ -48,16 +48,6 @@ CREATE TABLE catalogdb.ebosstarget_v5 (
     w1_nanomaggies_ivar REAL,
     w2_nanomaggies REAL,
     w2_nanomaggies_ivar REAL,
-    has_wise_phot BOOLEAN,
-    objid_targeting BIGINT PRIMARY KEY
+    has_wise_phot BOOLEAN NULL,
+    objid_targeting BIGINT
 ) WITHOUT OIDS;
-
-
--- Create indices here directly since it's a small table
-
-CREATE INDEX on catalogdb.ebosstarget_v5 (q3c_ang2ipix(ra, dec));
-CLUSTER ebosstarget_v5_q3c_ang2ipix_idx on catalogdb.ebosstarget_v5;
-ANALYZE catalogdb.ebosstarget_v5;
-
-CREATE INDEX CONCURRENTLY ebosstarget_v5_objc_type_idx
-    ON catalogdb.ebosstarget_v5 using BTREE (objc_type);

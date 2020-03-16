@@ -28,6 +28,8 @@ def main():
         data = astropy.table.Table.read(path + file_)
         data.meta = {}
         data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
+        if 'std' in file_:
+            data['has_wise_phot'] = '0'
         to_csv(data, out + file_ + '.csv', header=True, overwrite=True, convert_arrays=True)
         del data
 
