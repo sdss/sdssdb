@@ -1857,7 +1857,7 @@ class DR14QV44(SDSS5dbModel):
     err_hmag = FloatField(null=True)
     err_jmag = FloatField(null=True)
     err_kmag = FloatField(null=True)
-    err_psfmag = ArrayField(null=True)  # ARRAY
+    err_psfmag = ArrayField(null=True)
     err_w1mag = FloatField(null=True)
     err_w2mag = FloatField(null=True)
     err_w3mag = FloatField(null=True)
@@ -1876,14 +1876,14 @@ class DR14QV44(SDSS5dbModel):
     flux_2_0_12_0kev_err = FloatField(column_name='flux_2.0_12.0kev_err', null=True)
     fuv = FloatField(null=True)
     fuv_ivar = FloatField(null=True)
-    gal_ext = ArrayField(null=True)  # ARRAY
+    gal_ext = ArrayField(null=True)
     galex_matched = FloatField(null=True)
     hflux = FloatField(null=True)
     hflux_err = FloatField(null=True)
     hmag = FloatField(null=True)
     hrdflag = IntegerField(null=True)
     hsnr = FloatField(null=True)
-    ivar_psfflux = ArrayField(null=True)  # ARRAY
+    ivar_psfflux = ArrayField(null=True)
     jflux = FloatField(null=True)
     jflux_err = FloatField(null=True)
     jmag = FloatField(null=True)
@@ -1907,8 +1907,8 @@ class DR14QV44(SDSS5dbModel):
     ph_flags = CharField(null=True)
     plate = IntegerField(null=True)
     plate_duplicate = ArrayField(field_class=IntegerField, null=True)
-    psfflux = ArrayField(null=True)  # ARRAY
-    psfmag = ArrayField(null=True)  # ARRAY
+    psfflux = ArrayField(null=True)
+    psfmag = ArrayField(null=True)
     ra = FloatField(null=True)
     rass_counts = FloatField(null=True)
     rass_counts_snr = FloatField(null=True)
@@ -2184,6 +2184,57 @@ class GaiaUnwiseAgn(SDSS5dbModel):
 
     class Meta:
         table_name = 'gaia_unwise_agn'
+        schema = 'catalogdb'
+
+
+class EbosstargetV5(SDSS5dbModel):
+
+    run = IntegerField(null=True)
+    camcol = IntegerField(null=True)
+    field = IntegerField(null=True)
+    id = IntegerField(null=True)
+    rerun = TextField(null=True)
+    fibermag = ArrayField(field_class=FloatField, null=True)
+    fiber2mag = ArrayField(field_class=FloatField, null=True)
+    calib_status = ArrayField(field_class=IntegerField, null=True)
+    ra = DoubleField(null=True)
+    dec = DoubleField(null=True)
+    epoch = FloatField(null=True)
+    pmra = FloatField(null=True)
+    pmdec = FloatField(null=True)
+    eboss_target1 = BigIntegerField(null=True)
+    eboss_target2 = BigIntegerField(null=True)
+    eboss_target_id = BigIntegerField(null=True)
+    thing_id_targeting = IntegerField(null=True)
+    objc_type = IntegerField(null=True)
+    objc_flags = IntegerField(null=True)
+    objc_flags2 = IntegerField(null=True)
+    flags = IntegerField(null=True)
+    flags2 = IntegerField(null=True)
+    psf_fwhm = ArrayField(field_class=FloatField, null=True)
+    psfflux = ArrayField(field_class=FloatField, null=True)
+    psfflux_ivar = ArrayField(field_class=FloatField, null=True)
+    extinction = ArrayField(field_class=FloatField, null=True)
+    fiberflux = ArrayField(field_class=FloatField, null=True)
+    fiberflux_ivar = ArrayField(field_class=FloatField, null=True)
+    fiber2flux = ArrayField(field_class=FloatField, null=True)
+    fiber2flux_ivar = ArrayField(field_class=FloatField, null=True)
+    modelflux = ArrayField(field_class=FloatField, null=True)
+    modelflux_ivar = ArrayField(field_class=FloatField, null=True)
+    modelmag = ArrayField(field_class=FloatField, null=True)
+    modelmag_ivar = ArrayField(field_class=FloatField, null=True)
+    resolve_status = IntegerField(null=True)
+    w1_mag = FloatField(null=True)
+    w1_mag_err = FloatField(null=True)
+    w1_nanomaggies = FloatField(null=True)
+    w1_nanomaggies_ivar = FloatField(null=True)
+    w2_nanomaggies = FloatField(null=True)
+    w2_nanomaggies_ivar = FloatField(null=True)
+    has_wise_phot = BooleanField(null=True)
+    objid_targeting = BigAutoField(primary_key=True)
+
+    class Meta:
+        table_name = 'ebosstarget_v5'
         schema = 'catalogdb'
 
 
