@@ -35,9 +35,9 @@ def main():
 
         print(f'Copying {file_}')
         cursor = database.cursor()
-        fileobj = open(out + file_ + '.csv')
-        fileobj.readline()  # Read header
-        cursor.copy_from(fileobj, 'catalogdb.ebosstarget_v5', sep=',')
+        cursor.copy_expert('COPY catalogdb.ebosstarget_v5 FROM STDIN '
+                           'WITH DELIMITER \',\' NULL \'\\N\' CSV HEADER;',
+                           open(out + file_ + '.csv'))
         database.commit()
 
 
