@@ -1960,8 +1960,8 @@ class BhmSpidersGenericSuperset(SDSS5dbModel):
     # Chosen to match X-ray columns defined in eROSITA/SDSS-V MoU (v2.0, April 2019)
     ero_version = TextField(index=True, null==True)     # string identifying this eROSITA data reduction version
     ero_souuid = TextField(index=True, null=True)       # string identifying this X-ray source
-    ero_xray_flux = FloatField(null=True)               # X-ray flux, 0.5-8keV band, erg/cm2/s
-    ero_xray_flux_err = FloatField(null=True)           # X-ray flux uncertainty, 0.5-8keV band, erg/cm2/s
+    ero_flux = FloatField(null=True)                    # X-ray flux, 0.5-8keV band, erg/cm2/s
+    ero_flux_err = FloatField(null=True)                # X-ray flux uncertainty, 0.5-8keV band, erg/cm2/s
     ero_ext = FloatField(null=True)                     # X-ray extent parameter - arcsec
     ero_ext_err = FloatField(null=True)                 # X-ray extent parameter uncertainty - arcsec
     ero_ext_like = FloatField(null=True)                # X-ray extent likelihood
@@ -1973,29 +1973,52 @@ class BhmSpidersGenericSuperset(SDSS5dbModel):
     # Parameters describing the cross-matching of X-ray to optical/IR catalogue(s)
     xmatch_method = TextField(null=True)                # 'ML+NWAY', 'LR' , 'SDSS_REDMAPPER', 'LS_REDMAPPER', 'HSC_REDMAPPER', 'MCMF' etc
     xmatch_version = TextField(null=True)               # version identifier for cross-matching algorithm
-    xmatch_dist_arcsec = FloatField(null=True)          # separation between X-ray position and opt positions - arcsec
+    xmatch_dist = FloatField(null=True)                 # separation between X-ray position and opt positions - arcsec
     xmatch_qual_metric = FloatField(null=True)          # measure of quality of xmatch (e.g. p_any for Nway, LR)
     xmatch_qual_flags = IntegerField(null=True)         # e.g. NWAY match_flag - treat as bitmask
 
     # Parameters that describe the sub-class + priority rank of the object
-    target_class    = IntegerField(null=True)           # TBD, but e.g. 1=AGN candidate, 2=Stellar candidate,
+    target_class    = TextField(null=True)              # TBD, but e.g. 'unknown', 'AGN', 'Star', 'Galaxy'
                                                         # 3=TDE candidate, 4=Compact object, Cluster BCG=11, Cluster member-galaxy=12, low-z galaxy=13 etc
     target_priority = IntegerField(null=True)           # allows priority ranking based on info not available in catalogdb
-    target_has_spec = IntegerField(null=True)           # (bitmask) allows flagging of targets that have a redshift from a catalogue that is not listed in catalogdb
+    target_has_spec = IntegerField(null=True)           # (bitmask) allows flagging of targets that have a redshift
+                                                        # from a catalogue that might not be listed in catalogdb
+                                                        # follow bit pattern in spec compilation
+                                                        # values < 0 means 'unknown'
 
     # Parameters derived from the cross-matched opt/IR catalogue
-    best_opt = TextField(index=True, null=True)         # which optical catalogue(and version) provided this counterpart, e.g. 'ls_dr8', 'ps1_dr2' ...
-                                                        # will also be the origin of the photometry columns below
 
-    ls_id = BigIntegerField(index=True, null=True)      # arithmetically derived from ls_release, ls_brickid and ls_objid
-                                                        # ls_id = ls_objid + ls_brickid * 2**16 + ls_release * 2**40
-                                                        #  - make sure that we have a common definition within CatalogDB
+    # which optical catalogue(and version) provided this counterpart, e.g. 'ls_dr8', 'ps1_dr2' ...
+    # will also be the origin of the photometry columns below
+    best_opt = TextField(index=True, null=True)
 
-    ps1_dr2_objid = BigIntegerField(index=True,         # Pan-STARRS1-DR2 object id (= ObjectThin.ObjID = StackObjectThin.ObjID)
-                                    null=True)          #
+    # arithmetically derived from ls_release, ls_brickid and ls_objid
+    # ls_id = ls_objid + ls_brickid * 2**16 + ls_release * 2**40
+    #  - make sure that we have a common definition within CatalogDB
+    # must be used when ls was the main source of counterparts to erosita source, otherwise is optional
+    ls_id = BigIntegerField(index=True, null=True)
 
-    gaia_dr2_source_id = BigIntegerField(index=True,    # derived from legacysurvey sweeps OPT_REF_ID when OPT_REF_CAT='G2'
-                                         null=True)     # - SPIDERS team can also pre-match this for photometry from non-LS catalogues
+    # Pan-STARRS1-DR2 object id (= ObjectThin.ObjID = StackObjectThin.ObjID)
+    # Must be used when ps1-dr2(+unWISE) was the main source of counterparts to an erosita source, otherwise is optional
+    ps1_dr2_objid = BigIntegerField(index=True,  null=True)
+
+    # derived from legacysurvey sweeps OPT_REF_ID when OPT_REF_CAT='G2'
+    # must be used when ls was the main source of counterparts to erosita source, otherwise is optional
+    # - SPIDERS team should also pre-match to gaia dr2 when using counterparts from non-LS catalogues
+    gaia_dr2_source_id = BigIntegerField(index=True, null=True)
+
+    # Corresponds to the unWISE catalog band-merged 'unwise_objid'
+    #  - should be used when ps1-dr2+unWISE was the main source of counterparts to erosita sources, otherwise is optional
+    unwise_dr1_objid = CharField(index=True, null=True,  max_length=16)
+
+    # provisional:
+    # Corresponds to the DES dr1 coadd_object_id
+    #  - must be used when DES-dr1 was the primary source of counterpart to an erosita source, otherwise is optional
+    des_dr1_coadd_object_id = BigIntegerField(index=True, null=True)
+
+    # Corresponds to the SDSS DR16 photoObj [[https://www.sdss.org/dr13/help/glossary/#ObjID]]
+    #  - must be used when SDSS photoObj was the primary source of counterpart to an erosita source, otherwise is optional
+    sdss_dr16_objid = BigIntegerField(index=True, null=True)
 
 
     opt_ra = DoubleField(index=True, null=True)         # included for convenience, but are copied from columns in other tables
