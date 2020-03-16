@@ -20,18 +20,20 @@ def main():
     path = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/ebosstarget/v0005/'
     files = ['ebosstarget-v0005-qso.fits', 'ebosstarget-v0005-std.fits']
 
+    out = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/'
+
     for file_ in files:
 
         print(f'Converting {file_}')
         data = astropy.table.Table.read(path + file_)
         data.meta = {}
         data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
-        to_csv(data, path + file_ + '.csv', header=True, overwrite=True, convert_arrays=True)
+        to_csv(data, out + file_ + '.csv', header=True, overwrite=True, convert_arrays=True)
         del data
 
         print(f'Copying {file_}')
         cursor = database.cursor()
-        fileobj = open(path + file_ + '.csv')
+        fileobj = open(out + file_ + '.csv')
         fileobj.readline()  # Read header
         cursor.copy_from(fileobj, 'catalogdb.gaia_unwise_agn', sep=',')
         database.commit()
