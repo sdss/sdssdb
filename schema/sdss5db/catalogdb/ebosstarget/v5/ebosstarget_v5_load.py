@@ -35,7 +35,7 @@ def main():
         cursor = database.cursor()
         fileobj = open(out + file_ + '.csv')
         fileobj.readline()  # Read header
-        cursor.copy_from(fileobj, 'catalogdb.gaia_unwise_agn', sep=',')
+        cursor.copy_from(fileobj, 'catalogdb.ebosstarget_v5', sep=',')
         database.commit()
 
 
