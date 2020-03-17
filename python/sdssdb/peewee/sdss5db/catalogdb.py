@@ -1950,7 +1950,8 @@ class DR14QV44(SDSS5dbModel):
 
 # The following model (BhmSpidersGenericSuperset) does not need to be represented as a table in the database
 # it is used only as the parent class of BhmSpidersAGNSuperset, BhmSpidersClustersSuperset
-# which are real database tables. Am assuming that PeeWee can handle such a scheme without issues.
+# which are real database tables. I am assuming that PeeWee can handle such a scheme without problems
+# If not, then we will have to duplicate the
 
 class BhmSpidersGenericSuperset(SDSS5dbModel):
 
@@ -1974,12 +1975,12 @@ class BhmSpidersGenericSuperset(SDSS5dbModel):
     xmatch_method = TextField(null=True)                # 'ML+NWAY', 'LR' , 'SDSS_REDMAPPER', 'LS_REDMAPPER', 'HSC_REDMAPPER', 'MCMF' etc
     xmatch_version = TextField(null=True)               # version identifier for cross-matching algorithm
     xmatch_dist = FloatField(null=True)                 # separation between X-ray position and opt positions - arcsec
-    xmatch_qual_metric = FloatField(null=True)          # measure of quality of xmatch (e.g. p_any for Nway, LR)
-    xmatch_qual_flags = IntegerField(null=True)         # e.g. NWAY match_flag - treat as bitmask
+    xmatch_metric = FloatField(null=True)               # measure of quality of xmatch (e.g. p_any for Nway, LR)
+    xmatch_flags = BigIntegerField(null=True)           # flavour of match, quality flags, e.g. NWAY match_flag - treat as bitmask
 
-    # Parameters that describe the sub-class + priority rank of the object
+    # Parameters that describe the major class of the object
     target_class    = TextField(null=True)              # TBD, but e.g. 'unknown', 'AGN', 'Star', 'Galaxy'
-                                                        # 3=TDE candidate, 4=Compact object, Cluster BCG=11, Cluster member-galaxy=12, low-z galaxy=13 etc
+
     target_priority = IntegerField(null=True)           # allows priority ranking based on info not available in catalogdb
     target_has_spec = IntegerField(null=True)           # (bitmask) allows flagging of targets that have a redshift
                                                         # from a catalogue that might not be listed in catalogdb
@@ -1990,7 +1991,7 @@ class BhmSpidersGenericSuperset(SDSS5dbModel):
 
     # which optical catalogue(and version) provided this counterpart, e.g. 'ls_dr8', 'ps1_dr2' ...
     # will also be the origin of the photometry columns below
-    best_opt = TextField(index=True, null=True)
+    best_opt = TextField(null=True)
 
     # arithmetically derived from ls_release, ls_brickid and ls_objid
     # ls_id = ls_objid + ls_brickid * 2**16 + ls_release * 2**40
@@ -2000,7 +2001,7 @@ class BhmSpidersGenericSuperset(SDSS5dbModel):
 
     # Pan-STARRS1-DR2 object id (= ObjectThin.ObjID = StackObjectThin.ObjID)
     # Must be used when ps1-dr2(+unWISE) was the main source of counterparts to an erosita source, otherwise is optional
-    ps1_dr2_objid = BigIntegerField(index=True,  null=True)
+    ps1_dr2_objid = BigIntegerField(index=True, null=True)
 
     # derived from legacysurvey sweeps OPT_REF_ID when OPT_REF_CAT='G2'
     # must be used when ls was the main source of counterparts to erosita source, otherwise is optional
@@ -2056,6 +2057,29 @@ class BhmSpidersAgnSuperset(BhmSpidersGenericSuperset):
 class BhmSpidersClustersSuperset(BhmSpidersGenericSuperset):
     class Meta:
         table_name = 'bhm_spiders_clusters_superset'
+
+
+
+class BhmCsc(SDSS5dbModel):
+    pk = BigAutoField()
+
+    csc_version = TextField(null=True)
+    cxo_name = TextField(null=True)
+
+    oir_ra  = DoubleField(null=True, index=true)
+    oir_dec = DoubleField(null=True, index=true)
+
+    mag_g = FloatField(null=True)
+    mag_r = FloatField(null=True)
+    mag_i = FloatField(null=True)
+    mag_z = FloatField(null=True)
+    mag_H = FloatField(null=True)
+
+    spectrograph = CharField(index=True, null=True,  max_length=6)
+
+    class Meta:
+        table_name = 'bhm_csc'
+        schema = 'catalogdb'
 
 
 
