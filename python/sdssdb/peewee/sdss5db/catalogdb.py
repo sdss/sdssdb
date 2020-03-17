@@ -2135,7 +2135,7 @@ class LegacySurveyDR8(SDSS5dbModel):
     maskbits = IntegerField(null=True)
 
     class Meta:
-        table_name = 'legacy_survey'
+        table_name = 'legacy_survey_dr8'
         schema = 'catalogdb'
         primary_key = False
 
