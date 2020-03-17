@@ -2011,7 +2011,7 @@ class unWISE(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class LegacySurvey(SDSS5dbModel):
+class LegacySurveyDR8(SDSS5dbModel):
 
     objid = BigIntegerField(primary_key=True)
     release = IntegerField(null=True)

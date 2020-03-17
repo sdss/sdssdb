@@ -6,7 +6,7 @@ Files: /uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/legacysurvey
 
 */
 
-CREATE TABLE catalogdb.legacy_survey (
+CREATE TABLE catalogdb.legacy_survey_dr8 (
     release INTEGER,
     brickid BIGINT,
     brickname TEXT,
@@ -128,7 +128,3 @@ CREATE TABLE catalogdb.legacy_survey (
     pmdec_ivar REAL,
     maskbits INTEGER
 ) WITHOUT OIDS;
-
-
--- Add the serial PK after copying the data.
-ALTER TABLE catalogdb.legacy_survey ADD COLUMN pk BIGSERIAL PRIMARY KEY;
