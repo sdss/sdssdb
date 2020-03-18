@@ -31,8 +31,8 @@ def main():
 
     path_ = ('/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/wd/dr2/')
 
-    for file_, table in (('J_MNRAS_482_4570_gaia2wd.dat.gz.fits.gz', 'wd_dr2'),
-                         ('J_MNRAS_482_4570_gaiasdss.dat.gz.fits.gz', 'wd_dr2_sdss')):
+    for file_, table in (('J_MNRAS_482_4570_gaia2wd.dat.gz.fits.gz', 'gaia_dr2_wd'),
+                         ('J_MNRAS_482_4570_gaiasdss.dat.gz.fits.gz', 'gaia_dr2_wd_sdss')):
 
         data = astropy.table.Table.read(path_ + file_)
 

@@ -262,7 +262,7 @@ Modifications to datamodels:
 */
 
 
-CREATE TABLE catalogdb.wd_dr2 (
+CREATE TABLE catalogdb.gaia_dr2_wd (
     wd TEXT,
     dr2name TEXT,
     source_id BIGINT PRIMARY KEY,
@@ -323,7 +323,7 @@ CREATE TABLE catalogdb.wd_dr2 (
 ) WITHOUT OIDS;
 
 
-CREATE TABLE catalogdb.wd_dr2_sdss (
+CREATE TABLE catalogdb.gaia_dr2_wd_sdss (
     pk SERIAL PRIMARY KEY,
     wd TEXT,
     n_wd TEXT,
