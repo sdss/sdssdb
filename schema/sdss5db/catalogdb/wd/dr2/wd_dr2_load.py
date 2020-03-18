@@ -43,10 +43,14 @@ def main():
                 new_column_name = column_name.lower()
             data.rename_column(column_name, new_column_name)
 
-        name_split = numpy.core.defchararray.split(data['dr2name'])
-        source_id = numpy.array(list(zip(*name_split))[2], numpy.int64)
-
-        data.add_column(astropy.table.Column(source_id, 'source_id'), data.index_column('source'))
+        if 'gaia2wd' in file_:
+            name_split = numpy.core.defchararray.split(data['dr2name'])
+            source_id = numpy.array(list(zip(*name_split))[2], numpy.int64)
+            data.add_column(astropy.table.Column(source_id, 'source_id'),
+                            data.index_column('source'))
+        else:
+            pk = numpy.arange(len(data)) + 1
+            data.add_column(astropy.table.Column(pk, 'pk'), 0)
 
         copy_data(data, database, table, schema='catalogdb')
 

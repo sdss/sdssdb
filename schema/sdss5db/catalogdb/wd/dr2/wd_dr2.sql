@@ -324,9 +324,9 @@ CREATE TABLE catalogdb.wd_dr2 (
 
 
 CREATE TABLE catalogdb.wd_dr2_sdss (
+    pk SERIAL PRIMARY KEY,
     wd TEXT,
     n_wd TEXT,
-    source_id BIGINT PRIMARY KEY,
     source INTEGER,
     sdss TEXT,
     ra DOUBLE PRECISION,
