@@ -43,6 +43,8 @@ def main():
                 new_column_name = column_name.lower()
             data.rename_column(column_name, new_column_name)
 
+        data['wd'][:] = numpy.core.defchararray.strip(data['wd'].data)
+
         if 'gaia2wd' in file_:
             name_split = numpy.core.defchararray.split(data['dr2name'])
             source_id = numpy.array(list(zip(*name_split))[2], numpy.int64)
