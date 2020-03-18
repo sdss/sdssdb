@@ -254,6 +254,7 @@ Modifications to datamodels:
 - source -> source_id.
 - RAdeg, DEdeg, e_RAdeg, e_DEdeg -> ra, dec, e_ra, e_dec
 - pm_de, e_pmde -> pm_dec, e_pmdec
+- FG, e_FG Gmag -> fg_gaia, e_fg_gaia, g_gaia_mag
 - E(BR/RP) -> e_br_rp
 - (S/N) -> snr
 
@@ -276,9 +277,9 @@ CREATE TABLE catalogdb.wd_dr2 (
     e_pmdec DOUBLE PRECISION,
     epsi REAL,
     amax REAL,
-    fg REAL,
-    e_fg REAL,
-    gmag REAL,
+    fg_gaia REAL,
+    e_fg_gaia REAL,
+    g_gaia_mag REAL,
     fbp REAL,
     e_fbp REAL,
     bpmag REAL,

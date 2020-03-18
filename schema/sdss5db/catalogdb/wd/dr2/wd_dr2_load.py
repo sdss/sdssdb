@@ -17,15 +17,18 @@ def main():
 
     assert database.connected
 
-    replacements = {'source': 'source_id',
-                    'radeg': 'ra',
-                    'dedeg': 'dec',
+    replacements = {'Source': 'source_id',
+                    'RAdeg': 'ra',
+                    'DEdeg': 'dec',
                     'e_RAdeg': 'e_ra',
                     'e_DEdeg': 'e_dec',
-                    'pm_de': 'pm_dec',
-                    'e_pmde': 'e_pmdec',
-                    'e(br/rp)': 'e_br_rp',
-                    '(s/n)': 'snr'}
+                    'pmDE': 'pmdec',
+                    'e_pmDE': 'e_pmdec',
+                    'E(BR/RP)': 'e_br_rp',
+                    '(S/N)': 'snr',
+                    'FG': 'fg_gaia',
+                    'e_FG': 'e_fg_gaia',
+                    'Gmag': 'g_gaia_mag'}
 
     path_ = ('/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/wd/dr2/')
 
@@ -33,10 +36,12 @@ def main():
                          ('J_MNRAS_482_4570_gaiasdss.dat.gz.fits.gz', 'wd_dr2_sdss')):
 
         data = astropy.table.Table.read(path_ + file_)
+
         for column_name in data.colnames:
-            new_column_name = column_name.lower()
-            if new_column_name in replacements:
-                new_column_name = replacements[new_column_name]
+            if column_name in replacements:
+                new_column_name = replacements[column_name]
+            else:
+                new_column_name = column_name.lower()
             data.rename_column(column_name, new_column_name)
 
         copy_data(data, database, table, schema='catalogdb')
