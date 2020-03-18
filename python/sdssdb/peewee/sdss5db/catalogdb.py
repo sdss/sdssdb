@@ -577,72 +577,6 @@ class GaiaDR2Clean(SDSS5dbModel):
         schema = 'catalogdb'
 
 
-class GaiaDR2WDCandidatesV1(SDSS5dbModel):
-
-    ag = DoubleField(null=True)
-    astrometric_excess_noise = DoubleField(null=True)
-    astrometric_sigma5d_max = DoubleField(null=True)
-    b = DoubleField(index=True, null=True)
-    chi2 = DoubleField(null=True)
-    chisq_he = DoubleField(null=True)
-    dec = DoubleField(index=True, null=True)
-    dec_error = DoubleField(null=True)
-    density = DoubleField(null=True)
-    designation = TextField(null=True)
-    e_gmag = DoubleField(null=True)
-    e_imag = DoubleField(null=True)
-    e_rmag = DoubleField(null=True)
-    e_umag = DoubleField(null=True)
-    e_zmag = DoubleField(null=True)
-    elog_g = DoubleField(null=True)
-    elog_g_he = DoubleField(null=True)
-    emass = DoubleField(null=True)
-    emass_he = DoubleField(null=True)
-    eteff = DoubleField(null=True)
-    eteff_he = DoubleField(null=True)
-    gmag = DoubleField(null=True)
-    imag = DoubleField(null=True)
-    l = DoubleField(index=True, null=True)
-    log_g = DoubleField(null=True)
-    log_g_he = DoubleField(null=True)
-    mass = DoubleField(null=True)
-    mass_he = DoubleField(null=True)
-    parallax = DoubleField(null=True)
-    parallax_error = DoubleField(null=True)
-    phot_bp_mean_flux = DoubleField(null=True)
-    phot_bp_mean_flux_error = DoubleField(null=True)
-    phot_bp_mean_mag = DoubleField(null=True)
-    phot_bp_rp_excess_factor = DoubleField(null=True)
-    phot_g_mean_flux = DoubleField(index=True, null=True)
-    phot_g_mean_flux_error = DoubleField(null=True)
-    phot_g_mean_mag = DoubleField(index=True, null=True)
-    phot_rp_mean_flux = DoubleField(null=True)
-    phot_rp_mean_flux_error = DoubleField(null=True)
-    phot_rp_mean_mag = DoubleField(null=True)
-    pmdec = DoubleField(null=True)
-    pmdec_error = DoubleField(null=True)
-    pmra = DoubleField(null=True)
-    pmra_error = DoubleField(null=True)
-    pwd = FloatField(null=True)
-    pwd_correction = FloatField(null=True)
-    ra = DoubleField(index=True, null=True)
-    ra_error = DoubleField(null=True)
-    rmag = DoubleField(null=True)
-    sdss_name = TextField(null=True)
-    teff = DoubleField(null=True)
-    teff_he = DoubleField(null=True)
-    umag = DoubleField(null=True)
-    white_dwarf_name = TextField(null=True)
-    zmag = DoubleField(null=True)
-
-    def gaia_source(self):
-        return GaiaDR2Source.select().get_id(self.source_id)
-
-    class Meta:
-        table_name = 'gaia_dr2_wd_candidates_v1'
-        schema = 'catalogdb'
-
-
 class GaiaDR2SDSSDR9BestNeighbour(SDSS5dbModel):
 
     angular_distance = DoubleField(null=True)
@@ -2388,6 +2322,115 @@ class BhmCsc(SDSS5dbModel):
 
     class Meta:
         table_name = 'bhm_csc'
+        schema = 'catalogdb'
+
+
+class Gaia_DR2_WD_SDSS(SDSS5dbModel):
+
+    pk = AutoField(primary_key=True)
+    wd = TextField(null=True)
+    n_wd = TextField(null=True)
+    source = IntegerField(null=True)
+    sdss = TextField(null=True)
+    ra = DoubleField(null=True)
+    dec = DoubleField(null=True)
+    umag = FloatField(null=True)
+    e_umag = FloatField(null=True)
+    gmag = FloatField(null=True)
+    e_gmag = FloatField(null=True)
+    rmag = FloatField(null=True)
+    e_rmag = FloatField(null=True)
+    imag = FloatField(null=True)
+    e_imag = FloatField(null=True)
+    zmag = FloatField(null=True)
+    e_zmag = FloatField(null=True)
+    plate = IntegerField(null=True)
+    mjd = IntegerField(null=True)
+    fiber = IntegerField(null=True)
+    snr = FloatField(null=True)
+    spclass = TextField(null=True)
+
+    @property
+    def specobj(self):
+        """Returns the matching record in `.SDSSDR16SpecObj`."""
+
+        return SDSSDR16SpecObj.get(SDSSDR16SpecObj.plate == self.plate,
+                                   SDSSDR16SpecObj.mjd == self.mjd,
+                                   SDSSDR16SpecObj.fiberid == self.fiber)
+
+    class Meta:
+        table_name = 'gaia_dr2_wd_sdss'
+        schema = 'catalogdb'
+
+
+class Gaia_DR2_WD(SDSS5dbModel):
+
+    wd = TextField(null=True)
+    dr2name = TextField(null=True)
+    source_id = BigAutoField(primary_key=True)
+    source = IntegerField(null=True)
+    ra = DoubleField(null=True)
+    e_ra = DoubleField(null=True)
+    dec = DoubleField(null=True)
+    e_dec = DoubleField(null=True)
+    plx = FloatField(null=True)
+    e_plx = FloatField(null=True)
+    pmra = DoubleField(null=True)
+    e_pmra = DoubleField(null=True)
+    pmdec = DoubleField(null=True)
+    e_pmdec = DoubleField(null=True)
+    epsi = FloatField(null=True)
+    amax = FloatField(null=True)
+    fg_gaia = FloatField(null=True)
+    e_fg_gaia = FloatField(null=True)
+    g_gaia_mag = FloatField(null=True)
+    fbp = FloatField(null=True)
+    e_fbp = FloatField(null=True)
+    bpmag = FloatField(null=True)
+    frp = FloatField(null=True)
+    e_frp = FloatField(null=True)
+    rpmag = FloatField(null=True)
+    e_br_rp = FloatField(null=True)
+    glon = DoubleField(null=True)
+    glat = DoubleField(null=True)
+    density = FloatField(null=True)
+    ag = FloatField(null=True)
+    sdss = TextField(null=True)
+    umag = FloatField(null=True)
+    e_umag = FloatField(null=True)
+    gmag = FloatField(null=True)
+    e_gmag = FloatField(null=True)
+    rmag = FloatField(null=True)
+    e_rmag = FloatField(null=True)
+    imag = FloatField(null=True)
+    e_imag = FloatField(null=True)
+    zmag = FloatField(null=True)
+    e_zmag = FloatField(null=True)
+    pwd = FloatField(null=True)
+    f_pwd = IntegerField(null=True)
+    teffh = FloatField(null=True)
+    e_teffh = FloatField(null=True)
+    loggh = FloatField(null=True)
+    e_loggh = FloatField(null=True)
+    massh = FloatField(null=True)
+    e_massh = FloatField(null=True)
+    chi2h = FloatField(null=True)
+    teffhe = FloatField(null=True)
+    e_teffhe = FloatField(null=True)
+    logghe = FloatField(null=True)
+    e_logghe = FloatField(null=True)
+    masshe = FloatField(null=True)
+    e_masshe = FloatField(null=True)
+    chisqhe = FloatField(null=True)
+
+    @property
+    def sdss_spectra(self):
+        """Returns records from `.Gaia_DR2_WD_SDSS` with matching ``wd``."""
+
+        return Gaia_DR2_WD_SDSS.select().where(Gaia_DR2_WD_SDSS.wd == self.wd)
+
+    class Meta:
+        table_name = 'gaia_dr2_wd'
         schema = 'catalogdb'
 
 
