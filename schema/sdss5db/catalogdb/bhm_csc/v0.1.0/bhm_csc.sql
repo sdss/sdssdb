@@ -12,7 +12,7 @@ Files: /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/csc/csc_f
 */
 
 CREATE TABLE catalogdb.bhm_csc (
-    id BIGSERIAL PRIMARY KEY,
+    pk BIGSERIAL PRIMARY KEY,
     csc_version TEXT,
     cxo_name TEXT,
     oir_ra DOUBLE PRECISION,

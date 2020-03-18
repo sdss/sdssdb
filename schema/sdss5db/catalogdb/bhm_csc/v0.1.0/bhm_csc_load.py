@@ -21,7 +21,7 @@ def main():
              'target/catalogs/csc/csc_for_catalogdb_v0/CSC2_stub1_realonly_v0.1.0.fits')
 
     data = astropy.table.Table.read(file_)
-    data.add_column(astropy.table.Column(numpy.arange(len(data)) + 1, 'id'), 0)  # Add id pk.
+    data.add_column(astropy.table.Column(numpy.arange(len(data)) + 1, 'pk'), 0)  # Add id pk.
 
     copy_data(data, database, 'bhm_csc', schema='catalogdb')
 

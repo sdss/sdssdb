@@ -2370,7 +2370,7 @@ class BhmSpidersClustersSuperset(BhmSpidersGenericSuperset):
 
 class BhmCsc(SDSS5dbModel):
 
-    id = BigAutoField()
+    pk = BigAutoField()
 
     csc_version = TextField(null=True)
     cxo_name = TextField(null=True)
