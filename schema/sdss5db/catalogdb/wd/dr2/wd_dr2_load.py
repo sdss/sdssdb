@@ -17,8 +17,7 @@ def main():
 
     assert database.connected
 
-    replacements = {'Source': 'source_id',
-                    'RAdeg': 'ra',
+    replacements = {'RAdeg': 'ra',
                     'DEdeg': 'dec',
                     'e_RAdeg': 'e_ra',
                     'e_DEdeg': 'e_dec',
@@ -43,6 +42,11 @@ def main():
             else:
                 new_column_name = column_name.lower()
             data.rename_column(column_name, new_column_name)
+
+        name_split = numpy.core.defchararray.split(data['dr2name'])
+        source_id = numpy.array(list(zip(*name_split))[2], numpy.int64)
+
+        data.add_column(astropy.table.Column(source_id, 'source_id'), data.index_column('source'))
 
         copy_data(data, database, table, schema='catalogdb')
 

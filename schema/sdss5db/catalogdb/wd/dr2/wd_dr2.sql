@@ -251,7 +251,8 @@ Modifications to datamodels:
 
 - All columns to lower case.
 - All column except coordinates have been converted from float64 to float32.
-- source -> source_id.
+- Added a source_id column that is constructed taking the integer of the
+- dr2name designation (to be used for foreign keys).
 - RAdeg, DEdeg, e_RAdeg, e_DEdeg -> ra, dec, e_ra, e_dec
 - pm_de, e_pmde -> pm_dec, e_pmdec
 - FG, e_FG Gmag -> fg_gaia, e_fg_gaia, g_gaia_mag
@@ -264,7 +265,8 @@ Modifications to datamodels:
 CREATE TABLE catalogdb.wd_dr2 (
     wd TEXT,
     dr2name TEXT,
-    source_id INTEGER PRIMARY KEY,
+    source_id BIGINT PRIMARY KEY,
+    source INTEGER,
     ra DOUBLE PRECISION,
     e_ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
@@ -325,6 +327,7 @@ CREATE TABLE catalogdb.wd_dr2_sdss (
     wd TEXT,
     n_wd TEXT,
     source_id BIGINT PRIMARY KEY,
+    source INTEGER,
     sdss TEXT,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
