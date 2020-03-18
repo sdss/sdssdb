@@ -406,9 +406,18 @@ CREATE TABLE catalogdb.sdss_dr16_specobj(
 
 alter table catalogdb.sdss_dr16_specobj add primary key(specObjID);
 
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_bestObjID_index ON catalogdb.sdss_dr16_specobj using BTREE (bestObjID);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_fluxObjID_index ON catalogdb.sdss_dr16_specobj using BTREE (fluxObjID);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_targetObjID_index ON catalogdb.sdss_dr16_specobj using BTREE (targetObjID);
+CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_bestObjID_index
+    ON catalogdb.sdss_dr16_specobj using BTREE (bestObjID);
+CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_fluxObjID_index
+    ON catalogdb.sdss_dr16_specobj using BTREE (fluxObjID);
+CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_targetObjID_index
+    ON catalogdb.sdss_dr16_specobj using BTREE (targetObjID);
+CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_mjd_index
+    ON catalogdb.sdss_dr16_specobj using BTREE (mjd);
+CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_plate_index
+    ON catalogdb.sdss_dr16_specobj using BTREE (plate);
+CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_fiberid_index
+    ON catalogdb.sdss_dr16_specobj using BTREE (fiberid);
 
 
 CREATE INDEX on catalogdb.sdss_dr16_specobj (q3c_ang2ipix(ra, dec));
