@@ -2436,44 +2436,10 @@ class Gaia_DR2_WD(SDSS5dbModel):
 
 class Tycho2(SDSS5dbModel):
 
-    id_tycho = BigAutoField(primary_key=True)
-    name = TextField(null=True)
-    pflag = CharField(null=True)
-    ramdeg = DoubleField(null=True)
-    demdeg = DoubleField(null=True)
-    pmra = DoubleField(null=True)
-    pmde = DoubleField(null=True)
-    e_ramdeg = DoubleField(null=True)
-    e_demdeg = DoubleField(null=True)
-    e_pmra = DoubleField(null=True)
-    e_pmde = DoubleField(null=True)
-    epram = DoubleField(null=True)
-    epdem = DoubleField(null=True)
-    num = IntegerField(null=True)
-    q_ramdeg = DoubleField(null=True)
-    q_demdeg = DoubleField(null=True)
-    q_pmra = DoubleField(null=True)
-    q_pmde = DoubleField(null=True)
-    btmag = DoubleField(null=True)
-    e_btmag = DoubleField(null=True)
-    vtmag = DoubleField(null=True)
-    e_vtmag = DoubleField(null=True)
-    prox = IntegerField(null=True)
-    tyc = CharField(null=True)
-    hip = IntegerField(null=True)
-    ccdm = TextField(null=True)
-    radeg = DoubleField(null=True)
-    dedeg = DoubleField(null=True)
-    epra_1990 = DoubleField(null=True)
-    epde_1990 = DoubleField(null=True)
-    e_radeg = DoubleField(null=True)
-    e_dedeg = DoubleField(null=True)
-    posflg = CharField(null=True)
-    corr = DoubleField(null=True)
-
     class Meta:
         table_name = 'tycho2'
         schema = 'catalogdb'
+        use_reflection = True
 
 
 _GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
