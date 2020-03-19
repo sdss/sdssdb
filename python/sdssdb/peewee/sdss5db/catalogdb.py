@@ -1947,9 +1947,10 @@ class unWISE(SDSS5dbModel):
 
 class LegacySurveyDR8(SDSS5dbModel):
 
-    objid = BigIntegerField(primary_key=True)
-    release = IntegerField(null=True)
-    brickid = BigIntegerField(null=True)
+    lsid = BigIntegerField(primary_key=True)
+    objid = BigIntegerField()
+    release = IntegerField()
+    brickid = BigIntegerField()
     brickname = TextField(null=True)
     type = TextField(null=True)
     ra = DoubleField(null=True)
@@ -2071,7 +2072,6 @@ class LegacySurveyDR8(SDSS5dbModel):
     class Meta:
         table_name = 'legacy_survey_dr8'
         schema = 'catalogdb'
-        primary_key = False
 
 
 class GaiaUnwiseAgn(SDSS5dbModel):
