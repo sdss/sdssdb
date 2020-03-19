@@ -311,13 +311,13 @@ if _peewee:
 
         Attributes
         ----------
-        models : set
+        models : list
             Models bound to this database. Only models that are bound using
             `~sdssdb.peewee.BaseModel` are handled.
 
         """
 
-        models = set([])
+        models = list()
 
         def __init__(self, *args, **kwargs):
 
