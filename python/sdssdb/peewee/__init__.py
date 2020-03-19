@@ -136,6 +136,10 @@ class BaseModel(Model, metaclass=ReflectMeta):
     #: A list of fields (as strings) to be included in the ``__repr__``
     print_fields = []
 
+    class Meta:
+        primary_key = False
+        use_reflection = False
+
     def __str__(self):
         """A custom str for the model repr."""
 
