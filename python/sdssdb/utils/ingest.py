@@ -258,6 +258,8 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
         for col_value in row:
             if numpy.isscalar(col_value):
                 row_data.append(str(col_value))
+            elif numpy.ma.is_masked(col_value):
+                row_data.append('')
             else:
                 if col_value.dtype.base.str[1] == 'S':
                     col_value = col_value.astype('U')
