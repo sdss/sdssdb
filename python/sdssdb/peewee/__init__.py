@@ -14,7 +14,7 @@ from peewee import Model, ModelBase, fn
 from playhouse.hybrid import hybrid_method
 from playhouse.reflection import generate_models
 
-from sdssdb.core.exceptions import SdssdbUserWarning
+from sdssdb import log
 
 
 class ReflectMeta(ModelBase):
@@ -104,10 +104,9 @@ class ReflectMeta(ModelBase):
 
         try:
             ReflectedModel = generate_models(database, schema=schema,
-                                            table_names=table_name)[table_name]
+                                             table_names=table_name)[table_name]
         except KeyError:
-            warnings.warn('reflection failed for {}'.format(table_name),
-                          SdssdbUserWarning)
+            log.debug('reflection failed for {}'.format(table_name))
             return
 
         for field_name, field in ReflectedModel._meta.fields.items():
