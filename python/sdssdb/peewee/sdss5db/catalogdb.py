@@ -869,7 +869,7 @@ class SDSSDR13Photoobj(SDSS5dbModel):
     fieldid = BigIntegerField(null=True)
     flags = BigIntegerField(null=True)
     htmid = BigIntegerField(null=True)
-    l = DoubleField(index=True, null=True)
+    l = DoubleField(index=True, null=True)  # noqa
     lnldev_g = FloatField(null=True)
     lnldev_i = FloatField(null=True)
     lnldev_r = FloatField(null=True)
