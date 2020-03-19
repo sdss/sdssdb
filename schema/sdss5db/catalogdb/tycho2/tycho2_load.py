@@ -18,7 +18,6 @@ def main():
     assert database.connected
 
     path_ = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/tycho2/Tycho-2/'
-    path_ = '/Users/albireo/Downloads/Tycho-2/'
 
     for file_ in sorted(glob.glob(path_ + 'tyc2.dat.*.gz')):
 
