@@ -9,7 +9,7 @@ from sdssdb import _peewee
 if _peewee is False:
     raise ImportError('Peewee must be installed to use this module.')
 
-
+import peewee
 from peewee import Model, ModelBase, fn
 from playhouse.hybrid import hybrid_method
 from playhouse.reflection import generate_models
@@ -66,17 +66,34 @@ class ReflectMeta(ModelBase):
 
     def __new__(cls, name, bases, attrs):
 
+        # Remove explicit foreign keys before we do reflection.
+        fks = [(name, attr) for name, attr in attrs.items()
+               if  isinstance(attr, peewee.ForeignKeyField)]
+
+        for name, __ in fks:
+            attrs.pop(name)
+
         Model = super(ReflectMeta, cls).__new__(cls, name, bases, attrs)
         Model._meta.use_reflection = getattr(Model._meta, 'use_reflection', False)
+        Model._meta._fks = fks
 
         database = Model._meta.database
-        if database and hasattr(database, 'models'):
-            database.models.add(Model)
+        if database and hasattr(database, 'models') and Model not in database.models:
+            database.models.append(Model)
 
-        if Model._meta.use_reflection and database and database.connected:
-            cls.reflect(Model)
+        if Model._meta.use_reflection:
+            if database and database.connected:
+                cls.reflect(Model)
+        else:
+            cls._attach_fks(Model)
 
         return Model
+
+    def _attach_fks(self):
+        """Attach the explicit foreign keys."""
+
+        for name, fk in self._meta._fks:
+            self._meta.add_field(name, fk)
 
     def reflect(self):
         """Adds fields and indexes to the model using reflection."""
@@ -120,6 +137,9 @@ class ReflectMeta(ModelBase):
                 self._meta.set_primary_key(field_name, field)
             else:
                 self._meta.add_field(field_name, field)
+
+        # Attach FKs now
+        self._attach_fks()
 
         for index in ReflectedModel._meta.indexes:
 
