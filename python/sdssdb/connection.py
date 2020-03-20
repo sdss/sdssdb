@@ -14,12 +14,13 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import importlib
+import re
 import socket
 
 import six
 from pgpasslib import getpass
 
-from sdssdb import config, log, _peewee, _sqla
+from sdssdb import _peewee, _sqla, config, log
 
 
 if _peewee:
@@ -117,7 +118,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             # Tries to find a profile whose domain matches the hostname
             for profile in config:
                 if 'domain' in config[profile] and config[profile]['domain'] is not None:
-                    if hostname.endswith(config[profile]['domain']):
+                    if re.match(config[profile]['domain'], hostname):
                         self.profile = profile
                         break
 
