@@ -14,45 +14,54 @@ from peewee import (BigAutoField, BigIntegerField, CharField,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
-from . import SDSS5dbModel, database  # noqa
+from . import BaseModel, database  # noqa
+
+
+class CatalogdbModel(BaseModel):
+
+    class Meta:
+        database = database
+        use_reflection = True
+        reflection_options = {'skip_foreign_keys': True}
+        primary_key = False
 
 
 _GaiaDR2TmassBestNeighbourDeferred = DeferredThroughModel()
 
 
-class AllWise(SDSS5dbModel):
+class AllWise(CatalogdbModel):
 
     class Meta:
         table_name = 'allwise'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class ErositaAGNMock(SDSS5dbModel):
+class ErositaAGNMock(CatalogdbModel):
 
     class Meta:
         table_name = 'erosita_agn_mock'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class ErositaClustersMock(SDSS5dbModel):
+class ErositaClustersMock(CatalogdbModel):
 
     class Meta:
         table_name = 'erosita_clusters_mock'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class TwoMassPsc(SDSS5dbModel):
+class TwoMassPsc(CatalogdbModel):
+
+    pts_key = IntegerField(primary_key=True)
 
     class Meta:
         table_name = 'twomass_psc'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GaiaDR2Source(SDSS5dbModel):
+class GaiaDR2Source(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
 
     tmass_best_sources = ManyToManyField(TwoMassPsc,
                                          through_model=_GaiaDR2TmassBestNeighbourDeferred,
@@ -61,113 +70,102 @@ class GaiaDR2Source(SDSS5dbModel):
     class Meta:
         table_name = 'gaia_dr2_source'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GaiaDR2Clean(SDSS5dbModel):
+class GaiaDR2Clean(CatalogdbModel):
 
-    source = ForeignKeyField(GaiaDR2Source, column_name='source_id', backref='gaia_clean')
+    source_id = ForeignKeyField(GaiaDR2Source,
+                                field='source_id',
+                                backref='gaia_clean',
+                                lazy_load=True)
 
     class Meta:
         table_name = 'gaia_dr2_clean'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GaiaDR2SDSSDR9BestNeighbour(SDSS5dbModel):
+class GaiaDR2SDSSDR9BestNeighbour(CatalogdbModel):
 
     class Meta:
         table_name = 'gaiadr2_sdssdr9_best_neighbour'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GalacticGenesis(SDSS5dbModel):
+class GalacticGenesis(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_genesis'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GalacticGenesisBig(SDSS5dbModel):
+class GalacticGenesisBig(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_genesis_big'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GUVCat(SDSS5dbModel):
+class GUVCat(CatalogdbModel):
 
     class Meta:
         table_name = 'guvcat'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class KeplerInput10(SDSS5dbModel):
+class KeplerInput10(CatalogdbModel):
 
     class Meta:
         table_name = 'kepler_input_10'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR13Photoobj(SDSS5dbModel):
+class SDSSDR13Photoobj(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr13_photoobj'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR14APOGEEStar(SDSS5dbModel):
+class SDSSDR14APOGEEStar(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_apogeestar'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR14APOGEEStarVisit(SDSS5dbModel):
+class SDSSDR14APOGEEStarVisit(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_apogeestarvisit'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR14APOGEEVisit(SDSS5dbModel):
+class SDSSDR14APOGEEVisit(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_apogeevisit'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR14ASCAPStar(SDSS5dbModel):
+class SDSSDR14ASCAPStar(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_ascapstar'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR14CannonStar(SDSS5dbModel):
+class SDSSDR14CannonStar(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_cannonstar'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class SDSSDR14SpecObj(SDSS5dbModel):
+class SDSSDR14SpecObj(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_specobj'
         schema = 'catalogdb'
-        use_reflection = True
 
 
 class SDSSDR16SpecObj(SDSSDR14SpecObj):
@@ -176,90 +174,89 @@ class SDSSDR16SpecObj(SDSSDR14SpecObj):
         table_name = 'sdss_dr16_specobj'
 
 
-class TIC_v8(SDSS5dbModel):
+class TIC_v8(CatalogdbModel):
 
     class Meta:
         table_name = 'tic_v8'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class TwoMassClean(SDSS5dbModel):
+class TwoMassClean(CatalogdbModel):
 
-    psc = ForeignKeyField(TwoMassPsc, field='pts_key',
-                          column_name='pts_key', backref='tmass_clean')
+    pts_key = ForeignKeyField(TwoMassPsc,
+                              backref='tmass_clean',
+                              lazy_load=True)
 
     class Meta:
         table_name = 'twomass_clean'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class TwoMassCleanNoNeighbor(SDSS5dbModel):
+class TwoMassCleanNoNeighbor(CatalogdbModel):
 
     class Meta:
         table_name = 'twomass_clean_noneighbor'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
+class GaiaDR2TmassBestNeighbour(CatalogdbModel):
 
-    gaia_source = ForeignKeyField(GaiaDR2Source,
-                                  column_name='source_id',
-                                  backref='tmass_best_neighbour')
-    tmass_source = ForeignKeyField(TwoMassPsc,
-                                   column_name='tmass_pts_key',
-                                   field='pts_key',
-                                   backref='gaia_best_neighbour')
+    source_id = ForeignKeyField(GaiaDR2Source,
+                                field='source_id',
+                                column_name='source_id',
+                                backref='+',
+                                lazy_load=False)
+
+    tmass_pts_key = ForeignKeyField(TwoMassPsc,
+                                    field='pts_key',
+                                    column_name='tmass_pts_key',
+                                    backref='+',
+                                    lazy_load=False)
 
     class Meta:
         table_name = 'gaiadr2_tmass_best_neighbour'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class DR14QV44(SDSS5dbModel):
+class DR14QV44(CatalogdbModel):
 
     class Meta:
         table_name = 'dr14q_v4_4'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class unWISE(SDSS5dbModel):
+class unWISE(CatalogdbModel):
 
     class Meta:
         table_name = 'unwise'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class LegacySurveyDR8(SDSS5dbModel):
+class LegacySurveyDR8(CatalogdbModel):
 
     class Meta:
         table_name = 'legacy_survey_dr8'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class GaiaUnwiseAgn(SDSS5dbModel):
+class GaiaUnwiseAgn(CatalogdbModel):
 
-    unwise = ForeignKeyField(unWISE, column_name='unwise_objid')
-    gaia = ForeignKeyField(GaiaDR2Source)
+    unwise_objid = ForeignKeyField(unWISE,
+                                   lazy_load=True)
+
+    gaia = ForeignKeyField(GaiaDR2Source,
+                           lazy_load=True)
 
     class Meta:
         table_name = 'gaia_unwise_agn'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class EbosstargetV5(SDSS5dbModel):
+class EbosstargetV5(CatalogdbModel):
 
     class Meta:
         table_name = 'ebosstarget_v5'
         schema = 'catalogdb'
-        use_reflection = True
 
 
 # The following model (BhmSpidersGenericSuperset) does not need to be represented
@@ -267,7 +264,7 @@ class EbosstargetV5(SDSS5dbModel):
 # BhmSpidersClustersSuperset which are real database tables. I am assuming that PeeWee
 # can handle such a scheme without problems. If not, then we will have to duplicate the
 
-class BhmSpidersGenericSuperset(SDSS5dbModel):
+class BhmSpidersGenericSuperset(CatalogdbModel):
 
     # Not using reflection here to preserve Tom's notes.
 
@@ -378,6 +375,7 @@ class BhmSpidersGenericSuperset(SDSS5dbModel):
     class Meta:
         table_name = 'bhm_spiders_generic_superset'
         schema = 'catalogdb'
+        use_reflection = False
 
 
 # Note that following models are currently identical in form, but may well diverge in the future
@@ -394,15 +392,14 @@ class BhmSpidersClustersSuperset(BhmSpidersGenericSuperset):
         table_name = 'bhm_spiders_clusters_superset'
 
 
-class BhmCsc(SDSS5dbModel):
+class BhmCsc(CatalogdbModel):
 
     class Meta:
         table_name = 'bhm_csc'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class Gaia_DR2_WD_SDSS(SDSS5dbModel):
+class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
     @property
     def specobj(self):
@@ -415,10 +412,9 @@ class Gaia_DR2_WD_SDSS(SDSS5dbModel):
     class Meta:
         table_name = 'gaia_dr2_wd_sdss'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class Gaia_DR2_WD(SDSS5dbModel):
+class Gaia_DR2_WD(CatalogdbModel):
 
     @property
     def sdss_spectra(self):
@@ -429,15 +425,13 @@ class Gaia_DR2_WD(SDSS5dbModel):
     class Meta:
         table_name = 'gaia_dr2_wd'
         schema = 'catalogdb'
-        use_reflection = True
 
 
-class Tycho2(SDSS5dbModel):
+class Tycho2(CatalogdbModel):
 
     class Meta:
         table_name = 'tycho2'
         schema = 'catalogdb'
-        use_reflection = True
 
 
 _GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)

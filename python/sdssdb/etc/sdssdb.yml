@@ -36,9 +36,9 @@ sdssadmin:
 
 operations:
     user: sdss
-    host: operations.sdss.org
+    host: null
     port: 5432
-    domain: operations.sdss.org
+    domain: operations.sdss.*
 
 manga:
     user: sdss
