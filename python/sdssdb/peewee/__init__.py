@@ -62,38 +62,40 @@ class ReflectMeta(ModelBase):
     updated. Note that this will not work if using Peewee's
     :class:`peewee:PostgresqlDatabase`.
 
+    By default, `.ReflectMeta` will add all the fields from the reflected
+    models, including foreign keys. Sometimes that is not desirable and it's
+    preferable to define the foreign keys explicitely. In that case it's
+    possible to disable the reflection of foreign keys by doing ::
+
+    class ReflectBaseModel(peewee.Model, metaclass=ReflectMeta):
+
+            class Meta:
+                primary_key = False
+                use_reflection = False
+                reflection_options = {'skip_foreign_keys': True}
+                database = database
+
+    Foreign keys explicitely defined need to reference fields that exist so the
+    referenced columns need to be added manually. A caveat is that many-to-many
+    relationship need to be defined explicitely since it's not possible to set
+    the through model based on the reflected information.
+
     """
 
     def __new__(cls, name, bases, attrs):
 
-        # Remove explicit foreign keys before we do reflection.
-        fks = [(name, attr) for name, attr in attrs.items()
-               if  isinstance(attr, peewee.ForeignKeyField)]
-
-        for name, __ in fks:
-            attrs.pop(name)
-
         Model = super(ReflectMeta, cls).__new__(cls, name, bases, attrs)
+
         Model._meta.use_reflection = getattr(Model._meta, 'use_reflection', False)
-        Model._meta._fks = fks
 
         database = Model._meta.database
         if database and hasattr(database, 'models') and Model not in database.models:
             database.models.append(Model)
 
-        if Model._meta.use_reflection:
-            if database and database.connected:
-                cls.reflect(Model)
-        else:
-            cls._attach_fks(Model)
+        if Model._meta.use_reflection and database and database.connected:
+            cls.reflect(Model)
 
         return Model
-
-    def _attach_fks(self):
-        """Attach the explicit foreign keys."""
-
-        for name, fk in self._meta._fks:
-            self._meta.add_field(name, fk)
 
     def reflect(self):
         """Adds fields and indexes to the model using reflection."""
@@ -110,7 +112,6 @@ class ReflectMeta(ModelBase):
         for index in self._meta.indexes:
             if hasattr(index, 'reflected') and index.reflected:
                 self._meta.indexes.remove(index)
-
 
         database = self._meta.database
         if not database.is_connection_usable():
@@ -131,15 +132,17 @@ class ReflectMeta(ModelBase):
             if field_name in self._meta.fields:
                 continue
 
+            if (isinstance(field, peewee.ForeignKeyField) and
+                    hasattr(self._meta, 'reflection_options') and
+                    self._meta.reflection_options.get('skip_foreign_keys', False)):
+                continue
+
             field.reflected = True
 
             if field.primary_key:
                 self._meta.set_primary_key(field_name, field)
             else:
                 self._meta.add_field(field_name, field)
-
-        # Attach FKs now
-        self._attach_fks()
 
         for index in ReflectedModel._meta.indexes:
 
