@@ -173,19 +173,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         # Gets the necessary configuration values from the profile
         db_configuration = {}
         for item in ['user', 'host', 'port']:
-            if item in connection_params and connection_params[item] is not None:
+            if item in connection_params:
                 db_configuration[item] = connection_params[item]
             else:
                 profile_value = config[self.profile].get(item, None)
-
-                # If the hostname is the same as the current domain,
-                # do not specify the host. This helps with the configuration
-                # of the PSQL security at Utah.
-                if item == 'host':
-                    domain = socket.getfqdn()
-                    if profile_value == domain:
-                        continue
-
                 db_configuration[item] = profile_value
 
         dbname = dbname or self.dbname
