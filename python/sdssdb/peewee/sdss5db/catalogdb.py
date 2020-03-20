@@ -36,20 +36,6 @@ class AllWise(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class ErositaAGNMock(CatalogdbModel):
-
-    class Meta:
-        table_name = 'erosita_agn_mock'
-        schema = 'catalogdb'
-
-
-class ErositaClustersMock(CatalogdbModel):
-
-    class Meta:
-        table_name = 'erosita_clusters_mock'
-        schema = 'catalogdb'
-
-
 class TwoMassPsc(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
