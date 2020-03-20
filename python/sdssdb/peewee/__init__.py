@@ -173,8 +173,12 @@ class BaseModel(Model, metaclass=ReflectMeta):
     def __str__(self):
         """A custom str for the model repr."""
 
-        pk_field = self._meta.primary_key.name
-        fields = ['{0}={1!r}'.format(pk_field, self.get_id())]
+        if self._meta.primary_key:
+            pk_field = self._meta.primary_key.name
+            fields = ['{0}={1!r}'.format(pk_field, self.get_id())]
+        else:
+            pk_field = None
+            fields = []
 
         for extra_field in ['label', 'name']:
             if extra_field not in self.print_fields:
