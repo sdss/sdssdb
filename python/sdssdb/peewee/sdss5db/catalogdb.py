@@ -420,4 +420,9 @@ class Tycho2(CatalogdbModel):
         schema = 'catalogdb'
 
 
-_GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
+class GaiaQSO(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_qso'
+        schema = 'catalogdb'
+
