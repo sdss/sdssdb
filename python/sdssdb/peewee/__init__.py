@@ -76,9 +76,17 @@ class ReflectMeta(ModelBase):
                 database = database
 
     Foreign keys explicitely defined need to reference fields that exist so the
-    referenced columns need to be added manually. A caveat is that many-to-many
-    relationship need to be defined explicitely since it's not possible to set
-    the through model based on the reflected information.
+    referenced columns need to be added manually.
+
+    Caveats:
+
+    - Many-to-many relationships need to be defined explicitely since
+    it's not possible to set the through model based on the reflected
+    information.
+
+    - When the primary key of a model is also a foreign key, it needs to be
+    defined explicitely. Otherwise the field will be added but not marked as
+    primary key.
 
     """
 
