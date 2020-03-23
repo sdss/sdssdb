@@ -518,5 +518,19 @@ class TIC_v8(CatalogdbModel):
         schema = 'catalogdb'
 
 
+class CatWISE(CatalogdbModel):
+
+    class Meta:
+        table_name = 'tic_v8'
+        schema = 'catwise'
+
+
+class CatWISEReject(CatalogdbModel):
+
+    class Meta:
+        table_name = 'tic_v8'
+        schema = 'catwise_reject'
+
+
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)

@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+# encoding: utf-8
+
+
+path=/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/CatWISE
+
+for dir in $path/prelim/*/ ; do
+    echo $dir
+    # gzcat $dir/*.tbl.gz | sed -e '/^[\\|]/ d' | psql -U sdss sdss5db -c "\COPY catalogdb.catwise FROM STDIN WITH CSV DELIMITER ' ' NULL 'null';"
+    ls $dir/*.tbl.gz | parallel -j4 "python $SDSSDB_DIR/schema/sdss5db/catalogdb/CatWISE/CatWISE_load_helper.py {}"
+    ls $dir/*_cat_*.tbl.gz.csv | parallel -j4 "psql -U sdss sdss5db -c \"\COPY catalogdb.catwise FROM '{}' WITH CSV HEADER NULL '\N';\""
+    ls $dir/*_rej_*.tbl.gz.csv | parallel -j4 "psql -U sdss sdss5db -c \"\COPY catalogdb.catwise_reject FROM '{}' WITH CSV HEADER NULL '\N';\""
+done
