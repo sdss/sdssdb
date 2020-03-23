@@ -445,6 +445,8 @@ if _sqla:
                 self.engine.dispose()
                 self.engine = None
                 self.connected = False
+                self.Session = None
+                self.metadata = None
             else:
                 self.connected = True
                 self.dbname = dbname
