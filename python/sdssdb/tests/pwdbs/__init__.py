@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 1:47:12 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Sunday, 1st March 2020 1:48:16 pm
+# Last Modified: Monday, 23rd March 2020 5:03:45 pm
 # Modified By: Brian Cherinka
 
 
@@ -29,3 +29,12 @@ class TmpModel(BaseModel):
 
     class Meta:
         database = database
+
+
+def prepare_testdb():
+    ''' connect and set up test models after db initialization ''' 
+    models = TmpModel.__subclasses__()
+    database.bind(models, bind_refs=False, bind_backrefs=False)
+    database.connect()
+    database.create_tables(models)
+    return database

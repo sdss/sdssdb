@@ -7,7 +7,7 @@
 # Created: Monday, 2nd March 2020 1:24:15 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Sunday, 22nd March 2020 4:44:00 pm
+# Last Modified: Monday, 23rd March 2020 3:33:54 pm
 # Modified By: Brian Cherinka
 
 
@@ -17,7 +17,6 @@ if database.connected:
     from sdssdb.sqlalchemy.archive import sas
 import pytest
 
-pytestmark = pytest.mark.nodb
 
 @pytest.mark.parametrize('database', [database], indirect=True)
 class TestArchiveDb(object):
