@@ -37,7 +37,7 @@ CREATE TABLE catalogdb.twomass_psc (
     pxcntr integer,
     gal_contam smallint,
     mp_flg smallint,
-    pts_key integer,
+    pts_key integer PRIMARY KEY,
     hemis character(1),
     date date,
     scan smallint,
@@ -529,6 +529,3 @@ CREATE TABLE catalogdb.twomass_xsc (
     k_seetrack real,
     ext_key integer
 ) WITHOUT OIDS;
-
-
-

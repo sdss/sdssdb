@@ -1,6 +1,6 @@
 /*
 
-schema for dr 14 apogeeStar table.
+schema for dr 14 apogeeVisit table.
 
 Model can be found at http://skyserver.sdss.org/CasJobs/SchemaBrowser.aspx
 
@@ -60,7 +60,7 @@ synthvhelio real    4       km/s    Heliocentric radial velocity from cross-corr
 */
 
 CREATE TABLE catalogdb.sdss_dr14_apogeeVisit(
-    visit_id varchar(64),
+    visit_id varchar(64) PRIMARY KEY,
     apred_version varchar(32),
     apogee_id varchar(64),
     target_id varchar(64),
@@ -115,11 +115,11 @@ CREATE TABLE catalogdb.sdss_dr14_apogeeVisit(
 
 \copy catalogdb.sdss_dr14_apogeeVisit FROM program 'bzcat $CATALOGDB_DIR/sdssApogeeVisit/dr14/src/sqlApogeeVisit.csv.bz2' WITH CSV HEADER;
 
-alter table catalogdb.sdss_dr14_apogeeVisit add primary key(visit_id);
+CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit (q3c_ang2ipix(ra, dec));
+CLUSTER sdss_dr14_apogeeVisit_q3c_ang2ipix_idx ON catalogdb.sdss_dr14_apogeeVisit;
+ANALYZE catalogdb.sdss_dr14_apogeeVisit;
 
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit using BTREE (ra);
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit using BTREE (dec);
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit using BTREE (glon);
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit using BTREE (glat);
-
-
+CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (ra);
+CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (dec);
+CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (glon);
+CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (glat);

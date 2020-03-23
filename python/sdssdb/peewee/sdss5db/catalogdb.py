@@ -9,7 +9,6 @@
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last modified time: 2019-09-23 00:54:42
 
-
 from peewee import (BigAutoField, BigIntegerField, CharField,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
@@ -26,31 +25,36 @@ class CatalogdbModel(BaseModel):
         primary_key = False
 
 
-_GaiaDR2TmassBestNeighbourDeferred = DeferredThroughModel()
+_Gaia_DR2_TwoMass_Best_Neighbour_Deferred = DeferredThroughModel()
+_APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
 
 class AllWise(CatalogdbModel):
+
+    cntr = BigIntegerField(primary_key=True)
+    designation = TextField()
 
     class Meta:
         table_name = 'allwise'
         schema = 'catalogdb'
 
 
-class TwoMassPsc(CatalogdbModel):
+class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
+    designation = TextField()
 
     class Meta:
         table_name = 'twomass_psc'
         schema = 'catalogdb'
 
 
-class GaiaDR2Source(CatalogdbModel):
+class Gaia_DR2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
 
-    tmass_best_sources = ManyToManyField(TwoMassPsc,
-                                         through_model=_GaiaDR2TmassBestNeighbourDeferred,
+    tmass_best_sources = ManyToManyField(TwoMassPSC,
+                                         through_model=_Gaia_DR2_TwoMass_Best_Neighbour_Deferred,
                                          backref='gaia_best_sources')
 
     class Meta:
@@ -58,9 +62,9 @@ class GaiaDR2Source(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class GaiaDR2Clean(CatalogdbModel):
+class Gaia_DR2_Clean(CatalogdbModel):
 
-    source_id = ForeignKeyField(GaiaDR2Source,
+    source_id = ForeignKeyField(Gaia_DR2,
                                 field='source_id',
                                 backref='gaia_clean',
                                 lazy_load=True)
@@ -70,7 +74,7 @@ class GaiaDR2Clean(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class GaiaDR2SDSSDR9BestNeighbour(CatalogdbModel):
+class Gaia_DR2_SDSS_DR9_Best_Neighbour(CatalogdbModel):
 
     class Meta:
         table_name = 'gaiadr2_sdssdr9_best_neighbour'
@@ -98,78 +102,114 @@ class GUVCat(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class KeplerInput10(CatalogdbModel):
+class KeplerInput_DR10(CatalogdbModel):
+
+    kic_kepler_id = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'kepler_input_10'
         schema = 'catalogdb'
 
 
-class SDSSDR13Photoobj(CatalogdbModel):
+class SDSS_DR13_PhotoObj(CatalogdbModel):
+
+    objid = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'sdss_dr13_photoobj'
         schema = 'catalogdb'
 
 
-class SDSSDR14APOGEEStar(CatalogdbModel):
+class SDSS_DR14_APOGEE_Visit(CatalogdbModel):
 
-    class Meta:
-        table_name = 'sdss_dr14_apogeestar'
-        schema = 'catalogdb'
-
-
-class SDSSDR14APOGEEStarVisit(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr14_apogeestarvisit'
-        schema = 'catalogdb'
-
-
-class SDSSDR14APOGEEVisit(CatalogdbModel):
+    visit_id = TextField(primary_key=True)
 
     class Meta:
         table_name = 'sdss_dr14_apogeevisit'
         schema = 'catalogdb'
 
 
-class SDSSDR14ASCAPStar(CatalogdbModel):
+class SDSS_DR14_APOGEE_Star(CatalogdbModel):
+
+    apstar_id = TextField(primary_key=True)
+    apogee_id = TextField()
+
+    visits = ManyToManyField(SDSS_DR14_APOGEE_Visit,
+                             through_model=_APOGEE_Star_Visit_Deferred,
+                             backref='stars')
+
+    class Meta:
+        table_name = 'sdss_dr14_APOGEE_Star'
+        schema = 'catalogdb'
+
+
+class SDSS_DR14_APOGEE_Star_Visit(CatalogdbModel):
+
+    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
+                             backref='+',
+                             lazy_load=False)
+
+    visit = ForeignKeyField(SDSS_DR14_APOGEE_Visit,
+                            backref='+',
+                            lazy_load=False)
+
+    class Meta:
+        table_name = 'sdss_dr14_APOGEE_Starvisit'
+        schema = 'catalogdb'
+
+
+class SDSS_DR14_ASCAP_Star(CatalogdbModel):
+
+    apstar_id = TextField(primary_key=True)
+    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
+                             backref='ascap_stars')
 
     class Meta:
         table_name = 'sdss_dr14_ascapstar'
         schema = 'catalogdb'
 
 
-class SDSSDR14CannonStar(CatalogdbModel):
+class SDSS_DR14_Cannon_Star(CatalogdbModel):
+
+    @property
+    def apstars(self):
+        """Returns the associated stars in ``SDSSDR14APOGEEStar``."""
+
+        return (SDSS_DR14_APOGEE_Star
+                .select()
+                .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
 
     class Meta:
         table_name = 'sdss_dr14_cannonstar'
         schema = 'catalogdb'
 
 
-class SDSSDR14SpecObj(CatalogdbModel):
+class SDSS_DR14_SpecObj(CatalogdbModel):
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                               column_name='bestobjid',
+                               object_id_name='bestobjid',
+                               backref='specobj_dr14')
 
     class Meta:
         table_name = 'sdss_dr14_specobj'
         schema = 'catalogdb'
 
 
-class SDSSDR16SpecObj(SDSSDR14SpecObj):
+class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                               column_name='bestobjid',
+                               object_id_name='bestobjid',
+                               backref='specobj_dr16')
 
     class Meta:
         table_name = 'sdss_dr16_specobj'
 
 
-class TIC_v8(CatalogdbModel):
+class TwoMass_Clean(CatalogdbModel):
 
-    class Meta:
-        table_name = 'tic_v8'
-        schema = 'catalogdb'
-
-
-class TwoMassClean(CatalogdbModel):
-
-    pts_key = ForeignKeyField(TwoMassPsc,
+    pts_key = ForeignKeyField(TwoMassPSC,
                               backref='tmass_clean',
                               lazy_load=True)
 
@@ -178,22 +218,22 @@ class TwoMassClean(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class TwoMassCleanNoNeighbor(CatalogdbModel):
+class TwoMass_Clean_No_Neighbor(CatalogdbModel):
 
     class Meta:
         table_name = 'twomass_clean_noneighbor'
         schema = 'catalogdb'
 
 
-class GaiaDR2TmassBestNeighbour(CatalogdbModel):
+class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
-    source_id = ForeignKeyField(GaiaDR2Source,
+    source_id = ForeignKeyField(Gaia_DR2,
                                 field='source_id',
                                 column_name='source_id',
                                 backref='+',
                                 lazy_load=False)
 
-    tmass_pts_key = ForeignKeyField(TwoMassPsc,
+    tmass_pts_key = ForeignKeyField(TwoMassPSC,
                                     field='pts_key',
                                     column_name='tmass_pts_key',
                                     backref='+',
@@ -204,7 +244,7 @@ class GaiaDR2TmassBestNeighbour(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class DR14QV44(CatalogdbModel):
+class DR14_Q_V4_4(CatalogdbModel):
 
     class Meta:
         table_name = 'dr14q_v4_4'
@@ -218,27 +258,45 @@ class unWISE(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class LegacySurveyDR8(CatalogdbModel):
+class Legacy_Survey_DR8(CatalogdbModel):
+
+    ref_cat = TextField()
+    ref_id = BigIntegerField()
+
+    @property
+    def gaia(self):
+        """Returns the Gaia DR2 object or `None` if no match."""
+
+        if self.ref_cat != 'G2':
+            return None
+
+        return Gaia_DR2.get(source_id=self.ref_id)
 
     class Meta:
         table_name = 'legacy_survey_dr8'
         schema = 'catalogdb'
 
 
-class GaiaUnwiseAgn(CatalogdbModel):
+class Gaia_unWISE_AGN(CatalogdbModel):
 
-    unwise_objid = ForeignKeyField(unWISE,
-                                   lazy_load=True)
+    gaia_sourceid = BigIntegerField(primary_key=True)
 
-    gaia = ForeignKeyField(GaiaDR2Source,
-                           lazy_load=True)
+    unwise = ForeignKeyField(unWISE, field='unwise_objid',
+                             column_name='unwise_objid',
+                             object_id_name='unwise_objid',
+                             backref='+')
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid_id',
+                           backref='+')
 
     class Meta:
         table_name = 'gaia_unwise_agn'
         schema = 'catalogdb'
 
 
-class EbosstargetV5(CatalogdbModel):
+class eBOSS_Taarget_v5(CatalogdbModel):
 
     class Meta:
         table_name = 'ebosstarget_v5'
@@ -250,7 +308,7 @@ class EbosstargetV5(CatalogdbModel):
 # BhmSpidersClustersSuperset which are real database tables. I am assuming that PeeWee
 # can handle such a scheme without problems. If not, then we will have to duplicate the
 
-class BhmSpidersGenericSuperset(CatalogdbModel):
+class BHM_Spiders_Generic_Superset(CatalogdbModel):
 
     # Not using reflection here to preserve Tom's notes.
 
@@ -366,19 +424,19 @@ class BhmSpidersGenericSuperset(CatalogdbModel):
 
 # Note that following models are currently identical in form, but may well diverge in the future
 
-class BhmSpidersAgnSuperset(BhmSpidersGenericSuperset):
+class BHM_Spiders_AGN_Superset(BHM_Spiders_Generic_Superset):
 
     class Meta:
         table_name = 'bhm_spiders_agn_superset'
 
 
-class BhmSpidersClustersSuperset(BhmSpidersGenericSuperset):
+class BHM_Spiders_Clusters_Superset(BHM_Spiders_Generic_Superset):
 
     class Meta:
         table_name = 'bhm_spiders_clusters_superset'
 
 
-class BhmCsc(CatalogdbModel):
+class BHM_CSC(CatalogdbModel):
 
     class Meta:
         table_name = 'bhm_csc'
@@ -389,11 +447,11 @@ class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
     @property
     def specobj(self):
-        """Returns the matching record in `.SDSSDR16SpecObj`."""
+        """Returns the matching record in `.SDSS_DR16_SpecObj`."""
 
-        return SDSSDR16SpecObj.get(SDSSDR16SpecObj.plate == self.plate,
-                                   SDSSDR16SpecObj.mjd == self.mjd,
-                                   SDSSDR16SpecObj.fiberid == self.fiber)
+        return SDSS_DR16_SpecObj.get(SDSS_DR16_SpecObj.plate == self.plate,
+                                     SDSS_DR16_SpecObj.mjd == self.mjd,
+                                     SDSS_DR16_SpecObj.fiberid == self.fiber)
 
     class Meta:
         table_name = 'gaia_dr2_wd_sdss'
@@ -403,7 +461,7 @@ class Gaia_DR2_WD_SDSS(CatalogdbModel):
 class Gaia_DR2_WD(CatalogdbModel):
 
     @property
-    def sdss_spectra(self):
+    def sdss(self):
         """Returns records from `.Gaia_DR2_WD_SDSS` with matching ``wd``."""
 
         return Gaia_DR2_WD_SDSS.select().where(Gaia_DR2_WD_SDSS.wd == self.wd)
@@ -414,6 +472,8 @@ class Gaia_DR2_WD(CatalogdbModel):
 
 
 class Tycho2(CatalogdbModel):
+
+    name = TextField()
 
     class Meta:
         table_name = 'tycho2'
@@ -426,3 +486,37 @@ class GaiaQSO(CatalogdbModel):
         table_name = 'gaia_qso'
         schema = 'catalogdb'
 
+
+class TIC_v8(CatalogdbModel):
+
+    tycho2 = ForeignKeyField(Tycho2, field='name',
+                             column_name='tyc', object_id_name='tyc',
+                             backref='tic')
+
+    twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
+                                  column_name='twomass', object_id_name='twomass',
+                                  backref='tic')
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj, field='objid',
+                               column_name='sdss_int', object_id_name='sdss_int',
+                               backref='tic')
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_int', object_id_name='gaia_int',
+                           backref='tic')
+
+    allwise_target = ForeignKeyField(AllWise, field='designation',
+                                     column_name='allwise', object_id_name='allwise',
+                                     backref='tic')
+
+    kepler_input = ForeignKeyField(KeplerInput_DR10, field='kic_kepler_id',
+                                   column_name='kic', object_id_name='kic',
+                                   backref='tic')
+
+    class Meta:
+        table_name = 'tic_v8'
+        schema = 'catalogdb'
+
+
+_Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
+_APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)

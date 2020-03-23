@@ -205,7 +205,7 @@ img varbinary   -1  IMAGE?      Spectrum Image
 */
 
 CREATE TABLE catalogdb.sdss_dr16_specobj(
-    specObjID numeric(20),
+    specObjID numeric(20) PRIMARY KEY,
     bestObjID bigint,
     fluxObjID bigint,
     targetObjID bigint,
@@ -404,22 +404,13 @@ CREATE TABLE catalogdb.sdss_dr16_specobj(
 
 \copy catalogdb.sdss_dr16_specobj FROM program 'bzcat /uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssSpecObj/dr16/src/sqlSpecObj.csv.bz2' WITH CSV HEADER;
 
-alter table catalogdb.sdss_dr16_specobj add primary key(specObjID);
-
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_bestObjID_index
-    ON catalogdb.sdss_dr16_specobj using BTREE (bestObjID);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_fluxObjID_index
-    ON catalogdb.sdss_dr16_specobj using BTREE (fluxObjID);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_targetObjID_index
-    ON catalogdb.sdss_dr16_specobj using BTREE (targetObjID);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_mjd_index
-    ON catalogdb.sdss_dr16_specobj using BTREE (mjd);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_plate_index
-    ON catalogdb.sdss_dr16_specobj using BTREE (plate);
-CREATE INDEX CONCURRENTLY sdss_dr16_sdss_dr16_specobj_fiberid_index
-    ON catalogdb.sdss_dr16_specobj using BTREE (fiberid);
-
-
-CREATE INDEX on catalogdb.sdss_dr16_specobj (q3c_ang2ipix(ra, dec));
-CLUSTER sdss_dr16_specobj_q3c_ang2ipix_idx on catalogdb.sdss_dr16_specobj;
+CREATE INDEX ON catalogdb.sdss_dr16_specobj (q3c_ang2ipix(ra, dec));
+CLUSTER sdss_dr16_specobj_q3c_ang2ipix_idx ON catalogdb.sdss_dr16_specobj;
 ANALYZE catalogdb.sdss_dr16_specobj;
+
+CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (bestObjID);
+CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (fluxObjID);
+CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (targetObjID);
+CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (mjd);
+CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (plate);
+CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (fiberid);

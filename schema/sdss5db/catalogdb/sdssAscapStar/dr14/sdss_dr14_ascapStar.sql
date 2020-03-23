@@ -171,7 +171,7 @@ felem_nd_h_err  real    4       dex FERRE pipeline uncalibratied ratio original 
 CREATE TABLE catalogdb.sdss_dr14_ascapStar(
     apstar_id   varchar(64),
     target_id   varchar(64),
-    aspcap_id   varchar(64),
+    aspcap_id   varchar(64) PRIMARY KEY,
     apogee_id   varchar(32),
     aspcap_version  varchar(32),
     results_version varchar(32),
@@ -331,12 +331,7 @@ CREATE TABLE catalogdb.sdss_dr14_ascapStar(
     felem_nd_h_err  real
 );
 
-
 \copy catalogdb.sdss_dr14_ascapStar FROM program 'bzcat $CATALOGDB_DIR/sdssAscapStar/dr14/src/sqlaspcapStar.csv.bz2' WITH CSV HEADER;
 
-alter table catalogdb.sdss_dr14_ascapStar add primary key(apstar_id);
-
-CREATE INDEX CONCURRENTLY sdss_dr14_ascapStar_target_id_index ON catalogdb.sdss_dr14_ascapStar using BTREE (target_id);
-CREATE INDEX CONCURRENTLY sdss_dr14_ascapStar_apogee_id_index ON catalogdb.sdss_dr14_ascapStar using BTREE (apogee_id);
-
-
+CREATE INDEX ON catalogdb.sdss_dr14_ascapStar USING BTREE (target_id);
+CREATE INDEX ON catalogdb.sdss_dr14_ascapStar USING BTREE (apogee_id);

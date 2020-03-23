@@ -11,9 +11,7 @@ drop index catalogdb.gaia_dr1_tgas_dec_index;
 
 -- Indices
 
-CREATE INDEX CONCURRENTLY ON catalogdb.guvcat using BTREE (ra);
-CREATE INDEX CONCURRENTLY ON catalogdb.guvcat using BTREE (dec);
 
-alter table catalogdb.guvcat add primary key(objid);
-
-
+CREATE INDEX ON catalogdb.guvcat (q3c_ang2ipix(ra, dec));
+CLUSTER guvcat_q3c_ang2ipix_idx ON catalogdb.guvcat;
+ANALYZE catalogdb.guvcat;

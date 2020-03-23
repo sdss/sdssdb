@@ -333,7 +333,7 @@ References:
 
 CREATE TABLE catalogdb.tycho2 (
     id_tycho  BIGINT PRIMARY KEY,
-      name    TEXT,
+      name    TEXT PRIMARY KEY,
       pflag   CHARACTER(1),
       ramdeg  DOUBLE PRECISION,
       demdeg  DOUBLE PRECISION,

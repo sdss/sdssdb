@@ -48,6 +48,8 @@ CREATE TABLE catalogdb.gaia_qso (
 \copy catalogdb.gaia_qso FROM PROGRAM 'cat $CATALOGDB_DIR/gaia_qso/Gaia_QSO_Liao_2019.csv' WITH CSV HEADER;
 
 ALTER TABLE catalogdb.gaia_qso ADD COLUMN pk BIGSERIAL;
+ALTER TABLE catalogdb.gaia_qso ADD PRIMARY KEY (pk);
+
 
 CREATE INDEX ON catalogdb.gaia_qso (q3c_ang2ipix(raj2000, dej2000));
 CLUSTER gaia_qso_q3c_ang2ipix_idx ON catalogdb.gaia_qso;
