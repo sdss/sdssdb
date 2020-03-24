@@ -9,6 +9,7 @@ import re
 import pytest
 import importlib
 import inspect
+import sdssdb
 from sdssdb.tests.sqladbs import prepare_testdb as sqla_prepdb
 from sdssdb.tests.pwdbs import prepare_testdb as pw_prepdb
 from pytest_postgresql.factories import DatabaseJanitor
@@ -18,14 +19,18 @@ from pytest_postgresql.factories import DatabaseJanitor
 # register(TableFactory)
 
 
-# def pytest_addoption(parser):
-#     """ Add new options to the pytest command-line """
-#     # only run peewee tests
-#     parser.addoption('--peewee', action='store_true', default=False, 
-#                      help='Only run tests for peewee dbs')
-#     # only run sqla tests
-#     parser.addoption('--sqla', action='store_true', default=False,
-#                      help='Only run tests for sqlalchemy dbs')
+def pytest_addoption(parser):
+    """ Add new options to the pytest command-line """
+    # # only run peewee tests
+    # parser.addoption('--peewee', action='store_true', default=False, 
+    #                  help='Only run tests for peewee dbs')
+    # # only run sqla tests
+    # parser.addoption('--sqla', action='store_true', default=False,
+    #                  help='Only run tests for sqlalchemy dbs')
+
+    # persist the sqla session and peewee transaction
+    parser.addoption('--persist-sessions', action='store_true', default=False,
+                     help='Switch session and transaction fixtures to module scope')
 
 
 def pytest_ignore_collect(path, config):
@@ -75,7 +80,7 @@ def database(dropdb, request):
         yield request.param
     else:
         # check if request is coming from a sqla db or peewee db
-        issqla = 'sqladbs' in request.module.__name__
+        issqla = 'sqladbs' in request.module.__name__ or 'sqlalchemy' in request.module.__name__
         # initialize the test database
         janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '11.4')
         janitor.init()
@@ -85,11 +90,9 @@ def database(dropdb, request):
         janitor.drop()
 
 
-@pytest.fixture(scope='module')
-def session(database):
-    ''' SQLA session fixture. set autouse=True to ensure persistence '''
-    session = database.Session()
-    session.begin()
-    yield session
-    session.rollback()
-    session.close()
+def determine_scope(fixture_name, config):
+    ''' determine the scope of the session and transaction fixtures '''
+    if config.getoption("--persist-sessions", None):
+        return "module"
+    return "function"
+

@@ -7,15 +7,17 @@
 # Created: Monday, 23rd March 2020 4:41:32 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Monday, 23rd March 2020 5:18:29 pm
+# Last Modified: Tuesday, 24th March 2020 10:16:06 am
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
 import factory
 import inspect
+import pytest
 from pytest_factoryboy import register
 from . import factories
+from ..conftest import determine_scope
 
 
 # register all xxxFactory classes
@@ -27,3 +29,11 @@ for item in dir(factories):
     attr = getattr(factories, item)
     if inspect.isclass(attr) and issubclass(attr, factory.Factory):
         register(attr)
+
+
+@pytest.fixture(scope=determine_scope, autouse=True)
+def transaction(database):
+    ''' Peewee transaction fixture. set autouse=True to ensure persistence '''
+    with database.transaction() as txn:
+        yield txn
+        txn.rollback()
