@@ -546,5 +546,19 @@ class Watchdog(CatalogdbModel):
         schema = 'catalogdb'
 
 
+class BlackCAT(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'blackcat'
+        schema = 'catalogdb'
+
+
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
