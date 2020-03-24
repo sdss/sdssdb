@@ -521,15 +521,15 @@ class TIC_v8(CatalogdbModel):
 class CatWISE(CatalogdbModel):
 
     class Meta:
-        table_name = 'tic_v8'
-        schema = 'catwise'
+        table_name = 'catwise'
+        schema = 'catalogdb'
 
 
 class CatWISEReject(CatalogdbModel):
 
     class Meta:
-        table_name = 'tic_v8'
-        schema = 'catwise_reject'
+        table_name = 'catwise_reject'
+        schema = 'catalogdb'
 
 
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
