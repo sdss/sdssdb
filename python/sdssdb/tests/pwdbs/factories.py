@@ -7,7 +7,7 @@
 # Created: Monday, 23rd March 2020 4:35:14 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 10:44:44 am
+# Last Modified: Tuesday, 24th March 2020 2:30:20 pm
 # Modified By: Brian Cherinka
 
 
@@ -19,7 +19,9 @@ from .factoryboy import PeeweeModelFactory
 
 # can use factory.Faker to create simple fake items
 # or more general faker object to create more complicated items like python lists,
-# sets, or dicts.  See sqladbs.factories.WavelengthFactory.
+# sets, or dicts.  See sqladbs.factories.WavelengthFactory.  For a list of available fake
+# providers, see https://faker.readthedocs.io/en/master/providers.html.  To see the available
+# factory declarations, see https://factoryboy.readthedocs.io/en/latest/reference.html#declarations
 faker = factory.faker.faker.Factory().create()
 
 

@@ -9,14 +9,9 @@ import re
 import pytest
 import importlib
 import inspect
-import sdssdb
 from sdssdb.tests.sqladbs import prepare_testdb as sqla_prepdb
 from sdssdb.tests.pwdbs import prepare_testdb as pw_prepdb
 from pytest_postgresql.factories import DatabaseJanitor
-
-# from pytest_factoryboy import register
-# from sdssdb.tests.sqladbs.testdb import TableFactory
-# register(TableFactory)
 
 
 def pytest_addoption(parser):
@@ -92,6 +87,7 @@ def database(dropdb, request):
         # check if request is coming from a sqla db or peewee db
         issqla = 'sqladbs' in request.module.__name__ or 'sqlalchemy' in request.module.__name__
         # initialize the test database
+        # uses https://github.com/ClearcodeHQ/pytest-postgresql
         janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '11.4')
         janitor.init()
         db = sqla_prepdb() if issqla else pw_prepdb()

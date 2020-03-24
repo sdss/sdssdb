@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 5:45:43 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 10:44:57 am
+# Last Modified: Tuesday, 24th March 2020 2:29:23 pm
 # Modified By: Brian Cherinka
 
 
@@ -20,7 +20,9 @@ from sdssdb.sqlalchemy.archive import database as archive
 
 # can use factory.Faker to create simple fake items
 # or more general faker object to create more complicated items like python lists,
-# sets, or dicts.  See sqladbs.factories.WavelengthFactory.
+# sets, or dicts.  See sqladbs.factories.WavelengthFactory.  For a list of available fake
+# providers, see https://faker.readthedocs.io/en/master/providers.html.  To see the available
+# factory declarations, see https://factoryboy.readthedocs.io/en/latest/reference.html#declarations
 faker = factory.faker.faker.Factory().create()
 
 # need to load Model Classes this way for cases where the database does not exist for a test

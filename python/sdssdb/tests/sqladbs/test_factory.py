@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 3:17:17 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 9:23:14 am
+# Last Modified: Tuesday, 24th March 2020 2:35:42 pm
 # Modified By: Brian Cherinka
 
 
@@ -32,7 +32,6 @@ class TestFactory(object):
 
     def test_factory_fixture(self, session, user_factory):
         ''' test the factory can create new entries '''
-        print('tf', user_factory._meta.sqlalchemy_session, database.Session)
         table = user_factory(name="Test Human")
         assert table.id == 0
         assert table.name == "Test Human"
@@ -40,7 +39,6 @@ class TestFactory(object):
 
     def test_a_transaction(self, session, batchit):
         rows = session.query(models.User).all()
-        print('rows', rows)
         assert len(rows) >= 10
 
     def test_model_fixture(self, user):

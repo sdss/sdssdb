@@ -7,7 +7,7 @@
 # Created: Monday, 23rd March 2020 4:20:08 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:02:28 pm
+# Last Modified: Tuesday, 24th March 2020 2:35:58 pm
 # Modified By: Brian Cherinka
 
 
@@ -25,7 +25,6 @@ class TestFactory(object):
 
     def test_factory_fixture(self, transaction, user_factory):
         ''' test the factory can create new entries '''
-        print('tf', user_factory)
         user = user_factory(name="Test Human")
         assert user.id == 1
         assert user.name == "Test Human"
@@ -33,7 +32,6 @@ class TestFactory(object):
 
     def test_a_transaction(self, transaction, batchit):
         rows = list(models.User.select())
-        print('rows', rows)
         assert len(rows) >= 10
 
     def test_model_fixture(self, transaction, user):

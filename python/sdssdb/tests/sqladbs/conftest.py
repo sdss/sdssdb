@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 5:46:55 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 11:46:29 am
+# Last Modified: Tuesday, 24th March 2020 2:29:49 pm
 # Modified By: Brian Cherinka
 
 
@@ -28,7 +28,8 @@ from . import factories
 # pytest_factoryboy @register decorator registers fixtures in directory where it is
 # called.  To make available to tests, need to either import them
 # have to register manually in conftest, instead of with @register class decorator, when
-# factories organized in separate files compared to models and tests
+# factories organized in separate files compared to models and tests.  For docs on
+# pytest_factoryboy, see https://pytest-factoryboy.readthedocs.io/en/latest
 for item in dir(factories):
     attr = getattr(factories, item)
     if inspect.isclass(attr) and issubclass(attr, factory.Factory):
