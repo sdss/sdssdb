@@ -183,3 +183,28 @@ ALTER TABLE catalogdb.bhm_spiders_clusters_superset
     FOREIGN KEY (ls_id)
     REFERENCES catalogdb.legacy_survey_dr8 (ls_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+-- skymapper_dr1_1
+
+CREATE INDEX ON catalogdb.skymapper_dr1_1 USING BTREE (allwise_cntr);
+CREATE INDEX ON catalogdb.skymapper_dr1_1 USING BTREE (gaia_dr2_id1);
+CREATE INDEX ON catalogdb.skymapper_dr1_1 USING BTREE (gaia_dr2_id2);
+
+ALTER TABLE catalogdb.skymapper_dr1_1
+    ADD CONSTRAINT allwise_cntr_fk
+    FOREIGN KEY (allwise_cntr)
+    REFERENCES catalogdb.allwise (cntr)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE catalogdb.skymapper_dr1_1
+    ADD CONSTRAINT gaia_dr2_id1_fk
+    FOREIGN KEY (gaia_dr2_id1)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE catalogdb.skymapper_dr1_1
+    ADD CONSTRAINT gaia_dr2_id2_fk
+    FOREIGN KEY (gaia_dr2_id2)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
+    ON UPDATE CASCADE ON DELETE CASCADE;

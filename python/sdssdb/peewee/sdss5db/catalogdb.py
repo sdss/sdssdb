@@ -616,5 +616,45 @@ class ATNF(CatalogdbModel):
         schema = 'catalogdb'
 
 
+class SkyMapper_DR1_1(CatalogdbModel):
+
+    allwise = ForeignKeyField(AllWise, field='cntr',
+                              column_name='allwise_cntr',
+                              object_id_name='allwise_cntr',
+                              backref='skymapper')
+
+    gaia1 = ForeignKeyField(Gaia_DR2, field='source_id',
+                            column_name='gaia_dr2_id1',
+                            object_id_name='gaia_dr2_id1',
+                            backref='skymapper1')
+
+    gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
+                            column_name='gaia_dr2_id2',
+                            object_id_name='gaia_dr2_id2',
+                            backref='skymapper2')
+
+    @property
+    def twomass1(self):
+        """Returns the closest 2MASS PSC source, if defined."""
+
+        if self.twomass_cat1 != 'PSC':
+            return None
+
+        return TwoMassPSC.get(pts_key=self.twomass_key1)
+
+    @property
+    def twomass2(self):
+        """Returns the second closest 2MASS PSC source, if defined."""
+
+        if self.twomass_cat2 != 'PSC':
+            return None
+
+        return TwoMassPSC.get(pts_key=self.twomass_key2)
+
+    class Meta:
+        table_name = 'skymapper_dr1_1'
+        schema = 'catalogdb'
+
+
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
