@@ -184,6 +184,19 @@ class SDSS_DR14_Cannon_Star(CatalogdbModel):
         schema = 'catalogdb'
 
 
+class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
+
+    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
+                             field='apogee_id',
+                             column_name='apogee_id',
+                             object_id_name='apogee_id',
+                             backref='allstar')
+
+    class Meta:
+        table_name = 'sdss_apogeeAllStarMerge_r13'
+        schema = 'catalogdb'
+
+
 class SDSS_DR14_SpecObj(CatalogdbModel):
 
     photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,

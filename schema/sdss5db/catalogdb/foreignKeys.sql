@@ -184,7 +184,6 @@ ALTER TABLE catalogdb.bhm_spiders_clusters_superset
     REFERENCES catalogdb.legacy_survey_dr8 (ls_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-<<<<<<< Updated upstream
 
 -- skymapper_dr1_1
 
@@ -208,15 +207,13 @@ ALTER TABLE catalogdb.skymapper_dr1_1
     ADD CONSTRAINT gaia_dr2_id2_fk
     FOREIGN KEY (gaia_dr2_id2)
     REFERENCES catalogdb.gaia_dr2_source (source_id)
-=======
 CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (ls_id);
 
 
--- sdss_apogeeAllStarMerge_r13_q3c_ang2ipix_gal_idx
+-- sdss_apogeeAllStarMerge_r13
 
-ALTER TABLE catalogdb.bhm_spiders_clusters_superset
-    ADD CONSTRAINT ls_id_fk
-    FOREIGN KEY (ls_id)
-    REFERENCES catalogdb.legacy_survey_dr8 (ls_id)
->>>>>>> Stashed changes
+ALTER TABLE catalogdb.sdss_apogeeAllStarMerge_r13
+    ADD CONSTRAINT apogee_id_fk
+    FOREIGN KEY (apogee_id)
+    REFERENCES catalogdb.sdss_dr14_apogeeStar (apogee_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
