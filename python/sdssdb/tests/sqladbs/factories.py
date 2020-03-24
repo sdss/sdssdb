@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 5:45:43 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:29:23 pm
+# Last Modified: Tuesday, 24th March 2020 2:39:38 pm
 # Modified By: Brian Cherinka
 
 
@@ -16,7 +16,7 @@ import factory
 from sdssdb.tests.sqladbs import models, database as db, get_model_from_database
 from sdssdb.sqlalchemy.mangadb import database as mangadb
 from sdssdb.sqlalchemy.archive import database as archive
-#from pytest_factoryboy import register
+from pytest_factoryboy import register
 
 # can use factory.Faker to create simple fake items
 # or more general faker object to create more complicated items like python lists,
@@ -30,7 +30,7 @@ datadb = get_model_from_database(mangadb, 'datadb')
 sas = get_model_from_database(archive, 'sas')
 
 
-#@register
+@register
 class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     ''' factory for testdb user table'''
     class Meta:
@@ -43,7 +43,7 @@ class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
 
 
 if datadb:
-    #@register
+    @register
     class WaveFactory(factory.alchemy.SQLAlchemyModelFactory):
         ''' factory for mangadb wavelength table '''
         class Meta:
@@ -56,7 +56,7 @@ if datadb:
 
 
 if sas:
-    #@register
+    @register
     class TreeFactory(factory.alchemy.SQLAlchemyModelFactory):
         ''' factory for archive db tree table '''
         class Meta:

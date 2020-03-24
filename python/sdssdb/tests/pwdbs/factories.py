@@ -7,14 +7,14 @@
 # Created: Monday, 23rd March 2020 4:35:14 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:30:20 pm
+# Last Modified: Tuesday, 24th March 2020 2:38:07 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
 import factory
 from sdssdb.tests.pwdbs import models, database as testdb
-from sdssdb.peewee.sdss5db import database as sdss5db, catalogdb, targetdb
+from sdssdb.peewee.sdss5db import database as sdss5db, targetdb
 from .factoryboy import PeeweeModelFactory
 
 # can use factory.Faker to create simple fake items
@@ -43,7 +43,4 @@ class TargetTypeFactory(PeeweeModelFactory):
 
     pk = factory.Sequence(lambda n: n)
     label = factory.Faker('word')
-    # catalogid = factory.Faker('pyint')
-    # ra = factory.Faker('pyfloat', min_value=0, max_value=360)
-    # dec = factory.Faker('pyfloat', min_value=0, max_value=90)
-    # field_pk = factory.Sequence(lambda n: n)
+
