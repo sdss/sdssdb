@@ -7,12 +7,12 @@
 # Created: Monday, 23rd March 2020 4:20:08 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 9:23:21 am
+# Last Modified: Tuesday, 24th March 2020 2:02:28 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
-from sdssdb.tests.pwdbs import models, database
+from sdssdb.tests.pwdbs import models
 import pytest
 
 

@@ -7,15 +7,11 @@
 # Created: Tuesday, 24th March 2020 11:14:22 am
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 11:42:35 am
+# Last Modified: Tuesday, 24th March 2020 2:01:54 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
-import sdssdb
-import pytest
-from sdssdb.tests.sqladbs import database as sqladb
-from sdssdb.tests.pwdbs import database as pwdb
 
 
 def assert_testdb(database):

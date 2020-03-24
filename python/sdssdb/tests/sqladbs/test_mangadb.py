@@ -7,7 +7,7 @@
 # Created: Friday, 23rd August 2019 12:35:00 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2019 Brian Cherinka
-# Last Modified: Sunday, 22nd March 2020 4:44:35 pm
+# Last Modified: Tuesday, 24th March 2020 2:01:11 pm
 # Modified By: Brian Cherinka
 
 
@@ -18,11 +18,11 @@ from __future__ import print_function, division, absolute_import
 # #from ..conftest import TmpBase
 # from sqlalchemy.dialects.postgresql import ARRAY
 import factory
+import pytest
 from pytest_factoryboy import register
 from sdssdb.sqlalchemy.mangadb import database
 if database.connected:
     from sdssdb.sqlalchemy.mangadb import datadb
-import pytest
 
 faker = factory.faker.faker.Factory().create()
 

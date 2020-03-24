@@ -7,13 +7,13 @@
 # Created: Sunday, 1st March 2020 2:56:48 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 10:43:29 am
+# Last Modified: Tuesday, 24th March 2020 2:02:15 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
 import pytest
-from sdssdb.peewee.sdss5db import database, catalogdb, targetdb
+from sdssdb.peewee.sdss5db import database, targetdb
 
 
 @pytest.mark.parametrize('database', [database], indirect=True)

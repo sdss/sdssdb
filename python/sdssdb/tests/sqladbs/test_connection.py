@@ -7,14 +7,14 @@
 # Created: Tuesday, 24th March 2020 11:24:38 am
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 11:25:43 am
+# Last Modified: Tuesday, 24th March 2020 2:00:52 pm
 # Modified By: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import
-from __future__ import print_function, division, absolute_import
-import sdssdb
+from __future__ import absolute_import, division, print_function
+
 import pytest
+import sdssdb
 
 
 def assert_testdb(database):
@@ -30,4 +30,3 @@ class TestSQLADatabaseConnection(object):
         ''' test connection to testdb '''
         assert_testdb(database)
         assert isinstance(database, sdssdb.connection.SQLADatabaseConnection)
-

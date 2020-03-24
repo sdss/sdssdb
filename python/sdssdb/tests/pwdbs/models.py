@@ -7,12 +7,12 @@
 # Created: Monday, 23rd March 2020 4:35:07 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Monday, 23rd March 2020 4:57:34 pm
+# Last Modified: Tuesday, 24th March 2020 2:02:52 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
-from peewee import IntegerField, CharField, AutoField
+from peewee import CharField, AutoField
 from sdssdb.tests.pwdbs import TmpModel
 
 

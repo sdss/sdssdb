@@ -7,13 +7,12 @@
 # Created: Tuesday, 24th March 2020 11:25:08 am
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 11:25:36 am
+# Last Modified: Tuesday, 24th March 2020 2:02:40 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
 import sdssdb
-import pytest
 
 
 def assert_testdb(database):

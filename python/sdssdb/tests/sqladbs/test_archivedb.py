@@ -7,15 +7,15 @@
 # Created: Monday, 2nd March 2020 1:24:15 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Monday, 23rd March 2020 3:33:54 pm
+# Last Modified: Tuesday, 24th March 2020 2:00:40 pm
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
+import pytest
 from sdssdb.sqlalchemy.archive import database
 if database.connected:
     from sdssdb.sqlalchemy.archive import sas
-import pytest
 
 
 @pytest.mark.parametrize('database', [database], indirect=True)
