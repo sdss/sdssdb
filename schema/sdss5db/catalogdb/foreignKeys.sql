@@ -118,12 +118,12 @@ ALTER TABLE catalogdb.tic_v8
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (twomass);
 
 ALTER TABLE catalogdb.tic_v8
-    ADD CONSTRAINT sdss_int_fk
+    ADD CONSTRAINT sdss_fk
     FOREIGN KEY (sdss_int)
     REFERENCES catalogdb.sdss_dr13_photoobj (objid)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (sdss_int);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (sdss);
 
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT gaia_int_fk

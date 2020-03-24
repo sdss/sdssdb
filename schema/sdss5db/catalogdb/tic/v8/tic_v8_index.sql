@@ -4,9 +4,6 @@
 ALTER TABLE catalogdb.tic_v8 ADD COLUMN gaia_int BIGINT;
 UPDATE catalogdb.tic_v8 SET gaia_int = gaia::BIGINT;
 
-ALTER TABLE catalogdb.tic_v8 ADD COLUMN sdss_int BIGINT;
-UPDATE catalogdb.tic_v8 SET sdss_int = sdss::BIGINT;
-
 
 -- Indices
 
