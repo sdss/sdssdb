@@ -102,6 +102,11 @@ ALTER TABLE catalogdb.sdss_dr14_ascapStar
 -- tic_v8
 
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (sdss);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (tyc);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (twomass);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (kic);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (allwise);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gaia_int);
 
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT sdss_fk
@@ -109,15 +114,11 @@ ALTER TABLE catalogdb.tic_v8
     REFERENCES catalogdb.sdss_dr13_photoobj (objid)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (tyc);
-
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT tyc_fk
     FOREIGN KEY (tyc)
     REFERENCES catalogdb.tycho2 (name)
     ON UPDATE CASCADE ON DELETE CASCADE;
-
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (twomass);
 
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT twomass_fk
@@ -125,28 +126,22 @@ ALTER TABLE catalogdb.tic_v8
     REFERENCES catalogdb.twomass_psc (designation)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gaia_int);
-
-ALTER TABLE catalogdb.tic_v8
-    ADD CONSTRAINT gaia_int_fk
-    FOREIGN KEY (gaia_int)
-    REFERENCES catalogdb.gaia_dr2_source (source_id)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (allwise);
-
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT allwise_fk
     FOREIGN KEY (allwise)
     REFERENCES catalogdb.allwise (designation)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (kic);
-
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT kic_fk
     FOREIGN KEY (kic)
     REFERENCES catalogdb.kepler_input_10 (kic_kepler_id)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE catalogdb.tic_v8
+    ADD CONSTRAINT gaia_int_fk
+    FOREIGN KEY (gaia_int)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 
