@@ -21,12 +21,13 @@ from pytest_postgresql.factories import DatabaseJanitor
 
 def pytest_addoption(parser):
     """ Add new options to the pytest command-line """
-    # # only run peewee tests
-    # parser.addoption('--peewee', action='store_true', default=False, 
-    #                  help='Only run tests for peewee dbs')
-    # # only run sqla tests
-    # parser.addoption('--sqla', action='store_true', default=False,
-    #                  help='Only run tests for sqlalchemy dbs')
+    # only run peewee tests
+    parser.addoption('--peewee', action='store_true', default=False, 
+                     help='Only run tests for peewee dbs')
+
+    # only run sqla tests
+    parser.addoption('--sqla', action='store_true', default=False,
+                     help='Only run tests for sqlalchemy dbs')
 
     # persist the sqla session and peewee transaction
     parser.addoption('--persist-sessions', action='store_true', default=False,
@@ -40,6 +41,15 @@ def pytest_ignore_collect(path, config):
     which ones have databases that fail to connect and ignores them.
 
     '''
+    only_peewee = config.getoption("--peewee", None)
+    only_sqla = config.getoption("--sqla", None)
+    assert not all([only_peewee, only_sqla]), 'both --peewee and --sqla options cannot be set'
+    if only_peewee:
+        if 'sqladbs' in str(path):
+            return True
+    if only_sqla:
+        if 'pwdbs' in str(path):
+            return True
 
     # identify and ignore test modules where no local
     # database is set up for those tests
