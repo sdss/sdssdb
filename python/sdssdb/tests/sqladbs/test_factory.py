@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 3:17:17 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Monday, 23rd March 2020 6:19:07 pm
+# Last Modified: Tuesday, 24th March 2020 9:23:14 am
 # Modified By: Brian Cherinka
 
 
@@ -41,7 +41,7 @@ class TestFactory(object):
     def test_a_transaction(self, session, batchit):
         rows = session.query(models.User).all()
         print('rows', rows)
-        assert len(rows) == 11
+        assert len(rows) >= 10
 
     def test_model_fixture(self, user):
         ''' test a single new instance of model Table is created '''

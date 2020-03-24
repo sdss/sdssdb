@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 5:45:43 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Monday, 23rd March 2020 6:13:02 pm
+# Last Modified: Tuesday, 24th March 2020 10:44:57 am
 # Modified By: Brian Cherinka
 
 
@@ -18,7 +18,9 @@ from sdssdb.sqlalchemy.mangadb import database as mangadb
 from sdssdb.sqlalchemy.archive import database as archive
 #from pytest_factoryboy import register
 
-
+# can use factory.Faker to create simple fake items
+# or more general faker object to create more complicated items like python lists,
+# sets, or dicts.  See sqladbs.factories.WavelengthFactory.
 faker = factory.faker.faker.Factory().create()
 
 # need to load Model Classes this way for cases where the database does not exist for a test
