@@ -7,7 +7,7 @@
 # Created: Monday, 23rd March 2020 4:35:14 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:38:07 pm
+# Last Modified: Tuesday, 24th March 2020 3:37:42 pm
 # Modified By: Brian Cherinka
 
 
@@ -35,10 +35,10 @@ class UserFactory(PeeweeModelFactory):
     essence = 'human'
 
 
-class TargetTypeFactory(PeeweeModelFactory):
-    ''' factory for sdss5db targetdb target_type table '''
+class CategoryFactory(PeeweeModelFactory):
+    ''' factory for sdss5db targetdb category table '''
     class Meta:
-        model = targetdb.TargetType
+        model = targetdb.Category
         database = sdss5db
 
     pk = factory.Sequence(lambda n: n)

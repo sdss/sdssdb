@@ -7,7 +7,7 @@
 # Created: Monday, 23rd March 2020 4:20:08 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:35:58 pm
+# Last Modified: Tuesday, 24th March 2020 3:34:48 pm
 # Modified By: Brian Cherinka
 
 
@@ -35,7 +35,7 @@ class TestFactory(object):
         assert len(rows) >= 10
 
     def test_model_fixture(self, transaction, user):
-        ''' test a single new instance of model Table is created '''
+        ''' test a single new instance of model User is created '''
         assert isinstance(user, models.User)
         assert user.essence == 'human'
         assert user.name != 'Test Human'

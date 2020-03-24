@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 3:17:17 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:35:42 pm
+# Last Modified: Tuesday, 24th March 2020 3:34:36 pm
 # Modified By: Brian Cherinka
 
 
@@ -32,17 +32,17 @@ class TestFactory(object):
 
     def test_factory_fixture(self, session, user_factory):
         ''' test the factory can create new entries '''
-        table = user_factory(name="Test Human")
-        assert table.id == 0
-        assert table.name == "Test Human"
-        assert table.essence == 'human'
+        user = user_factory(name="Test Human")
+        assert user.id == 0
+        assert user.name == "Test Human"
+        assert user.essence == 'human'
 
     def test_a_transaction(self, session, batchit):
         rows = session.query(models.User).all()
         assert len(rows) >= 10
 
     def test_model_fixture(self, user):
-        ''' test a single new instance of model Table is created '''
+        ''' test a single new instance of model User is created '''
         assert isinstance(user, models.User)
         assert user.essence == 'human'
         assert user.name != 'Test Human'
