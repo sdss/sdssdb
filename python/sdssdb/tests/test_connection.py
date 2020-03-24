@@ -1,30 +1,35 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # 
-# Filename: test_sqlalchemy.py
+# Filename: test_connection.py
 # Project: tests
 # Author: Brian Cherinka
-# Created: Sunday, 1st March 2020 11:48:23 am
+# Created: Tuesday, 24th March 2020 11:14:22 am
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Monday, 2nd March 2020 1:54:48 pm
+# Last Modified: Tuesday, 24th March 2020 11:42:35 am
 # Modified By: Brian Cherinka
 
 
 from __future__ import print_function, division, absolute_import
+import sdssdb
+import pytest
+from sdssdb.tests.sqladbs import database as sqladb
+from sdssdb.tests.pwdbs import database as pwdb
 
 
-class TestSQLAConnection(object):
-    
-    def _assert_testdb(self, database):
-        assert database.dbname == 'test'
-        assert database.connected is True
-        assert database.profile == 'local'
-        assert database.dbversion is None
+def assert_testdb(database):
+    assert database.dbname == 'test'
+    assert database.connected is True
+    assert database.profile == 'local'
+    assert database.dbversion is None        
+
+
+class TestGenericDatabaseConnection(object):
 
     def test_db_connected(self, database):
         ''' test connection to testdb '''
-        self._assert_testdb(database)
+        assert_testdb(database)
 
     def test_list_profiles(self, database):
         ''' test profiles '''
@@ -35,8 +40,8 @@ class TestSQLAConnection(object):
 
     def test_change_version(self, database):
         ''' test to change db versions '''
-        self._assert_testdb(database)
-        
+        assert_testdb(database)
+
         # change to
         database.change_version('v1')
         assert database.dbname == 'test_v1'
@@ -45,5 +50,4 @@ class TestSQLAConnection(object):
 
         # change back
         database.change_version()
-        self._assert_testdb(database)
-
+        assert_testdb(database)
