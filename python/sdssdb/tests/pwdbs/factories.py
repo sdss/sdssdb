@@ -7,7 +7,7 @@
 # Created: Monday, 23rd March 2020 4:35:14 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 3:37:42 pm
+# Last Modified: Tuesday, 24th March 2020 3:42:31 pm
 # Modified By: Brian Cherinka
 
 
@@ -23,6 +23,12 @@ from .factoryboy import PeeweeModelFactory
 # providers, see https://faker.readthedocs.io/en/master/providers.html.  To see the available
 # factory declarations, see https://factoryboy.readthedocs.io/en/latest/reference.html#declarations
 faker = factory.faker.faker.Factory().create()
+
+#
+# This file contains factories used to generate fake data when needed.  Each factory has a db, a Model
+# or a db.Session applied to it.  All columns in the table must be replaced with some fake data
+# generator using faker or factory.Faker.
+#
 
 
 class UserFactory(PeeweeModelFactory):
