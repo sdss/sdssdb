@@ -24,13 +24,13 @@ def main():
     data = astropy.table.Table.read(file_)
     data.meta = {}
     data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
-    to_csv(data, file_ + '.csv', header=True, overwrite=True)
+    to_csv(data, file_ + '.csv', header=True)
     del data
 
     cursor = database.cursor()
     fileobj = open(file_ + '.csv')
     fileobj.readline()  # Read header
-    cursor.copy_from(fileobj, 'catalogdb.sdss_apogeeAllStarMerge_r13', sep=',')
+    cursor.copy_from(fileobj, 'catalogdb.sdss_apogeeAllStarMerge_r13', sep='\t')
     database.commit()
 
 

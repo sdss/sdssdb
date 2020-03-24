@@ -9,7 +9,9 @@
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last modified time: 2019-09-23 11:47:00
 
+import functools
 import io
+import multiprocessing
 import os
 import re
 import warnings
@@ -37,7 +39,7 @@ DTYPE_TO_FIELD = {
 }
 
 
-def to_csv(table, path, header=True, convert_arrays=True, **kwargs):
+def to_csv(table, path, header=True, delimiter='\t', use_multiprocessing=False, workers=4):
     """Creates a PostgreSQL-valid CSV file from a table, handling arrays.
 
     Parameters
@@ -48,32 +50,31 @@ def to_csv(table, path, header=True, convert_arrays=True, **kwargs):
         The path to which to write the CSV file.
     header : bool
         Whether to add a header with the column names.
-    convert_arrays : bool
-        If `True`, the arrays in the table are converted into a
-        PostgreSQL-valid string.
-    kwargs : dict
-        Other arguments to pass to `~astropy.table.Table.write`.
+    delimiter : str
+        The delimiter between columns in the CSV files.
+    use_multiprocessing : bool
+        Whether to use multiple cores. The rows of the resulting file will not
+        have the same ordering as the original table.
+    workers : int
+        How many workers to use with multiprocessing.
 
     """
 
-    if convert_arrays:
-        columns = [col for col in table.colnames if table[col].ndim > 1]
-        for col in columns:
-            index = table.index_column(col)
-            col_str = ['{' + ','.join(map(str, xx)) + '}' for xx in table[col]]
-            table.remove_column(col)
-            table.add_column(astropy.table.Column(col_str, col), index)
+    if use_multiprocessing:
+        pool = multiprocessing.Pool(workers)
+        tmp_list = pool.map(functools.partial(convert_row_to_psql,
+                                              delimiter=delimiter),
+                            table, chunksize=1000)
+    else:
+        tmp_list = [convert_row_to_psql(row, delimiter=delimiter) for row in table]
+
+    csv_str = '\n'.join(tmp_list)
 
     if header:
-        write_kwargs = {'format': 'csv', 'fast_writer': True}
-    else:
-        write_kwargs = {'format': 'ascii.no_header',
-                        'delimiter': ',',
-                        'fast_writer': True}
+        csv_str = delimiter.join(table.colnames) + '\n' + csv_str
 
-    write_kwargs.update(kwargs)
-
-    table.write(path, **write_kwargs)
+    unit = open(path, 'w')
+    unit.write(csv_str)
 
 
 def table_exists(table_name, connection, schema=None):
@@ -204,6 +205,28 @@ def create_model_from_table(table_name, table, schema=None, lowercase=False,
     return type(str(table_name), (BaseModel,), attrs)
 
 
+def convert_row_to_psql(row, delimiter='\t'):
+    """Concerts an astropy table row to a Postgresql-valid CSV string."""
+
+    row_data = []
+
+    for col_value in row:
+        if numpy.isscalar(col_value):
+            row_data.append(str(col_value))
+        elif numpy.ma.is_masked(col_value):
+            row_data.append('')
+        else:
+            if col_value.dtype.base.str[1] == 'S':
+                col_value = col_value.astype('U')
+            row_data.append(
+                str(col_value.tolist())
+                .replace('\n', '')
+                .replace('\'', '\"')
+                .replace('[', '{').replace(']', '}'))
+
+    return delimiter.join(row_data)
+
+
 def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
               show_progress=False):
     """Loads data into a DB table using ``COPY``.
@@ -252,24 +275,7 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
     for ii in iterable:
 
         row = data[ii]
-
-        row_data = []
-
-        for col_value in row:
-            if numpy.isscalar(col_value):
-                row_data.append(str(col_value))
-            elif numpy.ma.is_masked(col_value):
-                row_data.append('')
-            else:
-                if col_value.dtype.base.str[1] == 'S':
-                    col_value = col_value.astype('U')
-                row_data.append(
-                    str(col_value.tolist())
-                    .replace('\n', '')
-                    .replace('\'', '\"')
-                    .replace('[', '{').replace(']', '}'))
-
-        tmp_list.append('\t'.join(row_data))
+        tmp_list.append(convert_row_to_psql(row))
         chunk += 1
 
         # If we have reached a chunk commit point, or this is the last item,
