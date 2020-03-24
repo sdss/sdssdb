@@ -6,6 +6,9 @@ cache:
 
 sudo: false
 
+services:
+  - postgresql
+  
 python:
 - '2.7'
 - '3.5'
