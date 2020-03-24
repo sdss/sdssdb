@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.3.2 <2020-03-10>`
+* Change ``operations-test`` profile to ``operations`` using the new machine hostname.
+* New schema and models for ``sdss5db.targetdb``.
+
 * :release:`0.3.1 <2020-02-24>`
 * Added ``archive`` database with ``sas`` schema.
 * :bug:`18` Fixed Travis built after migration to using ``setup.cfg``.

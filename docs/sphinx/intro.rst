@@ -118,7 +118,7 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
-            <td class="warning"></td>
+            <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.targetdb.pdf"></a></td>
         </tr>
         <tr>
@@ -216,7 +216,7 @@ The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssd
 * **apo**: a user on the APO machines.
 * **lco**: a user on the LCO machines.
 * **manga**: a user on the Utah manga machine.
-* **operations-test**: a user on the Utah sdssadmin machine.
+* **operations**: a user on the Utah operations machine.
 * **sdssadmin**: a user on the Utah sdssadmin machine.
 * **lore**: a user on the Utah lore machine.
 
