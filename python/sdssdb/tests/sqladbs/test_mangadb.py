@@ -7,7 +7,7 @@
 # Created: Friday, 23rd August 2019 12:35:00 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2019 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:33:11 pm
+# Last Modified: Tuesday, 24th March 2020 5:55:03 pm
 # Modified By: Brian Cherinka
 
 
@@ -25,12 +25,6 @@ if database.connected:
 
 faker = factory.faker.faker.Factory().create()
 
-
-@pytest.fixture(scope='session', autouse=True)
-def skipdb():
-    if database.connected is False:
-        pytest.skip('no mangadb found')
-        
         
 @pytest.mark.parametrize('database', [database], indirect=True)
 class TestMangaDB(object):
