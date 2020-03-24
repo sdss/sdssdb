@@ -186,11 +186,13 @@ class SDSS_DR14_Cannon_Star(CatalogdbModel):
 
 class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
 
-    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
-                             field='apogee_id',
-                             column_name='apogee_id',
-                             object_id_name='apogee_id',
-                             backref='allstar')
+    @property
+    def apstar(self):
+        """Returns the stars on `.SDSS_DR14_APOGEE_Star` with matching ``apogee_id``."""
+
+        return (SDSS_DR14_APOGEE_Star
+                .select()
+                .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
 
     class Meta:
         table_name = 'sdss_apogeeAllStarMerge_r13'
