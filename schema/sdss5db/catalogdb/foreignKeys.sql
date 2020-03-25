@@ -21,14 +21,13 @@ ALTER TABLE catalogdb.gaia_dr2_wd_candidates_v1
 -- gaiadr2_tmass_best_neighbour
 
 CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (source_id ASC);
+CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
 
 ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
     ADD CONSTRAINT source_id_fk
     FOREIGN KEY (source_id)
     REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
-
-CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
 
 ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
     ADD CONSTRAINT tmass_pts_key_fk
@@ -60,13 +59,13 @@ ALTER TABLE catalogdb.sdss_dr16_specobj
 
 -- gaia_unwise_agn
 
+CREATE INDEX ON catalogdb.gaia_unwise_agn USING BTREE (unwise_objid);
+
 ALTER TABLE catalogdb.gaia_unwise_agn
     ADD CONSTRAINT source_id_fk
     FOREIGN KEY (gaia_sourceid)
     REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
-
-CREATE INDEX ON catalogdb.gaia_unwise_agn USING BTREE (unwise_objid);
 
 ALTER TABLE catalogdb.gaia_unwise_agn
     ADD CONSTRAINT unwise_objid_fk
@@ -148,14 +147,14 @@ ALTER TABLE catalogdb.tic_v8
 -- bhm_spiders_agn_superset, bhm_spiders_clusters_superset
 
 CREATE INDEX ON catalogdb.bhm_spiders_agn_superset USING BTREE (gaia_dr2_source_id);
+UPDATE catalogdb.bhm_spiders_agn_superset SET gaia_dr2_source_id = NULL WHERE gaia_dr2_source_id = 0;
+CREATE INDEX ON catalogdb.bhm_spiders_agn_superset USING BTREE (ls_id);
 
 ALTER TABLE catalogdb.bhm_spiders_agn_superset
     ADD CONSTRAINT gaia_dr2_source_id_fk
     FOREIGN KEY (gaia_dr2_source_id)
-    REFERENCES catalogdb.gaia_dr2_source (gaia_dr2_source_id_kepler_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
-
-CREATE INDEX ON catalogdb.bhm_spiders_agn_superset USING BTREE (ls_id);
 
 ALTER TABLE catalogdb.bhm_spiders_agn_superset
     ADD CONSTRAINT ls_id_fk
@@ -164,14 +163,14 @@ ALTER TABLE catalogdb.bhm_spiders_agn_superset
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (gaia_dr2_source_id);
+CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (ls_id);
+UPDATE catalogdb.bhm_spiders_clusters_superset SET gaia_dr2_source_id = NULL WHERE gaia_dr2_source_id = 0;
 
 ALTER TABLE catalogdb.bhm_spiders_clusters_superset
     ADD CONSTRAINT gaia_dr2_source_id_fk
     FOREIGN KEY (gaia_dr2_source_id)
-    REFERENCES catalogdb.gaia_dr2_source (gaia_dr2_source_id_kepler_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
-
-CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (ls_id);
 
 ALTER TABLE catalogdb.bhm_spiders_clusters_superset
     ADD CONSTRAINT ls_id_fk
@@ -202,4 +201,3 @@ ALTER TABLE catalogdb.skymapper_dr1_1
     ADD CONSTRAINT gaia_dr2_id2_fk
     FOREIGN KEY (gaia_dr2_id2)
     REFERENCES catalogdb.gaia_dr2_source (source_id)
-CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (ls_id);
