@@ -126,5 +126,6 @@ CREATE TABLE catalogdb.legacy_survey_dr8 (
     pmra_ivar REAL,
     pmdec REAL,
     pmdec_ivar REAL,
-    maskbits INTEGER
+    maskbits INTEGER,
+    ls_id BIGINT GENERATED ALWAYS AS (objid + brickid * 2^16 + release * 2^40) STORED
 ) WITHOUT OIDS;
