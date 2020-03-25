@@ -5,6 +5,12 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Test suite only runs where existing local databases found.  Optionally run only `peewee` or `sqlalchemy` tests. 
+* Adds ability to generate fake data based on real database models for tests
+* Adds ability to test against real or fake databases
+* Write tests either for `peewee` or `sqlalchemy` databases
+* :feature:`-` New framework for writing tests against databases
+
 * :release:`0.3.2 <2020-03-10>`
 * Change ``operations-test`` profile to ``operations`` using the new machine hostname.
 * New schema and models for ``sdss5db.targetdb``.
