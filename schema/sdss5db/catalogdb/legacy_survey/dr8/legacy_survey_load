@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # encoding: utf-8
 
-ls ./*.fits.csv | parallel -j10 "psql -U sdss sdss5db -c \"\copy catalogdb.legacy_survey_dr8 FROM '{}' WITH HEADER DELIMITER ',' NULL '\N' CSV;;\""
+ls $CATALOGDB_DIR/legacysurvey/dr8/north/sweep/*.fits.csv | xargs -I {} sh -c "echo {} && psql -U sdss sdss5db -c \"\copy catalogdb.legacy_survey_dr8 FROM {} WITH HEADER DELIMITER ',' NULL '\N' CSV;\""
+ls $CATALOGDB_DIR/legacysurvey/dr8/south/sweep/*.fits.csv | xargs -I {} sh -c "echo {} && psql -U sdss sdss5db -c \"\copy catalogdb.legacy_survey_dr8 FROM {} WITH HEADER DELIMITER ',' NULL '\N' CSV;\""
