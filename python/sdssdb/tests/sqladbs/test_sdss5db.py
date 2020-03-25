@@ -7,7 +7,7 @@
 # Created: Wednesday, 4th March 2020 3:01:10 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 2:01:27 pm
+# Last Modified: Wednesday, 25th March 2020 1:13:59 pm
 # Modified By: Brian Cherinka
 
 
@@ -19,7 +19,7 @@ if database.connected:
 
 
 @pytest.mark.parametrize('database', [database], indirect=True)
-class TestSDSS5Db(object):
+class TestCatalogDb(object):
 
     def test_allwise_list(self, session):
         aw_count = session.query(catalogdb.AllWise).count()

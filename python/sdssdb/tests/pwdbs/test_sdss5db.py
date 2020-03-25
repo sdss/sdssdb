@@ -7,7 +7,7 @@
 # Created: Sunday, 1st March 2020 2:56:48 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2020 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 3:38:17 pm
+# Last Modified: Wednesday, 25th March 2020 1:14:34 pm
 # Modified By: Brian Cherinka
 
 
@@ -17,7 +17,7 @@ from sdssdb.peewee.sdss5db import database, targetdb
 
 
 @pytest.mark.parametrize('database', [database], indirect=True)
-class TestSDSS5Db(object):
+class TestTargetDb(object):
 
     def test_category_fake_count(self, category_factory):
         ''' test to count category select results

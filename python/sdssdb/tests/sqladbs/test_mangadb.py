@@ -7,7 +7,7 @@
 # Created: Friday, 23rd August 2019 12:35:00 pm
 # License: BSD 3-clause "New" or "Revised" License
 # Copyright (c) 2019 Brian Cherinka
-# Last Modified: Tuesday, 24th March 2020 5:55:03 pm
+# Last Modified: Wednesday, 25th March 2020 1:13:53 pm
 # Modified By: Brian Cherinka
 
 
@@ -25,9 +25,9 @@ if database.connected:
 
 faker = factory.faker.faker.Factory().create()
 
-        
+
 @pytest.mark.parametrize('database', [database], indirect=True)
-class TestMangaDB(object):
+class TestDataDB(object):
 
     def test_added_wavelength(self, session, wave_factory):
         ''' test that we can add fake rows to real dbs that are undone '''
