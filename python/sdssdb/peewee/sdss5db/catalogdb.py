@@ -139,7 +139,7 @@ class SDSS_DR14_APOGEE_Star(CatalogdbModel):
                              backref='stars')
 
     class Meta:
-        table_name = 'sdss_dr14_APOGEE_Star'
+        table_name = 'sdss_dr14_apogeestar'
         schema = 'catalogdb'
 
 
@@ -154,7 +154,7 @@ class SDSS_DR14_APOGEE_Star_Visit(CatalogdbModel):
                             lazy_load=False)
 
     class Meta:
-        table_name = 'sdss_dr14_APOGEE_Starvisit'
+        table_name = 'sdss_dr14_apogeestarvisit'
         schema = 'catalogdb'
 
 
@@ -187,7 +187,7 @@ class SDSS_DR14_Cannon_Star(CatalogdbModel):
 class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
 
     @property
-    def apstar(self):
+    def apstars(self):
         """Returns the stars on `.SDSS_DR14_APOGEE_Star` with matching ``apogee_id``."""
 
         return (SDSS_DR14_APOGEE_Star
@@ -195,7 +195,7 @@ class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
                 .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
 
     class Meta:
-        table_name = 'sdss_apogeeAllStarMerge_r13'
+        table_name = 'sdss_apogeeallstarmerge_r13'
         schema = 'catalogdb'
 
 
