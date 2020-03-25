@@ -9,8 +9,8 @@ At Utah: /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/skymapp
 
 */
 
-CREATE TABLE skymapper_dr1_1 (
-    object_id BIGINT PRIMARY KEY,
+CREATE TABLE catalogdb.skymapper_dr1_1 (
+    object_id BIGINT,
     raj2000 DOUBLE PRECISION,
     dej2000 DOUBLE PRECISION,
     e_raj2000 INTEGER,
