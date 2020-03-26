@@ -259,10 +259,18 @@ class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
         schema = 'catalogdb'
 
 
-class DR14_Q_V4_4(CatalogdbModel):
+class SDSS_DR14_QSO(CatalogdbModel):
+
+    @property
+    def specobj(self):
+        """Returns the matching record in `.SDSS_DR16_SpecObj`."""
+
+        return SDSS_DR16_SpecObj.get(SDSS_DR16_SpecObj.plate == self.plate,
+                                     SDSS_DR16_SpecObj.mjd == self.mjd,
+                                     SDSS_DR16_SpecObj.fiberid == self.fiber)
 
     class Meta:
-        table_name = 'dr14q_v4_4'
+        table_name = 'sdss_dr14_qso'
         schema = 'catalogdb'
 
 
