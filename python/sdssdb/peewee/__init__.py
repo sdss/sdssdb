@@ -112,11 +112,6 @@ class ReflectMeta(ModelBase):
         if not hasattr(self._meta, 'use_reflection') or not self._meta.use_reflection:
             return
 
-        # First clear all previously reflected fields and indexes.
-        for field in self._meta.fields:
-            if hasattr(field, 'reflected') and field.reflected:
-                self._meta.remove_field(field)
-
         for index in self._meta.indexes:
             if hasattr(index, 'reflected') and index.reflected:
                 self._meta.indexes.remove(index)
@@ -138,19 +133,24 @@ class ReflectMeta(ModelBase):
         for field_name, field in ReflectedModel._meta.fields.items():
 
             if field_name in self._meta.fields:
-                continue
+                meta_field = self._meta.fields[field_name]
+                if not hasattr(meta_field, 'reflected') or not meta_field.reflected:
+                    continue
 
             if (isinstance(field, peewee.ForeignKeyField) and
                     hasattr(self._meta, 'reflection_options') and
                     self._meta.reflection_options.get('skip_foreign_keys', False)):
                 continue
 
-            field.reflected = True
+            if field_name == 'specobjid':
+                print(field, field.primary_key)
 
             if field.primary_key:
                 self._meta.set_primary_key(field_name, field)
             else:
                 self._meta.add_field(field_name, field)
+
+            self._meta.fields[field_name].reflected = True
 
         for index in ReflectedModel._meta.indexes:
 
@@ -159,6 +159,7 @@ class ReflectMeta(ModelBase):
             if index in self._meta.indexes:
                 continue
 
+            index.reflected = True
             self._meta.indexes.append(index)
 
 
