@@ -205,7 +205,7 @@ def create_model_from_table(table_name, table, schema=None, lowercase=False,
     return type(str(table_name), (BaseModel,), attrs)
 
 
-def convert_row_to_psql(row, delimiter='\t'):
+def convert_row_to_psql(row, delimiter='\t', null='\\N'):
     """Concerts an astropy table row to a Postgresql-valid CSV string."""
 
     row_data = []
@@ -214,7 +214,7 @@ def convert_row_to_psql(row, delimiter='\t'):
         if numpy.isscalar(col_value):
             row_data.append(str(col_value))
         elif numpy.ma.is_masked(col_value):
-            row_data.append('')
+            row_data.append(null)
         else:
             if col_value.dtype.base.str[1] == 'S':
                 col_value = col_value.astype('U')

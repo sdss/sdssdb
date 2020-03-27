@@ -142,9 +142,6 @@ class ReflectMeta(ModelBase):
                     self._meta.reflection_options.get('skip_foreign_keys', False)):
                 continue
 
-            if field_name == 'specobjid':
-                print(field, field.primary_key)
-
             if field.primary_key:
                 self._meta.set_primary_key(field_name, field)
             else:
@@ -159,7 +156,6 @@ class ReflectMeta(ModelBase):
             if index in self._meta.indexes:
                 continue
 
-            index.reflected = True
             self._meta.indexes.append(index)
 
 

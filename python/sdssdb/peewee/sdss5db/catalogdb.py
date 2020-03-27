@@ -20,6 +20,7 @@ class CatalogdbModel(BaseModel):
 
     class Meta:
         database = database
+        schema = 'catalogdb'
         use_reflection = True
         reflection_options = {'skip_foreign_keys': True}
         primary_key = False
@@ -36,7 +37,6 @@ class AllWise(CatalogdbModel):
 
     class Meta:
         table_name = 'allwise'
-        schema = 'catalogdb'
 
 
 class TwoMassPSC(CatalogdbModel):
@@ -46,7 +46,6 @@ class TwoMassPSC(CatalogdbModel):
 
     class Meta:
         table_name = 'twomass_psc'
-        schema = 'catalogdb'
 
 
 class Gaia_DR2(CatalogdbModel):
@@ -59,47 +58,42 @@ class Gaia_DR2(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_source'
-        schema = 'catalogdb'
 
 
 class Gaia_DR2_Clean(CatalogdbModel):
 
-    source_id = ForeignKeyField(Gaia_DR2,
-                                field='source_id',
-                                backref='gaia_clean',
-                                lazy_load=True)
+    source = ForeignKeyField(Gaia_DR2,
+                             field='source_id',
+                             column_name='source_id',
+                             object_id_name='source_id',
+                             backref='+')
 
     class Meta:
         table_name = 'gaia_dr2_clean'
-        schema = 'catalogdb'
 
 
 class Gaia_DR2_SDSS_DR9_Best_Neighbour(CatalogdbModel):
 
     class Meta:
         table_name = 'gaiadr2_sdssdr9_best_neighbour'
-        schema = 'catalogdb'
 
 
 class GalacticGenesis(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_genesis'
-        schema = 'catalogdb'
 
 
 class GalacticGenesisBig(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_genesis_big'
-        schema = 'catalogdb'
 
 
 class GUVCat(CatalogdbModel):
 
     class Meta:
         table_name = 'guvcat'
-        schema = 'catalogdb'
 
 
 class KeplerInput_DR10(CatalogdbModel):
@@ -108,7 +102,6 @@ class KeplerInput_DR10(CatalogdbModel):
 
     class Meta:
         table_name = 'kepler_input_10'
-        schema = 'catalogdb'
 
 
 class SDSS_DR13_PhotoObj(CatalogdbModel):
@@ -117,7 +110,6 @@ class SDSS_DR13_PhotoObj(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr13_photoobj'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_APOGEE_Visit(CatalogdbModel):
@@ -126,7 +118,6 @@ class SDSS_DR14_APOGEE_Visit(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_apogeevisit'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_APOGEE_Star(CatalogdbModel):
@@ -140,7 +131,6 @@ class SDSS_DR14_APOGEE_Star(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_apogeestar'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_APOGEE_Star_Visit(CatalogdbModel):
@@ -155,7 +145,6 @@ class SDSS_DR14_APOGEE_Star_Visit(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_apogeestarvisit'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_ASCAP_Star(CatalogdbModel):
@@ -166,7 +155,6 @@ class SDSS_DR14_ASCAP_Star(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_ascapstar'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_Cannon_Star(CatalogdbModel):
@@ -181,7 +169,6 @@ class SDSS_DR14_Cannon_Star(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_cannonstar'
-        schema = 'catalogdb'
 
 
 class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
@@ -196,7 +183,6 @@ class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_apogeeallstarmerge_r13'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_SpecObj(CatalogdbModel):
@@ -208,7 +194,6 @@ class SDSS_DR14_SpecObj(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_specobj'
-        schema = 'catalogdb'
 
 
 class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
@@ -230,14 +215,12 @@ class TwoMass_Clean(CatalogdbModel):
 
     class Meta:
         table_name = 'twomass_clean'
-        schema = 'catalogdb'
 
 
 class TwoMass_Clean_No_Neighbor(CatalogdbModel):
 
     class Meta:
         table_name = 'twomass_clean_noneighbor'
-        schema = 'catalogdb'
 
 
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
@@ -256,7 +239,6 @@ class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
     class Meta:
         table_name = 'gaiadr2_tmass_best_neighbour'
-        schema = 'catalogdb'
 
 
 class SDSS_DR14_QSO(CatalogdbModel):
@@ -271,14 +253,14 @@ class SDSS_DR14_QSO(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr14_qso'
-        schema = 'catalogdb'
 
 
 class unWISE(CatalogdbModel):
 
+    unwise_objid = TextField(primary_key=True)
+
     class Meta:
         table_name = 'unwise'
-        schema = 'catalogdb'
 
 
 class Legacy_Survey_DR8(CatalogdbModel):
@@ -297,7 +279,6 @@ class Legacy_Survey_DR8(CatalogdbModel):
 
     class Meta:
         table_name = 'legacy_survey_dr8'
-        schema = 'catalogdb'
 
 
 class Gaia_unWISE_AGN(CatalogdbModel):
@@ -316,14 +297,12 @@ class Gaia_unWISE_AGN(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_unwise_agn'
-        schema = 'catalogdb'
 
 
 class eBOSS_Taarget_v5(CatalogdbModel):
 
     class Meta:
         table_name = 'ebosstarget_v5'
-        schema = 'catalogdb'
 
 
 # The following model (BhmSpidersGenericSuperset) does not need to be represented
@@ -441,7 +420,6 @@ class BHM_Spiders_Generic_Superset(CatalogdbModel):
 
     class Meta:
         table_name = 'bhm_spiders_generic_superset'
-        schema = 'catalogdb'
         use_reflection = False
 
 
@@ -463,7 +441,6 @@ class BHM_CSC(CatalogdbModel):
 
     class Meta:
         table_name = 'bhm_csc'
-        schema = 'catalogdb'
 
 
 class Gaia_DR2_WD_SDSS(CatalogdbModel):
@@ -478,7 +455,6 @@ class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_wd_sdss'
-        schema = 'catalogdb'
 
 
 class Gaia_DR2_WD(CatalogdbModel):
@@ -491,7 +467,6 @@ class Gaia_DR2_WD(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_wd'
-        schema = 'catalogdb'
 
 
 class Tycho2(CatalogdbModel):
@@ -500,14 +475,12 @@ class Tycho2(CatalogdbModel):
 
     class Meta:
         table_name = 'tycho2'
-        schema = 'catalogdb'
 
 
 class GaiaQSO(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_qso'
-        schema = 'catalogdb'
 
 
 class TIC_v8(CatalogdbModel):
@@ -538,21 +511,18 @@ class TIC_v8(CatalogdbModel):
 
     class Meta:
         table_name = 'tic_v8'
-        schema = 'catalogdb'
 
 
 class CatWISE(CatalogdbModel):
 
     class Meta:
         table_name = 'catwise'
-        schema = 'catalogdb'
 
 
 class CatWISEReject(CatalogdbModel):
 
     class Meta:
         table_name = 'catwise_reject'
-        schema = 'catalogdb'
 
 
 class Watchdog(CatalogdbModel):
@@ -566,7 +536,6 @@ class Watchdog(CatalogdbModel):
 
     class Meta:
         table_name = 'watchdog'
-        schema = 'catalogdb'
 
 
 class BlackCAT(CatalogdbModel):
@@ -580,7 +549,6 @@ class BlackCAT(CatalogdbModel):
 
     class Meta:
         table_name = 'blackcat'
-        schema = 'catalogdb'
 
 
 class XRay_Pulsars(CatalogdbModel):
@@ -594,7 +562,6 @@ class XRay_Pulsars(CatalogdbModel):
 
     class Meta:
         table_name = 'xray_pulsars'
-        schema = 'catalogdb'
 
 
 class LowMassXRayBinaries(CatalogdbModel):
@@ -608,7 +575,6 @@ class LowMassXRayBinaries(CatalogdbModel):
 
     class Meta:
         table_name = 'lmxb'
-        schema = 'catalogdb'
 
 
 class GalacticMillisecondPulsars(CatalogdbModel):
@@ -622,7 +588,6 @@ class GalacticMillisecondPulsars(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_millisecond_pulsars'
-        schema = 'catalogdb'
 
 
 class ATNF(CatalogdbModel):
@@ -636,7 +601,6 @@ class ATNF(CatalogdbModel):
 
     class Meta:
         table_name = 'atnf'
-        schema = 'catalogdb'
 
 
 class SkyMapper_DR1_1(CatalogdbModel):
@@ -676,7 +640,12 @@ class SkyMapper_DR1_1(CatalogdbModel):
 
     class Meta:
         table_name = 'skymapper_dr1_1'
-        schema = 'catalogdb'
+
+
+class PS1_g18(CatalogdbModel):
+
+    class Meta:
+        table_name = 'ps1_g18'
 
 
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
