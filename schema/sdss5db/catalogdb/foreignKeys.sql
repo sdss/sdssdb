@@ -201,3 +201,14 @@ ALTER TABLE catalogdb.skymapper_dr1_1
     ADD CONSTRAINT gaia_dr2_id2_fk
     FOREIGN KEY (gaia_dr2_id2)
     REFERENCES catalogdb.gaia_dr2_source (source_id)
+
+
+-- glimpse
+
+CREATE INDEX ON catalogdb.glimpse USING BTREE (tmass_cntr);
+
+ALTER TABLE catalogdb.glimpse
+    ADD CONSTRAINT tmass_cntr_fk
+    FOREIGN KEY (tmass_cntr)
+    REFERENCES catalogdb.twomass_psc (pts_key)
+    ON UPDATE CASCADE ON DELETE CASCADE;

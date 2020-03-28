@@ -648,5 +648,16 @@ class PS1_g18(CatalogdbModel):
         table_name = 'ps1_g18'
 
 
+class GLIMPSE(CatalogdbModel):
+
+    twomass = ForeignKeyField(TwoMassPSC, field='pts_key',
+                              column_name='tmass_cntr',
+                              backref='glimpse_targets')
+
+    class Meta:
+        table_name = 'glimpse'
+        print_fields = ['designation']
+
+
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
