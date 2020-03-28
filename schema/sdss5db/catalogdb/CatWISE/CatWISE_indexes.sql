@@ -1,8 +1,8 @@
 
 -- PKs
 
-ALTER TABLE catalogdb.catwise ADD PRIMARY KEY (source_name);
-ALTER TABLE catalogdb.catwise_reject ADD PRIMARY KEY (source_name);
+ALTER TABLE catalogdb.catwise ADD PRIMARY KEY (source_id);
+ALTER TABLE catalogdb.catwise_reject ADD PRIMARY KEY (source_id);
 
 
 -- Indexes
