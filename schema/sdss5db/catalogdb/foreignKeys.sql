@@ -9,6 +9,16 @@ https://www.postgresql.org/docs/8.2/static/sql-altertable.html
 
 */
 
+
+-- gaia_dr2_clean
+
+ALTER TABLE catalogdb.gaia_dr2_clean
+    ADD CONSTRAINT source_id_fk
+    FOREIGN KEY (source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 -- gaia_dr2_wd_candidates_v1
 
 ALTER TABLE catalogdb.gaia_dr2_wd_candidates_v1
