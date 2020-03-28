@@ -163,17 +163,15 @@ class BaseModel(Model, metaclass=ReflectMeta):
     """A custom peewee `.Model` with enhanced representation and methods.
 
     By default it always prints ``pk``, ``name``, and ``label``, if found.
-    Models can define they own `.print_fields` as a list of field to be output
-    in the representation.
+    Models can define they own ``print_fields`` in ``Meta`` as a list of field
+    names to be output in the representation.
 
     """
-
-    #: A list of fields (as strings) to be included in the ``__repr__``
-    print_fields = []
 
     class Meta:
         primary_key = False
         use_reflection = False
+        print_fields = []
 
     def __str__(self):
         """A custom str for the model repr."""
@@ -186,10 +184,10 @@ class BaseModel(Model, metaclass=ReflectMeta):
             fields = []
 
         for extra_field in ['label', 'name']:
-            if extra_field not in self.print_fields:
-                self.print_fields.append(extra_field)
+            if extra_field not in self._meta.print_fields:
+                self._meta.print_fields.append(extra_field)
 
-        for ff in self.print_fields:
+        for ff in self._meta.print_fields:
             if ff == pk_field:
                 continue
             if hasattr(self, ff):

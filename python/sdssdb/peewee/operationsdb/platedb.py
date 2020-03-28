@@ -141,8 +141,6 @@ PlateStatusThroughModel = DeferredThroughModel()
 
 class Plate(OperationsDBModel):
 
-    print_fields = ['plate_id']
-
     chunk = TextField(null=True)
     comment = TextField(null=True)
     current_survey_mode = ForeignKeyField(column_name='current_survey_mode_pk',
@@ -198,6 +196,7 @@ class Plate(OperationsDBModel):
     class Meta:
         db_table = 'plate'
         schema = 'platedb'
+        print_fields = ['plate_id']
 
 
 class PluggingStatus(OperationsDBModel):
