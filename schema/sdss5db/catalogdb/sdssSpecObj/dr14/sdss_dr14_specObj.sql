@@ -411,6 +411,4 @@ ANALYZE catalogdb.sdss_dr14_specobj;
 CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (bestObjID);
 CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (fluxObjID);
 CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (targetObjID);
-CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (mjd);
-CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (plate);
-CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (fiberid);
+CREATE INDEX ON catalogdb.sdss_dr14_specobj (mjd, plate, fiberid);
