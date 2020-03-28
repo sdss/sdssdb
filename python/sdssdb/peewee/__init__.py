@@ -149,6 +149,12 @@ class ReflectMeta(ModelBase):
 
             self._meta.fields[field_name].reflected = True
 
+        # Composite keys are not a normal column so if the pk has not been
+        # set already, check if it exists in the reflected model.
+        if not self._meta.primary_key and ReflectedModel._meta.primary_key:
+            pk = ReflectedModel._meta.primary_key
+            self._meta.set_primary_key(pk.name, pk)
+
         for index in ReflectedModel._meta.indexes:
 
             # TODO: this probably can never work. Find a better way of determining
@@ -177,7 +183,10 @@ class BaseModel(Model, metaclass=ReflectMeta):
         """A custom str for the model repr."""
 
         if self._meta.primary_key:
-            pk_field = self._meta.primary_key.name
+            if self._meta.composite_key:
+                pk_field = '(' + ', '.join(self._meta.primary_key.field_names) + ')'
+            else:
+                pk_field = self._meta.primary_key.name
             fields = ['{0}={1!r}'.format(pk_field, self.get_id())]
         else:
             pk_field = None
