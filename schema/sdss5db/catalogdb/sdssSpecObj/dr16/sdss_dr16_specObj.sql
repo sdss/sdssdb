@@ -414,3 +414,5 @@ CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (targetObjID);
 CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (mjd);
 CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (plate);
 CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (fiberid);
+
+CREATE INDEX ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid);

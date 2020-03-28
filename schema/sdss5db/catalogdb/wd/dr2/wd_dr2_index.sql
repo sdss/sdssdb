@@ -12,3 +12,4 @@ ANALYZE catalogdb.gaia_dr2_wd_sdss;
 CREATE INDEX ON catalogdb.gaia_dr2_wd_sdss USING BTREE (plate);
 CREATE INDEX ON catalogdb.gaia_dr2_wd_sdss USING BTREE (mjd);
 CREATE INDEX ON catalogdb.gaia_dr2_wd_sdss USING BTREE (fiber);
+CREATE INDEX ON catalogdb.gaia_dr2_wd_sdss (mjd, plate, fiber);

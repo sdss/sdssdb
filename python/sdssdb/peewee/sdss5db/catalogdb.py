@@ -249,7 +249,7 @@ class SDSS_DR14_QSO(CatalogdbModel):
 
         return SDSS_DR16_SpecObj.get(SDSS_DR16_SpecObj.plate == self.plate,
                                      SDSS_DR16_SpecObj.mjd == self.mjd,
-                                     SDSS_DR16_SpecObj.fiberid == self.fiber)
+                                     SDSS_DR16_SpecObj.fiberid == self.fiberid)
 
     class Meta:
         table_name = 'sdss_dr14_qso'
