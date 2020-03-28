@@ -659,5 +659,11 @@ class GLIMPSE(CatalogdbModel):
         print_fields = ['designation']
 
 
+class BHM_eFEDS_Veto(CatalogdbModel):
+
+    class Meta:
+        table_name = 'bhm_efeds_veto'
+
+
 _Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
