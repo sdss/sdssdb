@@ -11,12 +11,6 @@ drop index catalogdb.gaia_dr1_tgas_dec_index;
 
 -- Indices
 
-CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (ra);
-CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (dec);
-CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (l);
-CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (b);
-CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (ecl_lon);
-CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (ecl_lat);
 CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (phot_g_mean_flux);
 CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (phot_g_mean_mag);
 CREATE INDEX ON catalogdb.gaia_dr2_source USING BTREE (solution_id);
