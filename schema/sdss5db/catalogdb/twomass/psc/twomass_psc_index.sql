@@ -10,8 +10,6 @@ drop index catalogdb.gaia_dr1_tgas_dec_index;
 
 -- Indices
 
-CREATE INDEX ON catalogdb.twomass_psc USING BTREE (ra);
-CREATE INDEX ON catalogdb.twomass_psc USING BTREE (decl);
 CREATE INDEX ON catalogdb.twomass_psc USING BTREE (j_m);
 CREATE INDEX ON catalogdb.twomass_psc USING BTREE (h_m);
 CREATE INDEX ON catalogdb.twomass_psc USING BTREE (k_m);

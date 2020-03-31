@@ -408,11 +408,8 @@ CREATE INDEX ON catalogdb.sdss_dr16_specobj (q3c_ang2ipix(ra, dec));
 CLUSTER sdss_dr16_specobj_q3c_ang2ipix_idx ON catalogdb.sdss_dr16_specobj;
 ANALYZE catalogdb.sdss_dr16_specobj;
 
-CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (bestObjID);
 CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (fluxObjID);
 CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (targetObjID);
-CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (mjd);
-CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (plate);
-CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (fiberid);
 
 CREATE INDEX ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid);
+CREATE INDEX ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid, run2d);

@@ -18,7 +18,9 @@ CREATE TABLE catalogdb.gaiadr2_tmass_best_neighbour(
     tmass_pts_key integer
 );
 
-\copy catalogdb.gaiadr2_tmass_best_neighbour FROM '$CATALOGDB_DIR/xmatch/gaia_tmass/gaiaDR2/tmass_best_neighbour.csv' WITH CSV HEADER;
+\copy catalogdb.gaiadr2_tmass_best_neighbour
+    FROM '$CATALOGDB_DIR/xmatch/gaia_tmass/gaiaDR2/tmass_best_neighbour.csv'
+    WITH CSV HEADER;
 
 ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour ADD PRIMARY KEY (source_id);
 

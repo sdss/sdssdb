@@ -52,7 +52,7 @@ converting the FITS table to CSV.
 
 */
 
-CREATE UNLOGGED TABLE catalogdb.bhm_efeds_veto (
+CREATE TABLE catalogdb.bhm_efeds_veto (
     programname VARCHAR(5),
     chunk VARCHAR(7),
     platesn2 REAL,

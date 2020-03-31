@@ -20,9 +20,9 @@ def main():
     path_ = ('/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/'
              'target/catalogs/eRosita/eFEDS_for_catalogdb_v0/')
 
-    for file_, table in (('BHM_SPIDERS_EFEDS_SUPERSET_CLUS_v0.1.0.fits',
+    for file_, table in (('BHM_SPIDERS_EFEDS_SUPERSET_CLUS_v0.1.1.fits',
                           'bhm_spiders_clusters_superset'),
-                         ('BHM_SPIDERS_EFEDS_SUPERSET_AGN_v0.1.0.fits',
+                         ('BHM_SPIDERS_EFEDS_SUPERSET_AGN_v0.1.1.fits',
                           'bhm_spiders_agn_superset')):
 
         data = astropy.table.Table.read(path_ + file_)

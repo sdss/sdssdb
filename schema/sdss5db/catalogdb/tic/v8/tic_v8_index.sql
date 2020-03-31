@@ -11,8 +11,6 @@ CREATE INDEX on catalogdb.tic_v8 (q3c_ang2ipix(ra, dec));
 CLUSTER legacy_survey_q3c_ang2ipix_idx ON catalogdb.tic_v8;
 ANALYZE catalogdb.tic_v8;
 
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gallong);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gallat);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Bmag);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Vmag);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (umag);

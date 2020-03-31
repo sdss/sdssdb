@@ -9,8 +9,8 @@ https://github.com/sdss/sdssdb/blob/add_bhm_peewee_classes1/python/sdssdb/peewee
 see classes 'BhmSpidersAgnSuperset' and 'BhmSpidersClustersSuperset'
 
 ##Filename                                                       rows
-# catalogdb_v0/BHM_SPIDERS_EFEDS_SUPERSET_AGN_v0.1.0.fits       23994
-# catalogdb_v0/BHM_SPIDERS_EFEDS_SUPERSET_CLUS_v0.1.0.fits      19636
+# catalogdb_v0/BHM_SPIDERS_EFEDS_SUPERSET_AGN_v0.1.1.fits       23994
+# catalogdb_v0/BHM_SPIDERS_EFEDS_SUPERSET_CLUS_v0.1.1.fits      19636
 
 Files: /uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/eFEDS_for_catalogdb_v0
 
@@ -19,7 +19,7 @@ Files: /uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/eFED
 CREATE TABLE catalogdb.bhm_spiders_clusters_superset (
     pk BIGSERIAL PRIMARY KEY,
     ero_version TEXT,
-    ero_souuid TEXT,
+    ero_detuid TEXT,
     ero_flux REAL,
     ero_flux_err REAL,
     ero_ext REAL,
@@ -63,7 +63,7 @@ CREATE TABLE catalogdb.bhm_spiders_clusters_superset (
 CREATE TABLE catalogdb.bhm_spiders_agn_superset (
     pk BIGSERIAL PRIMARY KEY,
     ero_version TEXT,
-    ero_souuid TEXT,
+    ero_detuid TEXT,
     ero_flux REAL,
     ero_flux_err REAL,
     ero_ext REAL,

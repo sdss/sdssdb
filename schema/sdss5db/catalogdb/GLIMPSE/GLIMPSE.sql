@@ -101,7 +101,7 @@ https://irsa.ipac.caltech.edu/data/SPITZER/GLIMPSE/overview.html
 
 */
 
-CREATE UNLOGGED TABLE catalogdb.glimpse (
+CREATE TABLE catalogdb.glimpse (
     designation TEXT,
     tmass_designation VARCHAR(18),
     tmass_cntr INTEGER,

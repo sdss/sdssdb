@@ -19,18 +19,45 @@ ALTER TABLE catalogdb.gaia_dr2_clean
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- gaia_dr2_wd_candidates_v1
+-- gaiadr2_sdssdr9_best_neighbour
 
-ALTER TABLE catalogdb.gaia_dr2_wd_candidates_v1
+-- Some objectids are not present in dr13_photooj. It should not matter
+-- because the TIC has x-matching with SDSS.
+
+-- CREATE INDEX ON catalogdb.gaiadr2_sdssdr9_best_neighbour (sdssdr9_oid);
+
+-- ALTER TABLE catalogdb.gaiadr2_sdssdr9_best_neighbour
+--     ADD CONSTRAINT source_id_fk
+--     FOREIGN KEY (source_id)
+--     REFERENCES catalogdb.gaia_dr2_source (source_id)
+--     ON UPDATE CASCADE ON DELETE CASCADE;
+
+-- ALTER TABLE catalogdb.gaiadr2_sdssdr9_best_neighbour
+--     ADD CONSTRAINT sdssdr9_oid_fk
+--     FOREIGN KEY (sdssdr9_oid)
+--     REFERENCES catalogdb.sdss_dr13_photoobj (objid)
+--     ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+-- gaiadr2_tmass_best_neighbour
+
+CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
+
+ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
     ADD CONSTRAINT source_id_fk
     FOREIGN KEY (source_id)
     REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
+    ADD CONSTRAINT tmass_pts_key_fk
+    FOREIGN KEY (tmass_pts_key)
+    REFERENCES catalogdb.twomass_psc (pts_key)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 -- gaiadr2_tmass_best_neighbour
 
-CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (source_id ASC);
 CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
 
 ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
@@ -48,23 +75,27 @@ ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
 
 -- sdss_dr14_specobj
 
+UPDATE catalogdb.sdss_dr14_specobj SET bestobjid = NULL WHERE bestobjid = 0;
 CREATE INDEX ON catalogdb.sdss_dr14_specobj using BTREE (bestobjid ASC);
 
-ALTER TABLE catalogdb.sdss_dr14_specobj
-    ADD CONSTRAINT bestobjid_fk
-    FOREIGN KEY (bestobjid)
-    REFERENCES catalogdb.sdss_dr13_photoobj (objid)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+-- Cannot be created because some bestobjids are not present in dr13_photoobj.
+-- ALTER TABLE catalogdb.sdss_dr14_specobj
+--     ADD CONSTRAINT bestobjid_fk
+--     FOREIGN KEY (bestobjid)
+--     REFERENCES catalogdb.sdss_dr13_photoobj (objid)
+--     ON UPDATE CASCADE ON DELETE CASCADE;
 
 -- sdss_dr16_specobj
 
+UPDATE catalogdb.sdss_dr16_specobj SET bestobjid = NULL WHERE bestobjid = 0;
 CREATE INDEX ON catalogdb.sdss_dr16_specobj using BTREE (bestobjid ASC);
 
-ALTER TABLE catalogdb.sdss_dr16_specobj
-    ADD CONSTRAINT bestobjid_fk
-    FOREIGN KEY (bestobjid)
-    REFERENCES catalogdb.sdss_dr13_photoobj (objid)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+-- Cannot be created because some bestobjids are not present in dr13_photoobj.
+-- ALTER TABLE catalogdb.sdss_dr16_specobj
+--     ADD CONSTRAINT bestobjid_fk
+--     FOREIGN KEY (bestobjid)
+--     REFERENCES catalogdb.sdss_dr13_photoobj (objid)
+--     ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 -- gaia_unwise_agn
@@ -222,3 +253,11 @@ ALTER TABLE catalogdb.glimpse
     FOREIGN KEY (tmass_cntr)
     REFERENCES catalogdb.twomass_psc (pts_key)
     ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+-- gaia_dr2_wd
+
+ALTER TABLE catalogdb.gaia_dr2_wd
+    ADD CONSTRAINT source_id_fk
+    FOREIGN KEY (source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id);

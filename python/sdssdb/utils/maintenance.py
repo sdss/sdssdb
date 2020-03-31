@@ -10,7 +10,7 @@ import sys
 import time
 
 
-def vacuum_all(database, analyze=True, schema=None):
+def vacuum_all(database, analyze=True, verbose=False, schema=None):
     """Vacuums all the tables in a database or schema.
 
     Parameters
@@ -19,6 +19,8 @@ def vacuum_all(database, analyze=True, schema=None):
         A PeeWee connection to the database to vacuum.
     analyze : bool
         Whether to run ``ANALYZE`` when vacuumming.
+    verbose : bool
+        Whether to run in verbose mode.
     schema : str
         The schema to vacuum. If `None`, vacuums the entire database.
 
@@ -26,8 +28,11 @@ def vacuum_all(database, analyze=True, schema=None):
 
     def execute_sql(statement):
 
-        sys.stdout.write(statement + ' ... ')
-        sys.stdout.flush()
+        if 'VEBOSE' in statement:
+            print(statement + ' ... ')
+        else:
+            sys.stdout.write(statement + ' ... ')
+            sys.stdout.flush()
 
         tstart = time.time()
 
@@ -40,7 +45,11 @@ def vacuum_all(database, analyze=True, schema=None):
 
         tend = time.time()
         telapsed = tend - tstart
-        print(f'{telapsed:.1f} s')
+
+        if 'VEBOSE' in statement:
+            print('Elapsed {telap sed:.1f} s')
+        else:
+            print(f'{telapsed:.1f} s')
 
         connection.set_isolation_level(original_isolation_level)
 
@@ -48,7 +57,7 @@ def vacuum_all(database, analyze=True, schema=None):
 
     if schema is None:
 
-        statement = 'VACUUM' + (' ANALYZE' if analyze else '')
+        statement = 'VACUUM' + (' VEBOSE' if verbose else '') + (' ANALYZE' if analyze else '')
         execute_sql(statement)
 
         return
@@ -58,6 +67,9 @@ def vacuum_all(database, analyze=True, schema=None):
     for table in sorted(tables):
 
         table_name = table if schema is None else schema + '.' + table
-        statement = 'VACUUM' + (' ANALYZE' if analyze else '') + ' ' + table_name
+        statement = ('VACUUM' +
+                     (' VEBOSE' if verbose else '') +
+                     (' ANALYZE' if analyze else '') +
+                     ' ' + table_name)
 
         execute_sql(statement)

@@ -26,7 +26,7 @@ class CatalogdbModel(BaseModel):
         primary_key = False
 
 
-_Gaia_DR2_TwoMass_Best_Neighbour_Deferred = DeferredThroughModel()
+_Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
 _APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
 
@@ -52,9 +52,9 @@ class Gaia_DR2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
 
-    tmass_best_sources = ManyToManyField(TwoMassPSC,
-                                         through_model=_Gaia_DR2_TwoMass_Best_Neighbour_Deferred,
-                                         backref='gaia_best_sources')
+    tmass_best = ManyToManyField(TwoMassPSC,
+                                 through_model=_Gaia_DR2_TwoMass_Deferred,
+                                 backref='gaia_best')
 
     class Meta:
         table_name = 'gaia_dr2_source'
@@ -70,12 +70,6 @@ class Gaia_DR2_Clean(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_clean'
-
-
-class Gaia_DR2_SDSS_DR9_Best_Neighbour(CatalogdbModel):
-
-    class Meta:
-        table_name = 'gaiadr2_sdssdr9_best_neighbour'
 
 
 class GalacticGenesis(CatalogdbModel):
@@ -418,6 +412,9 @@ class BHM_Spiders_Generic_Superset(CatalogdbModel):
     opt_modelflux_z = FloatField(null=True)
     opt_modelflux_ivar_z = FloatField(null=True)
 
+    ls = ForeignKeyField(Legacy_Survey_DR8, backref='+')
+    gaia = ForeignKeyField(Gaia_DR2, object_id_name='gaia_dr2_source_id', backref='+')
+
     class Meta:
         table_name = 'bhm_spiders_generic_superset'
         use_reflection = False
@@ -458,6 +455,12 @@ class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
 
 class Gaia_DR2_WD(CatalogdbModel):
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='wd',
+                           unique=True)
 
     @property
     def sdss(self):
@@ -665,5 +668,5 @@ class BHM_eFEDS_Veto(CatalogdbModel):
         table_name = 'bhm_efeds_veto'
 
 
-_Gaia_DR2_TwoMass_Best_Neighbour_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
+_Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
