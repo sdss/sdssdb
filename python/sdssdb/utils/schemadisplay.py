@@ -164,7 +164,7 @@ def _render_table_html(model, show_columns=True, show_pks=True,
                     column_name = '(' + ', '.join(column_names) + ')'
 
                 if index.unique:
-                    if column_name == pk.column_name:
+                    if pk and column_name == pk.column_name:
                         continue
                     ilabel = 'UNIQUE'
 
