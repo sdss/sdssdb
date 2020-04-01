@@ -143,7 +143,7 @@ def _render_table_html(model, show_columns=True, show_pks=True,
                        if not isinstance(index._expressions[0], ForeignKeyField)]
 
         if len(indexes) > 0:
-            html += '<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>'
+            first = True
 
             for index in indexes:
 
@@ -167,6 +167,10 @@ def _render_table_html(model, show_columns=True, show_pks=True,
                     if column_name == pk.column_name:
                         continue
                     ilabel = 'UNIQUE'
+
+                if first:
+                    html += '<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>'
+                    first = False
 
                 html += f'<TR><TD ALIGN="LEFT">{ilabel} {column_name}</TD></TR>'
 
