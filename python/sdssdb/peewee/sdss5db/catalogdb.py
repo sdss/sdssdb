@@ -62,6 +62,8 @@ class Gaia_DR2(CatalogdbModel):
 
 class Gaia_DR2_Clean(CatalogdbModel):
 
+    source_id = BigIntegerField(primary_key=True)
+
     source = ForeignKeyField(Gaia_DR2,
                              field='source_id',
                              column_name='source_id',

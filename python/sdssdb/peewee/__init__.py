@@ -84,9 +84,10 @@ class ReflectMeta(ModelBase):
     it's not possible to set the through model based on the reflected
     information.
 
-    - When the primary key of a model is also a foreign key, it needs to be
-    defined explicitely. Otherwise the field will be added but not marked as
-    primary key.
+    - When the primary key of a model is also a foreign key and
+    ``reflection_options = {'skip_foreign_keys': True}``, both the primary key
+    and the foreign key need to be defined explicitely. Otherwise neither
+    will be added.
 
     """
 
@@ -121,6 +122,9 @@ class ReflectMeta(ModelBase):
         if not database.is_connection_usable():
             raise peewee.DatabaseError('database not connected.')
 
+        skip_fks = (hasattr(self._meta, 'reflection_options') and
+                    self._meta.reflection_options.get('skip_foreign_keys', False))
+
         table_name = self._meta.table_name
         schema = self._meta.schema
 
@@ -138,9 +142,7 @@ class ReflectMeta(ModelBase):
                 if not hasattr(meta_field, 'reflected') or not meta_field.reflected:
                     continue
 
-            if (isinstance(field, peewee.ForeignKeyField) and
-                    hasattr(self._meta, 'reflection_options') and
-                    self._meta.reflection_options.get('skip_foreign_keys', False)):
+            if isinstance(field, peewee.ForeignKeyField) and skip_fks:
                 continue
 
             if field.primary_key:
@@ -151,10 +153,14 @@ class ReflectMeta(ModelBase):
             self._meta.fields[field_name].reflected = True
 
         # Composite keys are not a normal column so if the pk has not been
-        # set already, check if it exists in the reflected model.
+        # set already, check if it exists in the reflected model. We avoid
+        # adding pks that are
         if not self._meta.primary_key and ReflectedModel._meta.primary_key:
-            pk = ReflectedModel._meta.primary_key
-            self._meta.set_primary_key(pk.name, pk)
+            if isinstance(ReflectedModel._meta.primary_key, peewee.ForeignKeyField) and skip_fks:
+                pass
+            else:
+                pk = ReflectedModel._meta.primary_key
+                self._meta.set_primary_key(pk.name, pk)
 
 
 class BaseModel(Model, metaclass=ReflectMeta):
