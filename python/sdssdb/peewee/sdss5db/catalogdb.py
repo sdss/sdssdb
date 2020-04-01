@@ -416,7 +416,6 @@ class BHM_Spiders_Generic_Superset(CatalogdbModel):
     gaia = ForeignKeyField(Gaia_DR2, object_id_name='gaia_dr2_source_id', backref='+')
 
     class Meta:
-        table_name = 'bhm_spiders_generic_superset'
         use_reflection = False
 
 

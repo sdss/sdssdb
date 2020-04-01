@@ -101,7 +101,8 @@ class ReflectMeta(ModelBase):
             database.models.append(Model)
 
         if Model._meta.use_reflection and database and database.connected:
-            cls.reflect(Model)
+            if Model.table_exists():
+                cls.reflect(Model)
 
         return Model
 
