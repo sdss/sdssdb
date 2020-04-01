@@ -80,7 +80,7 @@ CREATE TABLE catalogdb.bhm_efeds_veto (
     anyormask INTEGER
 );
 
-\COPY catalogdb.bhm_efeds_vetoexit
+\COPY catalogdb.bhm_efeds_veto
  FROM /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/bhm_veto_lists/bhm_efeds_veto/v0.1.0/BHM_EFEDS_VETO_v0.1.0.csv WITH CSV HEADER DELIMITER E'\t' NULL '\N';
 
 -- Query to create a new column with the correct specobjid. 1301 is the result of
@@ -88,23 +88,17 @@ CREATE TABLE catalogdb.bhm_efeds_veto (
 -- These specobjid are uint64 and larger than what can be stored as a BIGINT, so we're not
 -- creating them for now.
 
--- ALTER TABLE catalogdb.bhm_efeds_vetoexit
+-- ALTER TABLE catalogdb.bhm_efeds_veto
  ADD COLUMN specobjid BIGINT;
--- UPDATE catalogdb.bhm_efeds_vetoexit
+-- UPDATE catalogdb.bhm_efeds_veto
 
 --     SET specobjid = (plate::bigint<<50 ) + (fiberid::bigint<<38) +
 --                     ((mjd-50000)::bigint<<24) + (1301::bigint<<10);
 
--- CREATE INDEX ON catalogdb.bhm_efeds_vetoexit
- (specobjid);
+-- CREATE INDEX ON catalogdb.bhm_efeds_veto (specobjid);
 
-CREATE INDEX ON catalogdb.bhm_efeds_vetoexit
- (mjd, plate, fiberid, run2d);
+CREATE INDEX ON catalogdb.bhm_efeds_veto (mjd, plate, fiberid, run2d);
 
-CREATE INDEX ON catalogdb.bhm_efeds_vetoexit
- (q3c_ang2ipix(plug_ra, plug_dec));
-CLUSTER bhm_efeds_vetoexit
-_q3c_ang2ipix_idx ON catalogdb.bhm_efeds_vetoexit
-;
-ANALYZE catalogdb.bhm_efeds_vetoexit
-;
+CREATE INDEX ON catalogdb.bhm_efeds_veto (q3c_ang2ipix(plug_ra, plug_dec));
+CLUSTER bhm_efeds_veto_q3c_ang2ipix_idx ON catalogdb.bhm_efeds_veto;
+ANALYZE catalogdb.bhm_efeds_veto;
