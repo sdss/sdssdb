@@ -12,6 +12,8 @@
 # The following functions are adapted from the sqlalchemy_schemadisplay by
 # Florian Schulze (https://github.com/fschulze/sqlalchemy_schemadisplay).
 
+import re
+
 import pydot
 from peewee import ForeignKeyField
 
@@ -39,13 +41,18 @@ field_type_psql = {'AUTO': 'SERIAL',
                    'VARCHAR': 'VARCHAR'}
 
 
-def _render_table_html(model, show_indices=True, show_datatypes=True):
+def _render_table_html(model, show_columns=True, show_pks=True,
+                       show_indices=True, show_datatypes=True):
     """Creates the HTML tags for a table, including PKs, FKs, and indices.
 
     Parameters
     ----------
     model : `peewee.Model`
         The Peewee model for which to create the table.
+    show_columns : bool
+        Whether to show the column names.
+    show_pks : bool
+        Whether to show the primary key. Supersedes ``show_columns``.
     show_indices : `bool`
         Whether to show the indices from the table as separate rows.
     show_datatypes : `bool`
@@ -168,8 +175,9 @@ def _render_table_html(model, show_indices=True, show_datatypes=True):
     return html
 
 
-def create_schema_graph(models=None, base=None, schema=None, show_indices=True,
-                        show_datatypes=True, font='Bitstream-Vera Sans',
+def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
+                        show_pks=True, show_indices=True, show_datatypes=True,
+                        skip_tables=[], font='Bitstream-Vera Sans',
                         concentrate=True, relation_options={}, rankdir='TB'):
     """Creates a graph visualisation from a series of Peewee models.
 
@@ -179,27 +187,33 @@ def create_schema_graph(models=None, base=None, schema=None, show_indices=True,
 
     Parameters
     ----------
-    models : `list`
+    models : list
         A list of Peewee `models <peewee:Model>` to be graphed.
-    base : `peewee:Model`
+    base : peewee:Model
         A base model class. If passed, all the model classes that were created
         by subclassing from the base model will be used.
-    schema : `str`
+    schema : str
         A schema name. If passed, will be used to limit the list of models or
         ``base`` subclasses to only the models that match the schema name.
-    show_indices : `bool`
+    show_columns : bool
+        Whether to show the column names.
+    show_pks : bool
+        Whether to show the primary key. Supersedes ``show_columns``.
+    show_indices : bool
         Whether to show the indices from the table as separate rows.
-    show_datatypes : `bool`
+    show_datatypes : bool
         Whether to show the data type of each column.
-    font : `str`
+    skip_tables : list
+        List of table names to skip.
+    font : str
         The name of the font to use.
-    relation_options : `dict`
+    relation_options : dict
         Additional parameters to be passed to ``pydot.Edge`` when creating the
         relationships.
 
     Returns
     -------
-    graph : pydot.Dot
+    graph : `pydot.Dot`
         A ``pydot.Dot`` object with the graph representation of the schema.
 
     Example
@@ -217,7 +231,13 @@ def create_schema_graph(models=None, base=None, schema=None, show_indices=True,
     relation_kwargs.update(relation_options)
 
     if base and not models:
-        models = base.__subclasses__()
+        models = set(base.__subclasses__())
+        while True:
+            old_models = models.copy()
+            for model in old_models:
+                models |= set(model.__subclasses__())
+            if models == old_models:
+                break
 
     if schema:
         models = [model for model in models if model._meta.schema == schema]
@@ -231,10 +251,18 @@ def create_schema_graph(models=None, base=None, schema=None, show_indices=True,
 
     for model in models:
 
+        if model._meta.table_name in skip_tables:
+            continue
+
+        if model._meta.database.connected and not model.table_exists():
+            continue
+
         graph.add_node(
             pydot.Node(str(model._meta.table_name),
                        shape='plaintext',
                        label=_render_table_html(model,
+                                                show_columns=show_columns,
+                                                show_pks=show_pks,
                                                 show_indices=show_indices,
                                                 show_datatypes=show_datatypes),
                        fontname=font,
@@ -247,8 +275,13 @@ def create_schema_graph(models=None, base=None, schema=None, show_indices=True,
                     field.rel_model not in models):
                 continue
 
-            from_col_name = field.column_name
+            from_col_name = '+ ' + field.column_name
+
             to_col_name = field.rel_field.column_name
+            if field.rel_field.primary_key:
+                to_col_name = ''
+            else:
+                to_col_name = '+ ' + to_col_name
 
             edge = [model._meta.table_name, field.rel_model._meta.table_name]
 
@@ -260,8 +293,8 @@ def create_schema_graph(models=None, base=None, schema=None, show_indices=True,
 
             graph_edge = pydot.Edge(
                 dir='both',
-                headlabel=f'+ {to_col_name}',
-                taillabel=f'+ {from_col_name}',
+                headlabel=to_col_name,
+                taillabel=from_col_name,
                 arrowhead='none',
                 arrowtail='none',
                 # arrowhead=is_inheritance and 'none' or 'odot',
