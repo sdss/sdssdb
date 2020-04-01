@@ -125,9 +125,9 @@ class ReflectMeta(ModelBase):
 
         try:
             ReflectedModel = generate_models(database, schema=schema,
-                                             table_names=table_name)[table_name]
-        except KeyError:
-            log.debug('reflection failed for {}'.format(table_name))
+                                             table_names=[table_name])[table_name]
+        except Exception as ee:
+            log.debug('reflection failed for {}: {}'.format(table_name, ee))
             return
 
         for field_name, field in ReflectedModel._meta.fields.items():
