@@ -155,15 +155,6 @@ class ReflectMeta(ModelBase):
             pk = ReflectedModel._meta.primary_key
             self._meta.set_primary_key(pk.name, pk)
 
-        for index in ReflectedModel._meta.indexes:
-
-            # TODO: this probably can never work. Find a better way of determining
-            # if the index has been added manually.
-            if index in self._meta.indexes:
-                continue
-
-            self._meta.indexes.append(index)
-
 
 class BaseModel(Model, metaclass=ReflectMeta):
     """A custom peewee `.Model` with enhanced representation and methods.
