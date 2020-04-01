@@ -666,5 +666,11 @@ class BHM_eFEDS_Veto(CatalogdbModel):
         table_name = 'bhm_efeds_veto'
 
 
+class BestBrightest(CatalogdbModel):
+
+    class Meta:
+        table_name = 'best_brightest'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
