@@ -672,5 +672,24 @@ class BestBrightest(CatalogdbModel):
         table_name = 'best_brightest'
 
 
+class SkyMapperGaia(CatalogdbModel):
+
+    skymapper_object_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    skymapper = ForeignKeyField(SkyMapper_DR1_1,
+                                column_name='skymapper_object_id',
+                                object_id_name='skymapper_object_id',
+                                backref='+')
+
+    class Meta:
+        table_name = 'skymapper_gaia'
+        print_fields = ['gaia_source_id']
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
