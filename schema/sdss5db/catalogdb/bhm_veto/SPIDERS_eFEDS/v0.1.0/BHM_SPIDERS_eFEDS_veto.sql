@@ -80,9 +80,7 @@ CREATE TABLE catalogdb.bhm_efeds_veto (
     anyormask INTEGER
 );
 
-\COPY catalogdb.bhm_efeds_veto
-    FROM /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/bhm_veto_lists/bhm_efeds_veto/v0.1.0/BHM_EFEDS_VETO_v0.1.0.csv
-    WITH CSV HEADER DELIMITER E'\t' NULL '\N';
+\COPY catalogdb.bhm_efeds_veto FROM /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/bhm_veto_lists/bhm_efeds_veto/v0.1.0/BHM_EFEDS_VETO_v0.1.0.csv WITH CSV HEADER DELIMITER E'\t' NULL '\N';
 
 -- Query to create a new column with the correct specobjid. 1301 is the result of
 -- (N-5)*10000+M*100+P for RUN2D v5_13_1 (see https://www.sdss.org/dr16/help/glossary/#specobj).

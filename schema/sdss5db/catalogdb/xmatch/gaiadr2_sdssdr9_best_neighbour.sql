@@ -18,8 +18,6 @@ CREATE TABLE catalogdb.gaiadr2_sdssdr9_best_neighbour(
 );
 
 
-\COPY catalogdb.gaiadr2_sdssdr9_best_neighbour
-    FROM '/uufs/chpc.utah.edu/common/home/sdss/sdsswork/gaia/dr2/crossmatch/csv_catalogs/sdssdr9_best_neighbour.csv'
-    WITH CSV HEADER;
+\COPY catalogdb.gaiadr2_sdssdr9_best_neighbour FROM '/uufs/chpc.utah.edu/common/home/sdss/sdsswork/gaia/dr2/crossmatch/csv_catalogs/sdssdr9_best_neighbour.csv' WITH CSV HEADER;
 
 ALTER TABLE catalogdb.gaiadr2_sdssdr9_best_neighbour ADD PRIMARY KEY (source_id);
