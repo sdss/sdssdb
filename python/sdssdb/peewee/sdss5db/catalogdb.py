@@ -578,6 +578,19 @@ class GalacticMillisecondPulsars(CatalogdbModel):
         table_name = 'galactic_millisecond_pulsars'
 
 
+class TransitionalMillisecondPulsars(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'transitional_msps'
+
+
 class ATNF(CatalogdbModel):
 
     name = TextField(primary_key=True)
