@@ -112,20 +112,38 @@ def _render_table_html(model, show_indices=True, show_datatypes=True):
     # Add indexes and unique constraints
     if show_indices:
 
-        indexes = [index for index in model._meta.fields_to_index()
-                   if not isinstance(index._expressions[0], ForeignKeyField)]
+        if model._meta.database.connected:
+            indexes = model._meta.database.get_indexes(model._meta.table_name,
+                                                       schema=model._meta.schema)
+        else:
+            indexes = [index._expressions[0] for index in model._meta.fields_to_index()
+                       if not isinstance(index._expressions[0], ForeignKeyField)]
 
         if len(indexes) > 0:
             html += '<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>'
 
             for index in indexes:
 
-                column_name = index._expressions[0].column_name
+                column_names = index.columns
+                ilabel = 'INDEX'
 
-                if index._unique:
-                    ilabel = 'UNIQUE'
+                if len(column_names) == 1:
+                    column_name = column_names[0]
+                    if column_name == '':
+                        match = re.match(r'.+q3c_ang2ipix\("*(\w+)"*, "*(\w+)"*\).+',
+                                         index.sql)
+                        if match:
+                            column_name = '(' + ', '.join(match.groups()) + ')'
+                            ilabel = 'Q3C'
+                        else:
+                            continue
                 else:
-                    ilabel = 'INDEX'
+                    column_name = '(' + ', '.join(column_names) + ')'
+
+                if index.unique:
+                    if column_name == pk.column_name:
+                        continue
+                    ilabel = 'UNIQUE'
 
                 html += f'<TR><TD ALIGN="LEFT">{ilabel} {column_name}</TD></TR>'
 
