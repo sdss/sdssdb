@@ -201,22 +201,6 @@ class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
         table_name = 'sdss_dr16_specobj'
 
 
-class TwoMass_Clean(CatalogdbModel):
-
-    pts_key = ForeignKeyField(TwoMassPSC,
-                              backref='tmass_clean',
-                              lazy_load=True)
-
-    class Meta:
-        table_name = 'twomass_clean'
-
-
-class TwoMass_Clean_No_Neighbor(CatalogdbModel):
-
-    class Meta:
-        table_name = 'twomass_clean_noneighbor'
-
-
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
     source_id = ForeignKeyField(Gaia_DR2,
@@ -496,7 +480,7 @@ class TIC_v8(CatalogdbModel):
                                   backref='tic')
 
     photoobj = ForeignKeyField(SDSS_DR13_PhotoObj, field='objid',
-                               column_name='sdss_int', object_id_name='sdss_int',
+                               column_name='sdss', object_id_name='sdss',
                                backref='tic')
 
     gaia = ForeignKeyField(Gaia_DR2, field='source_id',
