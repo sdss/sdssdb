@@ -63,29 +63,30 @@ def _render_table_html(model, show_columns=True, show_pks=True,
     table_name = model._meta.table_name
     fields = model._meta.fields
 
-    pk_col_names = set([fields[field_name].column_name for field_name in fields
-                        if fields[field_name].primary_key])
+    # pk_col_names = set([fields[field_name].column_name for field_name in fields
+    #                     if fields[field_name].primary_key])
 
-    fk_col_names = set([fields[field_name].column_name for field_name in fields
-                        if isinstance(fields[field_name], ForeignKeyField)])
+    # fk_col_names = set([fields[field_name].column_name for field_name in fields
+    #                     if isinstance(fields[field_name], ForeignKeyField)])
 
     def format_field_str(field):
         """Add in (PK) OR (FK) suffixes to column names."""
 
-        column_name = field.column_name
-        if model._meta.composite_key:
-            column_name = '(' + ', '.join(pk.field_names) + ')'
-
         suffixes = []
 
-        if column_name in pk_col_names or column_name == '__composite_key__':
+        column_name = field.column_name
+        if column_name == '__composite_key__':
+            column_name = '(' + ', '.join(pk.field_names) + ')'
+            suffixes.append('PK')  # Composite keys get .primary_key == False
+
+        if field.primary_key:
             suffixes.append('PK')
-        if column_name in fk_col_names:
+        if isinstance(field, ForeignKeyField):
             suffixes.append('FK')
 
         suffix = ' (' + ', '.join(suffixes) + ')' if len(suffixes) > 0 else ''
 
-        if show_datatypes:
+        if show_datatypes and field.column_name != '__composite_key__':
             field_type = field.field_type
             if field_type in field_type_psql:
                 field_type = field_type_psql[field_type]
