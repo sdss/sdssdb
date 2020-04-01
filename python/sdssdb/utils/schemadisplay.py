@@ -66,10 +66,12 @@ def _render_table_html(model, show_indices=True, show_datatypes=True):
         """Add in (PK) OR (FK) suffixes to column names."""
 
         column_name = field.column_name
+        if model._meta.composite_key:
+            column_name = '(' + ', '.join(pk.field_names) + ')'
 
         suffixes = []
 
-        if column_name in pk_col_names:
+        if column_name in pk_col_names or column_name == '__composite_key__':
             suffixes.append('PK')
         if column_name in fk_col_names:
             suffixes.append('FK')
@@ -85,27 +87,41 @@ def _render_table_html(model, show_indices=True, show_datatypes=True):
             return f'- {column_name}{suffix}'
 
     html = (f'<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0">'
-            f'<TR><TD ALIGN="CENTER">{table_name}</TD></TR>'
-            f'<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>')
+            f'<TR><TD ALIGN="CENTER"><font face="Lucida Sans Demibold Roman">'
+            f'{table_name}</font></TD></TR>')
 
     added_col_name = []
     fields_html = []
 
-    # Add a row for each column in the table.
-    for field in fields.values():
-
-        column_name = field.column_name
-
-        # Avoids repeating columns. This can happen if there are multiple
-        # FKs pointing to the same column.
-        if column_name in added_col_name:
-            continue
-
+    pk = model._meta.primary_key
+    if show_pks and pk:
+        if model._meta.composite_key:
+            column_name = '(' + ', '.join(pk.field_names) + ')'
+        else:
+            column_name = pk.column_name
         fields_html.append(
             '<TR><TD ALIGN="LEFT" PORT="{}">{}</TD></TR>'.format(
-                column_name, format_field_str(field)))
+                column_name, format_field_str(pk)))
 
-        added_col_name.append(column_name)
+    # Add a row for each column in the table.
+    if show_columns:
+        for field in fields.values():
+
+            if field.primary_key:
+                continue
+
+            column_name = field.column_name
+
+            # Avoids repeating columns. This can happen if there are multiple
+            # FKs pointing to the same column.
+            if column_name in added_col_name:
+                continue
+
+            fields_html.append(
+                '<TR><TD ALIGN="LEFT" PORT="{}">{}</TD></TR>'.format(
+                    column_name, format_field_str(field)))
+
+            added_col_name.append(column_name)
 
     html += ''.join(fields_html)
 
