@@ -96,7 +96,7 @@ def _render_table_html(model, show_columns=True, show_pks=True,
 
     html = (f'<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0">'
             f'<TR><TD ALIGN="CENTER"><font face="Lucida Sans Demibold Roman">'
-            f'{table_name}</font></TD></TR>')
+            f'{table_name}</font><BR/>({model.__name__})</TD></TR>')
 
     added_col_name = []
     fields_html = []
@@ -131,7 +131,9 @@ def _render_table_html(model, show_columns=True, show_pks=True,
 
             added_col_name.append(column_name)
 
-    html += ''.join(fields_html)
+    if len(fields_html) > 0:
+        html += '<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>'
+        html += ''.join(fields_html)
 
     # Add indexes and unique constraints
     if show_indices:
@@ -183,7 +185,7 @@ def _render_table_html(model, show_columns=True, show_pks=True,
 def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
                         show_pks=True, show_indices=True, show_datatypes=True,
                         skip_tables=[], font='Bitstream-Vera Sans',
-                        concentrate=True, relation_options={}, rankdir='TB'):
+                        graph_options={}, relation_options={}):
     """Creates a graph visualisation from a series of Peewee models.
 
     Produces a `pydot <https://pypi.org/project/pydot/>`__ graph including the
@@ -212,6 +214,8 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
         List of table names to skip.
     font : str
         The name of the font to use.
+    graph_options : dict
+        Options for creating the graph. Any valid Graphviz option.
     relation_options : dict
         Additional parameters to be passed to ``pydot.Edge`` when creating the
         relationships.
@@ -247,12 +251,13 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
     if schema:
         models = [model for model in models if model._meta.schema == schema]
 
-    graph = pydot.Dot(prog='dot',
-                      mode='ipsep',
-                      overlap='ipsep',
-                      sep='0.01',
-                      concentrate=str(concentrate),
-                      rankdir=rankdir)
+    default_graph_options = dict(rankdir='TB',
+                                 sep='0.1',
+                                 mode='ipsep',
+                                 overlap='ipsep')
+    default_graph_options.update(graph_options)
+
+    graph = pydot.Dot(prog='dot', **graph_options)
 
     for model in models:
 
