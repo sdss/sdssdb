@@ -205,17 +205,19 @@ class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
 
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
-    source_id = ForeignKeyField(Gaia_DR2,
-                                field='source_id',
-                                column_name='source_id',
-                                backref='+',
-                                lazy_load=False)
+    source_id = BigIntegerField(primary_key=True)
 
-    tmass_pts_key = ForeignKeyField(TwoMassPSC,
-                                    field='pts_key',
-                                    column_name='tmass_pts_key',
-                                    backref='+',
-                                    lazy_load=False)
+    gaia = ForeignKeyField(Gaia_DR2,
+                           field='source_id',
+                           column_name='source_id',
+                           backref='+',
+                           lazy_load=False)
+
+    twomass = ForeignKeyField(TwoMassPSC,
+                              field='pts_key',
+                              column_name='tmass_pts_key',
+                              backref='+',
+                              lazy_load=False)
 
     class Meta:
         table_name = 'gaiadr2_tmass_best_neighbour'
@@ -248,14 +250,10 @@ class Legacy_Survey_DR8(CatalogdbModel):
     ref_cat = TextField()
     ref_id = BigIntegerField()
 
-    @property
-    def gaia(self):
-        """Returns the Gaia DR2 object or `None` if no match."""
-
-        if self.ref_cat != 'G2':
-            return None
-
-        return Gaia_DR2.get(source_id=self.ref_id)
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid',
+                           backref='legacy_survey')
 
     class Meta:
         table_name = 'legacy_survey_dr8'
