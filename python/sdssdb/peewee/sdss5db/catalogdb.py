@@ -695,5 +695,11 @@ class UVOT_SSC_1(CatalogdbModel):
         table_name = 'uvotssc1'
 
 
+class CataclysmicVariables(CatalogdbModel):
+
+    class Meta:
+        table_name = 'cataclysmic_variables'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
