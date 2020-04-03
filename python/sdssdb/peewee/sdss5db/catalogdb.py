@@ -701,5 +701,16 @@ class CataclysmicVariables(CatalogdbModel):
         table_name = 'cataclysmic_variables'
 
 
+class YSO_Clustering(CatalogdbModel):
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'yso_clustering'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)

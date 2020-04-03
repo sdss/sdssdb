@@ -269,3 +269,11 @@ ALTER TABLE catalogdb.legacy_survey_dr8
     ADD CONSTRAINT gaia_sourceid_fk
     FOREIGN KEY (gaia_sourceid)
     REFERENCES catalogdb.gaia_dr2_source (source_id);
+
+
+-- yso_clustering
+
+ALTER TABLE catalogdb.yso_clustering
+    ADD CONSTRAINT source_id_fk
+    FOREIGN KEY (source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id);
