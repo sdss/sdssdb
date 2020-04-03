@@ -714,5 +714,17 @@ class YSO_Clustering(CatalogdbModel):
         table_name = 'yso_clustering'
 
 
+class MIPSGAL(CatalogdbModel):
+
+    glimpse = ForeignKeyField(GLIMPSE, backref='+')
+    twomass = ForeignKeyField(TwoMassPSC,
+                              column_name='twomass_name',
+                              object_id_name='twomass_name',
+                              backref='+')
+
+    class Meta:
+        table_name = 'mipsgal'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)

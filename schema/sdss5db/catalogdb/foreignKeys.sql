@@ -277,3 +277,24 @@ ALTER TABLE catalogdb.yso_clustering
     ADD CONSTRAINT source_id_fk
     FOREIGN KEY (source_id)
     REFERENCES catalogdb.gaia_dr2_source (source_id);
+
+
+-- mipsgal
+
+-- Prepare the columns
+UPDATE catalogdb.mipsgal SET twomass_name = TRIM(twomass_name);
+UPDATE catalogdb.mipsgal SET twomass_name = NULL where twomass_name = '';
+UPDATE catalogdb.mipsgal SET glimpse = NULL where TRIM(glimpse) = '';
+
+CREATE INDEX CONCURRENTLY ON catalogdb.mipsgal USING BTREE (twomass_name);
+CREATE INDEX CONCURRENTLY ON catalogdb.mipsgal USING BTREE (glimpse);
+
+ALTER TABLE catalogdb.mipsgal
+    ADD CONSTRAINT twomass_name_fk
+    FOREIGN KEY (twomass_name)
+    REFERENCES catalogdb.twomass_psc (designation);
+
+ALTER TABLE catalogdb.mipsgal
+    ADD CONSTRAINT glimpse_fk
+    FOREIGN KEY (glimpse)
+    REFERENCES catalogdb.glimpse (designation);
