@@ -379,7 +379,7 @@ CREATE TABLE catalogdb.tycho2 (
 \COPY catalogdb.tycho2 FROM /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/tycho2/Tycho-2/tycho2_all.csv WITH CSV HEADER DELIMITER ',';
 
 ALTER TABLE catalogdb.tycho2 ADD COLUMN designation TEXT;
-UPDATE catalogdb.tycho2 SET designation = tyc1 || '-' || LPAD(tyc2::TEXT, 5, '0')  || '-' || tyc3;
+UPDATE catalogdb.tycho2 SET designation = LPAD(tyc1::TEXT, 4, '0') || '-' || LPAD(tyc2::TEXT, 5, '0')  || '-' || tyc3;
 
 -- Need to remove duplicates in the supplement tables. This assumes that the supplement tables
 -- are towards the end of the table, which may not be true, but seems to work.
