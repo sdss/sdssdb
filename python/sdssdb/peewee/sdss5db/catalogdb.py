@@ -703,6 +703,8 @@ class CataclysmicVariables(CatalogdbModel):
 
 class YSO_Clustering(CatalogdbModel):
 
+    source_id = BigIntegerField(primary_key=True)
+
     gaia = ForeignKeyField(Gaia_DR2,
                            column_name='source_id',
                            object_id_name='source_id',
