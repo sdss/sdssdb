@@ -718,12 +718,28 @@ class MIPSGAL(CatalogdbModel):
 
     glimpse = ForeignKeyField(GLIMPSE, backref='+')
     twomass = ForeignKeyField(TwoMassPSC,
-                              column_name='twomass_name',
                               object_id_name='twomass_name',
                               backref='+')
 
     class Meta:
         table_name = 'mipsgal'
+
+
+class TESS_TOI(CatalogdbModel):
+
+    tic = ForeignKeyField(TIC_v8,
+                          column_name='ticid',
+                          object_id_name='ticid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'yso_clustering'
+
+
+class XMM_OM_SUSS_4_1(CatalogdbModel):
+
+    class Meta:
+        table_name = 'xmm_om_suss_4_1'
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
