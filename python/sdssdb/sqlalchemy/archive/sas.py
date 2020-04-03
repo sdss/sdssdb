@@ -97,14 +97,13 @@ class File(Base):
         return any(self.symlink_files)
 
     @property
-    def symlinked_by(self):
+    def symlink_tree(self):
         ''' returns a list of files/directories symlinking to this file '''
         symfiles = self.symlink_files
         symdirs = []
         for path in self.parents:
             if any(path.linked_symlink_directories):
                 symdirs.extend(path.linked_symlink_directories)
-                break
         return symfiles + symdirs
 
 
