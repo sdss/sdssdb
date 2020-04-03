@@ -18,8 +18,10 @@ def main():
     assert database.connected
 
     path_ = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/tycho2/Tycho-2/'
+    paths = list(glob.glob(path_ + 'tyc2.dat.*.gz')) + [path_ + 'suppl_1.dat.gz',
+                                                        path_ + 'suppl_2.dat.gz']
 
-    for file_ in sorted(glob.glob(path_ + 'tyc2.dat.*.gz')):
+    for file_ in sorted(paths):
 
         print(file_)
 

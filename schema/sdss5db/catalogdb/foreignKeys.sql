@@ -157,7 +157,7 @@ ALTER TABLE catalogdb.tic_v8
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT tyc_fk
     FOREIGN KEY (tyc)
-    REFERENCES catalogdb.tycho2 (name)
+    REFERENCES catalogdb.tycho2 (designation)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE catalogdb.tic_v8
