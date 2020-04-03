@@ -733,7 +733,7 @@ class TESS_TOI(CatalogdbModel):
                           backref='+')
 
     class Meta:
-        table_name = 'yso_clustering'
+        table_name = 'tess_toi'
 
 
 class XMM_OM_SUSS_4_1(CatalogdbModel):

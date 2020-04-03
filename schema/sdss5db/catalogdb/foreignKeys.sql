@@ -298,3 +298,13 @@ ALTER TABLE catalogdb.mipsgal
     ADD CONSTRAINT glimpse_fk
     FOREIGN KEY (glimpse)
     REFERENCES catalogdb.glimpse (designation);
+
+
+-- TESS-TOI
+
+CREATE INDEX CONCURRENTLY ON catalogdb.tess_toi USING BTREE (ticid);
+
+ALTER TABLE catalogdb.tess_toi
+    ADD CONSTRAINT ticid_fk
+    FOREIGN KEY (ticid)
+    REFERENCES catalogdb.tic_v8 (id);
