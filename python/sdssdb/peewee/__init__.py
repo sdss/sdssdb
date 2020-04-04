@@ -20,7 +20,7 @@ from sdssdb import log
 class ReflectMeta(ModelBase):
     """A metaclass that supports model reflection on demand.
 
-    This metaclass expands Peewee's ``ModelBase`` to provide a hook for
+    This metaclass expands PeeWee's ``ModelBase`` to provide a hook for
     declaring/expanding fields and indexes using the
     :ref:`introspection system <peewee:reflection>`. The feature is enabled
     by a new attribute in :class:`peewee:Metadata` called ``use_reflection``
@@ -75,8 +75,10 @@ class ReflectMeta(ModelBase):
                 reflection_options = {'skip_foreign_keys': True}
                 database = database
 
-    Foreign keys explicitely defined need to reference fields that exist so the
-    referenced columns need to be added manually.
+    Foreign keys explicitely defined need to reference existing fields,
+    so the referenced columns need to be added manually. In practice, this
+    means that if you add a `peewee:ForeignKeyField`, the referenced field
+    (usually the primary key) needs to be defined explicitely.
 
     Caveats:
 
@@ -88,6 +90,10 @@ class ReflectMeta(ModelBase):
     ``reflection_options = {'skip_foreign_keys': True}``, both the primary key
     and the foreign key need to be defined explicitely. Otherwise neither
     will be added.
+
+    - `.ReflectMeta` is designed to fail silently if PeeWee's reflection fails.
+    Error are logged with debug level and can be display by setting
+    doing ``from sdssdb import log`` and ``log.set_level(0)``.
 
     """
 
