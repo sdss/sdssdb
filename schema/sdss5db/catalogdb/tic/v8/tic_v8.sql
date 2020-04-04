@@ -131,5 +131,5 @@ CREATE TABLE catalogdb.tic_v8 (
 	e_dec_orig DOUBLE PRECISION,
 	raddflag INTEGER,
 	wdflag INTEGER,
-	objid BIGINT,
+	objid BIGINT
 )  WITHOUT OIDS;
