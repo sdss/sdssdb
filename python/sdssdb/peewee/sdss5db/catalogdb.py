@@ -716,10 +716,15 @@ class YSO_Clustering(CatalogdbModel):
 
 class MIPSGAL(CatalogdbModel):
 
-    glimpse = ForeignKeyField(GLIMPSE, backref='+')
     twomass = ForeignKeyField(TwoMassPSC,
                               object_id_name='twomass_name',
                               backref='+')
+
+    @property
+    def glimpse(self):
+        """One-to-many for GLIMPSE targets."""
+
+        return GLIMPSE.select().where(GLIMPSE.designation == self.glimpse)
 
     class Meta:
         table_name = 'mipsgal'

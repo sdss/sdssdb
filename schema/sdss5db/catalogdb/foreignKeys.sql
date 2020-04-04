@@ -294,11 +294,6 @@ ALTER TABLE catalogdb.mipsgal
     FOREIGN KEY (twomass_name)
     REFERENCES catalogdb.twomass_psc (designation);
 
-ALTER TABLE catalogdb.mipsgal
-    ADD CONSTRAINT glimpse_fk
-    FOREIGN KEY (glimpse)
-    REFERENCES catalogdb.glimpse (designation);
-
 
 -- TESS-TOI
 
