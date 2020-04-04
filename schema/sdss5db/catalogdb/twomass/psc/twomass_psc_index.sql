@@ -18,7 +18,9 @@ CREATE INDEX ON catalogdb.twomass_psc (q3c_ang2ipix(ra, decl));
 CLUSTER twomass_psc_q3c_ang2ipix_idx ON catalogdb.twomass_psc;
 ANALYZE catalogdb.twomass_psc;
 
-ALTER TABLE catalogdb.twomass_psc ADD CONSTRAINT UNIQUE (designation);
+ALTER TABLE catalogdb.twomass_psc
+    ADD CONSTRAINT catalogdb_twomass_psc_designation_unique
+    UNIQUE (designation);
 CREATE INDEX ON catalogdb.twomass_psc USING BTREE (designation);
 
 CREATE INDEX ON catalogdb.twomass_psc USING BTREE (ph_qual);
