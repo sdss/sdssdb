@@ -8,7 +8,7 @@ UPDATE catalogdb.tic_v8 SET gaia_int = gaia::BIGINT;
 -- Indices
 
 CREATE INDEX on catalogdb.tic_v8 (q3c_ang2ipix(ra, dec));
-CLUSTER legacy_survey_q3c_ang2ipix_idx ON catalogdb.tic_v8;
+CLUSTER tic_v8_q3c_ang2ipix_idx ON catalogdb.tic_v8;
 ANALYZE catalogdb.tic_v8;
 
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Bmag);

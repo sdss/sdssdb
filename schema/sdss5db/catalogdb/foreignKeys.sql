@@ -161,8 +161,8 @@ ALTER TABLE catalogdb.tic_v8
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE catalogdb.tic_v8
-    ADD CONSTRAINT twomass_fk
-    FOREIGN KEY (twomass)
+    ADD CONSTRAINT twomass_psc_fk
+    FOREIGN KEY (twomass_psc)
     REFERENCES catalogdb.twomass_psc (designation)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
