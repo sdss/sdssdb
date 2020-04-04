@@ -73,3 +73,52 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
                      ' ' + table_name)
 
         execute_sql(statement)
+
+
+def get_cluster_index(connection, table_name=None, schema=None):
+    """Returns a tuple with the index on which a table has been clustered."""
+
+    table_name = table_name or '%%'
+    schema = schema or '%%'
+
+    cursor = connection.execute_sql(f"""
+        SELECT
+            c.relname AS tablename,
+            n.nspname AS schemaname,
+            i.relname AS indexname
+        FROM pg_index x
+            JOIN pg_class c ON c.oid = x.indrelid
+            JOIN pg_class i ON i.oid = x.indexrelid
+            JOIN pg_namespace n ON n.oid = i.relnamespace
+        WHERE
+            x.indisclustered AND
+            n.nspname LIKE '{schema}' AND
+            c.relname LIKE '{table_name}';
+    """)
+
+    return cursor.fetchall()
+
+
+def get_unclustered_tables(connection, schema=None):
+    """Lists tables not clustered."""
+
+    schema_like = schema or '%%'
+
+    table_names = connection.execute_sql(f"""
+        SELECT
+            tablename
+        FROM pg_tables
+        WHERE
+            schemaname LIKE '{schema_like}';
+    """).fetchall()
+
+    table_names = [table_name[0] for table_name in table_names]
+
+    clustered = get_cluster_index(connection, schema=schema)
+    if schema:
+        clustered = [idx for idx in clustered if idx[1] == schema]
+
+    unclustered = [table for table in table_names
+                   if table not in list(zip(*clustered))[0]]
+
+    return unclustered
