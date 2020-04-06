@@ -476,7 +476,7 @@ class TIC_v8(CatalogdbModel):
                              backref='tic')
 
     twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
-                                  column_name='twomass', object_id_name='twomass',
+                                  column_name='twomass_psc',
                                   backref='tic')
 
     photoobj = ForeignKeyField(SDSS_DR13_PhotoObj, field='objid',

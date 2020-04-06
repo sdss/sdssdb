@@ -11,5 +11,5 @@ UPDATE catalogdb.legacy_survey_dr8 SET gaia_sourceid = ref_id
 CREATE INDEX ON catalogdb.legacy_survey_dr8 (gaia_sourceid);
 
 CREATE INDEX ON catalogdb.legacy_survey_dr8 (q3c_ang2ipix(ra, dec));
-CLUSTER legacy_survey_q3c_ang2ipix_idx ON catalogdb.legacy_survey_dr8;
-ANALYZE catalogdb.legacy_survey_dr8;
+CLUSTER legacy_survey_dr8_q3c_ang2ipix_idx ON catalogdb.legacy_survey_dr8;
+VACUUM ANALYZE catalogdb.legacy_survey_dr8;

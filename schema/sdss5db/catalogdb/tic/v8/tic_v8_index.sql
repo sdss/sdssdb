@@ -9,7 +9,7 @@ UPDATE catalogdb.tic_v8 SET gaia_int = gaia::BIGINT;
 
 CREATE INDEX on catalogdb.tic_v8 (q3c_ang2ipix(ra, dec));
 CLUSTER tic_v8_q3c_ang2ipix_idx ON catalogdb.tic_v8;
-ANALYZE catalogdb.tic_v8;
+VACUUM ANALYZE catalogdb.tic_v8;
 
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Bmag);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Vmag);
@@ -21,3 +21,9 @@ CREATE INDEX ON catalogdb.tic_v8 USING BTREE (zmag);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Jmag);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Hmag);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Kmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (posflag);
+
+ALTER TABLE catalogdb.tic_v8 ADD COLUMN twomass_psc TEXT;
+UPDATE catalogdb.tic_v8
+    SET twomass_psc = twomass
+    WHERE twomass IS NOT NULL AND posflag != '2MASSEXT';

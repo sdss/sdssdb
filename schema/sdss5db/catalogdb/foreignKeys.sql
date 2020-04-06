@@ -143,7 +143,7 @@ ALTER TABLE catalogdb.sdss_dr14_ascapStar
 
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (sdss);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (tyc);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (twomass);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (twomass_psc);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (kic);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (allwise);
 CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gaia_int);
