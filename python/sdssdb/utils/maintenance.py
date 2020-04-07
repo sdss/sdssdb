@@ -122,3 +122,41 @@ def get_unclustered_tables(connection, schema=None):
                    if table not in list(zip(*clustered))[0]]
 
     return unclustered
+
+
+def get_row_count(connection, table_name, schema=None, approximate=True):
+    """Returns the model row count.
+
+    Parameters
+    ----------
+    connection : .PeeweeDatabaseConnection
+        The database connection.
+    table : str
+        The table name.
+    schema : str
+        The schema in which the table lives.
+    approximate : bool
+        If True, returns the approximate row count from the ``pg_class``
+        table (much faster). Otherwise calculates the exact count.
+
+    """
+
+    if approximate:
+        if schema is None:
+            sql = ('SELECT reltuples AS approximate_row_count '
+                   'FROM pg_class WHERE relname = \'{table_name}\';')
+        else:
+            sql = ('SELECT reltuples AS approximate_row_count FROM pg_class '
+                   'JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace '
+                   'WHERE relname = \'{table_name}\' AND pg_namespace.nspname = \'{schema}\';')
+    else:
+        if schema is None:
+            sql = 'SELECT count(*) FROM {table_name};'
+        else:
+            sql = 'SELECT count(*) FROM {schema}.{table_name};'
+
+    count = connection.execute_sql(sql.format(table_name=table_name, schema=schema)).fetchall()
+    if len(count) == 0:
+        raise ValueError('failed retrieving the row count. Check the table name and schema.')
+
+    return count[0][0]
