@@ -29,6 +29,10 @@ except ImportError:
     progressbar = False
 
 
+__all__ = ('to_csv', 'copy_data', 'drop_table', 'create_model_from_table',
+           'bulk_insert', 'file_to_db')
+
+
 DTYPE_TO_FIELD = {
     'i2': peewee.SmallIntegerField,
     'i4': peewee.IntegerField,

@@ -10,6 +10,10 @@ import sys
 import time
 
 
+__all__ = ('vacuum_all', 'get_cluster_index', 'get_unclustered_tables',
+           'get_row_count')
+
+
 def vacuum_all(database, analyze=True, verbose=False, schema=None):
     """Vacuums all the tables in a database or schema.
 

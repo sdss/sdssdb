@@ -14,11 +14,17 @@
 
 import re
 
-import pydot
 from peewee import ForeignKeyField
 
 
+try:
+    import pydot
+except ImportError:
+    pydot = None
+
+
 __all__ = ['create_schema_graph', 'show_schema_graph']
+
 
 field_type_psql = {'AUTO': 'SERIAL',
                    'BIGAUTO': 'BIGSERIAL',
@@ -235,6 +241,8 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
     """
 
     assert models or base, 'either model or base must be passed.'
+    assert pydot, ('pydot is required for create_schema_graph. '
+                   'Try running "pip install sdssdb[all]"')
 
     relation_kwargs = {'fontsize': '7.0'}
     relation_kwargs.update(relation_options)
