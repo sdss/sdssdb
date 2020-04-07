@@ -30,6 +30,10 @@ _Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
 _APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
 
+class Catalog(CatalogdbModel):
+    pass
+
+
 class AllWise(CatalogdbModel):
 
     cntr = BigIntegerField(primary_key=True)
