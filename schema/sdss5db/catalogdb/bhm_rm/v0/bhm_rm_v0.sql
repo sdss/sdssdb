@@ -146,7 +146,7 @@ CREATE TABLE catalogdb.bhm_rm_v0 (
 
 ALTER TABLE catalogdb.bhm_rm_v0 ADD COLUMN pk BIGSERIAL PRIMARY KEY;
 
-CREATE INDEX ON catalogdb.bhm_rm_v0 (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (q3c_ang2ipix(ra, dec));
 CLUSTER bhm_rm_v0_q3c_ang2ipix_idx ON catalogdb.bhm_rm_v0;
 VACUUM ANALYZE catalogdb.bhm_rm_v0;
 

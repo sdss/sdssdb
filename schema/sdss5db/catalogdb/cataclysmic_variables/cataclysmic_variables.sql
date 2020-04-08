@@ -104,6 +104,6 @@ CREATE TABLE catalogdb.cataclysmic_variables (
 
 ALTER TABLE catalogdb.cataclysmic_variables ADD PRIMARY KEY (ref_id);
 
-CREATE INDEX ON catalogdb.cataclysmic_variables (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.cataclysmic_variables (q3c_ang2ipix(ra, dec));
 CLUSTER cataclysmic_variables_q3c_ang2ipix_idx ON catalogdb.cataclysmic_variables;
 ANALYZE catalogdb.cataclysmic_variables;

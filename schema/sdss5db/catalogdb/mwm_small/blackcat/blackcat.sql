@@ -19,7 +19,7 @@ CREATE TABLE catalogdb.blackcat (
     gaia_source_id BIGINT PRIMARY KEY
 );
 
-CREATE INDEX ON catalogdb.blackcat (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.blackcat (q3c_ang2ipix(radeg, decdeg));
 CLUSTER blackcat_q3c_ang2ipix_idx ON catalogdb.blackcat;
 ANALYZE catalogdb.blackcat;
 

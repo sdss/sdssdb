@@ -51,15 +51,15 @@ ALTER TABLE catalogdb.gaia_qso ADD COLUMN pk BIGSERIAL;
 ALTER TABLE catalogdb.gaia_qso ADD PRIMARY KEY (pk);
 
 
-CREATE INDEX ON catalogdb.gaia_qso (q3c_ang2ipix(raj2000, dej2000));
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso (q3c_ang2ipix(raj2000, dej2000));
 CLUSTER gaia_qso_q3c_ang2ipix_idx ON catalogdb.gaia_qso;
 ANALYZE catalogdb.gaia_qso;
 
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (umag);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (gmag);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (rmag);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (imag);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (zmag);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (w1_w2);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (w2_w3);
-CREATE INDEX ON catalogdb.gaia_qso USING BTREE (w1mag);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (umag);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (gmag);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (rmag);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (imag);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (zmag);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (w1_w2);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (w2_w3);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (w1mag);

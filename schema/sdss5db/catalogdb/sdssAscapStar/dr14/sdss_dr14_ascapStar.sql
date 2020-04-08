@@ -333,5 +333,5 @@ CREATE TABLE catalogdb.sdss_dr14_ascapStar(
 
 \copy catalogdb.sdss_dr14_ascapStar FROM program 'bzcat $CATALOGDB_DIR/sdssAscapStar/dr14/src/sqlaspcapStar.csv.bz2' WITH CSV HEADER;
 
-CREATE INDEX ON catalogdb.sdss_dr14_ascapStar USING BTREE (target_id);
-CREATE INDEX ON catalogdb.sdss_dr14_ascapStar USING BTREE (apogee_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_ascapStar USING BTREE (target_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_ascapStar USING BTREE (apogee_id);

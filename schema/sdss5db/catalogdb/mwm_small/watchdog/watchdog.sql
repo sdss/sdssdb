@@ -19,7 +19,7 @@ CREATE TABLE catalogdb.watchdog (
     gaia_source_id BIGINT PRIMARY KEY
 );
 
-CREATE INDEX ON catalogdb.watchdog (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.watchdog (q3c_ang2ipix(radeg, decdeg));
 CLUSTER watchdog_q3c_ang2ipix_idx ON catalogdb.watchdog;
 ANALYZE catalogdb.watchdog;
 

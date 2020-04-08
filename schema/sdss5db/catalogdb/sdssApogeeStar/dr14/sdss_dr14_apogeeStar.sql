@@ -112,13 +112,13 @@ CREATE TABLE catalogdb.sdss_dr14_apogeeStar(
 
 \copy catalogdb.sdss_dr14_apogeeStar FROM program 'bzcat $CATALOGDB_DIR/sdssApogeeStar/dr14/src/sqlApogeeStar.csv.bz2' WITH CSV HEADER;
 
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStar (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar (q3c_ang2ipix(ra, dec));
 CLUSTER sdss_dr14_apogeeStar_q3c_ang2ipix_idx ON catalogdb.sdss_dr14_apogeeStar;
 ANALYZE catalogdb.sdss_dr14_apogeeStar;
 
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStar USING BTREE (ra);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStar USING BTREE (dec);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStar USING BTREE (glon);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStar USING BTREE (glat);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (ra);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (dec);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (glon);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (glat);
 
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStar USING BTREE (apogee_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (apogee_id);

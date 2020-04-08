@@ -377,6 +377,6 @@ CREATE TABLE catalogdb.uvotssc1 (
 
 ALTER TABLE catalogdb.uvotssc1 ADD id BIGSERIAL PRIMARY KEY;
 
-CREATE INDEX ON catalogdb.uvotssc1 (q3c_ang2ipix(radeg, dedeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.uvotssc1 (q3c_ang2ipix(radeg, dedeg));
 CLUSTER uvotssc1_q3c_ang2ipix_idx ON catalogdb.uvotssc1;
 VACUUM ANALYZE catalogdb.uvotssc1;

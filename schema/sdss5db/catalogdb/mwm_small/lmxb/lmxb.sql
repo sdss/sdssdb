@@ -19,7 +19,7 @@ CREATE TABLE catalogdb.lmxb (
     gaia_source_id BIGINT PRIMARY KEY
 );
 
-CREATE INDEX ON catalogdb.lmxb (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.lmxb (q3c_ang2ipix(radeg, decdeg));
 CLUSTER lmxb_q3c_ang2ipix_idx ON catalogdb.lmxb;
 ANALYZE catalogdb.lmxb;
 

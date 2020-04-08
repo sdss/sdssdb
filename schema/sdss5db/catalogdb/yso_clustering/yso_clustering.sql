@@ -25,6 +25,6 @@ CREATE TABLE catalogdb.yso_clustering (
     edist DOUBLE PRECISION
 );
 
-CREATE INDEX ON catalogdb.yso_clustering (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.yso_clustering (q3c_ang2ipix(ra, dec));
 CLUSTER yso_clustering_q3c_ang2ipix_idx ON catalogdb.yso_clustering;
 ANALYZE catalogdb.yso_clustering;

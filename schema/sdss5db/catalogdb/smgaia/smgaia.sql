@@ -20,9 +20,9 @@ CREATE TABLE catalogdb.skymapper_gaia (
 \COPY catalogdb.skymapper_gaia FROM PROGRAM 'zcat /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/SMGaia/SMGaia.csv.gz' WITH CSV HEADER DELIMITER ',';
 
 
-CREATE INDEX ON catalogdb.skymapper_gaia (gaia_source_id);
-CREATE INDEX ON catalogdb.skymapper_gaia (teff);
-CREATE INDEX ON catalogdb.skymapper_gaia (feh);
+CREATE INDEX CONCURRENTLY ON catalogdb.skymapper_gaia (gaia_source_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.skymapper_gaia (teff);
+CREATE INDEX CONCURRENTLY ON catalogdb.skymapper_gaia (feh);
 
 
 ALTER TABLE catalogdb.skymapper_gaia

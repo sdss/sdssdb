@@ -171,4 +171,4 @@ CREATE TABLE catalogdb.sdss_dr14_cannonStar(
 
 \copy catalogdb.sdss_dr14_cannonStar FROM program 'bzcat $CATALOGDB_DIR/sdssCannonStar/dr14/src/sqlcannonStar.csv.bz2' WITH CSV HEADER;
 
-CREATE INDEX ON catalogdb.sdss_dr14_cannonStar USING BTREE (apogee_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_cannonStar USING BTREE (apogee_id);

@@ -19,7 +19,7 @@ CREATE TABLE catalogdb.galactic_millisecond_pulsars (
     gaia_source_id BIGINT PRIMARY KEY
 );
 
-CREATE INDEX ON catalogdb.galactic_millisecond_pulsars (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.galactic_millisecond_pulsars (q3c_ang2ipix(radeg, decdeg));
 CLUSTER galactic_millisecond_pulsars_q3c_ang2ipix_idx ON catalogdb.galactic_millisecond_pulsars;
 ANALYZE catalogdb.galactic_millisecond_pulsars;
 

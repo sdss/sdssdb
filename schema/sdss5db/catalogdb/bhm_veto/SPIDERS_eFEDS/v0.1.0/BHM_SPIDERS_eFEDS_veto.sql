@@ -91,12 +91,12 @@ CREATE TABLE catalogdb.bhm_efeds_veto (
 -- UPDATE catalogdb.bhm_efeds_veto
 --     SET specobjid = (plate::bigint<<50 ) + (fiberid::bigint<<38) +
 --                     ((mjd-50000)::bigint<<24) + (1301::bigint<<10);
--- CREATE INDEX ON catalogdb.bhm_efeds_veto (specobjid);
+-- CREATE INDEX CONCURRENTLY ON catalogdb.bhm_efeds_veto (specobjid);
 
 ALTER TABLE catalogdb.bhm_efeds_veto ADD PRIMARY KEY (plate, mjd, fiberid, run2d);
 
-CREATE INDEX ON catalogdb.bhm_efeds_veto (mjd, plate, fiberid, run2d);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_efeds_veto (mjd, plate, fiberid, run2d);
 
-CREATE INDEX ON catalogdb.bhm_efeds_veto (q3c_ang2ipix(plug_ra, plug_dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_efeds_veto (q3c_ang2ipix(plug_ra, plug_dec));
 CLUSTER bhm_efeds_veto_q3c_ang2ipix_idx ON catalogdb.bhm_efeds_veto;
 ANALYZE catalogdb.bhm_efeds_veto;

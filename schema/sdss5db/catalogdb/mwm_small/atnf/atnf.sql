@@ -19,11 +19,11 @@ CREATE TABLE catalogdb.atnf (
     gaia_source_id BIGINT
 );
 
-CREATE INDEX ON catalogdb.atnf (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.atnf (q3c_ang2ipix(radeg, decdeg));
 CLUSTER atnf_q3c_ang2ipix_idx ON catalogdb.atnf;
 ANALYZE catalogdb.atnf;
 
-CREATE INDEX ON catalogdb.atnf USING BTREE (gaia_source_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.atnf USING BTREE (gaia_source_id);
 
 ALTER TABLE catalogdb.atnf
     ADD CONSTRAINT gaia_source_id_fk

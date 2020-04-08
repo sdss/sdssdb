@@ -22,5 +22,5 @@ CREATE TABLE catalogdb.sdss_dr14_apogeeStarVisit(
 
 ALTER TABLE catalogdb.sdss_dr14_apogeeStarVisit ADD COLUMN pk BIGSERIAL PRIMARY KEY;
 
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStarVisit using BTREE (apstar_id);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeStarVisit using BTREE (visit_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStarVisit using BTREE (apstar_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStarVisit using BTREE (visit_id);

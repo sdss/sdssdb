@@ -127,6 +127,6 @@ CREATE TABLE catalogdb.xmm_om_suss_4_1 (
 
 ALTER TABLE catalogdb.xmm_om_suss_4_1 ADD COLUMN pk BIGSERIAL PRIMARY KEY;
 
-CREATE INDEX on catalogdb.xmm_om_suss_4_1 (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.xmm_om_suss_4_1 (q3c_ang2ipix(ra, dec));
 CLUSTER xmm_om_suss_4_1_q3c_ang2ipix_idx on catalogdb.xmm_om_suss_4_1;
 VACUUM ANALYZE catalogdb.xmm_om_suss_4_1;

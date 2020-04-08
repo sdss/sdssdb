@@ -24,7 +24,7 @@ ALTER TABLE catalogdb.gaia_dr2_clean
 -- Some objectids are not present in dr13_photooj. It should not matter
 -- because the TIC has x-matching with SDSS.
 
--- CREATE INDEX ON catalogdb.gaiadr2_sdssdr9_best_neighbour (sdssdr9_oid);
+-- CREATE INDEX CONCURRENTLY ON catalogdb.gaiadr2_sdssdr9_best_neighbour (sdssdr9_oid);
 
 -- ALTER TABLE catalogdb.gaiadr2_sdssdr9_best_neighbour
 --     ADD CONSTRAINT source_id_fk
@@ -41,7 +41,7 @@ ALTER TABLE catalogdb.gaia_dr2_clean
 
 -- gaiadr2_tmass_best_neighbour
 
-CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
 
 ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
     ADD CONSTRAINT source_id_fk
@@ -58,7 +58,7 @@ ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
 
 -- gaiadr2_tmass_best_neighbour
 
-CREATE INDEX ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaiadr2_tmass_best_neighbour using BTREE (tmass_pts_key ASC);
 
 ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
     ADD CONSTRAINT source_id_fk
@@ -76,7 +76,7 @@ ALTER TABLE catalogdb.gaiadr2_tmass_best_neighbour
 -- sdss_dr14_specobj
 
 UPDATE catalogdb.sdss_dr14_specobj SET bestobjid = NULL WHERE bestobjid = 0;
-CREATE INDEX ON catalogdb.sdss_dr14_specobj using BTREE (bestobjid ASC);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_specobj using BTREE (bestobjid ASC);
 
 -- Cannot be created because some bestobjids are not present in dr13_photoobj.
 -- ALTER TABLE catalogdb.sdss_dr14_specobj
@@ -88,7 +88,7 @@ CREATE INDEX ON catalogdb.sdss_dr14_specobj using BTREE (bestobjid ASC);
 -- sdss_dr16_specobj
 
 UPDATE catalogdb.sdss_dr16_specobj SET bestobjid = NULL WHERE bestobjid = 0;
-CREATE INDEX ON catalogdb.sdss_dr16_specobj using BTREE (bestobjid ASC);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr16_specobj using BTREE (bestobjid ASC);
 
 -- Cannot be created because some bestobjids are not present in dr13_photoobj.
 -- ALTER TABLE catalogdb.sdss_dr16_specobj
@@ -100,7 +100,7 @@ CREATE INDEX ON catalogdb.sdss_dr16_specobj using BTREE (bestobjid ASC);
 
 -- gaia_unwise_agn
 
-CREATE INDEX ON catalogdb.gaia_unwise_agn USING BTREE (unwise_objid);
+CREATE INDEX CONCURRENTLY ON catalogdb.gaia_unwise_agn USING BTREE (unwise_objid);
 
 ALTER TABLE catalogdb.gaia_unwise_agn
     ADD CONSTRAINT source_id_fk
@@ -141,12 +141,12 @@ ALTER TABLE catalogdb.sdss_dr14_ascapStar
 
 -- tic_v8
 
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (sdss);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (tyc);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (twomass_psc);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (kic);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (allwise);
-CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gaia_int);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (sdss);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (tyc);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (twomass_psc);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (kic);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (allwise);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (gaia_int);
 
 ALTER TABLE catalogdb.tic_v8
     ADD CONSTRAINT sdss_fk
@@ -187,9 +187,9 @@ ALTER TABLE catalogdb.tic_v8
 
 -- bhm_spiders_agn_superset, bhm_spiders_clusters_superset
 
-CREATE INDEX ON catalogdb.bhm_spiders_agn_superset USING BTREE (gaia_dr2_source_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_spiders_agn_superset USING BTREE (gaia_dr2_source_id);
 UPDATE catalogdb.bhm_spiders_agn_superset SET gaia_dr2_source_id = NULL WHERE gaia_dr2_source_id = 0;
-CREATE INDEX ON catalogdb.bhm_spiders_agn_superset USING BTREE (ls_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_spiders_agn_superset USING BTREE (ls_id);
 
 ALTER TABLE catalogdb.bhm_spiders_agn_superset
     ADD CONSTRAINT gaia_dr2_source_id_fk
@@ -203,8 +203,8 @@ ALTER TABLE catalogdb.bhm_spiders_agn_superset
     REFERENCES catalogdb.legacy_survey_dr8 (ls_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (gaia_dr2_source_id);
-CREATE INDEX ON catalogdb.bhm_spiders_clusters_superset USING BTREE (ls_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_spiders_clusters_superset USING BTREE (gaia_dr2_source_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_spiders_clusters_superset USING BTREE (ls_id);
 UPDATE catalogdb.bhm_spiders_clusters_superset SET gaia_dr2_source_id = NULL WHERE gaia_dr2_source_id = 0;
 
 ALTER TABLE catalogdb.bhm_spiders_clusters_superset
@@ -222,9 +222,9 @@ ALTER TABLE catalogdb.bhm_spiders_clusters_superset
 
 -- skymapper_dr1_1
 
-CREATE INDEX ON catalogdb.skymapper_dr1_1 USING BTREE (allwise_cntr);
-CREATE INDEX ON catalogdb.skymapper_dr1_1 USING BTREE (gaia_dr2_id1);
-CREATE INDEX ON catalogdb.skymapper_dr1_1 USING BTREE (gaia_dr2_id2);
+CREATE INDEX CONCURRENTLY ON catalogdb.skymapper_dr1_1 USING BTREE (allwise_cntr);
+CREATE INDEX CONCURRENTLY ON catalogdb.skymapper_dr1_1 USING BTREE (gaia_dr2_id1);
+CREATE INDEX CONCURRENTLY ON catalogdb.skymapper_dr1_1 USING BTREE (gaia_dr2_id2);
 
 ALTER TABLE catalogdb.skymapper_dr1_1
     ADD CONSTRAINT allwise_cntr_fk
@@ -246,7 +246,7 @@ ALTER TABLE catalogdb.skymapper_dr1_1
 
 -- glimpse
 
-CREATE INDEX ON catalogdb.glimpse USING BTREE (tmass_cntr);
+CREATE INDEX CONCURRENTLY ON catalogdb.glimpse USING BTREE (tmass_cntr);
 
 ALTER TABLE catalogdb.glimpse
     ADD CONSTRAINT tmass_cntr_fk

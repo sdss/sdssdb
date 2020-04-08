@@ -72,6 +72,6 @@ CREATE TABLE catalogdb.mipsgal (
     f2 INTEGER
 );
 
-CREATE INDEX ON catalogdb.mipsgal (q3c_ang2ipix(radeg, dedeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.mipsgal (q3c_ang2ipix(radeg, dedeg));
 CLUSTER mipsgal_q3c_ang2ipix_idx ON catalogdb.mipsgal;
 ANALYZE catalogdb.mipsgal;

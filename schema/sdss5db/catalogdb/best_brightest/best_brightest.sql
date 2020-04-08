@@ -48,6 +48,6 @@ CREATE TABLE catalogdb.best_brightest (
 
 ALTER TABLE catalogdb.best_brightest ADD PRIMARY KEY (designation);
 
-CREATE INDEX ON catalogdb.best_brightest (q3c_ang2ipix(ra_1, dec_1));
+CREATE INDEX CONCURRENTLY ON catalogdb.best_brightest (q3c_ang2ipix(ra_1, dec_1));
 CLUSTER best_brightest_q3c_ang2ipix_idx ON catalogdb.best_brightest;
 ANALYZE catalogdb.best_brightest;

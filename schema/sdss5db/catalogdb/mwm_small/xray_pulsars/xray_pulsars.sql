@@ -19,7 +19,7 @@ CREATE TABLE catalogdb.xray_pulsars (
     gaia_source_id BIGINT PRIMARY KEY
 );
 
-CREATE INDEX ON catalogdb.xray_pulsars (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.xray_pulsars (q3c_ang2ipix(radeg, decdeg));
 CLUSTER xray_pulsars_q3c_ang2ipix_idx ON catalogdb.xray_pulsars;
 ANALYZE catalogdb.xray_pulsars;
 

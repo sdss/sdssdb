@@ -404,12 +404,12 @@ CREATE TABLE catalogdb.sdss_dr16_specobj(
 
 \copy catalogdb.sdss_dr16_specobj FROM program 'bzcat /uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssSpecObj/dr16/src/sqlSpecObj.csv.bz2' WITH CSV HEADER;
 
-CREATE INDEX ON catalogdb.sdss_dr16_specobj (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr16_specobj (q3c_ang2ipix(ra, dec));
 CLUSTER sdss_dr16_specobj_q3c_ang2ipix_idx ON catalogdb.sdss_dr16_specobj;
 ANALYZE catalogdb.sdss_dr16_specobj;
 
-CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (fluxObjID);
-CREATE INDEX ON catalogdb.sdss_dr16_specobj USING BTREE (targetObjID);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr16_specobj USING BTREE (fluxObjID);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr16_specobj USING BTREE (targetObjID);
 
-CREATE INDEX ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid);
-CREATE INDEX ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid, run2d);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr16_specobj (mjd, plate, fiberid, run2d);

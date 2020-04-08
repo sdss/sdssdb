@@ -17,16 +17,16 @@ ALTER TABLE catalogdb.allwise ADD PRIMARY KEY (cntr);
 
 -- Indices
 
-CREATE INDEX ON catalogdb.allwise USING BTREE (designation);
+CREATE INDEX CONCURRENTLY ON catalogdb.allwise USING BTREE (designation);
 
-CREATE INDEX ON catalogdb.allwise USING BTREE (ra);
-CREATE INDEX ON catalogdb.allwise USING BTREE (dec);
-CREATE INDEX ON catalogdb.allwise USING BTREE (glat);
-CREATE INDEX ON catalogdb.allwise using BTREE (glon);
+CREATE INDEX CONCURRENTLY ON catalogdb.allwise USING BTREE (ra);
+CREATE INDEX CONCURRENTLY ON catalogdb.allwise USING BTREE (dec);
+CREATE INDEX CONCURRENTLY ON catalogdb.allwise USING BTREE (glat);
+CREATE INDEX CONCURRENTLY ON catalogdb.allwise using BTREE (glon);
 
 ALTER TABLE catalogdb.allwise
     ADD CONSTRAINT allwise_designation_unique UNIQUE (designation);
 
-CREATE INDEX ON catalogdb.allwise (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.allwise (q3c_ang2ipix(ra, dec));
 CLUSTER allwise_q3c_ang2ipix_idx ON catalogdb.allwise;
 ANALYZE catalogdb.allwise;

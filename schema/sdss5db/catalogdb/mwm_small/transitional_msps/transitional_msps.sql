@@ -19,7 +19,7 @@ CREATE TABLE catalogdb.transitional_msps (
     gaia_source_id BIGINT PRIMARY KEY
 );
 
-CREATE INDEX ON catalogdb.transitional_msps (q3c_ang2ipix(radeg, decdeg));
+CREATE INDEX CONCURRENTLY ON catalogdb.transitional_msps (q3c_ang2ipix(radeg, decdeg));
 CLUSTER transitional_msps_q3c_ang2ipix_idx ON catalogdb.transitional_msps;
 ANALYZE catalogdb.transitional_msps;
 

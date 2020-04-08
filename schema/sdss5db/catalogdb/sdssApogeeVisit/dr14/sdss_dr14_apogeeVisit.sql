@@ -115,11 +115,11 @@ CREATE TABLE catalogdb.sdss_dr14_apogeeVisit(
 
 \copy catalogdb.sdss_dr14_apogeeVisit FROM program 'bzcat $CATALOGDB_DIR/sdssApogeeVisit/dr14/src/sqlApogeeVisit.csv.bz2' WITH CSV HEADER;
 
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit (q3c_ang2ipix(ra, dec));
 CLUSTER sdss_dr14_apogeeVisit_q3c_ang2ipix_idx ON catalogdb.sdss_dr14_apogeeVisit;
 ANALYZE catalogdb.sdss_dr14_apogeeVisit;
 
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (ra);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (dec);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (glon);
-CREATE INDEX ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (glat);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (ra);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (dec);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (glon);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeVisit USING BTREE (glat);

@@ -404,11 +404,11 @@ CREATE TABLE catalogdb.sdss_dr14_specobj(
 
 \copy catalogdb.sdss_dr14_specobj FROM program 'bzcat $CATALOGDB_DIR/sdssSpecObj/dr14/src/sqlSpecObj.csv.bz2' WITH CSV HEADER;
 
-CREATE INDEX ON catalogdb.sdss_dr14_specobj (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_specobj (q3c_ang2ipix(ra, dec));
 CLUSTER sdss_dr14_specobj_q3c_ang2ipix_idx ON catalogdb.sdss_dr14_specobj;
 ANALYZE catalogdb.sdss_dr14_specobj;
 
-CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (fluxObjID);
-CREATE INDEX ON catalogdb.sdss_dr14_specobj USING BTREE (targetObjID);
-CREATE INDEX ON catalogdb.sdss_dr14_specobj (mjd, plate, fiberid);
-CREATE INDEX ON catalogdb.sdss_dr14_specobj (mjd, plate, fiberid, run2d);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_specobj USING BTREE (fluxObjID);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_specobj USING BTREE (targetObjID);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_specobj (mjd, plate, fiberid);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_specobj (mjd, plate, fiberid, run2d);
