@@ -14,7 +14,7 @@
 
 import re
 
-from peewee import ForeignKeyField
+from peewee import ForeignKeyField, IndexMetadata
 
 
 try:
@@ -155,6 +155,8 @@ def _render_table_html(model, show_columns=True, show_pks=True,
             first = True
 
             for index in indexes:
+                if not isinstance(index, IndexMetadata):
+                    continue
 
                 column_names = index.columns
                 ilabel = 'INDEX'
@@ -259,8 +261,9 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
     if schema:
         models = [model for model in models if model._meta.schema == schema]
 
-    default_graph_options = dict(rankdir='TB',
-                                 sep='0.1',
+    default_graph_options = dict(program='dot',
+                                 rankdir='TB',
+                                 sep='0.01',
                                  mode='ipsep',
                                  overlap='ipsep')
     default_graph_options.update(graph_options)
