@@ -751,5 +751,39 @@ class XMM_OM_SUSS_4_1(CatalogdbModel):
         table_name = 'xmm_om_suss_4_1'
 
 
+class GeometricDistances_Gaia_DR2(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'geometric_distances_gaia_dr2'
+
+
+class BHM_RM_v0(CatalogdbModel):
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id_gaia',
+                           object_id_name='source_id_gaia',
+                           backref='+')
+
+    unwise = ForeignKeyField(unWISE,
+                             column_name='objid_unwise',
+                             object_id_name='objid_unwise',
+                             backref='+')
+
+    sdss = ForeignKeyField(SDSS_DR13_PhotoObj,
+                           column_name='objid_sdss',
+                           object_id_name='objid_sdss',
+                           backref='+')
+
+    class Meta:
+        table_name = 'bhm_rm_v0'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
