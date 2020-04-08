@@ -344,8 +344,9 @@ if _peewee:
 
             if self.is_connection_usable():
                 for model in self.models:
-                    if hasattr(model, 'reflect'):
-                        model.reflect()
+                    if getattr(model._meta, 'use_reflection', False):
+                        if hasattr(model, 'reflect'):
+                            model.reflect()
 
             return self.connected
 

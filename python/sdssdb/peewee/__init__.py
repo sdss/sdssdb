@@ -114,13 +114,15 @@ class ReflectMeta(ModelBase):
             database.models.append(Model)
 
         if Model._meta.use_reflection and database and database.connected:
-            if Model.table_exists():
-                cls.reflect(Model)
+            cls.reflect(Model)
 
         return Model
 
     def reflect(self):
         """Adds fields and indexes to the model using reflection."""
+
+        if not self.table_exists():
+            return
 
         # Don't do anything if this model doesn't want reflection.
         if not hasattr(self._meta, 'use_reflection') or not self._meta.use_reflection:
