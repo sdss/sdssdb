@@ -5,6 +5,13 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Many changes to the ``catalogdb`` schema files and PeeWee implementation to match the contents to SDSS-V v0 target selection.
+* A new `.ReflectMeta` metaclass that provides reflection for PeeWee models (with some caveats).
+* Reimplementation of most catalogdb PeeWee model classes for catalogdb using reflection.
+* Changes to the schema display tools.
+* New tools for table `ingestion <.ingest>`.
+* New tools for database `maintenance/internals <.internals>`.
+
 * :release:`0.3.2 <2020-03-10>`
 * Change ``operations-test`` profile to ``operations`` using the new machine hostname.
 * New schema and models for ``sdss5db.targetdb``.
