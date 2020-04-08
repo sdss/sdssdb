@@ -93,9 +93,13 @@ class ReflectMeta(ModelBase):
     and the foreign key need to be defined explicitely. Otherwise neither
     will be added.
 
-    - `.ReflectMeta` is designed to fail silently if PeeWee's reflection fails.
-    Error are logged with debug level and can be display by setting
-    doing ``from sdssdb import log`` and ``log.set_level(0)``.
+    - Reflection will fail if a table is locked with ``AccessExclusiveLock``.
+    In that case reflection will be skipped and a warning issued. Note that if
+    the table is locked with an exclusive lock you won't be able to access the
+    data in any case.
+
+    - In this version, indexes discovered by reflection are not propagated to
+    the model class. This should not have any impact in performance.
 
     """
 
