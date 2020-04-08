@@ -16,7 +16,6 @@ import os
 import re
 import warnings
 
-import astropy.table
 import numpy
 import peewee
 from playhouse.postgres_ext import ArrayField
@@ -397,6 +396,8 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
         The model for the table created.
 
     """
+
+    import astropy.table
 
     # If we drop we need to re-create but there is no need to truncate.
     if drop:
