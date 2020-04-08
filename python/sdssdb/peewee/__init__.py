@@ -69,13 +69,13 @@ class ReflectMeta(ModelBase):
     preferable to define the foreign keys explicitely. In that case it's
     possible to disable the reflection of foreign keys by doing ::
 
-    class ReflectBaseModel(peewee.Model, metaclass=ReflectMeta):
+        class ReflectBaseModel(peewee.Model, metaclass=ReflectMeta):
 
-            class Meta:
-                primary_key = False
-                use_reflection = False
-                reflection_options = {'skip_foreign_keys': True}
-                database = database
+                class Meta:
+                    primary_key = False
+                    use_reflection = False
+                    reflection_options = {'skip_foreign_keys': True}
+                    database = database
 
     Foreign keys explicitely defined need to reference existing fields,
     so the referenced columns need to be added manually. In practice, this
@@ -85,21 +85,21 @@ class ReflectMeta(ModelBase):
     Caveats:
 
     - Many-to-many relationships need to be defined explicitely since
-    it's not possible to set the through model based on the reflected
-    information.
+      it's not possible to set the through model based on the reflected
+      information.
 
     - When the primary key of a model is also a foreign key and
-    ``reflection_options = {'skip_foreign_keys': True}``, both the primary key
-    and the foreign key need to be defined explicitely. Otherwise neither
-    will be added.
+      ``reflection_options = {'skip_foreign_keys': True}``, both the primary
+      key and the foreign key need to be defined explicitely. Otherwise neither
+      will be added.
 
     - Reflection will fail if a table is locked with ``AccessExclusiveLock``.
-    In that case reflection will be skipped and a warning issued. Note that if
-    the table is locked with an exclusive lock you won't be able to access the
-    data in any case.
+      In that case reflection will be skipped and a warning issued. Note that
+      if the table is locked with an exclusive lock you won't be able to access
+      the data in any case.
 
     - In this version, indexes discovered by reflection are not propagated to
-    the model class. This should not have any impact in performance.
+      the model class. This should not have any impact in performance.
 
     """
 

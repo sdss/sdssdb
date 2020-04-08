@@ -293,11 +293,9 @@ def generate_schema_graphs():
                       UserWarning)
         return
 
-    schemas = ['sdss5db.targetdb', 'sdss5db.catalogdb', 'operationsdb.platedb',
-               'operationsdb.mangadb', 'operationsdb.apogeeqldb']
+    schemas = ['operationsdb.platedb', 'operationsdb.mangadb', 'operationsdb.apogeeqldb']
 
-    output_dir = os.path.join(os.path.dirname(__file__),
-                              '_static/schema_graphs/auto')
+    output_dir = os.path.join(os.path.dirname(__file__), '_static/schema_graphs/auto')
 
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)

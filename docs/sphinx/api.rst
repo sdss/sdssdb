@@ -39,4 +39,8 @@ Utils
     :members:
     :show-inheritance:
 
+.. automodule:: sdssdb.utils.internals
+    :members:
+    :show-inheritance:
+
 .. autofunction:: sdssdb.utils.create_schema_graph
