@@ -15,6 +15,8 @@ from playhouse.hybrid import hybrid_method
 from playhouse.reflection import generate_models
 
 from sdssdb import log
+from sdssdb.core.exceptions import SdssdbUserWarning
+from sdssdb.utils import is_table_locked
 
 
 class ReflectMeta(ModelBase):
@@ -135,6 +137,11 @@ class ReflectMeta(ModelBase):
         schema = self._meta.schema
 
         try:
+            lock = is_table_locked(database, table_name)
+            if lock and lock == 'AccessExclusiveLock':
+                warnings.warn(f'table {schema}.{table_name} is locked and '
+                              'will not be reflected.', SdssdbUserWarning)
+                return
             ReflectedModel = generate_models(database, schema=schema,
                                              table_names=[table_name])[table_name]
         except Exception as ee:
