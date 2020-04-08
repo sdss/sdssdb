@@ -173,11 +173,16 @@ def get_row_count(connection, table_name, schema=None, approximate=True):
     return count[0][0]
 
 
-def is_table_locked(connection, table_name):
+def is_table_locked(connection, table_name, schema=None):
     """Returns the locks for a table or `None` if no lock is present."""
 
-    sql = ('SELECT mode FROM pg_locks JOIN pg_class ON pg_class.oid = pg_locks.relation '
-           f'WHERE pg_class.relname = {table_name!r}')
+    schema = schema or '%%'
+
+    sql = ('SELECT mode FROM pg_locks JOIN pg_class '
+           'ON pg_class.oid = pg_locks.relation '
+           'JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace '
+           f'WHERE pg_class.relname = {table_name!r} '
+           f'AND pg_namespace.nspname LIKE {schema!r};')
 
     with connection.atomic():
         locks = connection.execute_sql(sql).fetchall()
