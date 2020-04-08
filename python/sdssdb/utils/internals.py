@@ -174,19 +174,15 @@ def get_row_count(connection, table_name, schema=None, approximate=True):
 
 
 def is_table_locked(connection, table_name):
-    """Returns the type of lock for a table or `None` if no lock is present."""
+    """Returns the locks for a table or `None` if no lock is present."""
 
     sql = ('SELECT mode FROM pg_locks JOIN pg_class ON pg_class.oid = pg_locks.relation '
            f'WHERE pg_class.relname = {table_name!r}')
 
     with connection.atomic():
-        lock = connection.execute_sql(sql).fetchall()
+        locks = connection.execute_sql(sql).fetchall()
 
-    if not lock:
+    if not locks:
         return None
 
-    if len(lock) > 1:
-        raise RuntimeError('received lock information for more than one relation. '
-                           'Something must have gone wrong with the query.')
-
-    return lock[0][0]
+    return list(zip(*locks))[0]

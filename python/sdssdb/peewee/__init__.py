@@ -137,8 +137,8 @@ class ReflectMeta(ModelBase):
         schema = self._meta.schema
 
         try:
-            lock = is_table_locked(database, table_name)
-            if lock and lock == 'AccessExclusiveLock':
+            locks = is_table_locked(database, table_name)
+            if locks and 'AccessExclusiveLock' in locks:
                 warnings.warn(f'table {schema}.{table_name} is locked and '
                               'will not be reflected.', SdssdbUserWarning)
                 return
