@@ -3,7 +3,7 @@
 #
 # @Author: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Date: 2020-03-28
-# @Filename: maintenance.py
+# @Filename: internals.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 import sys
@@ -11,7 +11,7 @@ import time
 
 
 __all__ = ('vacuum_all', 'get_cluster_index', 'get_unclustered_tables',
-           'get_row_count')
+           'get_row_count', 'is_table_locked')
 
 
 def vacuum_all(database, analyze=True, verbose=False, schema=None):
@@ -62,7 +62,8 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
     if schema is None:
 
         statement = 'VACUUM' + (' VEBOSE' if verbose else '') + (' ANALYZE' if analyze else '')
-        execute_sql(statement)
+        with database.atomic():
+            execute_sql(statement)
 
         return
 
@@ -76,7 +77,8 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
                      (' ANALYZE' if analyze else '') +
                      ' ' + table_name)
 
-        execute_sql(statement)
+        with database.atomic():
+            execute_sql(statement)
 
 
 def get_cluster_index(connection, table_name=None, schema=None):
@@ -85,20 +87,21 @@ def get_cluster_index(connection, table_name=None, schema=None):
     table_name = table_name or '%%'
     schema = schema or '%%'
 
-    cursor = connection.execute_sql(f"""
-        SELECT
-            c.relname AS tablename,
-            n.nspname AS schemaname,
-            i.relname AS indexname
-        FROM pg_index x
-            JOIN pg_class c ON c.oid = x.indrelid
-            JOIN pg_class i ON i.oid = x.indexrelid
-            JOIN pg_namespace n ON n.oid = i.relnamespace
-        WHERE
-            x.indisclustered AND
-            n.nspname LIKE '{schema}' AND
-            c.relname LIKE '{table_name}';
-    """)
+    with connection.atomic():
+        cursor = connection.execute_sql(f"""
+            SELECT
+                c.relname AS tablename,
+                n.nspname AS schemaname,
+                i.relname AS indexname
+            FROM pg_index x
+                JOIN pg_class c ON c.oid = x.indrelid
+                JOIN pg_class i ON i.oid = x.indexrelid
+                JOIN pg_namespace n ON n.oid = i.relnamespace
+            WHERE
+                x.indisclustered AND
+                n.nspname LIKE '{schema}' AND
+                c.relname LIKE '{table_name}';
+        """)
 
     return cursor.fetchall()
 
@@ -108,13 +111,14 @@ def get_unclustered_tables(connection, schema=None):
 
     schema_like = schema or '%%'
 
-    table_names = connection.execute_sql(f"""
-        SELECT
-            tablename
-        FROM pg_tables
-        WHERE
-            schemaname LIKE '{schema_like}';
-    """).fetchall()
+    with connection.atomic():
+        table_names = connection.execute_sql(f"""
+            SELECT
+                tablename
+            FROM pg_tables
+            WHERE
+                schemaname LIKE '{schema_like}';
+        """).fetchall()
 
     table_names = [table_name[0] for table_name in table_names]
 
@@ -159,8 +163,30 @@ def get_row_count(connection, table_name, schema=None, approximate=True):
         else:
             sql = 'SELECT count(*) FROM {schema}.{table_name};'
 
-    count = connection.execute_sql(sql.format(table_name=table_name, schema=schema)).fetchall()
+    with connection.atomic():
+        count = connection.execute_sql(sql.format(table_name=table_name,
+                                                  schema=schema)).fetchall()
+
     if len(count) == 0:
         raise ValueError('failed retrieving the row count. Check the table name and schema.')
 
     return count[0][0]
+
+
+def is_table_locked(connection, table_name):
+    """Returns the type of lock for a table or `None` if no lock is present."""
+
+    sql = ('SELECT mode FROM pg_locks JOIN pg_class ON pg_class.oid = pg_locks.relation '
+           f'WHERE pg_class.relname = {table_name!r}')
+
+    with connection.atomic():
+        lock = connection.execute_sql(sql).fetchall()
+
+    if not lock:
+        return None
+
+    if len(lock) > 1:
+        raise RuntimeError('received lock information for more than one relation. '
+                           'Something must have gone wrong with the query.')
+
+    return lock[0][0]

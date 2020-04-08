@@ -2,4 +2,4 @@
 
 from .schemadisplay import *
 from .ingest import *
-from .maintenance import *
+from .internals import *
