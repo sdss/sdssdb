@@ -11,14 +11,21 @@ from peewee import (AutoField, BigIntegerField, BooleanField, DeferredThroughMod
                     ManyToManyField, SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
-from . import SDSS5dbModel, catalogdb, database  # noqa
+from . import BaseModel, database  # noqa
+
+
+class TargetdbBase(BaseModel):
+
+    class Meta:
+        schema = 'targetdb'
+        database = database
 
 
 AssignmentDeferred = DeferredThroughModel()
 ProgramToTargetDeferred = DeferredThroughModel()
 
 
-class Cadence(SDSS5dbModel):
+class Cadence(TargetdbBase):
     delta = ArrayField(field_class=FloatField, null=True)
     delta_max = ArrayField(field_class=FloatField, null=True)
     delta_min = ArrayField(field_class=FloatField, null=True)
@@ -30,19 +37,17 @@ class Cadence(SDSS5dbModel):
 
     class Meta:
         table_name = 'cadence'
-        schema = 'targetdb'
 
 
-class Observatory(SDSS5dbModel):
+class Observatory(TargetdbBase):
     label = TextField()
     pk = AutoField()
 
     class Meta:
         table_name = 'observatory'
-        schema = 'targetdb'
 
 
-class Field(SDSS5dbModel):
+class Field(TargetdbBase):
     cadence = ForeignKeyField(column_name='cadence_pk',
                               field='pk',
                               model=Cadence,
@@ -58,10 +63,9 @@ class Field(SDSS5dbModel):
 
     class Meta:
         table_name = 'field'
-        schema = 'targetdb'
 
 
-class Design(SDSS5dbModel):
+class Design(TargetdbBase):
     field = ForeignKeyField(column_name='field_pk',
                             field='pk',
                             model=Field,
@@ -71,28 +75,25 @@ class Design(SDSS5dbModel):
 
     class Meta:
         table_name = 'design'
-        schema = 'targetdb'
 
 
-class Instrument(SDSS5dbModel):
+class Instrument(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
 
     class Meta:
         table_name = 'instrument'
-        schema = 'targetdb'
 
 
-class PositionerStatus(SDSS5dbModel):
+class PositionerStatus(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
 
     class Meta:
         table_name = 'positioner_status'
-        schema = 'targetdb'
 
 
-class PositionerInfo(SDSS5dbModel):
+class PositionerInfo(TargetdbBase):
     apogee = BooleanField(null=False)
     boss = BooleanField(null=False)
     fiducial = BooleanField(null=False)
@@ -100,10 +101,9 @@ class PositionerInfo(SDSS5dbModel):
 
     class Meta:
         table_name = 'positioner_info'
-        schema = 'targetdb'
 
 
-class Positioner(SDSS5dbModel):
+class Positioner(TargetdbBase):
     id = IntegerField(null=True)
     observatory = ForeignKeyField(column_name='observatory_pk',
                                   field='pk',
@@ -120,10 +120,9 @@ class Positioner(SDSS5dbModel):
 
     class Meta:
         table_name = 'positioner'
-        schema = 'targetdb'
 
 
-class Magnitude(SDSS5dbModel):
+class Magnitude(TargetdbBase):
     bp = FloatField(null=True)
     g = FloatField(null=True)
     h = FloatField(null=True)
@@ -134,37 +133,33 @@ class Magnitude(SDSS5dbModel):
 
     class Meta:
         table_name = 'magnitude'
-        schema = 'targetdb'
 
 
-class Version(SDSS5dbModel):
+class Version(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
 
     class Meta:
         table_name = 'version'
-        schema = 'targetdb'
 
 
-class Category(SDSS5dbModel):
+class Category(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
 
     class Meta:
         table_name = 'category'
-        schema = 'targetdb'
 
 
-class Survey(SDSS5dbModel):
+class Survey(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
 
     class Meta:
         table_name = 'survey'
-        schema = 'targetdb'
 
 
-class Program(SDSS5dbModel):
+class Program(TargetdbBase):
     category = ForeignKeyField(column_name='category_pk',
                                field='pk',
                                model=Category,
@@ -178,10 +173,9 @@ class Program(SDSS5dbModel):
 
     class Meta:
         table_name = 'program'
-        schema = 'targetdb'
 
 
-class Target(SDSS5dbModel):
+class Target(TargetdbBase):
     catalogid = BigIntegerField(null=True)
     dec = DoubleField(null=True)
     epoch = FloatField(null=True)
@@ -215,10 +209,9 @@ class Target(SDSS5dbModel):
 
     class Meta:
         table_name = 'target'
-        schema = 'targetdb'
 
 
-class Assignment(SDSS5dbModel):
+class Assignment(TargetdbBase):
     design = ForeignKeyField(Design,
                              column_name='design_pk',
                              field='pk')
@@ -235,10 +228,9 @@ class Assignment(SDSS5dbModel):
 
     class Meta:
         table_name = 'assignment'
-        schema = 'targetdb'
 
 
-class ProgramToTarget(SDSS5dbModel):
+class ProgramToTarget(TargetdbBase):
     cadence = ForeignKeyField(Cadence,
                               column_name='cadence_pk',
                               field='pk')
@@ -259,7 +251,6 @@ class ProgramToTarget(SDSS5dbModel):
 
     class Meta:
         table_name = 'program_to_target'
-        schema = 'targetdb'
 
 
 AssignmentDeferred.set_model(Assignment)
