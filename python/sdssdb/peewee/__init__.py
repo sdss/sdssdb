@@ -144,8 +144,12 @@ class ReflectMeta(ModelBase):
                 return
             ReflectedModel = generate_models(database, schema=schema,
                                              table_names=[table_name])[table_name]
+        except KeyError as ee:
+            warnings.warn(f'reflection failed for {table_name}: table or column {ee} not found.',
+                          SdssdbUserWarning)
+            return
         except Exception as ee:
-            log.debug('reflection failed for {}: {}'.format(table_name, ee))
+            warnings.warn(f'reflection failed for {table_name}: {ee}', SdssdbUserWarning)
             return
 
         for field_name, field in ReflectedModel._meta.fields.items():
