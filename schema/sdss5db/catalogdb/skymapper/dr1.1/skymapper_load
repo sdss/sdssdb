@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+ls $CATALOGDB_DIR/skymapper/dr1.1/*.csv.gz | parallel -j10 "psql -U sdss sdss5db -c \"\copy catalogdb.skymapper_dr1_1 FROM program 'zcat {}' WITH CSV HEADER;\""

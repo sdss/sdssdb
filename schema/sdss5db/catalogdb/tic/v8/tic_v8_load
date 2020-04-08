@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+ls /uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/tic/v8/csv/*.csv.gz | parallel -j25 "psql -U sdss sdss5db -c \"\copy catalogdb.tic_v8 FROM program 'zcat {}' WITH CSV;\""

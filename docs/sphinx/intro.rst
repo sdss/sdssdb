@@ -21,6 +21,8 @@ This will returns the first 10 results from Gaia DR2 with g magnitude in the ran
     >>> session = database.Session()
     >>> targets = session.query(GaiaDR2Source).filter((GaiaDR2Source.phot_g_mean_mag > 15) & (GaiaDR2Source.phot_g_mean_mag < 16)).limit(10).all()
 
+.. warning:: Note that the implementation of ``catalogdb`` in SQLALchemy is very limited and should not be used in general.
+
 
 Available databases
 -------------------
@@ -111,15 +113,15 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">sdss5db</td>
             <td class="active">catalogdb</td>
             <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.catalogdb.pdf"></a></td>
+            <td class="warning"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="_static/schema_graphs/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/sdss5db.targetdb.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/sdss5db.targetdb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">archive</td>
@@ -185,8 +187,7 @@ Now imagine the case in which you are running ``sdssdb`` from your local compute
     >>> database
     <PeeweeDatabaseConnection (dbname='apodb', profile='local', connected=True)>
 
-There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatabaseConnection``, one for each mapping library. Each database connection has two keyword arguments: a user/machine profile, a database name.  The connection will automatically attempt to connect to the specified database with the profile unless the ``autoconnect`` keyword is set to `False`.
-::
+There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatabaseConnection``, one for each mapping library. Each database connection has two keyword arguments: a user/machine profile, a database name.  The connection will automatically attempt to connect to the specified database with the profile unless the ``autoconnect`` keyword is set to `False`. ::
 
     # load a database connection with the Utah manga machine profile and connect to the manga database. To create a Peewee conenction replace with PeeweeDatabaseConnection.
     from sdssdb.connection import SQLADatabaseConnection

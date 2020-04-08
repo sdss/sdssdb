@@ -58,7 +58,7 @@ htmID   bigint  8           HTM ID
 */
 
 CREATE TABLE catalogdb.sdss_dr14_apogeeStar(
-    apstar_id varchar(64),
+    apstar_id varchar(64) PRIMARY KEY,
     target_id varchar(64),
     reduction_id varchar(32),
     file varchar(128),
@@ -112,11 +112,13 @@ CREATE TABLE catalogdb.sdss_dr14_apogeeStar(
 
 \copy catalogdb.sdss_dr14_apogeeStar FROM program 'bzcat $CATALOGDB_DIR/sdssApogeeStar/dr14/src/sqlApogeeStar.csv.bz2' WITH CSV HEADER;
 
-alter table catalogdb.sdss_dr14_apogeeStar add primary key(apstar_id);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar (q3c_ang2ipix(ra, dec));
+CLUSTER sdss_dr14_apogeeStar_q3c_ang2ipix_idx ON catalogdb.sdss_dr14_apogeeStar;
+ANALYZE catalogdb.sdss_dr14_apogeeStar;
 
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar using BTREE (ra);
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar using BTREE (dec);
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar using BTREE (glon);
-CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar using BTREE (glat);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (ra);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (dec);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (glon);
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (glat);
 
-
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStar USING BTREE (apogee_id);

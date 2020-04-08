@@ -3,18 +3,19 @@
 #
 # @Author: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Date: 2019-09-21
-# @Filename: load.py
+# @Filename: ingest.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 #
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last modified time: 2019-09-23 11:47:00
 
+import functools
 import io
+import multiprocessing
 import os
 import re
 import warnings
 
-import astropy.table
 import numpy
 import peewee
 from playhouse.postgres_ext import ArrayField
@@ -27,6 +28,10 @@ except ImportError:
     progressbar = False
 
 
+__all__ = ('to_csv', 'copy_data', 'drop_table', 'create_model_from_table',
+           'bulk_insert', 'file_to_db')
+
+
 DTYPE_TO_FIELD = {
     'i2': peewee.SmallIntegerField,
     'i4': peewee.IntegerField,
@@ -35,6 +40,44 @@ DTYPE_TO_FIELD = {
     'f8': peewee.DoubleField,
     'S([0-9]+)': peewee.CharField
 }
+
+
+def to_csv(table, path, header=True, delimiter='\t', use_multiprocessing=False, workers=4):
+    """Creates a PostgreSQL-valid CSV file from a table, handling arrays.
+
+    Parameters
+    ----------
+    table : astropy.table.Table
+        The table to convert.
+    path : str
+        The path to which to write the CSV file.
+    header : bool
+        Whether to add a header with the column names.
+    delimiter : str
+        The delimiter between columns in the CSV files.
+    use_multiprocessing : bool
+        Whether to use multiple cores. The rows of the resulting file will not
+        have the same ordering as the original table.
+    workers : int
+        How many workers to use with multiprocessing.
+
+    """
+
+    if use_multiprocessing:
+        pool = multiprocessing.Pool(workers)
+        tmp_list = pool.map(functools.partial(convert_row_to_psql,
+                                              delimiter=delimiter),
+                            table, chunksize=1000)
+    else:
+        tmp_list = [convert_row_to_psql(row, delimiter=delimiter) for row in table]
+
+    csv_str = '\n'.join(tmp_list)
+
+    if header:
+        csv_str = delimiter.join(table.colnames) + '\n' + csv_str
+
+    unit = open(path, 'w')
+    unit.write(csv_str)
 
 
 def table_exists(table_name, connection, schema=None):
@@ -165,6 +208,28 @@ def create_model_from_table(table_name, table, schema=None, lowercase=False,
     return type(str(table_name), (BaseModel,), attrs)
 
 
+def convert_row_to_psql(row, delimiter='\t', null='\\N'):
+    """Concerts an astropy table row to a Postgresql-valid CSV string."""
+
+    row_data = []
+
+    for col_value in row:
+        if numpy.isscalar(col_value):
+            row_data.append(str(col_value))
+        elif numpy.ma.is_masked(col_value):
+            row_data.append(null)
+        else:
+            if col_value.dtype.base.str[1] == 'S':
+                col_value = col_value.astype('U')
+            row_data.append(
+                str(col_value.tolist())
+                .replace('\n', '')
+                .replace('\'', '\"')
+                .replace('[', '{').replace(']', '}'))
+
+    return delimiter.join(row_data)
+
+
 def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
               show_progress=False):
     """Loads data into a DB table using ``COPY``.
@@ -213,23 +278,7 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
     for ii in iterable:
 
         row = data[ii]
-
-        # Adds the pk
-        row_data = []
-
-        for col_value in row:
-            if numpy.isscalar(col_value):
-                row_data.append(str(col_value))
-            else:
-                if col_value.dtype.base.str[1] == 'S':
-                    col_value = col_value.astype('U')
-                row_data.append(
-                    str(col_value.tolist())
-                    .replace('\n', '')
-                    .replace('\'', '\"')
-                    .replace('[', '{').replace(']', '}'))
-
-        tmp_list.append('\t'.join(row_data))
+        tmp_list.append(convert_row_to_psql(row))
         chunk += 1
 
         # If we have reached a chunk commit point, or this is the last item,
@@ -347,6 +396,8 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
         The model for the table created.
 
     """
+
+    import astropy.table
 
     # If we drop we need to re-create but there is no need to truncate.
     if drop:

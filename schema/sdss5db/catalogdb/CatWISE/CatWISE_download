@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+wget -r -nH --no-parent --reject="index.html*" -P ./ https://portal.nersc.gov/project/cosmo/data/CatWISE/

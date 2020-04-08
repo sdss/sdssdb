@@ -20,8 +20,7 @@ CREATE TABLE catalogdb.sdss_dr14_apogeeStarVisit(
 
 \copy catalogdb.sdss_dr14_apogeeStarVisit FROM program 'bzcat $CATALOGDB_DIR/sdssApogeeStarVisit/dr14/src/sqlApogeeStarVisit.csv.bz2' WITH CSV HEADER;
 
-alter table catalogdb.sdss_dr14_apogeeStarVisit add primary key(visit_id);
+ALTER TABLE catalogdb.sdss_dr14_apogeeStarVisit ADD COLUMN pk BIGSERIAL PRIMARY KEY;
 
 CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStarVisit using BTREE (apstar_id);
-
-
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_apogeeStarVisit using BTREE (visit_id);

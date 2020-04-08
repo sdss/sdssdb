@@ -20,7 +20,7 @@ CREATE TABLE catalogdb.allwise(
     elat                 decimal(9,7)    ,
     wx                   decimal(7,3)    ,
     wy                   decimal(7,3)    ,
-    cntr                 bigint         ,
+    cntr                 bigint PRIMARY KEY,
     source_id            char(28)        ,
     coadd_id             char(20)        ,
     src                  integer         ,
@@ -307,8 +307,3 @@ CREATE TABLE catalogdb.allwise(
     spt_ind              integer         ,
     htm20                bigint
 );
-
-
-
-
-

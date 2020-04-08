@@ -10,11 +10,13 @@ Installation
 
     pip install sdssdb
 
-then you can check that it works by running a python terminal and doing ::
+then you can check that it works by running a python terminal and doing
+
+.. parsed-literal::
 
     >>> import sdssdb
     >>> sdssdb.__version__
-    0.3.3dev
+    |sdssdb_version|
 
 If you are working from Utah, ``sdssdb`` is installed as a module and you should be able to do ::
 

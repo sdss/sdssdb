@@ -9,1942 +9,781 @@
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last modified time: 2019-09-23 00:54:42
 
+from peewee import (BigAutoField, BigIntegerField, CharField,
+                    DeferredThroughModel, DoubleField, FloatField,
+                    ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
-from peewee import (AutoField, BigAutoField, BigIntegerField, BooleanField, CharField,
-                    DateField, DecimalField, DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField, ManyToManyField, TextField)
-from playhouse.postgres_ext import ArrayField
-
-from . import SDSS5dbModel, database  # noqa
+from . import BaseModel, database  # noqa
 
 
-class AllWise(SDSS5dbModel):
-
-    best_use_cntr = BigIntegerField(null=True)
-    cc_flags = CharField(null=True)
-    cntr = BigIntegerField(null=True)
-    coadd_id = CharField(null=True)
-    dec = DecimalField(index=True, null=True)
-    dec_pm = DecimalField(null=True)
-    designation = CharField(null=True)
-    det_bit = IntegerField(null=True)
-    elat = DecimalField(null=True)
-    elon = DecimalField(null=True)
-    ext_flg = IntegerField(null=True)
-    glat = DecimalField(index=True, null=True)
-    glon = DecimalField(index=True, null=True)
-    h_m_2mass = DecimalField(null=True)
-    h_msig_2mass = DecimalField(null=True)
-    htm20 = BigIntegerField(null=True)
-    j_m_2mass = DecimalField(null=True)
-    j_msig_2mass = DecimalField(null=True)
-    k_m_2mass = DecimalField(null=True)
-    k_msig_2mass = DecimalField(null=True)
-    moon_lev = CharField(null=True)
-    n_2mass = IntegerField(null=True)
-    na = IntegerField(null=True)
-    nb = IntegerField(null=True)
-    ngrp = IntegerField(null=True)
-    pa_2mass = DecimalField(null=True)
-    ph_qual = CharField(null=True)
-    pmcode = CharField(null=True)
-    pmdec = IntegerField(null=True)
-    pmra = IntegerField(null=True)
-    q12 = IntegerField(null=True)
-    q23 = IntegerField(null=True)
-    q34 = IntegerField(null=True)
-    r_2mass = DecimalField(null=True)
-    ra = DecimalField(index=True, null=True)
-    ra_pm = DecimalField(null=True)
-    rchi2 = FloatField(null=True)
-    rchi2_pm = FloatField(null=True)
-    rel = CharField(null=True)
-    rho12 = IntegerField(null=True)
-    rho23 = IntegerField(null=True)
-    rho34 = IntegerField(null=True)
-    satnum = CharField(null=True)
-    sigdec = DecimalField(null=True)
-    sigdec_pm = DecimalField(null=True)
-    sigpmdec = IntegerField(null=True)
-    sigpmra = IntegerField(null=True)
-    sigra = DecimalField(null=True)
-    sigra_pm = DecimalField(null=True)
-    sigradec = DecimalField(null=True)
-    sigradec_pm = DecimalField(null=True)
-    source_id = CharField(null=True)
-    spt_ind = IntegerField(null=True)
-    src = IntegerField(null=True)
-    tmass_key = IntegerField(null=True)
-    var_flg = CharField(null=True)
-    w1ba = DecimalField(null=True)
-    w1cc_map = IntegerField(null=True)
-    w1cc_map_str = CharField(null=True)
-    w1conf = DecimalField(null=True)
-    w1cov = DecimalField(null=True)
-    w1flg = IntegerField(null=True)
-    w1flg_1 = IntegerField(null=True)
-    w1flg_2 = IntegerField(null=True)
-    w1flg_3 = IntegerField(null=True)
-    w1flg_4 = IntegerField(null=True)
-    w1flg_5 = IntegerField(null=True)
-    w1flg_6 = IntegerField(null=True)
-    w1flg_7 = IntegerField(null=True)
-    w1flg_8 = IntegerField(null=True)
-    w1flux = FloatField(null=True)
-    w1gerr = DecimalField(null=True)
-    w1gflg = IntegerField(null=True)
-    w1gmag = DecimalField(null=True)
-    w1k = DecimalField(null=True)
-    w1m = IntegerField(null=True)
-    w1mag = DecimalField(null=True)
-    w1mag_1 = DecimalField(null=True)
-    w1mag_2 = DecimalField(null=True)
-    w1mag_3 = DecimalField(null=True)
-    w1mag_4 = DecimalField(null=True)
-    w1mag_5 = DecimalField(null=True)
-    w1mag_6 = DecimalField(null=True)
-    w1mag_7 = DecimalField(null=True)
-    w1mag_8 = DecimalField(null=True)
-    w1magp = DecimalField(null=True)
-    w1mcor = DecimalField(null=True)
-    w1mjdmax = DecimalField(null=True)
-    w1mjdmean = DecimalField(null=True)
-    w1mjdmin = DecimalField(null=True)
-    w1mlq = DecimalField(null=True)
-    w1mpro = DecimalField(null=True)
-    w1ndf = IntegerField(null=True)
-    w1nm = IntegerField(null=True)
-    w1pa = DecimalField(null=True)
-    w1rchi2 = FloatField(null=True)
-    w1rchi2_pm = FloatField(null=True)
-    w1rsemi = DecimalField(null=True)
-    w1sat = DecimalField(null=True)
-    w1sigflux = FloatField(null=True)
-    w1sigm = DecimalField(null=True)
-    w1sigm_1 = DecimalField(null=True)
-    w1sigm_2 = DecimalField(null=True)
-    w1sigm_3 = DecimalField(null=True)
-    w1sigm_4 = DecimalField(null=True)
-    w1sigm_5 = DecimalField(null=True)
-    w1sigm_6 = DecimalField(null=True)
-    w1sigm_7 = DecimalField(null=True)
-    w1sigm_8 = DecimalField(null=True)
-    w1sigmpro = DecimalField(null=True)
-    w1sigp1 = DecimalField(null=True)
-    w1sigp2 = DecimalField(null=True)
-    w1sigsk = DecimalField(null=True)
-    w1sky = DecimalField(null=True)
-    w1snr = DecimalField(null=True)
-    w2ba = DecimalField(null=True)
-    w2cc_map = IntegerField(null=True)
-    w2cc_map_str = CharField(null=True)
-    w2conf = DecimalField(null=True)
-    w2cov = DecimalField(null=True)
-    w2flg = IntegerField(null=True)
-    w2flg_1 = IntegerField(null=True)
-    w2flg_2 = IntegerField(null=True)
-    w2flg_3 = IntegerField(null=True)
-    w2flg_4 = IntegerField(null=True)
-    w2flg_5 = IntegerField(null=True)
-    w2flg_6 = IntegerField(null=True)
-    w2flg_7 = IntegerField(null=True)
-    w2flg_8 = IntegerField(null=True)
-    w2flux = FloatField(null=True)
-    w2gerr = DecimalField(null=True)
-    w2gflg = IntegerField(null=True)
-    w2gmag = DecimalField(null=True)
-    w2k = DecimalField(null=True)
-    w2m = IntegerField(null=True)
-    w2mag = DecimalField(null=True)
-    w2mag_1 = DecimalField(null=True)
-    w2mag_2 = DecimalField(null=True)
-    w2mag_3 = DecimalField(null=True)
-    w2mag_4 = DecimalField(null=True)
-    w2mag_5 = DecimalField(null=True)
-    w2mag_6 = DecimalField(null=True)
-    w2mag_7 = DecimalField(null=True)
-    w2mag_8 = DecimalField(null=True)
-    w2magp = DecimalField(null=True)
-    w2mcor = DecimalField(null=True)
-    w2mjdmax = DecimalField(null=True)
-    w2mjdmean = DecimalField(null=True)
-    w2mjdmin = DecimalField(null=True)
-    w2mlq = DecimalField(null=True)
-    w2mpro = DecimalField(null=True)
-    w2ndf = IntegerField(null=True)
-    w2nm = IntegerField(null=True)
-    w2pa = DecimalField(null=True)
-    w2rchi2 = FloatField(null=True)
-    w2rchi2_pm = FloatField(null=True)
-    w2rsemi = DecimalField(null=True)
-    w2sat = DecimalField(null=True)
-    w2sigflux = FloatField(null=True)
-    w2sigm = DecimalField(null=True)
-    w2sigm_1 = DecimalField(null=True)
-    w2sigm_2 = DecimalField(null=True)
-    w2sigm_3 = DecimalField(null=True)
-    w2sigm_4 = DecimalField(null=True)
-    w2sigm_5 = DecimalField(null=True)
-    w2sigm_6 = DecimalField(null=True)
-    w2sigm_7 = DecimalField(null=True)
-    w2sigm_8 = DecimalField(null=True)
-    w2sigmpro = DecimalField(null=True)
-    w2sigp1 = DecimalField(null=True)
-    w2sigp2 = DecimalField(null=True)
-    w2sigsk = DecimalField(null=True)
-    w2sky = DecimalField(null=True)
-    w2snr = DecimalField(null=True)
-    w3ba = DecimalField(null=True)
-    w3cc_map = IntegerField(null=True)
-    w3cc_map_str = CharField(null=True)
-    w3conf = DecimalField(null=True)
-    w3cov = DecimalField(null=True)
-    w3flg = IntegerField(null=True)
-    w3flg_1 = IntegerField(null=True)
-    w3flg_2 = IntegerField(null=True)
-    w3flg_3 = IntegerField(null=True)
-    w3flg_4 = IntegerField(null=True)
-    w3flg_5 = IntegerField(null=True)
-    w3flg_6 = IntegerField(null=True)
-    w3flg_7 = IntegerField(null=True)
-    w3flg_8 = IntegerField(null=True)
-    w3flux = FloatField(null=True)
-    w3gerr = DecimalField(null=True)
-    w3gflg = IntegerField(null=True)
-    w3gmag = DecimalField(null=True)
-    w3k = DecimalField(null=True)
-    w3m = IntegerField(null=True)
-    w3mag = DecimalField(null=True)
-    w3mag_1 = DecimalField(null=True)
-    w3mag_2 = DecimalField(null=True)
-    w3mag_3 = DecimalField(null=True)
-    w3mag_4 = DecimalField(null=True)
-    w3mag_5 = DecimalField(null=True)
-    w3mag_6 = DecimalField(null=True)
-    w3mag_7 = DecimalField(null=True)
-    w3mag_8 = DecimalField(null=True)
-    w3magp = DecimalField(null=True)
-    w3mcor = DecimalField(null=True)
-    w3mjdmax = DecimalField(null=True)
-    w3mjdmean = DecimalField(null=True)
-    w3mjdmin = DecimalField(null=True)
-    w3mlq = DecimalField(null=True)
-    w3mpro = DecimalField(null=True)
-    w3ndf = IntegerField(null=True)
-    w3nm = IntegerField(null=True)
-    w3pa = DecimalField(null=True)
-    w3rchi2 = FloatField(null=True)
-    w3rchi2_pm = FloatField(null=True)
-    w3rsemi = DecimalField(null=True)
-    w3sat = DecimalField(null=True)
-    w3sigflux = FloatField(null=True)
-    w3sigm = DecimalField(null=True)
-    w3sigm_1 = DecimalField(null=True)
-    w3sigm_2 = DecimalField(null=True)
-    w3sigm_3 = DecimalField(null=True)
-    w3sigm_4 = DecimalField(null=True)
-    w3sigm_5 = DecimalField(null=True)
-    w3sigm_6 = DecimalField(null=True)
-    w3sigm_7 = DecimalField(null=True)
-    w3sigm_8 = DecimalField(null=True)
-    w3sigmpro = DecimalField(null=True)
-    w3sigp1 = DecimalField(null=True)
-    w3sigp2 = DecimalField(null=True)
-    w3sigsk = DecimalField(null=True)
-    w3sky = DecimalField(null=True)
-    w3snr = DecimalField(null=True)
-    w4ba = DecimalField(null=True)
-    w4cc_map = IntegerField(null=True)
-    w4cc_map_str = CharField(null=True)
-    w4conf = DecimalField(null=True)
-    w4cov = DecimalField(null=True)
-    w4flg = IntegerField(null=True)
-    w4flg_1 = IntegerField(null=True)
-    w4flg_2 = IntegerField(null=True)
-    w4flg_3 = IntegerField(null=True)
-    w4flg_4 = IntegerField(null=True)
-    w4flg_5 = IntegerField(null=True)
-    w4flg_6 = IntegerField(null=True)
-    w4flg_7 = IntegerField(null=True)
-    w4flg_8 = IntegerField(null=True)
-    w4flux = FloatField(null=True)
-    w4gerr = DecimalField(null=True)
-    w4gflg = IntegerField(null=True)
-    w4gmag = DecimalField(null=True)
-    w4k = DecimalField(null=True)
-    w4m = IntegerField(null=True)
-    w4mag = DecimalField(null=True)
-    w4mag_1 = DecimalField(null=True)
-    w4mag_2 = DecimalField(null=True)
-    w4mag_3 = DecimalField(null=True)
-    w4mag_4 = DecimalField(null=True)
-    w4mag_5 = DecimalField(null=True)
-    w4mag_6 = DecimalField(null=True)
-    w4mag_7 = DecimalField(null=True)
-    w4mag_8 = DecimalField(null=True)
-    w4magp = DecimalField(null=True)
-    w4mcor = DecimalField(null=True)
-    w4mjdmax = DecimalField(null=True)
-    w4mjdmean = DecimalField(null=True)
-    w4mjdmin = DecimalField(null=True)
-    w4mlq = DecimalField(null=True)
-    w4mpro = DecimalField(null=True)
-    w4ndf = IntegerField(null=True)
-    w4nm = IntegerField(null=True)
-    w4pa = DecimalField(null=True)
-    w4rchi2 = FloatField(null=True)
-    w4rchi2_pm = FloatField(null=True)
-    w4rsemi = DecimalField(null=True)
-    w4sat = DecimalField(null=True)
-    w4sigflux = FloatField(null=True)
-    w4sigm = DecimalField(null=True)
-    w4sigm_1 = DecimalField(null=True)
-    w4sigm_2 = DecimalField(null=True)
-    w4sigm_3 = DecimalField(null=True)
-    w4sigm_4 = DecimalField(null=True)
-    w4sigm_5 = DecimalField(null=True)
-    w4sigm_6 = DecimalField(null=True)
-    w4sigm_7 = DecimalField(null=True)
-    w4sigm_8 = DecimalField(null=True)
-    w4sigmpro = DecimalField(null=True)
-    w4sigp1 = DecimalField(null=True)
-    w4sigp2 = DecimalField(null=True)
-    w4sigsk = DecimalField(null=True)
-    w4sky = DecimalField(null=True)
-    w4snr = DecimalField(null=True)
-    wx = DecimalField(null=True)
-    wy = DecimalField(null=True)
-    x = DecimalField(null=True)
-    xscprox = DecimalField(null=True)
-    y = DecimalField(null=True)
-    z = DecimalField(null=True)
+class CatalogdbModel(BaseModel):
 
     class Meta:
-        table_name = 'allwise'
+        database = database
         schema = 'catalogdb'
+        use_reflection = True
+        reflection_options = {'skip_foreign_keys': True}
         primary_key = False
 
 
-class ErositaAGNMock(SDSS5dbModel):
+_Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
+_APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
-    allwise_designation = TextField(null=True)
-    ero_dec = DoubleField(index=True, null=True)
-    ero_det_like_0 = FloatField(null=True)
-    ero_detuid = TextField(null=True)
-    ero_flux = FloatField(index=True, null=True)
-    ero_flux_err = FloatField(null=True)
-    ero_ra = DoubleField(index=True, null=True)
-    ero_radec_err = FloatField(null=True)
-    ero_souuid = TextField(null=True)
-    gaia_dr2_source_id = BigIntegerField(null=True)
-    nsc_dr1_id = TextField(null=True)
-    pk = BigAutoField()
-    sdss_dr14_objid = BigIntegerField(null=True)
-    t_exp = DoubleField(null=True)
-    target_dec = DoubleField(index=True, null=True)
-    target_mag_r = FloatField(null=True)
-    target_magerr_r = FloatField(null=True)
-    target_match_prob = FloatField(null=True)
-    target_origin = IntegerField(null=True)
-    target_pmdec = FloatField(null=True)
-    target_pmra = FloatField(null=True)
-    target_priority = IntegerField(index=True, null=True)
-    target_ra = DoubleField(index=True, null=True)
+
+class Catalog(CatalogdbModel):
+    pass
+
+
+class AllWise(CatalogdbModel):
+
+    cntr = BigIntegerField(primary_key=True)
+    designation = TextField()
 
     class Meta:
-        table_name = 'erosita_agn_mock'
-        schema = 'catalogdb'
+        table_name = 'allwise'
 
 
-class ErositaClustersMock(SDSS5dbModel):
+class TwoMassPSC(CatalogdbModel):
 
-    allwise_designation = TextField(null=True)
-    ero_dec = DoubleField(index=True, null=True)
-    ero_det_like_0 = FloatField(null=True)
-    ero_detuid = TextField(null=True)
-    ero_ext = FloatField(null=True)
-    ero_ext_err = FloatField(null=True)
-    ero_ext_like = FloatField(null=True)
-    ero_flux = FloatField(index=True, null=True)
-    ero_flux_err = FloatField(null=True)
-    ero_ra = DoubleField(index=True, null=True)
-    ero_radec_err = FloatField(null=True)
-    ero_souuid = TextField(null=True)
-    gaia_dr2_source_id = BigIntegerField(null=True)
-    nsc_dr1_id = TextField(null=True)
-    pk = BigAutoField()
-    sdss_dr14_objid = BigIntegerField(null=True)
-    t_exp = DoubleField(null=True)
-    target_dec = DoubleField(index=True, null=True)
-    target_mag_r = FloatField(null=True)
-    target_magerr_r = FloatField(null=True)
-    target_match_prob = FloatField(null=True)
-    target_origin = IntegerField(null=True)
-    target_pmdec = FloatField(null=True)
-    target_pmra = FloatField(null=True)
-    target_priority = IntegerField(index=True, null=True)
-    target_ra = DoubleField(index=True, null=True)
-
-    class Meta:
-        table_name = 'erosita_clusters_mock'
-        schema = 'catalogdb'
-
-
-class TwoMassPsc(SDSS5dbModel):
-
-    a = CharField(null=True)
-    b_m_opt = FloatField(null=True)
-    bl_flg = CharField(null=True)
-    cc_flg = CharField(index=True, null=True)
-    coadd = IntegerField(null=True)
-    coadd_key = IntegerField(null=True)
-    date = DateField(null=True)
-    decl = DoubleField(index=True, null=True)
-    designation = CharField(index=True, null=True)
-    dist_edge_ew = IntegerField(null=True)
-    dist_edge_flg = CharField(null=True)
-    dist_edge_ns = IntegerField(null=True)
-    dist_opt = FloatField(null=True)
-    dup_src = IntegerField(null=True)
-    err_ang = IntegerField(null=True)
-    err_maj = FloatField(null=True)
-    err_min = FloatField(null=True)
-    ext_key = IntegerField(null=True)
-    gal_contam = IntegerField(index=True, null=True)
-    glat = FloatField(null=True)
-    glon = FloatField(null=True)
-    h_cmsig = FloatField(null=True)
-    h_m = FloatField(index=True, null=True)
-    h_m_stdap = FloatField(null=True)
-    h_msig_stdap = FloatField(null=True)
-    h_msigcom = FloatField(null=True)
-    h_psfchi = FloatField(null=True)
-    h_snr = FloatField(null=True)
-    hemis = CharField(null=True)
-    j_cmsig = FloatField(null=True)
-    j_m = FloatField(index=True, null=True)
-    j_m_stdap = FloatField(null=True)
-    j_msig_stdap = FloatField(null=True)
-    j_msigcom = FloatField(null=True)
-    j_psfchi = FloatField(null=True)
-    j_snr = FloatField(null=True)
-    jdate = DoubleField(null=True)
-    k_cmsig = FloatField(null=True)
-    k_m = FloatField(index=True, null=True)
-    k_m_stdap = FloatField(null=True)
-    k_msig_stdap = FloatField(null=True)
-    k_msigcom = FloatField(null=True)
-    k_psfchi = FloatField(null=True)
-    k_snr = FloatField(null=True)
-    mp_flg = IntegerField(null=True)
-    ndet = CharField(null=True)
-    nopt_mchs = IntegerField(null=True)
-    ph_qual = CharField(index=True, null=True)
-    phi_opt = IntegerField(null=True)
-    prox = FloatField(null=True)
-    pts_key = AutoField()
-    pxcntr = IntegerField(null=True)
-    pxpa = IntegerField(null=True)
-    ra = DoubleField(index=True, null=True)
-    rd_flg = CharField(index=True, null=True)
-    scan = IntegerField(null=True)
-    scan_key = IntegerField(null=True)
-    use_src = IntegerField(null=True)
-    vr_m_opt = FloatField(null=True)
-    x_scan = FloatField(null=True)
+    pts_key = IntegerField(primary_key=True)
+    designation = TextField()
 
     class Meta:
         table_name = 'twomass_psc'
-        schema = 'catalogdb'
 
 
-_GaiaDR2TmassBestNeighbourDeferred = DeferredThroughModel()
+class Gaia_DR2(CatalogdbModel):
 
+    source_id = BigIntegerField(primary_key=True)
 
-class GaiaDR2Source(SDSS5dbModel):
-
-    a_g_percentile_lower = FloatField(null=True)
-    a_g_percentile_upper = FloatField(null=True)
-    a_g_val = FloatField(null=True)
-    astrometric_chi2_al = FloatField(index=True, null=True)
-    astrometric_excess_noise = DoubleField(null=True)
-    astrometric_excess_noise_sig = DoubleField(null=True)
-    astrometric_gof_al = FloatField(null=True)
-    astrometric_matched_observations = IntegerField(null=True)
-    astrometric_n_bad_obs_al = IntegerField(null=True)
-    astrometric_n_good_obs_al = IntegerField(index=True, null=True)
-    astrometric_n_obs_ac = IntegerField(null=True)
-    astrometric_n_obs_al = IntegerField(null=True)
-    astrometric_params_solved = IntegerField(null=True)
-    astrometric_primary_flag = BooleanField(null=True)
-    astrometric_pseudo_colour = DoubleField(null=True)
-    astrometric_pseudo_colour_error = DoubleField(null=True)
-    astrometric_sigma5d_max = FloatField(null=True)
-    astrometric_weight_al = FloatField(null=True)
-    b = DoubleField(index=True, null=True)
-    bp_g = FloatField(null=True)
-    bp_rp = FloatField(null=True)
-    dec = DoubleField(index=True, null=True)
-    dec_error = DoubleField(null=True)
-    dec_parallax_corr = FloatField(null=True)
-    dec_pmdec_corr = FloatField(null=True)
-    dec_pmra_corr = FloatField(null=True)
-    designation = TextField(null=True)
-    duplicated_source = BooleanField(null=True)
-    e_bp_min_rp_percentile_lower = FloatField(null=True)
-    e_bp_min_rp_percentile_upper = FloatField(null=True)
-    e_bp_min_rp_val = FloatField(null=True)
-    ecl_lat = DoubleField(index=True, null=True)
-    ecl_lon = DoubleField(index=True, null=True)
-    flame_flags = BigIntegerField(null=True)
-    frame_rotator_object_type = IntegerField(null=True)
-    g_rp = FloatField(null=True)
-    l = DoubleField(index=True, null=True)
-    lum_percentile_lower = FloatField(null=True)
-    lum_percentile_upper = FloatField(null=True)
-    lum_val = FloatField(null=True)
-    matched_observations = IntegerField(null=True)
-    mean_varpi_factor_al = FloatField(null=True)
-    parallax = DoubleField(index=True, null=True)
-    parallax_error = DoubleField(null=True)
-    parallax_over_error = FloatField(index=True, null=True)
-    parallax_pmdec_corr = FloatField(null=True)
-    parallax_pmra_corr = FloatField(null=True)
-    phot_bp_mean_flux = DoubleField(null=True)
-    phot_bp_mean_flux_error = DoubleField(null=True)
-    phot_bp_mean_flux_over_error = FloatField(index=True, null=True)
-    phot_bp_mean_mag = FloatField(index=True, null=True)
-    phot_bp_n_obs = IntegerField(null=True)
-    phot_bp_rp_excess_factor = FloatField(index=True, null=True)
-    phot_g_mean_flux = DoubleField(index=True, null=True)
-    phot_g_mean_flux_error = DoubleField(null=True)
-    phot_g_mean_flux_over_error = FloatField(index=True, null=True)
-    phot_g_mean_mag = FloatField(index=True, null=True)
-    phot_g_n_obs = IntegerField(null=True)
-    phot_proc_mode = IntegerField(null=True)
-    phot_rp_mean_flux = DoubleField(null=True)
-    phot_rp_mean_flux_error = DoubleField(null=True)
-    phot_rp_mean_flux_over_error = FloatField(index=True, null=True)
-    phot_rp_mean_mag = FloatField(index=True, null=True)
-    phot_rp_n_obs = IntegerField(null=True)
-    phot_variable_flag = TextField(null=True)
-    pmdec = DoubleField(null=True)
-    pmdec_error = DoubleField(null=True)
-    pmra = DoubleField(null=True)
-    pmra_error = DoubleField(null=True)
-    pmra_pmdec_corr = FloatField(null=True)
-    priam_flags = BigIntegerField(null=True)
-    ra = DoubleField(index=True, null=True)
-    ra_dec_corr = FloatField(null=True)
-    ra_error = DoubleField(null=True)
-    ra_parallax_corr = FloatField(null=True)
-    ra_pmdec_corr = FloatField(null=True)
-    ra_pmra_corr = FloatField(null=True)
-    radial_velocity = DoubleField(null=True)
-    radial_velocity_error = DoubleField(null=True)
-    radius_percentile_lower = FloatField(null=True)
-    radius_percentile_upper = FloatField(null=True)
-    radius_val = FloatField(null=True)
-    random_index = BigIntegerField(null=True)
-    ref_epoch = DoubleField(null=True)
-    rv_nb_transits = IntegerField(null=True)
-    rv_template_fe_h = FloatField(null=True)
-    rv_template_logg = FloatField(null=True)
-    rv_template_teff = FloatField(null=True)
-    solution_id = BigIntegerField(index=True, null=True)
-    source_id = BigAutoField()
-    teff_percentile_lower = FloatField(null=True)
-    teff_percentile_upper = FloatField(null=True)
-    teff_val = FloatField(null=True)
-    visibility_periods_used = IntegerField(index=True, null=True)
-
-    tmass_best_sources = ManyToManyField(TwoMassPsc,
-                                         through_model=_GaiaDR2TmassBestNeighbourDeferred,
-                                         backref='gaia_best_sources')
+    tmass_best = ManyToManyField(TwoMassPSC,
+                                 through_model=_Gaia_DR2_TwoMass_Deferred,
+                                 backref='gaia_best')
 
     class Meta:
         table_name = 'gaia_dr2_source'
-        schema = 'catalogdb'
 
 
-class GaiaDR2Clean(SDSS5dbModel):
+class Gaia_DR2_Clean(CatalogdbModel):
 
-    source_id = BigAutoField(column_name='source_id')
-    source = ForeignKeyField(GaiaDR2Source, column_name='source_id', backref='gaia_clean')
+    source_id = BigIntegerField(primary_key=True)
+
+    source = ForeignKeyField(Gaia_DR2,
+                             field='source_id',
+                             column_name='source_id',
+                             object_id_name='source_id',
+                             backref='+')
 
     class Meta:
         table_name = 'gaia_dr2_clean'
-        schema = 'catalogdb'
 
 
-class GaiaDR2WDCandidatesV1(SDSS5dbModel):
-
-    ag = DoubleField(null=True)
-    astrometric_excess_noise = DoubleField(null=True)
-    astrometric_sigma5d_max = DoubleField(null=True)
-    b = DoubleField(index=True, null=True)
-    chi2 = DoubleField(null=True)
-    chisq_he = DoubleField(null=True)
-    dec = DoubleField(index=True, null=True)
-    dec_error = DoubleField(null=True)
-    density = DoubleField(null=True)
-    designation = TextField(null=True)
-    e_gmag = DoubleField(null=True)
-    e_imag = DoubleField(null=True)
-    e_rmag = DoubleField(null=True)
-    e_umag = DoubleField(null=True)
-    e_zmag = DoubleField(null=True)
-    elog_g = DoubleField(null=True)
-    elog_g_he = DoubleField(null=True)
-    emass = DoubleField(null=True)
-    emass_he = DoubleField(null=True)
-    eteff = DoubleField(null=True)
-    eteff_he = DoubleField(null=True)
-    gmag = DoubleField(null=True)
-    imag = DoubleField(null=True)
-    l = DoubleField(index=True, null=True)
-    log_g = DoubleField(null=True)
-    log_g_he = DoubleField(null=True)
-    mass = DoubleField(null=True)
-    mass_he = DoubleField(null=True)
-    parallax = DoubleField(null=True)
-    parallax_error = DoubleField(null=True)
-    phot_bp_mean_flux = DoubleField(null=True)
-    phot_bp_mean_flux_error = DoubleField(null=True)
-    phot_bp_mean_mag = DoubleField(null=True)
-    phot_bp_rp_excess_factor = DoubleField(null=True)
-    phot_g_mean_flux = DoubleField(index=True, null=True)
-    phot_g_mean_flux_error = DoubleField(null=True)
-    phot_g_mean_mag = DoubleField(index=True, null=True)
-    phot_rp_mean_flux = DoubleField(null=True)
-    phot_rp_mean_flux_error = DoubleField(null=True)
-    phot_rp_mean_mag = DoubleField(null=True)
-    pmdec = DoubleField(null=True)
-    pmdec_error = DoubleField(null=True)
-    pmra = DoubleField(null=True)
-    pmra_error = DoubleField(null=True)
-    pwd = FloatField(null=True)
-    pwd_correction = FloatField(null=True)
-    ra = DoubleField(index=True, null=True)
-    ra_error = DoubleField(null=True)
-    rmag = DoubleField(null=True)
-    sdss_name = TextField(null=True)
-    teff = DoubleField(null=True)
-    teff_he = DoubleField(null=True)
-    umag = DoubleField(null=True)
-    white_dwarf_name = TextField(null=True)
-    zmag = DoubleField(null=True)
-
-    def gaia_source(self):
-        return GaiaDR2Source.select().get_id(self.source_id)
-
-    class Meta:
-        table_name = 'gaia_dr2_wd_candidates_v1'
-        schema = 'catalogdb'
-
-
-class GaiaDR2SDSSDR9BestNeighbour(SDSS5dbModel):
-
-    angular_distance = DoubleField(null=True)
-    best_neighbour_multiplicity = IntegerField(null=True)
-    gaia_astrometric_params = IntegerField(null=True)
-    number_of_mates = IntegerField(null=True)
-    number_of_neighbours = IntegerField(null=True)
-    original_ext_source_id = TextField(null=True)
-    sdssdr9_oid = BigIntegerField(index=True, null=True)
-    source_id = BigAutoField()
-
-    class Meta:
-        table_name = 'gaiadr2_sdssdr9_best_neighbour'
-        schema = 'catalogdb'
-
-
-class GalacticGenesis(SDSS5dbModel):
-
-    g_dec = DoubleField(null=True)
-    g_ra = DoubleField(null=True)
-    gaiaid = BigAutoField()
-    h_m = FloatField(index=True, null=True)
-    phot_g_mean_mag = FloatField(index=True, null=True)
-    t_dec = DoubleField(null=True)
-    t_ra = DoubleField(null=True)
-    twomass_desig = CharField(null=True, unique=True)
+class GalacticGenesis(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_genesis'
-        schema = 'catalogdb'
 
 
-class GalacticGenesisBig(SDSS5dbModel):
-
-    g_dec = DoubleField(null=True)
-    g_ra = DoubleField(null=True)
-    gaiaid = BigAutoField()
-    h_m = FloatField(index=True, null=True)
-    phot_g_mean_mag = FloatField(index=True, null=True)
-    t_dec = DoubleField(null=True)
-    t_ra = DoubleField(null=True)
-    twomass_desig = CharField(null=True)
+class GalacticGenesisBig(CatalogdbModel):
 
     class Meta:
         table_name = 'galactic_genesis_big'
-        schema = 'catalogdb'
 
 
-class GUVCat(SDSS5dbModel):
-
-    avaspdec = DoubleField(null=True)
-    avaspra = DoubleField(null=True)
-    band = IntegerField(null=True)
-    chkobj_type = IntegerField(null=True)
-    corv = TextField(null=True)
-    dec = DoubleField(index=True, null=True)
-    difffuv = FloatField(null=True)
-    difffuvdist = FloatField(null=True)
-    diffnuv = FloatField(null=True)
-    diffnuvdist = FloatField(null=True)
-    e_bv = FloatField(null=True)
-    fexptime = FloatField(null=True)
-    fov_radius = FloatField(null=True)
-    fuv_a_world = FloatField(null=True)
-    fuv_artifact = IntegerField(null=True)
-    fuv_b_world = FloatField(null=True)
-    fuv_class_star = FloatField(null=True)
-    fuv_ellipticity = FloatField(null=True)
-    fuv_errtheta_j2000 = FloatField(null=True)
-    fuv_flags = IntegerField(null=True)
-    fuv_flux = FloatField(null=True)
-    fuv_fluxerr = FloatField(null=True)
-    fuv_fwhm_image = FloatField(null=True)
-    fuv_fwhm_world = FloatField(null=True)
-    fuv_kron_radius = FloatField(null=True)
-    fuv_mag = FloatField(null=True)
-    fuv_mag_aper_4 = FloatField(null=True)
-    fuv_mag_aper_6 = FloatField(null=True)
-    fuv_mag_auto = FloatField(null=True)
-    fuv_magerr = FloatField(null=True)
-    fuv_magerr_aper_4 = FloatField(null=True)
-    fuv_magerr_aper_6 = FloatField(null=True)
-    fuv_magerr_auto = FloatField(null=True)
-    fuv_ncat_flux_radius_3 = FloatField(null=True)
-    fuv_ncat_fwhm_image = FloatField(null=True)
-    fuv_poserr = FloatField(null=True)
-    fuv_pperr = FloatField(null=True)
-    fuv_theta_j2000 = FloatField(null=True)
-    fuv_weight = FloatField(null=True)
-    fuv_x_image = FloatField(null=True)
-    fuv_y_image = FloatField(null=True)
-    glat = DoubleField(null=True)
-    glon = DoubleField(null=True)
-    grank = IntegerField(null=True)
-    grankdist = IntegerField(null=True)
-    groupgid = TextField(null=True)
-    groupgiddist = TextField(null=True)
-    groupgidtot = TextField(null=True)
-    ib_poserr = FloatField(null=True)
-    img = IntegerField(null=True)
-    inlargeobj = TextField(null=True)
-    istherespectrum = IntegerField(null=True)
-    largeobjsize = FloatField(null=True)
-    mpstype = TextField(null=True)
-    nexptime = FloatField(null=True)
-    ngrank = IntegerField(null=True)
-    ngrankdist = BigIntegerField(null=True)
-    nuv_a_world = FloatField(null=True)
-    nuv_artifact = IntegerField(null=True)
-    nuv_b_world = FloatField(null=True)
-    nuv_class_star = FloatField(null=True)
-    nuv_ellipticity = FloatField(null=True)
-    nuv_errtheta_j2000 = FloatField(null=True)
-    nuv_flags = IntegerField(null=True)
-    nuv_flux = FloatField(null=True)
-    nuv_fluxerr = FloatField(null=True)
-    nuv_fwhm_image = FloatField(null=True)
-    nuv_fwhm_world = FloatField(null=True)
-    nuv_kron_radius = FloatField(null=True)
-    nuv_mag = FloatField(null=True)
-    nuv_mag_aper_4 = FloatField(null=True)
-    nuv_mag_aper_6 = FloatField(null=True)
-    nuv_mag_auto = FloatField(null=True)
-    nuv_magerr = FloatField(null=True)
-    nuv_magerr_aper_4 = FloatField(null=True)
-    nuv_magerr_aper_6 = FloatField(null=True)
-    nuv_magerr_auto = FloatField(null=True)
-    nuv_poserr = FloatField(null=True)
-    nuv_pperr = FloatField(null=True)
-    nuv_theta_j2000 = FloatField(null=True)
-    nuv_weight = FloatField(null=True)
-    nuv_x_image = FloatField(null=True)
-    nuv_y_image = FloatField(null=True)
-    objid = BigAutoField()
-    photoextractid = BigIntegerField(null=True)
-    primgid = BigIntegerField(null=True)
-    primgiddist = BigIntegerField(null=True)
-    prob = FloatField(null=True)
-    ra = DoubleField(index=True, null=True)
-    sep = FloatField(null=True)
-    sepas = FloatField(null=True)
-    sepasdist = FloatField(null=True)
-    subvisit = IntegerField(null=True)
-    tilenum = IntegerField(null=True)
-    type = IntegerField(null=True)
+class GUVCat(CatalogdbModel):
 
     class Meta:
         table_name = 'guvcat'
-        schema = 'catalogdb'
 
 
-class KeplerInput10(SDSS5dbModel):
+class KeplerInput_DR10(CatalogdbModel):
 
-    kic_altid = BigIntegerField(null=True)
-    kic_altsource = BigIntegerField(null=True)
-    kic_aq = IntegerField(null=True)
-    kic_av = FloatField(null=True)
-    kic_blend = IntegerField(null=True)
-    kic_catkey = BigIntegerField(null=True)
-    kic_cq = TextField(null=True)
-    kic_d51mag = DoubleField(null=True)
-    kic_dec = DoubleField(index=True, null=True)
-    kic_degree_ra = DoubleField(null=True)
-    kic_ebminusv = FloatField(null=True)
-    kic_feh = FloatField(null=True)
-    kic_fov_flag = IntegerField(null=True)
-    kic_galaxy = IntegerField(null=True)
-    kic_gkcolor = DoubleField(null=True)
-    kic_glat = DoubleField(index=True, null=True)
-    kic_glon = DoubleField(index=True, null=True)
-    kic_gmag = DoubleField(index=True, null=True)
-    kic_grcolor = DoubleField(null=True)
-    kic_gredmag = DoubleField(null=True)
-    kic_hmag = DoubleField(index=True, null=True)
-    kic_imag = DoubleField(index=True, null=True)
-    kic_jkcolor = DoubleField(null=True)
-    kic_jmag = DoubleField(index=True, null=True)
-    kic_kepler_id = BigAutoField()
-    kic_kepmag = DoubleField(index=True, null=True)
-    kic_kmag = DoubleField(index=True, null=True)
-    kic_logg = FloatField(null=True)
-    kic_parallax = FloatField(null=True)
-    kic_pmdec = DoubleField(null=True)
-    kic_pmra = DoubleField(null=True)
-    kic_pmtotal = FloatField(null=True)
-    kic_pq = TextField(null=True)
-    kic_ra = DoubleField(index=True, null=True)
-    kic_radius = FloatField(null=True)
-    kic_rmag = DoubleField(index=True, null=True)
-    kic_scpid = BigIntegerField(null=True)
-    kic_scpkey = BigIntegerField(null=True)
-    kic_teff = IntegerField(null=True)
-    kic_tm_designation = TextField(null=True)
-    kic_tmid = BigIntegerField(null=True)
-    kic_umag = DoubleField(index=True, null=True)
-    kic_variable = IntegerField(null=True)
-    kic_zmag = DoubleField(index=True, null=True)
+    kic_kepler_id = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'kepler_input_10'
-        schema = 'catalogdb'
 
 
-class SDSSDR13Photoobj(SDSS5dbModel):
+class SDSS_DR13_PhotoObj(CatalogdbModel):
 
-    aperflux7_g = FloatField(null=True)
-    aperflux7_i = FloatField(null=True)
-    aperflux7_r = FloatField(null=True)
-    aperflux7_u = FloatField(null=True)
-    aperflux7_z = FloatField(null=True)
-    b = DoubleField(index=True, null=True)
-    balkanid = IntegerField(null=True)
-    calibstatus_g = IntegerField(null=True)
-    calibstatus_i = IntegerField(null=True)
-    calibstatus_r = IntegerField(null=True)
-    calibstatus_u = IntegerField(null=True)
-    calibstatus_z = IntegerField(null=True)
-    camcol = IntegerField(null=True)
-    colc = FloatField(null=True)
-    colcerr = FloatField(null=True)
-    colv = FloatField(null=True)
-    colverr = FloatField(null=True)
-    dec = DoubleField(index=True, null=True)
-    devflux_g = FloatField(null=True)
-    devflux_i = FloatField(null=True)
-    devflux_r = FloatField(null=True)
-    devflux_u = FloatField(null=True)
-    devflux_z = FloatField(null=True)
-    devfluxivar_g = FloatField(null=True)
-    devfluxivar_i = FloatField(null=True)
-    devfluxivar_r = FloatField(null=True)
-    devfluxivar_u = FloatField(null=True)
-    devfluxivar_z = FloatField(null=True)
-    expflux_g = FloatField(null=True)
-    expflux_i = FloatField(null=True)
-    expflux_r = FloatField(null=True)
-    expflux_u = FloatField(null=True)
-    expflux_z = FloatField(null=True)
-    expfluxivar_g = FloatField(null=True)
-    expfluxivar_i = FloatField(null=True)
-    expfluxivar_r = FloatField(null=True)
-    expfluxivar_u = FloatField(null=True)
-    expfluxivar_z = FloatField(null=True)
-    extinction_g = FloatField(null=True)
-    extinction_i = FloatField(null=True)
-    extinction_r = FloatField(null=True)
-    extinction_u = FloatField(null=True)
-    extinction_z = FloatField(null=True)
-    fiber2flux_g = FloatField(null=True)
-    fiber2flux_i = FloatField(null=True)
-    fiber2flux_r = FloatField(null=True)
-    fiber2flux_u = FloatField(null=True)
-    fiber2flux_z = FloatField(null=True)
-    fiber2fluxivar_g = FloatField(null=True)
-    fiber2fluxivar_i = FloatField(null=True)
-    fiber2fluxivar_r = FloatField(null=True)
-    fiber2fluxivar_u = FloatField(null=True)
-    fiber2fluxivar_z = FloatField(null=True)
-    fiber2mag_g = FloatField(null=True)
-    fiber2mag_i = FloatField(null=True)
-    fiber2mag_r = FloatField(null=True)
-    fiber2mag_u = FloatField(null=True)
-    fiber2mag_z = FloatField(null=True)
-    fiber2magerr_g = FloatField(null=True)
-    fiber2magerr_i = FloatField(null=True)
-    fiber2magerr_r = FloatField(null=True)
-    fiber2magerr_u = FloatField(null=True)
-    fiber2magerr_z = FloatField(null=True)
-    fiberflux_g = FloatField(null=True)
-    fiberflux_i = FloatField(null=True)
-    fiberflux_r = FloatField(null=True)
-    fiberflux_u = FloatField(null=True)
-    fiberflux_z = FloatField(null=True)
-    fiberfluxivar_g = FloatField(null=True)
-    fiberfluxivar_i = FloatField(null=True)
-    fiberfluxivar_r = FloatField(null=True)
-    fiberfluxivar_u = FloatField(null=True)
-    fiberfluxivar_z = FloatField(null=True)
-    fibermag_g = FloatField(null=True)
-    fibermag_i = FloatField(null=True)
-    fibermag_r = FloatField(null=True)
-    fibermag_u = FloatField(null=True)
-    fibermag_z = FloatField(null=True)
-    fibermagerr_g = FloatField(null=True)
-    fibermagerr_i = FloatField(null=True)
-    fibermagerr_r = FloatField(null=True)
-    fibermagerr_u = FloatField(null=True)
-    fibermagerr_z = FloatField(null=True)
-    field = IntegerField(null=True)
-    fieldid = BigIntegerField(null=True)
-    flags = BigIntegerField(null=True)
-    htmid = BigIntegerField(null=True)
-    l = DoubleField(index=True, null=True)
-    lnldev_g = FloatField(null=True)
-    lnldev_i = FloatField(null=True)
-    lnldev_r = FloatField(null=True)
-    lnldev_u = FloatField(null=True)
-    lnldev_z = FloatField(null=True)
-    lnlexp_g = FloatField(null=True)
-    lnlexp_i = FloatField(null=True)
-    lnlexp_r = FloatField(null=True)
-    lnlexp_u = FloatField(null=True)
-    lnlexp_z = FloatField(null=True)
-    lnlstar_g = FloatField(null=True)
-    lnlstar_i = FloatField(null=True)
-    lnlstar_r = FloatField(null=True)
-    lnlstar_u = FloatField(null=True)
-    lnlstar_z = FloatField(null=True)
-    mrrcc_g = FloatField(null=True)
-    mrrcc_i = FloatField(null=True)
-    mrrcc_r = FloatField(null=True)
-    mrrcc_u = FloatField(null=True)
-    mrrcc_z = FloatField(null=True)
-    ndetect = IntegerField(null=True)
-    nmgypercount_g = FloatField(null=True)
-    nmgypercount_i = FloatField(null=True)
-    nmgypercount_r = FloatField(null=True)
-    nmgypercount_u = FloatField(null=True)
-    nmgypercount_z = FloatField(null=True)
-    obj = IntegerField(null=True)
-    objid = BigAutoField()
-    parentid = BigIntegerField(null=True)
-    petroflux_g = FloatField(null=True)
-    petroflux_i = FloatField(null=True)
-    petroflux_r = FloatField(null=True)
-    petroflux_u = FloatField(null=True)
-    petroflux_z = FloatField(null=True)
-    petrofluxivar_g = FloatField(null=True)
-    petrofluxivar_i = FloatField(null=True)
-    petrofluxivar_r = FloatField(null=True)
-    petrofluxivar_u = FloatField(null=True)
-    petrofluxivar_z = FloatField(null=True)
-    petromag_g = FloatField(null=True)
-    petromag_i = FloatField(null=True)
-    petromag_r = FloatField(null=True)
-    petromag_u = FloatField(null=True)
-    petromag_z = FloatField(null=True)
-    petromagerr_g = FloatField(null=True)
-    petromagerr_i = FloatField(null=True)
-    petromagerr_r = FloatField(null=True)
-    petromagerr_u = FloatField(null=True)
-    petromagerr_z = FloatField(null=True)
-    petror50_g = FloatField(null=True)
-    petror50_i = FloatField(null=True)
-    petror50_r = FloatField(null=True)
-    petror50_u = FloatField(null=True)
-    petror50_z = FloatField(null=True)
-    petror50err_g = FloatField(null=True)
-    petror50err_i = FloatField(null=True)
-    petror50err_r = FloatField(null=True)
-    petror50err_u = FloatField(null=True)
-    petror50err_z = FloatField(null=True)
-    petror90_g = FloatField(null=True)
-    petror90_i = FloatField(null=True)
-    petror90_r = FloatField(null=True)
-    petror90_u = FloatField(null=True)
-    petror90_z = FloatField(null=True)
-    petror90err_g = FloatField(null=True)
-    petror90err_i = FloatField(null=True)
-    petror90err_r = FloatField(null=True)
-    petror90err_u = FloatField(null=True)
-    petror90err_z = FloatField(null=True)
-    petrorad_g = FloatField(null=True)
-    petrorad_i = FloatField(null=True)
-    petrorad_r = FloatField(null=True)
-    petrorad_u = FloatField(null=True)
-    petrorad_z = FloatField(null=True)
-    petroraderr_g = FloatField(null=True)
-    petroraderr_i = FloatField(null=True)
-    petroraderr_r = FloatField(null=True)
-    petroraderr_u = FloatField(null=True)
-    petroraderr_z = FloatField(null=True)
-    psfflux_g = FloatField(null=True)
-    psfflux_i = FloatField(null=True)
-    psfflux_r = FloatField(null=True)
-    psfflux_u = FloatField(null=True)
-    psfflux_z = FloatField(null=True)
-    psffluxivar_g = FloatField(null=True)
-    psffluxivar_i = FloatField(null=True)
-    psffluxivar_r = FloatField(null=True)
-    psffluxivar_u = FloatField(null=True)
-    psffluxivar_z = FloatField(null=True)
-    psffwhm_g = FloatField(null=True)
-    psffwhm_i = FloatField(null=True)
-    psffwhm_r = FloatField(null=True)
-    psffwhm_u = FloatField(null=True)
-    psffwhm_z = FloatField(null=True)
-    psfmag_g = FloatField(index=True, null=True)
-    psfmag_i = FloatField(index=True, null=True)
-    psfmag_r = FloatField(index=True, null=True)
-    psfmag_u = FloatField(index=True, null=True)
-    psfmag_z = FloatField(index=True, null=True)
-    psfmagerr_g = FloatField(null=True)
-    psfmagerr_i = FloatField(null=True)
-    psfmagerr_r = FloatField(null=True)
-    psfmagerr_u = FloatField(null=True)
-    psfmagerr_z = FloatField(null=True)
-    ra = DoubleField(index=True, null=True)
-    rerun = IntegerField(null=True)
-    resolvestatus = IntegerField(null=True)
-    rowc = FloatField(null=True)
-    rowcerr = FloatField(null=True)
-    rowv = FloatField(null=True)
-    rowverr = FloatField(null=True)
-    run = IntegerField(null=True)
-    sky_g = FloatField(null=True)
-    sky_i = FloatField(null=True)
-    sky_r = FloatField(null=True)
-    sky_u = FloatField(null=True)
-    sky_z = FloatField(null=True)
-    skyivar_g = FloatField(null=True)
-    skyivar_i = FloatField(null=True)
-    skyivar_r = FloatField(null=True)
-    skyivar_u = FloatField(null=True)
-    skyivar_z = FloatField(null=True)
-    specobjid = DecimalField(null=True)
-    thingid = IntegerField(null=True)
-    type = IntegerField(null=True)
+    objid = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'sdss_dr13_photoobj'
-        schema = 'catalogdb'
 
 
-class SDSSDR14APOGEEStar(SDSS5dbModel):
+class SDSS_DR14_APOGEE_Visit(CatalogdbModel):
 
-    andflag = BigIntegerField(null=True)
-    apogee2_target1 = BigIntegerField(null=True)
-    apogee2_target2 = BigIntegerField(null=True)
-    apogee2_target3 = BigIntegerField(null=True)
-    apogee_id = CharField(null=True)
-    apogee_target1 = BigIntegerField(null=True)
-    apogee_target2 = BigIntegerField(null=True)
-    apogee_target3 = BigIntegerField(null=True)
-    apstar_id = CharField(primary_key=True)
-    apstar_version = CharField(null=True)
-    chi2_threshold = FloatField(null=True)
-    commiss = BigIntegerField(null=True)
-    dec = DoubleField(index=True, null=True)
-    extratarg = BigIntegerField(null=True)
-    field = CharField(null=True)
-    file = CharField(null=True)
-    glat = DoubleField(index=True, null=True)
-    glon = DoubleField(index=True, null=True)
-    htmid = BigIntegerField(null=True)
-    location_id = BigIntegerField(null=True)
-    max_h = FloatField(null=True)
-    max_jk = FloatField(null=True)
-    min_h = FloatField(null=True)
-    min_jk = FloatField(null=True)
-    nvisits = BigIntegerField(null=True)
-    ra = DoubleField(index=True, null=True)
-    reduction_id = CharField(null=True)
-    rv_autofwhm = FloatField(null=True)
-    rv_ccfwhm = FloatField(null=True)
-    rv_feh = FloatField(null=True)
-    rv_logg = FloatField(null=True)
-    rv_teff = FloatField(null=True)
-    snr = FloatField(null=True)
-    stablerv_chi2 = FloatField(null=True)
-    stablerv_chi2_prob = FloatField(null=True)
-    stablerv_rchi2 = FloatField(null=True)
-    starflag = BigIntegerField(null=True)
-    survey = CharField(null=True)
-    synthscatter = FloatField(null=True)
-    synthverr = FloatField(null=True)
-    synthverr_med = FloatField(null=True)
-    synthvhelio_avg = FloatField(null=True)
-    synthvscatter = FloatField(null=True)
-    target_id = CharField(null=True)
-    telescope = CharField(null=True)
-    verr = FloatField(null=True)
-    verr_med = FloatField(null=True)
-    vhelio_avg = FloatField(null=True)
-    vscatter = FloatField(null=True)
-
-    class Meta:
-        table_name = 'sdss_dr14_apogeestar'
-        schema = 'catalogdb'
-
-
-class SDSSDR14APOGEEStarVisit(SDSS5dbModel):
-
-    visit_id = CharField(primary_key=True)
-    apstar_id = CharField(index=True, null=True)
-
-    class Meta:
-        table_name = 'sdss_dr14_apogeestarvisit'
-        schema = 'catalogdb'
-
-
-class SDSSDR14APOGEEVisit(SDSS5dbModel):
-
-    apogee2_target1 = BigIntegerField(null=True)
-    apogee2_target2 = BigIntegerField(null=True)
-    apogee2_target3 = BigIntegerField(null=True)
-    apogee_id = CharField(null=True)
-    apogee_target1 = BigIntegerField(null=True)
-    apogee_target2 = BigIntegerField(null=True)
-    apogee_target3 = BigIntegerField(null=True)
-    apred_version = CharField(null=True)
-    bc = FloatField(null=True)
-    chisq = FloatField(null=True)
-    dateobs = CharField(null=True)
-    dec = DoubleField(index=True, null=True)
-    estvhelio = FloatField(null=True)
-    estvrel = FloatField(null=True)
-    estvrelerr = FloatField(null=True)
-    estvtype = BigIntegerField(null=True)
-    extratarg = BigIntegerField(null=True)
-    fiberid = BigIntegerField(null=True)
-    file = CharField(null=True)
-    glat = DoubleField(index=True, null=True)
-    glon = DoubleField(index=True, null=True)
-    jd = DoubleField(null=True)
-    location_id = BigIntegerField(null=True)
-    max_h = FloatField(null=True)
-    max_jk = FloatField(null=True)
-    min_h = FloatField(null=True)
-    min_jk = FloatField(null=True)
-    mjd = BigIntegerField(null=True)
-    plate = CharField(null=True)
-    ra = DoubleField(index=True, null=True)
-    reduction_id = CharField(null=True)
-    rv_alpha = FloatField(null=True)
-    rv_carb = FloatField(null=True)
-    rv_feh = FloatField(null=True)
-    rv_logg = FloatField(null=True)
-    rv_teff = FloatField(null=True)
-    snr = FloatField(null=True)
-    starflag = BigIntegerField(null=True)
-    survey = CharField(null=True)
-    synthfile = CharField(null=True)
-    synthvhelio = FloatField(null=True)
-    synthvrel = FloatField(null=True)
-    synthvrelerr = FloatField(null=True)
-    target_id = CharField(null=True)
-    telescope = CharField(null=True)
-    vhelio = FloatField(null=True)
-    visit_id = CharField(primary_key=True)
-    vrel = FloatField(null=True)
-    vrelerr = FloatField(null=True)
-    vtype = FloatField(null=True)
+    visit_id = TextField(primary_key=True)
 
     class Meta:
         table_name = 'sdss_dr14_apogeevisit'
-        schema = 'catalogdb'
 
 
-class SDSSDR14ASCAPStar(SDSS5dbModel):
+class SDSS_DR14_APOGEE_Star(CatalogdbModel):
 
-    al_fe = FloatField(null=True)
-    al_fe_err = FloatField(null=True)
-    al_fe_flag = IntegerField(null=True)
-    alpha_m = FloatField(null=True)
-    alpha_m_err = FloatField(null=True)
-    alpha_m_flag = IntegerField(null=True)
-    apogee_id = CharField(index=True, null=True)
-    apstar_id = CharField(primary_key=True)
-    aspcap_chi2 = FloatField(null=True)
-    aspcap_class = CharField(null=True)
-    aspcap_id = CharField(null=True)
-    aspcap_version = CharField(null=True)
-    aspcapflag = BigIntegerField(null=True)
-    c_fe = FloatField(null=True)
-    c_fe_err = FloatField(null=True)
-    c_fe_flag = IntegerField(null=True)
-    ca_fe = FloatField(null=True)
-    ca_fe_err = FloatField(null=True)
-    ca_fe_flag = IntegerField(null=True)
-    ci_fe = FloatField(null=True)
-    ci_fe_err = FloatField(null=True)
-    ci_fe_flag = IntegerField(null=True)
-    co_fe = FloatField(null=True)
-    co_fe_err = FloatField(null=True)
-    co_fe_flag = IntegerField(null=True)
-    cr_fe = FloatField(null=True)
-    cr_fe_err = FloatField(null=True)
-    cr_fe_flag = IntegerField(null=True)
-    cu_fe = FloatField(null=True)
-    cu_fe_err = FloatField(null=True)
-    cu_fe_flag = IntegerField(null=True)
-    fe_h = FloatField(null=True)
-    fe_h_err = FloatField(null=True)
-    fe_h_flag = IntegerField(null=True)
-    felem_al_h = FloatField(null=True)
-    felem_al_h_err = FloatField(null=True)
-    felem_c_m = FloatField(null=True)
-    felem_c_m_err = FloatField(null=True)
-    felem_ca_m = FloatField(null=True)
-    felem_ca_m_err = FloatField(null=True)
-    felem_ci_m = FloatField(null=True)
-    felem_ci_m_err = FloatField(null=True)
-    felem_co_h = FloatField(null=True)
-    felem_co_h_err = FloatField(null=True)
-    felem_cr_h = FloatField(null=True)
-    felem_cr_h_err = FloatField(null=True)
-    felem_cu_h = FloatField(null=True)
-    felem_cu_h_err = FloatField(null=True)
-    felem_fe_h = FloatField(null=True)
-    felem_fe_h_err = FloatField(null=True)
-    felem_ge_h = FloatField(null=True)
-    felem_ge_h_err = FloatField(null=True)
-    felem_k_h = FloatField(null=True)
-    felem_k_h_err = FloatField(null=True)
-    felem_mg_m = FloatField(null=True)
-    felem_mg_m_err = FloatField(null=True)
-    felem_mn_h = FloatField(null=True)
-    felem_mn_h_err = FloatField(null=True)
-    felem_n_m = FloatField(null=True)
-    felem_n_m_err = FloatField(null=True)
-    felem_na_h = FloatField(null=True)
-    felem_na_h_err = FloatField(null=True)
-    felem_nd_h = FloatField(null=True)
-    felem_nd_h_err = FloatField(null=True)
-    felem_ni_h = FloatField(null=True)
-    felem_ni_h_err = FloatField(null=True)
-    felem_o_m = FloatField(null=True)
-    felem_o_m_err = FloatField(null=True)
-    felem_p_m = FloatField(null=True)
-    felem_p_m_err = FloatField(null=True)
-    felem_rb_h = FloatField(null=True)
-    felem_rb_h_err = FloatField(null=True)
-    felem_s_m = FloatField(null=True)
-    felem_s_m_err = FloatField(null=True)
-    felem_si_m = FloatField(null=True)
-    felem_si_m_err = FloatField(null=True)
-    felem_ti_m = FloatField(null=True)
-    felem_ti_m_err = FloatField(null=True)
-    felem_tiii_m = FloatField(null=True)
-    felem_tiii_m_err = FloatField(null=True)
-    felem_v_h = FloatField(null=True)
-    felem_v_h_err = FloatField(null=True)
-    felem_y_h = FloatField(null=True)
-    felem_y_h_err = FloatField(null=True)
-    fparam_alpha_m = FloatField(null=True)
-    fparam_c_m = FloatField(null=True)
-    fparam_logg = FloatField(null=True)
-    fparam_logvmicro = FloatField(null=True)
-    fparam_m_h = FloatField(null=True)
-    fparam_n_m = FloatField(null=True)
-    fparam_teff = FloatField(null=True)
-    ge_fe = FloatField(null=True)
-    ge_fe_err = FloatField(null=True)
-    ge_fe_flag = IntegerField(null=True)
-    k_fe = FloatField(null=True)
-    k_fe_err = FloatField(null=True)
-    k_fe_flag = IntegerField(null=True)
-    logg = FloatField(null=True)
-    logg_err = FloatField(null=True)
-    logg_flag = IntegerField(null=True)
-    m_h = FloatField(null=True)
-    m_h_err = FloatField(null=True)
-    m_h_flag = IntegerField(null=True)
-    mg_fe = FloatField(null=True)
-    mg_fe_err = FloatField(null=True)
-    mg_fe_flag = IntegerField(null=True)
-    mn_fe = FloatField(null=True)
-    mn_fe_err = FloatField(null=True)
-    mn_fe_flag = IntegerField(null=True)
-    n_fe = FloatField(null=True)
-    n_fe_err = FloatField(null=True)
-    n_fe_flag = IntegerField(null=True)
-    na_fe = FloatField(null=True)
-    na_fe_err = FloatField(null=True)
-    na_fe_flag = IntegerField(null=True)
-    nd_fe = FloatField(null=True)
-    nd_fe_err = FloatField(null=True)
-    nd_fe_flag = IntegerField(null=True)
-    ni_fe = FloatField(null=True)
-    ni_fe_err = FloatField(null=True)
-    ni_fe_flag = IntegerField(null=True)
-    o_fe = FloatField(null=True)
-    o_fe_err = FloatField(null=True)
-    o_fe_flag = IntegerField(null=True)
-    p_fe = FloatField(null=True)
-    p_fe_err = FloatField(null=True)
-    p_fe_flag = IntegerField(null=True)
-    param_c_m = FloatField(null=True)
-    param_c_m_flag = IntegerField(null=True)
-    param_n_m = FloatField(null=True)
-    param_n_m_flag = IntegerField(null=True)
-    rb_fe = FloatField(null=True)
-    rb_fe_err = FloatField(null=True)
-    rb_fe_flag = IntegerField(null=True)
-    results_version = CharField(null=True)
-    s_fe = FloatField(null=True)
-    s_fe_err = FloatField(null=True)
-    s_fe_flag = IntegerField(null=True)
-    si_fe = FloatField(null=True)
-    si_fe_err = FloatField(null=True)
-    si_fe_flag = IntegerField(null=True)
-    target_id = CharField(index=True, null=True)
-    teff = FloatField(null=True)
-    teff_err = FloatField(null=True)
-    teff_flag = IntegerField(null=True)
-    ti_fe = FloatField(null=True)
-    ti_fe_err = FloatField(null=True)
-    ti_fe_flag = IntegerField(null=True)
-    tiii_fe = FloatField(null=True)
-    tiii_fe_err = FloatField(null=True)
-    tiii_fe_flag = IntegerField(null=True)
-    v_fe = FloatField(null=True)
-    v_fe_err = FloatField(null=True)
-    v_fe_flag = IntegerField(null=True)
-    vmacro = FloatField(null=True)
-    vmicro = FloatField(null=True)
-    vsini = FloatField(null=True)
-    y_fe = FloatField(null=True)
-    y_fe_err = FloatField(null=True)
-    y_fe_flag = IntegerField(null=True)
+    apstar_id = TextField(primary_key=True)
+    apogee_id = TextField()
+
+    visits = ManyToManyField(SDSS_DR14_APOGEE_Visit,
+                             through_model=_APOGEE_Star_Visit_Deferred,
+                             backref='stars')
+
+    class Meta:
+        table_name = 'sdss_dr14_apogeestar'
+
+
+class SDSS_DR14_APOGEE_Star_Visit(CatalogdbModel):
+
+    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
+                             backref='+',
+                             lazy_load=False)
+
+    visit = ForeignKeyField(SDSS_DR14_APOGEE_Visit,
+                            backref='+',
+                            lazy_load=False)
+
+    class Meta:
+        table_name = 'sdss_dr14_apogeestarvisit'
+
+
+class SDSS_DR14_ASCAP_Star(CatalogdbModel):
+
+    apstar_id = TextField(primary_key=True)
+    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
+                             backref='ascap_stars')
 
     class Meta:
         table_name = 'sdss_dr14_ascapstar'
-        schema = 'catalogdb'
 
 
-class SDSSDR14CannonStar(SDSS5dbModel):
+class SDSS_DR14_Cannon_Star(CatalogdbModel):
 
-    al_h = FloatField(null=True)
-    al_h_err = FloatField(null=True)
-    al_h_rawerr = FloatField(null=True)
-    alpha_m = FloatField(null=True)
-    alpha_m_err = FloatField(null=True)
-    alpha_m_rawerr = FloatField(null=True)
-    apogee_id = CharField(index=True, null=True)
-    c_h = FloatField(null=True)
-    c_h_err = FloatField(null=True)
-    c_h_rawerr = FloatField(null=True)
-    ca_h = FloatField(null=True)
-    ca_h_err = FloatField(null=True)
-    ca_h_rawerr = FloatField(null=True)
-    cannon_id = CharField(primary_key=True)
-    chi_sq = FloatField(null=True)
-    ci_h = FloatField(null=True)
-    ci_h_err = FloatField(null=True)
-    ci_h_rawerr = FloatField(null=True)
-    co_h = FloatField(null=True)
-    co_h_err = FloatField(null=True)
-    co_h_rawerr = FloatField(null=True)
-    cr_h = FloatField(null=True)
-    cr_h_err = FloatField(null=True)
-    cr_h_rawerr = FloatField(null=True)
-    fe_h = FloatField(null=True)
-    fe_h_err = FloatField(null=True)
-    fe_h_rawerr = FloatField(null=True)
-    field = CharField(null=True)
-    filename = CharField(null=True)
-    k_h = FloatField(null=True)
-    k_h_err = FloatField(null=True)
-    k_h_rawerr = FloatField(null=True)
-    location_id = BigIntegerField(null=True)
-    logg = FloatField(null=True)
-    logg_err = FloatField(null=True)
-    logg_rawerr = FloatField(null=True)
-    m_h = FloatField(null=True)
-    m_h_err = FloatField(null=True)
-    m_h_rawerr = FloatField(null=True)
-    mg_h = FloatField(null=True)
-    mg_h_err = FloatField(null=True)
-    mg_h_rawerr = FloatField(null=True)
-    mn_h = FloatField(null=True)
-    mn_h_err = FloatField(null=True)
-    mn_h_rawerr = FloatField(null=True)
-    n_h = FloatField(null=True)
-    n_h_err = FloatField(null=True)
-    n_h_rawerr = FloatField(null=True)
-    na_h = FloatField(null=True)
-    na_h_err = FloatField(null=True)
-    na_h_rawerr = FloatField(null=True)
-    ni_h = FloatField(null=True)
-    ni_h_err = FloatField(null=True)
-    ni_h_rawerr = FloatField(null=True)
-    o_h = FloatField(null=True)
-    o_h_err = FloatField(null=True)
-    o_h_rawerr = FloatField(null=True)
-    p_h = FloatField(null=True)
-    p_h_err = FloatField(null=True)
-    p_h_rawerr = FloatField(null=True)
-    r_chi_sq = FloatField(null=True)
-    s_h = FloatField(null=True)
-    s_h_err = FloatField(null=True)
-    s_h_rawerr = FloatField(null=True)
-    si_h = FloatField(null=True)
-    si_h_err = FloatField(null=True)
-    si_h_rawerr = FloatField(null=True)
-    teff = FloatField(null=True)
-    teff_err = FloatField(null=True)
-    teff_rawerr = FloatField(null=True)
-    ti_h = FloatField(null=True)
-    ti_h_err = FloatField(null=True)
-    ti_h_rawerr = FloatField(null=True)
-    tiii_h = FloatField(null=True)
-    tiii_h_err = FloatField(null=True)
-    tiii_h_rawerr = FloatField(null=True)
-    v_h = FloatField(null=True)
-    v_h_err = FloatField(null=True)
-    v_h_rawerr = FloatField(null=True)
+    @property
+    def apstars(self):
+        """Returns the associated stars in ``SDSSDR14APOGEEStar``."""
+
+        return (SDSS_DR14_APOGEE_Star
+                .select()
+                .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
 
     class Meta:
         table_name = 'sdss_dr14_cannonstar'
-        schema = 'catalogdb'
 
 
-class SDSSDR14SpecObj(SDSS5dbModel):
+class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
 
-    ancillary_target1 = BigIntegerField(null=True)
-    ancillary_target2 = BigIntegerField(null=True)
-    anyandmask = IntegerField(null=True)
-    anyormask = IntegerField(null=True)
-    bestobjid = BigIntegerField(index=True, null=True)
-    bluefiber = IntegerField(null=True)
-    boss_target1 = BigIntegerField(null=True)
-    bossprimary = IntegerField(null=True)
-    bossspecobjid = IntegerField(null=True)
-    chi68p = FloatField(null=True)
-    chunk = CharField(null=True)
-    class_ = CharField(column_name='class', null=True)
-    class_noqso = CharField(null=True)
-    class_person = CharField(null=True)
-    comments_person = CharField(null=True)
-    cx = DoubleField(null=True)
-    cy = DoubleField(null=True)
-    cz = DoubleField(null=True)
-    dec = DoubleField(index=True, null=True)
-    deredsn2 = FloatField(null=True)
-    designid = IntegerField(null=True)
-    dof = FloatField(null=True)
-    eboss_target0 = BigIntegerField(null=True)
-    eboss_target1 = BigIntegerField(null=True)
-    eboss_target2 = BigIntegerField(null=True)
-    eboss_target_id = BigIntegerField(null=True)
-    elodiebv = FloatField(null=True)
-    elodiedof = FloatField(null=True)
-    elodiefeh = FloatField(null=True)
-    elodiefilename = CharField(null=True)
-    elodielogg = FloatField(null=True)
-    elodieobject = CharField(null=True)
-    elodierchi2 = FloatField(null=True)
-    elodiesptype = CharField(null=True)
-    elodieteff = FloatField(null=True)
-    elodiez = FloatField(null=True)
-    elodiezerr = FloatField(null=True)
-    elodiezmodelerr = FloatField(null=True)
-    fiberid = IntegerField(null=True)
-    firstrelease = CharField(null=True)
-    fluxobjid = BigIntegerField(index=True, null=True)
-    fracnsighi_1 = FloatField(null=True)
-    fracnsighi_10 = FloatField(null=True)
-    fracnsighi_2 = FloatField(null=True)
-    fracnsighi_3 = FloatField(null=True)
-    fracnsighi_4 = FloatField(null=True)
-    fracnsighi_5 = FloatField(null=True)
-    fracnsighi_6 = FloatField(null=True)
-    fracnsighi_7 = FloatField(null=True)
-    fracnsighi_8 = FloatField(null=True)
-    fracnsighi_9 = FloatField(null=True)
-    fracnsiglo_1 = FloatField(null=True)
-    fracnsiglo_10 = FloatField(null=True)
-    fracnsiglo_2 = FloatField(null=True)
-    fracnsiglo_3 = FloatField(null=True)
-    fracnsiglo_4 = FloatField(null=True)
-    fracnsiglo_5 = FloatField(null=True)
-    fracnsiglo_6 = FloatField(null=True)
-    fracnsiglo_7 = FloatField(null=True)
-    fracnsiglo_8 = FloatField(null=True)
-    fracnsiglo_9 = FloatField(null=True)
-    fracnsigma_1 = FloatField(null=True)
-    fracnsigma_10 = FloatField(null=True)
-    fracnsigma_2 = FloatField(null=True)
-    fracnsigma_3 = FloatField(null=True)
-    fracnsigma_4 = FloatField(null=True)
-    fracnsigma_5 = FloatField(null=True)
-    fracnsigma_6 = FloatField(null=True)
-    fracnsigma_7 = FloatField(null=True)
-    fracnsigma_8 = FloatField(null=True)
-    fracnsigma_9 = FloatField(null=True)
-    htmid = BigIntegerField(null=True)
-    instrument = CharField(null=True)
-    lambdaeff = FloatField(null=True)
-    legacy_target1 = BigIntegerField(null=True)
-    legacy_target2 = BigIntegerField(null=True)
-    legacyprimary = IntegerField(null=True)
-    loadversion = IntegerField(null=True)
-    mjd = IntegerField(null=True)
-    npoly = FloatField(null=True)
-    plate = IntegerField(null=True)
-    plateid = DecimalField(null=True)
-    platerun = CharField(null=True)
-    platesn2 = FloatField(null=True)
-    primtarget = BigIntegerField(null=True)
-    programname = CharField(null=True)
-    ra = DoubleField(index=True, null=True)
-    rchi2 = FloatField(null=True)
-    rchi2diff = FloatField(null=True)
-    rchi2diff_noqso = FloatField(null=True)
-    run1d = CharField(null=True)
-    run2d = CharField(null=True)
-    scienceprimary = IntegerField(null=True)
-    sdssprimary = IntegerField(null=True)
-    sectarget = BigIntegerField(null=True)
-    segue1_target1 = BigIntegerField(null=True)
-    segue1_target2 = BigIntegerField(null=True)
-    segue1primary = IntegerField(null=True)
-    segue2_target1 = BigIntegerField(null=True)
-    segue2_target2 = BigIntegerField(null=True)
-    segue2primary = IntegerField(null=True)
-    segueprimary = IntegerField(null=True)
-    sn1_g = FloatField(null=True)
-    sn1_i = FloatField(null=True)
-    sn1_r = FloatField(null=True)
-    sn2_g = FloatField(null=True)
-    sn2_i = FloatField(null=True)
-    sn2_r = FloatField(null=True)
-    snmedian = FloatField(null=True)
-    snmedian_g = FloatField(null=True)
-    snmedian_i = FloatField(null=True)
-    snmedian_r = FloatField(null=True)
-    snmedian_u = FloatField(null=True)
-    snmedian_z = FloatField(null=True)
-    snturnoff = FloatField(null=True)
-    sourcetype = CharField(null=True)
-    special_target1 = BigIntegerField(null=True)
-    special_target2 = BigIntegerField(null=True)
-    specobjid = DecimalField(primary_key=True)
-    spectroflux_g = FloatField(null=True)
-    spectroflux_i = FloatField(null=True)
-    spectroflux_r = FloatField(null=True)
-    spectroflux_u = FloatField(null=True)
-    spectroflux_z = FloatField(null=True)
-    spectrofluxivar_g = FloatField(null=True)
-    spectrofluxivar_i = FloatField(null=True)
-    spectrofluxivar_r = FloatField(null=True)
-    spectrofluxivar_u = FloatField(null=True)
-    spectrofluxivar_z = FloatField(null=True)
-    spectrographid = IntegerField(null=True)
-    spectroskyflux_g = FloatField(null=True)
-    spectroskyflux_i = FloatField(null=True)
-    spectroskyflux_r = FloatField(null=True)
-    spectroskyflux_u = FloatField(null=True)
-    spectroskyflux_z = FloatField(null=True)
-    spectrosynflux_g = FloatField(null=True)
-    spectrosynflux_i = FloatField(null=True)
-    spectrosynflux_r = FloatField(null=True)
-    spectrosynflux_u = FloatField(null=True)
-    spectrosynflux_z = FloatField(null=True)
-    spectrosynfluxivar_g = FloatField(null=True)
-    spectrosynfluxivar_i = FloatField(null=True)
-    spectrosynfluxivar_r = FloatField(null=True)
-    spectrosynfluxivar_u = FloatField(null=True)
-    spectrosynfluxivar_z = FloatField(null=True)
-    subclass = CharField(null=True)
-    subclass_noqso = CharField(null=True)
-    survey = CharField(null=True)
-    targetobjid = BigIntegerField(index=True, null=True)
-    targettype = CharField(null=True)
-    tcolumn_0 = IntegerField(null=True)
-    tcolumn_1 = IntegerField(null=True)
-    tcolumn_2 = IntegerField(null=True)
-    tcolumn_3 = IntegerField(null=True)
-    tcolumn_4 = IntegerField(null=True)
-    tcolumn_5 = IntegerField(null=True)
-    tcolumn_6 = IntegerField(null=True)
-    tcolumn_7 = IntegerField(null=True)
-    tcolumn_8 = IntegerField(null=True)
-    tcolumn_9 = IntegerField(null=True)
-    tfile = CharField(null=True)
-    theta_0 = FloatField(null=True)
-    theta_1 = FloatField(null=True)
-    theta_2 = FloatField(null=True)
-    theta_3 = FloatField(null=True)
-    theta_4 = FloatField(null=True)
-    theta_5 = FloatField(null=True)
-    theta_6 = FloatField(null=True)
-    theta_7 = FloatField(null=True)
-    theta_8 = FloatField(null=True)
-    theta_9 = FloatField(null=True)
-    thing_id = IntegerField(null=True)
-    thing_id_targeting = BigIntegerField(null=True)
-    tile = IntegerField(null=True)
-    veldisp = FloatField(null=True)
-    veldispchi2 = FloatField(null=True)
-    veldispdof = IntegerField(null=True)
-    veldisperr = FloatField(null=True)
-    veldispnpix = IntegerField(null=True)
-    veldispz = FloatField(null=True)
-    veldispzerr = FloatField(null=True)
-    wavemax = FloatField(null=True)
-    wavemin = FloatField(null=True)
-    wcoverage = FloatField(null=True)
-    xfocal = FloatField(null=True)
-    yfocal = FloatField(null=True)
-    z = FloatField(null=True)
-    z_noqso = FloatField(null=True)
-    z_person = FloatField(null=True)
-    zerr = FloatField(null=True)
-    zerr_noqso = FloatField(null=True)
-    zoffset = FloatField(null=True)
-    zwarning = IntegerField(null=True)
-    zwarning_noqso = IntegerField(null=True)
+    @property
+    def apstars(self):
+        """Returns the stars on `.SDSS_DR14_APOGEE_Star` with matching ``apogee_id``."""
+
+        return (SDSS_DR14_APOGEE_Star
+                .select()
+                .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
+
+    class Meta:
+        table_name = 'sdss_apogeeallstarmerge_r13'
+
+
+class SDSS_DR14_SpecObj(CatalogdbModel):
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                               column_name='bestobjid',
+                               object_id_name='bestobjid',
+                               backref='specobj_dr14')
 
     class Meta:
         table_name = 'sdss_dr14_specobj'
-        schema = 'catalogdb'
 
 
-class TIC_v8(SDSS5dbModel):
+class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
 
-    allwise = CharField(index=True, null=True)
-    apass = CharField(index=True, null=True)
-    bmag = FloatField(null=True)
-    bmagflag = CharField(null=True)
-    contratio = FloatField(null=True)
-    d = FloatField(null=True)
-    dec = DoubleField(null=True)
-    dec_orig = DoubleField(null=True)
-    disposition = CharField(null=True)
-    distflag = CharField(null=True)
-    duplicate_id = BigIntegerField(null=True)
-    e_bmag = FloatField(null=True)
-    e_d = FloatField(null=True)
-    e_dec = DoubleField(null=True)
-    e_dec_orig = DoubleField(null=True)
-    e_ebv = FloatField(null=True)
-    e_gaiabp = FloatField(null=True)
-    e_gaiamag = FloatField(null=True)
-    e_gaiarp = FloatField(null=True)
-    e_gmag = FloatField(null=True)
-    e_hmag = FloatField(null=True)
-    e_imag = FloatField(null=True)
-    e_jmag = FloatField(null=True)
-    e_kmag = FloatField(null=True)
-    e_logg = FloatField(null=True)
-    e_lum = FloatField(null=True)
-    e_mass = FloatField(null=True)
-    e_mh = FloatField(null=True)
-    e_plx = FloatField(null=True)
-    e_pmdec = FloatField(null=True)
-    e_pmra = FloatField(null=True)
-    e_ra = DoubleField(null=True)
-    e_ra_orig = DoubleField(null=True)
-    e_rad = FloatField(null=True)
-    e_rho = FloatField(null=True)
-    e_rmag = FloatField(null=True)
-    e_teff = FloatField(null=True)
-    e_tmag = FloatField(null=True)
-    e_umag = FloatField(null=True)
-    e_vmag = FloatField(null=True)
-    e_w1mag = FloatField(null=True)
-    e_w2mag = FloatField(null=True)
-    e_w3mag = FloatField(null=True)
-    e_w4mag = FloatField(null=True)
-    e_zmag = FloatField(null=True)
-    ebv = FloatField(null=True)
-    ebvflag = CharField(null=True)
-    eclat = DoubleField(null=True)
-    eclong = DoubleField(null=True)
-    eneg_dist = FloatField(null=True)
-    eneg_ebv = FloatField(null=True)
-    eneg_logg = FloatField(null=True)
-    eneg_lum = FloatField(null=True)
-    eneg_mass = FloatField(null=True)
-    eneg_rad = FloatField(null=True)
-    eneg_rho = FloatField(null=True)
-    eneg_teff = FloatField(null=True)
-    epos_dist = FloatField(null=True)
-    epos_ebv = FloatField(null=True)
-    epos_logg = FloatField(null=True)
-    epos_lum = FloatField(null=True)
-    epos_mass = FloatField(null=True)
-    epos_rad = FloatField(null=True)
-    epos_rho = FloatField(null=True)
-    epos_teff = FloatField(null=True)
-    gaia = CharField(index=True, null=True)
-    gaiabp = FloatField(null=True)
-    gaiamag = FloatField(null=True)
-    gaiaqflag = IntegerField(null=True)
-    gaiarp = FloatField(null=True)
-    gallat = DoubleField(null=True)
-    gallong = DoubleField(null=True)
-    gmag = FloatField(null=True)
-    hip = IntegerField(index=True, null=True)
-    hmag = FloatField(null=True)
-    id = BigIntegerField(null=True)
-    imag = FloatField(null=True)
-    jmag = FloatField(null=True)
-    kic = IntegerField(index=True, null=True)
-    kmag = FloatField(null=True)
-    logg = FloatField(null=True)
-    lum = FloatField(null=True)
-    lumclass = CharField(null=True)
-    mass = FloatField(null=True)
-    mh = FloatField(null=True)
-    numcont = IntegerField(null=True)
-    objid = BigIntegerField(null=True)
-    objtype = CharField(null=True)
-    parflag = CharField(null=True)
-    plx = FloatField(null=True)
-    pmdec = FloatField(null=True)
-    pmflag = CharField(null=True)
-    pmra = FloatField(null=True)
-    posflag = CharField(null=True)
-    priority = FloatField(null=True)
-    prox = FloatField(null=True)
-    ra = DoubleField(null=True)
-    ra_orig = DoubleField(null=True)
-    rad = FloatField(null=True)
-    raddflag = IntegerField(null=True)
-    rho = FloatField(null=True)
-    rmag = FloatField(null=True)
-    sdss = BigIntegerField(index=True, null=True)
-    spflag = CharField(null=True)
-    splits = CharField(null=True)
-    starchareflag = CharField(null=True)
-    teff = FloatField(null=True)
-    tefflag = CharField(null=True)
-    tessflag = CharField(null=True)
-    tmag = FloatField(null=True)
-    twomass = CharField(index=True, null=True)
-    twomflag = CharField(null=True)
-    tyc = CharField(index=True, null=True)
-    typesrc = CharField(null=True)
-    ucac = CharField(index=True, null=True)
-    umag = FloatField(null=True)
-    version = CharField(null=True)
-    vmag = FloatField(null=True)
-    vmagflag = CharField(null=True)
-    w1mag = FloatField(null=True)
-    w2mag = FloatField(null=True)
-    w3mag = FloatField(null=True)
-    w4mag = FloatField(null=True)
-    wdflag = IntegerField(null=True)
-    zmag = FloatField(null=True)
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                               column_name='bestobjid',
+                               object_id_name='bestobjid',
+                               backref='specobj_dr16')
 
     class Meta:
-        table_name = 'tic_v8'
-        schema = 'catalogdb'
+        table_name = 'sdss_dr16_specobj'
 
 
-class TwoMassClean(SDSS5dbModel):
+class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
-    decl = DoubleField(null=True)
-    designation = CharField(primary_key=True)
-    h_m = FloatField(index=True, null=True)
-    ra = DoubleField(null=True)
-    twomassbrightneighbor = BooleanField(index=True, null=True)
+    source_id = BigIntegerField(primary_key=True)
 
-    psc = ForeignKeyField(TwoMassPsc, field='pts_key',
-                          column_name='pts_key', backref='tmass_clean')
+    gaia = ForeignKeyField(Gaia_DR2,
+                           field='source_id',
+                           column_name='source_id',
+                           backref='+',
+                           lazy_load=False)
 
-    class Meta:
-        table_name = 'twomass_clean'
-        schema = 'catalogdb'
-
-
-class TwoMassCleanNoNeighbor(SDSS5dbModel):
-
-    decl = DoubleField(null=True)
-    designation = CharField(primary_key=True)
-    h_m = FloatField(index=True, null=True)
-    pts_key = IntegerField(null=True)
-    ra = DoubleField(null=True)
-
-    class Meta:
-        table_name = 'twomass_clean_noneighbor'
-        schema = 'catalogdb'
-
-
-class GaiaDR2TmassBestNeighbour(SDSS5dbModel):
-
-    angular_distance = DoubleField(null=True)
-    best_neighbour_multiplicity = IntegerField(null=True)
-    gaia_astrometric_params = IntegerField(null=True)
-    number_of_mates = IntegerField(null=True)
-    number_of_neighbours = IntegerField(null=True)
-    tmass_oid = BigIntegerField(index=True, null=True)
-
-    gaia_source = ForeignKeyField(GaiaDR2Source,
-                                  column_name='source_id',
-                                  backref='tmass_best_neighbour')
-    tmass_source = ForeignKeyField(TwoMassPsc,
-                                   column_name='tmass_pts_key',
-                                   field='pts_key',
-                                   backref='gaia_best_neighbour')
+    twomass = ForeignKeyField(TwoMassPSC,
+                              field='pts_key',
+                              column_name='tmass_pts_key',
+                              backref='+',
+                              lazy_load=False)
 
     class Meta:
         table_name = 'gaiadr2_tmass_best_neighbour'
-        schema = 'catalogdb'
 
 
-class DR14QV44(SDSS5dbModel):
+class SDSS_DR14_QSO(CatalogdbModel):
 
-    pk = AutoField(null=False, primary_key=True)
-    ancillary_target1 = BigIntegerField(null=True)
-    ancillary_target2 = BigIntegerField(null=True)
-    bi_civ = FloatField(null=True)
-    boss_target1 = BigIntegerField(null=True)
-    cc_flags = CharField(null=True)
-    col_number = IntegerField(null=True)
-    dec = FloatField(null=True)
-    eboss_target0 = BigIntegerField(null=True)
-    eboss_target1 = BigIntegerField(null=True)
-    eboss_target2 = BigIntegerField(null=True)
-    err_bi_civ = FloatField(null=True)
-    err_hmag = FloatField(null=True)
-    err_jmag = FloatField(null=True)
-    err_kmag = FloatField(null=True)
-    err_psfmag = ArrayField(null=True)  # ARRAY
-    err_w1mag = FloatField(null=True)
-    err_w2mag = FloatField(null=True)
-    err_w3mag = FloatField(null=True)
-    err_w4mag = FloatField(null=True)
-    fiberid = IntegerField(null=True)
-    fiberid_duplicate = ArrayField(field_class=IntegerField, null=True)
-    field_number = IntegerField(null=True)
-    first_flux = FloatField(null=True)
-    first_matched = IntegerField(null=True)
-    first_snr = FloatField(null=True)
-    flux_0_2_12_0kev = FloatField(column_name='flux_0.2_12.0kev', null=True)
-    flux_0_2_12_0kev_err = FloatField(column_name='flux_0.2_12.0kev_err', null=True)
-    flux_0_2_2_0kev = FloatField(column_name='flux_0.2_2.0kev', null=True)
-    flux_0_2_2_0kev_err = FloatField(column_name='flux_0.2_2.0kev_err', null=True)
-    flux_2_0_12_0kev = FloatField(column_name='flux_2.0_12.0kev', null=True)
-    flux_2_0_12_0kev_err = FloatField(column_name='flux_2.0_12.0kev_err', null=True)
-    fuv = FloatField(null=True)
-    fuv_ivar = FloatField(null=True)
-    gal_ext = ArrayField(null=True)  # ARRAY
-    galex_matched = FloatField(null=True)
-    hflux = FloatField(null=True)
-    hflux_err = FloatField(null=True)
-    hmag = FloatField(null=True)
-    hrdflag = IntegerField(null=True)
-    hsnr = FloatField(null=True)
-    ivar_psfflux = ArrayField(null=True)  # ARRAY
-    jflux = FloatField(null=True)
-    jflux_err = FloatField(null=True)
-    jmag = FloatField(null=True)
-    jrdflag = IntegerField(null=True)
-    jsnr = FloatField(null=True)
-    kflux = FloatField(null=True)
-    kflux_err = FloatField(null=True)
-    kmag = FloatField(null=True)
-    krdflag = IntegerField(null=True)
-    ksnr = FloatField(null=True)
-    lum_0_2_12_0kev = FloatField(column_name='lum_0.2_12.0kev', null=True)
-    mi = FloatField(null=True)
-    mjd = IntegerField(null=True)
-    mjd_duplicate = ArrayField(field_class=IntegerField, null=True)
-    n_spec = IntegerField(null=True)
-    n_spec_boss = IntegerField(null=True)
-    n_spec_sdss = IntegerField(null=True)
-    nuv = FloatField(null=True)
-    nuv_ivar = FloatField(null=True)
-    obj_id = CharField(null=True)
-    ph_flags = CharField(null=True)
-    plate = IntegerField(null=True)
-    plate_duplicate = ArrayField(field_class=IntegerField, null=True)
-    psfflux = ArrayField(null=True)  # ARRAY
-    psfmag = ArrayField(null=True)  # ARRAY
-    ra = FloatField(null=True)
-    rass_counts = FloatField(null=True)
-    rass_counts_snr = FloatField(null=True)
-    rerun_number = CharField(null=True)
-    run_number = IntegerField(null=True)
-    sdss2first_sep = FloatField(null=True)
-    sdss2mass_sep = FloatField(null=True)
-    sdss2rosat_sep = FloatField(null=True)
-    sdss2wise_sep = FloatField(null=True)
-    sdss2xmm_sep = FloatField(null=True)
-    sdss_name = CharField(null=True)
-    source_z = CharField(null=True)
-    spectro = CharField(null=True)
-    spectro_duplicate = ArrayField(field_class=CharField, null=True)
-    thing_id = IntegerField(null=True)
-    ukidss_matched = FloatField(null=True)
-    w1chi2 = FloatField(null=True)
-    w1mag = FloatField(null=True)
-    w1snr = FloatField(null=True)
-    w2chi2 = FloatField(null=True)
-    w2mag = FloatField(null=True)
-    w2snr = FloatField(null=True)
-    w3chi2 = FloatField(null=True)
-    w3mag = FloatField(null=True)
-    w3snr = FloatField(null=True)
-    w4chi2 = FloatField(null=True)
-    w4mag = FloatField(null=True)
-    w4snr = FloatField(null=True)
-    yflux = FloatField(null=True)
-    yflux_err = FloatField(null=True)
-    z = FloatField(null=True)
-    z_err = FloatField(null=True)
-    z_mgii = FloatField(null=True)
-    z_pca = FloatField(null=True)
-    z_pca_er = FloatField(null=True)
-    z_pipe = FloatField(null=True)
-    z_pipe_err = FloatField(null=True)
-    z_vi = FloatField(null=True)
-    zwarning = IntegerField(null=True)
+    @property
+    def specobj(self):
+        """Returns the matching record in `.SDSS_DR16_SpecObj`."""
+
+        return SDSS_DR16_SpecObj.get(SDSS_DR16_SpecObj.plate == self.plate,
+                                     SDSS_DR16_SpecObj.mjd == self.mjd,
+                                     SDSS_DR16_SpecObj.fiberid == self.fiberid)
 
     class Meta:
-        table_name = 'dr14q_v4_4'
-        schema = 'catalogdb'
+        table_name = 'sdss_dr14_qso'
 
 
-_GaiaDR2TmassBestNeighbourDeferred.set_model(GaiaDR2TmassBestNeighbour)
+class unWISE(CatalogdbModel):
+
+    unwise_objid = TextField(primary_key=True)
+
+    class Meta:
+        table_name = 'unwise'
+
+
+class Legacy_Survey_DR8(CatalogdbModel):
+
+    ref_cat = TextField()
+    ref_id = BigIntegerField()
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid',
+                           backref='legacy_survey')
+
+    class Meta:
+        table_name = 'legacy_survey_dr8'
+
+
+class Gaia_unWISE_AGN(CatalogdbModel):
+
+    gaia_sourceid = BigIntegerField(primary_key=True)
+
+    unwise = ForeignKeyField(unWISE, field='unwise_objid',
+                             column_name='unwise_objid',
+                             object_id_name='unwise_objid',
+                             backref='+')
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'gaia_unwise_agn'
+
+
+class eBOSS_Taarget_v5(CatalogdbModel):
+
+    class Meta:
+        table_name = 'ebosstarget_v5'
+
+
+# The following model (BhmSpidersGenericSuperset) does not need to be represented
+# as a table in the database it is used only as the parent class of BhmSpidersAGNSuperset,
+# BhmSpidersClustersSuperset which are real database tables. I am assuming that PeeWee
+# can handle such a scheme without problems. If not, then we will have to duplicate the
+
+class BHM_Spiders_Generic_Superset(CatalogdbModel):
+
+    # Not using reflection here to preserve Tom's notes.
+
+    pk = BigAutoField()
+
+    # Parameters derived from eROSITA eSASS catalogue
+    # Chosen to match X-ray columns defined in eROSITA/SDSS-V MoU (v2.0, April 2019)
+    ero_version = TextField(index=True, null=True)  # string identifying this eROSITA data
+                                                    # reduction version
+    ero_souuid = TextField(index=True, null=True)   # string identifying this X-ray source
+    ero_flux = FloatField(null=True)                # X-ray flux, 0.5-8keV band, erg/cm2/s
+    ero_flux_err = FloatField(null=True)            # X-ray flux uncertainty, 0.5-8keV band,
+                                                    # erg/cm2/s
+    ero_ext = FloatField(null=True)                 # X-ray extent parameter - arcsec
+    ero_ext_err = FloatField(null=True)             # X-ray extent parameter uncertainty - arcsec
+    ero_ext_like = FloatField(null=True)            # X-ray extent likelihood
+    ero_det_like = FloatField(null=True)            # X-ray detection likelihood
+    ero_ra = DoubleField(index=True, null=True)     # X-ray position, RA, ICRS, degrees
+    ero_dec = DoubleField(index=True, null=True)    # X-ray position, Dec, ICRS, degrees
+    ero_radec_err = FloatField(null=True)           # X-ray position uncertainty, arcsec
+
+    # Parameters describing the cross-matching of X-ray to optical/IR catalogue(s)
+
+    # 'ML+NWAY', 'LR' , 'SDSS_REDMAPPER', 'LS_REDMAPPER', 'HSC_REDMAPPER', 'MCMF' etc
+    xmatch_method = TextField(null=True)
+    # version identifier for cross-matching algorithm
+    xmatch_version = TextField(null=True)
+    # separation between X-ray position and opt positions - arcsec
+    xmatch_dist = FloatField(null=True)
+    # measure of quality of xmatch (e.g. p_any for Nway, LR)
+    xmatch_metric = FloatField(null=True)
+    # flavour of match, quality flags, e.g. NWAY match_flag - treat as bitmask
+    xmatch_flags = BigIntegerField(null=True)
+
+    # Parameters that describe the major class of the object
+    target_class = TextField(null=True)     # TBD, but e.g. 'unknown', 'AGN', 'Star', 'Galaxy'
+
+    target_priority = IntegerField(null=True)  # allows priority ranking based on
+                                               # info not available in catalogdb
+    target_has_spec = IntegerField(null=True)  # (bitmask) allows flagging of targets
+                                               # that have a redshift from a catalogue
+                                               # that might not be listed in catalogdb
+                                               # follow bit pattern in spec compilation
+                                               # values < 0 means 'unknown'
+
+    # Parameters derived from the cross-matched opt/IR catalogue
+
+    # which optical catalogue(and version) provided this counterpart,
+    # e.g. 'ls_dr8', 'ps1_dr2' ... will also be the origin of the photometry columns below
+    best_opt = TextField(null=True)
+
+    # arithmetically derived from ls_release, ls_brickid and ls_objid
+    # ls_id = ls_objid + ls_brickid * 2**16 + ls_release * 2**40
+    #  - make sure that we have a common definition within CatalogDB
+    # must be used when ls was the main source of counterparts to
+    # erosita source, otherwise is optional
+    ls_id = BigIntegerField(index=True, null=True)
+
+    # Pan-STARRS1-DR2 object id (= ObjectThin.ObjID = StackObjectThin.ObjID)
+    # Must be used when ps1-dr2(+unWISE) was the main source of counterparts
+    # to an erosita source, otherwise is optional
+    ps1_dr2_objid = BigIntegerField(index=True, null=True)
+
+    # derived from legacysurvey sweeps OPT_REF_ID when OPT_REF_CAT='G2'
+    # must be used when ls was the main source of counterparts to erosita source,
+    # otherwise is optional
+    # - SPIDERS team should also pre-match to gaia dr2 when using counterparts
+    # from non-LS catalogues
+    gaia_dr2_source_id = BigIntegerField(index=True, null=True)
+
+    # Corresponds to the unWISE catalog band-merged 'unwise_objid'
+    #  - should be used when ps1-dr2+unWISE was the main source of
+    # counterparts to erosita sources, otherwise is optional
+    unwise_dr1_objid = CharField(index=True, null=True, max_length=16)
+
+    # provisional:
+    # Corresponds to the DES dr1 coadd_object_id
+    #  - must be used when DES-dr1 was the primary source of counterpart to an
+    # erosita source, otherwise is optional
+    des_dr1_coadd_object_id = BigIntegerField(index=True, null=True)
+
+    # Corresponds to the SDSS DR16 photoObj https://www.sdss.org/dr13/help/glossary/#ObjID
+    #  - must be used when SDSS photoObj was the primary source of counterpart
+    # to an erosita source, otherwise is optional
+    sdss_dr16_objid = BigIntegerField(index=True, null=True)
+
+    # included for convenience, but are copied from columns in other tables
+    opt_ra = DoubleField(index=True, null=True)
+    opt_dec = DoubleField(index=True, null=True)
+    opt_pmra = FloatField(null=True)
+    opt_pmdec = FloatField(null=True)
+    opt_epoch = FloatField(null=True)
+
+    # For convenience we send a subset of magnitude columns over to the database
+    # - the full set of columns is available via a database JOIN to e.g. main ls_dr8 catalogue
+    # Note to self: Be careful with use of modelflux, fiberflux, fiber2flux etc!
+    opt_modelflux_g = FloatField(null=True)
+    opt_modelflux_ivar_g = FloatField(null=True)
+    opt_modelflux_r = FloatField(null=True)
+    opt_modelflux_ivar_r = FloatField(null=True)
+    opt_modelflux_r = FloatField(null=True)
+    opt_modelflux_ivar_r = FloatField(null=True)
+    opt_modelflux_i = FloatField(null=True)
+    opt_modelflux_ivar_i = FloatField(null=True)
+    opt_modelflux_z = FloatField(null=True)
+    opt_modelflux_ivar_z = FloatField(null=True)
+
+    ls = ForeignKeyField(Legacy_Survey_DR8, backref='+')
+    gaia = ForeignKeyField(Gaia_DR2, object_id_name='gaia_dr2_source_id', backref='+')
+
+    class Meta:
+        use_reflection = False
+
+
+# Note that following models are currently identical in form, but may well diverge in the future
+
+class BHM_Spiders_AGN_Superset(BHM_Spiders_Generic_Superset):
+
+    class Meta:
+        table_name = 'bhm_spiders_agn_superset'
+
+
+class BHM_Spiders_Clusters_Superset(BHM_Spiders_Generic_Superset):
+
+    class Meta:
+        table_name = 'bhm_spiders_clusters_superset'
+
+
+class BHM_CSC(CatalogdbModel):
+
+    class Meta:
+        table_name = 'bhm_csc'
+
+
+class Gaia_DR2_WD_SDSS(CatalogdbModel):
+
+    @property
+    def specobj(self):
+        """Returns the matching record in `.SDSS_DR16_SpecObj`."""
+
+        return SDSS_DR16_SpecObj.get(SDSS_DR16_SpecObj.plate == self.plate,
+                                     SDSS_DR16_SpecObj.mjd == self.mjd,
+                                     SDSS_DR16_SpecObj.fiberid == self.fiber)
+
+    class Meta:
+        table_name = 'gaia_dr2_wd_sdss'
+
+
+class Gaia_DR2_WD(CatalogdbModel):
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='wd',
+                           unique=True)
+
+    @property
+    def sdss(self):
+        """Returns records from `.Gaia_DR2_WD_SDSS` with matching ``wd``."""
+
+        return Gaia_DR2_WD_SDSS.select().where(Gaia_DR2_WD_SDSS.wd == self.wd)
+
+    class Meta:
+        table_name = 'gaia_dr2_wd'
+
+
+class Tycho2(CatalogdbModel):
+
+    name = TextField()
+
+    class Meta:
+        table_name = 'tycho2'
+
+
+class GaiaQSO(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_qso'
+
+
+class TIC_v8(CatalogdbModel):
+
+    tycho2 = ForeignKeyField(Tycho2, field='name',
+                             column_name='tyc', object_id_name='tyc',
+                             backref='tic')
+
+    twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
+                                  column_name='twomass_psc',
+                                  backref='tic')
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj, field='objid',
+                               column_name='sdss', object_id_name='sdss',
+                               backref='tic')
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_int', object_id_name='gaia_int',
+                           backref='tic')
+
+    allwise_target = ForeignKeyField(AllWise, field='designation',
+                                     column_name='allwise', object_id_name='allwise',
+                                     backref='tic')
+
+    kepler_input = ForeignKeyField(KeplerInput_DR10, field='kic_kepler_id',
+                                   column_name='kic', object_id_name='kic',
+                                   backref='tic')
+
+    class Meta:
+        table_name = 'tic_v8'
+
+
+class CatWISE(CatalogdbModel):
+
+    class Meta:
+        table_name = 'catwise'
+
+
+class CatWISEReject(CatalogdbModel):
+
+    class Meta:
+        table_name = 'catwise_reject'
+
+
+class Watchdog(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'watchdog'
+
+
+class BlackCAT(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'blackcat'
+
+
+class XRay_Pulsars(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'xray_pulsars'
+
+
+class LowMassXRayBinaries(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'lmxb'
+
+
+class GalacticMillisecondPulsars(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'galactic_millisecond_pulsars'
+
+
+class TransitionalMillisecondPulsars(CatalogdbModel):
+
+    gaia_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'transitional_msps'
+
+
+class ATNF(CatalogdbModel):
+
+    name = TextField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'atnf'
+
+
+class SkyMapper_DR1_1(CatalogdbModel):
+
+    allwise = ForeignKeyField(AllWise, field='cntr',
+                              column_name='allwise_cntr',
+                              object_id_name='allwise_cntr',
+                              backref='skymapper')
+
+    gaia1 = ForeignKeyField(Gaia_DR2, field='source_id',
+                            column_name='gaia_dr2_id1',
+                            object_id_name='gaia_dr2_id1',
+                            backref='skymapper1')
+
+    gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
+                            column_name='gaia_dr2_id2',
+                            object_id_name='gaia_dr2_id2',
+                            backref='skymapper2')
+
+    @property
+    def twomass1(self):
+        """Returns the closest 2MASS PSC source, if defined."""
+
+        if self.twomass_cat1 != 'PSC':
+            return None
+
+        return TwoMassPSC.get(pts_key=self.twomass_key1)
+
+    @property
+    def twomass2(self):
+        """Returns the second closest 2MASS PSC source, if defined."""
+
+        if self.twomass_cat2 != 'PSC':
+            return None
+
+        return TwoMassPSC.get(pts_key=self.twomass_key2)
+
+    class Meta:
+        table_name = 'skymapper_dr1_1'
+
+
+class PS1_g18(CatalogdbModel):
+
+    class Meta:
+        table_name = 'ps1_g18'
+
+
+class GLIMPSE(CatalogdbModel):
+
+    twomass = ForeignKeyField(TwoMassPSC, field='pts_key',
+                              column_name='tmass_cntr',
+                              backref='glimpse_targets')
+
+    class Meta:
+        table_name = 'glimpse'
+        print_fields = ['designation']
+
+
+class BHM_eFEDS_Veto(CatalogdbModel):
+
+    class Meta:
+        table_name = 'bhm_efeds_veto'
+
+
+class BestBrightest(CatalogdbModel):
+
+    class Meta:
+        table_name = 'best_brightest'
+
+
+class SkyMapperGaia(CatalogdbModel):
+
+    skymapper_object_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='+')
+
+    skymapper = ForeignKeyField(SkyMapper_DR1_1,
+                                column_name='skymapper_object_id',
+                                object_id_name='skymapper_object_id',
+                                backref='+')
+
+    class Meta:
+        table_name = 'skymapper_gaia'
+        print_fields = ['gaia_source_id']
+
+
+class UVOT_SSC_1(CatalogdbModel):
+
+    class Meta:
+        table_name = 'uvotssc1'
+
+
+class CataclysmicVariables(CatalogdbModel):
+
+    class Meta:
+        table_name = 'cataclysmic_variables'
+
+
+class YSO_Clustering(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'yso_clustering'
+
+
+class MIPSGAL(CatalogdbModel):
+
+    twomass = ForeignKeyField(TwoMassPSC,
+                              object_id_name='twomass_name',
+                              backref='+')
+
+    @property
+    def glimpse(self):
+        """One-to-many for GLIMPSE targets."""
+
+        return GLIMPSE.select().where(GLIMPSE.designation == self.glimpse)
+
+    class Meta:
+        table_name = 'mipsgal'
+
+
+class TESS_TOI(CatalogdbModel):
+
+    tic = ForeignKeyField(TIC_v8,
+                          column_name='ticid',
+                          object_id_name='ticid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'tess_toi'
+
+
+class XMM_OM_SUSS_4_1(CatalogdbModel):
+
+    class Meta:
+        table_name = 'xmm_om_suss_4_1'
+
+
+class GeometricDistances_Gaia_DR2(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'geometric_distances_gaia_dr2'
+
+
+class BHM_RM_v0(CatalogdbModel):
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id_gaia',
+                           object_id_name='source_id_gaia',
+                           backref='+')
+
+    unwise = ForeignKeyField(unWISE,
+                             column_name='objid_unwise',
+                             object_id_name='objid_unwise',
+                             backref='+')
+
+    sdss = ForeignKeyField(SDSS_DR13_PhotoObj,
+                           column_name='objid_sdss',
+                           object_id_name='objid_sdss',
+                           backref='+')
+
+    class Meta:
+        table_name = 'bhm_rm_v0'
+
+
+_Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
+_APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)

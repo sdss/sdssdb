@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "catalogdb"."dr14q_v4_4" (
+CREATE TABLE IF NOT EXISTS "catalogdb"."sdss_dr14_qso" (
   "sdss_name" VARCHAR(18),
   "ra" DOUBLE PRECISION,
   "dec" DOUBLE PRECISION,

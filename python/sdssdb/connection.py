@@ -14,12 +14,13 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import importlib
+import re
 import socket
 
 import six
 from pgpasslib import getpass
 
-from sdssdb import config, log, _peewee, _sqla
+from sdssdb import _peewee, _sqla, config, log
 
 
 if _peewee:
@@ -117,7 +118,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             # Tries to find a profile whose domain matches the hostname
             for profile in config:
                 if 'domain' in config[profile] and config[profile]['domain'] is not None:
-                    if hostname.endswith(config[profile]['domain']):
+                    if re.match(config[profile]['domain'], hostname):
                         self.profile = profile
                         break
 
@@ -172,19 +173,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         # Gets the necessary configuration values from the profile
         db_configuration = {}
         for item in ['user', 'host', 'port']:
-            if item in connection_params and connection_params[item] is not None:
+            if item in connection_params:
                 db_configuration[item] = connection_params[item]
             else:
                 profile_value = config[self.profile].get(item, None)
-
-                # If the hostname is the same as the current domain,
-                # do not specify the host. This helps with the configuration
-                # of the PSQL security at Utah.
-                if item == 'host':
-                    domain = socket.getfqdn()
-                    if profile_value == domain:
-                        continue
-
                 db_configuration[item] = profile_value
 
         dbname = dbname or self.dbname
@@ -307,7 +299,17 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 if _peewee:
 
     class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
-        """Peewee database connection implementation."""
+        """Peewee database connection implementation.
+
+        Attributes
+        ----------
+        models : list
+            Models bound to this database. Only models that are bound using
+            `~sdssdb.peewee.BaseModel` are handled.
+
+        """
+
+        models = list()
 
         def __init__(self, *args, **kwargs):
 
@@ -336,9 +338,14 @@ if _peewee:
                 self.dbname = dbname
             except OperationalError:
                 if not silent_on_fail:
-                    log.warning(f'failed to connect to database {self.database!r}.', UserWarning)
+                    log.warning(f'failed to connect to database {self.database!r}.')
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
+
+            if self.is_connection_usable():
+                for model in self.models:
+                    if hasattr(model, 'reflect'):
+                        model.reflect()
 
             return self.connected
 
