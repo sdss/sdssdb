@@ -75,7 +75,7 @@ The first line conveniently allows for access to the database connection from th
 Using reflection with Peewee
 ''''''''''''''''''''''''''''
 
-Peewee provides a :ref:`reflection <peewee:reflection>` utility (internally used by ``pwiz``). Base on this tool we developed a `reflection metaclass <.ReflectMeta>` that can be used to expedite the creating of models by only requiring to define foreign keys. Note that this is not an official component of Peewee and it comes with certain caveats. Before using the reflection metaclass, make sure to read the `API documentation <.ReflectMeta>`.
+Peewee provides a :ref:`reflection <peewee:reflection>` utility (internally used by ``pwiz``). Based on this tool we developed a `reflection metaclass <.ReflectMeta>` that can be used to expedite the creating of models by only requiring to define foreign keys. Note that this is not an official component of Peewee and it comes with certain caveats. Before using the reflection metaclass, make sure to read the `API documentation <.ReflectMeta>`.
 
 To define a base class with reflection with do ::
 
