@@ -475,6 +475,8 @@ class GaiaQSO(CatalogdbModel):
 
 class TIC_v8(CatalogdbModel):
 
+    id = BigIntegerField(primary_key=True)
+
     tycho2 = ForeignKeyField(Tycho2, field='name',
                              column_name='tyc', object_id_name='tyc',
                              backref='tic')
