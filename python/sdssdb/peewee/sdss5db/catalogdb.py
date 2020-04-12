@@ -9,9 +9,13 @@
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last modified time: 2019-09-23 00:54:42
 
+import warnings
+
 from peewee import (BigAutoField, BigIntegerField, CharField,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
+
+from sdssdb.core.exceptions import SdssdbUserWarning
 
 from . import BaseModel, database  # noqa
 
@@ -789,3 +793,35 @@ class BHM_RM_v0(CatalogdbModel):
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
+
+
+# Add relational tables to namespace.
+all_tables = database.get_tables('catalogdb')
+
+for rtname in all_tables:
+    if rtname.startswith('catalog_to_'):
+
+        tname = rtname[len('catalog_to_'):]
+        if tname not in database.models:
+            warnings.warn(f'{rtname}: cannot find related table {tname!r}',
+                          SdssdbUserWarning)
+            continue
+
+        rel_model = database.models[tname]
+        model_name = 'CatalogTo' + rel_model.__name__
+
+        class Meta:
+            table_name = rtname
+
+        RelationalModel = type(model_name, (CatalogdbModel,), {'Meta': Meta})
+
+        RelationalModel._meta.add_field('catalog',
+                                        ForeignKeyField(Catalog,
+                                                        column_name='catalogid',
+                                                        backref='+'))
+        RelationalModel._meta.add_field('target',
+                                        ForeignKeyField(rel_model,
+                                                        column_name='target_id',
+                                                        backref='+'))
+
+        globals()[model_name] = RelationalModel
