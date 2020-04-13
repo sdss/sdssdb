@@ -48,7 +48,7 @@ class File(Base):
 
     @property
     def partner(self):
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         return session.query(File).join(Structure, datadb.Cube, FileType).filter(
             Structure.pk == self.structure.pk, datadb.Cube.pk == self.cube.pk,
             FileType.pk != self.filetype.pk).one()
@@ -114,7 +114,7 @@ class Hdu(Base):
     def header(self):
         '''Returns an astropy header'''
 
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         data = session.query(HeaderKeyword.name, HeaderValue.value,
                              HeaderValue.comment).join(HeaderValue, HduToHeaderValue).filter(
             HduToHeaderValue.header_value_pk == HeaderValue.pk,
@@ -280,7 +280,7 @@ class ModelCube(Base):
 
         """
 
-        session = db.Session.object_session(self)
+        session = database.Session.object_session(self)
         spaxels = session.query(getattr(ModelSpaxel, extension)).filter(
             ModelSpaxel.modelcube_pk == self.pk).order_by(ModelSpaxel.x, ModelSpaxel.y).all()
 
