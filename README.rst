@@ -33,3 +33,5 @@ How to use
 
 .. |travis| image:: https://travis-ci.org/sdss/sdssdb.svg?branch=master
     :target: https://travis-ci.org/sdss/sdssdb
+
+.. |Python application| image:: https://github.com/sdss/sdssdb/workflows/Python%20application/badge.svg
