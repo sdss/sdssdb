@@ -114,7 +114,7 @@ columns below are order in which they appearn in csvs
 */
 
 CREATE TABLE catalogdb.guvcat(
-    OBJID bigint,
+    OBJID bigint PRIMARY KEY,
     PHOTOEXTRACTID bigint,
     MPSTYPE text,
     AVASPRA double precision,
@@ -210,8 +210,3 @@ CREATE TABLE catalogdb.guvcat(
     INLARGEOBJ text,
     LARGEOBJSIZE real
 );
-
-
-
-
-

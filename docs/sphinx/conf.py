@@ -49,7 +49,7 @@ except ImportError:
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.mathjax',
-              'sphinx.ext.intersphinx', 'releases']
+              'sphinx.ext.intersphinx', 'sdsstools.releases', 'sphinx.ext.napoleon']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -133,7 +133,8 @@ autodoc_member_order = 'groupwise'
 napoleon_use_rtype = False
 napoleon_use_ivar = True
 
-rst_epilog = """
+rst_epilog = f"""
+.. |sdssdb_version| replace:: {__version__}
 .. |numpy_array| replace:: Numpy array
 """
 
@@ -292,11 +293,9 @@ def generate_schema_graphs():
                       UserWarning)
         return
 
-    schemas = ['sdss5db.targetdb', 'sdss5db.catalogdb', 'operationsdb.platedb',
-               'operationsdb.mangadb', 'operationsdb.apogeeqldb']
+    schemas = ['operationsdb.platedb', 'operationsdb.mangadb', 'operationsdb.apogeeqldb']
 
-    output_dir = os.path.join(os.path.dirname(__file__),
-                              '_static/schema_graphs/auto')
+    output_dir = os.path.join(os.path.dirname(__file__), '_static/schema_graphs/auto')
 
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)

@@ -521,7 +521,7 @@ TAI_z
 */
 
 CREATE TABLE catalogdb.sdss_dr13_photoobj(
-    objID   bigint,
+    objID   bigint PRIMARY KEY,
     run smallint,
     rerun   smallint,
     camcol  smallint,
@@ -735,8 +735,3 @@ CREATE TABLE catalogdb.sdss_dr13_photoobj(
     b   double precision,
     l   double precision
 );
-
-
-
-
-

@@ -89,7 +89,7 @@ r_chi_sq    real    4           reduced chi^2 from Cannon analysis
 
 CREATE TABLE catalogdb.sdss_dr14_cannonStar(
     apogee_id   varchar(32),
-    cannon_id   varchar(64),
+    cannon_id   varchar(64) PRIMARY KEY,
     filename    varchar(128),
     location_id bigint,
     field   varchar(128),
@@ -169,11 +169,6 @@ CREATE TABLE catalogdb.sdss_dr14_cannonStar(
     r_chi_sq    real
 );
 
-
 \copy catalogdb.sdss_dr14_cannonStar FROM program 'bzcat $CATALOGDB_DIR/sdssCannonStar/dr14/src/sqlcannonStar.csv.bz2' WITH CSV HEADER;
 
-alter table catalogdb.sdss_dr14_cannonStar add primary key(cannon_id);
-
-CREATE INDEX CONCURRENTLY sdss_dr14_cannonStar_apogee_id_index ON catalogdb.sdss_dr14_cannonStar using BTREE (apogee_id);
-
-
+CREATE INDEX CONCURRENTLY ON catalogdb.sdss_dr14_cannonStar USING BTREE (apogee_id);

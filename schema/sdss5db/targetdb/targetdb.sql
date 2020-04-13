@@ -229,7 +229,7 @@ CREATE INDEX CONCURRENTLY magnitude_pk_idx ON targetdb.target using BTREE(magnit
 CREATE INDEX CONCURRENTLY catalogid_idx ON targetdb.target using BTREE(catalogid);
 
 -- This doesn't seem to be loaded unless it's run manually inside a PSQL console.
-CREATE INDEX ON targetdb.target (q3c_ang2ipix(ra, dec));
+CREATE INDEX CONCURRENTLY ON targetdb.target (q3c_ang2ipix(ra, dec));
 CLUSTER target_q3c_ang2ipix_idx on targetdb.target;
 ANALYZE targetdb.target;
 
@@ -252,5 +252,5 @@ CREATE INDEX CONCURRENTLY field_cadence_pk_idx ON targetdb.field using BTREE(cad
 CREATE INDEX CONCURRENTLY observatory_pk_idx ON targetdb.field using BTREE(observatory_pk);
 
 CREATE INDEX CONCURRENTLY positioner_status_pk_idx ON targetdb.positioner using BTREE(positioner_status_pk);
-CREATE INDEX CONCURRENTLY positioner_type_pk_idx ON targetdb.positioner using BTREE(positioner_type_pk);
+CREATE INDEX CONCURRENTLY positioner_info_pk_idx ON targetdb.positioner using BTREE(positioner_info_pk);
 CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx ON targetdb.positioner using BTREE(observatory_pk);

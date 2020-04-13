@@ -7,12 +7,15 @@ Database connections
 
 .. automodule:: sdssdb.connection
    :members: DatabaseConnection, PeeweeDatabaseConnection, SQLADatabaseConnection
-   :undoc-members:
    :show-inheritance:
 
 
 Peewee
 ------
+
+.. autoclass:: sdssdb.peewee.ReflectMeta
+   :members:
+   :show-inheritance:
 
 .. autoclass:: sdssdb.peewee.BaseModel
    :members:
@@ -32,7 +35,11 @@ SQLAlchemy
 Utils
 -----
 
-.. automodule:: sdssdb.utils.database
+.. automodule:: sdssdb.utils.ingest
+    :members:
+    :show-inheritance:
+
+.. automodule:: sdssdb.utils.internals
     :members:
     :show-inheritance:
 

@@ -19,7 +19,7 @@ drop schema catalogdb cascade;
 CREATE TABLE catalogdb.gaia_dr2_source (
     solution_id bigint,
     designation text,
-    source_id bigint,
+    source_id bigint primary key,
     random_index bigint,
     ref_epoch double precision,
     ra double precision,
@@ -111,7 +111,3 @@ CREATE TABLE catalogdb.gaia_dr2_source (
     lum_val real,
     lum_percentile_lower real,
     lum_percentile_upper real);
-
-
-
-

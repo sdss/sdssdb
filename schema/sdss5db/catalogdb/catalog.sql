@@ -17,4 +17,6 @@ CREATE TABLE catalogdb.catalog (
 	dec DOUBLE PRECISION,
 	pmra REAL,
 	pmdec REAL,
-	epoch REAL);
+	epoch REAL,
+	parallax REAL,
+	version TEXT);

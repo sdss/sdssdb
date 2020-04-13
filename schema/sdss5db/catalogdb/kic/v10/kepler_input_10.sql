@@ -28,7 +28,7 @@ CREATE TABLE catalogdb.kepler_input_10 (
     kic_hmag double precision,
     kic_kmag double precision,
     kic_kepmag double precision,
-    kic_kepler_id bigint,
+    kic_kepler_id bigint PRIMARY KEY,
     kic_tmid bigint,
     kic_scpid bigint,
     kic_altid bigint,

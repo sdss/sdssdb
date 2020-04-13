@@ -10,11 +10,15 @@ Installation
 
     pip install sdssdb
 
-then you can check that it works by running a python terminal and doing ::
+then you can check that it works by running a python terminal and doing
+
+.. parsed-literal::
 
     >>> import sdssdb
     >>> sdssdb.__version__
-    0.3.3dev
+    |sdssdb_version|
+
+This should provide all the libraries that you'll need for basic use of ``sdssdb``. Some functions require libraries such as `astropy <https://www.astropy.org/>`__ or `pandas <https://pandas.pydata.org/>`__. To install all the necessary dependencies you can do ``pip install sdssdb[all]``. If you want to also install the development and documentation tools, do ``pip install sdssdb[all,dev,docs]``.
 
 If you are working from Utah, ``sdssdb`` is installed as a module and you should be able to do ::
 

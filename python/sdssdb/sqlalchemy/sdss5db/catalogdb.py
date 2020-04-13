@@ -10,11 +10,18 @@
 
 from __future__ import absolute_import, division, print_function
 
+import warnings
+
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
 
+from sdssdb.core.exceptions import SdssdbWarning
 from sdssdb.sqlalchemy.sdss5db import SDSS5Base, database
+
+
+warnings.warn('support for catalogdb in SQLalchemy is incomplete. Use Peewee instead.',
+              SdssdbWarning)
 
 
 class Base(AbstractConcreteBase, SDSS5Base):

@@ -7,8 +7,8 @@ Contributing to sdssdb
 Contributions to ``sdssdb`` are most welcome. Product development happens on its `GitHub repository <https://www.github.com/sdss/sdssdb>`__. For details on how to develop for an SDSS product refer to the `coding style guide <https://sdss-python-template.readthedocs.io/en/latest/standards.html>`__. All contributions to ``sdssdb`` need to be done as pull requests against the master branch.
 
 
-Contributing a new database
----------------------------
+Contributing a new database or schema
+-------------------------------------
 
 In addition to improvements to the code, you can contribute database connections and model classes for your databases. To do so, first remember the directory structure of ``sdssdb``
 
@@ -63,7 +63,7 @@ For an example of how to implement a database with Peewee you can look at the `s
 
 The first two lines simply import the base classes for the database connection and base model class. We then subclass `~sdssdb.connection.PeeweeDatabaseConnection` to create the connection for ``awesomedb``, overriding the `~sdssdb.connection.PeeweeDatabaseConnection.dbname` attribute. We then instantiate the database connection as ``database``. Note the ``autoconnect=True`` parameter which tells the database connection to try to use the best available profile to connect when the class gets instantiated. Finally, we subclass `~sdssdb.peewee.BaseModel` and we bind the database connection to it.
 
-Next we need to creates the model classes themselves. At its simplest, a model class represents a table in a given schema and contains a list of the columns in the table, each one as a class attribute. Model classes must subclass from a base class (``AwesomedbModel`` in our example) that has been linked to the database connection. Differently from SQLAlchemy, Peewee requires that all the columns be explicitly described, as opposed to autoloaded. To help with this task you can use the `pwiz <http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#pwiz-a-model-generator>`__ model generator. For example, to create a file with the list of model classes for ``stupendous`` you would run, from a terminal ::
+Next we need to creates the model classes themselves. At its simplest, a model class represents a table in a given schema and contains a list of the columns in the table, each one as a class attribute. Model classes must subclass from a base class (``AwesomedbModel`` in our example) that has been linked to the database connection. The default mode in Peewee is to explicitely define all columns, as opposed to autoloaded. To help with this task you can use the `pwiz <http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#pwiz-a-model-generator>`__ model generator. For example, to create a file with the list of model classes for ``stupendous`` you would run, from a terminal ::
 
     python -m pwiz -e postgresql -s stupendous awesomedb > stupendous.py
 
@@ -75,6 +75,30 @@ Once the file has been generated you will need to do some changes. On the top of
     from . import AwesomedbModel as BaseModel
 
 The first line conveniently allows for access to the database connection from the schema submodule. The second one renames ``AwesomedbModel`` to ``BaseModel`` so that all the model classes in the file inherit from it. You'll probably need to make some other changes to the file, especially to the foreign keys to make sure they match your naming requirements.
+
+Using reflection with Peewee
+''''''''''''''''''''''''''''
+
+Peewee provides a :ref:`reflection <peewee:reflection>` utility (internally used by ``pwiz``). Based on this tool we developed a `reflection metaclass <.ReflectMeta>` that can be used to expedite the creating of models by only requiring to define foreign keys. Note that this is not an official component of Peewee and it comes with certain caveats. Before using the reflection metaclass, make sure to read the `API documentation <.ReflectMeta>`.
+
+To define a base class with reflection with do ::
+
+    import peewee
+    from sdssdb.peewee import ReflectMeta
+
+    class ReflectBaseModel(peewee.Model, metaclass=ReflectMeta):
+        class Meta:
+            primary_key = False     # To make sure Peewee doesn't add its own PK.
+            use_reflection = False  # We'll enable reflection manually for certain models.
+            database = database
+
+    class AwesomedbModel(ReflectBaseModel):
+        class Meta:
+            use_reflection = True
+            schema = 'stupendous'
+            table_name = 'stupendous_table'
+
+When the connection is created this model will be reflected and autocompleted with all the columns that exist in the table. The reflection does not include `foreign keys <peewee:ForeignKeyField>`, which must be created manually (along with their referenced columns). You can check the `catalogdb <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/peewee/sdss5db/catalogdb.py>`__ models for an implementation of this type.
 
 
 SQLAlchemy
