@@ -35,7 +35,7 @@ except ImportError:
 
 
 __all__ = ('to_csv', 'copy_data', 'drop_table', 'create_model_from_table',
-           'bulk_insert', 'file_to_db')
+           'bulk_insert', 'file_to_db', 'create_adhoc_database')
 
 
 DTYPE_TO_FIELD = {
