@@ -465,8 +465,6 @@ class Gaia_DR2_WD(CatalogdbModel):
 
 class Tycho2(CatalogdbModel):
 
-    name = TextField()
-
     class Meta:
         table_name = 'tycho2'
 
@@ -481,7 +479,7 @@ class TIC_v8(CatalogdbModel):
 
     id = BigIntegerField(primary_key=True)
 
-    tycho2 = ForeignKeyField(Tycho2, field='name',
+    tycho2 = ForeignKeyField(Tycho2, field='designation',
                              column_name='tyc', object_id_name='tyc',
                              backref='tic')
 
