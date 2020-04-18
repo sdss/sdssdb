@@ -11,7 +11,7 @@
 
 import warnings
 
-from peewee import (BigAutoField, BigIntegerField, CharField,
+from peewee import (BigAutoField, BigIntegerField, CharField, CompositeKey,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
@@ -36,7 +36,7 @@ _APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
 class Catalog(CatalogdbModel):
 
-    catalogid = BigIntegerField(primary_key=True, null=False)
+    catalogid = BigIntegerField(null=False)
     iauname = TextField(null=True)
     ra = DoubleField(null=False)
     dec = DoubleField(null=False)
@@ -48,7 +48,8 @@ class Catalog(CatalogdbModel):
 
     class Meta:
         table_name = 'catalog'
-        use_reflection = True
+        use_reflection = False
+        primary_key = CompositeKey('catalogid', 'version')
 
 
 class AllWise(CatalogdbModel):
