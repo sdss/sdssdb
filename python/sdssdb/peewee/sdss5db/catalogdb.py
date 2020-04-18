@@ -21,6 +21,17 @@ from . import BaseModel, database  # noqa
 
 
 class CatalogdbModel(BaseModel):
+    class Meta:
+        database = database
+        schema = 'catalogdb'
+        use_reflection = False
+
+
+_Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
+_APOGEE_Star_Visit_Deferred = DeferredThroughModel()
+
+
+class Catalog(CatalogdbModel):
 
     catalogid = BigIntegerField(primary_key=True, null=False)
     iauname = TextField(null=True)
@@ -33,17 +44,7 @@ class CatalogdbModel(BaseModel):
     version = TextField(null=False)
 
     class Meta:
-        database = database
-        schema = 'catalogdb'
-        use_reflection = False
-
-
-_Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
-_APOGEE_Star_Visit_Deferred = DeferredThroughModel()
-
-
-class Catalog(CatalogdbModel):
-    pass
+        table_name = 'catalog'
 
 
 class AllWise(CatalogdbModel):
