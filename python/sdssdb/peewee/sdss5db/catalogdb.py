@@ -26,6 +26,8 @@ class CatalogdbModel(BaseModel):
         database = database
         schema = 'catalogdb'
         use_reflection = True
+        reflection_options = {'skip_foreign_keys': True}
+        primary_key = False
 
 
 _Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
