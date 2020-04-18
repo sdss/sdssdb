@@ -21,10 +21,11 @@ from . import BaseModel, database  # noqa
 
 
 class CatalogdbModel(BaseModel):
+
     class Meta:
         database = database
         schema = 'catalogdb'
-        use_reflection = False
+        use_reflection = True
 
 
 _Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
@@ -45,6 +46,7 @@ class Catalog(CatalogdbModel):
 
     class Meta:
         table_name = 'catalog'
+        use_reflection = True
 
 
 class AllWise(CatalogdbModel):
