@@ -22,12 +22,20 @@ from . import BaseModel, database  # noqa
 
 class CatalogdbModel(BaseModel):
 
+    catalogid = BigIntegerField(primary_key=True, null=False)
+    iauname = TextField(null=True)
+    ra = DoubleField(null=False)
+    dec = DoubleField(null=False)
+    pmra = FloatField(null=True)
+    pmdec = FloatField(null=True)
+    parallax = FloatField(null=True)
+    lead = TextField(null=False)
+    version = TextField(null=False)
+
     class Meta:
         database = database
         schema = 'catalogdb'
-        use_reflection = True
-        reflection_options = {'skip_foreign_keys': True}
-        primary_key = False
+        use_reflection = False
 
 
 _Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
@@ -465,6 +473,8 @@ class Gaia_DR2_WD(CatalogdbModel):
 
 class Tycho2(CatalogdbModel):
 
+    designation = TextField(primary_key=True)
+
     class Meta:
         table_name = 'tycho2'
 
@@ -622,10 +632,10 @@ class SkyMapper_DR1_1(CatalogdbModel):
                             object_id_name='gaia_dr2_id1',
                             backref='skymapper1')
 
-    gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
-                            column_name='gaia_dr2_id2',
-                            object_id_name='gaia_dr2_id2',
-                            backref='skymapper2')
+    # gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
+    #                         column_name='gaia_dr2_id2',
+    #                         object_id_name='gaia_dr2_id2',
+    #                         backref='skymapper2')
 
     @property
     def twomass1(self):
@@ -794,7 +804,10 @@ _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
 
 
 # Add relational tables to namespace.
-all_tables = database.get_tables('catalogdb')
+if database.connected and database.is_connection_usable():
+    all_tables = database.get_tables('catalogdb')
+else:
+    all_tables = []
 
 for rtname in all_tables:
     if rtname.startswith('catalog_to_'):

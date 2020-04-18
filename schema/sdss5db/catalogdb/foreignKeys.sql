@@ -238,10 +238,10 @@ ALTER TABLE catalogdb.skymapper_dr1_1
     REFERENCES catalogdb.gaia_dr2_source (source_id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE catalogdb.skymapper_dr1_1
-    ADD CONSTRAINT gaia_dr2_id2_fk
-    FOREIGN KEY (gaia_dr2_id2)
-    REFERENCES catalogdb.gaia_dr2_source (source_id)
+-- ALTER TABLE catalogdb.skymapper_dr1_1
+--     ADD CONSTRAINT gaia_dr2_id2_fk
+--     FOREIGN KEY (gaia_dr2_id2)
+--     REFERENCES catalogdb.gaia_dr2_source (source_id)
 
 
 -- glimpse
