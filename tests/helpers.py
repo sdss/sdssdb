@@ -137,7 +137,7 @@ def create_factory(name, database, model, columns=None, auto=True, base=None):
 
     # generate columns if none given
     if not columns:
-        columns = create_fake_columns(model) if auto and database.connected else {}
+        columns = create_fake_columns(model) if auto and not database.connected else {}
 
     # update any columns with customization from file
     if database.connected:
