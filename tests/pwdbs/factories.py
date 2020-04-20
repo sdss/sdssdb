@@ -11,11 +11,19 @@
 # Modified By: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
+
 import factory
-from tests.pwdbs import models, database as testdb
-from sdssdb.peewee.sdss5db import database as sdss5db, targetdb
+from tests.helpers import create_factory, create_fake_columns
+from tests.pwdbs import database as testdb
+from tests.pwdbs import models
+
+from sdssdb.peewee.sdss5db import catalogdb
+from sdssdb.peewee.sdss5db import database as sdss5db
+from sdssdb.peewee.sdss5db import targetdb
+
 from .factoryboy import PeeweeModelFactory
+
 
 # can use factory.Faker to create simple fake items
 # or more general faker object to create more complicated items like python lists,
@@ -31,6 +39,7 @@ faker = factory.faker.faker.Factory().create()
 #
 
 
+# manually specify class factories for test or real ORM models
 class UserFactory(PeeweeModelFactory):
     class Meta:
         model = models.User
@@ -47,6 +56,13 @@ class CategoryFactory(PeeweeModelFactory):
         model = targetdb.Category
         database = sdss5db
 
+    # columns for which to generate fake data can be specified here
     pk = factory.Sequence(lambda n: n)
     label = factory.Faker('word')
 
+
+# auto generate a factory class with fake data generators for all columns
+awprops = create_fake_columns(catalogdb.AllWise)
+awprops['designation'] = factory.Faker('word')
+AWFactory = create_factory('AWFactory', sdss5db, catalogdb.AllWise,
+                           columns=awprops, base=PeeweeModelFactory)
