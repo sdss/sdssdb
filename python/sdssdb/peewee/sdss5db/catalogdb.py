@@ -11,7 +11,7 @@
 
 import warnings
 
-from peewee import (BigAutoField, BigIntegerField, CharField,
+from peewee import (BigAutoField, BigIntegerField, CharField, CompositeKey,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
@@ -35,7 +35,21 @@ _APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
 
 class Catalog(CatalogdbModel):
-    pass
+
+    catalogid = BigIntegerField(null=False)
+    iauname = TextField(null=True)
+    ra = DoubleField(null=False)
+    dec = DoubleField(null=False)
+    pmra = FloatField(null=True)
+    pmdec = FloatField(null=True)
+    parallax = FloatField(null=True)
+    lead = TextField(null=False)
+    version = TextField(null=False)
+
+    class Meta:
+        table_name = 'catalog'
+        use_reflection = False
+        primary_key = CompositeKey('catalogid', 'version')
 
 
 class AllWise(CatalogdbModel):
@@ -465,7 +479,7 @@ class Gaia_DR2_WD(CatalogdbModel):
 
 class Tycho2(CatalogdbModel):
 
-    name = TextField()
+    designation = TextField(primary_key=True)
 
     class Meta:
         table_name = 'tycho2'
@@ -481,7 +495,7 @@ class TIC_v8(CatalogdbModel):
 
     id = BigIntegerField(primary_key=True)
 
-    tycho2 = ForeignKeyField(Tycho2, field='name',
+    tycho2 = ForeignKeyField(Tycho2, field='designation',
                              column_name='tyc', object_id_name='tyc',
                              backref='tic')
 
@@ -624,10 +638,10 @@ class SkyMapper_DR1_1(CatalogdbModel):
                             object_id_name='gaia_dr2_id1',
                             backref='skymapper1')
 
-    gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
-                            column_name='gaia_dr2_id2',
-                            object_id_name='gaia_dr2_id2',
-                            backref='skymapper2')
+    # gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
+    #                         column_name='gaia_dr2_id2',
+    #                         object_id_name='gaia_dr2_id2',
+    #                         backref='skymapper2')
 
     @property
     def twomass1(self):
@@ -796,7 +810,10 @@ _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
 
 
 # Add relational tables to namespace.
-all_tables = database.get_tables('catalogdb')
+if database.connected and database.is_connection_usable():
+    all_tables = database.get_tables('catalogdb')
+else:
+    all_tables = []
 
 for rtname in all_tables:
     if rtname.startswith('catalog_to_'):

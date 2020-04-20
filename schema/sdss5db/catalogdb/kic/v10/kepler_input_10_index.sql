@@ -15,8 +15,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 (q3c_ang2ipix(kic_ra, kic
 CLUSTER kepler_input_10_q3c_ang2ipix_idx ON catalogdb.kepler_input_10;
 ANALYZE catalogdb.kepler_input_10;
 
-CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_ra);
-CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_dec);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_umag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_gmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_rmag);
@@ -26,5 +24,3 @@ CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_jmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_hmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_kmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_kepmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_glon);
-CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_glat);
