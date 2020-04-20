@@ -15,14 +15,15 @@ import multiprocessing
 import os
 import re
 import warnings
-import inflect
 
+import inflect
 import numpy
 import peewee
 from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import generate_models
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
+from sqlalchemy.ext.declarative import DeferredReflection, declarative_base
+
 from sdssdb import log
 from sdssdb.connection import SQLADatabaseConnection
 from sdssdb.sqlalchemy import BaseModel
