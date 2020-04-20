@@ -9,15 +9,15 @@ import re
 import pytest
 import importlib
 import inspect
-from sdssdb.tests.sqladbs import prepare_testdb as sqla_prepdb
-from sdssdb.tests.pwdbs import prepare_testdb as pw_prepdb
+from .sqladbs import prepare_testdb as sqla_prepdb
+from .pwdbs import prepare_testdb as pw_prepdb
 from pytest_postgresql.factories import DatabaseJanitor
 
 
 def pytest_addoption(parser):
     """ Add new options to the pytest command-line """
     # only run peewee tests
-    parser.addoption('--peewee', action='store_true', default=False, 
+    parser.addoption('--peewee', action='store_true', default=False,
                      help='Only run tests for peewee dbs')
 
     # only run sqla tests
@@ -31,7 +31,7 @@ def pytest_addoption(parser):
 
 def pytest_ignore_collect(path, config):
     ''' pytest hook to identify tests to be ignored during collection
-    
+
     Looks through all test_xxx.py files in pwdbs and sqladbs and determines
     which ones have databases that fail to connect and ignores them.
 

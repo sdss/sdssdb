@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: test_factory.py
 # Project: pwdbs
 # Author: Brian Cherinka
@@ -12,7 +12,7 @@
 
 
 from __future__ import print_function, division, absolute_import
-from sdssdb.tests.pwdbs import models
+from tests.pwdbs import models
 import pytest
 
 
@@ -20,7 +20,7 @@ import pytest
 def batchit(user_factory):
     user_factory.create_batch(10)
 
-    
+
 class TestFactory(object):
 
     def test_factory_fixture(self, transaction, user_factory):

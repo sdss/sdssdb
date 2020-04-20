@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: factories.py
 # Project: pwdbs
 # Author: Brian Cherinka
@@ -13,7 +13,7 @@
 
 from __future__ import print_function, division, absolute_import
 import factory
-from sdssdb.tests.pwdbs import models, database as testdb
+from tests.pwdbs import models, database as testdb
 from sdssdb.peewee.sdss5db import database as sdss5db, targetdb
 from .factoryboy import PeeweeModelFactory
 

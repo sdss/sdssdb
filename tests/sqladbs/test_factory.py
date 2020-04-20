@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: test_testdb.py
 # Project: sqladbs
 # Author: Brian Cherinka
@@ -14,7 +14,7 @@
 from __future__ import print_function, division, absolute_import
 
 import pytest
-from sdssdb.tests.sqladbs import models, database
+from tests.sqladbs import models, database
 
 
 @pytest.fixture(scope='function', autouse=True)

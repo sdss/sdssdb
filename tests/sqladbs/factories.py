@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: factories.py
 # Project: sqladbs
 # Author: Brian Cherinka
@@ -13,7 +13,7 @@
 
 from __future__ import print_function, division, absolute_import
 import factory
-from sdssdb.tests.sqladbs import models, database as db, get_model_from_database
+from tests.sqladbs import models, database as db, get_model_from_database
 from sdssdb.sqlalchemy.mangadb import database as mangadb
 from sdssdb.sqlalchemy.archive import database as archive
 
@@ -63,7 +63,7 @@ if sas:
         ''' factory for archive db tree table '''
         class Meta:
             model = sas.Tree
-            sqlalchemy_session = archive.Session  
+            sqlalchemy_session = archive.Session
 
         id = factory.Sequence(lambda n: n)
         version = factory.Sequence(lambda n: 'dr{0}'.format(30 + n))
