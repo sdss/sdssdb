@@ -450,34 +450,37 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
 
 
 def create_adhoc_database(dbname, schema=None, profile='local'):
-    ''' creates an adhoc SQLA database and models, given an existing db
-    
+    """ Creates an adhoc SQLA database and models, given an existing db
+
     Creates an in-memory SQLA database connection given a database name
     to connect to, along with auto-generated models for the a given schema
-    name.  Currently limited to building models for one schema at a time. 
+    name.  Currently limited to building models for one schema at a time.
     Useful for temporarily creating and trialing a database connection, and
     simple models, without building and committing a full fledged new database
     connection.
 
-    Parameters:
-        dbname (str):
+    Parameters
+    ----------
+        dbname : str
             The name of the database to create a connection for
-        schema (str):
+        schema : str
             The name of the schema to create mappings for
-        profile (str):
+        profile : str
             The database profile to connect with
 
-    Returns:
+    Returns
+    -------
         A temporary database connection and module of model classes
 
-    Example:
+    Example
+    -------
         >>> from sdssdb.utils.database import create_adhoc_database
         >>> tempdb, models = create_adhoc_database('datamodel', schema='filespec')
         >>> tempdb
         >>> <DatamodelDatabaseConnection (dbname='datamodel', profile='local', connected=True)>
         >>> models.File
         >>> sqlalchemy.ext.automap.File
-    '''
+    """
 
     # create the database
     dbclass = f'{dbname.title()}DatabaseConnection'
@@ -485,7 +488,7 @@ def create_adhoc_database(dbname, schema=None, profile='local'):
     tempdb_class = type(dbclass, (SQLADatabaseConnection,),
                         {'dbname': dbname, 'base': automap_base(base)})
     tempdb = tempdb_class(profile=profile, autoconnect=True)
-    
+
     if tempdb.connected is False:
         log.warning(f'Could not connect to database: {dbname}. '
                     'Please check that the database exists. Cannot automap models.')
@@ -500,26 +503,51 @@ def create_adhoc_database(dbname, schema=None, profile='local'):
 
 
 def camelize_classname(base, tablename, table):
-    ''' Produce a 'camelized' class name, e.g.
+    """ Produce a 'camelized' class name, e.g.
 
     Converts a database table name to camelcase. Uses underscores to denote a
     new hump. E.g. 'words_and_underscores' -> 'WordsAndUnderscores'
-
     see https://docs.sqlalchemy.org/en/13/orm/extensions/automap.html#overriding-naming-schemes
 
-    '''
+    Parameters
+    ----------
+    base : ~sqlalchemy.ext.automap.AutomapBase
+        the AutomapBase class doing the prepare.
+    tablenname : str
+        The string name of the Table
+    table : ~sqlalchemy.schema.Table
+        The Table object itself
+
+    Returns:
+        a string class name
+
+    """
     return str(tablename[0].upper() + re.sub(r'_([a-z])', lambda m: m.group(1).upper(), tablename[1:]))
 
 
 def pluralize_collection(base, local_cls, referred_cls, constraint):
-    ''' Produce an 'uncamelized', 'pluralized' class name, e.g.
-    
-    Con
-    e.g. 'SomeTerm' -> 'some_terms'
+    """ Produce an 'uncamelized', 'pluralized' class name
 
+    Converts a camel-cased class name into a uncamelized, pluralized class name, e.g.
+    'SomeTerm' -> 'some_terms'.  Used when auto-defining relationship names.
     see https://docs.sqlalchemy.org/en/13/orm/extensions/automap.html#overriding-naming-schemes
-    
-    '''
+
+    Parameters
+    ----------
+    base : ~sqlalchemy.ext.automap.AutomapBase
+        the AutomapBase class doing the prepare.
+    local_cls : object
+        the class to be mapped on the local side.
+    referred_cls : object
+        the class to be mapped on the referring side.
+    constraint : ~sqlalchemy.schema.ForeignKeyConstraint
+        the ForeignKeyConstraint that is being inspected to produce this relationship.
+
+    Returns
+    -------
+        An uncamelized, pluralized string class name
+
+    """
     referred_name = referred_cls.__name__
     uncamelized = re.sub(r'[A-Z]',
                          lambda m: "_%s" % m.group(0).lower(),
