@@ -137,11 +137,10 @@ def create_factory(name, database, model, columns=None, auto=True, base=None):
 
     # generate columns if none given
     if not columns:
-        columns = create_fake_columns(model) if auto and not database.connected else {}
+        columns = create_fake_columns(model) if auto else {}
 
     # update any columns with customization from file
-    if database.connected:
-        columns = update_fake_columns(model, columns)
+    columns = update_fake_columns(model, columns)
 
     # update the class attributes and create the new Factory class
     assert base is not None, ('factory base must be either PeeweeModelFactory '
@@ -186,7 +185,8 @@ def update_fake_columns(model, columns):
             fake_args = vals.get('args', [])
             fake_kwargs = vals.get('kwargs', {})
             # ensure that the column specified in the file is actually in real list of columns
-            assert key in columns, f'{key} not found in table columns for {model}.  Check spelling.'
-            columns[key] = factory.Faker(fake_type, *fake_args, **fake_kwargs)
+            #assert key in columns, f'{key} not found in table columns for {model}.  Check spelling.'
+            if key in columns:
+                columns[key] = factory.Faker(fake_type, *fake_args, **fake_kwargs)
     return columns
 
