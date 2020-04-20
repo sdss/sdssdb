@@ -137,10 +137,11 @@ def create_factory(name, database, model, columns=None, auto=True, base=None):
 
     # generate columns if none given
     if not columns:
-        columns = create_fake_columns(model) if auto else {}
+        columns = create_fake_columns(model) if auto and database.connected else {}
 
     # update any columns with customization from file
-    columns = update_fake_columns(model, columns)
+    if database.connected:
+        columns = update_fake_columns(model, columns)
 
     # update the class attributes and create the new Factory class
     assert base is not None, ('factory base must be either PeeweeModelFactory '
