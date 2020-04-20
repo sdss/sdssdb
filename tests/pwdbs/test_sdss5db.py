@@ -31,6 +31,7 @@ class TestTargetDb(object):
         assert nt > 0
 
 
+@pytest.mark.parametrize('database', [database], indirect=True)
 class TestAllWise(object):
 
     def test_allwise_model_creation(self, aw_factory):
