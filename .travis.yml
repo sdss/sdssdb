@@ -4,8 +4,6 @@ cache:
   pip: true
   timeout: 1000
 
-sudo: false
-
 services:
   - postgresql
 
