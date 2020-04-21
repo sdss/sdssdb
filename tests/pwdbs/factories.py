@@ -14,7 +14,7 @@
 from __future__ import absolute_import, division, print_function
 
 import factory
-from tests.helpers import create_factory, create_fake_columns
+#from tests.helpers import create_factory, create_fake_columns
 from tests.pwdbs import database as testdb
 from tests.pwdbs import models
 
@@ -61,8 +61,8 @@ class CategoryFactory(PeeweeModelFactory):
     label = factory.Faker('word')
 
 
-# auto generate a factory class with fake data generators for all columns
-awprops = create_fake_columns(catalogdb.AllWise)
-awprops['designation'] = factory.Faker('word')
-AWFactory = create_factory('AWFactory', sdss5db, catalogdb.AllWise,
-                           columns=awprops, base=PeeweeModelFactory)
+# # auto generate a factory class with fake data generators for all columns
+# awprops = create_fake_columns(catalogdb.AllWise)
+# awprops['designation'] = factory.Faker('word')
+# AWFactory = create_factory('AWFactory', sdss5db, catalogdb.AllWise,
+#                            columns=awprops, base=PeeweeModelFactory)

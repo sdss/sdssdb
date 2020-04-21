@@ -11,11 +11,17 @@
 # Modified By: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
+
 import factory
-from tests.sqladbs import models, database as db, get_model_from_database
-from sdssdb.sqlalchemy.mangadb import database as mangadb
+#from tests.helpers import create_factory, create_fake_columns
+from tests.sqladbs import database as db
+from tests.sqladbs import get_model_from_database, models
+
 from sdssdb.sqlalchemy.archive import database as archive
+from sdssdb.sqlalchemy.mangadb import database as mangadb
+#from sdssdb.sqlalchemy.sdss5db import database as sdss5db
+
 
 # can use factory.Faker to create simple fake items
 # or more general faker object to create more complicated items like python lists,
@@ -27,6 +33,7 @@ faker = factory.faker.faker.Factory().create()
 # need to load Model Classes this way for cases where the database does not exist for a test
 datadb = get_model_from_database(mangadb, 'datadb')
 sas = get_model_from_database(archive, 'sas')
+#targetdb = get_model_from_database(sdss5db, 'targetdb')
 
 #
 # This file contains factories used to generate fake data when needed.  Each factory has a db, a Model
@@ -35,6 +42,7 @@ sas = get_model_from_database(archive, 'sas')
 #
 
 
+# manually specify class factories for test or real ORM models
 class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     ''' factory for testdb user table'''
     class Meta:
@@ -57,6 +65,9 @@ if datadb:
         wavelength = faker.pylist(10, False, 'float')
         bintype = 'NAN'
 
+    # # auto generate a factory class with fake data generators for all columns
+    # ObsinfoFactory = create_factory('ObsinfoFactory', mangadb, datadb.ObsInfo,
+    #                                 base=factory.alchemy.SQLAlchemyModelFactory)
 
 if sas:
     class TreeFactory(factory.alchemy.SQLAlchemyModelFactory):
@@ -67,3 +78,16 @@ if sas:
 
         id = factory.Sequence(lambda n: n)
         version = factory.Sequence(lambda n: 'dr{0}'.format(30 + n))
+
+
+# if targetdb:
+#     # auto generate a factory class with fake data generators for all columns
+#     # targprops = create_fake_columns(targetdb.Target)
+#     # targprops['designation'] = factory.Faker('word')
+#     # TargetFactory = create_factory('TargetFactory', sdss5db, targetdb.Target,
+#     #                                columns=targprops, base=factory.alchemy.SQLAlchemyModelFactory)
+#     class TargetFactory(factory.alchemy.SQLAlchemyModelFactory):
+#         ''' factory for archive db tree table '''
+#         class Meta:
+#             model = targetdb.Target
+#             sqlalchemy_session = sdss5db.Session

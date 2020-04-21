@@ -17,9 +17,10 @@ import factory
 import yaml
 import os
 from sdssdb.peewee import BaseModel as PWBase
+import sqlalchemy.orm.attributes
 
 
-def _generate_sql_data(columns):
+def _generate_sql_data(model, columns):
     ''' Generate fake Python value generators for sqlalchemy
 
     For a given SQLalchemy model, attempts to auto-generate
@@ -36,6 +37,11 @@ def _generate_sql_data(columns):
 
     props = {}
     for k, v in columns.items():
+        isattr = isinstance(getattr(model, k), sqlalchemy.orm.attributes.InstrumentedAttribute)
+        # only set fakers for standard attributes
+        if not isattr:
+            continue
+
         if v.primary_key is True:
             val = factory.Sequence(lambda n: n)
         elif v.type.python_type == int:
@@ -105,7 +111,7 @@ def create_fake_columns(model):
     if ispw_model:
         props = _generate_peewee_data(meta.columns)
     else:
-        props = _generate_sql_data(meta.columns)
+        props = _generate_sql_data(model, meta.columns)
     return props
 
 

@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: test_sdss5db.py
 # Project: sqladbs
 # Author: Brian Cherinka
@@ -23,3 +23,11 @@ class TestCatalogDb(object):
 
     def test_allwise_list(self, session):
         aw_count = session.query(catalogdb.AllWise).count()
+
+
+# @pytest.mark.parametrize('database', [database], indirect=True)
+# class TestTargetDB(object):
+
+#     def test_target_model_creation(self, target_factory):
+#         tt = target_factory.build()
+#         assert tt.pk > 0
