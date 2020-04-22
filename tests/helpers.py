@@ -49,7 +49,7 @@ def _generate_sql_data(model, columns):
         elif v.type.python_type == str:
             val = factory.Faker('pystr')
         elif v.type.python_type == float:
-            val = factory.Faker('pyfloat')
+            val = factory.Faker('pyfloat', positive=True)
         elif v.type.python_type == decimal.Decimal:
             val = factory.Faker('pydecimal')
         elif v.type.python_type == list:
@@ -84,7 +84,7 @@ def _generate_peewee_data(columns):
         elif v.field_type in ['TEXT', 'VARCHAR']:
             val = factory.Faker('pystr')
         elif v.field_type == 'FLOAT':
-            val = factory.Faker('pyfloat')
+            val = factory.Faker('pyfloat', positive=True)
         elif v.field_type == 'DECIMAL':
             val = factory.Faker('pydecimal')
         else:

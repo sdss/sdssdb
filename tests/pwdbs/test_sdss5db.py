@@ -31,11 +31,11 @@ class TestTargetDb(object):
         assert nt > 0
 
 
-# @pytest.mark.parametrize('database', [database], indirect=True)
-# class TestAllWise(object):
+@pytest.mark.parametrize('database', [database], indirect=True)
+class TestAllWise(object):
 
-#     def test_allwise_model_creation(self, aw_factory):
-#         aw = aw_factory.build()
-#         assert aw.cntr is not None
-#         assert isinstance(aw.ra, decimal.Decimal)
-#         assert aw.ra > decimal.Decimal('0') and aw.ra < decimal.Decimal('360')
+    def test_allwise_model_creation(self, aw_factory):
+        aw = aw_factory.build()
+        assert aw.cntr is not None
+        assert isinstance(aw.ra, decimal.Decimal)
+        assert aw.ra > decimal.Decimal('0') and aw.ra < decimal.Decimal('360')
