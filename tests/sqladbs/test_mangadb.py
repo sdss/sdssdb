@@ -44,7 +44,7 @@ class TestDataDB(object):
         cc = session.query(datadb.Cube).count()
         assert cc > 1
 
-    # def test_obsinfo_model_creation(self, obsinfo_factory):
-    #     obs = obsinfo_factory.build()
-    #     assert obs.pk is not None
-    #     assert obs.airmass > 0
+    def test_obsinfo_model_creation(self, obsinfo_factory):
+        obs = obsinfo_factory.build()
+        assert obs.pk is not None
+        assert obs.airmass > 0

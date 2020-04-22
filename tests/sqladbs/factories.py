@@ -14,7 +14,7 @@
 from __future__ import absolute_import, division, print_function
 
 import factory
-#from tests.helpers import create_factory, create_fake_columns
+from tests.helpers import create_factory, create_fake_columns
 from tests.sqladbs import database as db
 from tests.sqladbs import get_model_from_database, models
 
@@ -65,9 +65,9 @@ if datadb:
         wavelength = faker.pylist(10, False, 'float')
         bintype = 'NAN'
 
-    # # auto generate a factory class with fake data generators for all columns
-    # ObsinfoFactory = create_factory('ObsinfoFactory', mangadb, datadb.ObsInfo,
-    #                                 base=factory.alchemy.SQLAlchemyModelFactory)
+    # auto generate a factory class with fake data generators for all columns
+    ObsinfoFactory = create_factory('ObsinfoFactory', mangadb, datadb.ObsInfo,
+                                    base=factory.alchemy.SQLAlchemyModelFactory)
 
 if sas:
     class TreeFactory(factory.alchemy.SQLAlchemyModelFactory):
