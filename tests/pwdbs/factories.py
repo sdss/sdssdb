@@ -15,12 +15,9 @@ from __future__ import absolute_import, division, print_function
 
 import factory
 #from tests.helpers import create_factory, create_fake_columns
-from tests.pwdbs import database as testdb
-from tests.pwdbs import models
+from tests.pwdbs import database as testdb, models
 
-from sdssdb.peewee.sdss5db import catalogdb
-from sdssdb.peewee.sdss5db import database as sdss5db
-from sdssdb.peewee.sdss5db import targetdb
+from sdssdb.peewee.sdss5db import database as sdss5db, targetdb
 
 from .factoryboy import PeeweeModelFactory
 
