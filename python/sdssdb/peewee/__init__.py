@@ -113,34 +113,35 @@ class ReflectMeta(ModelBase):
         if database and hasattr(database, 'models') and Model not in database.models:
             database.models[Model._meta.table_name] = Model
 
-        if Model._meta.use_reflection and database and database.connected:
-            cls.reflect(Model)
+        cls.reflect(Model)
 
         return Model
 
     def reflect(self):
         """Adds fields and indexes to the model using reflection."""
 
-        if not self.table_exists():
+        meta = self._meta
+        database = meta.database
+
+        if not database or not database.connected or not self.table_exists():
             return
 
         # Don't do anything if this model doesn't want reflection.
-        if not hasattr(self._meta, 'use_reflection') or not self._meta.use_reflection:
+        if not hasattr(meta, 'use_reflection') or not meta.use_reflection:
             return
 
-        for index in self._meta.indexes:
+        for index in meta.indexes:
             if hasattr(index, 'reflected') and index.reflected:
-                self._meta.indexes.remove(index)
+                meta.indexes.remove(index)
 
-        database = self._meta.database
         if not database.is_connection_usable():
             raise peewee.DatabaseError('database not connected.')
 
-        skip_fks = (hasattr(self._meta, 'reflection_options') and
-                    self._meta.reflection_options.get('skip_foreign_keys', False))
+        skip_fks = (hasattr(meta, 'reflection_options') and
+                    meta.reflection_options.get('skip_foreign_keys', False))
 
-        table_name = self._meta.table_name
-        schema = self._meta.schema
+        table_name = meta.table_name
+        schema = meta.schema
 
         try:
             locks = is_table_locked(database, table_name)
@@ -151,7 +152,8 @@ class ReflectMeta(ModelBase):
             ReflectedModel = generate_models(database, schema=schema,
                                              table_names=[table_name])[table_name]
         except KeyError as ee:
-            warnings.warn(f'reflection failed for {table_name}: table or column {ee} not found.',
+            warnings.warn(f'reflection failed for {table_name}: '
+                          f'table or column {ee} not found.',
                           SdssdbUserWarning)
             return
         except Exception as ee:
@@ -160,8 +162,8 @@ class ReflectMeta(ModelBase):
 
         for field_name, field in ReflectedModel._meta.fields.items():
 
-            if field_name in self._meta.fields:
-                meta_field = self._meta.fields[field_name]
+            if field_name in meta.fields:
+                meta_field = meta.fields[field_name]
                 if not hasattr(meta_field, 'reflected') or not meta_field.reflected:
                     continue
 
@@ -169,21 +171,21 @@ class ReflectMeta(ModelBase):
                 continue
 
             if field.primary_key:
-                self._meta.set_primary_key(field_name, field)
+                meta.set_primary_key(field_name, field)
             else:
-                self._meta.add_field(field_name, field)
+                meta.add_field(field_name, field)
 
-            self._meta.fields[field_name].reflected = True
+            meta.fields[field_name].reflected = True
 
         # Composite keys are not a normal column so if the pk has not been
         # set already, check if it exists in the reflected model. We avoid
         # adding pks that are
-        if not self._meta.primary_key and ReflectedModel._meta.primary_key:
+        if not meta.primary_key and ReflectedModel._meta.primary_key:
             if isinstance(ReflectedModel._meta.primary_key, peewee.ForeignKeyField) and skip_fks:
                 pass
             else:
                 pk = ReflectedModel._meta.primary_key
-                self._meta.set_primary_key(pk.name, pk)
+                meta.set_primary_key(pk.name, pk)
 
 
 class BaseModel(Model, metaclass=ReflectMeta):
