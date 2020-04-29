@@ -19,3 +19,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_source USING BTREE (solution_id)
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_source (q3c_ang2ipix(ra, dec));
 CLUSTER gaia_dr2_source_q3c_ang2ipix_idx ON catalogdb.gaia_dr2_source;
 ANALYZE catalogdb.gaia_dr2_source;
+
+ALTER TABLE catalogdb.gaia_dr2_source ALTER COLUMN source_id SET STATISTICS 5000;
+ALTER INDEX catalogdb.gaia_dr2_source_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

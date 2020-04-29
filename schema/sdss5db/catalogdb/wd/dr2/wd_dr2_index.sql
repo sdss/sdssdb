@@ -13,3 +13,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_wd_sdss USING BTREE (plate);
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_wd_sdss USING BTREE (mjd);
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_wd_sdss USING BTREE (fiber);
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_dr2_wd_sdss (mjd, plate, fiber);
+
+ALTER TABLE catalogdb.gaia_dr2_wd_sdss ALTER COLUMN pk SET STATISTICS 5000;
+ALTER INDEX catalogdb.gaia_dr2_wd_sdss_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

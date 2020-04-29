@@ -24,3 +24,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_jmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_hmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_kmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 USING BTREE (kic_kepmag);
+
+ALTER TABLE catalogdb.kepler_input_10 ALTER COLUMN kic_kepler_id SET STATISTICS 5000;
+ALTER INDEX catalogdb.kepler_input_10_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

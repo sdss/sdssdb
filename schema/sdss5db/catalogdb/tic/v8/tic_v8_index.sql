@@ -27,3 +27,12 @@ ALTER TABLE catalogdb.tic_v8 ADD COLUMN twomass_psc TEXT;
 UPDATE catalogdb.tic_v8
     SET twomass_psc = twomass
     WHERE twomass IS NOT NULL AND posflag != '2MASSEXT';
+
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN id SET STATISTICS 5000;
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN kic SET STATISTICS 5000;
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN tyc SET STATISTICS 5000;
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN gaia_int SET STATISTICS 5000;
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN sdss SET STATISTICS 5000;
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN allwise SET STATISTICS 5000;
+ALTER TABLE catalogdb.tic_v8 ALTER COLUMN twomass_psc SET STATISTICS 5000;
+ALTER INDEX catalogdb.tic_v8_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

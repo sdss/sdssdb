@@ -393,3 +393,6 @@ ALTER TABLE catalogdb.tycho2 ADD PRIMARY KEY (designation);
 CREATE INDEX CONCURRENTLY ON catalogdb.tycho2 (q3c_ang2ipix(ramdeg, demdeg));
 CLUSTER tycho2_q3c_ang2ipix_idx on catalogdb.tycho2;
 VACUUM ANALYZE catalogdb.tycho2;
+
+ALTER TABLE catalogdb.tycho2 ALTER COLUMN designation SET STATISTICS 5000;
+ALTER INDEX catalogdb.tycho2_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

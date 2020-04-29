@@ -63,3 +63,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (zmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (w1_w2);
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (w2_w3);
 CREATE INDEX CONCURRENTLY ON catalogdb.gaia_qso USING BTREE (w1mag);
+
+ALTER TABLE catalogdb.gaia_qso ALTER COLUMN pk SET STATISTICS 5000;
+ALTER INDEX catalogdb.gaia_qso_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

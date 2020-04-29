@@ -30,3 +30,7 @@ ALTER TABLE catalogdb.allwise
 CREATE INDEX CONCURRENTLY ON catalogdb.allwise (q3c_ang2ipix(ra, dec));
 CLUSTER allwise_q3c_ang2ipix_idx ON catalogdb.allwise;
 ANALYZE catalogdb.allwise;
+
+ALTER TABLE catalogdb.allwise ALTER COLUMN cntr SET STATISTICS 5000;
+ALTER TABLE catalogdb.allwise ALTER COLUMN designation SET STATISTICS 5000;
+ALTER INDEX catalogdb.allwise_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

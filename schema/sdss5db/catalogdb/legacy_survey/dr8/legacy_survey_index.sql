@@ -13,3 +13,7 @@ CREATE INDEX CONCURRENTLY ON catalogdb.legacy_survey_dr8 (gaia_sourceid);
 CREATE INDEX CONCURRENTLY ON catalogdb.legacy_survey_dr8 (q3c_ang2ipix(ra, dec));
 CLUSTER legacy_survey_dr8_q3c_ang2ipix_idx ON catalogdb.legacy_survey_dr8;
 VACUUM ANALYZE catalogdb.legacy_survey_dr8;
+
+ALTER TABLE catalogdb.legacy_survey_dr8 ALTER COLUMN ls_id SET STATISTICS 5000;
+ALTER TABLE catalogdb.legacy_survey_dr8 ALTER COLUMN gaia_sourceid SET STATISTICS 5000;
+ALTER INDEX catalogdb.legacy_survey_dr8_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;
