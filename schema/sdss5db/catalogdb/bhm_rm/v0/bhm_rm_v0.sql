@@ -166,3 +166,9 @@ CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (des_var_sn);
 CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (ps1_var_rms);
 CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (ps1_var_sn);
 CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (photo_bitmask);
+
+ALTER TABLE catalogdb.bhm_rm_v0 ALTER COLUMN pk SET STATISTICS 1000;
+ALTER TABLE catalogdb.bhm_rm_v0 ALTER COLUMN source_id_gaia SET STATISTICS 1000;
+ALTER TABLE catalogdb.bhm_rm_v0 ALTER COLUMN objid_sdss SET STATISTICS 1000;
+ALTER TABLE catalogdb.bhm_rm_v0 ALTER COLUMN objid_unwise SET STATISTICS 1000;
+ALTER INDEX catalogdb.bhm_rm_v0_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

@@ -27,3 +27,6 @@ CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc USING BTREE (ph_qual);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc USING BTREE (cc_flg);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc USING BTREE (gal_contam);
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_psc USING BTREE (rd_flg);
+
+ALTER TABLE catalogdb.twomass_psc ALTER COLUMN designation SET STATISTICS 5000;
+ALTER INDEX catalogdb.twomass_psc_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

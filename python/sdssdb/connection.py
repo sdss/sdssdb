@@ -330,10 +330,10 @@ if _peewee:
 
         def __init__(self, *args, **kwargs):
 
+            self.models = {}
+
             PostgresqlDatabase.__init__(self, None)
             DatabaseConnection.__init__(self, *args, **kwargs)
-
-            self.models = {}
 
         @property
         def connection_params(self):
