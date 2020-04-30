@@ -114,14 +114,14 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">catalogdb</td>
             <td class="success"></td>
             <td class="warning"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="_static/schema_graphs/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="../../../../schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="../../../../schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/sdss5db.targetdb.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="../../../../schema/sdss5db/targetdb/sdss5db.targetdb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">archive</td>

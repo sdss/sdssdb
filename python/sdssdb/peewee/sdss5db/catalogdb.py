@@ -11,7 +11,7 @@
 
 import warnings
 
-from peewee import (BigAutoField, BigIntegerField, CharField, CompositeKey,
+from peewee import (AutoField, BigAutoField, BigIntegerField, CharField,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
@@ -34,9 +34,21 @@ _Gaia_DR2_TwoMass_Deferred = DeferredThroughModel()
 _APOGEE_Star_Visit_Deferred = DeferredThroughModel()
 
 
+class Version(CatalogdbModel):
+    """Model for the version table."""
+
+    id = AutoField()
+    version = TextField(null=False)
+    code = TextField(null=False)
+
+    class Meta:
+        table_name = 'version'
+        use_reflection = False
+
+
 class Catalog(CatalogdbModel):
 
-    catalogid = BigIntegerField(null=False)
+    catalogid = BigIntegerField(null=False, primary_key=True)
     iauname = TextField(null=True)
     ra = DoubleField(null=False)
     dec = DoubleField(null=False)
@@ -44,12 +56,11 @@ class Catalog(CatalogdbModel):
     pmdec = FloatField(null=True)
     parallax = FloatField(null=True)
     lead = TextField(null=False)
-    version = TextField(null=False)
+    version = ForeignKeyField(Version)
 
     class Meta:
         table_name = 'catalog'
         use_reflection = False
-        primary_key = CompositeKey('catalogid', 'version')
 
 
 class AllWise(CatalogdbModel):
@@ -829,6 +840,7 @@ for rtname in all_tables:
 
         class Meta:
             table_name = rtname
+            primary_key = False
 
         RelationalModel = type(model_name, (CatalogdbModel,), {'Meta': Meta})
 
@@ -839,6 +851,10 @@ for rtname in all_tables:
         RelationalModel._meta.add_field('target',
                                         ForeignKeyField(rel_model,
                                                         column_name='target_id',
+                                                        backref='+'))
+        RelationalModel._meta.add_field('version',
+                                        ForeignKeyField(Version,
+                                                        column_name='version_id',
                                                         backref='+'))
 
         globals()[model_name] = RelationalModel

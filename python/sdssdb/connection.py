@@ -328,12 +328,12 @@ if _peewee:
 
         """
 
-        models = dict()
-
         def __init__(self, *args, **kwargs):
 
             PostgresqlDatabase.__init__(self, None)
             DatabaseConnection.__init__(self, *args, **kwargs)
+
+            self.models = {}
 
         @property
         def connection_params(self):
