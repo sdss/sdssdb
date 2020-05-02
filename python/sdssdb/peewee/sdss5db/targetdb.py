@@ -25,6 +25,16 @@ AssignmentDeferred = DeferredThroughModel()
 ProgramToTargetDeferred = DeferredThroughModel()
 
 
+class Version(TargetdbBase):
+    label = TextField(null=True)
+    pk = AutoField()
+    target_selection = BooleanField()
+    robostrategy = BooleanField()
+
+    class Meta:
+        table_name = 'version'
+
+
 class Cadence(TargetdbBase):
     delta = ArrayField(field_class=FloatField, null=True)
     delta_max = ArrayField(field_class=FloatField, null=True)
@@ -59,7 +69,9 @@ class Field(TargetdbBase):
                                   null=True)
     pk = AutoField()
     racen = DoubleField(null=True)
-    version = TextField(null=True)
+    version = ForeignKeyField(column_name='version_pk',
+                              field='pk',
+                              model=Version)
 
     class Meta:
         table_name = 'field'
@@ -135,14 +147,6 @@ class Magnitude(TargetdbBase):
         table_name = 'magnitude'
 
 
-class Version(TargetdbBase):
-    label = TextField(null=True)
-    pk = AutoField()
-
-    class Meta:
-        table_name = 'version'
-
-
 class Category(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
@@ -170,6 +174,9 @@ class Program(TargetdbBase):
                              field='pk',
                              model=Survey,
                              null=True)
+    version = ForeignKeyField(column_name='version_pk',
+                              field='pk',
+                              model=Version)
 
     class Meta:
         table_name = 'program'
@@ -206,6 +213,7 @@ class Target(TargetdbBase):
     versions = ManyToManyField(Version,
                                through_model=ProgramToTargetDeferred,
                                backref='targets')
+    parallax = FloatField(null=True)
 
     class Meta:
         table_name = 'target'

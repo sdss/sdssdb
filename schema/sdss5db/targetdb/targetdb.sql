@@ -12,18 +12,21 @@ CREATE SCHEMA targetdb;
 SET search_path TO targetdb;
 
 CREATE TABLE targetdb.target (
-	pk SERIAL PRIMARY KEY NOT NULL,
+	pk BIGSERIAL PRIMARY KEY NOT NULL,
 	ra DOUBLE PRECISION,
 	dec DOUBLE PRECISION,
 	pmra REAL,
 	pmdec REAL,
 	epoch REAL,
+    parallax REAL,
 	magnitude_pk BIGINT,
 	catalogid BIGINT);
 
 CREATE TABLE targetdb.version (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	label TEXT);
+	label TEXT,
+    target_selection BOOLEAN,
+    robostrategy BOOLEAN);
 
 CREATE TABLE targetdb.magnitude (
 	pk SERIAL PRIMARY KEY NOT NULL,
@@ -38,6 +41,7 @@ CREATE TABLE targetdb.program (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	survey_pk SMALLINT,
 	category_pk SMALLINT,
+    version_pk SMALLINT,
 	label TEXT);
 
 CREATE TABLE targetdb.survey (
@@ -109,7 +113,7 @@ CREATE TABLE targetdb.field (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	racen DOUBLE PRECISION,
 	deccen DOUBLE PRECISION,
-	version TEXT,
+	version_pk SMALLINT,
 	cadence_pk SMALLINT,
 	observatory_pk SMALLINT);
 
@@ -150,6 +154,11 @@ ALTER TABLE ONLY targetdb.program
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT category_fk
     FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.program
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
@@ -205,6 +214,11 @@ ALTER TABLE ONLY targetdb.field
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT observatory_fk
     FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.field
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.positioner
