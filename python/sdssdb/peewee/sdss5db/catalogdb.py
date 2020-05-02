@@ -39,7 +39,7 @@ class Version(CatalogdbModel):
 
     id = AutoField()
     version = TextField(null=False)
-    code = TextField(null=False)
+    tag = TextField(null=False)
 
     class Meta:
         table_name = 'version'
