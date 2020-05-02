@@ -10,8 +10,57 @@ import sys
 import time
 
 
-__all__ = ('vacuum_all', 'get_cluster_index', 'get_unclustered_tables',
+__all__ = ('vacuum', 'vacuum_all', 'get_cluster_index', 'get_unclustered_tables',
            'get_row_count', 'is_table_locked')
+
+
+def vacuum(database, table_name, analyze=True, verbose=False, schema=None):
+    """Vacuums (and optionally analyses) a table.
+
+    Parameters
+    ----------
+    database : .PeeweeDatabaseConnection
+        A PeeWee connection to the database to vacuum.
+    table_name : str
+        The table name.
+    analyze : bool
+        Whether to run ``ANALYZE`` when vacuumming.
+    verbose : bool
+        Whether to run in verbose mode.
+    schema : str
+        The schema to vacuum. If `None`, vacuums the entire database.
+
+    """
+
+    def execute_sql(statement):
+
+        tstart = time.time()
+
+        # Change isolation level to allow executing commands such as VACUUM.
+        connection = database.connection()
+        original_isolation_level = connection.isolation_level
+        connection.set_isolation_level(0)
+
+        database.execute_sql(statement)
+
+        tend = time.time()
+        telapsed = tend - tstart
+
+        if 'VEBOSE' in statement:
+            print(f'Elapsed {telapsed:.1f} s')
+
+        connection.set_isolation_level(original_isolation_level)
+
+    assert database.is_connection_usable(), 'connection is not usable.'
+
+    table_name = table_name if schema is None else schema + '.' + table_name
+    statement = ('VACUUM' +
+                 (' VEBOSE' if verbose else '') +
+                 (' ANALYZE' if analyze else '') +
+                 ' ' + table_name)
+
+    with database.atomic():
+        execute_sql(statement)
 
 
 def vacuum_all(database, analyze=True, verbose=False, schema=None):
@@ -51,7 +100,7 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
         telapsed = tend - tstart
 
         if 'VEBOSE' in statement:
-            print('Elapsed {telap sed:.1f} s')
+            print(f'Elapsed {telapsed:.1f} s')
         else:
             print(f'{telapsed:.1f} s')
 
