@@ -9,9 +9,14 @@ drop index catalogdb.gaia_dr1_tgas_dec_index;
 */
 
 
+-- kic_ra is in hours. Convert to degrees.
+
+ALTER TABLE catalogdb.kepler_input_10 ADD COLUMN kic_ra_deg DOUBLE PRECISION;
+UPDATE catalogdb.kepler_input_10 SET kic_ra_deg = kic_ra * 15;
+
 -- Indices
 
-CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 (q3c_ang2ipix(kic_ra, kic_dec));
+CREATE INDEX CONCURRENTLY ON catalogdb.kepler_input_10 (q3c_ang2ipix(kic_ra_deg, kic_dec));
 CLUSTER kepler_input_10_q3c_ang2ipix_idx ON catalogdb.kepler_input_10;
 ANALYZE catalogdb.kepler_input_10;
 
