@@ -144,7 +144,7 @@ ALTER TABLE ONLY targetdb.target
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk
-    FOREIGN KEY (catalogid) REFERENCES catalogdb.gaia_dr2_source(source_id);
+    FOREIGN KEY (catalogid) REFERENCES catalogdb.catalog(catalogid);
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT survey_fk
