@@ -11,6 +11,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Changes to the schema display tools.
 * New tools for table `ingestion <.ingest>`.
 * New tools for database `maintenance/internals <.internals>`.
+* Add `.PeeweeDatabaseConnection.get_model` to retrieve the model for a given table.
 
 * :release:`0.3.2 <2020-03-10>`
 * Change ``operations-test`` profile to ``operations`` using the new machine hostname.

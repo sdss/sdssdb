@@ -350,6 +350,33 @@ if _peewee:
 
             return self.connected
 
+        def get_model(self, table_name, schema=None):
+            """Returns the model for a table.
+
+            Parameters
+            ----------
+            table_name : str
+                The name of the table whose model will be returned.
+            schema : str
+                The schema for the table. If `None`, the first model that
+                matches the table name will be returned.
+
+            Returns
+            -------
+            :class:`peewee:Model` or `None`
+                The model associated with the table, or `None` if no model
+                was found.
+
+            """
+
+            for model in self.models:
+                if schema and model._meta.schema != schema:
+                    continue
+                if model._meta.table_name == table_name:
+                    return model
+
+            return None
+
 
 if _sqla:
 
