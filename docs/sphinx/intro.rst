@@ -113,14 +113,14 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">sdss5db</td>
             <td class="active">catalogdb</td>
             <td class="success"></td>
-            <td class="warning"></td>
+            <td class="danger"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/master/schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="https://github.com/sdss/sdssdb/raw/master/schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
-            <td class="success"></td>
+            <td class="danger"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/master/schema/sdss5db/targetdb/sdss5db.targetdb.pdf"></a></td>
         </tr>
         <tr>

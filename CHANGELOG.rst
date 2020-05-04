@@ -12,6 +12,7 @@ This document records the main changes to the ``sdssdb`` code.
 * New tools for table `ingestion <.ingest>`.
 * New tools for database `maintenance/internals <.internals>`.
 * Add `.PeeweeDatabaseConnection.get_model` to retrieve the model for a given table.
+* :bug:`28` Temporarily remove SQLAlchemy implementation of ``sds5db`` since it's not maintained. We may reintroduce it later once the schema is stable.
 
 * :release:`0.3.2 <2020-03-10>`
 * Change ``operations-test`` profile to ``operations`` using the new machine hostname.
