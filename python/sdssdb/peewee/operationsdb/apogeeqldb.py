@@ -6,8 +6,6 @@
 # @Filename: apogeeqldb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from __future__ import absolute_import, division, print_function
-
 from peewee import (SQL, AutoField, DecimalField, DoubleField,
                     FloatField, ForeignKeyField, IntegerField, TextField)
 from playhouse.postgres_ext import ArrayField

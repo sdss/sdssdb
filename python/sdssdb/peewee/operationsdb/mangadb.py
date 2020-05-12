@@ -6,8 +6,6 @@
 # @Filename: mangadb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from __future__ import absolute_import, division, print_function
-
 from peewee import (BooleanField, FloatField, ForeignKeyField,
                     IntegerField, PrimaryKeyField, TextField)
 

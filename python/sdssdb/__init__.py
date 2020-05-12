@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import warnings
 
 from sdsstools import get_config, get_logger, get_package_version
