@@ -10,9 +10,12 @@
 
 from __future__ import absolute_import, division, print_function
 
+import pathlib
 from sdssdb.sqlalchemy.archive import database, ArchiveBase
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Session
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import func
 
 SCHEMA = 'sas'
 
@@ -45,14 +48,63 @@ class Directory(Base):
     __tablename__ = 'directory'
     print_fields = ['location']
 
+    @property
+    def parents(self):
+        ''' return a list of all parent directories '''
+        parentdirs = []
+        path = pathlib.Path(self.location)
+        session = Session.object_session(self)
+        parentlocs = [str(p) for p in path.parents]
+        parentdirs = session.query(Directory).\
+            filter(Directory.tree == self.tree, Directory.location.in_(parentlocs)).\
+            order_by(Directory.id.desc()).all()
+        return parentdirs
+
+    @property
+    def children(self):
+        ''' return a complete list of child sub-directories '''
+        session = Session.object_session(self)
+        realc = session.query(Directory).\
+            filter(Directory.tree == self.tree, Directory.location.ilike(
+            self.location + '%'), Directory.nested == self.nested + 1).all()
+        symc = self.symlink_directories
+        return realc + symc 
+
 
 class File(Base):
     __tablename__ = 'file'
     print_fields = ['name']
 
-    @property
+    @hybrid_property
     def name(self):
         return self.location.rsplit('/', 1)[-1]
+
+    @name.expression
+    def name(cls):
+        return func.reverse(func.split_part(func.reverse(cls.location), '/', 1))
+
+    @property
+    def parents(self):
+        ''' returns a list of all parent directories '''
+        parent = self.directory
+        parents = parent.parents
+        parents.insert(0, parent)
+        return parents
+    
+    @property
+    def has_symlinks(self):
+        ''' returns True if this file is being symlinked or not '''
+        return any(self.symlink_files)
+
+    @property
+    def symlink_tree(self):
+        ''' returns a list of files/directories symlinking to this file '''
+        symfiles = self.symlink_files
+        symdirs = []
+        for path in self.parents:
+            if any(path.linked_symlink_directories):
+                symdirs.extend(path.linked_symlink_directories)
+        return symfiles + symdirs
 
 
 class SymlinkFile(Base):

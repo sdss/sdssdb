@@ -587,7 +587,11 @@ class ObsInfo(Base):
 
     @hybrid_property
     def expnum(self):
-        return func.trim(self._expnum)
+        return self._expnum.strip()
+
+    @expnum.expression
+    def expnum(cls):
+        return func.trim(cls._expnum)
 
 
 class CubeShape(Base):

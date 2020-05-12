@@ -1,0 +1,20 @@
+#
+# custom definitions to generate fake data for model columns using factory.Faker
+#
+# see https://faker.readthedocs.io/en/master/providers/faker.providers.python.html for
+# valid python types
+#
+# Format is a dictionary of table names.  Each table name is a dictionary of columns.  Each column
+# is a dictionary of three keys:
+#   type - the factory.Faker type
+#   args - a list of input arguments to the factory.Faker object
+#   kwargs - a list of keyword arguments to the factory.Faker object
+
+allwise:
+  designation: {type: word}
+  ra: {type: pydecimal, kwargs: {min_value: 0, max_value: 360} }
+  dec:
+    type: pydecimal
+    args: []
+    kwargs: {min_value: 0, max_value: 90}
+

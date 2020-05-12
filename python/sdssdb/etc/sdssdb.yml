@@ -51,3 +51,9 @@ utahdb:
     host: db.sdss.utah.edu
     port: 5432
     domain: db.sdss.utah.edu
+
+slore:
+    user: sdss
+    host: lore.sdss.utah.edu
+    port: 5432
+    domain: lore.sdss.utah.edu

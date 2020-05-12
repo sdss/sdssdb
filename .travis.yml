@@ -4,13 +4,13 @@ cache:
   pip: true
   timeout: 1000
 
-sudo: false
+services:
+  - postgresql
 
 python:
-- '2.7'
-- '3.5'
 - '3.6'
 - '3.7'
+- '3.8'
 
 os:
 - linux
@@ -18,8 +18,8 @@ os:
 matrix:
   fast_finish: true
   allow_failures:
-    - python: '2.7'
-    - python: '3.5'
+    - python: '3.6'
+
 
 notifications:
   email: false
@@ -34,10 +34,10 @@ install:
 - pip install pytest
 - pip install pytest-coverage
 - pip install coveralls
-- python setup.py install
+- pip install .[all,dev]
 
 script:
-- pytest python/sdssdb/tests --cov python/sdssdb --cov-report html
+- pytest -p no:sugar tests --cov python/sdssdb --cov-report html
 
 after_success:
 - coveralls

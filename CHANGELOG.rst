@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Test suite only runs where existing local databases found.  Optionally run only `peewee` or `sqlalchemy` tests. 
+* Adds ability to generate fake data based on real database models for tests
+* Adds ability to test against real or fake databases
+* Write tests either for `peewee` or `sqlalchemy` databases
+* :feature:`-` New framework for writing tests against databases
 * Many changes to the ``catalogdb`` schema files and PeeWee implementation to match the contents to SDSS-V v0 target selection.
 * A new `.ReflectMeta` metaclass that provides reflection for PeeWee models (with some caveats).
 * Reimplementation of most catalogdb PeeWee model classes for catalogdb using reflection.
