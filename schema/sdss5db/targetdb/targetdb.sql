@@ -12,18 +12,21 @@ CREATE SCHEMA targetdb;
 SET search_path TO targetdb;
 
 CREATE TABLE targetdb.target (
-	pk SERIAL PRIMARY KEY NOT NULL,
+	pk BIGSERIAL PRIMARY KEY NOT NULL,
 	ra DOUBLE PRECISION,
 	dec DOUBLE PRECISION,
 	pmra REAL,
 	pmdec REAL,
 	epoch REAL,
+    parallax REAL,
 	magnitude_pk BIGINT,
 	catalogid BIGINT);
 
 CREATE TABLE targetdb.version (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	label TEXT);
+	label TEXT,
+    target_selection BOOLEAN,
+    robostrategy BOOLEAN);
 
 CREATE TABLE targetdb.magnitude (
 	pk SERIAL PRIMARY KEY NOT NULL,
@@ -38,6 +41,7 @@ CREATE TABLE targetdb.program (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	survey_pk SMALLINT,
 	category_pk SMALLINT,
+    version_pk SMALLINT,
 	label TEXT);
 
 CREATE TABLE targetdb.survey (
@@ -53,12 +57,11 @@ CREATE TABLE targetdb.program_to_target (
 	lambda_eff REAL,
 	program_pk SMALLINT,
 	target_pk BIGINT,
-    version_pk SMALLINT,
 	cadence_pk SMALLINT);
 
 CREATE TABLE targetdb.cadence (
     pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT,
+    label TEXT NOT NULL,
     nexposures SMALLINT,
     delta REAL[],
     skybrightness REAL[],
@@ -109,7 +112,7 @@ CREATE TABLE targetdb.field (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	racen DOUBLE PRECISION,
 	deccen DOUBLE PRECISION,
-	version TEXT,
+	version_pk SMALLINT,
 	cadence_pk SMALLINT,
 	observatory_pk SMALLINT);
 
@@ -140,7 +143,7 @@ ALTER TABLE ONLY targetdb.target
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk
-    FOREIGN KEY (catalogid) REFERENCES catalogdb.gaia_dr2_source(source_id);
+    FOREIGN KEY (catalogid) REFERENCES catalogdb.catalog(catalogid);
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT survey_fk
@@ -150,6 +153,11 @@ ALTER TABLE ONLY targetdb.program
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT category_fk
     FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.program
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
@@ -165,11 +173,6 @@ ALTER TABLE ONLY targetdb.program_to_target
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT cadence_fk
     FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.program_to_target
-    ADD CONSTRAINT version_pk_fk
-    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.assignment
@@ -207,6 +210,11 @@ ALTER TABLE ONLY targetdb.field
     FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE ONLY targetdb.field
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
 ALTER TABLE ONLY targetdb.positioner
     ADD CONSTRAINT positioner_status_fk
     FOREIGN KEY (positioner_status_pk) REFERENCES targetdb.positioner_status(pk)
@@ -239,7 +247,6 @@ CREATE INDEX CONCURRENTLY category_pk_idx ON targetdb.program using BTREE(catego
 CREATE INDEX CONCURRENTLY program_pk_idx ON targetdb.program_to_target using BTREE(program_pk);
 CREATE INDEX CONCURRENTLY target_pk_idx ON targetdb.program_to_target using BTREE(target_pk);
 CREATE INDEX CONCURRENTLY cadence_pk_idx ON targetdb.program_to_target using BTREE(cadence_pk);
-CREATE INDEX CONCURRENTLY version_pk_idx ON targetdb.program_to_target using BTREE(version_pk);
 
 CREATE INDEX CONCURRENTLY assignment_target_pk_idx ON targetdb.assignment using BTREE(target_pk);
 CREATE INDEX CONCURRENTLY positioner_pk_idx ON targetdb.assignment using BTREE(positioner_pk);

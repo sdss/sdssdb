@@ -11,7 +11,7 @@ from peewee import (AutoField, BigIntegerField, BooleanField, DeferredThroughMod
                     ManyToManyField, SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
-from . import BaseModel, database  # noqa
+from . import BaseModel, catalogdb, database  # noqa
 
 
 class TargetdbBase(BaseModel):
@@ -25,12 +25,22 @@ AssignmentDeferred = DeferredThroughModel()
 ProgramToTargetDeferred = DeferredThroughModel()
 
 
+class Version(TargetdbBase):
+    label = TextField(null=True)
+    pk = AutoField()
+    target_selection = BooleanField()
+    robostrategy = BooleanField()
+
+    class Meta:
+        table_name = 'version'
+
+
 class Cadence(TargetdbBase):
     delta = ArrayField(field_class=FloatField, null=True)
     delta_max = ArrayField(field_class=FloatField, null=True)
     delta_min = ArrayField(field_class=FloatField, null=True)
     instrument_pk = ArrayField(field_class=IntegerField, null=True)
-    label = TextField(null=True)
+    label = TextField(null=False)
     nexposures = SmallIntegerField(null=True)
     pk = AutoField()
     skybrightness = ArrayField(field_class=FloatField, null=True)
@@ -59,7 +69,9 @@ class Field(TargetdbBase):
                                   null=True)
     pk = AutoField()
     racen = DoubleField(null=True)
-    version = TextField(null=True)
+    version = ForeignKeyField(column_name='version_pk',
+                              field='pk',
+                              model=Version)
 
     class Meta:
         table_name = 'field'
@@ -135,14 +147,6 @@ class Magnitude(TargetdbBase):
         table_name = 'magnitude'
 
 
-class Version(TargetdbBase):
-    label = TextField(null=True)
-    pk = AutoField()
-
-    class Meta:
-        table_name = 'version'
-
-
 class Category(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
@@ -162,21 +166,25 @@ class Survey(TargetdbBase):
 class Program(TargetdbBase):
     category = ForeignKeyField(column_name='category_pk',
                                field='pk',
-                               model=Category,
-                               null=True)
-    label = TextField(null=True)
+                               model=Category)
+    label = TextField()
     pk = AutoField()
     survey = ForeignKeyField(column_name='survey_pk',
                              field='pk',
-                             model=Survey,
-                             null=True)
+                             model=Survey)
+    version = ForeignKeyField(column_name='version_pk',
+                              field='pk',
+                              model=Version)
 
     class Meta:
         table_name = 'program'
 
 
 class Target(TargetdbBase):
-    catalogid = BigIntegerField(null=True)
+    catalog = ForeignKeyField(column_name='catalogid',
+                              object_id_name='catalogid',
+                              model=catalogdb.Catalog,
+                              field='catalogid')
     dec = DoubleField(null=True)
     epoch = FloatField(null=True)
     magnitude = ForeignKeyField(column_name='magnitude_pk',
@@ -197,15 +205,10 @@ class Target(TargetdbBase):
     instruments = ManyToManyField(Instrument,
                                   through_model=AssignmentDeferred,
                                   backref='targets')
-    programs = ManyToManyField(Program,
-                               through_model=ProgramToTargetDeferred,
-                               backref='targets')
     cadences = ManyToManyField(Cadence,
                                through_model=ProgramToTargetDeferred,
                                backref='targets')
-    versions = ManyToManyField(Version,
-                               through_model=ProgramToTargetDeferred,
-                               backref='targets')
+    parallax = FloatField(null=True)
 
     class Meta:
         table_name = 'target'
@@ -243,11 +246,6 @@ class ProgramToTarget(TargetdbBase):
                              column_name='target_pk',
                              field='pk',
                              on_delete='CASCADE')
-    version = ForeignKeyField(Version,
-                              column_name='version_pk',
-                              field='pk',
-                              null=True,
-                              on_delete='CASCADE')
 
     class Meta:
         table_name = 'program_to_target'
