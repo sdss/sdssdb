@@ -12,7 +12,7 @@ from peewee import (AutoField, BigAutoField, BigIntegerField, CharField,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
-from sdssdb.core.exceptions import SdssdbUserWarning
+from sdssdb.core import SdssdbUserWarning
 
 from . import BaseModel, database  # noqa
 

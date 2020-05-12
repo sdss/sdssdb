@@ -8,9 +8,7 @@
 # @Last modified by:   Brian Cherinka
 # @Last Modified time: 2017-12-05 12:19:32
 
-from __future__ import print_function, division, absolute_import
-
-from ..misc.logger import log
+from . import log
 
 
 class SdssdbError(Exception):
