@@ -12,9 +12,10 @@ from peewee import (AutoField, BigAutoField, BigIntegerField, CharField,
                     DeferredThroughModel, DoubleField, FloatField,
                     ForeignKeyField, IntegerField, ManyToManyField, TextField)
 
-from sdssdb.core import SdssdbUserWarning
+from sdssdb.exceptions import SdssdbUserWarning
 
-from . import BaseModel, database  # noqa
+from .. import BaseModel
+from . import database  # noqa
 
 
 class CatalogdbModel(BaseModel):
