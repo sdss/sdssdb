@@ -189,7 +189,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             if item in connection_params:
                 db_configuration[item] = connection_params[item]
             else:
-                profile_value = self._config[self.profile].get(item, None)
+                profile_value = self._config.get(item, None)
                 db_configuration[item] = profile_value
 
         dbname = dbname or self.dbname
