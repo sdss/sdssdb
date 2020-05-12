@@ -83,7 +83,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         if self.dbversion:
             self.dbname = f'{self.dbname}_{self.dbversion}'
 
-        self.set_profile(profile=profile, connect=autoconnect)
+        self.set_profile(profile=profile, connect=False)
 
         if autoconnect and self.dbname:
             self.connect(dbname=self.dbname, silent_on_fail=True)
@@ -139,7 +139,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             if self.connected and self.profile == previous_profile:
                 pass
             elif self.dbname is not None:
-                self.connect(silent_on_fail=True)
+                self.connect()
 
         return self.connected
 
@@ -359,9 +359,9 @@ if _peewee:
             try:
                 self.connected = PostgresqlDatabase.connect(self)
                 self.dbname = dbname
-            except OperationalError:
+            except OperationalError as ee:
                 if not silent_on_fail:
-                    log.warning(f'failed to connect to database {self.database!r}.')
+                    log.warning(f'failed to connect to database {self.database!r}: {ee}')
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
 
