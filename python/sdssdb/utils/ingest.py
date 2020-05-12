@@ -5,9 +5,6 @@
 # @Date: 2019-09-21
 # @Filename: ingest.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
-#
-# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-09-23 11:47:00
 
 import functools
 import io
@@ -16,7 +13,6 @@ import os
 import re
 import warnings
 
-import inflect
 import numpy
 import peewee
 from playhouse.postgres_ext import ArrayField
@@ -33,6 +29,11 @@ try:
     import progressbar
 except ImportError:
     progressbar = False
+
+try:
+    import inflect
+except ImportError:
+    inflect = None
 
 
 __all__ = ('to_csv', 'copy_data', 'drop_table', 'create_model_from_table',
@@ -523,7 +524,9 @@ def camelize_classname(base, tablename, table):
         a string class name
 
     """
-    return str(tablename[0].upper() + re.sub(r'_([a-z])', lambda m: m.group(1).upper(), tablename[1:]))
+    return str(tablename[0].upper() + re.sub(r'_([a-z])',
+                                             lambda m: m.group(1).upper(),
+                                             tablename[1:]))
 
 
 def pluralize_collection(base, local_cls, referred_cls, constraint):
@@ -549,6 +552,9 @@ def pluralize_collection(base, local_cls, referred_cls, constraint):
         An uncamelized, pluralized string class name
 
     """
+
+    assert inflect, 'pluralize_collection requires the inflect library.'
+
     referred_name = referred_cls.__name__
     uncamelized = re.sub(r'[A-Z]',
                          lambda m: "_%s" % m.group(0).lower(),
