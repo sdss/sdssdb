@@ -866,4 +866,10 @@ for rtname in all_tables:
                                                         column_name='version_id',
                                                         backref='+'))
 
+        # Add a many-to-many to Catalog
+        Catalog._meta.add_field(rel_model.__name__.lower(),
+                                ManyToManyField(rel_model,
+                                                through_model=RelationalModel,
+                                                backref='+'))
+
         globals()[model_name] = RelationalModel
