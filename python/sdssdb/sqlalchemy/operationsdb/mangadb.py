@@ -5,9 +5,6 @@
 # @Date: 2018-12-11
 # @Filename: mangadb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
-#
-# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-11 16:09:08
 
 import math
 from decimal import Decimal

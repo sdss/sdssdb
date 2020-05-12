@@ -5,9 +5,6 @@
 # @Date: 2019-09-20
 # @Filename: apogeeqldb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
-#
-# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2019-09-20 20:54:15
 
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr

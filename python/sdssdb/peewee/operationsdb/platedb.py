@@ -5,10 +5,6 @@
 # @Date: 2018-09-22
 # @Filename: platedb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
-#
-# @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
-# @Last modified time: 2018-12-05 15:17:46
-
 
 from __future__ import absolute_import, division, print_function
 
