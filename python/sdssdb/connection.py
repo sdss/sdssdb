@@ -353,6 +353,10 @@ if _peewee:
         def _conn(self, dbname, silent_on_fail=False, **params):
             """Connects to the DB and tests the connection."""
 
+            if 'password' not in params:
+                params['password'] = getpass(params['host'], params['port'],
+                                             dbname, params['user'])
+
             PostgresqlDatabase.__init__(self, None)
             PostgresqlDatabase.init(self, dbname, **params)
 
