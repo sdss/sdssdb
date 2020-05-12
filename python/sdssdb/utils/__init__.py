@@ -1,5 +1,5 @@
 # flake8: noqa
 
-from .schemadisplay import *
-from .ingest import *
-from .internals import *
+from . import schemadisplay
+from . import ingest
+from . import internals

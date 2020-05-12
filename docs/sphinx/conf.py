@@ -21,7 +21,7 @@ import sphinx_bootstrap_theme
 from pkg_resources import parse_version
 
 from sdssdb import __version__
-from sdssdb.utils import create_schema_graph
+from sdssdb.utils.schemadisplay import create_schema_graph
 
 
 try:

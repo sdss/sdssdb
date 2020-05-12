@@ -476,7 +476,7 @@ def create_adhoc_database(dbname, schema=None, profile='local'):
 
     Example
     -------
-        >>> from sdssdb.utils.database import create_adhoc_database
+        >>> from sdssdb.utils.ingest import create_adhoc_database
         >>> tempdb, models = create_adhoc_database('datamodel', schema='filespec')
         >>> tempdb
         >>> <DatamodelDatabaseConnection (dbname='datamodel', profile='local', connected=True)>

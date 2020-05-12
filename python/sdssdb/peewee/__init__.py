@@ -16,7 +16,7 @@ from playhouse.reflection import generate_models
 
 from sdssdb import log
 from sdssdb.core.exceptions import SdssdbUserWarning
-from sdssdb.utils import is_table_locked
+from sdssdb.utils.internals import is_table_locked
 
 
 class ReflectMeta(ModelBase):
