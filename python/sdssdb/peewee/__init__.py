@@ -152,7 +152,8 @@ class ReflectMeta(ModelBase):
 
             with database.atomic():
                 ReflectedModel = generate_models(database, schema=schema,
-                                                 table_names=[table_name])[table_name]
+                                                 table_names=[table_name],
+                                                 bare_fields=True)[table_name]
         except KeyError as ee:
             warnings.warn(f'reflection failed for {table_name}: '
                           f'table or column {ee} not found.',
