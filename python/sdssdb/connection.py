@@ -55,14 +55,19 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Whether to autoconnect to the database using the profile parameters.
         Requites `.dbname` to be set.
     dbversion : str
-        A database version.  If specified, appends to dbname as "dbname_dbversion"
-        and becomes the dbname used for connection strings.
+        A database version.  If specified, appends to dbname as
+        "dbname_dbversion" and becomes the dbname used for connection strings.
 
     """
 
     #: The database name.
     dbname = None
+
+    #: Database version
     dbversion = None
+
+    #: # Whether to call Model.reflect() in Peewee after a connection.
+    auto_reflect = True
 
     def __init__(self, dbname=None, profile=None, autoconnect=True, dbversion=None):
 
@@ -229,6 +234,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'To set it in runtime change the dbname '
                                'attribute.')
 
+        params = {key: params[key] for key in params if params[key]}
+
         return self._conn(dbname, **params)
 
     @staticmethod
@@ -312,6 +319,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         self.dbname = f'{dbname}_{self.dbversion}' if dbversion else dbname
         self.connect(dbname=self.dbname, silent_on_fail=True)
 
+    def post_connect(self):
+        """Hook called after a successfull connection."""
+
+        pass
+
 
 if _peewee:
 
@@ -348,8 +360,7 @@ if _peewee:
             """Connects to the DB and tests the connection."""
 
             if 'password' not in params:
-                params['password'] = getpass(params['host'], params['port'],
-                                             dbname, params['user'])
+                params['password'] = getpass(dbname=dbname, **params)
 
             PostgresqlDatabase.__init__(self, None)
             PostgresqlDatabase.init(self, dbname, **params)
@@ -363,12 +374,15 @@ if _peewee:
                 PostgresqlDatabase.init(self, None)
                 self.connected = False
 
-            if self.is_connection_usable():
+            if self.is_connection_usable() and self.auto_reflect:
                 with self.atomic():
                     for model in self.models.values():
                         if getattr(model._meta, 'use_reflection', False):
                             if hasattr(model, 'reflect'):
                                 model.reflect()
+
+            if self.connected:
+                self.post_connect()
 
             return self.connected
 
@@ -489,6 +503,9 @@ if _sqla:
                 self.connected = True
                 self.dbname = dbname
                 self.prepare_bases()
+
+            if self.connected:
+                self.post_connect()
 
             return self.connected
 
