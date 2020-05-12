@@ -127,6 +127,8 @@ class GalacticGenesisBig(CatalogdbModel):
 
 class GUVCat(CatalogdbModel):
 
+    objid = BigIntegerField(primary_key=True)
+
     class Meta:
         table_name = 'guvcat'
 
@@ -194,6 +196,8 @@ class SDSS_DR14_ASCAP_Star(CatalogdbModel):
 
 class SDSS_DR14_Cannon_Star(CatalogdbModel):
 
+    cannon_id = TextField(primary_key=True)
+
     @property
     def apstars(self):
         """Returns the associated stars in ``SDSSDR14APOGEEStar``."""
@@ -207,6 +211,8 @@ class SDSS_DR14_Cannon_Star(CatalogdbModel):
 
 
 class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
+
+    apogee_id = TextField(primary_key=True)
 
     @property
     def apstars(self):
@@ -222,6 +228,8 @@ class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
 
 class SDSS_DR14_SpecObj(CatalogdbModel):
 
+    specobjid = BigIntegerField(primary_key=True)
+
     photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
                                column_name='bestobjid',
                                object_id_name='bestobjid',
@@ -232,6 +240,8 @@ class SDSS_DR14_SpecObj(CatalogdbModel):
 
 
 class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
+
+    specobjid = BigIntegerField(primary_key=True)
 
     photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
                                column_name='bestobjid',
@@ -263,6 +273,8 @@ class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
 
 class SDSS_DR14_QSO(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     @property
     def specobj(self):
@@ -459,11 +471,15 @@ class BHM_Spiders_Clusters_Superset(BHM_Spiders_Generic_Superset):
 
 class BHM_CSC(CatalogdbModel):
 
+    pk = BigIntegerField(primary_key=True)
+
     class Meta:
         table_name = 'bhm_csc'
 
 
 class Gaia_DR2_WD_SDSS(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     @property
     def specobj(self):
@@ -478,6 +494,8 @@ class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
 
 class Gaia_DR2_WD(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
 
     gaia = ForeignKeyField(Gaia_DR2,
                            column_name='source_id',
@@ -504,6 +522,8 @@ class Tycho2(CatalogdbModel):
 
 
 class GaiaQSO(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'gaia_qso'
@@ -543,11 +563,15 @@ class TIC_v8(CatalogdbModel):
 
 class CatWISE(CatalogdbModel):
 
+    source_id = BigIntegerField(primary_key=True)
+
     class Meta:
         table_name = 'catwise'
 
 
 class CatWISEReject(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'catwise_reject'
@@ -653,15 +677,10 @@ class SkyMapper_DR1_1(CatalogdbModel):
                               object_id_name='allwise_cntr',
                               backref='skymapper')
 
-    gaia1 = ForeignKeyField(Gaia_DR2, field='source_id',
-                            column_name='gaia_dr2_id1',
-                            object_id_name='gaia_dr2_id1',
-                            backref='skymapper1')
-
-    # gaia2 = ForeignKeyField(Gaia_DR2, field='source_id',
-    #                         column_name='gaia_dr2_id2',
-    #                         object_id_name='gaia_dr2_id2',
-    #                         backref='skymapper2')
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_dr2_id1',
+                           object_id_name='gaia_dr2_id1',
+                           backref='skymapper')
 
     @property
     def twomass1(self):
@@ -687,11 +706,15 @@ class SkyMapper_DR1_1(CatalogdbModel):
 
 class PS1_g18(CatalogdbModel):
 
+    objid = BigIntegerField(primary_key=True)
+
     class Meta:
         table_name = 'ps1_g18'
 
 
 class GLIMPSE(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     twomass = ForeignKeyField(TwoMassPSC, field='pts_key',
                               column_name='tmass_cntr',
@@ -704,11 +727,15 @@ class GLIMPSE(CatalogdbModel):
 
 class BHM_eFEDS_Veto(CatalogdbModel):
 
+    pk = BigIntegerField(primary_key=True)
+
     class Meta:
         table_name = 'bhm_efeds_veto'
 
 
 class BestBrightest(CatalogdbModel):
+
+    designation = TextField(primary_key=True)
 
     class Meta:
         table_name = 'best_brightest'
@@ -735,11 +762,15 @@ class SkyMapperGaia(CatalogdbModel):
 
 class UVOT_SSC_1(CatalogdbModel):
 
+    id = BigIntegerField(primary_key=True)
+
     class Meta:
         table_name = 'uvotssc1'
 
 
 class CataclysmicVariables(CatalogdbModel):
+
+    ref_id = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'cataclysmic_variables'
@@ -760,6 +791,8 @@ class YSO_Clustering(CatalogdbModel):
 
 class MIPSGAL(CatalogdbModel):
 
+    mipsgal = TextField(primary_key=True)
+
     twomass = ForeignKeyField(TwoMassPSC,
                               object_id_name='twomass_name',
                               backref='+')
@@ -776,6 +809,8 @@ class MIPSGAL(CatalogdbModel):
 
 class TESS_TOI(CatalogdbModel):
 
+    pk = BigIntegerField(primary_key=True)
+
     tic = ForeignKeyField(TIC_v8,
                           column_name='ticid',
                           object_id_name='ticid',
@@ -786,6 +821,8 @@ class TESS_TOI(CatalogdbModel):
 
 
 class XMM_OM_SUSS_4_1(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'xmm_om_suss_4_1'
@@ -805,6 +842,8 @@ class GeometricDistances_Gaia_DR2(CatalogdbModel):
 
 
 class BHM_RM_v0(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     gaia = ForeignKeyField(Gaia_DR2,
                            column_name='source_id_gaia',
