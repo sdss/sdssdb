@@ -35,7 +35,8 @@ sdssadmin:
     domain: sdssadmin.wasatch.peaks
 
 operations:
-    user: sdss
+    user: sdss_user
+    admin: sdss
     host: operations.sdss.org
     port: 5432
     domain: operations.sdss.*

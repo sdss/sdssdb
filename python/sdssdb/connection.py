@@ -74,11 +74,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         #: Reports whether the connection is active.
         self.connected = False
+
         self.profile = None
+        self._config = {}
+
         self.dbname = dbname if dbname else self.dbname
         self.dbversion = dbversion or self.dbversion
         if self.dbversion:
-            self.dbname = f'{self.dbname}_{self.dbversion}' 
+            self.dbname = f'{self.dbname}_{self.dbversion}'
 
         self.set_profile(profile=profile, connect=autoconnect)
 
@@ -113,6 +116,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
             assert profile in config, 'profile not found in configuration file.'
             self.profile = profile
+            self._config = config[profile].copy()
 
         else:
 
@@ -127,6 +131,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                 if 'domain' in config[profile] and config[profile]['domain'] is not None:
                     if re.match(config[profile]['domain'], hostname):
                         self.profile = profile
+                        self._config = config[profile].copy()
+                        self._config['host'] = None  # Use localhost.
                         break
 
         if connect:
@@ -183,7 +189,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             if item in connection_params:
                 db_configuration[item] = connection_params[item]
             else:
-                profile_value = config[self.profile].get(item, None)
+                profile_value = self._config[self.profile].get(item, None)
                 db_configuration[item] = profile_value
 
         dbname = dbname or self.dbname
@@ -286,10 +292,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        profile = config[self.profile]
-        assert 'admin' in profile, 'admin user not defined in profile'
+        assert 'admin' in self._config, 'admin user not defined in profile'
 
-        self.become(profile['admin'])
+        self.become(self._config['admin'])
 
     def become_user(self):
         """Becomes the read-only user."""
@@ -297,14 +302,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        profile = config[self.profile]
-        user = profile['user'] if 'user' in profile else None
+        user = self._config['user'] if 'user' in self._config else None
 
         self.become(user)
 
     def change_version(self, dbversion=None):
         ''' Change database version and attempt to reconnect
-        
+
         Parameters:
             dbversion (str):
                 A database version

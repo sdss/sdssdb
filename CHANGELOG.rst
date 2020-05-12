@@ -5,19 +5,20 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
-* Test suite only runs where existing local databases found.  Optionally run only `peewee` or `sqlalchemy` tests. 
-* Adds ability to generate fake data based on real database models for tests
-* Adds ability to test against real or fake databases
-* Write tests either for `peewee` or `sqlalchemy` databases
-* :feature:`-` New framework for writing tests against databases
+* Test suite only runs where existing local databases found.  Optionally run only ``peewee`` or ``sqlalchemy`` tests.
+* Adds ability to generate fake data based on real database models for tests.
+* Adds ability to test against real or fake databases.
+* Write tests either for ``peewee`` or ``sqlalchemy`` databases.
+* :feature:`-` New framework for writing tests against databases.
 * Many changes to the ``catalogdb`` schema files and PeeWee implementation to match the contents to SDSS-V v0 target selection.
-* A new `.ReflectMeta` metaclass that provides reflection for PeeWee models (with some caveats).
+* :feature:`-` A new `.ReflectMeta` metaclass that provides reflection for PeeWee models (with some caveats).
 * Reimplementation of most catalogdb PeeWee model classes for catalogdb using reflection.
 * Changes to the schema display tools.
 * New tools for table `ingestion <.ingest>`.
 * New tools for database `maintenance/internals <.internals>`.
 * Add `.PeeweeDatabaseConnection.get_model` to retrieve the model for a given table.
 * :bug:`28` Temporarily remove SQLAlchemy implementation of ``sds5db`` since it's not maintained. We may reintroduce it later once the schema is stable.
+* Use ``host=localhost`` when a profile is being used on its own domain.
 
 * :release:`0.3.2 <2020-03-10>`
 * Change ``operations-test`` profile to ``operations`` using the new machine hostname.
