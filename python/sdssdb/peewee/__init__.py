@@ -84,6 +84,10 @@ class ReflectMeta(ModelBase):
 
     Caveats:
 
+    - Due to a bug in PeeWee primary keys are not discovered correctly and
+      a composite key encompassing all the fields in the model is created.
+      To avoid this, explicitely define the primary key in the model.
+
     - Many-to-many relationships need to be defined explicitely since
       it's not possible to set the through model based on the reflected
       information.
