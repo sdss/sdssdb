@@ -81,6 +81,14 @@ class TwoMassPSC(CatalogdbModel):
         table_name = 'twomass_psc'
 
 
+class TwoMassXSC(CatalogdbModel):
+
+    designation = TextField(primary_key=True)
+
+    class Meta:
+        table_name = 'twomass_xsc'
+
+
 class Gaia_DR2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)

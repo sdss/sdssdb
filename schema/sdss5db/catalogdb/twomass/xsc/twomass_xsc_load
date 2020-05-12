@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+# encoding: utf-8
+
+zcat $CATALOGDB_DIR/twomass/xsc/xsc_aaa.gz | psql -U sdss sdss5db -c "\copy catalogdb.twomass_xsc FROM STDIN WITH DELIMITER '|' NULL '\N' CSV;"
+zcat $CATALOGDB_DIR/twomass/xsc/xsc_baa.gz | psql -U sdss sdss5db -c "\copy catalogdb.twomass_xsc FROM STDIN WITH DELIMITER '|' NULL '\N' CSV;"
