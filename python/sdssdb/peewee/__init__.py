@@ -149,8 +149,10 @@ class ReflectMeta(ModelBase):
                 warnings.warn(f'table {schema}.{table_name} is locked and '
                               'will not be reflected.', SdssdbUserWarning)
                 return
-            ReflectedModel = generate_models(database, schema=schema,
-                                             table_names=[table_name])[table_name]
+
+            with database.atomic():
+                ReflectedModel = generate_models(database, schema=schema,
+                                                 table_names=[table_name])[table_name]
         except KeyError as ee:
             warnings.warn(f'reflection failed for {table_name}: '
                           f'table or column {ee} not found.',
