@@ -468,8 +468,8 @@ if _sqla:
             password = params.get('password', None)
             if not password:
                 try:
-                    password = getpass(params['host'], params['port'], params['database'],
-                                       params['username'])
+                    password = pgpasslib.getpass(params['host'], params['port'],
+                                                 params['database'], params['username'])
                 except KeyError:
                     raise RuntimeError('ERROR: invalid server configuration')
             return password
