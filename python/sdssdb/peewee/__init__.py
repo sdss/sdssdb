@@ -84,7 +84,8 @@ class ReflectMeta(ModelBase):
 
     Caveats:
 
-    - Due to a bug in PeeWee primary keys are not discovered correctly and
+    - Due to a bug in PeeWee primary keys are not discovered correctly if the
+      user connected to the database does not have write access. In that case
       a composite key encompassing all the fields in the model is created.
       To avoid this, explicitely define the primary key in the model.
 
