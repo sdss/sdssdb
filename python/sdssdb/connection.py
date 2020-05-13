@@ -11,8 +11,8 @@ import importlib
 import re
 import socket
 
+import pgpasslib
 import six
-from pgpasslib import getpass
 
 from sdssdb import _peewee, _sqla, config, log
 
@@ -363,7 +363,10 @@ if _peewee:
             """Connects to the DB and tests the connection."""
 
             if 'password' not in params:
-                params['password'] = getpass(dbname=dbname, **params)
+                try:
+                    params['password'] = pgpasslib.getpass(dbname=dbname, **params)
+                except pgpasslib.FileNotFound:
+                    params['password'] = None
 
             PostgresqlDatabase.init(self, dbname, **params)
 
