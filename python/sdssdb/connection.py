@@ -19,6 +19,7 @@ from sdssdb import _peewee, _sqla, config, log
 
 if _peewee:
     from peewee import OperationalError, PostgresqlDatabase
+    from playhouse.reflection import Introspector
 
 if _sqla:
     from sqlalchemy import create_engine, MetaData
@@ -70,9 +71,6 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     auto_reflect = True
 
     def __init__(self, dbname=None, profile=None, autoconnect=True, dbversion=None):
-
-        #: Reports whether the connection is active.
-        self.connected = False
 
         self.profile = None
         self._config = {}
@@ -341,18 +339,23 @@ if _peewee:
         def __init__(self, *args, **kwargs):
 
             self.models = {}
+            self.introspector = {}
 
             PostgresqlDatabase.__init__(self, None)
             DatabaseConnection.__init__(self, *args, **kwargs)
+
+        @property
+        def connected(self):
+            """Reports whether the connection is active."""
+
+            return self.is_connection_usable()
 
         @property
         def connection_params(self):
             """Returns a dictionary with the connection parameters."""
 
             if self.connected:
-                dsn = self.connection().get_dsn_parameters()
-                dsn.update({'dbname': self.dbname})
-                return dsn
+                return self.connect_params
 
             return None
 
@@ -362,17 +365,15 @@ if _peewee:
             if 'password' not in params:
                 params['password'] = getpass(dbname=dbname, **params)
 
-            PostgresqlDatabase.__init__(self, None)
             PostgresqlDatabase.init(self, dbname, **params)
 
             try:
-                self.connected = PostgresqlDatabase.connect(self)
+                PostgresqlDatabase.connect(self)
                 self.dbname = dbname
             except OperationalError as ee:
                 if not silent_on_fail:
                     log.warning(f'failed to connect to database {self.database!r}: {ee}')
                 PostgresqlDatabase.init(self, None)
-                self.connected = False
 
             if self.is_connection_usable() and self.auto_reflect:
                 with self.atomic():
@@ -413,6 +414,17 @@ if _peewee:
 
             return None
 
+        def get_introspector(self, schema=None):
+            """Gets a Peewee database :pyclass:`peewee:Instrospector`."""
+
+            schema_key = schema or ''
+
+            if schema_key not in self.introspector:
+                self.introspector[schema_key] = Introspector.from_database(self,
+                                                                           schema=schema)
+
+            return self.introspector[schema_key]
+
 
 if _sqla:
 
@@ -425,6 +437,10 @@ if _sqla:
         metadata = None
 
         def __init__(self, *args, **kwargs):
+
+            #: Reports whether the connection is active.
+            self.connected = False
+
             self._connect_params = None
             DatabaseConnection.__init__(self, *args, **kwargs)
 
