@@ -355,7 +355,7 @@ if _peewee:
             """Returns a dictionary with the connection parameters."""
 
             if self.connected:
-                return self.connect_params
+                return self.connect_params.copy()
 
             return None
 
