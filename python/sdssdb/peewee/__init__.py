@@ -79,6 +79,15 @@ class ReflectMeta(ModelBase):
     means that if you add a `peewee:ForeignKeyField`, the referenced field
     (usually the primary key) needs to be defined explicitely.
 
+    The default Peewee reflection process requires multiple queries against
+    the database for each table. This can become quite slow if the schema
+    contains many tables or if the connection has significant overhead, for
+    example when connected over an SSH tunnel. In these cases one can set
+    ``Meta`` with ``reflection_options = {'use_peewee_reflection': False}``.
+    This will use a reflection system that is designed to minimise the
+    number of queries needed for schema introspection. Note that this system
+    is experimental and doesn't reflect foreign keys or constraints.
+
     Caveats:
 
     - Due to a bug in PeeWee primary keys are not discovered correctly if the
@@ -109,11 +118,10 @@ class ReflectMeta(ModelBase):
 
         Model = super(ReflectMeta, cls).__new__(cls, name, bases, attrs)
 
-        Model._meta.use_reflection = getattr(Model._meta, 'use_reflection', False)
-
         database = Model._meta.database
-        if database and hasattr(database, 'models') and Model not in database.models:
-            database.models[Model._meta.table_name] = Model
+        if database and hasattr(database, 'models'):
+            if Model not in database.models:
+                database.models[Model._meta.table_name] = Model
 
         cls.reflect(Model)
 
@@ -124,8 +132,18 @@ class ReflectMeta(ModelBase):
 
         meta = self._meta
         database = meta.database
+        table_name = meta.table_name
+        schema = meta.schema
 
-        if not database or not database.connected or not self.table_exists():
+        if not database or not database.connected:
+            return
+
+        # Lists tables in the schema. This is a bit of a hack but
+        # faster than using database.table_exists because it's cached.
+        database.get_fields(table_name, schema)  # Force caching of _metadata.
+        schema_tables = database._metadata[schema].keys()
+
+        if table_name not in schema_tables:
             return
 
         # Don't do anything if this model doesn't want reflection.
@@ -139,35 +157,52 @@ class ReflectMeta(ModelBase):
         if not database.is_connection_usable():
             raise peewee.DatabaseError('database not connected.')
 
-        skip_fks = (hasattr(meta, 'reflection_options') and
-                    meta.reflection_options.get('skip_foreign_keys', False))
-
-        table_name = meta.table_name
-        schema = meta.schema
+        if hasattr(meta, 'reflection_options'):
+            opts = meta.reflection_options
+            skip_fks = opts.get('skip_foreign_keys', False)
+            use_peewee_reflection = opts.get('use_peewee_reflection', True)
+        else:
+            skip_fks = False
+            custom_reflection = False
 
         try:
-            locks = is_table_locked(database, table_name)
-            if locks and 'AccessExclusiveLock' in locks:
-                warnings.warn(f'table {schema}.{table_name} is locked and '
-                              'will not be reflected.', SdssdbUserWarning)
-                return
 
-            introspector = database.get_introspector(schema)
-            ReflectedModel = introspector.generate_models(table_names=[table_name])[table_name]
+            if use_peewee_reflection:
+
+                # Check for locks. We only need to do this if using the Peewee
+                # reflection because one of the queries it does can be blocked
+                # by a AccessExclusiveLock lock.
+                locks = is_table_locked(database, table_name)
+                if locks and 'AccessExclusiveLock' in locks:
+                    warnings.warn(f'table {schema}.{table_name} is locked and '
+                                  'will not be reflected.', SdssdbUserWarning)
+                    return
+
+                introspector = database.get_introspector(schema)
+                reflected_model = introspector.generate_models(
+                    table_names=[table_name])[table_name]
+                fields = reflected_model._meta.fields
+
+            else:
+                fields = database.get_fields(table_name, schema)
+                fields = {field.column_name: field for field in fields}
+
         except KeyError as ee:
             warnings.warn(f'reflection failed for {table_name}: '
                           f'table or column {ee} not found.',
                           SdssdbUserWarning)
             return
+
         except Exception as ee:
-            warnings.warn(f'reflection failed for {table_name}: {ee}', SdssdbUserWarning)
+            warnings.warn(f'reflection failed for {table_name}: {ee}',
+                          SdssdbUserWarning)
             return
 
-        for field_name, field in ReflectedModel._meta.fields.items():
+        for field_name, field in fields.items():
 
             if field_name in meta.fields:
                 meta_field = meta.fields[field_name]
-                if not hasattr(meta_field, 'reflected') or not meta_field.reflected:
+                if not getattr(meta_field, 'reflected', False):
                     continue
 
             if isinstance(field, peewee.ForeignKeyField) and skip_fks:
@@ -182,13 +217,17 @@ class ReflectMeta(ModelBase):
 
         # Composite keys are not a normal column so if the pk has not been
         # set already, check if it exists in the reflected model. We avoid
-        # adding pks that are
-        if not meta.primary_key and ReflectedModel._meta.primary_key:
-            if isinstance(ReflectedModel._meta.primary_key, peewee.ForeignKeyField) and skip_fks:
-                pass
-            else:
-                pk = ReflectedModel._meta.primary_key
-                meta.set_primary_key(pk.name, pk)
+        # adding pks that are foreign keys.
+        if not meta.primary_key:
+            if use_peewee_reflection and reflected_model._meta.primary_key:
+                pk = reflected_model._meta.primary_key
+                if not isinstance(pk, peewee.ForeignKeyField) or not skip_fks:
+                    meta.set_primary_key(pk.name, pk)
+            elif not use_peewee_reflection:
+                pk = database.get_primary_keys(table_name, schema)
+                if len(pk) > 1:
+                    pk = peewee.CompositeKey(*pk)
+                    meta.set_primary_key('__composite_key__', pk)
 
 
 class BaseModel(Model, metaclass=ReflectMeta):
