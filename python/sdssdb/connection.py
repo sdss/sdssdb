@@ -15,11 +15,14 @@ import pgpasslib
 import six
 
 from sdssdb import _peewee, _sqla, config, log
+from sdssdb.utils.internals import get_database_columns
 
 
 if _peewee:
+    import peewee
     from peewee import OperationalError, PostgresqlDatabase
-    from playhouse.reflection import Introspector
+    from playhouse.postgres_ext import ArrayField
+    from playhouse.reflection import Introspector, UnknownField
 
 if _sqla:
     from sqlalchemy import create_engine, MetaData
@@ -341,6 +344,8 @@ if _peewee:
             self.models = {}
             self.introspector = {}
 
+            self._metadata = {}
+
             PostgresqlDatabase.__init__(self, None)
             DatabaseConnection.__init__(self, *args, **kwargs)
 
@@ -423,10 +428,65 @@ if _peewee:
             schema_key = schema or ''
 
             if schema_key not in self.introspector:
-                self.introspector[schema_key] = Introspector.from_database(self,
-                                                                           schema=schema)
+                self.introspector[schema_key] = Introspector.from_database(
+                    self, schema=schema)
 
             return self.introspector[schema_key]
+
+        def get_fields(self, table_name, schema=None, cache=True):
+            """Returns a list of Peewee fields for a table."""
+
+            schema = schema or 'public'
+
+            if schema not in self._metadata or not cache:
+                self._metadata[schema] = get_database_columns(self,
+                                                              schema=schema)
+
+            if table_name not in self._metadata[schema]:
+                return []
+
+            table_metadata = self._metadata[schema][table_name]
+
+            pk = table_metadata['pk']
+            composite_key = pk is not None and len(pk) > 1
+
+            columns = table_metadata['columns']
+
+            fields = []
+            for col_name, field_type, array_type, nullable in columns:
+
+                is_pk = True if (pk is not None and not composite_key and
+                                 pk[0] == col_name) else False
+
+                params = {'column_name': col_name,
+                          'null': nullable,
+                          'primary_key': is_pk,
+                          'unique': is_pk}
+
+                if array_type:
+                    field = ArrayField(array_type, **params)
+                elif array_type is False and field_type is UnknownField:
+                    field = peewee.BareField(**params)
+                else:
+                    field = field_type(**params)
+
+                fields.append(field)
+
+            return fields
+
+        def get_primary_keys(self, table_name, schema=None, cache=True):
+            """Returns the primary keys for a table."""
+
+            schema = schema or 'public'
+
+            if schema not in self._metadata or not cache:
+                self._metadata[schema] = get_database_columns(self,
+                                                              schema=schema)
+
+            if table_name not in self._metadata[schema]:
+                return []
+            else:
+                return self._metadata[schema][table_name]['pk'] or []
 
 
 if _sqla:
