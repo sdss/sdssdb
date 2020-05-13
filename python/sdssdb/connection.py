@@ -418,7 +418,7 @@ if _peewee:
             return None
 
         def get_introspector(self, schema=None):
-            """Gets a Peewee database :pyclass:`peewee:Instrospector`."""
+            """Gets a Peewee database :class:`peewee:Introspector`."""
 
             schema_key = schema or ''
 
