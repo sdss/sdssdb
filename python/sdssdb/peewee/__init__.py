@@ -154,10 +154,8 @@ class ReflectMeta(ModelBase):
                               'will not be reflected.', SdssdbUserWarning)
                 return
 
-            with database.atomic():
-                ReflectedModel = generate_models(database, schema=schema,
-                                                 table_names=[table_name],
-                                                 bare_fields=True)[table_name]
+            introspector = database.get_introspector(schema)
+            ReflectedModel = introspector.generate_models(table_names=[table_name])[table_name]
         except KeyError as ee:
             warnings.warn(f'reflection failed for {table_name}: '
                           f'table or column {ee} not found.',
