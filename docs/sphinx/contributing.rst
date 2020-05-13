@@ -76,6 +76,8 @@ Once the file has been generated you will need to do some changes. On the top of
 
 The first line conveniently allows for access to the database connection from the schema submodule. The second one renames ``AwesomedbModel`` to ``BaseModel`` so that all the model classes in the file inherit from it. You'll probably need to make some other changes to the file, especially to the foreign keys to make sure they match your naming requirements.
 
+.. _reflect-peewee:
+
 Using reflection with Peewee
 ''''''''''''''''''''''''''''
 
