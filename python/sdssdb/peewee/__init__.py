@@ -1,7 +1,6 @@
 # isort:skip_file
 # flake8: noqa
 
-import re
 import warnings
 
 from sdssdb import _peewee
@@ -12,9 +11,7 @@ if _peewee is False:
 import peewee
 from peewee import Model, ModelBase, fn
 from playhouse.hybrid import hybrid_method
-from playhouse.reflection import generate_models
 
-from sdssdb import log
 from sdssdb.exceptions import SdssdbUserWarning
 from sdssdb.utils.internals import is_table_locked
 
