@@ -14,21 +14,18 @@ import socket
 import pgpasslib
 import six
 
-from sdssdb import _peewee, _sqla, config, log
+from sqlalchemy import MetaData, create_engine
+from sqlalchemy.engine import url
+from sqlalchemy.exc import OperationalError as OpError
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+import peewee
+from peewee import OperationalError, PostgresqlDatabase
+from playhouse.postgres_ext import ArrayField
+from playhouse.reflection import Introspector, UnknownField
+
+from sdssdb import config, log
 from sdssdb.utils.internals import get_database_columns
-
-
-if _peewee:
-    import peewee
-    from peewee import OperationalError, PostgresqlDatabase
-    from playhouse.postgres_ext import ArrayField
-    from playhouse.reflection import Introspector, UnknownField
-
-if _sqla:
-    from sqlalchemy import create_engine, MetaData
-    from sqlalchemy.engine import url
-    from sqlalchemy.exc import OperationalError as OpError
-    from sqlalchemy.orm import sessionmaker, scoped_session
 
 
 __all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
@@ -326,334 +323,328 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         pass
 
 
-if _peewee:
+class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
+    """Peewee database connection implementation.
 
-    class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
-        """Peewee database connection implementation.
+    Attributes
+    ----------
+    models : list
+        Models bound to this database. Only models that are bound using
+        `~sdssdb.peewee.BaseModel` are handled.
 
-        Attributes
+    """
+
+    def __init__(self, *args, **kwargs):
+
+        self.models = {}
+        self.introspector = {}
+
+        self._metadata = {}
+
+        PostgresqlDatabase.__init__(self, None)
+        DatabaseConnection.__init__(self, *args, **kwargs)
+
+    @property
+    def connected(self):
+        """Reports whether the connection is active."""
+
+        return self.is_connection_usable()
+
+    @property
+    def connection_params(self):
+        """Returns a dictionary with the connection parameters."""
+
+        if self.connected:
+            return self.connect_params.copy()
+
+        return None
+
+    def _conn(self, dbname, silent_on_fail=False, **params):
+        """Connects to the DB and tests the connection."""
+
+        if 'password' not in params:
+            try:
+                params['password'] = pgpasslib.getpass(dbname=dbname, **params)
+            except pgpasslib.FileNotFound:
+                params['password'] = None
+
+        PostgresqlDatabase.init(self, dbname, **params)
+
+        try:
+            PostgresqlDatabase.connect(self)
+            self.dbname = dbname
+        except OperationalError as ee:
+            if not silent_on_fail:
+                log.warning(f'failed to connect to database {self.database!r}: {ee}')
+            PostgresqlDatabase.init(self, None)
+
+        if self.is_connection_usable() and self.auto_reflect:
+            with self.atomic():
+                for model in self.models.values():
+                    if getattr(model._meta, 'use_reflection', False):
+                        if hasattr(model, 'reflect'):
+                            model.reflect()
+
+        if self.connected:
+            self.post_connect()
+
+        return self.connected
+
+    def get_model(self, table_name, schema=None):
+        """Returns the model for a table.
+
+        Parameters
         ----------
-        models : list
-            Models bound to this database. Only models that are bound using
-            `~sdssdb.peewee.BaseModel` are handled.
+        table_name : str
+            The name of the table whose model will be returned.
+        schema : str
+            The schema for the table. If `None`, the first model that
+            matches the table name will be returned.
+
+        Returns
+        -------
+        :class:`peewee:Model` or `None`
+            The model associated with the table, or `None` if no model
+            was found.
 
         """
 
-        def __init__(self, *args, **kwargs):
+        for model in self.models:
+            if schema and model._meta.schema != schema:
+                continue
+            if model._meta.table_name == table_name:
+                return model
 
-            self.models = {}
-            self.introspector = {}
+        return None
 
-            self._metadata = {}
+    def get_introspector(self, schema=None):
+        """Gets a Peewee database :class:`peewee:Introspector`."""
 
-            PostgresqlDatabase.__init__(self, None)
-            DatabaseConnection.__init__(self, *args, **kwargs)
+        schema_key = schema or ''
 
-        @property
-        def connected(self):
-            """Reports whether the connection is active."""
+        if schema_key not in self.introspector:
+            self.introspector[schema_key] = Introspector.from_database(
+                self, schema=schema)
 
-            return self.is_connection_usable()
+        return self.introspector[schema_key]
 
-        @property
-        def connection_params(self):
-            """Returns a dictionary with the connection parameters."""
+    def get_fields(self, table_name, schema=None, cache=True):
+        """Returns a list of Peewee fields for a table."""
 
-            if self.connected:
-                return self.connect_params.copy()
+        schema = schema or 'public'
 
-            return None
+        if schema not in self._metadata or not cache:
+            self._metadata[schema] = get_database_columns(self, schema=schema)
 
-        def _conn(self, dbname, silent_on_fail=False, **params):
-            """Connects to the DB and tests the connection."""
+        if table_name not in self._metadata[schema]:
+            return []
 
-            if 'password' not in params:
-                try:
-                    params['password'] = pgpasslib.getpass(dbname=dbname, **params)
-                except pgpasslib.FileNotFound:
-                    params['password'] = None
+        table_metadata = self._metadata[schema][table_name]
 
-            PostgresqlDatabase.init(self, dbname, **params)
+        pk = table_metadata['pk']
+        composite_key = pk is not None and len(pk) > 1
 
-            try:
-                PostgresqlDatabase.connect(self)
-                self.dbname = dbname
-            except OperationalError as ee:
-                if not silent_on_fail:
-                    log.warning(f'failed to connect to database {self.database!r}: {ee}')
-                PostgresqlDatabase.init(self, None)
+        columns = table_metadata['columns']
 
-            if self.is_connection_usable() and self.auto_reflect:
-                with self.atomic():
-                    for model in self.models.values():
-                        if getattr(model._meta, 'use_reflection', False):
-                            if hasattr(model, 'reflect'):
-                                model.reflect()
+        fields = []
+        for col_name, field_type, array_type, nullable in columns:
 
-            if self.connected:
-                self.post_connect()
+            is_pk = True if (pk is not None and not composite_key and
+                             pk[0] == col_name) else False
 
-            return self.connected
+            params = {'column_name': col_name,
+                      'null': nullable,
+                      'primary_key': is_pk,
+                      'unique': is_pk}
 
-        def get_model(self, table_name, schema=None):
-            """Returns the model for a table.
-
-            Parameters
-            ----------
-            table_name : str
-                The name of the table whose model will be returned.
-            schema : str
-                The schema for the table. If `None`, the first model that
-                matches the table name will be returned.
-
-            Returns
-            -------
-            :class:`peewee:Model` or `None`
-                The model associated with the table, or `None` if no model
-                was found.
-
-            """
-
-            for model in self.models:
-                if schema and model._meta.schema != schema:
-                    continue
-                if model._meta.table_name == table_name:
-                    return model
-
-            return None
-
-        def get_introspector(self, schema=None):
-            """Gets a Peewee database :class:`peewee:Introspector`."""
-
-            schema_key = schema or ''
-
-            if schema_key not in self.introspector:
-                self.introspector[schema_key] = Introspector.from_database(
-                    self, schema=schema)
-
-            return self.introspector[schema_key]
-
-        def get_fields(self, table_name, schema=None, cache=True):
-            """Returns a list of Peewee fields for a table."""
-
-            schema = schema or 'public'
-
-            if schema not in self._metadata or not cache:
-                self._metadata[schema] = get_database_columns(self,
-                                                              schema=schema)
-
-            if table_name not in self._metadata[schema]:
-                return []
-
-            table_metadata = self._metadata[schema][table_name]
-
-            pk = table_metadata['pk']
-            composite_key = pk is not None and len(pk) > 1
-
-            columns = table_metadata['columns']
-
-            fields = []
-            for col_name, field_type, array_type, nullable in columns:
-
-                is_pk = True if (pk is not None and not composite_key and
-                                 pk[0] == col_name) else False
-
-                params = {'column_name': col_name,
-                          'null': nullable,
-                          'primary_key': is_pk,
-                          'unique': is_pk}
-
-                if array_type:
-                    field = ArrayField(array_type, **params)
-                elif array_type is False and field_type is UnknownField:
-                    field = peewee.BareField(**params)
-                else:
-                    field = field_type(**params)
-
-                fields.append(field)
-
-            return fields
-
-        def get_primary_keys(self, table_name, schema=None, cache=True):
-            """Returns the primary keys for a table."""
-
-            schema = schema or 'public'
-
-            if schema not in self._metadata or not cache:
-                self._metadata[schema] = get_database_columns(self,
-                                                              schema=schema)
-
-            if table_name not in self._metadata[schema]:
-                return []
+            if array_type:
+                field = ArrayField(array_type, **params)
+            elif array_type is False and field_type is UnknownField:
+                field = peewee.BareField(**params)
             else:
-                return self._metadata[schema][table_name]['pk'] or []
+                field = field_type(**params)
+
+            fields.append(field)
+
+        return fields
+
+    def get_primary_keys(self, table_name, schema=None, cache=True):
+        """Returns the primary keys for a table."""
+
+        schema = schema or 'public'
+
+        if schema not in self._metadata or not cache:
+            self._metadata[schema] = get_database_columns(self, schema=schema)
+
+        if table_name not in self._metadata[schema]:
+            return []
+        else:
+            return self._metadata[schema][table_name]['pk'] or []
 
 
-if _sqla:
+class SQLADatabaseConnection(DatabaseConnection):
+    ''' SQLAlchemy database connection implementation '''
 
-    class SQLADatabaseConnection(DatabaseConnection):
-        ''' SQLAlchemy database connection implementation '''
+    engine = None
+    bases = []
+    Session = None
+    metadata = None
 
-        engine = None
-        bases = []
-        Session = None
-        metadata = None
+    def __init__(self, *args, **kwargs):
 
-        def __init__(self, *args, **kwargs):
+        #: Reports whether the connection is active.
+        self.connected = False
 
-            #: Reports whether the connection is active.
+        self._connect_params = None
+        DatabaseConnection.__init__(self, *args, **kwargs)
+
+    @property
+    def connection_params(self):
+        """Returns a dictionary with the connection parameters."""
+
+        return self._connect_params
+
+    def _get_password(self, **params):
+        ''' Get a db password from a pgpass file
+
+        Parameters:
+            params (dict):
+                A dictionary of database connection parameters
+
+        Returns:
+            The database password for a given set of connection parameters
+
+        '''
+
+        password = params.get('password', None)
+        if not password:
+            try:
+                password = pgpasslib.getpass(params['host'], params['port'],
+                                             params['database'], params['username'])
+            except KeyError:
+                raise RuntimeError('ERROR: invalid server configuration')
+        return password
+
+    def _make_connection_string(self, dbname, **params):
+        ''' Build a db connection string
+
+        Parameters:
+            dbname (str):
+                The name of the database to connect to
+            params (dict):
+                A dictionary of database connection parameters
+
+        Returns:
+            A database connection string
+
+        '''
+
+        db_params = params.copy()
+        db_params['drivername'] = 'postgresql+psycopg2'
+        db_params['database'] = dbname
+        db_params['username'] = db_params.pop('user', None)
+        db_params['host'] = db_params.pop('host', 'localhost')
+        db_params['port'] = db_params.pop('port', 5432)
+        if db_params['username']:
+            db_params['password'] = self._get_password(**db_params)
+        db_connection_string = url.URL(**db_params)
+        self._connect_params = params
+        return db_connection_string
+
+    def _conn(self, dbname, silent_on_fail=False, **params):
+        '''Connects to the DB and tests the connection.'''
+
+        # get connection string
+        db_connection_string = self._make_connection_string(dbname, **params)
+
+        try:
+            self.create_engine(db_connection_string, echo=False,
+                               pool_size=10, pool_recycle=1800)
+            self.engine.connect()
+        except OpError:
+            if not silent_on_fail:
+                log.warning('Failed to connect to database {0}'.format(dbname))
+            self.engine.dispose()
+            self.engine = None
             self.connected = False
+            self.Session = None
+            self.metadata = None
+        else:
+            self.connected = True
+            self.dbname = dbname
+            self.prepare_bases()
 
-            self._connect_params = None
-            DatabaseConnection.__init__(self, *args, **kwargs)
+        if self.connected:
+            self.post_connect()
 
-        @property
-        def connection_params(self):
-            """Returns a dictionary with the connection parameters."""
+        return self.connected
 
-            return self._connect_params
+    def reset_engine(self):
+        ''' Reset the engine, metadata, and session '''
 
-        def _get_password(self, **params):
-            ''' Get a db password from a pgpass file
+        self.bases = []
+        if self.engine:
+            self.engine.dispose()
+            self.engine = None
+            self.metadata = None
+            self.Session.close()
+            self.Session = None
 
-            Parameters:
-                params (dict):
-                    A dictionary of database connection parameters
+    def create_engine(self, db_connection_string=None, echo=False, pool_size=10,
+                      pool_recycle=1800, expire_on_commit=True):
+        ''' Create a new database engine
 
-            Returns:
-                The database password for a given set of connection parameters
+        Resets and creates a new sqlalchemy database engine.  Also creates and binds
+        engine metadata and a new scoped session.
 
-            '''
+        '''
 
-            password = params.get('password', None)
-            if not password:
-                try:
-                    password = pgpasslib.getpass(params['host'], params['port'],
-                                                 params['database'], params['username'])
-                except KeyError:
-                    raise RuntimeError('ERROR: invalid server configuration')
-            return password
+        self.reset_engine()
 
-        def _make_connection_string(self, dbname, **params):
-            ''' Build a db connection string
+        if not db_connection_string:
+            dbname = self.dbname or self.DATABASE_NAME
+            db_connection_string = self._make_connection_string(dbname,
+                                                                **self.connection_params)
 
-            Parameters:
-                dbname (str):
-                    The name of the database to connect to
-                params (dict):
-                    A dictionary of database connection parameters
+        self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size,
+                                    pool_recycle=pool_recycle)
+        self.metadata = MetaData(bind=self.engine)
+        self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
+                                                   expire_on_commit=expire_on_commit))
 
-            Returns:
-                A database connection string
+    def add_base(self, base, prepare=True):
+        """Binds a base to this connection."""
 
-            '''
+        if base not in self.bases:
+            self.bases.append(base)
 
-            db_params = params.copy()
-            db_params['drivername'] = 'postgresql+psycopg2'
-            db_params['database'] = dbname
-            db_params['username'] = db_params.pop('user', None)
-            db_params['host'] = db_params.pop('host', 'localhost')
-            db_params['port'] = db_params.pop('port', 5432)
-            if db_params['username']:
-                db_params['password'] = self._get_password(**db_params)
-            db_connection_string = url.URL(**db_params)
-            self._connect_params = params
-            return db_connection_string
+        if prepare and self.connected:
+            self.prepare_bases(base=base)
 
-        def _conn(self, dbname, silent_on_fail=False, **params):
-            '''Connects to the DB and tests the connection.'''
+    def prepare_bases(self, base=None):
+        """Prepare a Model Base
 
-            # get connection string
-            db_connection_string = self._make_connection_string(dbname, **params)
+        Prepares a SQLalchemy Base for reflection. This binds a database
+        engine to a specific Base which maps to a set of ModelClasses.
+        If ``base`` is passed only that base will be prepared. Otherwise,
+        all the bases bound to this database connection will be prepared.
 
-            try:
-                self.create_engine(db_connection_string, echo=False,
-                                   pool_size=10, pool_recycle=1800)
-                self.engine.connect()
-            except OpError:
-                if not silent_on_fail:
-                    log.warning('Failed to connect to database {0}'.format(dbname))
-                self.engine.dispose()
-                self.engine = None
-                self.connected = False
-                self.Session = None
-                self.metadata = None
-            else:
-                self.connected = True
-                self.dbname = dbname
-                self.prepare_bases()
+        """
 
-            if self.connected:
-                self.post_connect()
+        do_bases = [base] if base else self.bases
 
-            return self.connected
+        for base in do_bases:
+            base.prepare(self.engine)
 
-        def reset_engine(self):
-            ''' Reset the engine, metadata, and session '''
-
-            self.bases = []
-            if self.engine:
-                self.engine.dispose()
-                self.engine = None
-                self.metadata = None
-                self.Session.close()
-                self.Session = None
-
-        def create_engine(self, db_connection_string=None, echo=False, pool_size=10,
-                          pool_recycle=1800, expire_on_commit=True):
-            ''' Create a new database engine
-
-            Resets and creates a new sqlalchemy database engine.  Also creates and binds
-            engine metadata and a new scoped session.
-
-            '''
-
-            self.reset_engine()
-
-            if not db_connection_string:
-                dbname = self.dbname or self.DATABASE_NAME
-                db_connection_string = self._make_connection_string(dbname,
-                                                                    **self.connection_params)
-
-            self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size,
-                                        pool_recycle=pool_recycle)
-            self.metadata = MetaData(bind=self.engine)
-            self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
-                                                       expire_on_commit=expire_on_commit))
-
-        def add_base(self, base, prepare=True):
-            """Binds a base to this connection."""
-
-            if base not in self.bases:
-                self.bases.append(base)
-
-            if prepare and self.connected:
-                self.prepare_bases(base=base)
-
-        def prepare_bases(self, base=None):
-            """Prepare a Model Base
-
-            Prepares a SQLalchemy Base for reflection. This binds a database
-            engine to a specific Base which maps to a set of ModelClasses.
-            If ``base`` is passed only that base will be prepared. Otherwise,
-            all the bases bound to this database connection will be prepared.
-
-            """
-
-            do_bases = [base] if base else self.bases
-
-            for base in do_bases:
-                base.prepare(self.engine)
-
-                # If the base has an attribute _relations that's the function
-                # to call to set up the relationships once the engine has been
-                # bound to the base.
-                if hasattr(base, '_relations'):
-                    if isinstance(base._relations, str):
-                        module = importlib.import_module(base.__module__)
-                        relations_func = getattr(module, base._relations)
-                        relations_func()
-                    elif callable(base._relations):
-                        base._relations()
-                    else:
-                        pass
+            # If the base has an attribute _relations that's the function
+            # to call to set up the relationships once the engine has been
+            # bound to the base.
+            if hasattr(base, '_relations'):
+                if isinstance(base._relations, str):
+                    module = importlib.import_module(base.__module__)
+                    relations_func = getattr(module, base._relations)
+                    relations_func()
+                elif callable(base._relations):
+                    base._relations()
+                else:
+                    pass

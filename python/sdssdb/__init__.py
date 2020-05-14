@@ -19,23 +19,5 @@ log = get_logger(NAME)
 config = get_config(NAME, user_path='~/.sdssdb/sdssdb.yml')
 
 
-try:
-    import peewee  # noqa
-    _peewee = True
-except ImportError:
-    _peewee = False
-
-try:
-    import sqlalchemy  # noqa
-    _sqla = True
-except ImportError:
-    _sqla = False
-    if _peewee is False:
-        raise ImportError('neither SQLAlchemy nor Peewee are installed. '
-                          'Install at least one of them to use sdssdb.')
-
-
-if _peewee:
-    from .connection import PeeweeDatabaseConnection  # noqa
-if _sqla:
-    from .connection import SQLADatabaseConnection  # noqa
+from .connection import PeeweeDatabaseConnection  # noqa
+from .connection import SQLADatabaseConnection  # noqa
