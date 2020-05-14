@@ -15,9 +15,9 @@ __version__ = get_package_version(path='./', package_name=NAME)
 
 log = get_logger(NAME)
 
-# Loads config
-config = get_config(NAME, user_path='~/.sdssdb/sdssdb.yml')
-
+# This looks for user configuration in the usual places (including
+# ~/.config/sdss/sdssdb.yml and ~/.sdssdb/sdssdb.yml).
+config = get_config(NAME)
 
 from .connection import PeeweeDatabaseConnection  # noqa
 from .connection import SQLADatabaseConnection  # noqa

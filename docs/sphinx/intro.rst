@@ -211,7 +211,7 @@ where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of param
 Supported Profiles
 ------------------
 
-The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.sdssdb/sdssdb.yml`` with the same structure.
+The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.config/sdss/sdssdb.yaml`` with the same structure.
 
 * **local**: a generic localhost profile. Used if the hostname does not match any other profile.
 * **apo**: a user on the APO machines.
