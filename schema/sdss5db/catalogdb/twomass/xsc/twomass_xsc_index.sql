@@ -15,9 +15,6 @@ CLUSTER twomass_xsc_q3c_ang2ipix_idx ON catalogdb.twomass_xsc;
 ANALYZE catalogdb.twomass_xsc;
 
 CREATE INDEX CONCURRENTLY ON catalogdb.twomass_xsc (pts_key);
+CREATE INDEX CONCURRENTLY ON catalogdb.twomass_xsc USING BTREE (jdate);
 
 ALTER TABLE catalogdb.twomass_xsc ADD PRIMARY KEY (designation);
-
-ALTER TABLE catalogdb.twomass_xsc ALTER COLUMN pts_key SET STATISTICS 5000;
-ALTER TABLE catalogdb.twomass_xsc ALTER COLUMN designation SET STATISTICS 5000;
-ALTER INDEX catalogdb.twomass_xsc_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;

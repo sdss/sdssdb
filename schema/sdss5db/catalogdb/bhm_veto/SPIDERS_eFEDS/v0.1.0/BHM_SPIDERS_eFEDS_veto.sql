@@ -93,7 +93,7 @@ CREATE TABLE catalogdb.bhm_efeds_veto (
 --                     ((mjd-50000)::bigint<<24) + (1301::bigint<<10);
 -- CREATE INDEX CONCURRENTLY ON catalogdb.bhm_efeds_veto (specobjid);
 
-ALTER TABLE catalogdb.bhm_efeds_veto ADD PRIMARY KEY (plate, mjd, fiberid, run2d);
+ALTER TABLE catalogdb.bhm_efeds_veto ADD COLUMN pk BIGSERIAL PRIMARY KEY;
 
 CREATE INDEX CONCURRENTLY ON catalogdb.bhm_efeds_veto (mjd, plate, fiberid, run2d);
 
