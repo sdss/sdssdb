@@ -40,7 +40,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test basic import
       run: |
-        python -c "from sdssdb import DatabaseConnection"
+        python -c "from sdssdb.connection import DatabaseConnection"
     # - name: Test with pytest
     #   run: |
     #     pip install pytest
