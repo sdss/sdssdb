@@ -11,7 +11,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Write tests either for ``peewee`` or ``sqlalchemy`` databases.
 * :feature:`-` New framework for writing tests against databases.
 * Many changes to the ``catalogdb`` schema files and PeeWee implementation to match the contents to SDSS-V v0 target selection.
-* :feature:`-` A new `.ReflectMeta` metaclass that provides reflection for PeeWee models (with some caveats).
+* :feature:`-` A new `.ReflectMeta` metaclass that provides :ref:`reflection for Peewee models <reflect-peewee>` (with some caveats).
 * Reimplementation of most catalogdb PeeWee model classes for catalogdb using reflection.
 * Changes to the schema display tools.
 * New tools for table `ingestion <.ingest>`.

@@ -76,6 +76,8 @@ Once the file has been generated you will need to do some changes. On the top of
 
 The first line conveniently allows for access to the database connection from the schema submodule. The second one renames ``AwesomedbModel`` to ``BaseModel`` so that all the model classes in the file inherit from it. You'll probably need to make some other changes to the file, especially to the foreign keys to make sure they match your naming requirements.
 
+.. _reflect-peewee:
+
 Using reflection with Peewee
 ''''''''''''''''''''''''''''
 
@@ -99,6 +101,8 @@ To define a base class with reflection we do ::
             table_name = 'stupendous_table'
 
 When the connection is created this model will be reflected and autocompleted with all the columns that exist in the table. The reflection will include the `foreign keys <peewee:ForeignKeyField>` that have been defined for the table in the database. Sometimes this is not desirable and we'd rather create them manually. In this case we can add the attribute ``reflection_options = {'skip_foreign_keys': True}`` to ``Meta`` in the ``ReflectBaseModel``. You can check the `catalogdb <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/peewee/sdss5db/catalogdb.py>`__ models for an implementation of this type.
+
+The default Peewee reflection process requires multiple queries against the database for each table. This can become quite slow if the schema contains many tables or if the connection has significant overhead, for example when connected over an SSH tunnel. In these cases one can set ``Meta`` with ``reflection_options = {'use_peewee_reflection': False}``. This will use a reflection system that is designed to minimise the number of queries needed for schema introspection. Note that this system is experimental and doesn't reflect foreign keys or constraints. If you find problems revert to the default ``use_peewee_reflection=True``.
 
 
 SQLAlchemy

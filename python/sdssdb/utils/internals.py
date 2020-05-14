@@ -6,12 +6,16 @@
 # @Filename: internals.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+import collections
+import re
 import sys
 import time
 
+from playhouse.reflection import PostgresqlMetadata, UnknownField
+
 
 __all__ = ('vacuum', 'vacuum_all', 'get_cluster_index', 'get_unclustered_tables',
-           'get_row_count', 'is_table_locked')
+           'get_row_count', 'is_table_locked', 'get_database_columns')
 
 
 def vacuum(database, table_name, analyze=True, verbose=False, schema=None):
@@ -240,3 +244,96 @@ def is_table_locked(connection, table_name, schema=None):
         return None
 
     return list(zip(*locks))[0]
+
+
+def get_database_columns(database, schema=None):
+    """Returns database column metadata.
+
+    Queries the ``pg_catalog`` schema to retrieve column information
+    for all the tables in a schema.
+
+    Parameters
+    ----------
+    database : .PeeweeDatabaseConnection
+        The database connection.
+    schema : str
+        The schema to query. Defaults to the public schema.
+
+    Returns
+    -------
+    metadata : `dict`
+        A mapping keyed by the table name. For each table the list of
+        primary keys is accessible via the key ``pk``, as well as the column
+        metadata as ``columns``. Each column metadata is a named tuple with
+        attributes ``name``, ``field_type`` (the Peewee column class),
+        ``array_type``, and ``nullable``.
+
+    """
+
+    metadata = {}
+    ColumnMetadata = collections.namedtuple('ColumnMetadata',
+                                            ('name', 'field_type',
+                                             'array_type', 'nullable'))
+
+    schema = schema or 'public'
+
+    # Get column type mapping.
+    pg_metadata = PostgresqlMetadata(database)
+    column_map = pg_metadata.column_map
+
+    # Get the mapping of oid to relation (table)
+    relids = dict(database.execute_sql(
+        """SELECT c.oid, c.relname from pg_catalog.pg_class c
+           JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
+           WHERE n.nspname = %s;""", (schema,)).fetchall())
+
+    # Get columns and create a mapping of table_name to column
+    # name and field type.
+    attr_data = database.execute_sql(
+        'SELECT attname, attrelid, atttypid, attnotnull '
+        'FROM pg_catalog.pg_attribute a '
+        'JOIN pg_catalog.pg_class c ON a.attrelid = c.oid '
+        'JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid '
+        'WHERE n.nspname = %s AND attnum > %s AND attisdropped IS FALSE AND '
+        '      c.reltype > %s',
+        (schema, 0, 0)).fetchall()
+
+    attrs_map = collections.defaultdict(list)
+    for col_name, relid, typeid, not_null in attr_data:
+        field_type = column_map.get(typeid, UnknownField)
+        array_type = pg_metadata.array_types.get(typeid, False)
+
+        null = not not_null
+        attrs_map[relids[relid]].append((col_name, field_type,
+                                         array_type, null))
+
+    # Get primary keys. Do not use information_schema.table_constraints
+    # because that requires the user to have write access to the table.
+
+    constraint_query = """
+        SELECT conrelid::regclass::text AS table_name,
+               pg_get_constraintdef(c.oid) AS cdef
+        FROM pg_constraint c
+        JOIN pg_namespace n ON n.oid = c.connamespace
+        WHERE contype IN (%s) AND n.nspname = %s
+        ORDER BY conrelid::regclass::text, contype DESC;
+    """
+
+    pks = database.execute_sql(constraint_query, ('pk', schema)).fetchall()
+    pk_map = {}
+
+    pk_re = re.compile(r'PRIMARY KEY \((.+)\)')
+
+    for table_name, cdef in pks:
+        cols = list(map(lambda x: x.strip(),
+                        pk_re.match(cdef).group(1).split(',')))
+        pk_map[table_name] = cols
+
+    # Compile the information in the metadata dictionary.
+    for table_name in attrs_map:
+        metadata[table_name] = {}
+        metadata[table_name]['columns'] = [ColumnMetadata(*data)
+                                           for data in attrs_map[table_name]]
+        metadata[table_name]['pk'] = pk_map.get(table_name, None)
+
+    return metadata
