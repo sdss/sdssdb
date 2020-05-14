@@ -19,6 +19,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Add `.PeeweeDatabaseConnection.get_model` to retrieve the model for a given table.
 * :bug:`28` Temporarily remove SQLAlchemy implementation of ``sds5db`` since it's not maintained. We may reintroduce it later once the schema is stable.
 * Use ``host=localhost`` when a profile is being used on its own domain.
+* :support:`32` Assume that both SQLAlchemy and Peewee will be installed and simplify code.
 
 * :release:`0.3.2 <2020-03-10>`
 * Change ``operations-test`` profile to ``operations`` using the new machine hostname.
