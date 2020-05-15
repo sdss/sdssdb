@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.0 <2020-05-15>`
 * Test suite only runs where existing local databases found.  Optionally run only ``peewee`` or ``sqlalchemy`` tests.
 * Adds ability to generate fake data based on real database models for tests.
 * Adds ability to test against real or fake databases.
