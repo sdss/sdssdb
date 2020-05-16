@@ -37,7 +37,7 @@ class Version(CatalogdbModel):
     """Model for the version table."""
 
     id = AutoField()
-    version = TextField(null=False)
+    plan = TextField(null=False)
     tag = TextField(null=False)
 
     class Meta:

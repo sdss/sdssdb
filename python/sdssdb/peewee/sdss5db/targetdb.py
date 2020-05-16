@@ -28,7 +28,7 @@ ProgramToTargetDeferred = DeferredThroughModel()
 
 
 class Version(TargetdbBase):
-    label = TextField(null=True)
+    plan = TextField(null=True)
     pk = AutoField()
     target_selection = BooleanField()
     robostrategy = BooleanField()
