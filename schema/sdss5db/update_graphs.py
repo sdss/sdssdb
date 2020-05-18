@@ -34,8 +34,7 @@ def create_graphs():
                                          skip_tables=['galactic_genesis_big',
                                                       'galactic_genesis'],
                                          graph_options={'rankdir': 'TB',
-                                                        'ratio': 'compress',
-                                                        'size': '30!,20!'})
+                                                        'ratio': '0.2'})
     cdb_lite_graph.write_pdf(f'{cwd}/catalogdb/sdss5db.catalogdb_lite.pdf')
 
     tdb_graph = create_schema_graph(base=targetdb.TargetdbBase,
