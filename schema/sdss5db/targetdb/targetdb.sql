@@ -1,9 +1,10 @@
 /*
 
-targetDB schema version v0.4.0
+targetDB schema version v0.5.0
 
 Created Jan 2018 - J. Sánchez-Gallego
 Updated Feb 2020 - J. Sánchez-Gallego
+Updated May 2020 - J. Sánchez-Gallego
 
 */
 
@@ -22,9 +23,10 @@ CREATE TABLE targetdb.target (
 	magnitude_pk BIGINT,
 	catalogid BIGINT);
 
-CREATE TABLE targetdb.version (
+CREATE TABLE targetdb.plan (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT,
+    tag TEXT,
     target_selection BOOLEAN,
     robostrategy BOOLEAN);
 
@@ -41,7 +43,7 @@ CREATE TABLE targetdb.program (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	survey_pk SMALLINT,
 	category_pk SMALLINT,
-    version_pk SMALLINT,
+    plan_pk SMALLINT,
 	label TEXT);
 
 CREATE TABLE targetdb.survey (
@@ -112,7 +114,7 @@ CREATE TABLE targetdb.field (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	racen DOUBLE PRECISION,
 	deccen DOUBLE PRECISION,
-	version_pk SMALLINT,
+	plan_pk SMALLINT,
 	cadence_pk SMALLINT,
 	observatory_pk SMALLINT);
 
@@ -156,8 +158,8 @@ ALTER TABLE ONLY targetdb.program
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program
-    ADD CONSTRAINT version_fk
-    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
+    ADD CONSTRAINT plan_fk
+    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
@@ -211,8 +213,8 @@ ALTER TABLE ONLY targetdb.field
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.field
-    ADD CONSTRAINT version_fk
-    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
+    ADD CONSTRAINT plan_fk
+    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.positioner

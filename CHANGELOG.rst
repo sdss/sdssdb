@@ -5,8 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Rename ``targetdb.version`` to ``targetdb.plan`` and add ``tag`` column.
+
 * :release:`0.4.1 <2020-05-18>`
-* Rename ``targetdb.Version.label`` and ``catalogdb.Version.version`` to ``plan``.
+* Rename ``targetdb.version.label`` and ``catalogdb.version.version`` to ``plan``.
 
 * :release:`0.4.0 <2020-05-15>`
 * Test suite only runs where existing local databases found.  Optionally run only ``peewee`` or ``sqlalchemy`` tests.
