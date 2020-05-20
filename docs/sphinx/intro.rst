@@ -24,6 +24,8 @@ This will returns the first 10 results from Gaia DR2 with g magnitude in the ran
 .. warning:: Note that the implementation of ``catalogdb`` in SQLALchemy is very limited and should not be used in general.
 
 
+.. _available-databases:
+
 Available databases
 -------------------
 
