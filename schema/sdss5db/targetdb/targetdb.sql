@@ -149,88 +149,71 @@ ALTER TABLE ONLY targetdb.target
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT survey_fk
-    FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk);
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT category_fk
-    FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk);
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT plan_fk
-    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk);
 
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT program_fk
-    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk);
 
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT target_fk
-    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk);
 
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT cadence_fk
-    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT target_fk
-    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT positioner_fk
-    FOREIGN KEY (positioner_pk) REFERENCES targetdb.positioner(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (positioner_pk) REFERENCES targetdb.positioner(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT instrument_fk
-    FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk);
 
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk);
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT cadence_fk
-    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk);
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT observatory_fk
-    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT plan_fk
-    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk);
 
 ALTER TABLE ONLY targetdb.positioner
     ADD CONSTRAINT positioner_status_fk
-    FOREIGN KEY (positioner_status_pk) REFERENCES targetdb.positioner_status(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (positioner_status_pk) REFERENCES targetdb.positioner_status(pk);
 
 ALTER TABLE ONLY targetdb.positioner
     ADD CONSTRAINT positioner_info_fk
-    FOREIGN KEY (positioner_info_pk) REFERENCES targetdb.positioner_info(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (positioner_info_pk) REFERENCES targetdb.positioner_info(pk);
 
 ALTER TABLE ONLY targetdb.positioner
     ADD CONSTRAINT observatory_fk
-    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
 
 
 -- Indices
