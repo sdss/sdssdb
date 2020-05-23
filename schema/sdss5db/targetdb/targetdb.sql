@@ -141,7 +141,8 @@ INSERT INTO targetdb.observatory VALUES (0, 'APO'), (1, 'LCO');
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT magnitude_fk
-    FOREIGN KEY (magnitude_pk) REFERENCES targetdb.magnitude(pk);
+    FOREIGN KEY (magnitude_pk) REFERENCES targetdb.magnitude(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk
@@ -149,31 +150,38 @@ ALTER TABLE ONLY targetdb.target
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT survey_fk
-    FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk);
+    FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT category_fk
-    FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk);
+    FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program
     ADD CONSTRAINT plan_fk
-    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk);
+    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT program_fk
-    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk);
+    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT target_fk
-    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk);
+    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
     ADD CONSTRAINT cadence_fk
-    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk);
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT target_fk
-    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk);
+    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT positioner_fk
@@ -185,11 +193,13 @@ ALTER TABLE ONLY targetdb.assignment
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk);
+    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk);
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT cadence_fk
@@ -201,7 +211,8 @@ ALTER TABLE ONLY targetdb.field
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT plan_fk
-    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk);
+    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.positioner
     ADD CONSTRAINT positioner_status_fk
