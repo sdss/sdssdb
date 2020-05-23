@@ -409,7 +409,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         """
 
-        for model in self.models:
+        for model in self.models.values():
             if schema and model._meta.schema != schema:
                 continue
             if model._meta.table_name == table_name:

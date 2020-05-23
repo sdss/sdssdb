@@ -121,7 +121,7 @@ class ReflectMeta(ModelBase):
 
         database = Model._meta.database
         if database and hasattr(database, 'models'):
-            if Model not in database.models:
+            if Model not in database.models.values():
                 database.models[Model._meta.table_name] = Model
 
         cls.reflect(Model)
