@@ -879,12 +879,14 @@ for rtname in all_tables:
     if rtname.startswith('catalog_to_'):
 
         tname = rtname[len('catalog_to_'):]
-        if tname not in database.models:
+        fname = 'catalogdb.' + tname
+
+        if fname not in database.models:
             warnings.warn(f'{rtname}: cannot find related table {tname!r}',
                           SdssdbUserWarning)
             continue
 
-        rel_model = database.models[tname]
+        rel_model = database.models[fname]
         model_name = 'CatalogTo' + rel_model.__name__
 
         class Meta:

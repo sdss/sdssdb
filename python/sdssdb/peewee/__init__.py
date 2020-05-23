@@ -122,7 +122,10 @@ class ReflectMeta(ModelBase):
         database = Model._meta.database
         if database and hasattr(database, 'models'):
             if Model not in database.models.values():
-                database.models[Model._meta.table_name] = Model
+                schema = Model._meta.schema
+                table_name = Model._meta.table_name
+                fpath = schema + '.' + table_name if schema else table_name
+                database.models[fpath] = Model
 
         cls.reflect(Model)
 
@@ -139,16 +142,16 @@ class ReflectMeta(ModelBase):
         if not database or not database.connected:
             return
 
+        # Don't do anything if this model doesn't want reflection.
+        if not hasattr(meta, 'use_reflection') or not meta.use_reflection:
+            return
+
         # Lists tables in the schema. This is a bit of a hack but
         # faster than using database.table_exists because it's cached.
         database.get_fields(table_name, schema)  # Force caching of _metadata.
         schema_tables = database._metadata[schema].keys()
 
         if table_name not in schema_tables:
-            return
-
-        # Don't do anything if this model doesn't want reflection.
-        if not hasattr(meta, 'use_reflection') or not meta.use_reflection:
             return
 
         for index in meta.indexes:
