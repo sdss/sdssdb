@@ -118,16 +118,19 @@ class ReflectMeta(ModelBase):
     def __new__(cls, name, bases, attrs):
 
         Model = super(ReflectMeta, cls).__new__(cls, name, bases, attrs)
+        meta = Model._meta
 
-        database = Model._meta.database
+        database = meta.database
         if database and hasattr(database, 'models'):
             if Model not in database.models.values():
-                schema = Model._meta.schema
-                table_name = Model._meta.table_name
+                schema = meta.schema
+                table_name = meta.table_name
                 fpath = schema + '.' + table_name if schema else table_name
                 database.models[fpath] = Model
 
-        cls.reflect(Model)
+        # Don't do anything if this model doesn't want reflection.
+        if getattr(meta, 'use_reflection', False):
+            cls.reflect(Model)
 
         return Model
 
@@ -140,10 +143,6 @@ class ReflectMeta(ModelBase):
         schema = meta.schema
 
         if not database or not database.connected:
-            return
-
-        # Don't do anything if this model doesn't want reflection.
-        if not hasattr(meta, 'use_reflection') or not meta.use_reflection:
             return
 
         # Lists tables in the schema. This is a bit of a hack but
