@@ -14,7 +14,7 @@ CREATE TABLE catalogdb.twomass_psc (
     err_maj real,
     err_min real,
     err_ang smallint,
-    designation character(17),
+    designation text,
     j_m real,
     j_cmsig real,
     j_msigcom real,

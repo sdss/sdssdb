@@ -9,7 +9,7 @@ http://tdc-www.harvard.edu/catalogs/tmx.format.html
 
 CREATE TABLE catalogdb.twomass_xsc (
     jdate double precision,
-    designation character(17),
+    designation text,
     ra double precision,
     decl double precision,
     sup_ra double precision,
