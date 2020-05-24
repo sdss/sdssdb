@@ -137,19 +137,6 @@ class Positioner(TargetdbBase):
         table_name = 'positioner'
 
 
-class Magnitude(TargetdbBase):
-    bp = FloatField(null=True)
-    g = FloatField(null=True)
-    h = FloatField(null=True)
-    i = FloatField(null=True)
-    pk = AutoField()
-    r = FloatField(null=True)
-    rp = FloatField(null=True)
-
-    class Meta:
-        table_name = 'magnitude'
-
-
 class Category(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
@@ -190,11 +177,6 @@ class Target(TargetdbBase):
                               field='catalogid')
     dec = DoubleField(null=True)
     epoch = FloatField(null=True)
-    magnitude = ForeignKeyField(column_name='magnitude_pk',
-                                field='pk',
-                                model=Magnitude,
-                                null=True,
-                                backref='targets')
     pk = AutoField()
     pmdec = FloatField(null=True)
     pmra = FloatField(null=True)
@@ -252,6 +234,23 @@ class ProgramToTarget(TargetdbBase):
 
     class Meta:
         table_name = 'program_to_target'
+
+
+class Magnitude(TargetdbBase):
+    bp = FloatField(null=True)
+    g = FloatField(null=True)
+    h = FloatField(null=True)
+    i = FloatField(null=True)
+    pk = AutoField()
+    r = FloatField(null=True)
+    rp = FloatField(null=True)
+    target = ForeignKeyField(column_name='target_pk',
+                             field='pk',
+                             model=Target,
+                             backref='magnitudes')
+
+    class Meta:
+        table_name = 'magnitude'
 
 
 AssignmentDeferred.set_model(Assignment)

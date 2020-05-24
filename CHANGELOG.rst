@@ -7,6 +7,7 @@ This document records the main changes to the ``sdssdb`` code.
 
 * Rename ``targetdb.version`` to ``targetdb.plan`` and add ``tag`` column.
 * Use schema-qualified keys for ``database.models``.
+* Modify ``targetdb`` schema so that ``magnitude`` references ``target`` instead of the other way around.
 
 * :release:`0.4.1 <2020-05-18>`
 * Rename ``targetdb.version.label`` and ``catalogdb.version.version`` to ``plan``.

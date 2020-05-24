@@ -37,7 +37,8 @@ CREATE TABLE targetdb.magnitude (
 	i REAL,
 	h REAL,
 	bp REAL,
-	rp REAL);
+	rp REAL,
+	target_pk BIGINT);
 
 CREATE TABLE targetdb.program (
 	pk SERIAL PRIMARY KEY NOT NULL,
@@ -140,11 +141,6 @@ INSERT INTO targetdb.observatory VALUES (0, 'APO'), (1, 'LCO');
 -- Foreign keys
 
 ALTER TABLE ONLY targetdb.target
-    ADD CONSTRAINT magnitude_fk
-    FOREIGN KEY (magnitude_pk) REFERENCES targetdb.magnitude(pk)
-	ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk
     FOREIGN KEY (catalogid) REFERENCES catalogdb.catalog(catalogid);
 
@@ -226,34 +222,74 @@ ALTER TABLE ONLY targetdb.positioner
     ADD CONSTRAINT observatory_fk
     FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
 
+ALTER TABLE ONLY targetdb.magnitude
+    ADD CONSTRAINT target_fk
+    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
+	ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 -- Indices
 
-CREATE INDEX CONCURRENTLY magnitude_pk_idx ON targetdb.target using BTREE(magnitude_pk);
-CREATE INDEX CONCURRENTLY catalogid_idx ON targetdb.target using BTREE(catalogid);
+CREATE INDEX CONCURRENTLY target_pk_idx
+	ON targetdb.magnitude
+	USING BTREE(target_pk);
+
+CREATE INDEX CONCURRENTLY catalogid_idx
+	ON targetdb.target
+	USING BTREE(catalogid);
 
 -- This doesn't seem to be loaded unless it's run manually inside a PSQL console.
 CREATE INDEX CONCURRENTLY ON targetdb.target (q3c_ang2ipix(ra, dec));
 CLUSTER target_q3c_ang2ipix_idx on targetdb.target;
 ANALYZE targetdb.target;
 
-CREATE INDEX CONCURRENTLY survey_pk_idx ON targetdb.program using BTREE(survey_pk);
-CREATE INDEX CONCURRENTLY category_pk_idx ON targetdb.program using BTREE(category_pk);
+CREATE INDEX CONCURRENTLY survey_pk_idx
+	ON targetdb.program
+	USING BTREE(survey_pk);
+CREATE INDEX CONCURRENTLY category_pk_idx
+	ON targetdb.program
+	USING BTREE(category_pk);
 
-CREATE INDEX CONCURRENTLY program_pk_idx ON targetdb.program_to_target using BTREE(program_pk);
-CREATE INDEX CONCURRENTLY target_pk_idx ON targetdb.program_to_target using BTREE(target_pk);
-CREATE INDEX CONCURRENTLY cadence_pk_idx ON targetdb.program_to_target using BTREE(cadence_pk);
+CREATE INDEX CONCURRENTLY program_pk_idx
+	ON targetdb.program_to_target
+	USING BTREE(program_pk);
+CREATE INDEX CONCURRENTLY target_pk_idx
+	ON targetdb.program_to_target
+	USING BTREE(target_pk);
+CREATE INDEX CONCURRENTLY cadence_pk_idx
+	ON targetdb.program_to_target
+	USING BTREE(cadence_pk);
 
-CREATE INDEX CONCURRENTLY assignment_target_pk_idx ON targetdb.assignment using BTREE(target_pk);
-CREATE INDEX CONCURRENTLY positioner_pk_idx ON targetdb.assignment using BTREE(positioner_pk);
-CREATE INDEX CONCURRENTLY instrument_pk_idx ON targetdb.assignment using BTREE(instrument_pk);
-CREATE INDEX CONCURRENTLY design_pk_idx ON targetdb.assignment using BTREE(design_pk);
+CREATE INDEX CONCURRENTLY assignment_target_pk_idx
+	ON targetdb.assignment
+	USING BTREE(target_pk);
+CREATE INDEX CONCURRENTLY positioner_pk_idx
+	ON targetdb.assignment
+	USING BTREE(positioner_pk);
+CREATE INDEX CONCURRENTLY instrument_pk_idx
+	ON targetdb.assignment
+	USING BTREE(instrument_pk);
+CREATE INDEX CONCURRENTLY design_pk_idx
+	ON targetdb.assignment
+	USING BTREE(design_pk);
 
-CREATE INDEX CONCURRENTLY field_pk_idx ON targetdb.design using BTREE(field_pk);
+CREATE INDEX CONCURRENTLY field_pk_idx
+	ON targetdb.design
+	USING BTREE(field_pk);
 
-CREATE INDEX CONCURRENTLY field_cadence_pk_idx ON targetdb.field using BTREE(cadence_pk);
-CREATE INDEX CONCURRENTLY observatory_pk_idx ON targetdb.field using BTREE(observatory_pk);
+CREATE INDEX CONCURRENTLY field_cadence_pk_idx
+	ON targetdb.field
+	USING BTREE(cadence_pk);
+CREATE INDEX CONCURRENTLY observatory_pk_idx
+	ON targetdb.field
+	USING BTREE(observatory_pk);
 
-CREATE INDEX CONCURRENTLY positioner_status_pk_idx ON targetdb.positioner using BTREE(positioner_status_pk);
-CREATE INDEX CONCURRENTLY positioner_info_pk_idx ON targetdb.positioner using BTREE(positioner_info_pk);
-CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx ON targetdb.positioner using BTREE(observatory_pk);
+CREATE INDEX CONCURRENTLY positioner_status_pk_idx
+	ON targetdb.positioner
+	USING BTREE(positioner_status_pk);
+CREATE INDEX CONCURRENTLY positioner_info_pk_idx
+	ON targetdb.positioner
+	USING BTREE(positioner_info_pk);
+CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx
+	ON targetdb.positioner
+	USING BTREE(observatory_pk);
