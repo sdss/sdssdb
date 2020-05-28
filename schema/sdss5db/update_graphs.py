@@ -34,13 +34,15 @@ def create_graphs():
                                          skip_tables=['galactic_genesis_big',
                                                       'galactic_genesis'],
                                          graph_options={'rankdir': 'TB',
-                                                        'ratio': '0.2'})
+                                                        'ratio': '0.2',
+                                                        'dpi': 72})
     cdb_lite_graph.write_pdf(f'{cwd}/catalogdb/sdss5db.catalogdb_lite.pdf')
 
     tdb_graph = create_schema_graph(base=targetdb.TargetdbBase,
                                     show_columns=True,
                                     graph_options={'rankdir': 'TB'})
     tdb_graph.write_pdf(f'{cwd}/targetdb/sdss5db.targetdb.pdf')
+    tdb_graph.write_png(f'{cwd}/targetdb/sdss5db.targetdb.png')
 
 
 if __name__ == '__main__':
