@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.2 <2020-05-29>`
 * Add ``targetdb.version.tag`` column.
 * Use schema-qualified keys for ``database.models``.
 * Modify ``targetdb`` schema so that ``magnitude`` references ``target`` instead of the other way around.
