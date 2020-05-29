@@ -5,7 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
-* Rename ``targetdb.version`` to ``targetdb.plan`` and add ``tag`` column.
+* Add ``targetdb.version.tag`` column.
 * Use schema-qualified keys for ``database.models``.
 * Modify ``targetdb`` schema so that ``magnitude`` references ``target`` instead of the other way around.
 * Allow to use `.ReflectMeta.reflect` manually even if ``use_reflection`` has not been set in ``Meta``.

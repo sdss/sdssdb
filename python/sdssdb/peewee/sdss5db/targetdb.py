@@ -27,15 +27,15 @@ AssignmentDeferred = DeferredThroughModel()
 ProgramToTargetDeferred = DeferredThroughModel()
 
 
-class Plan(TargetdbBase):
-    label = TextField()
+class Version(TargetdbBase):
+    plan = TextField()
     pk = AutoField()
     target_selection = BooleanField()
     robostrategy = BooleanField()
     tag = TextField()
 
     class Meta:
-        table_name = 'plan'
+        table_name = 'version'
 
 
 class Cadence(TargetdbBase):
@@ -72,9 +72,9 @@ class Field(TargetdbBase):
                                   null=True)
     pk = AutoField()
     racen = DoubleField(null=True)
-    plan = ForeignKeyField(column_name='plan_pk',
-                           field='pk',
-                           model=Plan)
+    version = ForeignKeyField(column_name='version_pk',
+                              field='pk',
+                              model=Version)
 
     class Meta:
         table_name = 'field'
@@ -162,9 +162,9 @@ class Program(TargetdbBase):
     survey = ForeignKeyField(column_name='survey_pk',
                              field='pk',
                              model=Survey)
-    plan = ForeignKeyField(column_name='plan_pk',
-                           field='pk',
-                           model=Plan)
+    version = ForeignKeyField(column_name='version_pk',
+                              field='pk',
+                              model=Version)
 
     class Meta:
         table_name = 'program'

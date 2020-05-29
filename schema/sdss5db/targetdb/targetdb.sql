@@ -23,9 +23,9 @@ CREATE TABLE targetdb.target (
 	magnitude_pk BIGINT,
 	catalogid BIGINT);
 
-CREATE TABLE targetdb.plan (
+CREATE TABLE targetdb.version (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	label TEXT,
+	plan TEXT,
     tag TEXT,
     target_selection BOOLEAN,
     robostrategy BOOLEAN);
@@ -44,7 +44,7 @@ CREATE TABLE targetdb.program (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	survey_pk SMALLINT,
 	category_pk SMALLINT,
-    plan_pk SMALLINT,
+    version_pk SMALLINT,
 	label TEXT);
 
 CREATE TABLE targetdb.survey (
@@ -115,7 +115,7 @@ CREATE TABLE targetdb.field (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	racen DOUBLE PRECISION,
 	deccen DOUBLE PRECISION,
-	plan_pk SMALLINT,
+	version_pk SMALLINT,
 	cadence_pk SMALLINT,
 	observatory_pk SMALLINT);
 
@@ -155,8 +155,8 @@ ALTER TABLE ONLY targetdb.program
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program
-    ADD CONSTRAINT plan_fk
-    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.program_to_target
@@ -206,8 +206,8 @@ ALTER TABLE ONLY targetdb.field
     FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
 
 ALTER TABLE ONLY targetdb.field
-    ADD CONSTRAINT plan_fk
-    FOREIGN KEY (plan_pk) REFERENCES targetdb.plan(pk)
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.positioner
