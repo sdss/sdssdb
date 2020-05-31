@@ -865,6 +865,19 @@ class BHM_RM_v0(CatalogdbModel):
         table_name = 'bhm_rm_v0'
 
 
+class Gaia_DR2_RUWE(CatalogdbModel):
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='ruwe')
+
+    ruwe = FloatField()
+
+    class Meta:
+        table_name = 'gaia_dr2_ruwe'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
 

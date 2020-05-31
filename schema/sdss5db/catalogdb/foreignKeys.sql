@@ -314,6 +314,14 @@ ALTER TABLE catalogdb.geometric_distances_gaia_dr2
     REFERENCES catalogdb.gaia_dr2_source (source_id);
 
 
+-- gaia_dr2_ruwe
+
+ALTER TABLE catalogdb.gaia_dr2_ruwe
+    ADD CONSTRAINT source_id_fk
+    FOREIGN KEY (source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id);
+
+
 -- bhm_rm_v0
 
 CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (source_id_gaia)
