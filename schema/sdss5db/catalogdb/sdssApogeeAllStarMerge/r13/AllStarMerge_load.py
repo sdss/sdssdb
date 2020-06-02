@@ -19,13 +19,15 @@ assert database.connected
 
 def main():
 
-    file_ = os.environ['CATALOGDB_DIR'] + 'sdssApogeeAllStarMerge/r13/allStarMerge-r13-l33-58814.fits'  # noqa
+    file_ = os.environ['CATALOGDB_DIR'] + '/sdssApogeeAllStarMerge/r13/allStarMerge-r13-l33-58932beta.fits'  # noqa
 
-    data = astropy.table.Table.read(file_)
-    data.meta = {}
-    data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
-    to_csv(data, file_ + '.csv', header=True)
-    del data
+    # data = astropy.table.Table.read(file_)
+    # data.meta = {}
+    # data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
+    # to_csv(data, file_ + '.csv', header=True)
+    # del data
+
+    database.become_admin()
 
     cursor = database.cursor()
     fileobj = open(file_ + '.csv')
