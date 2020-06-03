@@ -40,14 +40,15 @@ CREATE TABLE targetdb.magnitude (
 	rp REAL,
 	target_pk BIGINT);
 
-CREATE TABLE targetdb.program (
+CREATE TABLE targetdb.carton (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	survey_pk SMALLINT,
+	mapper_pk SMALLINT,
 	category_pk SMALLINT,
     version_pk SMALLINT,
-	label TEXT);
+	carton TEXT
+	program TEXT);
 
-CREATE TABLE targetdb.survey (
+CREATE TABLE targetdb.mapper (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
@@ -55,12 +56,13 @@ CREATE TABLE targetdb.category (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	label TEXT);
 
-CREATE TABLE targetdb.program_to_target (
+CREATE TABLE targetdb.carton_to_target (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	lambda_eff REAL,
-	program_pk SMALLINT,
+	carton_pk SMALLINT,
 	target_pk BIGINT,
-	cadence_pk SMALLINT);
+	cadence_pk SMALLINT,
+	priority INTEGER);
 
 CREATE TABLE targetdb.cadence (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -128,7 +130,7 @@ INSERT INTO targetdb.category VALUES
 	(0, 'science'), (1, 'standard_apogee'), (2, 'standard_boss'),
 	(3, 'guide'), (4, 'sky_apogee'), (5, 'sky_boss');
 
-INSERT INTO targetdb.survey VALUES (0, 'MWM'), (1, 'BHM');
+INSERT INTO targetdb.mapper VALUES (0, 'MWM'), (1, 'BHM');
 
 INSERT INTO targetdb.positioner_info VALUES
     (0, true, true, false), (1, false, true, false), (2, false, false, true);
@@ -144,34 +146,34 @@ ALTER TABLE ONLY targetdb.target
     ADD CONSTRAINT catalogid_fk
     FOREIGN KEY (catalogid) REFERENCES catalogdb.catalog(catalogid);
 
-ALTER TABLE ONLY targetdb.program
-    ADD CONSTRAINT survey_fk
-    FOREIGN KEY (survey_pk) REFERENCES targetdb.survey(pk)
+ALTER TABLE ONLY targetdb.carton
+    ADD CONSTRAINT mapper_fk
+    FOREIGN KEY (mapper_pk) REFERENCES targetdb.mapper(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.program
+ALTER TABLE ONLY targetdb.carton
     ADD CONSTRAINT category_fk
     FOREIGN KEY (category_pk) REFERENCES targetdb.category(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.program
+ALTER TABLE ONLY targetdb.carton
     ADD CONSTRAINT version_fk
     FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.program_to_target
-    ADD CONSTRAINT program_fk
-    FOREIGN KEY (program_pk) REFERENCES targetdb.program(pk)
+ALTER TABLE ONLY targetdb.carton_to_target
+    ADD CONSTRAINT carton_fk
+    FOREIGN KEY (carton_pk) REFERENCES targetdb.carton(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE
 	DEFERRABLE INITIALLY DEFERRED;;
 
-ALTER TABLE ONLY targetdb.program_to_target
+ALTER TABLE ONLY targetdb.carton_to_target
     ADD CONSTRAINT target_fk
     FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE
 	DEFERRABLE INITIALLY DEFERRED;;
 
-ALTER TABLE ONLY targetdb.program_to_target
+ALTER TABLE ONLY targetdb.carton_to_target
     ADD CONSTRAINT cadence_fk
     FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE
@@ -247,21 +249,21 @@ CREATE INDEX CONCURRENTLY ON targetdb.target (q3c_ang2ipix(ra, dec));
 CLUSTER target_q3c_ang2ipix_idx on targetdb.target;
 ANALYZE targetdb.target;
 
-CREATE INDEX CONCURRENTLY survey_pk_idx
-	ON targetdb.program
-	USING BTREE(survey_pk);
+CREATE INDEX CONCURRENTLY mapper_pk_idx
+	ON targetdb.carton
+	USING BTREE(mapper_pk);
 CREATE INDEX CONCURRENTLY category_pk_idx
-	ON targetdb.program
+	ON targetdb.carton
 	USING BTREE(category_pk);
 
-CREATE INDEX CONCURRENTLY program_pk_idx
-	ON targetdb.program_to_target
-	USING BTREE(program_pk);
+CREATE INDEX CONCURRENTLY carton_pk_idx
+	ON targetdb.carton_to_target
+	USING BTREE(carton_pk);
 CREATE INDEX CONCURRENTLY target_pk_idx
-	ON targetdb.program_to_target
+	ON targetdb.carton_to_target
 	USING BTREE(target_pk);
 CREATE INDEX CONCURRENTLY cadence_pk_idx
-	ON targetdb.program_to_target
+	ON targetdb.carton_to_target
 	USING BTREE(cadence_pk);
 
 CREATE INDEX CONCURRENTLY assignment_target_pk_idx

@@ -24,7 +24,7 @@ class TargetdbBase(BaseModel):
 
 
 AssignmentDeferred = DeferredThroughModel()
-ProgramToTargetDeferred = DeferredThroughModel()
+CartonToTargetDeferred = DeferredThroughModel()
 
 
 class Version(TargetdbBase):
@@ -145,29 +145,30 @@ class Category(TargetdbBase):
         table_name = 'category'
 
 
-class Survey(TargetdbBase):
+class Mapper(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
 
     class Meta:
-        table_name = 'survey'
+        table_name = 'mapper'
 
 
-class Program(TargetdbBase):
+class Carton(TargetdbBase):
     category = ForeignKeyField(column_name='category_pk',
                                field='pk',
                                model=Category)
     label = TextField()
     pk = AutoField()
-    survey = ForeignKeyField(column_name='survey_pk',
+    mapper = ForeignKeyField(column_name='mapper_pk',
                              field='pk',
-                             model=Survey)
+                             model=Mapper)
+    program = TextField()
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
 
     class Meta:
-        table_name = 'program'
+        table_name = 'carton'
 
 
 class Target(TargetdbBase):
@@ -191,7 +192,7 @@ class Target(TargetdbBase):
                                   through_model=AssignmentDeferred,
                                   backref='targets')
     cadences = ManyToManyField(Cadence,
-                               through_model=ProgramToTargetDeferred,
+                               through_model=CartonToTargetDeferred,
                                backref='targets')
     parallax = FloatField(null=True)
 
@@ -218,22 +219,23 @@ class Assignment(TargetdbBase):
         table_name = 'assignment'
 
 
-class ProgramToTarget(TargetdbBase):
+class CartonToTarget(TargetdbBase):
     cadence = ForeignKeyField(Cadence,
                               column_name='cadence_pk',
                               field='pk')
     lambda_eff = FloatField(null=True)
     pk = AutoField()
-    program = ForeignKeyField(Program,
-                              column_name='program_pk',
-                              field='pk')
+    carton = ForeignKeyField(Carton,
+                             column_name='carton_pk',
+                             field='pk')
     target = ForeignKeyField(Target,
                              column_name='target_pk',
                              field='pk',
                              on_delete='CASCADE')
+    priority = IntegerField()
 
     class Meta:
-        table_name = 'program_to_target'
+        table_name = 'carton_to_target'
 
 
 class Magnitude(TargetdbBase):
@@ -254,4 +256,4 @@ class Magnitude(TargetdbBase):
 
 
 AssignmentDeferred.set_model(Assignment)
-ProgramToTargetDeferred.set_model(ProgramToTarget)
+CartonToTargetDeferred.set_model(CartonToTarget)
