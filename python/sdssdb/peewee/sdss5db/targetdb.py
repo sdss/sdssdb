@@ -157,7 +157,7 @@ class Carton(TargetdbBase):
     category = ForeignKeyField(column_name='category_pk',
                                field='pk',
                                model=Category)
-    label = TextField()
+    carton = TextField()
     pk = AutoField()
     mapper = ForeignKeyField(column_name='mapper_pk',
                              field='pk',
