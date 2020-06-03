@@ -22,6 +22,8 @@ CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Jmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Hmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Kmag);
 CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (posflag);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (gallong);
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (gallat);
 
 ALTER TABLE catalogdb.tic_v8 ADD COLUMN twomass_psc TEXT;
 UPDATE catalogdb.tic_v8
@@ -36,3 +38,13 @@ ALTER TABLE catalogdb.tic_v8 ALTER COLUMN sdss SET STATISTICS 5000;
 ALTER TABLE catalogdb.tic_v8 ALTER COLUMN allwise SET STATISTICS 5000;
 ALTER TABLE catalogdb.tic_v8 ALTER COLUMN twomass_psc SET STATISTICS 5000;
 ALTER INDEX catalogdb.tic_v8_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;
+
+-- For Solar Neighbourhood Census
+
+CREATE INDEX CONCURRENTLY tic_v8_sqrt_pow_gallong_303_gallat_44
+    ON catalogdb.tic_v8 (sqrt(pow(gallong - 303.2, 2) + 2 * pow(gallat + 44.4, 2)));
+
+CREATE INDEX CONCURRENTLY tic_v8_sqrt_pow_gallong_280_gallat_33
+    ON catalogdb.tic_v8 (sqrt(pow(gallong - 280.3, 2) + 2 * pow(gallat + 33.0, 2)));
+
+CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 (plx, e_plx);
