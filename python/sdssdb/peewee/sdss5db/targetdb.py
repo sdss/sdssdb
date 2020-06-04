@@ -61,17 +61,18 @@ class Observatory(TargetdbBase):
 
 
 class Field(TargetdbBase):
+    pk = AutoField()
+    racen = DoubleField(null=False)
+    deccen = DoubleField(null=False)
+    rotation = FloatField(null=True)
     cadence = ForeignKeyField(column_name='cadence_pk',
                               field='pk',
                               model=Cadence,
                               null=True)
-    deccen = DoubleField(null=True)
     observatory = ForeignKeyField(column_name='observatory_pk',
                                   field='pk',
                                   model=Observatory,
                                   null=True)
-    pk = AutoField()
-    racen = DoubleField(null=True)
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
