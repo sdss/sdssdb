@@ -7,6 +7,7 @@ This document records the main changes to the ``sdssdb`` code.
 
 * Add schema for ``gaia_dr2_ruwe``.
 * Rename ``targetdb.program`` to ``carton``, and ``survey`` to ``mapper``. Add ``priority`` field in ``carton_to_target``.
+* Add ``z`` column to ``targetdb.magnitude``.
 
 * :release:`0.4.2 <2020-05-29>`
 * Add ``targetdb.version.tag`` column.

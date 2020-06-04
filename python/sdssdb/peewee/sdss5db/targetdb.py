@@ -243,6 +243,7 @@ class Magnitude(TargetdbBase):
     g = FloatField(null=True)
     h = FloatField(null=True)
     i = FloatField(null=True)
+    z = FloatField(null=True)
     pk = AutoField()
     r = FloatField(null=True)
     rp = FloatField(null=True)

@@ -35,6 +35,7 @@ CREATE TABLE targetdb.magnitude (
 	g REAL,
 	r REAL,
 	i REAL,
+	z REAL,
 	h REAL,
 	bp REAL,
 	rp REAL,
