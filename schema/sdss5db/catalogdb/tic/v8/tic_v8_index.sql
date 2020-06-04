@@ -41,10 +41,4 @@ ALTER INDEX catalogdb.tic_v8_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STAT
 
 -- For Solar Neighbourhood Census
 
-CREATE INDEX CONCURRENTLY tic_v8_sqrt_pow_gallong_303_gallat_44
-    ON catalogdb.tic_v8 (sqrt(pow(gallong - 303.2, 2) + 2 * pow(gallat + 44.4, 2)));
-
-CREATE INDEX CONCURRENTLY tic_v8_sqrt_pow_gallong_280_gallat_33
-    ON catalogdb.tic_v8 (sqrt(pow(gallong - 280.3, 2) + 2 * pow(gallat + 33.0, 2)));
-
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 (plx, e_plx);
+CREATE INDEX CONCURRENTLY tic_v8_plx_minus_e_plx ON catalogdb.tic_v8 ((plx-e_plx));
