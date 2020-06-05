@@ -64,7 +64,7 @@ class Field(TargetdbBase):
     pk = AutoField()
     racen = DoubleField(null=False)
     deccen = DoubleField(null=False)
-    rot_angle = FloatField(null=True)
+    position_angle = FloatField(null=True)
     cadence = ForeignKeyField(column_name='cadence_pk',
                               field='pk',
                               model=Cadence,

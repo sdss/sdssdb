@@ -118,7 +118,7 @@ CREATE TABLE targetdb.field (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	racen DOUBLE PRECISION NOT NULL,
 	deccen DOUBLE PRECISION NOT NULL,
-	rot_angle REAL,
+	position_angle REAL,
 	version_pk SMALLINT,
 	cadence_pk SMALLINT,
 	observatory_pk SMALLINT);
