@@ -253,26 +253,6 @@ class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
         table_name = 'sdss_dr16_specobj'
 
 
-class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
-
-    source_id = BigIntegerField(primary_key=True)
-
-    gaia = ForeignKeyField(Gaia_DR2,
-                           field='source_id',
-                           column_name='source_id',
-                           backref='+',
-                           lazy_load=False)
-
-    twomass = ForeignKeyField(TwoMassPSC,
-                              field='pts_key',
-                              column_name='tmass_pts_key',
-                              backref='+',
-                              lazy_load=False)
-
-    class Meta:
-        table_name = 'gaiadr2_tmass_best_neighbour'
-
-
 class SDSS_DR14_QSO(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
@@ -297,6 +277,46 @@ class unWISE(CatalogdbModel):
         table_name = 'unwise'
 
 
+class Tycho2(CatalogdbModel):
+
+    designation = TextField(primary_key=True)
+
+    class Meta:
+        table_name = 'tycho2'
+
+
+class TIC_v8(CatalogdbModel):
+
+    id = BigIntegerField(primary_key=True)
+
+    tycho2 = ForeignKeyField(Tycho2, field='designation',
+                             column_name='tyc', object_id_name='tyc',
+                             backref='tic')
+
+    twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
+                                  column_name='twomass_psc',
+                                  backref='tic')
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj, field='objid',
+                               column_name='sdss', object_id_name='sdss',
+                               backref='tic')
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_int', object_id_name='gaia_int',
+                           backref='tic')
+
+    allwise_target = ForeignKeyField(AllWise, field='designation',
+                                     column_name='allwise', object_id_name='allwise',
+                                     backref='tic')
+
+    kepler_input = ForeignKeyField(KeplerInput_DR10, field='kic_kepler_id',
+                                   column_name='kic', object_id_name='kic',
+                                   backref='tic')
+
+    class Meta:
+        table_name = 'tic_v8'
+
+
 class Legacy_Survey_DR8(CatalogdbModel):
 
     ls_id = BigIntegerField(primary_key=True)
@@ -308,29 +328,18 @@ class Legacy_Survey_DR8(CatalogdbModel):
                            object_id_name='gaia_sourceid',
                            backref='legacy_survey')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_sourceid',
+                          object_id_name='gaia_sourceid',
+                          backref='+',
+                          lazy_load=False)
+
     class Meta:
         table_name = 'legacy_survey_dr8'
 
 
-class Gaia_unWISE_AGN(CatalogdbModel):
-
-    gaia_sourceid = BigIntegerField(primary_key=True)
-
-    unwise = ForeignKeyField(unWISE, field='unwise_objid',
-                             column_name='unwise_objid',
-                             object_id_name='unwise_objid',
-                             backref='+')
-
-    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
-                           column_name='gaia_sourceid',
-                           object_id_name='gaia_sourceid_id',
-                           backref='+')
-
-    class Meta:
-        table_name = 'gaia_unwise_agn'
-
-
-class eBOSS_Taarget_v5(CatalogdbModel):
+class eBOSS_Target_v5(CatalogdbModel):
 
     class Meta:
         table_name = 'ebosstarget_v5'
@@ -451,6 +460,12 @@ class BHM_Spiders_Generic_Superset(CatalogdbModel):
 
     ls = ForeignKeyField(Legacy_Survey_DR8, field='ls_id', backref='+')
     gaia = ForeignKeyField(Gaia_DR2, object_id_name='gaia_dr2_source_id', backref='+')
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_dr2_source_id',
+                          object_id_name='gaia_dr2_source_id',
+                          backref='+',
+                          lazy_load=False)
 
     class Meta:
         use_reflection = False
@@ -494,32 +509,29 @@ class Gaia_DR2_WD_SDSS(CatalogdbModel):
         table_name = 'gaia_dr2_wd_sdss'
 
 
-class Gaia_DR2_WD(CatalogdbModel):
+class Gaia_unWISE_AGN(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    gaia_sourceid = BigIntegerField(primary_key=True)
 
-    gaia = ForeignKeyField(Gaia_DR2,
-                           column_name='source_id',
-                           object_id_name='source_id',
-                           backref='wd',
-                           unique=True)
+    unwise = ForeignKeyField(unWISE, field='unwise_objid',
+                             column_name='unwise_objid',
+                             object_id_name='unwise_objid',
+                             backref='+')
 
-    @property
-    def sdss(self):
-        """Returns records from `.Gaia_DR2_WD_SDSS` with matching ``wd``."""
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid',
+                           backref='+')
 
-        return Gaia_DR2_WD_SDSS.select().where(Gaia_DR2_WD_SDSS.wd == self.wd)
-
-    class Meta:
-        table_name = 'gaia_dr2_wd'
-
-
-class Tycho2(CatalogdbModel):
-
-    designation = TextField(primary_key=True)
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_sourceid',
+                          object_id_name='gaia_sourceid',
+                          backref='+',
+                          lazy_load=False)
 
     class Meta:
-        table_name = 'tycho2'
+        table_name = 'gaia_unwise_agn'
 
 
 class GaiaQSO(CatalogdbModel):
@@ -530,36 +542,31 @@ class GaiaQSO(CatalogdbModel):
         table_name = 'gaia_qso'
 
 
-class TIC_v8(CatalogdbModel):
+class Gaia_DR2_WD(CatalogdbModel):
 
-    id = BigIntegerField(primary_key=True)
+    source_id = BigIntegerField(primary_key=True)
 
-    tycho2 = ForeignKeyField(Tycho2, field='designation',
-                             column_name='tyc', object_id_name='tyc',
-                             backref='tic')
+    gaia = ForeignKeyField(Gaia_DR2,
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='wd',
+                           unique=True)
 
-    twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
-                                  column_name='twomass_psc',
-                                  backref='tic')
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id',
+                          object_id_name='source_id',
+                          backref='+',
+                          lazy_load=False)
 
-    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj, field='objid',
-                               column_name='sdss', object_id_name='sdss',
-                               backref='tic')
+    @property
+    def sdss(self):
+        """Returns records from `.Gaia_DR2_WD_SDSS` with matching ``wd``."""
 
-    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
-                           column_name='gaia_int', object_id_name='gaia_int',
-                           backref='tic')
-
-    allwise_target = ForeignKeyField(AllWise, field='designation',
-                                     column_name='allwise', object_id_name='allwise',
-                                     backref='tic')
-
-    kepler_input = ForeignKeyField(KeplerInput_DR10, field='kic_kepler_id',
-                                   column_name='kic', object_id_name='kic',
-                                   backref='tic')
+        return Gaia_DR2_WD_SDSS.select().where(Gaia_DR2_WD_SDSS.wd == self.wd)
 
     class Meta:
-        table_name = 'tic_v8'
+        table_name = 'gaia_dr2_wd'
 
 
 class CatWISE(CatalogdbModel):
@@ -587,6 +594,13 @@ class Watchdog(CatalogdbModel):
                            object_id_name='gaia_source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
+
     class Meta:
         table_name = 'watchdog'
 
@@ -599,6 +613,13 @@ class BlackCAT(CatalogdbModel):
                            column_name='gaia_source_id',
                            object_id_name='gaia_source_id',
                            backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
 
     class Meta:
         table_name = 'blackcat'
@@ -613,6 +634,13 @@ class XRay_Pulsars(CatalogdbModel):
                            object_id_name='gaia_source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
+
     class Meta:
         table_name = 'xray_pulsars'
 
@@ -625,6 +653,13 @@ class LowMassXRayBinaries(CatalogdbModel):
                            column_name='gaia_source_id',
                            object_id_name='gaia_source_id',
                            backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
 
     class Meta:
         table_name = 'lmxb'
@@ -639,6 +674,13 @@ class GalacticMillisecondPulsars(CatalogdbModel):
                            object_id_name='gaia_source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
+
     class Meta:
         table_name = 'galactic_millisecond_pulsars'
 
@@ -652,6 +694,13 @@ class TransitionalMillisecondPulsars(CatalogdbModel):
                            object_id_name='gaia_source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
+
     class Meta:
         table_name = 'transitional_msps'
 
@@ -664,6 +713,13 @@ class ATNF(CatalogdbModel):
                            column_name='gaia_source_id',
                            object_id_name='gaia_source_id',
                            backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
 
     class Meta:
         table_name = 'atnf'
@@ -751,6 +807,13 @@ class SkyMapperGaia(CatalogdbModel):
                            object_id_name='gaia_source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_source_id',
+                          object_id_name='gaia_source_id',
+                          backref='+',
+                          lazy_load=False)
+
     skymapper = ForeignKeyField(SkyMapper_DR1_1,
                                 column_name='skymapper_object_id',
                                 object_id_name='skymapper_object_id',
@@ -785,6 +848,13 @@ class YSO_Clustering(CatalogdbModel):
                            column_name='source_id',
                            object_id_name='source_id',
                            backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id',
+                          object_id_name='source_id',
+                          backref='+',
+                          lazy_load=False)
 
     class Meta:
         table_name = 'yso_clustering'
@@ -838,6 +908,13 @@ class GeometricDistances_Gaia_DR2(CatalogdbModel):
                            object_id_name='source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id',
+                          object_id_name='source_id',
+                          backref='+',
+                          lazy_load=False)
+
     class Meta:
         table_name = 'geometric_distances_gaia_dr2'
 
@@ -850,6 +927,13 @@ class BHM_RM_v0(CatalogdbModel):
                            column_name='source_id_gaia',
                            object_id_name='source_id_gaia',
                            backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id_gaia',
+                          object_id_name='source_id_gaia',
+                          backref='+',
+                          lazy_load=False)
 
     unwise = ForeignKeyField(unWISE,
                              column_name='objid_unwise',
@@ -872,10 +956,43 @@ class Gaia_DR2_RUWE(CatalogdbModel):
                            object_id_name='source_id',
                            backref='ruwe')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id',
+                          object_id_name='source_id',
+                          backref='+',
+                          lazy_load=False)
+
     ruwe = FloatField()
 
     class Meta:
         table_name = 'gaia_dr2_ruwe'
+
+
+class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           field='source_id',
+                           column_name='source_id',
+                           backref='+',
+                           lazy_load=False)
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id',
+                          backref='+',
+                          lazy_load=False)
+
+    twomass = ForeignKeyField(TwoMassPSC,
+                              field='pts_key',
+                              column_name='tmass_pts_key',
+                              backref='+',
+                              lazy_load=False)
+
+    class Meta:
+        table_name = 'gaiadr2_tmass_best_neighbour'
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)

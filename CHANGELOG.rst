@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Add ``ForeignKeyField`` to ``TIC_v8`` where for all models in ``catalogdb`` connected to Gaia.
+
 * :release:`0.4.2 <2020-06-05>`
 * Add schema for ``gaia_dr2_ruwe``.
 * Rename ``targetdb.program`` to ``carton``, and ``survey`` to ``mapper``. Add ``priority`` field in ``carton_to_target``.
