@@ -341,7 +341,9 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         self._metadata = {}
 
-        PostgresqlDatabase.__init__(self, None)
+        autorollback = kwargs.pop('autorollback', True)
+
+        PostgresqlDatabase.__init__(self, None, autorollback=autorollback)
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
