@@ -332,8 +332,7 @@ class Legacy_Survey_DR8(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_sourceid',
                           object_id_name='gaia_sourceid',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'legacy_survey_dr8'
@@ -464,8 +463,7 @@ class BHM_Spiders_Generic_Superset(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_dr2_source_id',
                           object_id_name='gaia_dr2_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         use_reflection = False
@@ -527,8 +525,7 @@ class Gaia_unWISE_AGN(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_sourceid',
                           object_id_name='gaia_sourceid',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'gaia_unwise_agn'
@@ -556,8 +553,7 @@ class Gaia_DR2_WD(CatalogdbModel):
                           field='gaia_int',
                           column_name='source_id',
                           object_id_name='source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     @property
     def sdss(self):
@@ -598,8 +594,7 @@ class Watchdog(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'watchdog'
@@ -618,8 +613,7 @@ class BlackCAT(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'blackcat'
@@ -638,8 +632,7 @@ class XRay_Pulsars(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'xray_pulsars'
@@ -658,8 +651,7 @@ class LowMassXRayBinaries(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'lmxb'
@@ -678,8 +670,7 @@ class GalacticMillisecondPulsars(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'galactic_millisecond_pulsars'
@@ -698,8 +689,7 @@ class TransitionalMillisecondPulsars(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'transitional_msps'
@@ -718,8 +708,7 @@ class ATNF(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'atnf'
@@ -738,6 +727,12 @@ class SkyMapper_DR1_1(CatalogdbModel):
                            column_name='gaia_dr2_id1',
                            object_id_name='gaia_dr2_id1',
                            backref='skymapper')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_dr2_id1',
+                          object_id_name='gaia_dr2_id1',
+                          backref='+')
 
     @property
     def twomass1(self):
@@ -811,8 +806,7 @@ class SkyMapperGaia(CatalogdbModel):
                           field='gaia_int',
                           column_name='gaia_source_id',
                           object_id_name='gaia_source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     skymapper = ForeignKeyField(SkyMapper_DR1_1,
                                 column_name='skymapper_object_id',
@@ -853,8 +847,7 @@ class YSO_Clustering(CatalogdbModel):
                           field='gaia_int',
                           column_name='source_id',
                           object_id_name='source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'yso_clustering'
@@ -912,8 +905,7 @@ class GeometricDistances_Gaia_DR2(CatalogdbModel):
                           field='gaia_int',
                           column_name='source_id',
                           object_id_name='source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     class Meta:
         table_name = 'geometric_distances_gaia_dr2'
@@ -932,8 +924,7 @@ class BHM_RM_v0(CatalogdbModel):
                           field='gaia_int',
                           column_name='source_id_gaia',
                           object_id_name='source_id_gaia',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     unwise = ForeignKeyField(unWISE,
                              column_name='objid_unwise',
@@ -960,13 +951,32 @@ class Gaia_DR2_RUWE(CatalogdbModel):
                           field='gaia_int',
                           column_name='source_id',
                           object_id_name='source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     ruwe = FloatField()
 
     class Meta:
         table_name = 'gaia_dr2_ruwe'
+
+
+class SDSS_DR13_PhotoObj_Primary(CatalogdbModel):
+
+    objid = BigIntegerField(primary_key=True)
+
+    photoObj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                               field='objid',
+                               column_name='objid',
+                               object_id_name='objid',
+                               backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='sdss',
+                          column_name='objid',
+                          object_id_name='objid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'sdss_dr13_photoobj_primary'
 
 
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
@@ -982,8 +992,7 @@ class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
     tic = ForeignKeyField(TIC_v8,
                           field='gaia_int',
                           column_name='source_id',
-                          backref='+',
-                          lazy_load=False)
+                          backref='+')
 
     twomass = ForeignKeyField(TwoMassPSC,
                               field='pts_key',
