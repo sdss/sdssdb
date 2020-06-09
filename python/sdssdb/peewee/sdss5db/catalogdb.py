@@ -340,6 +340,11 @@ class Legacy_Survey_DR8(CatalogdbModel):
 
 class eBOSS_Target_v5(CatalogdbModel):
 
+    sdss = ForeignKeyField(SDSS_DR13_PhotoObj,
+                           column_name='objid_targeting',
+                           object_id_name='objid_targeting',
+                           backref='+')
+
     class Meta:
         table_name = 'ebosstarget_v5'
 
