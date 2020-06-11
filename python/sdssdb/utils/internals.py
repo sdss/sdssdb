@@ -11,6 +11,7 @@ import re
 import sys
 import time
 
+from peewee import DoubleField
 from playhouse.reflection import PostgresqlMetadata, UnknownField
 
 
@@ -280,6 +281,9 @@ def get_database_columns(database, schema=None):
     # Get column type mapping.
     pg_metadata = PostgresqlMetadata(database)
     column_map = pg_metadata.column_map
+
+    # Add array type for double
+    pg_metadata.array_types[1022] = DoubleField
 
     # Get the mapping of oid to relation (table)
     relids = dict(database.execute_sql(
