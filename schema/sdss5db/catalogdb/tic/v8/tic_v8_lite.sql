@@ -33,7 +33,7 @@ CREATE MATERIALIZED VIEW catalogdb.tic_v8_lite AS
     ORDER BY q3c_ang2ipix(ra, dec);
 
 
-CREATE UNIQUE INDEX on catalogdb.allwise_lite (id);
+CREATE UNIQUE INDEX on catalogdb.tic_v8_lite (id);
 
 CREATE INDEX ON catalogdb.tic_v8_lite (gaia_int);
 CREATE INDEX ON catalogdb.tic_v8_lite (tyc);
