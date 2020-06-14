@@ -9,6 +9,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Use ``autorollback=True`` by default in `.PeeweeDatabaseConnection`.
 * Ensure reflection assigns double type arrays.
 * Clear metadata on reconnect.
+* Add ``lite`` materialized views to ``catalogdb``.
 
 * :release:`0.4.3 <2020-06-05>`
 * Add schema for ``gaia_dr2_ruwe``.
