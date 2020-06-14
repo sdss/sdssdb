@@ -8,6 +8,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Add ``ForeignKeyField`` to ``TIC_v8`` where for all models in ``catalogdb`` connected to Gaia.
 * Use ``autorollback=True`` by default in `.PeeweeDatabaseConnection`.
 * Ensure reflection assigns double type arrays.
+* Clear metadata on reconnect.
 
 * :release:`0.4.3 <2020-06-05>`
 * Add schema for ``gaia_dr2_ruwe``.

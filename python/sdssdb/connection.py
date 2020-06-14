@@ -371,6 +371,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
                 params['password'] = None
 
         PostgresqlDatabase.init(self, dbname, **params)
+        self._metadata = {}
 
         try:
             PostgresqlDatabase.connect(self)
