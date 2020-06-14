@@ -19,11 +19,11 @@ CREATE MATERIALIZED VIEW catalogdb.legacy_survey_dr8_lite AS
     ORDER BY q3c_ang2ipix(ra, dec);
 
 
-CREATE UNIQUE INDEX on catalogdb.allwise_lite (ls_id);
+CREATE UNIQUE INDEX on catalogdb.legacy_survey_dr8_lite (ls_id);
 
 CREATE INDEX ON catalogdb.legacy_survey_dr8_lite (ref_cat);
 CREATE INDEX ON catalogdb.legacy_survey_dr8_lite (ref_id);
 CREATE INDEX ON catalogdb.legacy_survey_dr8_lite (gaia_sourceid);
 
 CREATE INDEX ON catalogdb.legacy_survey_dr8_lite (q3c_ang2ipix(ra, dec));
-ANALYZE catalogdb.legacy_survey_dr8_lite;
+VACUUM ANALYZE catalogdb.legacy_survey_dr8_lite;

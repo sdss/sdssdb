@@ -16,12 +16,12 @@ CREATE MATERIALIZED VIEW catalogdb.twomass_psc_lite AS
         pts_key,
         glon,
         glat,
-        jdate,
+        jdate
     FROM catalogdb.twomass_psc
     ORDER BY q3c_ang2ipix(ra, decl);
 
 
-CREATE UNIQUE INDEX on catalogdb.allwise_lite (pts_key);
+CREATE UNIQUE INDEX on catalogdb.twomass_psc_lite (pts_key);
 CREATE UNIQUE INDEX ON catalogdb.twomass_psc_lite (designation);
 
 CREATE INDEX ON catalogdb.twomass_psc_lite (j_m);
@@ -34,4 +34,4 @@ CREATE INDEX ON catalogdb.twomass_psc_lite (cc_flg);
 CREATE INDEX ON catalogdb.twomass_psc_lite (jdate);
 
 CREATE INDEX ON catalogdb.twomass_psc_lite (q3c_ang2ipix(ra, decl));
-ANALYZE catalogdb.twomass_psc_lite;
+VACUUM ANALYZE catalogdb.twomass_psc_lite;
