@@ -1023,6 +1023,12 @@ class Gaia_DR2_Lite(CatalogdbModel):
                            column_name='source_id',
                            backref='+')
 
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='source_id',
+                          object_id_name='source_id',
+                          backref='+')
+
 
 class Legacy_Survey_DR8_Lite(CatalogdbModel):
 
@@ -1031,6 +1037,12 @@ class Legacy_Survey_DR8_Lite(CatalogdbModel):
     ls = ForeignKeyField(Legacy_Survey_DR8,
                          column_name='ls_id',
                          backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_sourceid',
+                          object_id_name='gaia_sourceid',
+                          backref='+')
 
     gaia = ForeignKeyField(Gaia_DR2,
                            column_name='gaia_sourceid',
@@ -1045,6 +1057,12 @@ class TwoMassPSC_Lite(CatalogdbModel):
     twomass_psc = ForeignKeyField(TwoMassPSC,
                                   column_name='pts_key',
                                   backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='twomass_psc',
+                          column_name='designation',
+                          object_id_name='designation',
+                          backref='+')
 
     class Meta:
         table_name = 'twomass_psc_lite'
@@ -1097,6 +1115,12 @@ class AllWise_Lite(CatalogdbModel):
     allwise = ForeignKeyField(AllWise,
                               column_name='cntr',
                               backref='+')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='allwise',
+                          column_name='designation',
+                          object_id_name='designation',
+                          backref='+')
 
 
 # Add relational tables to namespace.
