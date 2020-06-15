@@ -206,23 +206,24 @@ def get_row_count(connection, table_name, schema=None, approximate=True):
     if approximate:
         if schema is None:
             sql = ('SELECT reltuples AS approximate_row_count '
-                   'FROM pg_class WHERE relname = \'{table_name}\';')
+                   f'FROM pg_class WHERE relname = {table_name!r};')
         else:
             sql = ('SELECT reltuples AS approximate_row_count FROM pg_class '
                    'JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace '
-                   'WHERE relname = \'{table_name}\' AND pg_namespace.nspname = \'{schema}\';')
+                   f'WHERE relname = {table_name!r} AND pg_namespace.nspname = {schema!r};')
     else:
         if schema is None:
-            sql = 'SELECT count(*) FROM {table_name};'
+            sql = f'SELECT count(*) FROM {table_name};'
         else:
-            sql = 'SELECT count(*) FROM {schema}.{table_name};'
+            sql = f'SELECT count(*) FROM {schema}.{table_name};'
 
     with connection.atomic():
         count = connection.execute_sql(sql.format(table_name=table_name,
                                                   schema=schema)).fetchall()
 
     if len(count) == 0:
-        raise ValueError('failed retrieving the row count. Check the table name and schema.')
+        raise ValueError(f'failed retrieving the row count for table {table_name!r}'
+                         'Check the table name and schema.')
 
     return count[0][0]
 
