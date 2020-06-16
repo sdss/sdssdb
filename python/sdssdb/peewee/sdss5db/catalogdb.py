@@ -240,19 +240,6 @@ class SDSS_DR14_SpecObj(CatalogdbModel):
         table_name = 'sdss_dr14_specobj'
 
 
-class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
-
-    specobjid = BigIntegerField(primary_key=True)
-
-    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
-                               column_name='bestobjid',
-                               object_id_name='bestobjid',
-                               backref='specobj_dr16')
-
-    class Meta:
-        table_name = 'sdss_dr16_specobj'
-
-
 class SDSS_DR14_QSO(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
@@ -982,6 +969,24 @@ class SDSS_DR13_PhotoObj_Primary(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr13_photoobj_primary'
+
+
+class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
+
+    specobjid = BigIntegerField(primary_key=True)
+
+    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                               column_name='bestobjid',
+                               object_id_name='bestobjid',
+                               backref='specobj_dr16')
+
+    photoobj_primary = ForeignKeyField(SDSS_DR13_PhotoObj_Primary,
+                                       column_name='bestobjid',
+                                       object_id_name='bestobjid',
+                                       backref='+')
+
+    class Meta:
+        table_name = 'sdss_dr16_specobj'
 
 
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
