@@ -850,6 +850,7 @@ class MIPSGAL(CatalogdbModel):
     mipsgal = TextField(primary_key=True)
 
     twomass = ForeignKeyField(TwoMassPSC,
+                              field='designation',
                               object_id_name='twomass_name',
                               backref='+')
 
