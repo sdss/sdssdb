@@ -296,6 +296,14 @@ ALTER TABLE catalogdb.mipsgal
     REFERENCES catalogdb.twomass_psc (designation);
 
 
+-- mipsgal_extra
+
+ALTER TABLE catalogdb.mipsgal_extra
+    ADD CONSTRAINT source_id_fk
+    FOREIGN KEY (source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id);
+
+
 -- TESS-TOI
 
 CREATE INDEX CONCURRENTLY ON catalogdb.tess_toi USING BTREE (ticid);

@@ -864,6 +864,20 @@ class MIPSGAL(CatalogdbModel):
         table_name = 'mipsgal'
 
 
+class MIPSGAL_Extra(CatalogdbModel):
+
+    mipsgal = TextField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           field='source_id',
+                           column='source_id',
+                           object_id_name='source_id',
+                           backref='+')
+
+    class Meta:
+        table_name = 'mipsgal_extra'
+
+
 class TESS_TOI(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)

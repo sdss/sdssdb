@@ -18,7 +18,7 @@ def main():
 
     assert database.connected
 
-    file_ = os.environ['CATALOGDB_DIR'] + '/MIPSGAL.fits'
+    file_ = os.environ['CATALOGDB_DIR'] + '/MIPSGAL/MIPSGAL.fits'
 
     data = astropy.table.Table.read(file_)
 
