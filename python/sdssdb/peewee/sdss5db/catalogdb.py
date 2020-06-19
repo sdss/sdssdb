@@ -870,7 +870,7 @@ class MIPSGAL_Extra(CatalogdbModel):
 
     gaia = ForeignKeyField(Gaia_DR2,
                            field='source_id',
-                           column='source_id',
+                           column_name='source_id',
                            object_id_name='source_id',
                            backref='+')
 
