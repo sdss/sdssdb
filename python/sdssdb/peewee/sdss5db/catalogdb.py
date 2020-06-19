@@ -845,25 +845,6 @@ class YSO_Clustering(CatalogdbModel):
         table_name = 'yso_clustering'
 
 
-class MIPSGAL(CatalogdbModel):
-
-    mipsgal = TextField(primary_key=True)
-
-    twomass = ForeignKeyField(TwoMassPSC,
-                              field='designation',
-                              object_id_name='twomass_name',
-                              backref='+')
-
-    @property
-    def glimpse(self):
-        """One-to-many for GLIMPSE targets."""
-
-        return GLIMPSE.select().where(GLIMPSE.designation == self.glimpse)
-
-    class Meta:
-        table_name = 'mipsgal'
-
-
 class MIPSGAL_Extra(CatalogdbModel):
 
     mipsgal = TextField(primary_key=True)
@@ -876,6 +857,31 @@ class MIPSGAL_Extra(CatalogdbModel):
 
     class Meta:
         table_name = 'mipsgal_extra'
+
+
+class MIPSGAL(CatalogdbModel):
+
+    mipsgal = TextField(primary_key=True)
+
+    twomass = ForeignKeyField(TwoMassPSC,
+                              field='designation',
+                              object_id_name='twomass_name',
+                              backref='+')
+
+    extra = ForeignKeyField(MIPSGAL_Extra,
+                            field='mipsgal',
+                            column_name='mipsgal',
+                            object_id_name='mipsgal',
+                            backref='original')
+
+    @property
+    def glimpse(self):
+        """One-to-many for GLIMPSE targets."""
+
+        return GLIMPSE.select().where(GLIMPSE.designation == self.glimpse)
+
+    class Meta:
+        table_name = 'mipsgal'
 
 
 class TESS_TOI(CatalogdbModel):
