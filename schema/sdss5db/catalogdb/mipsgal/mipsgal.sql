@@ -67,9 +67,7 @@ CREATE TABLE catalogdb.mipsgal (
     fwhm DOUBLE PRECISION,
     sky DOUBLE PRECISION,
     lim1 DOUBLE PRECISION,
-    lim2 DOUBLE PRECISION,
-    f1 INTEGER,
-    f2 INTEGER
+    lim2 DOUBLE PRECISION
 );
 
 CREATE INDEX CONCURRENTLY ON catalogdb.mipsgal (q3c_ang2ipix(radeg, dedeg));

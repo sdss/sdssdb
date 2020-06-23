@@ -17,11 +17,16 @@ from sdssdb.utils.ingest import copy_data
 def main():
 
     assert database.connected
+    database.become_admin()
 
-    file_ = os.environ['CATALOGDB_DIR'] + '/MIPSGAL/MIPSGAL.fits'
-
+    file_ = os.environ['CATALOGDB_DIR'] + '/MIPSGAL/MIPSGAL_catalog.fits'
     data = astropy.table.Table.read(file_)
+    data.meta = {}
+    copy_data(data, database, 'mipsgal', schema='catalogdb')
 
+    file_ = os.environ['CATALOGDB_DIR'] + '/MIPSGAL/MIPSGAL_archive.fits'
+    data = astropy.table.Table.read(file_)
+    data.meta = {}
     copy_data(data, database, 'mipsgal', schema='catalogdb')
 
 
