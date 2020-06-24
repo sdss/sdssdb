@@ -350,3 +350,11 @@ ALTER TABLE catalogdb.bhm_rm_v0
     ADD CONSTRAINT objid_unwise_fk
     FOREIGN KEY (objid_unwise)
     REFERENCES catalogdb.unwise (unwise_objid);
+
+
+-- gaia_assas_sn_cepheids
+
+ALTER TABLE catalogdb.gaia_assas_sn_cepheids
+    ADD CONSTRAINT source_id_fk
+    FOREIGN KEY (source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id);

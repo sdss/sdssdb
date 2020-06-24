@@ -1150,6 +1150,17 @@ class AllWise_Lite(CatalogdbModel):
                           backref='+')
 
 
+class GAIA_ASSAS_SN_Cepheids:
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR2,
+                           field='source_id',
+                           column_name='source_id',
+                           object_id_name='source_id',
+                           backref='assas')
+
+
 # Add relational tables to namespace.
 if database.connected and database.is_connection_usable():
     all_tables = database.get_tables('catalogdb')

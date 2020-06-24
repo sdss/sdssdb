@@ -10,6 +10,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Ensure reflection assigns double type arrays.
 * Clear metadata on reconnect.
 * Add ``lite`` materialized views to ``catalogdb``.
+* Add ``catalogdb.gaia_assas_sn_cepheids`` table.
 
 * :release:`0.4.3 <2020-06-05>`
 * Add schema for ``gaia_dr2_ruwe``.
