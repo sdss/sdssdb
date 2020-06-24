@@ -1150,7 +1150,7 @@ class AllWise_Lite(CatalogdbModel):
                           backref='+')
 
 
-class GAIA_ASSAS_SN_Cepheids:
+class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
 
