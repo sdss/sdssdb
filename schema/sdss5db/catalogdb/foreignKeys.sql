@@ -139,6 +139,45 @@ ALTER TABLE catalogdb.sdss_dr14_ascapStar
     DEFERRABLE INITIALLY DEFERRED;
 
 
+-- sdss_dr16_apogeeStar
+
+ALTER TABLE catalogdb.sdss_dr16_apogeeStar
+    ADD CONSTRAINT gaia_source_id_fk
+    FOREIGN KEY (gaia_source_id)
+    REFERENCES catalogdb.gaia_dr2_source (source_id)
+    DEFERRABLE INITIALLY DEFERRED;
+
+
+-- sdss_dr16_apogeeStarVisit
+
+ALTER TABLE catalogdb.sdss_dr16_apogeeStarVisit
+    ADD CONSTRAINT visit_id_fk
+    FOREIGN KEY (visit_id)
+    REFERENCES catalogdb.sdss_dr16_apogeeVisit (visit_id)
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE catalogdb.sdss_dr16_apogeeStarVisit
+    ADD CONSTRAINT apstar_id_fk
+    FOREIGN KEY (apstar_id)
+    REFERENCES catalogdb.sdss_dr16_apogeeStar (apstar_id)
+    DEFERRABLE INITIALLY DEFERRED;
+
+
+-- sdss_dr16_apogeeAllStarVisit
+
+ALTER TABLE catalogdb.sdss_dr16_apogeeAllStarVisit
+    ADD CONSTRAINT visit_id_fk
+    FOREIGN KEY (visit_id)
+    REFERENCES catalogdb.sdss_dr16_apogeeVisit (visit_id)
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE catalogdb.sdss_dr16_apogeeAllStarVisit
+    ADD CONSTRAINT apstar_id_fk
+    FOREIGN KEY (apstar_id)
+    REFERENCES catalogdb.sdss_dr16_apogeeStar (apstar_id)
+    DEFERRABLE INITIALLY DEFERRED;
+
+
 -- tic_v8
 
 CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (sdss);

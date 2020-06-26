@@ -12,6 +12,7 @@ This document records the main changes to the ``sdssdb`` code.
 * Add ``lite`` materialized views to ``catalogdb``.
 * Add ``catalogdb.gaia_assas_sn_cepheids`` table.
 * Move deprecated tables to ``deprecated`` schema in ``sdss5db``.
+* Add DR16 versions of APOGEE tables.
 
 * :release:`0.4.3 <2020-06-05>`
 * Add schema for ``gaia_dr2_ruwe``.

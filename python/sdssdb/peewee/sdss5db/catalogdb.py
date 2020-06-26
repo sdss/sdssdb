@@ -138,65 +138,59 @@ class SDSS_DR13_PhotoObj(CatalogdbModel):
         table_name = 'sdss_dr13_photoobj'
 
 
-class SDSS_DR14_APOGEE_Visit(CatalogdbModel):
+class SDSS_DR16_APOGEE_Visit(CatalogdbModel):
 
     visit_id = TextField(primary_key=True)
 
     class Meta:
-        table_name = 'sdss_dr14_apogeevisit'
+        table_name = 'sdss_dr16_apogeevisit'
 
 
-class SDSS_DR14_APOGEE_Star(CatalogdbModel):
+class SDSS_DR16_APOGEE_Star(CatalogdbModel):
 
     apstar_id = TextField(primary_key=True)
     apogee_id = TextField()
 
-    visits = ManyToManyField(SDSS_DR14_APOGEE_Visit,
+    gaia = ForeignKeyField(Gaia_DR2,
+                           field='source_id',
+                           column_name='gaia_source_id',
+                           object_id_name='gaia_source_id',
+                           backref='apogee_star')
+
+    visits = ManyToManyField(SDSS_DR16_APOGEE_Visit,
                              through_model=_APOGEE_Star_Visit_Deferred,
                              backref='stars')
 
     class Meta:
-        table_name = 'sdss_dr14_apogeestar'
+        table_name = 'sdss_dr16_apogeestar'
 
 
-class SDSS_DR14_APOGEE_Star_Visit(CatalogdbModel):
+class SDSS_DR16_APOGEE_Star_Visit(CatalogdbModel):
 
-    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
+    apstar = ForeignKeyField(SDSS_DR16_APOGEE_Star,
                              backref='+',
                              lazy_load=False)
 
-    visit = ForeignKeyField(SDSS_DR14_APOGEE_Visit,
+    visit = ForeignKeyField(SDSS_DR16_APOGEE_Visit,
                             backref='+',
                             lazy_load=False)
 
     class Meta:
-        table_name = 'sdss_dr14_apogeestarvisit'
+        table_name = 'sdss_dr16_apogeestarvisit'
 
 
-class SDSS_DR14_ASCAP_Star(CatalogdbModel):
+class SDSS_DR16_APOGEE_Star_AllVisit(CatalogdbModel):
 
-    apstar_id = TextField(primary_key=True)
-    apstar = ForeignKeyField(SDSS_DR14_APOGEE_Star,
-                             backref='ascap_stars')
+    apstar = ForeignKeyField(SDSS_DR16_APOGEE_Star,
+                             backref='+',
+                             lazy_load=False)
 
-    class Meta:
-        table_name = 'sdss_dr14_ascapstar'
-
-
-class SDSS_DR14_Cannon_Star(CatalogdbModel):
-
-    cannon_id = TextField(primary_key=True)
-
-    @property
-    def apstars(self):
-        """Returns the associated stars in ``SDSSDR14APOGEEStar``."""
-
-        return (SDSS_DR14_APOGEE_Star
-                .select()
-                .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
+    visit = ForeignKeyField(SDSS_DR16_APOGEE_Visit,
+                            backref='+',
+                            lazy_load=False)
 
     class Meta:
-        table_name = 'sdss_dr14_cannonstar'
+        table_name = 'sdss_dr16_apogeestarallvisit'
 
 
 class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
@@ -207,9 +201,9 @@ class SDSS_APOGEE_AllStarMerge_r13(CatalogdbModel):
     def apstars(self):
         """Returns the stars on `.SDSS_DR14_APOGEE_Star` with matching ``apogee_id``."""
 
-        return (SDSS_DR14_APOGEE_Star
+        return (SDSS_DR16_APOGEE_Star
                 .select()
-                .where(SDSS_DR14_APOGEE_Star.apogee_id == self.apogee_id))
+                .where(SDSS_DR16_APOGEE_Star.apogee_id == self.apogee_id))
 
     class Meta:
         table_name = 'sdss_apogeeallstarmerge_r13'
@@ -1033,6 +1027,10 @@ class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
                            column_name='source_id',
                            object_id_name='source_id',
                            backref='assas')
+
+
+_Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
+_APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
 
 # Add relational tables to namespace.
