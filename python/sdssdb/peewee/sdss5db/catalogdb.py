@@ -114,18 +114,6 @@ class Gaia_DR2_Clean(CatalogdbModel):
         table_name = 'gaia_dr2_clean'
 
 
-class GalacticGenesis(CatalogdbModel):
-
-    class Meta:
-        table_name = 'galactic_genesis'
-
-
-class GalacticGenesisBig(CatalogdbModel):
-
-    class Meta:
-        table_name = 'galactic_genesis_big'
-
-
 class GUVCat(CatalogdbModel):
 
     objid = BigIntegerField(primary_key=True)
@@ -1034,120 +1022,6 @@ class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
     class Meta:
         table_name = 'gaiadr2_tmass_best_neighbour'
-
-
-_Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
-_APOGEE_Star_Visit_Deferred.set_model(SDSS_DR14_APOGEE_Star_Visit)
-
-
-# Lite views
-
-class Gaia_DR2_Lite(CatalogdbModel):
-
-    source_id = BigIntegerField(primary_key=True)
-
-    gaia = ForeignKeyField(Gaia_DR2,
-                           column_name='source_id',
-                           backref='+')
-
-    tic = ForeignKeyField(TIC_v8,
-                          field='gaia_int',
-                          column_name='source_id',
-                          object_id_name='source_id',
-                          backref='+')
-
-
-class Legacy_Survey_DR8_Lite(CatalogdbModel):
-
-    ls_id = BigIntegerField(primary_key=True)
-
-    ls = ForeignKeyField(Legacy_Survey_DR8,
-                         column_name='ls_id',
-                         backref='+')
-
-    tic = ForeignKeyField(TIC_v8,
-                          field='gaia_int',
-                          column_name='gaia_sourceid',
-                          object_id_name='gaia_sourceid',
-                          backref='+')
-
-    gaia = ForeignKeyField(Gaia_DR2,
-                           column_name='gaia_sourceid',
-                           object_id_name='gaia_sourceid',
-                           backref='+')
-
-
-class TwoMassPSC_Lite(CatalogdbModel):
-
-    pts_key = IntegerField(primary_key=True)
-
-    twomass_psc = ForeignKeyField(TwoMassPSC,
-                                  column_name='pts_key',
-                                  backref='+')
-
-    tic = ForeignKeyField(TIC_v8,
-                          field='twomass_psc',
-                          column_name='designation',
-                          object_id_name='designation',
-                          backref='+')
-
-    class Meta:
-        table_name = 'twomass_psc_lite'
-
-
-class TIC_v8_Lite(CatalogdbModel):
-
-    id = BigIntegerField(primary_key=True)
-
-    tycho2 = ForeignKeyField(Tycho2,
-                             field='designation',
-                             column_name='tyc',
-                             object_id_name='tyc',
-                             backref='+')
-
-    twomass_psc = ForeignKeyField(TwoMassPSC,
-                                  field='designation',
-                                  column_name='twomass_psc',
-                                  backref='+')
-
-    photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
-                               field='objid',
-                               column_name='sdss',
-                               object_id_name='sdss',
-                               backref='+')
-
-    gaia = ForeignKeyField(Gaia_DR2,
-                           field='source_id',
-                           column_name='gaia_int',
-                           object_id_name='gaia_int',
-                           backref='+')
-
-    allwise = ForeignKeyField(AllWise,
-                              field='designation',
-                              column_name='allwise',
-                              object_id_name='allwise_id',
-                              backref='+')
-
-    kic = ForeignKeyField(KeplerInput_DR10,
-                          field='kic_kepler_id',
-                          column_name='kic',
-                          object_id_name='kic_id',
-                          backref='+')
-
-
-class AllWise_Lite(CatalogdbModel):
-
-    cntr = BigIntegerField(primary_key=True)
-
-    allwise = ForeignKeyField(AllWise,
-                              column_name='cntr',
-                              backref='+')
-
-    tic = ForeignKeyField(TIC_v8,
-                          field='allwise',
-                          column_name='designation',
-                          object_id_name='designation',
-                          backref='+')
 
 
 class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
