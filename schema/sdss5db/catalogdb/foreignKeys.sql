@@ -371,9 +371,9 @@ ALTER TABLE catalogdb.gaia_dr2_ruwe
 
 -- bhm_rm_v0
 
-CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (source_id_gaia)
-CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (objid_sdss)
-CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (objid_unwise)
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (source_id_gaia);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (objid_sdss);
+CREATE INDEX CONCURRENTLY ON catalogdb.bhm_rm_v0 (objid_unwise);
 
 ALTER TABLE catalogdb.bhm_rm_v0
     ADD CONSTRAINT source_id_gaia_fk
@@ -386,6 +386,28 @@ ALTER TABLE catalogdb.bhm_rm_v0
     REFERENCES catalogdb.sdss_dr13_photoobj (objid);
 
 ALTER TABLE catalogdb.bhm_rm_v0
+    ADD CONSTRAINT objid_unwise_fk
+    FOREIGN KEY (objid_unwise)
+    REFERENCES catalogdb.unwise (unwise_objid);
+
+
+-- bhm_rm_v0_2
+
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (source_id_gaia);
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (objid_sdss);
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (objid_unwise);
+
+ALTER TABLE catalogdb.bhm_rm_v0_2
+    ADD CONSTRAINT source_id_gaia_fk
+    FOREIGN KEY (source_id_gaia)
+    REFERENCES catalogdb.gaia_dr2_source (source_id);
+
+ALTER TABLE catalogdb.bhm_rm_v0_2
+    ADD CONSTRAINT objid_sdss_fk
+    FOREIGN KEY (objid_sdss)
+    REFERENCES catalogdb.sdss_dr13_photoobj (objid);
+
+ALTER TABLE catalogdb.bhm_rm_v0_2
     ADD CONSTRAINT objid_unwise_fk
     FOREIGN KEY (objid_unwise)
     REFERENCES catalogdb.unwise (unwise_objid);

@@ -936,6 +936,10 @@ class BHM_RM_v0(CatalogdbModel):
         table_name = 'bhm_rm_v0'
 
 
+class BHM_RM_v0_2(BHM_RM_v0):
+    pass
+
+
 class Gaia_DR2_RUWE(CatalogdbModel):
 
     gaia = ForeignKeyField(Gaia_DR2,
