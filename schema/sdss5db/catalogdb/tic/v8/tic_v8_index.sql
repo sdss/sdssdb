@@ -7,23 +7,22 @@ UPDATE catalogdb.tic_v8 SET gaia_int = gaia::BIGINT;
 
 -- Indices
 
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 (q3c_ang2ipix(ra, dec));
-CLUSTER tic_v8_q3c_ang2ipix_idx ON catalogdb.tic_v8;
-VACUUM ANALYZE catalogdb.tic_v8;
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Bmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Vmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (umag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (rmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (imag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (zmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Jmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Hmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Kmag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (Tmag);
 
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Bmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Vmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (umag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (gmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (rmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (imag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (zmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Jmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Hmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (Kmag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (posflag);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (gallong);
-CREATE INDEX CONCURRENTLY ON catalogdb.tic_v8 USING BTREE (gallat);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (posflag);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gallong);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (gallat);
+CREATE INDEX ON catalogdb.tic_v8 USING BTREE (plx);
 
 ALTER TABLE catalogdb.tic_v8 ADD COLUMN twomass_psc TEXT;
 UPDATE catalogdb.tic_v8
@@ -41,4 +40,4 @@ ALTER INDEX catalogdb.tic_v8_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STAT
 
 -- For Solar Neighbourhood Census
 
-CREATE INDEX CONCURRENTLY tic_v8_plx_minus_e_plx ON catalogdb.tic_v8 ((plx-e_plx));
+CREATE INDEX tic_v8_plx_minus_e_plx ON catalogdb.tic_v8 ((plx-e_plx));
