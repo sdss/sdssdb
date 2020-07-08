@@ -1076,13 +1076,6 @@ for rtname in all_tables:
                                                         column_name='version_id',
                                                         backref='+'))
 
-        rlite = 'catalogdb.' + tname + '_lite'
-        if rlite in database.models:
-            RelationalModel._meta.add_field('lite',
-                                            ForeignKeyField(database.models[rlite],
-                                                            column_name='target_id',
-                                                            backref='+'))
-
         # Add a many-to-many to Catalog
         Catalog._meta.add_field(rel_model.__name__.lower(),
                                 ManyToManyField(rel_model,
