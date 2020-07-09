@@ -1082,4 +1082,11 @@ for rtname in all_tables:
                                                 through_model=RelationalModel,
                                                 backref='+'))
 
+        if tname == 'sdss_dr13_photoobj_primary':
+            RelationalModel._meta.add_field('sdss_dr13_photoobj',
+                                            ForeignKeyField(SDSS_DR13_PhotoObj,
+                                                            column_name='target_id',
+                                                            field='objid',
+                                                            backref='+'))
+
         globals()[model_name] = RelationalModel
