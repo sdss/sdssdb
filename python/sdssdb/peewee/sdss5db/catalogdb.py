@@ -15,7 +15,7 @@ from peewee import (AutoField, BigAutoField, BigIntegerField, CharField,
 from sdssdb.exceptions import SdssdbUserWarning
 
 from .. import BaseModel
-from . import database  # noqa
+from . import database
 
 
 class CatalogdbModel(BaseModel):
