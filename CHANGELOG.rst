@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.5 <2020-07-12>`
 * Add ``ForeignKeyField`` from ``CatalogToSDSS_DR13_PhotoObj_Primary`` directly to ``SDSS_DR13_PhotoObj``.
 
 * :release:`0.4.4 <2020-07-07>`
