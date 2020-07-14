@@ -419,3 +419,11 @@ ALTER TABLE catalogdb.gaia_assas_sn_cepheids
     ADD CONSTRAINT source_id_fk
     FOREIGN KEY (source_id)
     REFERENCES catalogdb.gaia_dr2_source (source_id);
+
+
+-- best_brightest
+
+ALTER TABLE catalogdb.allwise
+    ADD CONSTRAINT cntr_fk
+    FOREIGN KEY (cntr)
+    REFERENCES catalogdb.allwise (cntr);
