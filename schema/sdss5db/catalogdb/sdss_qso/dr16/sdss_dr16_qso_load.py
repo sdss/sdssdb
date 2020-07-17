@@ -19,17 +19,18 @@ assert database.connected
 
 def main():
 
+    database.become_admin()
+
     file_ = os.environ['CATALOGDB_DIR'] + '/sdss_qso/dr16q/DR16Q_v4.fits'
 
     data = astropy.table.Table.read(file_)
     data.meta = {}
     data.rename_columns(data.colnames, list(map(lambda x: x.lower(), data.colnames)))
-    to_csv(data, file_ + '.csv', header=True, overwrite=True)
+    to_csv(data, file_ + '.csv', header=False, delimiter=',')
     del data
 
     cursor = database.cursor()
     fileobj = open(file_ + '.csv')
-    fileobj.readline()  # Read header
     cursor.copy_from(fileobj, 'catalogdb.sdss_dr16_qso', sep=',')
     database.commit()
 

@@ -234,7 +234,7 @@ def convert_row_to_psql(row, delimiter='\t', null='\\N'):
                 str(col_value.tolist())
                 .replace('\n', '')
                 .replace('\'', '\"')
-                .replace('[', '{').replace(']', '}'))
+                .replace('[', '\"{').replace(']', '}\"'))
 
     return delimiter.join(row_data)
 

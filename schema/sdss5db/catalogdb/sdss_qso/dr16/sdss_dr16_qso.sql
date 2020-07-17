@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS catalogdb.sdss_dr16_qso (
     zwarn_lya BIGINT,
     deltachi2_lya DOUBLE PRECISION,
     z_lyawg REAL,
-    z_dla DOUBLE PRECISION[]
-    nhi_dla DOUBLE PRECISION[]
-    conf_dla DOUBLE PRECISION[]
+    z_dla DOUBLE PRECISION[],
+    nhi_dla DOUBLE PRECISION[],
+    conf_dla DOUBLE PRECISION[],
     bal_prob REAL,
     bi_civ DOUBLE PRECISION,
     err_bi_civ DOUBLE PRECISION,
@@ -73,11 +73,11 @@ CREATE TABLE IF NOT EXISTS catalogdb.sdss_dr16_qso (
     nspec_sdss INTEGER,
     nspec_boss INTEGER,
     nspec INTEGER,
-    plate_duplicate INTEGER[]
-    mjd_duplicate INTEGER[]
-    fiberid_duplicate INTEGER[]
-    spectro_duplicate INTEGER[]
-    skyversion uint8,
+    plate_duplicate INTEGER[],
+    mjd_duplicate INTEGER[],
+    fiberid_duplicate INTEGER[],
+    spectro_duplicate INTEGER[],
+    skyversion INTEGER,
     run_number INTEGER,
     rerun_number TEXT,
     camcol_number INTEGER,
@@ -90,11 +90,11 @@ CREATE TABLE IF NOT EXISTS catalogdb.sdss_dr16_qso (
     chunk TEXT,
     tile INTEGER,
     platesn2 DOUBLE PRECISION,
-    psfflux REAL[]
-    psfflux_ivar DOUBLE PRECISION[]
-    psfmag REAL[]
-    psfmagerr DOUBLE PRECISION[]
-    extinction REAL[]
+    psfflux REAL[],
+    psfflux_ivar DOUBLE PRECISION[],
+    psfmag REAL[],
+    psfmagerr DOUBLE PRECISION[],
+    extinction REAL[],
     m_i DOUBLE PRECISION,
     sn_median_all DOUBLE PRECISION,
     galex_matched INTEGER,
@@ -148,11 +148,11 @@ CREATE TABLE IF NOT EXISTS catalogdb.sdss_dr16_qso (
     ksnr DOUBLE PRECISION,
     krdflag INTEGER,
     sdss2mass_sep DOUBLE PRECISION,
-    2rxs_id TEXT,
-    2rxs_ra DOUBLE PRECISION,
-    2rxs_dec DOUBLE PRECISION,
-    2rxs_src_flux REAL,
-    2rxs_src_flux_err REAL,
+    rass2rxs_id TEXT,
+    rass2rxs_ra DOUBLE PRECISION,
+    rass2rxs_dec DOUBLE PRECISION,
+    rass2rxs_src_flux REAL,
+    rass2rxs_src_flux_err REAL,
     sdss2rosat_sep DOUBLE PRECISION,
     xmm_src_id BIGINT,
     xmm_ra DOUBLE PRECISION,
