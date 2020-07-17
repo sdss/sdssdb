@@ -238,6 +238,12 @@ class SDSS_DR14_QSO(CatalogdbModel):
         table_name = 'sdss_dr14_qso'
 
 
+class SDSS_DR16_QSO(SDSS_DR14_QSO):
+
+    class Meta:
+        table_name = 'sdss_dr16_qso'
+
+
 class unWISE(CatalogdbModel):
 
     unwise_objid = TextField(primary_key=True)
