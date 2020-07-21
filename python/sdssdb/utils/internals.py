@@ -284,6 +284,7 @@ def get_database_columns(database, schema=None):
     column_map = pg_metadata.column_map
 
     # Add array type for double
+    pg_metadata.array_types[1021] = FloatField
     pg_metadata.array_types[1022] = DoubleField
 
     # Get the mapping of oid to relation (table)
