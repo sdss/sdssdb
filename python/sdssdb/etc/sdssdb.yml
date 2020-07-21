@@ -58,17 +58,9 @@ slore:
     host: lore.sdss.utah.edu
     port: 5432
     domain: lore.sdss.utah.edu
-    
+
 tunnel_operations:
     user: sdss_user
     admin: sdss
     host: localhost
     port: 7502
-    domain: operations.sdss.*
-    
-tunnel_operations_sdss:
-    user: sdss
-    admin: sdss
-    host: localhost
-    port: 7502
-    domain: operations.sdss.*
