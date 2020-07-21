@@ -11,7 +11,7 @@ import re
 import sys
 import time
 
-from peewee import DoubleField
+from peewee import DoubleField, FloatField
 from playhouse.reflection import PostgresqlMetadata, UnknownField
 
 
