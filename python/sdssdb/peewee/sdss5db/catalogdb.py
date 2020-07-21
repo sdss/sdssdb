@@ -242,10 +242,11 @@ class SDSS_DR14_QSO(CatalogdbModel):
 
 class SDSS_DR16_QSO(SDSS_DR14_QSO):
 
+    psfmag = ArrayField(field_class=FloatField, null=True)
+
     class Meta:
         table_name = 'sdss_dr16_qso'
 
-    psfmag = ArrayField(field_class=FloatField, null=True)
 
 class unWISE(CatalogdbModel):
 
