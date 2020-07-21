@@ -7,6 +7,7 @@ This document records the main changes to the ``sdssdb`` code.
 
 * :release:`0.4.5 <2020-07-12>`
 * Add ``ForeignKeyField`` from ``CatalogToSDSS_DR13_PhotoObj_Primary`` directly to ``SDSS_DR13_PhotoObj``.
+* Add single precision float type to the list of Peewee arrays during reflection.
 
 * :release:`0.4.4 <2020-07-07>`
 * Add ``ForeignKeyField`` to ``TIC_v8`` where for all models in ``catalogdb`` connected to Gaia.
