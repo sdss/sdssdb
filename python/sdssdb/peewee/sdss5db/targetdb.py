@@ -248,10 +248,10 @@ class Magnitude(TargetdbBase):
     pk = AutoField()
     r = FloatField(null=True)
     rp = FloatField(null=True)
-    target = ForeignKeyField(column_name='target_pk',
-                             field='pk',
-                             model=Target,
-                             backref='magnitudes')
+    carton_to_target = ForeignKeyField(column_name='carton_to_target_pk',
+                                       field='pk',
+                                       model=CartonToTarget,
+                                       backref='magnitudes')
 
     class Meta:
         table_name = 'magnitude'

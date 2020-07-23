@@ -20,7 +20,6 @@ CREATE TABLE targetdb.target (
 	pmdec REAL,
 	epoch REAL,
     parallax REAL,
-	magnitude_pk BIGINT,
 	catalogid BIGINT);
 
 CREATE TABLE targetdb.version (
@@ -39,7 +38,7 @@ CREATE TABLE targetdb.magnitude (
 	h REAL,
 	bp REAL,
 	rp REAL,
-	target_pk BIGINT);
+	carton_to_target_pk BIGINT);
 
 CREATE TABLE targetdb.carton (
 	pk SERIAL PRIMARY KEY NOT NULL,
@@ -230,17 +229,17 @@ ALTER TABLE ONLY targetdb.positioner
     FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
 
 ALTER TABLE ONLY targetdb.magnitude
-    ADD CONSTRAINT target_fk
-    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
+    ADD CONSTRAINT carton_to_target_fk
+    FOREIGN KEY (carton_to_target_pk) REFERENCES targetdb.carton_to_target(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE
 	DEFERRABLE INITIALLY DEFERRED;
 
 
 -- Indices
 
-CREATE INDEX CONCURRENTLY target_pk_idx
+CREATE INDEX CONCURRENTLY carton_to_target_pk_idx
 	ON targetdb.magnitude
-	USING BTREE(target_pk);
+	USING BTREE(carton_to_target_pk);
 
 CREATE INDEX CONCURRENTLY catalogid_idx
 	ON targetdb.target
