@@ -173,10 +173,9 @@ class Carton(TargetdbBase):
 
 
 class Target(TargetdbBase):
-    catalog = ForeignKeyField(column_name='catalogid',
-                              object_id_name='catalogid',
-                              model=catalogdb.Catalog,
-                              field='catalogid')
+    catalogid = ForeignKeyField(column_name='catalogid',
+                                model=catalogdb.Catalog,
+                                field='catalogid')
     dec = DoubleField(null=True)
     epoch = FloatField(null=True)
     pk = AutoField()
