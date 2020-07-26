@@ -1043,6 +1043,10 @@ class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
                            backref='assas')
 
 
+class Skies_v1(CatalogdbModel):
+    pass
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
