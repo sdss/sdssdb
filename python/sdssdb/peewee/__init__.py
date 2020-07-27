@@ -7,6 +7,7 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 # flake8: noqa
 
+import keyword
 import warnings
 
 import peewee
@@ -166,7 +167,7 @@ class ReflectMeta(ModelBase):
             use_peewee_reflection = opts.get('use_peewee_reflection', True)
         else:
             skip_fks = False
-            custom_reflection = False
+            use_peewee_reflection = True
 
         try:
 
@@ -202,6 +203,9 @@ class ReflectMeta(ModelBase):
             return
 
         for field_name, field in fields.items():
+
+            if field_name in keyword.kwlist:
+                field_name += '_'
 
             if field_name in meta.fields:
                 meta_field = meta.fields[field_name]
