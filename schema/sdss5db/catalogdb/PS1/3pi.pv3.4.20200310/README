@@ -1,0 +1,41 @@
+These steps are for the table catalogdb.panstarrs1.
+
+(1) Steps to create the table:
+run createps1table.sql
+
+(2) Steps to load the table:
+run loadps1.py
+
+(3) Steps to add columns and update rows:
+
+Note that || is the SQL bitstring concatenation operator.
+
+Note that catid is the most significant bits.
+alter table catalogdb.panstarrs1 add column catid_objid bigint;
+
+update catalogdb.panstarrs1 set catid_objid = (catid::bit(32) || objid::bit(32))::bit(64)::bigint;
+
+Note that extid_hi is the most significant bits.
+alter table catalogdb.panstarrs1 add column extid_hi_lo bigint;
+
+update catalogdb.panstarrs1 set extid_hi_lo = (extid_hi::bit(32) || extid_lo::bit(32))::bit(64)::bigint;
+
+
+(4) Steps to create the primary key and indexes:
+
+alter table catalogdb.panstarrs1 add primary key (catid_objid);
+
+create index on catalogdb.panstarrs1(q3c_ang2ipix(ra, dec)); 
+
+create index on catalogdb.panstarrs1(g_stk_psf_flux);
+
+create index on catalogdb.panstarrs1(r_stk_psf_flux);
+
+create index on catalogdb.panstarrs1(i_stk_psf_flux);
+
+create index on catalogdb.panstarrs1(z_stk_psf_flux);
+
+create index on catalogdb.panstarrs1(stargal);
+
+create index on catalogdb.panstarrs1(flags);
+
