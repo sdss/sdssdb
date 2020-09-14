@@ -3,10 +3,13 @@ These steps are for the table catalogdb.panstarrs1.
 (1) Steps to create the table:
 run createps1table.sql
 
-(2) Steps to load the table:
+(2) Steps to convert the PS1 fits files to csv files:
+run fits2csv.py
+
+(3) Steps to load the table:
 run loadps1.py
 
-(3) Steps to add columns and update rows:
+(4) Steps to add columns and update rows:
 
 Note that || is the SQL bitstring concatenation operator.
 
@@ -21,7 +24,7 @@ alter table catalogdb.panstarrs1 add column extid_hi_lo bigint;
 update catalogdb.panstarrs1 set extid_hi_lo = (extid_hi::bit(32) || extid_lo::bit(32))::bit(64)::bigint;
 
 
-(4) Steps to create the primary key and indexes:
+(5) Steps to create the primary key and indexes:
 
 alter table catalogdb.panstarrs1 add primary key (catid_objid);
 

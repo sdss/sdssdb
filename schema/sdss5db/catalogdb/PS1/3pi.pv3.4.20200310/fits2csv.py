@@ -58,8 +58,3 @@ print("converted all fits files to csv")
 print("converted all fits files to csv", file=fout, flush=True)
 
 fout.close()
-
-# #####################################################
-
-# Some examples of creating and loading table:
-# https://github.com/sdss/sdssdb/tree/master/schema/sdss5db/catalogdb/PS1/g18
