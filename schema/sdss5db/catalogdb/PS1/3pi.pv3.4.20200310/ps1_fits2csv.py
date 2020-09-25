@@ -1,4 +1,4 @@
-# Program: fits2csv.py
+# Program: ps1_fits2csv.py
 # Aim: convert PS1 fits files to CSV.
 #
 # The program checks so that it does not convert fits files which already

@@ -1,4 +1,4 @@
-# Program: loadps1.py
+# Program: ps1_load.py
 # Aim: load PS1 csv files into the postgreSQL sdss5db database.
 #
 # The program checks so that it does not reload csv files which already
