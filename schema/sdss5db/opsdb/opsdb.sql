@@ -50,10 +50,6 @@ CREATE TABLE opsdb.survey (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
-CREATE TABLE opsdb.instrument (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT);
-
 CREATE TABLE opsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
     instrument_pk SMALLINT,
@@ -69,23 +65,6 @@ CREATE TABLE opsdb.camera_frame (
     ql_sn2 REAL,
     sn2 REAL,
     comment TEXT);
-
--- Table data
-
-INSERT INTO opsdb.instrument VALUES (0, 'BOSS'), (1, 'APOGEE');
-
-INSERT INTO opsdb.exposure_flavor VALUES
-    (1, Science), (2, Arc), (3, Flat), (4, Bias),
-    (5, Object), (6, Dark), (7, Sky), (8, Calib),
-    (9, LocalFlat), (10, SuperDark), (11, SuperFlat),
-    (12, DomeFlat), (13, QuartzFlat), (14, ArcLamp);
-
-INSERT INTO opsdb.instrument VALUES (1, 'BHM'), (2, 'MWM');
-
-INSERT INTO opsdb.instrument VALUES (1, 'r1'), (2, 'b1'), (3, 'APOGEE');
-
-INSERT INTO opsdb.completion_status VALUES (1, 'not started'), (2, 'started'), (3, 'complete');
-
 
 -- Foreign keys
 
@@ -137,9 +116,28 @@ ALTER TABLE ONLY opsdb.camera_frame
     ADD CONSTRAINT exposure_fk
     FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk);
 
+ALTER TABLE ONLY opsdb.camera
+    ADD CONSTRAINT instrument_fk
+    FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk);
+
+
+-- Table data
+
+INSERT INTO opsdb.exposure_flavor VALUES
+    (1, Science), (2, Arc), (3, Flat), (4, Bias),
+    (5, Object), (6, Dark), (7, Sky), (8, Calib),
+    (9, LocalFlat), (10, SuperDark), (11, SuperFlat),
+    (12, DomeFlat), (13, QuartzFlat), (14, ArcLamp);
+
+INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
+
+-- BOSS instrument defined to be 0 in targetdb.sql and APOGEE is 1
+
+INSERT INTO opsdb.camera VALUES (1, 0, 'r1'), (2, 0, 'b1'), (3, 1, 'APOGEE');
+
+INSERT INTO opsdb.completion_status VALUES (1, 'not started'), (2, 'started'), (3, 'complete');
 
 -- Indices
-
 
 CREATE INDEX CONCURRENTLY design_pk_idx
     ON opsdb.configuration
