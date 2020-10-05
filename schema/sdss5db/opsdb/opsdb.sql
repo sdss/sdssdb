@@ -124,10 +124,10 @@ ALTER TABLE ONLY opsdb.camera
 -- Table data
 
 INSERT INTO opsdb.exposure_flavor VALUES
-    (1, Science), (2, Arc), (3, Flat), (4, Bias),
-    (5, Object), (6, Dark), (7, Sky), (8, Calib),
-    (9, LocalFlat), (10, SuperDark), (11, SuperFlat),
-    (12, DomeFlat), (13, QuartzFlat), (14, ArcLamp);
+    (1, "Science"), (2, "Arc"), (3, "Flat"), (4, "Bias"),
+    (5, "Object"), (6, "Dark"), (7, "Sky"), (8, "Calib"),
+    (9, "LocalFlat"), (10, "SuperDark"), (11, "SuperFlat"),
+    (12, "DomeFlat"), (13, "QuartzFlat"), (14, "ArcLamp");
 
 INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 
@@ -146,13 +146,7 @@ CREATE INDEX CONCURRENTLY design_pk_idx
 CREATE INDEX CONCURRENTLY target_pk_idx
     ON opsdb.target_to_focal
     USING BTREE(target_pk);
-CREATE INDEX CONCURRENTLY configuration_pk_idx
-    ON opsdb.target_to_focal
-    USING BTREE(configuration_pk);
 
-CREATE INDEX CONCURRENTLY design_pk_idx
-    ON opsdb.design_to_status
-    USING BTREE(design_pk);
 -- this probably isn't worth it with 4 statuses
 -- CREATE INDEX CONCURRENTLY completion_status_pk_idx
 --     ON opsdb.design_to_status
