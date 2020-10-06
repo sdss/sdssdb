@@ -59,6 +59,7 @@ CREATE TABLE targetdb.category (
 CREATE TABLE targetdb.carton_to_target (
 	pk SERIAL PRIMARY KEY NOT NULL,
 	lambda_eff REAL,
+	value REAL,
 	carton_pk SMALLINT,
 	target_pk BIGINT,
 	cadence_pk SMALLINT,

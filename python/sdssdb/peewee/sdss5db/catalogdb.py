@@ -1044,7 +1044,11 @@ class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
 
 
 class Skies_v1(CatalogdbModel):
-    pass
+
+    pix_32768 = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'skies_v1'
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
