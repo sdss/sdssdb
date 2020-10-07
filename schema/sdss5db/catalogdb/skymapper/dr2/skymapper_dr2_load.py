@@ -45,7 +45,7 @@ for i in range(len(list_of_csv_files)):
     print("\\o " + full_csvout_file, file=fpgscript)
     print("\\copy catalogdb.skymapper_dr2 ", file=fpgscript, end='')
     print("from '" + full_csv_file + "' ", file=fpgscript, end='')
-    print(" with csv header null 'NULL'; ", file=fpgscript)
+    print(" with csv header null ''; ", file=fpgscript)
     print("\\o", file=fpgscript)
     print("\\q", file=fpgscript)
     fpgscript.close()
