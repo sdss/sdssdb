@@ -233,6 +233,7 @@ class CartonToTarget(TargetdbBase):
                              field='pk',
                              on_delete='CASCADE')
     priority = IntegerField()
+    value = FloatField()
 
     class Meta:
         table_name = 'carton_to_target'

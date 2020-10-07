@@ -5,6 +5,9 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Initial version of the ``sdss5db.opsdb`` schema.
+* Added field ``value`` to ``carton_to_target``.
+
 * :release:`0.4.5 <2020-07-12>`
 * Add ``ForeignKeyField`` from ``CatalogToSDSS_DR13_PhotoObj_Primary`` directly to ``SDSS_DR13_PhotoObj``.
 * Add single precision float type to the list of Peewee arrays during reflection.
