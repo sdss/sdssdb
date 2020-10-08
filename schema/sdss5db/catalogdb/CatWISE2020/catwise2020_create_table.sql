@@ -1,3 +1,6 @@
+-- The create table statement is based on the information in the below link:
+-- https://portal.nersc.gov/project/cosmo/data/CatWISE/2020cwcat.sis20200318.txt
+
 create table catalogdb.catwise2020 (
 source_name char(21),
 source_id char(25),
