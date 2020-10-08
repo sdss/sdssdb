@@ -1,5 +1,7 @@
--- based on http://skymapper.anu.edu.au/table-browser/dr2/
+-- The create table statement is based on the information in the below link:
+-- http://skymapper.anu.edu.au/table-browser/dr2/
 -- table dr2.master 
+
 create table catalogdb.skymapper_dr2 (
 object_id bigint,
 raj2000 double precision,
