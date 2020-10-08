@@ -1,3 +1,6 @@
+-- The create table statement is based on the information
+-- in the PanSTARRS1 DR2 fits files.
+
 create table catalogdb.panstarrs1 (
 ra double precision ,
 dec double precision ,
