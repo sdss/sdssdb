@@ -1,0 +1,3373 @@
+# There are different types of files in http://skymapper.anu.edu.au/_data/DR2/
+#
+# Hence use the list in http://skymapper.anu.edu.au/_data/DR2/LISTFILE
+# to wget the files.
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0001.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0002.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0003.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0004.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0005.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0006.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0007.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0008.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0009.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0010.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0011.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0012.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0013.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0014.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0015.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0016.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0017.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0018.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0019.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0020.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0021.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0022.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0023.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0024.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0025.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0026.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0027.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0028.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0029.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0030.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0031.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0032.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0033.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0034.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0035.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0036.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0037.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0038.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0039.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0040.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0041.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0042.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0043.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0044.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0045.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0046.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0047.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0048.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0049.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0050.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0051.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0052.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0053.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0054.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0055.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0056.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0057.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0058.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0059.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0060.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0061.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0062.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0063.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0064.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0065.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0066.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0067.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0068.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0069.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0070.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0071.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0072.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0073.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0074.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0075.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0076.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0077.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0078.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0079.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0080.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0081.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0082.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0083.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0084.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0085.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0086.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0087.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0088.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0089.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0090.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0091.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0092.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0093.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0094.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0095.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0096.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0097.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0098.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0099.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0100.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0101.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0102.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0103.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0104.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0105.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0106.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0107.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0108.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0109.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0110.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0111.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0112.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0113.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0114.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0115.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0116.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0117.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0118.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0119.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0120.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0121.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0122.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0123.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0124.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0125.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0126.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0127.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0128.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0129.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0130.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0131.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0132.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0133.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0134.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0135.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0136.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0137.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0138.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0139.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0140.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0141.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0142.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0143.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0144.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0145.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0146.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0147.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0148.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0149.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0150.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0151.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0152.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0153.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0154.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0155.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0156.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0157.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0158.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0159.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0160.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0161.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0162.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0163.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0164.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0165.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0166.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0167.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0168.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0169.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0170.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0171.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0172.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0173.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0174.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0175.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0176.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0177.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0178.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0179.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0180.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0181.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0182.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0183.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0184.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0185.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0186.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0187.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0188.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0189.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0190.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0191.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0192.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0193.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0194.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0195.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0196.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0197.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0198.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0199.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0200.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0201.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0202.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0203.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0204.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0205.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0206.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0207.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0208.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0209.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0210.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0211.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0212.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0213.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0214.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0215.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0216.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0217.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0218.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0219.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0220.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0221.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0222.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0223.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0224.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0225.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0226.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0227.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0228.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0229.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0230.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0231.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0232.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0233.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0234.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0235.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0236.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0237.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0238.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0239.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0240.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0241.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0242.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0243.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0244.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0245.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0246.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0247.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0248.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0249.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0250.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0251.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0252.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0253.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0254.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0255.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0256.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0257.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0258.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0259.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0260.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0261.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0262.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0263.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0264.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0265.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0266.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0267.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0268.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0269.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0270.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0271.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0272.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0273.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0274.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0275.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0276.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0277.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0278.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0279.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0280.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0281.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0282.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0283.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0284.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0285.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0286.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0287.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0288.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0289.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0290.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0291.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0292.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0293.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0294.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0295.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0296.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0297.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0298.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0299.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0300.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0301.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0302.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0303.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0304.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0305.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0306.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0307.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0308.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0309.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0310.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0311.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0312.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0313.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0314.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0315.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0316.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0317.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0318.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0319.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0320.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0321.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0322.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0323.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0324.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0325.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0326.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0327.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0328.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0329.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0330.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0331.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0332.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0333.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0334.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0335.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0336.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0337.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0338.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0339.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0340.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0341.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0342.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0343.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0344.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0345.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0346.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0347.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0348.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0349.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0350.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0351.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0352.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0353.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0354.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0355.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0356.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0357.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0358.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0359.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0360.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0361.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0362.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0363.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0364.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0365.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0366.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0367.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0368.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0369.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0370.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0371.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0372.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0373.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0374.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0375.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0376.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0377.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0378.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0379.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0380.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0381.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0382.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0383.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0384.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0385.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0386.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0387.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0388.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0389.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0390.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0391.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0392.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0393.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0394.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0395.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0396.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0397.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0398.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0399.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0400.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0401.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0402.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0403.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0404.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0405.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0406.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0407.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0408.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0409.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0410.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0411.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0412.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0413.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0414.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0415.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0416.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0417.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0418.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0419.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0420.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0421.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0422.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0423.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0424.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0425.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0426.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0427.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0428.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0429.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0430.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0431.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0432.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0433.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0434.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0435.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0436.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0437.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0438.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0439.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0440.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0441.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0442.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0443.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0444.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0445.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0446.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0447.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0448.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0449.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0450.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0451.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0452.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0453.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0454.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0455.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0456.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0457.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0458.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0459.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0460.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0461.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0462.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0463.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0464.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0465.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0466.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0467.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0468.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0469.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0470.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0471.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0472.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0473.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0474.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0475.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0476.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0477.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0478.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0479.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0480.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0481.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0482.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0483.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0484.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0485.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0486.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0487.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0488.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0489.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0490.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0491.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0492.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0493.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0494.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0495.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0496.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0497.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0498.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0499.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0500.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0501.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0502.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0503.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0504.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0505.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0506.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0507.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0508.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0509.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0510.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0511.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0512.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0513.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0514.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0515.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0516.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0517.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0518.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0519.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0520.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0521.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0522.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0523.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0524.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0525.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0526.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0527.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0528.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0529.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0530.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0531.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0532.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0533.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0534.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0535.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0536.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0537.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0538.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0539.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0540.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0541.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0542.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0543.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0544.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0545.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0546.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0547.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0548.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0549.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0550.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0551.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0552.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0553.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0554.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0555.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0556.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0557.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0558.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0559.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0560.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0561.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0562.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0563.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0564.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0565.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0566.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0567.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0568.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0569.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0570.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0571.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0572.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0573.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0574.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0575.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0576.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0577.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0578.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0579.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0580.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0581.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0582.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0583.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0584.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0585.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0586.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0587.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0588.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0589.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0590.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0591.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0592.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0593.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0594.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0595.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0596.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0597.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0598.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0599.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0600.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0601.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0602.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0603.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0604.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0605.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0606.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0607.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0608.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0609.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0610.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0611.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0612.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0613.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0614.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0615.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0616.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0617.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0618.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0619.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0620.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0621.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0622.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0623.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0624.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0625.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0626.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0627.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0628.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0629.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0630.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0631.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0632.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0633.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0634.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0635.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0636.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0637.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0638.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0639.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0640.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0641.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0642.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0643.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0644.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0645.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0646.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0647.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0648.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0649.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0650.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0651.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0652.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0653.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0654.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0655.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0656.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0657.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0658.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0659.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0660.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0661.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0662.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0663.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0664.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0665.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0666.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0667.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0668.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0669.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0670.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0671.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0672.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0673.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0674.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0675.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0676.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0677.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0678.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0679.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0680.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0681.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0682.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0683.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0684.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0685.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0686.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0687.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0688.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0689.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0690.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0691.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0692.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0693.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0694.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0695.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0696.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0697.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0698.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0699.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0700.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0701.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0702.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0703.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0704.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0705.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0706.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0707.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0708.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0709.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0710.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0711.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0712.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0713.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0714.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0715.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0716.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0717.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0718.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0719.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0720.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0721.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0722.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0723.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0724.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0725.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0726.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0727.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0728.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0729.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0730.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0731.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0732.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0733.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0734.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0735.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0736.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0737.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0738.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0739.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0740.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0741.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0742.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0743.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0744.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0745.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0746.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0747.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0748.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0749.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0750.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0751.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0752.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0753.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0754.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0755.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0756.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0757.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0758.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0759.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0760.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0761.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0762.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0763.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0764.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0765.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0766.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0767.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0768.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0769.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0770.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0771.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0772.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0773.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0774.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0775.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0776.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0777.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0778.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0779.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0780.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0781.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0782.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0783.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0784.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0785.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0786.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0787.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0788.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0789.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0790.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0791.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0792.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0793.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0794.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0795.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0796.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0797.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0798.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0799.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0800.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0801.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0802.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0803.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0804.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0805.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0806.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0807.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0808.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0809.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0810.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0811.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0812.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0813.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0814.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0815.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0816.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0817.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0818.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0819.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0820.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0821.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0822.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0823.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0824.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0825.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0826.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0827.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0828.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0829.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0830.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0831.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0832.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0833.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0834.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0835.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0836.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0837.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0838.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0839.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0840.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0841.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0842.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0843.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0844.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0845.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0846.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0847.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0848.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0849.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0850.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0851.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0852.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0853.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0854.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0855.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0856.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0857.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0858.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0859.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0860.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0861.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0862.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0863.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0864.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0865.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0866.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0867.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0868.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0869.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0870.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0871.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0872.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0873.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0874.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0875.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0876.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0877.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0878.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0879.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0880.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0881.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0882.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0883.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0884.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0885.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0886.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0887.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0888.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0889.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0890.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0891.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0892.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0893.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0894.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0895.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0896.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0897.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0898.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0899.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0900.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0901.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0902.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0903.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0904.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0905.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0906.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0907.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0908.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0909.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0910.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0911.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0912.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0913.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0914.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0915.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0916.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0917.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0918.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0919.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0920.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0921.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0922.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0923.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0924.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0925.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0926.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0927.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0928.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0929.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0930.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0931.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0932.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0933.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0934.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0935.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0936.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0937.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0938.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0939.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0940.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0941.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0942.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0943.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0944.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0945.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0946.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0947.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0948.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0949.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0950.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0951.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0952.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0953.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0954.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0955.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0956.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0957.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0958.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0959.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0960.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0961.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0962.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0963.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0964.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0965.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0966.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0967.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0968.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0969.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0970.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0971.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0972.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0973.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0974.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0975.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0976.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0977.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0978.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0979.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0980.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0981.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0982.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0983.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0984.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0985.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0986.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0987.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0988.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0989.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0990.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0991.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0992.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0993.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0994.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0995.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0996.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0997.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0998.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part0999.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1000.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1001.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1002.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1003.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1004.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1005.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1006.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1007.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1008.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1009.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1010.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1011.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1012.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1013.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1014.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1015.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1016.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1017.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1018.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1019.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1020.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1021.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1022.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1023.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1024.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1025.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1026.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1027.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1028.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1029.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1030.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1031.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1032.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1033.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1034.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1035.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1036.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1037.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1038.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1039.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1040.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1041.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1042.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1043.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1044.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1045.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1046.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1047.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1048.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1049.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1050.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1051.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1052.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1053.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1054.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1055.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1056.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1057.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1058.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1059.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1060.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1061.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1062.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1063.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1064.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1065.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1066.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1067.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1068.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1069.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1070.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1071.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1072.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1073.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1074.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1075.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1076.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1077.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1078.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1079.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1080.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1081.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1082.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1083.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1084.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1085.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1086.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1087.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1088.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1089.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1090.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1091.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1092.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1093.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1094.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1095.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1096.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1097.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1098.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1099.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1100.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1101.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1102.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1103.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1104.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1105.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1106.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1107.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1108.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1109.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1110.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1111.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1112.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1113.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1114.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1115.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1116.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1117.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1118.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1119.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1120.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1121.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1122.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1123.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1124.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1125.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1126.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1127.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1128.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1129.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1130.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1131.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1132.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1133.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1134.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1135.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1136.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1137.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1138.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1139.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1140.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1141.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1142.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1143.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1144.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1145.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1146.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1147.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1148.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1149.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1150.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1151.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1152.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1153.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1154.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1155.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1156.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1157.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1158.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1159.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1160.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1161.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1162.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1163.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1164.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1165.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1166.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1167.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1168.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1169.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1170.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1171.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1172.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1173.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1174.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1175.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1176.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1177.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1178.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1179.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1180.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1181.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1182.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1183.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1184.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1185.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1186.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1187.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1188.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1189.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1190.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1191.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1192.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1193.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1194.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1195.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1196.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1197.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1198.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1199.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1200.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1201.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1202.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1203.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1204.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1205.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1206.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1207.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1208.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1209.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1210.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1211.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1212.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1213.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1214.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1215.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1216.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1217.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1218.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1219.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1220.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1221.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1222.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1223.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1224.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1225.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1226.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1227.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1228.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1229.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1230.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1231.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1232.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1233.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1234.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1235.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1236.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1237.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1238.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1239.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1240.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1241.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1242.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1243.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1244.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1245.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1246.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1247.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1248.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1249.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1250.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1251.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1252.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1253.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1254.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1255.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1256.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1257.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1258.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1259.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1260.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1261.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1262.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1263.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1264.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1265.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1266.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1267.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1268.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1269.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1270.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1271.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1272.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1273.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1274.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1275.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1276.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1277.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1278.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1279.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1280.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1281.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1282.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1283.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1284.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1285.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1286.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1287.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1288.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1289.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1290.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1291.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1292.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1293.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1294.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1295.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1296.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1297.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1298.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1299.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1300.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1301.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1302.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1303.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1304.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1305.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1306.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1307.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1308.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1309.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1310.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1311.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1312.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1313.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1314.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1315.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1316.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1317.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1318.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1319.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1320.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1321.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1322.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1323.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1324.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1325.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1326.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1327.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1328.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1329.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1330.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1331.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1332.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1333.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1334.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1335.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1336.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1337.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1338.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1339.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1340.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1341.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1342.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1343.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1344.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1345.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1346.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1347.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1348.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1349.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1350.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1351.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1352.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1353.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1354.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1355.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1356.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1357.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1358.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1359.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1360.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1361.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1362.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1363.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1364.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1365.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1366.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1367.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1368.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1369.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1370.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1371.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1372.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1373.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1374.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1375.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1376.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1377.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1378.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1379.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1380.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1381.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1382.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1383.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1384.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1385.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1386.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1387.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1388.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1389.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1390.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1391.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1392.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1393.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1394.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1395.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1396.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1397.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1398.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1399.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1400.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1401.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1402.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1403.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1404.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1405.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1406.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1407.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1408.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1409.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1410.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1411.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1412.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1413.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1414.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1415.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1416.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1417.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1418.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1419.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1420.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1421.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1422.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1423.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1424.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1425.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1426.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1427.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1428.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1429.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1430.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1431.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1432.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1433.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1434.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1435.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1436.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1437.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1438.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1439.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1440.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1441.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1442.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1443.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1444.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1445.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1446.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1447.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1448.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1449.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1450.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1451.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1452.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1453.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1454.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1455.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1456.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1457.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1458.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1459.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1460.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1461.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1462.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1463.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1464.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1465.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1466.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1467.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1468.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1469.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1470.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1471.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1472.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1473.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1474.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1475.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1476.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1477.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1478.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1479.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1480.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1481.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1482.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1483.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1484.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1485.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1486.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1487.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1488.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1489.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1490.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1491.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1492.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1493.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1494.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1495.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1496.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1497.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1498.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1499.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1500.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1501.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1502.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1503.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1504.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1505.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1506.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1507.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1508.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1509.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1510.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1511.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1512.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1513.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1514.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1515.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1516.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1517.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1518.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1519.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1520.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1521.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1522.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1523.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1524.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1525.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1526.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1527.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1528.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1529.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1530.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1531.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1532.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1533.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1534.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1535.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1536.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1537.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1538.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1539.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1540.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1541.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1542.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1543.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1544.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1545.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1546.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1547.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1548.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1549.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1550.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1551.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1552.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1553.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1554.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1555.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1556.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1557.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1558.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1559.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1560.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1561.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1562.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1563.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1564.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1565.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1566.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1567.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1568.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1569.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1570.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1571.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1572.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1573.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1574.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1575.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1576.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1577.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1578.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1579.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1580.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1581.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1582.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1583.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1584.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1585.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1586.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1587.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1588.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1589.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1590.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1591.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1592.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1593.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1594.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1595.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1596.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1597.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1598.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1599.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1600.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1601.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1602.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1603.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1604.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1605.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1606.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1607.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1608.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1609.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1610.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1611.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1612.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1613.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1614.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1615.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1616.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1617.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1618.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1619.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1620.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1621.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1622.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1623.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1624.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1625.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1626.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1627.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1628.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1629.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1630.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1631.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1632.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1633.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1634.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1635.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1636.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1637.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1638.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1639.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1640.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1641.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1642.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1643.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1644.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1645.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1646.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1647.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1648.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1649.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1650.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1651.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1652.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1653.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1654.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1655.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1656.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1657.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1658.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1659.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1660.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1661.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1662.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1663.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1664.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1665.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1666.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1667.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1668.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1669.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1670.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1671.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1672.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1673.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1674.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1675.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1676.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1677.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1678.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1679.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1680.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1681.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1682.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1683.csv.gz
+
+wget -nv -nc http://skymapper.anu.edu.au/_data/DR2/SkyMapper.DR2.master.part1684.csv.gz
+
