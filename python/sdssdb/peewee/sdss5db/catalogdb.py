@@ -740,6 +740,48 @@ class SkyMapper_DR1_1(CatalogdbModel):
         table_name = 'skymapper_dr1_1'
 
 
+class SkyMapper_DR2(CatalogdbModel):
+
+    object_id = BigIntegerField(primary_key=True)
+
+    allwise = ForeignKeyField(AllWise, field='cntr',
+                              column_name='allwise_cntr',
+                              object_id_name='allwise_cntr',
+                              backref='skymapper_dr2')
+
+    gaia = ForeignKeyField(Gaia_DR2, field='source_id',
+                           column_name='gaia_dr2_id1',
+                           object_id_name='gaia_dr2_id1',
+                           backref='skymapper_dr2')
+
+    tic = ForeignKeyField(TIC_v8,
+                          field='gaia_int',
+                          column_name='gaia_dr2_id1',
+                          object_id_name='gaia_dr2_id1',
+                          backref='+')
+
+    @property
+    def twomass1(self):
+        """Returns the closest 2MASS PSC source, if defined."""
+
+        if self.twomass_cat1 != 'PSC':
+            return None
+
+        return TwoMassPSC.get(pts_key=self.twomass_key1)
+
+    @property
+    def twomass2(self):
+        """Returns the second closest 2MASS PSC source, if defined."""
+
+        if self.twomass_cat2 != 'PSC':
+            return None
+
+        return TwoMassPSC.get(pts_key=self.twomass_key2)
+
+    class Meta:
+        table_name = 'skymapper_dr2'
+
+
 class PS1_g18(CatalogdbModel):
 
     objid = BigIntegerField(primary_key=True)
