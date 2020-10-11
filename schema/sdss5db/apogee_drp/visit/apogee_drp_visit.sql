@@ -79,5 +79,8 @@ CREATE TABLE apogee_drp.visit (
     RV_LOGG	real,
     RV_ALPHA	real,
     RV_CARB	real,
-    SYNTHFILE	text
+    SYNTHFILE	text,
+    APRED_VERS  text,
+    MODIFIED timestamp with time zone DEFAULT now() NOT NULL,
+    UNIQUE(APRED_VERS,TELESCOPE,PLATE,MJD,FIBERID)
 );

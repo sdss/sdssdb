@@ -1,0 +1,3 @@
+CREATE INDEX CONCURRENTLY ON apogee_drp.exposure USING BTREE (num);
+CREATE INDEX CONCURRENTLY ON apogee_drp.exposure USING BTREE (mjd);
+

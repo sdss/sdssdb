@@ -13,8 +13,7 @@ CREATE TABLE apogee_drp.exposure (
     EXPTIME     real,
     DATEOBS     text,
     MJD         int,
-    INSTRUMENT  text,
-    CREATED timestamp with time zone,
-    MODIFIED timestamp with time zone DEFAULT now() NOT NULL
-    UNIQUE(NUM,INSTRUMENT)
+    OBSERVATORY text,
+    CREATED timestamp with time zone DEFAULT now() NOT NULL,
+    UNIQUE(NUM,OBSERVATORY)
 );
