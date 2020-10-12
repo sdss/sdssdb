@@ -66,6 +66,13 @@ CREATE TABLE opsdb.camera_frame (
     sn2 REAL,
     comment TEXT);
 
+CREATE TABLE opsdb.queue(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    design_pk SMALLINT,
+    field_pk SMALLINT,
+    position SMALLINT
+    );
+
 -- Foreign keys
 
 ALTER TABLE ONLY opsdb.configuration
@@ -123,11 +130,17 @@ ALTER TABLE ONLY opsdb.camera
 
 -- Table data
 
+
 INSERT INTO opsdb.exposure_flavor VALUES
     (1, "Science"), (2, "Arc"), (3, "Flat"), (4, "Bias"),
     (5, "Object"), (6, "Dark"), (7, "Sky"), (8, "Calib"),
     (9, "LocalFlat"), (10, "SuperDark"), (11, "SuperFlat"),
     (12, "DomeFlat"), (13, "QuartzFlat"), (14, "ArcLamp");
+
+INSERT INTO opsdb.queue VALUES
+    (0, 10000, 1000, 1), (1, 10001, 1001, 2),
+    (2, 10002, 1002, 3), (3, 10003, 1003, 4),
+    (4, 10004, 1004, 5), (5, 10005, 1005, 6);
 
 INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 
@@ -152,6 +165,8 @@ CREATE INDEX CONCURRENTLY target_pk_idx
 --     ON opsdb.design_to_status
 --     USING BTREE(completion_status_pk);
 
+
+
 CREATE INDEX CONCURRENTLY configuration_pk_idx
     ON opsdb.exposure
     USING BTREE(configuration_pk);
@@ -159,3 +174,31 @@ CREATE INDEX CONCURRENTLY configuration_pk_idx
 CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON opsdb.camera_frame
     USING BTREE(exposure_pk);
+
+CREATE FUNCTION opsdb.increment_queue ()
+RETURNS SMALLINT AS $$
+
+DECLARE design SMALLINT;
+
+DELCARE _pk SMALLINT;
+DELCARE _design SMALLINT;
+DECLARE _field SMALLINT;
+DECLARE _pos SMALLINT;
+
+BEGIN
+    FOR _pk, _design, _field, _pos IN 
+        SELECT * FROM opsdb.queue
+        ORDER BY position
+    LOOP 
+        IF _pos = 1 then
+            design := _design;
+            UPDATE opsdb.queue SET position = -1 WHERE pk=_pk;
+        ELSE 
+            UPDATE opsdb.queue SET position = _pos - 1 WHERE pk=_pk;
+        END IF;
+    END LOOP;
+    RETURN design;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE FUNCTION
