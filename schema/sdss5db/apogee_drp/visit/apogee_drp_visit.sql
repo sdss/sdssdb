@@ -9,6 +9,7 @@ CREATE TABLE apogee_drp.visit (
     APOGEE_ID	text,
     TARGET_ID	text,
     FILE	text,
+    URI         text,
     FIBERID	smallint,
     PLATE	text,
     MJD	integer,
