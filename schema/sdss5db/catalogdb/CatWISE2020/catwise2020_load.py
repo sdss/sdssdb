@@ -1,6 +1,6 @@
 # Program: catwise2020_load.py
 # Aim: load catwise2020 csv files into the postgreSQL sdss5db database.
-# TODO
+#
 # The program checks so that it does not reload csv files which already
 # have a csv.load.out file.
 
