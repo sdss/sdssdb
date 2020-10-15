@@ -1,0 +1,36 @@
+These steps are for the table catalogdb.panstarrs1.
+
+(1) create the table:
+run ps1_create_table.sql
+
+(2) convert the PS1 fits files to csv files:
+run ps1_fits2csv.py
+
+(3) load the table:
+run ps1_load.py
+
+(4) add columns and update rows:
+run ps1_update_catid_objid.sql
+run ps1_update_extid_hi_lo.sql
+
+Notes for ps1_update_catid_objid.sql and ps1_update_extid_hi_lo.sql:
+
+Note that || is the SQL bitstring concatenation operator.
+
+Note that catid is the most significant bits.
+alter table catalogdb.panstarrs1 add column catid_objid bigint;
+
+update catalogdb.panstarrs1 set catid_objid = (catid::bit(32) || objid::bit(32))::bit(64)::bigint;
+
+Note that extid_hi is the most significant bits.
+alter table catalogdb.panstarrs1 add column extid_hi_lo bigint;
+
+update catalogdb.panstarrs1 set extid_hi_lo = (extid_hi::bit(32) || extid_lo::bit(32))::bit(64)::bigint;
+
+
+(5) create the primary key:
+run ps1_alter_table_pkey.sql
+
+(6) create indexes:
+run ps1_create_indexes.sql 
+

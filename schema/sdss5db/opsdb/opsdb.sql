@@ -132,15 +132,16 @@ ALTER TABLE ONLY opsdb.camera
 
 
 INSERT INTO opsdb.exposure_flavor VALUES
-    (1, "Science"), (2, "Arc"), (3, "Flat"), (4, "Bias"),
-    (5, "Object"), (6, "Dark"), (7, "Sky"), (8, "Calib"),
-    (9, "LocalFlat"), (10, "SuperDark"), (11, "SuperFlat"),
-    (12, "DomeFlat"), (13, "QuartzFlat"), (14, "ArcLamp");
+    (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
+    (5, 'Object'), (6, 'Dark'), (7, 'Sky'), (8, 'Calib'),
+    (9, 'LocalFlat'), (10, 'SuperDark'), (11, 'SuperFlat'),
+    (12, 'DomeFlat'), (13, 'QuartzFlat'), (14, 'ArcLamp');
 
 INSERT INTO opsdb.queue VALUES
     (0, 10000, 1000, 1), (1, 10001, 1001, 2),
     (2, 10002, 1002, 3), (3, 10003, 1003, 4),
     (4, 10004, 1004, 5), (5, 10005, 1005, 6);
+
 
 INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 
