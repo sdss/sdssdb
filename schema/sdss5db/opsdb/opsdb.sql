@@ -176,15 +176,15 @@ CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON opsdb.camera_frame
     USING BTREE(exposure_pk);
 
-CREATE FUNCTION opsdb.increment_queue ()
-RETURNS SMALLINT AS $$
+CREATE FUNCTION opsdb.popQueue ()
+RETURNS integer AS $design$
 
-DECLARE design SMALLINT;
-
-DELCARE _pk SMALLINT;
-DELCARE _design SMALLINT;
-DECLARE _field SMALLINT;
-DECLARE _pos SMALLINT;
+declare
+    design integer;
+    _pk integer;
+    _design integer;
+    _field integer;
+    _pos integer;
 
 BEGIN
     FOR _pk, _design, _field, _pos IN 
@@ -199,7 +199,5 @@ BEGIN
         END IF;
     END LOOP;
     RETURN design;
-END
-$$ LANGUAGE plpgsql;
-
-CREATE FUNCTION
+END;
+$design$ LANGUAGE plpgsql;
