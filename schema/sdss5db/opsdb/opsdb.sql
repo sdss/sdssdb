@@ -137,12 +137,6 @@ INSERT INTO opsdb.exposure_flavor VALUES
     (9, 'LocalFlat'), (10, 'SuperDark'), (11, 'SuperFlat'),
     (12, 'DomeFlat'), (13, 'QuartzFlat'), (14, 'ArcLamp');
 
-INSERT INTO opsdb.queue VALUES
-    (0, 10000, 1000, 1), (1, 10001, 1001, 2),
-    (2, 10002, 1002, 3), (3, 10003, 1003, 4),
-    (4, 10004, 1004, 5), (5, 10005, 1005, 6);
-
-
 INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 
 -- BOSS instrument defined to be 0 in targetdb.sql and APOGEE is 1
@@ -166,8 +160,6 @@ CREATE INDEX CONCURRENTLY target_pk_idx
 --     ON opsdb.design_to_status
 --     USING BTREE(completion_status_pk);
 
-
-
 CREATE INDEX CONCURRENTLY configuration_pk_idx
     ON opsdb.exposure
     USING BTREE(configuration_pk);
@@ -175,6 +167,8 @@ CREATE INDEX CONCURRENTLY configuration_pk_idx
 CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON opsdb.camera_frame
     USING BTREE(exposure_pk);
+
+-- pop function to retrieve next in queue and increment
 
 CREATE FUNCTION opsdb.popQueue ()
 RETURNS integer AS $design$
@@ -201,3 +195,42 @@ BEGIN
     RETURN design;
 END;
 $design$ LANGUAGE plpgsql;
+
+-- add to end of queue
+
+CREATE FUNCTION opsdb.appendQueue (design integer, field integer)
+RETURNS void AS $$
+
+declare
+    maxpos integer;
+
+BEGIN
+    SELECT MAX(position) INTO maxpos FROM opsdb.queue;
+    INSERT INTO opsdb.queue  (design_pk, field_pk, position)
+    VALUES (design, field, maxpos+1);
+END;
+$$ LANGUAGE plpgsql;
+
+-- insert at position
+
+CREATE FUNCTION opsdb.insertInQueue (design integer, field integer, pos integer)
+RETURNS void AS $$
+
+declare
+    _pk integer;
+    _design integer;
+    _field integer;
+    _pos integer;
+
+BEGIN
+    FOR _pk, _design, _field, _pos IN
+        SELECT * FROM opsdb.queue
+        WHERE position >= pos
+    LOOP
+        UPDATE opsdb.queue SET position = _pos + 1 WHERE pk=_pk;
+    END LOOP;
+
+    INSERT INTO opsdb.queue  (design_pk, field_pk, position)
+    VALUES (design, field, pos);
+END;
+$$ LANGUAGE plpgsql;
