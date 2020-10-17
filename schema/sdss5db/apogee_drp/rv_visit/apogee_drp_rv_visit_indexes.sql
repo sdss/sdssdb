@@ -11,6 +11,6 @@ CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (plate);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (fiberid);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (mjd);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (telescope);
-CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (h);
+CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (hmag);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (vhelio);
 
