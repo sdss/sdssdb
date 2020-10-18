@@ -13,6 +13,5 @@ CREATE TABLE apogee_drp.plan (
     MJD		integer,
     PLATE	integer,
     PLATETYPE	text,
-    FILE	text,
     CREATED timestamp with time zone DEFAULT now() NOT NULL
 );
