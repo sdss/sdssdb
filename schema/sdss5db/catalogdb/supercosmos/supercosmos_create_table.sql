@@ -2,7 +2,7 @@
 -- the column names in the SuperCOSMOS README and 
 -- the column types in readSSABinary.py
 --
--- The below link has  more details
+-- The below link has more details
 -- http://ssa.roe.ac.uk/www/SSA_TABLE_SourceSchema.html#Source
 
 create table catalogdb.supercosmos(
