@@ -11,7 +11,7 @@
 input_dir = "/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/SuperCOSMOS/"  # noqa: E501
 output_dir = "/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/SuperCOSMOS/csv/"  # noqa: E501
 
-# This list is from the SuperCOSMOS  filelist.
+# This list is from the SuperCOSMOS filelist.
 list_of_bin_files = ["ssaSource000ra030.bin",
                      "ssaSource030ra060.bin",
                      "ssaSource060ra090.bin",
@@ -35,4 +35,3 @@ for i in range(len(list_of_bin_files)):
           full_bin_file + " " + full_csv_file + " > " +
           full_csv_file + ".out")
     print("")
-
