@@ -60,9 +60,6 @@ for i in range(len(list_of_csv_files)):
     wc_output = os.popen("wc -l " + full_csv_file).read()
     num_lines_str, file_name = wc_output.split()
     num_lines = int(num_lines_str)
-    # do not count the header line
-    # so reduce num_lines by one
-    num_lines = num_lines - 1
     print(csv_file, ":contains:", num_lines)
     print(csv_file, ":contains:", num_lines, file=fout, flush=True)
 
