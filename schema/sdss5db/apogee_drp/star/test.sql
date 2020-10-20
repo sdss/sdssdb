@@ -3,5 +3,7 @@ CREATE TABLE apogee_drp.test (
     ID	text,
     VERSION	text,
     TELESCOPE   text,
-    WIDTH	text
+    WIDTH	text,
+    FLUX	real[2][3],
+    UNIQUE(ID,VERSION,TELESCOPE)
 );

@@ -13,8 +13,8 @@ CREATE VIEW apogee_drp.visit_latest AS
          v.targ_4_5_err,v.wash_ddo51_giant_flag,v.wash_ddo51_star_flag,v.pmra,v.pmdec,v.pm_src,
          v.ak_targ,v.ak_targ_method,v.ak_wise,v.sfd_ebv,v.apogee_target1,v.apogee_target2,
          v.apogee_target3,v.apogee_target4,v.targflags,v.snr,v.starflag,v.starflags,v.dateobs,
-         v.jd,rv.starver,rv.bc,rv.vtype,rv.vrel,rv.vrelerr,rv.vhelio,rv.chisq,rv.rv_teff,
-         rv.rv_feh,rv.rv_logg,rv.xcorr_vrel,rv.xcorr_vrelerr,rv.xcorr_vhelio,rv.n_components,
+         v.jd,rv.starver,rv.bc,rv.vtype,rv.vrel,rv.vrelerr,rv.vheliobary,rv.chisq,rv.rv_teff,
+         rv.rv_feh,rv.rv_logg,rv.xcorr_vrel,rv.xcorr_vrelerr,rv.xcorr_vheliobary,rv.n_components,
          rv.rv_components
   FROM apogee_drp.rv_visit AS rv JOIN apogee_drp.visit AS v ON rv.visit_pk=v.pk
   WHERE (rv.apogee_id, rv.apred_vers, rv.telescope, rv.starver) IN

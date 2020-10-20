@@ -42,7 +42,7 @@ CREATE TABLE apogee_drp.star (
     STARFLAG	integer,
     ANDFLAG	integer,
     N_COMPONENTS	integer,
-    VHELIO	real,
+    VHELIOBARY	real,
     VSCATTER	real,
     VERR	real,
     RV_TEFF	real,

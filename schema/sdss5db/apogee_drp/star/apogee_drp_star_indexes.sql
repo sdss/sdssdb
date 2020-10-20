@@ -10,5 +10,5 @@ ANALYZE apogee_drp.star;
 CREATE INDEX CONCURRENTLY ON apogee_drp.star USING BTREE (telescope);
 CREATE INDEX CONCURRENTLY ON apogee_drp.star USING BTREE (healpix);
 CREATE INDEX CONCURRENTLY ON apogee_drp.star USING BTREE (hmag);
-CREATE INDEX CONCURRENTLY ON apogee_drp.star USING BTREE (vhelio);
+CREATE INDEX CONCURRENTLY ON apogee_drp.star USING BTREE (vheliobary);
 

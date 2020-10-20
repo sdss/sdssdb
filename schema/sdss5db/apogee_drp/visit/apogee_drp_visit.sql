@@ -71,7 +71,7 @@ CREATE TABLE apogee_drp.visit (
     VTYPE	smallint,
     VREL	real,
     VRELERR	real,
-    VHELIO	real,
+    VHELIOBARY	real,
     VLSR	real,
     VGSR	real,
     CHISQ	real,
