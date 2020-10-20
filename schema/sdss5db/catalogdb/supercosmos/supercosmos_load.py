@@ -47,7 +47,7 @@ for i in range(len(list_of_csv_files)):
     print("\\o " + full_csvout_file, file=fpgscript)
     print("\\copy catalogdb.supercosmos ", file=fpgscript, end='')
     print("from '" + full_csv_file + "' ", file=fpgscript, end='')
-    print("delimiter ','", file=fpgscript)
+    print("delimiter ',' ; ", file=fpgscript)
     print("\\o", file=fpgscript)
     print("\\q", file=fpgscript)
     fpgscript.close()
