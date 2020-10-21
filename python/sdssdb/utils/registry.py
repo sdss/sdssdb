@@ -159,11 +159,11 @@ def display_table(pprint: bool = None, mask_dups: bool = False,
 
     Raises
     ------
-    RuntimeError
+    ImportError
         when astropy is not installed
     """
     if not Table:
-        raise RuntimeError('No Table found. Astropy is not installed.')
+        raise ImportError('No Table found. Astropy is not installed.')
 
     tt = []
     for k, v in db_registry.items():
