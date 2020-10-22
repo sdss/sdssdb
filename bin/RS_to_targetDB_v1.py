@@ -4,6 +4,8 @@ import sys
 import argparse
 import numpy as np
 
+sdss_path = sdss_access.path.Path(release='sdss5')
+
 
 if __name__ == '__main__':
 
