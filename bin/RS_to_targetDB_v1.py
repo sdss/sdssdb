@@ -1,8 +1,9 @@
-from sdssdb.peewee.sdss5db import targetdb
-import sdss_access.path
 import sys
 import argparse
 import numpy as np
+
+from sdssdb.peewee.sdss5db import targetdb
+import sdss_access.path
 
 sdss_path = sdss_access.path.Path(release='sdss5')
 
@@ -37,9 +38,7 @@ if __name__ == '__main__':
     cadences_file = sdss_path.full('rsCadences', plan=plan,
                                    observatory=observatory)
 
-
-
-
+    targetdb.database.connect_from_parameters(user='sdss_user', host='operations.sdss.utah.edu', port=5432)
 
     #add new robostratgey version to targetDB
     versionDB=targetdb.Version.create(plan = plan,
@@ -49,40 +48,33 @@ if __name__ == '__main__':
 
     versionDB.save()
 
-
-
-
     #write the candeces to the cadenceDB
     
-    rsCadences=fitsio.read(cadences_file,ext=1)
+    # rsCadences=fitsio.read(cadences_file,ext=1)
 
     #need to pull out the pks for the instruments
-    instDB=targetdb.Instrument()
+    # instDB=targetdb.Instrument()
 
-    bosspk=instDB.get(instDB.label=='BOSS').pk
-    apogeepk=instDB.get(instDB.label=='APOGEE').pk
+    # bosspk=instDB.get(instDB.label=='BOSS').pk
+    # apogeepk=instDB.get(instDB.label=='APOGEE').pk
 
-    for cadence in rsCadences:
-        #need to get instrument pk (so go from label to pk above)
-        #setting blank indexes as -1, I dont know the right solution for this
-        inst_pk=np.zeros(len(rsCadences['INSTRUMENT']),dtype=int)-1
-        inst_pk[rsCadences['INSTRUMENT']=='BOSS']=bosspk
-        inst_pk[rsCadences['INSTRUMENT']=='APOGEE']=apogeepk
+    # for cadence in rsCadences:
+    #     #need to get instrument pk (so go from label to pk above)
+    #     #setting blank indexes as -1, I dont know the right solution for this
+    #     inst_pk=np.zeros(len(rsCadences['INSTRUMENT']),dtype=int)-1
+    #     inst_pk[rsCadences['INSTRUMENT']=='BOSS']=bosspk
+    #     inst_pk[rsCadences['INSTRUMENT']=='APOGEE']=apogeepk
 
-        #creates new row in database
-        cadenceDB=targetdb.Cadence.create(delta = rsCadences['DELTA'],
-            delta_max = rsCadences['DELTA_MAX'],
-            delta_min = rsCadences['DELTA_MIN'],
-            instrument_pk = inst_pk,
-            label = rsCadences['CADENCE'],
-            nexposures = rsCadences['NEXPOSURES'],
-            skybrightness = rsCadences['SKYBRIGHTNESS'])
-        #save row in database
-        cadenceDB.save()
-
-
-
-
+    #     #creates new row in database
+    #     cadenceDB=targetdb.Cadence.create(delta = rsCadences['DELTA'],
+    #         delta_max = rsCadences['DELTA_MAX'],
+    #         delta_min = rsCadences['DELTA_MIN'],
+    #         instrument_pk = inst_pk,
+    #         label = rsCadences['CADENCE'],
+    #         nexposures = rsCadences['NEXPOSURES'],
+    #         skybrightness = rsCadences['SKYBRIGHTNESS'])
+    #     #save row in database
+    #     cadenceDB.save()
 
     #write the fields to fieldDB and designs to designDB and assignments all at once (I think this makes sense to do together)
     
@@ -99,21 +91,27 @@ if __name__ == '__main__':
 
     #get observatory pk
     obsDB=targetdb.Observatory()
-    obspk=obsDB.get(obsDB.label==observatory).pk
+    obspk=obsDB.get(obsDB.label=observatory).pk
 
     #get plan pk
     versionDB=targetdb.Version()
-    verpk=obsDB.get(versionDB.plan==plan).pk
+    verpk=obsDB.get(versionDB.plan=plan).pk
 
     for allo1,allo3 in zip(rsAllocation1,rsAllocation3):
+        try:
+            dbCadence = cadenceDB.get(cadenceDB.label=allo1['cadence']).pk
+        except:
+            continue
 
         #creates new row in database
-        fieldDB=targetdb.Field.create(racen = allo1['racen'],
-            deccen = allo1['deccen'],
-            position_angle = allo3['pa1'], #what is the difference between pa1 and pa2?
-            cadence = cadenceDB.get(cadenceDB.label==allo1['cadence']).pk, #I think there are nones in here? is that true?
-            observatory = obspk,
-            version = verpk)
+        fieldDB = targetdb.Field.create(
+            pk=allo1['fieldid'],
+            racen=allo1['racen'],
+            deccen=allo1['deccen'],
+            position_angle=allo3['pa1'], #what is the difference between pa1 and pa2?
+            cadence=dbCadence,
+            observatory=obspk,
+            version=verpk)
         #save row in database
         fieldDB.save()
 
@@ -128,8 +126,8 @@ if __name__ == '__main__':
         for i in range(len(design[0,:])):
 
             #creates new row in design database
-            designDB=targetdb.Design.create(field = allo1['fieldid'],
-                exposure = i) #0 indexed for exposure
+            designDB = targetdb.Design.create(field=allo1['fieldid'],
+                exposure=i) #0 indexed for exposure
             #save row
             designDB.save()
 
@@ -137,19 +135,19 @@ if __name__ == '__main__':
             for j in range(len(design[:,i])):
 
                 #get the pk for the positioner_info (where I assume the ID is just the row # in the fits file)
-                pos_infopk=positionerDB.get(positionerDB.id==j).info
+                this_pos_DB=positionerDB.get(positionerDB.id=j)
 
-                #check in the positioner_info DB is this fiber is an apogee or boss fiber (and set key to whatever it coresponds to)
-                if postion_infoDB.get(postion_infoDB.pk==pos_infopk).apogee:
-                    inst_key=apogeepk
-                else:
-                    inst_key=bosspk
+                # #check in the positioner_info DB is this fiber is an apogee or boss fiber (and set key to whatever it coresponds to)
+                # if postion_infoDB.get(postion_infoDB.pk=pos_infopk).apogee:
+                #     inst_key=apogeepk
+                # else:
+                #     inst_key=bosspk
 
                 #add the assignment
-                assignDB=targetdb.Assignment.create(design = designDB.pk, #can I call the row like this?
-                    instrument = inst_key,
-                    positioner = positionerDB.get(positionerDB.id==j).pk,
-                    target = targetDB.get(targetDB.catalogid==design[j][i]).pk)
+                assignDB=targetdb.Assignment.create(design = designDB, #can I call the row like this?
+                    instrument = ??,
+                    positioner = this_pos_DB,
+                    target = targetDB.get(targetDB.catalogid=design[j][i]))
 
                 assignDB.save()
 
