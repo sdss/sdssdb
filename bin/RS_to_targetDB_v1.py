@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
             #creates new row in design database
             designDB=targetdb.Design.create(field = allo1['fieldid'],
-                exposure = i+1) #should this be 0 or 1 indexed?
+                exposure = i) #0 indexed for exposure
             #save row
             designDB.save()
 
