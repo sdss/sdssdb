@@ -51,7 +51,6 @@ CREATE TABLE apogee_drp.visit (
     GAIADR2_PMDEC_ERROR	real,
     GAIADR2_GMAG	real,
     GAIADR2_GERR	real,
-    GAIADR2_GERR	real,
     GAIADR2_BPMAG	real,
     GAIADR2_BPERR	real,
     GAIADR2_RPMAG	real,
