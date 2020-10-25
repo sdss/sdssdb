@@ -51,6 +51,6 @@ CREATE TABLE apogee_drp.star (
     MEANFIB	real,
     SIGFIB	real,
     NRES	text,
-    MODIFIED timestamp with time zone DEFAULT now() NOT NULL,
+    CREATED timestamp with time zone DEFAULT now() NOT NULL,
     UNIQUE(APRED_VERS,TELESCOPE,APOGEE_ID,STARVER)
 );

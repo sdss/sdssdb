@@ -1,6 +1,6 @@
 /*
 
-APOGEE DRP VisitRV information
+APOGEE DRP RV_Visit information
 
 */
 
@@ -37,6 +37,6 @@ CREATE TABLE apogee_drp.rv_visit (
     N_COMPONENTS  int,
     RV_COMPONENTS real[3],
     APRED_VERS  text,
-    MODIFIED timestamp with time zone DEFAULT now() NOT NULL,
+    CREATED timestamp with time zone DEFAULT now() NOT NULL,
     UNIQUE(APRED_VERS,TELESCOPE,PLATE,MJD,FIBERID,STARVER)
 );
