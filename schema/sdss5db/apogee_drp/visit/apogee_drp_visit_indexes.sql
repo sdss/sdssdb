@@ -18,7 +18,6 @@ CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_pmra);
 CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_pmdec);
 CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_bpmag);
 CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_rpmag);
-CREATE INDEX ON apogee_drp.visit USING BTREE (vheliobary);
 
 
 /*

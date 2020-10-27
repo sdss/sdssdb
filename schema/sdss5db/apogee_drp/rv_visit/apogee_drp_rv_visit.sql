@@ -8,6 +8,7 @@ CREATE TABLE apogee_drp.rv_visit (
     PK SERIAL NOT NULL PRIMARY KEY,
     VISIT_PK    int,
     APOGEE_ID	text,
+    CATALOGID	bigint,
     STAR_PK     int,
     STARVER     text,
     FILE	text,

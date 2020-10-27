@@ -1,4 +1,4 @@
-
+/*
 CREATE INDEX CONCURRENTLY rv_visit_apogee_id_pk
     ON apogee_drp.rv_visit (apogee_id);   -- takes a long time, but doesn’t block queries
 
@@ -12,9 +12,9 @@ CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (mjd);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (telescope);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (hmag);
 CREATE INDEX CONCURRENTLY ON apogee_drp.rv_visit USING BTREE (vheliobary);
+*/
 
 
-/*
 CREATE INDEX rv_visit_apogee_id_pk
     ON apogee_drp.rv_visit (apogee_id);   -- takes a long time, but doesn’t block queries
 
@@ -28,4 +28,4 @@ CREATE INDEX ON apogee_drp.rv_visit USING BTREE (mjd);
 CREATE INDEX ON apogee_drp.rv_visit USING BTREE (telescope);
 CREATE INDEX ON apogee_drp.rv_visit USING BTREE (hmag);
 CREATE INDEX ON apogee_drp.rv_visit USING BTREE (vheliobary);
-*/
+
