@@ -18,6 +18,7 @@ CREATE TABLE apogee_drp.visit (
     SURVEY	text,
     FIELD	text,
     PROGRAMNAME	text,
+    OBJTYPE	text,
     RA	double precision,
     DEC	double precision,
     GLON	double precision,
