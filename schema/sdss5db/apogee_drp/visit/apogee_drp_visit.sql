@@ -38,6 +38,7 @@ CREATE TABLE apogee_drp.visit (
     APOGEE_TARGET3	integer,
     APOGEE_TARGET4	integer,
     CATALOGID		bigint,
+    GAIADR2_SOURCEID	bigint,
     GAIADR2_PLX		real,
     GAIADR2_PLX_ERROR	real,
     GAIADR2_PMRA	real,
