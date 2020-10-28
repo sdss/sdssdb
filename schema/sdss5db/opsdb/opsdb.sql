@@ -42,7 +42,7 @@ CREATE TABLE opsdb.exposure (
     comment TEXT,
     start_time REAL,
     exposure_time REAL,
-    exposure_status_pk SMALLINT,
+    -- exposure_status_pk SMALLINT,
     exposure_flavor_pk SMALLINT,
     camera_pk SMALLINT);
 
@@ -62,6 +62,7 @@ CREATE TABLE opsdb.exposure_flavor (
 CREATE TABLE opsdb.camera_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure_pk SMALLINT,
+    camera_pk SMALLINT,
     ql_sn2 REAL,
     sn2 REAL,
     comment TEXT);
@@ -70,8 +71,7 @@ CREATE TABLE opsdb.queue(
     pk SERIAL PRIMARY KEY NOT NULL,
     design_pk SMALLINT,
     field_pk SMALLINT,
-    position SMALLINT
-    );
+    position SMALLINT);
 
 -- Foreign keys
 
