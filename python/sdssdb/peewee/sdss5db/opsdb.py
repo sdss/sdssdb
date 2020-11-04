@@ -155,9 +155,9 @@ class Queue(OpsdbBase):
 
     @classmethod
     def pop(cls):
-        design = Select(columns=[fn.popQueue()])
-        queue_db = Queue.get(design=design[0]["popqueue"])
-        return queue_db
+        design = Select(columns=[fn.popQueue()]).execute(database)
+        design_db = targetdb.Design.get(pk=design[0]["popqueue"])
+        return design_db
 
     @classmethod
     def appendQueue(cls, design, field):
@@ -165,9 +165,9 @@ class Queue(OpsdbBase):
             design = design.pk
         if isinstance(field, targetdb.Field):
             field = field.pk
-        Select(columns=[fn.appendQueue(design, field)])
-        queue_db = Queue.get(design=design)
-        return queue_db
+        Select(columns=[fn.appendQueue(design, field)]).execute(database)
+        # queue_db = Queue.get(design=design)
+        # return queue_db
 
     @classmethod
     def insertInQueue(cls, design, field, position):
@@ -175,9 +175,9 @@ class Queue(OpsdbBase):
             design = design.pk
         if isinstance(field, targetdb.Field):
             field = field.pk
-        Select(columns=[fn.insertInQueue(design, field, position)])
-        queue_db = Queue.get(design=design)
-        return queue_db
+        Select(columns=[fn.insertInQueue(design, field, position)]).execute(database)
+        # queue_db = Queue.get(design=design)
+        # return queue_db
 
     class Meta:
         table_name = 'queue'
