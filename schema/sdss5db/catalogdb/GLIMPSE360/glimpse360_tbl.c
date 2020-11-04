@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
 
     printf("info:output_file=%s\n", argv[2]);
 
-    //
+    // skip header lines
     for (i = 1; i <= NUM_HEADER_LINES; i++) {
         fgets(header_line, MAX_CHAR_HEADER_LINE, fptr);
         printf("%d:%s\n", i, header_line);
