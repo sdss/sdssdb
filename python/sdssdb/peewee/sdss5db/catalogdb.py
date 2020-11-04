@@ -814,7 +814,7 @@ class GLIMPSE(CatalogdbModel):
 
 class GLIMPSE360(CatalogdbModel):
 
-    pk = BigIntegerField(primary_key=True)
+    pkey = BigIntegerField(primary_key=True)
 
     twomass = ForeignKeyField(TwoMassPSC, field='pts_key',
                               column_name='tmass_cntr',
