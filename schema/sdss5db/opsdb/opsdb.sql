@@ -70,13 +70,17 @@ CREATE TABLE opsdb.camera_frame (
 CREATE TABLE opsdb.queue(
     pk SERIAL PRIMARY KEY NOT NULL,
     design_pk SMALLINT,
-    field_pk SMALLINT,
     position SMALLINT);
 
 -- Foreign keys
 
+ALTER TABLE ONLY opsdb.queue
+    ADD CONSTRAINT queue_design_fk
+    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk);
+
+
 ALTER TABLE ONLY opsdb.configuration
-    ADD CONSTRAINT design_fk
+    ADD CONSTRAINT config_design_fk
     FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk);
 
 ALTER TABLE ONLY opsdb.target_to_focal
@@ -92,7 +96,7 @@ ALTER TABLE ONLY opsdb.target_to_focal
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.design_to_status
-    ADD CONSTRAINT design_fk
+    ADD CONSTRAINT status_design_fk
     FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;

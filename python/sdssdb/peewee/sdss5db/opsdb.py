@@ -163,9 +163,7 @@ class Queue(OpsdbBase):
     def appendQueue(cls, design, field):
         if isinstance(design, targetdb.Design):
             design = design.pk
-        if isinstance(field, targetdb.Field):
-            field = field.pk
-        Select(columns=[fn.appendQueue(design, field)]).execute(database)
+        Select(columns=[fn.appendQueue(design)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
@@ -173,9 +171,7 @@ class Queue(OpsdbBase):
     def insertInQueue(cls, design, field, position):
         if isinstance(design, targetdb.Design):
             design = design.pk
-        if isinstance(field, targetdb.Field):
-            field = field.pk
-        Select(columns=[fn.insertInQueue(design, field, position)]).execute(database)
+        Select(columns=[fn.insertInQueue(design, position)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
