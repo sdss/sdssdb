@@ -116,14 +116,14 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">catalogdb</td>
             <td class="success"></td>
             <td class="danger"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/master/schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="https://github.com/sdss/sdssdb/raw/master/schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
             <td class="danger"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/master/schema/sdss5db/targetdb/sdss5db.targetdb.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/targetdb/sdss5db.targetdb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">archive</td>
@@ -213,7 +213,7 @@ where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of param
 Supported Profiles
 ------------------
 
-The following `profiles <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.config/sdss/sdssdb.yaml`` with the same structure.
+The following `profiles <https://github.com/sdss/sdssdb/blob/main/python/sdssdb/etc/sdssdb.yml>`__ are included with sdssdb. When a :ref:`database connection <conn-db>` is created without an explicit profile, the hostname of the current machine is used to find the best possible profile. Profiles can be added or modified by creating a YAML file in ``~/.config/sdss/sdssdb.yaml`` with the same structure.
 
 * **local**: a generic localhost profile. Used if the hostname does not match any other profile.
 * **apo**: a user on the APO machines.

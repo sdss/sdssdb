@@ -30,6 +30,6 @@ and follow the instructions above to be sure it has been loaded. Remember that `
 
 or for a development version ::
 
-    sdss_install --github sdssdb master
+    sdss_install --github sdssdb main
 
 More instructions on how to install and use ``sdss_install`` are available `here <https://wiki.sdss.org/display/knowledge/sdss_install+bootstrap+installation+instructions>`__.
