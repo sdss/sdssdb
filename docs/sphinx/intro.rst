@@ -10,18 +10,22 @@ Getting started with sdssdb
 Making a simple query with ``sdssdb``
 -------------------------------------
 
-Imagine that you want to query ``catalogdb`` (the schema containing all the catalogues used for target selection in SDSS-V) and get all the Gaia targets within a range of magnitudes. In most cases this only requires a couple lines of code ::
+Imagine that you want to query ``catalogdb`` (the schema containing all the catalogues used for target selection in SDSS-V) and get all the Gaia targets within a range of magnitudes. In most cases this only requires a couple lines of code. This example assumes that you're running the code from a machine at Utah which has direct access to the ``operations.sdss.org`` machine. ::
 
-    >>> from sdssdb.peewee.sdss5db.catalogdb import GaiaDR2Source
-    >>> targets = GaiaDR2Source.select().where((GaiaDR2Source.phot_g_mean_mag > 15) & (GaiaDR2Source.phot_g_mean_mag < 16)).limit(10)
+    >>> from sdssdb.peewee.sdss5db.catalogdb import database
+    >>> database.set_profile('operations')
+    True
+    >>> from sdssdb.peewee.sdss5db.catalogdb import Gaia_DR2
+    >>> targets = Gaia_DR2.select().where((Gaia_DR2.phot_g_mean_mag > 15) & (Gaia_DR2.phot_g_mean_mag < 16)).limit(10)
 
-This will returns the first 10 results from Gaia DR2 with g magnitude in the range :math:`(15, 16)`. Simple. The previous example uses peewee but the equivalent for SQLAlchemy is quite similar ::
+This will returns the first 10 results from Gaia DR2 with g magnitude in the range :math:`(15, 16)`. Simple.
 
-    >>> from sdssdb.sqlalchemy.sdss5db.catalogdb import GaiaDR2Source, database
-    >>> session = database.Session()
-    >>> targets = session.query(GaiaDR2Source).filter((GaiaDR2Source.phot_g_mean_mag > 15) & (GaiaDR2Source.phot_g_mean_mag < 16)).limit(10).all()
+A subtlety is that the order of imports is important. Since the ``Gaia_DR2`` model is populated dynamically, it must be imported once a connection to the database has been accomplished. Alternatively, one can do ::
 
-.. warning:: Note that the implementation of ``catalogdb`` in SQLALchemy is very limited and should not be used in general.
+    >>> from sdssdb.peewee.sdss5db import catalogdb
+    >>> catalogdb.database.set_profile('operations')
+    True
+    >>> targets = catalogdb.Gaia_DR2.select().where((catalogdb.Gaia_DR2.phot_g_mean_mag > 15) & (catalogdb.Gaia_DR2.phot_g_mean_mag < 16)).limit(10)
 
 
 .. _available-databases:
@@ -148,6 +152,8 @@ The `~sdssdb.connection.DatabaseConnection` abstract class allows to connect to 
     >>> db
     <SQLADatabaseConnection (dbname='manga', profile='local', connected=True)>
 
+(note that this example will only work if you have a local database called ``manga``)
+
 What happened here? `~sdssdb.connection.SQLADatabaseConnection` connected to the ``manga`` database using the ``local`` profile. A profile is simply a set of username, hostname, and port on which to look for a PostgreSQL server. ``sdssdb`` tries to be smart and select a profile that matches the machine on which you are working. That may not always work. For example, imagine that you are working on ``manga.wasatch.peaks`` but trying to connect to ``sdss5db`` which is running on ``operations-test.sdss.utah.edu`` ::
 
     >>> from sdssdb.connection import PeeweeDatabaseConnection
@@ -156,14 +162,14 @@ What happened here? `~sdssdb.connection.SQLADatabaseConnection` connected to the
 
 In this case the profile is not the appropriate for connecting to ``sdss5db`` and the connection fails. We can fix that by connecting with the correct profile ::
 
-    >>> db.set_profile('operations-test')
+    >>> db.set_profile('operations')
     True
     >>> db
-    <PeeweeDatabaseConnection (dbname='sdss5db', profile='operations-test', connected=True)>
+    <PeeweeDatabaseConnection (dbname='sdss5db', profile='operations', connected=True)>
 
 Or we could have connected to the database passing it a full set of parameters ::
 
-    >>> db.connect_from_parameters(user='sdss', host='operations-test.sdss.utah.edu', port=5432)
+    >>> db.connect_from_parameters(user='sdss', host='operations.sdss.org', port=5432)
     True
 
 In other cases you may have several databases running on the same server. You can prepare a connection using the appropriate profile and then connect to a specific database ::
