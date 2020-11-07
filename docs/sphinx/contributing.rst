@@ -4,7 +4,7 @@
 Contributing to sdssdb
 ======================
 
-Contributions to ``sdssdb`` are most welcome. Product development happens on its `GitHub repository <https://www.github.com/sdss/sdssdb>`__. For details on how to develop for an SDSS product refer to the `coding style guide <https://sdss-python-template.readthedocs.io/en/latest/standards.html>`__. All contributions to ``sdssdb`` need to be done as pull requests against the master branch.
+Contributions to ``sdssdb`` are most welcome. Product development happens on its `GitHub repository <https://www.github.com/sdss/sdssdb>`__. For details on how to develop for an SDSS product refer to the `coding style guide <https://sdss-python-template.readthedocs.io/en/latest/standards.html>`__. All contributions to ``sdssdb`` need to be done as pull requests against the ``main`` branch.
 
 
 Contributing a new database or schema
@@ -42,7 +42,7 @@ how to fill out those files depending on the library used.
 Peewee
 ^^^^^^
 
-For an example of how to implement a database with Peewee you can look at the `sdss5db <https://github.com/sdss/sdssdb/tree/master/python/sdssdb/peewee/sdss5db>`__ implementation. Let's start with the database connection in the ``__init__.py`` file. The basic structure is quite simple and would look something like ::
+For an example of how to implement a database with Peewee you can look at the `sdss5db <https://github.com/sdss/sdssdb/tree/main/python/sdssdb/peewee/sdss5db>`__ implementation. Let's start with the database connection in the ``__init__.py`` file. The basic structure is quite simple and would look something like ::
 
     from sdssdb.connection import PeeweeDatabaseConnection
     from sdssdb.peewee import BaseModel
@@ -100,7 +100,7 @@ To define a base class with reflection we do ::
             schema = 'stupendous'
             table_name = 'stupendous_table'
 
-When the connection is created this model will be reflected and autocompleted with all the columns that exist in the table. The reflection will include the `foreign keys <peewee:ForeignKeyField>` that have been defined for the table in the database. Sometimes this is not desirable and we'd rather create them manually. In this case we can add the attribute ``reflection_options = {'skip_foreign_keys': True}`` to ``Meta`` in the ``ReflectBaseModel``. You can check the `catalogdb <https://github.com/sdss/sdssdb/blob/master/python/sdssdb/peewee/sdss5db/catalogdb.py>`__ models for an implementation of this type.
+When the connection is created this model will be reflected and autocompleted with all the columns that exist in the table. The reflection will include the `foreign keys <peewee:ForeignKeyField>` that have been defined for the table in the database. Sometimes this is not desirable and we'd rather create them manually. In this case we can add the attribute ``reflection_options = {'skip_foreign_keys': True}`` to ``Meta`` in the ``ReflectBaseModel``. You can check the `catalogdb <https://github.com/sdss/sdssdb/blob/main/python/sdssdb/peewee/sdss5db/catalogdb.py>`__ models for an implementation of this type.
 
 If a model inherits from a base model using `.ReflectMeta`, it is possible to call ``Model.reflect`` manually to trigger a model reflection. This works even if ``use_reflection=False``.
 
@@ -110,7 +110,7 @@ The default Peewee reflection process requires multiple queries against the data
 SQLAlchemy
 ^^^^^^^^^^
 
-Creating a database connection and model classes for SQLALchemy is quite similar to Peewee. As before, refer to the implementation of `sdss5db <https://github.com/sdss/sdssdb/tree/master/python/sdssdb/sqlalchemy/sdss5db>`__ for a good example. In this case the ``__init__.py`` file would look like ::
+Creating a database connection and model classes for SQLALchemy is quite similar to Peewee. As before, refer to the implementation of `sdss5db <https://github.com/sdss/sdssdb/tree/main/python/sdssdb/sqlalchemy/sdss5db>`__ for a good example. In this case the ``__init__.py`` file would look like ::
 
     from sdssdb.connection import SQLADatabaseConnection
     from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
