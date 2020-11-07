@@ -812,6 +812,19 @@ class GLIMPSE(CatalogdbModel):
         print_fields = ['designation']
 
 
+class GLIMPSE360(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    twomass = ForeignKeyField(TwoMassPSC, field='pts_key',
+                              column_name='tmass_cntr',
+                              backref='glimpse360_targets')
+
+    class Meta:
+        table_name = 'glimpse360'
+        print_fields = ['designation']
+
+
 class BHM_eFEDS_Veto(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
