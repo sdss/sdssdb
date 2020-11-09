@@ -22,3 +22,4 @@ for line in fin:
     print(line, file=fout)
 
 fin.close()
+fout.close()
