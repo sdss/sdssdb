@@ -131,6 +131,7 @@ class KeplerInput_DR10(CatalogdbModel):
     class Meta:
         table_name = 'kepler_input_10'
 
+
 class Sagitta(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
