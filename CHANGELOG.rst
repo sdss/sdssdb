@@ -5,8 +5,13 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.6 <2020-11-12>`
+* :feature:`43` Add a database registry
 * Initial version of the ``sdss5db.opsdb`` schema.
 * Added field ``value`` to ``carton_to_target``.
+* Fix reflection for ``catalogdb.skies_v1``.
+* Schema files for multiple ``catalogdb`` tables in preparation for SDSS-V target selection v0.5.
+* Initial schema files for ``opsdb``.
 
 * :release:`0.4.5 <2020-07-12>`
 * Add ``ForeignKeyField`` from ``CatalogToSDSS_DR13_PhotoObj_Primary`` directly to ``SDSS_DR13_PhotoObj``.
