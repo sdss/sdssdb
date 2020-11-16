@@ -132,6 +132,14 @@ class KeplerInput_DR10(CatalogdbModel):
         table_name = 'kepler_input_10'
 
 
+class Sagitta(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sagitta'
+
+
 class SDSS_DR13_PhotoObj(CatalogdbModel):
 
     objid = BigIntegerField(primary_key=True)
@@ -294,6 +302,30 @@ class TIC_v8(CatalogdbModel):
 
     class Meta:
         table_name = 'tic_v8'
+
+
+class Twoqz_sixqz(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'twoqz_sixqz'
+
+
+class Zari18pms(CatalogdbModel):
+
+    source = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'zari18pms'
+
+
+class Zari18ums(CatalogdbModel):
+
+    source = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'zari18ums'
 
 
 class Legacy_Survey_DR8(CatalogdbModel):
