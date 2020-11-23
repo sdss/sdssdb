@@ -1,0 +1,7 @@
+For loading catalogdb.cantat_gaudin_nodup:
+I used nodup.fits as the source of the data for converting to CSV
+instead of nodup.dat because nodup.dat has blank spaces for some fields.
+
+For loading catalogdb.cantat_gaudin_table1:
+I used table1.dat as the source of the data for converting to CSV.
+(table1.dat uses --- for NULL)
