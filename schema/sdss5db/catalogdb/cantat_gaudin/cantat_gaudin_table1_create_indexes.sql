@@ -1,6 +1,6 @@
 \o cantat_gaudin_table1_create_indexes.out
 create index on catalogdb.cantat_gaudin_table1(q3c_ang2ipix(radeg,dedeg));
-create index on catalogdb.cantat_gaudin_table1(cluster);
+create unique index on catalogdb.cantat_gaudin_table1(cluster);
 create index on catalogdb.cantat_gaudin_table1(glon);
 create index on catalogdb.cantat_gaudin_table1(glat);
 create index on catalogdb.cantat_gaudin_table1(r50);
