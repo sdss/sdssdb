@@ -15,7 +15,7 @@ fout = open(dir + "nodup.csv", "w")
 # Hence, we use tags[-2] and tags[-1] for these lines.
 # Fields are described in the below link:
 # https://cdsarc.unistra.fr/ftp/J/A+A/640/A1/ReadMe
- 
+
 n = 0
 for line in fin:
     n = n + 1
@@ -34,7 +34,7 @@ for line in fin:
               ":tags[-2][0] and tags[-1][0] are not letters")
 
     line_out = radeg + "," + dedeg + "," + gaiadr2 + "," +\
-               proba + "," + cluster # noqa: E127
+               proba + "," + cluster  # noqa: E127
     print(line_out, file=fout)
 
 fin.close()
