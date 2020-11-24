@@ -1,9 +1,18 @@
--- From cantat_gaudin ReadMe 
+-- From cantat_gaudin ReadMe
+-- https://cdsarc.unistra.fr/ftp/J/A+A/640/A1/ReadMe 
 -- Byte-by-byte Description of file: nodup.dat
 --------------------------------------------------------------------------------
 --   Bytes Format Units    Label        Explanations
 --------------------------------------------------------------------------------
--- This is five columns selected from all the columns of nodup.dat.
+-- The table catalogdb.cantat_gaudin_nodup has
+-- five columns selected from all the columns of nodup.dat.
+--
+-- radeg is the first column of nodup.dat
+-- dedeg is the second column of nodup.dat
+-- gaiadr2 is the third column of nodup.dat
+-- proba is the third last column of nodup.dat
+-- cluster is the second last column of nodup.dat
+
 create table catalogdb.cantat_gaudin_nodup (
 radeg double precision, --   1- 21 E21.19 deg RAdeg Right ascension (ICRS) at Ep=2015.5
 dedeg double precision, --  23- 43 E21.18 deg DEdeg Declination (ICRS) at Ep=2015.5

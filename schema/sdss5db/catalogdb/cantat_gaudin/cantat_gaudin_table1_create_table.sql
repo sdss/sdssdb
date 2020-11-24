@@ -1,4 +1,5 @@
 -- From cantat_gaudin ReadMe 
+-- https://cdsarc.unistra.fr/ftp/J/A+A/640/A1/ReadMe
 -- Byte-by-byte Description of file: table1.dat
 --------------------------------------------------------------------------------
 --   Bytes Format Units    Label     Explanations
@@ -26,4 +27,4 @@ x double precision, -- 144-150  F7.0  pc X  ? X position in Galactic cartesian c
 y double precision, -- 152-158  F7.0  pc Y  ? Y position in Galactic cartesian coordinates
 z double precision, -- 160-165  F6.0  pc Z  ? Z position in Galactic cartesian coordinates
 rgc double precision -- 167-172  F6.0  pc  Rgc ? Distance from Galactic centre assuming the Sun is at 8340pc
-)
+);
