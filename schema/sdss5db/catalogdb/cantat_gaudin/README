@@ -1,0 +1,17 @@
+The table catalogdb.cantat_gaudin_nodup has
+primary key pkey and 5 columns from nodup.dat: 
+radeg, dedeg, gaiadr2, proba, cluster.
+
+For loading catalogdb.cantat_gaudin_nodup:
+I used nodup.dat as the source of the data for converting to CSV
+(nodup.dat has blank spaces for some fields in the middle and
+at the end of a line.
+The program cantat_gaudin_nodup_dat2csv.py takes this into account 
+while translating from nodup.dat to nodup.csv.)
+
+For loading catalogdb.cantat_gaudin_table1:
+I used table1.dat as the source of the data for converting to CSV.
+(table1.dat uses --- for NULL.
+The program cantat_gaudin_table1_load.sql takes this into account while
+loading the table1.csv file)
+
