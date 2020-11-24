@@ -1,10 +1,10 @@
-# dir must end with /
-dir = "/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/" +\
-      "cantat_gaudin/"
+# input_dir must end with /
+input_dir = "/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/" +\
+    "catalogs/cantat_gaudin/"
 
-fin = open(dir + "nodup.dat", "r")
+fin = open(input_dir + "nodup.dat", "r")
 
-fout = open(dir + "nodup.csv", "w")
+fout = open(input_dir + "nodup.csv", "w")
 
 # For some lines, in the middle of the line,
 # there are fields with blank spaces.
