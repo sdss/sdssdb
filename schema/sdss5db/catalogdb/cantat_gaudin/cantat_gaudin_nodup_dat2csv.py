@@ -13,7 +13,7 @@ fout = open(dir + "nodup.csv", "w")
 # from the last element of tags.
 # For some lines, the last field teff50 is missing.
 # Hence, we use tags[-2] and tags[-1] for these lines.
-# Fields are described in the below link:
+# Fields for nodup.dat are described in the below link:
 # https://cdsarc.unistra.fr/ftp/J/A+A/640/A1/ReadMe
 
 n = 0
