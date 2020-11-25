@@ -132,6 +132,34 @@ class KeplerInput_DR10(CatalogdbModel):
         table_name = 'kepler_input_10'
 
 
+class CantatGaudinTable1(CatalogdbModel):
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'cantat_gaudin_table1'
+
+
+class CantatGaudinNodup(CatalogdbModel):
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
+    pkey = BigIntegerField(primary_key=True)
+    gaiadr2 = ForeignKeyField(model=Gaia_DR2,  # remote model
+                              field='source_id',  # remote column name
+                              column_name='gaiadr2',  # current column name
+                              object_id_name='gaiadr2',
+                              backref='cantat_gaudin_nodup')
+    cluster = ForeignKeyField(model=CantatGaudinTable1,  # remote model
+                              field='cluster',  # remote column name
+                              column_name='cluster',  # current column name
+                              object_id_name='cluster',
+                              backref='cantat_gaudin_nodup')
+
+    class Meta:
+        table_name = 'cantat_gaudin_nodup'
+
+
 class Sagitta(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
@@ -305,7 +333,8 @@ class TIC_v8(CatalogdbModel):
 
 
 class Twoqz_sixqz(CatalogdbModel):
-
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
 
     class Meta:
@@ -845,10 +874,12 @@ class GLIMPSE(CatalogdbModel):
 
 
 class GLIMPSE360(CatalogdbModel):
-
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
 
-    twomass = ForeignKeyField(TwoMassPSC, field='pts_key',
+    twomass = ForeignKeyField(model=TwoMassPSC,
+                              field='pts_key',
                               column_name='tmass_cntr',
                               backref='glimpse360_targets')
 
