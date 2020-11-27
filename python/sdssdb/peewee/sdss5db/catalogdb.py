@@ -146,14 +146,14 @@ class CantatGaudinNodup(CatalogdbModel):
     # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
     gaiadr2 = ForeignKeyField(model=Gaia_DR2,  # remote model
-                              field='source_id',  # remote column name
-                              column_name='gaiadr2',  # current column name
-                              object_id_name='gaiadr2',
+                              field='source_id',  # remote field name
+                              column_name='source_id',  # remote column name
+                              object_id_name='source_id_object_id',
                               backref='cantat_gaudin_nodup')
     cluster = ForeignKeyField(model=CantatGaudinTable1,  # remote model
-                              field='cluster',  # remote column name
-                              column_name='cluster',  # current column name
-                              object_id_name='cluster',
+                              field='cluster',  # remote field name
+                              column_name='cluster',  # remote column name
+                              object_id_name='cluster_object_id',
                               backref='cantat_gaudin_nodup')
 
     class Meta:
