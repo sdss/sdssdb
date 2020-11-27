@@ -73,6 +73,30 @@ class AllWise(CatalogdbModel):
         table_name = 'allwise'
 
 
+class EROSITASupersetAGN(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_agn'
+
+
+class EROSITASupersetClusters(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_clusters'
+
+
+class EROSITASupersetStars(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_stars'
+
+
 class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
