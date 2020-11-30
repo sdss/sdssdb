@@ -169,16 +169,20 @@ class CantatGaudinNodup(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
-    gaiadr2 = ForeignKeyField(model=Gaia_DR2,  # remote model
-                              field='source_id',  # remote field name
-                              column_name='source_id',  # remote column name
-                              object_id_name='source_id_object_id',
-                              backref='cantat_gaudin_nodup')
-    cluster = ForeignKeyField(model=CantatGaudinTable1,  # remote model
-                              field='cluster',  # remote field name
-                              column_name='cluster',  # remote column name
-                              object_id_name='cluster_object_id',
-                              backref='cantat_gaudin_nodup')
+
+    gaiadr2_fk = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='gaiadr2',  # local column name
+        object_id_name='gaiadr2',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    cluster_fk = ForeignKeyField(
+        model=CantatGaudinTable1,  # remote model
+        field='cluster',  # remote column name
+        column_name='cluster',  # local column name
+        object_id_name='cluster',  # same as local column name
+        backref='+')  # '+' means do not create backref
 
     class Meta:
         table_name = 'cantat_gaudin_nodup'
