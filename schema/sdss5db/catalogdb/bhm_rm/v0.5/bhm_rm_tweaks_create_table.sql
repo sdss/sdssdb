@@ -12,7 +12,7 @@ dec double precision,
 rm_suitability integer,
 in_plate boolean,
 firstcarton char(17),
-mag real[5],
+mag real[5],  -- array column
 gaia_g real,
 date_set char(11) 
 );

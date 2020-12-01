@@ -8,7 +8,7 @@ create index on catalogdb.bhm_rm_tweaks(catalogid);
 create index on catalogdb.bhm_rm_tweaks(rm_suitability);
 create index on catalogdb.bhm_rm_tweaks(in_plate);
 create index on catalogdb.bhm_rm_tweaks(firstcarton);
-create index on catalogdb.bhm_rm_tweaks(mag); -- array column
+create index on catalogdb.bhm_rm_tweaks(mag);  -- array column
 create index on catalogdb.bhm_rm_tweaks(gaia_g);
 create index on catalogdb.bhm_rm_tweaks(date_set); 
 \o
