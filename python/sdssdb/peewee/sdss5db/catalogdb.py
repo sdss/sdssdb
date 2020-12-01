@@ -97,6 +97,14 @@ class EROSITASupersetStars(CatalogdbModel):
         table_name = 'erosita_superset_stars'
 
 
+class EROSITASupersetCompactobjects(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_compactobjects'
+
+
 class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
