@@ -1113,6 +1113,14 @@ class BHM_RM_v0_2(BHM_RM_v0):
     pass
 
 
+class BHM_RM_Tweaks(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'bhm_rm_tweaks'
+
+
 class Gaia_DR2_RUWE(CatalogdbModel):
 
     gaia = ForeignKeyField(Gaia_DR2,
