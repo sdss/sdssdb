@@ -105,6 +105,14 @@ class EROSITASupersetCompactobjects(CatalogdbModel):
         table_name = 'erosita_superset_compactobjects'
 
 
+class ElbadryRix(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'elbadry_rix'
+
+
 class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
