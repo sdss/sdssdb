@@ -1,7 +1,7 @@
 -- Based on the information in the below fits file.
 -- TESS_Observedv0.5.fits
 
-create table catalogdb.tess_toi (
+create table catalogdb.tess_toi_v05 (
     ticid bigint, -- format = 'K'
     target_type char(8), -- format = '8A'
     toi char(32), -- format = '32A'
