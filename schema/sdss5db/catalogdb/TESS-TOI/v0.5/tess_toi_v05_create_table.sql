@@ -6,7 +6,7 @@ create table catalogdb.tess_toi_v05 (
     target_type char(8), -- format = '8A'
     toi char(32), -- format = '32A'
     tess_disposition char(4), -- format = '4A'
-    tfopwg_Disposition char(3), -- format = '3A'
+    tfopwg_disposition char(3), -- format = '3A'
     ctoi char(32), -- format = '32A'
     user_disposition char(2), -- format = '2A'
     num_sectors double precision -- format = 'D'
