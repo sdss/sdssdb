@@ -16,6 +16,6 @@ create index on catalogdb.gaia_edr3_source(phot_rp_mean_mag);
 create index on catalogdb.gaia_edr3_source(bp_rp);
 create index on catalogdb.gaia_edr3_source(bp_g);
 create index on catalogdb.gaia_edr3_source(g_rp);
-create index on catalogdb.gaia_edr3_source(parallax - parallax_error);
-create index on catalogdb.gaia_edr3_source(parallax / parallax_error);
+create index on catalogdb.gaia_edr3_source((parallax - parallax_error));
+create index on catalogdb.gaia_edr3_source((parallax / parallax_error));
 \o
