@@ -150,6 +150,14 @@ class Gaia_EDR3(CatalogdbModel):
         table_name = 'gaia_edr3_source'
 
 
+class Gaia_DR2_Neighbourhood(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr2_neighbourhood'
+
+
 class Gaia_DR2_Clean(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
