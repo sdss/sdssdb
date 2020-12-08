@@ -152,7 +152,7 @@ class Gaia_EDR3(CatalogdbModel):
 
 class Gaia_DR2_Neighbourhood(CatalogdbModel):
 
-    dr2_source_id = BigIntegerField(primary_key=True)
+    pkey = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'gaia_dr2_neighbourhood'
