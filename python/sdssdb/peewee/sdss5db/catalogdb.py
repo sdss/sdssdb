@@ -228,6 +228,38 @@ class Sagitta(CatalogdbModel):
         table_name = 'sagitta'
 
 
+class SDSSV_Plateholes(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_plateholes'
+
+
+class SDSSV_Plateholes_Meta(CatalogdbModel):
+
+    yanny_uid = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_plateholes_meta'
+
+
+class SDSSV_BOSS_Conflist(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_boss_conflist'
+
+
+class SDSSV_BOSS_SPALL(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_boss_spall'
+
+
 class SDSS_DR13_PhotoObj(CatalogdbModel):
 
     objid = BigIntegerField(primary_key=True)
