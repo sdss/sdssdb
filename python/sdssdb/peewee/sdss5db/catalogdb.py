@@ -228,20 +228,27 @@ class Sagitta(CatalogdbModel):
         table_name = 'sagitta'
 
 
-class SDSSV_Plateholes(CatalogdbModel):
-
-    pkey = BigIntegerField(primary_key=True)
-
-    class Meta:
-        table_name = 'sdssv_plateholes'
-
-
 class SDSSV_Plateholes_Meta(CatalogdbModel):
 
     yanny_uid = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'sdssv_plateholes_meta'
+
+
+class SDSSV_Plateholes(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    yanny_uid_fk = ForeignKeyField(
+        model=SDSSV_Plateholes_Meta,  # remote model
+        field='yanny_uid',  # remote column name
+        column_name='yanny_uid',  # local column name
+        object_id_name='yanny_uid',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'sdssv_plateholes'
 
 
 class SDSSV_BOSS_Conflist(CatalogdbModel):
