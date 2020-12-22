@@ -1,11 +1,13 @@
 #!/bin/sh
 NOW=$(date +"%m%d%Y")
 db=sdss5db
+days=30
 for schema in apogee_drp astra; do
     PG_DUMP_FILE=${SDSSDB_DUMP_DIR}/${schema}/${db}_${schema}_$NOW.sql
     if [ -f $PG_DUMP_FILE ]; then
        echo "ABORTING: $PG_DUMP_FILE exists."
     else
-       pg_dump -U sdss -d $db -n $schema -v -Fc > $PG_DUMP_FILE
+       pg_dump -U sdss -d $db -n $schema -Fc > $PG_DUMP_FILE
     fi
+    find ${SDSSDB_DUMP_DIR}/${schema} -type f -mtime +${days} -exec rm -f {} \;
 done
