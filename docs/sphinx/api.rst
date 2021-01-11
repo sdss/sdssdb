@@ -43,4 +43,8 @@ Utils
     :members:
     :show-inheritance:
 
+.. automodule:: sdssdb.utils.registry
+    :members:
+    :show-inheritance:
+
 .. autofunction:: sdssdb.utils.schemadisplay.create_schema_graph

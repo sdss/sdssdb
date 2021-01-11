@@ -12,7 +12,7 @@ import astropy.table
 import click
 
 from sdssdb.connection import PeeweeDatabaseConnection
-from sdssdb.utils.database import file_to_db, table_exists, drop_table
+from sdssdb.utils.ingest import file_to_db, table_exists, drop_table
 
 
 try:

@@ -18,48 +18,42 @@ The SDSS-V Galactic Genesis Survey aims to better understand Galactic formation 
 
 Here we need to use the 2MASS catalogue to get the H magnitudes and Gaia for the H-band magnitudes and astrometric information. Let's see how to accomplish that.
 
-``catalogdb`` provides tables from Gaia DR2 (``GaiaDR2Source``) and 2MASS (``TwoMassPsc``), as well as an already computed best-neighbour relational table. To start with, let's join these tables ::
+``catalogdb`` provides tables from Gaia DR2 (``Gaia_DR2``) and 2MASS (``TwoMassPSC``), as well as an already computed best-neighbour relational table. To start with, let's join these tables ::
 
-    >>> from sdssdb.peewee.sdss5db.catalogdb import database, GaiaDR2Source, TwoMassPsc, GaiaDR2TmassBestNeighbour
-    >>> gaia_tmass = GaiaDR2Source.select().join(GaiaDR2TmassBestNeighbour).join(TwoMassPsc).limit(100)
+    >>> from sdssdb.peewee.sdss5db.catalogdb import database, Gaia_DR2, TwoMassPSC, Gaia_DR2_TwoMass_Best_Neighbour, Gaia_DR2_Clean
+    >>> gaia_tmass = Gaia_DR2.select().join(Gaia_DR2_TwoMass_Best_Neighbour).join(TwoMassPSC).limit(100)
 
 The ``limit(100)`` allows us to test the expression without doing the full join, which may take hours. From each one of the Gaia sources we can access the Gaia information but also navigate to the best 2MASS match ::
 
     >>> g1 = gaia_tmass[0]
     >>> g1.phot_g_mean_mag  # G magnitude
     17.413
-    >>> g1.tmass_best_sources[0]
-    <TwoMassPsc: 337808783>
-    >>> g1.tmass_best_sources[0].h_m  # H magnitude
+    >>> g1.tmass_best[0]
+    <TwoMassPSC: 337808783>
+    >>> g1.tmass_best[0].h_m  # H magnitude
     15.395
 
-Here ``tmass_best_sources`` uses ``GaiaDR2TmassBestNeighbour`` to return a list of the 2MASS sources associted with the instance of ``GaiaDR2Source``. The list can be empty if there are no matches or even have more than one 2MASS target, depending on how the cross-match was done.
+Here ``tmass_best`` uses ``Gaia_DR2_TwoMass_Best_Neighbour`` to return a list of the 2MASS sources associted with the instance of ``Gaia_DR2``. The list can be empty if there are no matches or even have more than one 2MASS target, depending on how the cross-match was done.
 
 The next step is to add the target selection constraints ::
 
-    >>> selection = GaiaDR2Source.select().join(GaiaDR2TmassBestNeighbour).join(TwoMassPsc).where(TwoMassPsc.h_m < 11).where((GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5).limit(100)
+    >>> selection = Gaia_DR2.select().join(Gaia_DR2_TwoMass_Best_Neighbour).join(TwoMassPSC).where(TwoMassPSC.h_m < 11).where((Gaia_DR2.phot_g_mean_mag - TwoMassPSC.h_m) > 3.5).limit(100)
 
-Quite simple! Let's improve things a bit. For both Gaia and 2MASS ``catalogdb`` provides "clean" tables, i.e., subsets of the original tables in which certain targets (e.g., those with bad astrometry, saturated, high proper motion) have been rejected. By joining to those tables we can make sure the resulting target selection also avoids them ::
+Quite simple! Let's improve things a bit. For Gaia ``catalogdb`` provides a "clean" table, i.e., a subset of the original table in which certain targets (e.g., those with bad astrometry, saturated, high proper motion) have alredy been rejected. By joining to that table we can make sure the resulting target selection also avoids them ::
 
-    >>> selection_clean = GaiaDR2Source.select().join(GaiaDR2Clean).switch(GaiaDR2Source).join(GaiaDR2TmassBestNeighbour).join(TwoMassPsc).join(TwoMassClean).where(TwoMassPsc.h_m < 11).where((GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5)
+    >>> selection_clean = Gaia_DR2.select().join(Gaia_DR2_Clean).switch(Gaia_DR2).join(Gaia_DR2_TwoMass_Best_Neighbour).join(TwoMassPSC).where(TwoMassPSC.h_m < 11).where((Gaia_DR2.phot_g_mean_mag - TwoMassPSC.h_m) > 3.5)
 
-Note the use of `switch <http://docs.peewee-orm.com/en/latest/peewee/api.html?highlight=switch#ModelSelect.switch>`__ to return the pointer to ``GaiaDR2Source`` before joining again with ``GaiaDR2TmassBestNeighbour``.
+Note the use of `switch <http://docs.peewee-orm.com/en/latest/peewee/api.html?highlight=switch#ModelSelect.switch>`__ to return the pointer to ``Gaia_DR2`` before joining again with ``Gaia_DR2_TwoMass_Best_Neighbour``.
 
-What is more, ``TwoMassClean`` has a ``twomassbrightneighbor`` boolean column that indicates if the target has a close, bright neighbour. Since we want to avoid those targets we add a new filter condition ::
+The ``SELECT`` statement for this query is ``Gaia_DR2``, which are returned as model class instances. From there we can navigate to all the relevant information, as we did to get ``h_m`` from the 2MASS table. To generate a list of targets to observe we are interested in only a few of the parameters (RA, declination, magnitude). We can select only those values and return the results as a list of tuples ::
 
-    >>> selection_clean_no_bright = selection_clean.where(TwoMassClean.twomassbrightneighbor == False)
-
-Note that we don't need to write the expression again. We can take the previous variable, ``selection_clean``, add the new filter, and store it in another variable.
-
-The ``SELECT`` statement for this query is ``GaiaDR2Source``, which are returned as model class instances. From there we can navigate to all the relevant information, as we did to get ``h_m`` from the 2MASS table. To generate a list of targets to observe we are interested in only a few of the parameters (RA, declination, magnitude). We can select only those values and return the results as a list of tuples ::
-
-    >>> galactic_genesis = GaiaDR2Source.select(
-        GaiaDR2Source.source_id,
-        TwoMassPsc.designation,
-        GaiaDR2Source.ra,
-        GaiaDR2Source.dec,
-        GaiaDR2Source.phot_g_mean_mag,
-        TwoMassPsc.h_m).join(GaiaDR2Clean).switch(GaiaDR2Source).join(GaiaDR2TmassBestNeighbour).join(TwoMassPsc).join(TwoMassClean).where(TwoMassPsc.h_m < 11, (GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5, TwoMassClean.twomassbrightneighbor == False)
+    >>> galactic_genesis = Gaia_DR2.select(
+        Gaia_DR2.source_id,
+        TwoMassPSC.designation,
+        Gaia_DR2.ra,
+        Gaia_DR2.dec,
+        Gaia_DR2.phot_g_mean_mag,
+        TwoMassPSC.h_m).join(Gaia_DR2_Clean).switch(Gaia_DR2).join(Gaia_DR2_TwoMass_Best_Neighbour).join(TwoMassPSC).where(TwoMassPSC.h_m < 11, (Gaia_DR2.phot_g_mean_mag - TwoMassPSC.h_m) > 3.5)
     >>> list(galactic_genesis.limit(100).tuples())
     [(1866735487144411648,
       '21002432+3525317 ',
@@ -93,19 +87,7 @@ From a list such as that one it's easy to create a new database table or FITS fi
 Using SQLAlchemy
 ----------------
 
-The previous example used the Peewee submodule. The same query can be performed in SQLAlchemy with a very similar syntax. Here is the equivalent of the final query ::
-
-    >>> from sdssdb.sqlalchemy.sdss5db.catalogdb import *
-    >>> session = database.Session()
-    >>> galactic_genesis = session.query(
-            GaiaDR2Source.source_id,
-            TwoMassPsc.designation,
-            GaiaDR2Source.ra,
-            GaiaDR2Source.dec,
-            GaiaDR2Source.phot_g_mean_mag,
-            TwoMassPsc.h_m).join(GaiaDR2Clean, GaiaDR2TmassBestNeighbour, TwoMassPsc, TwoMassClean).filter(TwoMassPsc.h_m < 11, (GaiaDR2Source.phot_g_mean_mag - TwoMassPsc.h_m) > 3.5, TwoMassClean.twomassbrightneighbor == False)
-
-Note that in SQLAlchemy there is no need to use the ``switch`` method.
+.. warning:: At this time, there are not models implemented for ``sdss5db`` in SQLAlchemy.
 
 
 Cone searches
@@ -113,11 +95,11 @@ Cone searches
 
 ``sdssdb`` provides a simple way of performing elliptical cone searches using `q3c <https://github.com/segasai/q3c>`__. Using the ``galactic_genesis`` query defined above, let's now get the targets within 1.5 degrees of :math:`(200, 40)` degrees ::
 
-    >>> cone = galactic_genesis.where(GaiaDR2Source.cone_search(200, 40, 1.5))
+    >>> cone = galactic_genesis.where(Gaia_DR2.cone_search(200, 40, 1.5))
     >>> list(cone)
-    [<GaiaDR2Source: 1524783316445526016>,
-     <GaiaDR2Source: 1524577913928477568>,
-     <GaiaDR2Source: 1524637493714681216>,
-     <GaiaDR2Source: 1525140554643949568>]
+    [<Gaia_DR2: 1524783316445526016>,
+     <Gaia_DR2: 1524577913928477568>,
+     <Gaia_DR2: 1524637493714681216>,
+     <Gaia_DR2: 1525140554643949568>]
 
 Refer to the `~sdssdb.peewee.BaseModel.cone_search` documentation for more details.
