@@ -180,6 +180,7 @@ class Queue(OpsdbBase):
     @classmethod
     def flushQueue(cls):
         cls.delete().where(cls.position is not None).execute()
+        database.execute_sql("SELECT setval('queue_pk_seq', 1);")
 
     class Meta:
-        table_name = 'queue'
+        table_name = "queue"
