@@ -181,11 +181,10 @@ declare
     design integer;
     _pk integer;
     _design integer;
-    _field integer;
     _pos integer;
 
 BEGIN
-    FOR _pk, _design, _field, _pos IN 
+    FOR _pk, _design, _pos IN
         SELECT * FROM opsdb.queue
         ORDER BY position
     LOOP 
@@ -202,7 +201,7 @@ $design$ LANGUAGE plpgsql;
 
 -- add to end of queue
 
-CREATE FUNCTION opsdb.appendQueue (design integer, field integer)
+CREATE FUNCTION opsdb.appendQueue (design integer)
 RETURNS void AS $$
 
 declare
@@ -210,31 +209,31 @@ declare
 
 BEGIN
     SELECT MAX(position) INTO maxpos FROM opsdb.queue;
-    INSERT INTO opsdb.queue  (design_pk, field_pk, position)
-    VALUES (design, field, maxpos+1);
+    IF maxpos IS NULL THEN SELECT 0 INTO maxpos; END IF;
+    INSERT INTO opsdb.queue  (design_pk, position)
+    VALUES (design, maxpos+1);
 END;
 $$ LANGUAGE plpgsql;
 
 -- insert at position
 
-CREATE FUNCTION opsdb.insertInQueue (design integer, field integer, pos integer)
+CREATE FUNCTION opsdb.insertInQueue (design integer, pos integer)
 RETURNS void AS $$
 
 declare
     _pk integer;
     _design integer;
-    _field integer;
     _pos integer;
 
 BEGIN
-    FOR _pk, _design, _field, _pos IN
+    FOR _pk, _design, _pos IN
         SELECT * FROM opsdb.queue
         WHERE position >= pos
     LOOP
         UPDATE opsdb.queue SET position = _pos + 1 WHERE pk=_pk;
     END LOOP;
 
-    INSERT INTO opsdb.queue  (design_pk, field_pk, position)
-    VALUES (design, field, pos);
+    INSERT INTO opsdb.queue  (design_pk, position)
+    VALUES (design, pos);
 END;
 $$ LANGUAGE plpgsql;

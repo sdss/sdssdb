@@ -119,9 +119,9 @@ class Exposure(OpsdbBase):
     exposure_flavor = ForeignKeyField(column_name='exposure_flavor_pk',
                                       field='pk',
                                       model=ExposureFlavor)
-    camera = ForeignKeyField(column_name='camera_pk',
-                             field='pk',
-                             model=Camera)
+    # camera = ForeignKeyField(column_name='camera_pk',
+    #                          field='pk',
+    #                          model=Camera)
 
     class Meta:
         table_name = 'exposure'
@@ -147,20 +147,22 @@ class Queue(OpsdbBase):
     design = ForeignKeyField(column_name='design_pk',
                              field='pk',
                              model=targetdb.Design)
-    field = ForeignKeyField(column_name='field_pk',
-                            field='pk',
-                            model=targetdb.Field)
+    # field = ForeignKeyField(column_name='field_pk',
+    #                         field='pk',
+    #                         model=targetdb.Field)
     position = IntegerField()
     pk = AutoField()
 
     @classmethod
     def pop(cls):
         design = Select(columns=[fn.popQueue()]).execute(database)
+        if design[0]["popqueue"] is None:
+            return None
         design_db = targetdb.Design.get(pk=design[0]["popqueue"])
         return design_db
 
     @classmethod
-    def appendQueue(cls, design, field):
+    def appendQueue(cls, design):
         if isinstance(design, targetdb.Design):
             design = design.pk
         Select(columns=[fn.appendQueue(design)]).execute(database)
@@ -168,12 +170,16 @@ class Queue(OpsdbBase):
         # return queue_db
 
     @classmethod
-    def insertInQueue(cls, design, field, position):
+    def insertInQueue(cls, design, position):
         if isinstance(design, targetdb.Design):
             design = design.pk
         Select(columns=[fn.insertInQueue(design, position)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
+
+    @classmethod
+    def flushQueue(cls):
+        cls.delete().where(cls.position is not None).execute()
 
     class Meta:
         table_name = 'queue'
