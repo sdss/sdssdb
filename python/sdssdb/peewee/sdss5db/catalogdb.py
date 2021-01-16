@@ -113,6 +113,14 @@ class ElbadryRix(CatalogdbModel):
         table_name = 'elbadry_rix'
 
 
+class MWM_TESS_OB(CatalogdbModel):
+
+    gaia_dr2_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'mwm_tess_ob'
+
+
 class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
