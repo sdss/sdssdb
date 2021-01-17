@@ -113,14 +113,6 @@ class ElbadryRix(CatalogdbModel):
         table_name = 'elbadry_rix'
 
 
-class MWM_TESS_OB(CatalogdbModel):
-
-    gaia_dr2_id = BigIntegerField(primary_key=True)
-
-    class Meta:
-        table_name = 'mwm_tess_ob'
-
-
 class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
@@ -437,6 +429,21 @@ class TIC_v8(CatalogdbModel):
 
     class Meta:
         table_name = 'tic_v8'
+
+
+class MWM_TESS_OB(CatalogdbModel):
+
+    gaia_dr2_id = BigIntegerField(primary_key=True)
+
+    gaiadr2_fk = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='gaia_dr2_id',  # local column name
+        object_id_name='gaia_dr2_id',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'mwm_tess_ob'
 
 
 class Twoqz_sixqz(CatalogdbModel):
