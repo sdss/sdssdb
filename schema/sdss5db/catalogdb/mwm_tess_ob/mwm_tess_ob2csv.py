@@ -1,3 +1,5 @@
+import math
+
 # See below link for details
 # https://wiki.sdss.org/display/OPS/Cartons+for+v0.5#Cartonsforv0.5-TESSCVZOBAFPulsatingBinaries
 
@@ -18,8 +20,8 @@ for line in f1:
     tags = line.split()
 
     temp = tags[1]
-    temp = temp.replace(".", "")
-    temp = temp.replace("e+18", "")
+    temp = float(tags[1])
+    temp = math.floor(temp)
     gaia_dr2_id = temp
 
     ra = tags[2]
@@ -40,8 +42,8 @@ for line in f2:
     tags = line.split()
 
     temp = tags[1]
-    temp = temp.replace(".", "")
-    temp = temp.replace("e+18", "")
+    temp = float(tags[1])
+    temp = math.floor(temp)
     gaia_dr2_id = temp
 
     ra = tags[2]
