@@ -58,7 +58,8 @@ CREATE TABLE targetdb.category (
 
 CREATE TABLE targetdb.carton_to_target (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	lambda_eff REAL,
+	-- lambda_eff REAL,
+    instrument_pk INTEGER,
 	value REAL,
 	carton_pk SMALLINT,
 	target_pk BIGINT,
@@ -68,12 +69,17 @@ CREATE TABLE targetdb.carton_to_target (
 CREATE TABLE targetdb.cadence (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT NOT NULL,
-    nexposures SMALLINT,
+    nepochs INTEGER,
+    nexp SMALLINT[],
     delta REAL[],
     skybrightness REAL[],
     delta_max REAL[],
     delta_min REAL[],
-    instrument_pk INTEGER[]);
+    -- slots_exposures is 2x24, for dark/bright x LST
+    -- needs INTEGER b/c RM I think?
+    slots_exposures INTEGER[][],
+    -- epoch_max_length is days
+    epoch_max_length REAL[]);
 
 CREATE TABLE targetdb.instrument (
 	pk SERIAL PRIMARY KEY NOT NULL,
@@ -162,6 +168,10 @@ ALTER TABLE ONLY targetdb.carton
     ADD CONSTRAINT version_fk
     FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
 	ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY targetdb.carton_to_target
+    ADD CONSTRAINT carton_to_targ_instrument_fk
+    FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk);
 
 ALTER TABLE ONLY targetdb.carton_to_target
     ADD CONSTRAINT carton_fk
