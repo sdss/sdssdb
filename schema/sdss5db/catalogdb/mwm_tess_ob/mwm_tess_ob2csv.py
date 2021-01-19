@@ -19,14 +19,10 @@ line = f1.readline()
 for line in f1:
     tags = line.split()
 
-    temp = tags[1]
-    temp = float(tags[1])
-    temp = math.floor(temp)
-    gaia_dr2_id = temp
-
-    ra = tags[2]
-    dec = tags[3]
-    h_mag = tags[4]
+    gaia_dr2_id = tags[2]
+    ra = tags[3]
+    dec = tags[4]
+    h_mag = tags[5]
     cadence = "apogee_bright_8x1"
     print(gaia_dr2_id, ra, dec, h_mag, cadence, sep=',', file=fout)
 
@@ -41,14 +37,10 @@ line = f2.readline()
 for line in f2:
     tags = line.split()
 
-    temp = tags[1]
-    temp = float(tags[1])
-    temp = math.floor(temp)
-    gaia_dr2_id = temp
-
-    ra = tags[2]
-    dec = tags[3]
-    h_mag = tags[4]
+    gaia_dr2_id = tags[2]
+    ra = tags[3]
+    dec = tags[4]
+    h_mag = tags[5]
     h_mag = float(h_mag)
     # if H < 11 then use apogee_bright_8x2
     # if H > =11 then use  apogee_bright_8x4
