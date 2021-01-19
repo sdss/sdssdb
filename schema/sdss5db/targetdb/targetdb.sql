@@ -58,7 +58,7 @@ CREATE TABLE targetdb.category (
 
 CREATE TABLE targetdb.carton_to_target (
 	pk SERIAL PRIMARY KEY NOT NULL,
-	-- lambda_eff REAL,
+	lambda_eff REAL,
     instrument_pk INTEGER,
 	value REAL,
 	carton_pk SMALLINT,
@@ -75,9 +75,6 @@ CREATE TABLE targetdb.cadence (
     skybrightness REAL[],
     delta_max REAL[],
     delta_min REAL[],
-    -- slots_exposures is 2x24, for dark/bright x LST
-    -- needs INTEGER b/c RM I think?
-    slots_exposures INTEGER[][],
     -- epoch_max_length is days
     epoch_max_length REAL[]);
 
@@ -125,6 +122,9 @@ CREATE TABLE targetdb.field (
 	racen DOUBLE PRECISION NOT NULL,
 	deccen DOUBLE PRECISION NOT NULL,
 	position_angle REAL,
+    -- slots_exposures is 2x24, for dark/bright x LST
+    -- needs INTEGER b/c RM I think?
+    slots_exposures INTEGER[][],
 	version_pk SMALLINT,
 	cadence_pk SMALLINT,
 	observatory_pk SMALLINT);
