@@ -47,6 +47,7 @@ class Cadence(TargetdbBase):
     nexposures = SmallIntegerField(null=True)
     pk = AutoField()
     skybrightness = ArrayField(field_class=FloatField, null=True)
+    epoch_max_length = ArrayField(field_class=FloatField, null=True)
 
     class Meta:
         table_name = 'cadence'
@@ -62,9 +63,11 @@ class Observatory(TargetdbBase):
 
 class Field(TargetdbBase):
     pk = AutoField()
+    field_id = IntegerField(null=False)
     racen = DoubleField(null=False)
     deccen = DoubleField(null=False)
     position_angle = FloatField(null=True)
+    slots_exposures = ArrayField(field_class=FloatField, null=True)
     cadence = ForeignKeyField(column_name='cadence_pk',
                               field='pk',
                               model=Cadence,
@@ -211,9 +214,9 @@ class Assignment(TargetdbBase):
     positioner = ForeignKeyField(Positioner,
                                  column_name='positioner_pk',
                                  field='pk')
-    target = ForeignKeyField(Target,
-                             column_name='target_pk',
-                             field='pk')
+    carton_to_target = ForeignKeyField(CartonToTarget,
+                                       column_name='carton_to_target_pk',
+                                       field='pk')
 
     class Meta:
         table_name = 'assignment'
