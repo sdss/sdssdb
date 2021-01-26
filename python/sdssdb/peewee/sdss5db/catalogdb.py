@@ -73,6 +73,46 @@ class AllWise(CatalogdbModel):
         table_name = 'allwise'
 
 
+class EROSITASupersetAGN(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_agn'
+
+
+class EROSITASupersetClusters(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_clusters'
+
+
+class EROSITASupersetStars(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_stars'
+
+
+class EROSITASupersetCompactobjects(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_compactobjects'
+
+
+class ElbadryRix(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'elbadry_rix'
+
+
 class TwoMassPSC(CatalogdbModel):
 
     pts_key = IntegerField(primary_key=True)
@@ -100,6 +140,22 @@ class Gaia_DR2(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_source'
+
+
+class Gaia_EDR3(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_source'
+
+
+class Gaia_DR2_Neighbourhood(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr2_neighbourhood'
 
 
 class Gaia_DR2_Clean(CatalogdbModel):
@@ -130,6 +186,85 @@ class KeplerInput_DR10(CatalogdbModel):
 
     class Meta:
         table_name = 'kepler_input_10'
+
+
+class CantatGaudinTable1(CatalogdbModel):
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'cantat_gaudin_table1'
+
+
+class CantatGaudinNodup(CatalogdbModel):
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
+    pkey = BigIntegerField(primary_key=True)
+
+    gaiadr2_fk = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='gaiadr2',  # local column name
+        object_id_name='gaiadr2',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    cluster_fk = ForeignKeyField(
+        model=CantatGaudinTable1,  # remote model
+        field='cluster',  # remote column name
+        column_name='cluster',  # local column name
+        object_id_name='cluster',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'cantat_gaudin_nodup'
+
+
+class Sagitta(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sagitta'
+
+
+class SDSSV_Plateholes_Meta(CatalogdbModel):
+
+    yanny_uid = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_plateholes_meta'
+
+
+class SDSSV_Plateholes(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    yanny_uid_fk = ForeignKeyField(
+        model=SDSSV_Plateholes_Meta,  # remote model
+        field='yanny_uid',  # remote column name
+        column_name='yanny_uid',  # local column name
+        object_id_name='yanny_uid',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'sdssv_plateholes'
+
+
+class SDSSV_BOSS_Conflist(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_boss_conflist'
+
+
+class SDSSV_BOSS_SPALL(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdssv_boss_spall'
 
 
 class SDSS_DR13_PhotoObj(CatalogdbModel):
@@ -294,6 +429,31 @@ class TIC_v8(CatalogdbModel):
 
     class Meta:
         table_name = 'tic_v8'
+
+
+class Twoqz_sixqz(CatalogdbModel):
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'twoqz_sixqz'
+
+
+class Zari18pms(CatalogdbModel):
+
+    source = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'zari18pms'
+
+
+class Zari18ums(CatalogdbModel):
+
+    source = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'zari18ums'
 
 
 class Legacy_Survey_DR8(CatalogdbModel):
@@ -812,6 +972,21 @@ class GLIMPSE(CatalogdbModel):
         print_fields = ['designation']
 
 
+class GLIMPSE360(CatalogdbModel):
+    # BigIntegerField is fine even though table column pkey
+    # is a bigserial column
+    pkey = BigIntegerField(primary_key=True)
+
+    twomass = ForeignKeyField(model=TwoMassPSC,
+                              field='pts_key',
+                              column_name='tmass_cntr',
+                              backref='glimpse360_targets')
+
+    class Meta:
+        table_name = 'glimpse360'
+        print_fields = ['designation']
+
+
 class BHM_eFEDS_Veto(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
@@ -999,6 +1174,14 @@ class BHM_RM_v0(CatalogdbModel):
 
 class BHM_RM_v0_2(BHM_RM_v0):
     pass
+
+
+class BHM_RM_Tweaks(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'bhm_rm_tweaks'
 
 
 class Gaia_DR2_RUWE(CatalogdbModel):
