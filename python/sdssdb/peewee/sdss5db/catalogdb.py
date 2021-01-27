@@ -431,6 +431,21 @@ class TIC_v8(CatalogdbModel):
         table_name = 'tic_v8'
 
 
+class MWM_TESS_OB(CatalogdbModel):
+
+    gaia_dr2_id = BigIntegerField(primary_key=True)
+
+    gaiadr2_fk = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='gaia_dr2_id',  # local column name
+        object_id_name='gaia_dr2_id',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'mwm_tess_ob'
+
+
 class Twoqz_sixqz(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
