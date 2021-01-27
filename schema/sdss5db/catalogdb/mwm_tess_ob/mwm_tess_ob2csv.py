@@ -1,11 +1,9 @@
-import math
-
 # See below link for details
 # https://wiki.sdss.org/display/OPS/Cartons+for+v0.5#Cartonsforv0.5-TESSCVZOBAFPulsatingBinaries
 
-#       identifier        	   		coord1 (ICRS,J2000/2000)      		Mag H
-# ----------------------------	 -----------------------------------	------
-# GaiaDR2 5.496271233536168e+18    97.4753547741182   -55.8477293540202  11.487
+#      Gaia ID                   coord1 (ICRS,J2000/2000)               Mag H
+# --------------------------------------------------------------------------
+# Gaia DR2 5496276314480471040   97.1905111991394   -55.9171573520957   8.326
 
 
 fout = open("mwm_tess_ob.csv", "w")
