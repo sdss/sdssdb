@@ -23,7 +23,7 @@ class TargetdbBase(BaseModel):
         database = database
 
 
-AssignmentDeferred = DeferredThroughModel()
+# AssignmentDeferred = DeferredThroughModel()
 CartonToTargetDeferred = DeferredThroughModel()
 
 
@@ -39,12 +39,13 @@ class Version(TargetdbBase):
 
 
 class Cadence(TargetdbBase):
+    label = TextField(null=False)
+    nepochs = IntegerField(null=True)
     delta = ArrayField(field_class=FloatField, null=True)
     delta_max = ArrayField(field_class=FloatField, null=True)
     delta_min = ArrayField(field_class=FloatField, null=True)
-    instrument_pk = ArrayField(field_class=IntegerField, null=True)
-    label = TextField(null=False)
-    nexposures = SmallIntegerField(null=True)
+    # instrument_pk = ArrayField(field_class=IntegerField, null=True)
+    nexp = ArrayField(field_class=SmallIntegerField, null=True)
     pk = AutoField()
     skybrightness = ArrayField(field_class=FloatField, null=True)
     epoch_max_length = ArrayField(field_class=FloatField, null=True)
@@ -67,7 +68,7 @@ class Field(TargetdbBase):
     racen = DoubleField(null=False)
     deccen = DoubleField(null=False)
     position_angle = FloatField(null=True)
-    slots_exposures = ArrayField(field_class=FloatField, null=True)
+    slots_exposures = ArrayField(field_class=IntegerField, null=True)
     cadence = ForeignKeyField(column_name='cadence_pk',
                               field='pk',
                               model=Cadence,
@@ -185,41 +186,22 @@ class Target(TargetdbBase):
     pmdec = FloatField(null=True)
     pmra = FloatField(null=True)
     ra = DoubleField(null=True)
-    designs = ManyToManyField(Design,
-                              through_model=AssignmentDeferred,
-                              backref='targets')
-    positioners = ManyToManyField(Positioner,
-                                  through_model=AssignmentDeferred,
-                                  backref='targets')
-    instruments = ManyToManyField(Instrument,
-                                  through_model=AssignmentDeferred,
-                                  backref='targets')
-    cadences = ManyToManyField(Cadence,
-                               through_model=CartonToTargetDeferred,
-                               backref='targets')
+    # designs = ManyToManyField(Design,
+    #                           through_model=AssignmentDeferred,
+    #                           backref='targets')
+    # positioners = ManyToManyField(Positioner,
+    #                               through_model=AssignmentDeferred,
+    #                               backref='targets')
+    # instruments = ManyToManyField(Instrument,
+    #                               through_model=AssignmentDeferred,
+    #                               backref='targets')
+    # cadences = ManyToManyField(Cadence,
+    #                            through_model=CartonToTargetDeferred,
+    #                            backref='targets')
     parallax = FloatField(null=True)
 
     class Meta:
         table_name = 'target'
-
-
-class Assignment(TargetdbBase):
-    design = ForeignKeyField(Design,
-                             column_name='design_pk',
-                             field='pk')
-    instrument = ForeignKeyField(Instrument,
-                                 column_name='instrument_pk',
-                                 field='pk')
-    pk = AutoField()
-    positioner = ForeignKeyField(Positioner,
-                                 column_name='positioner_pk',
-                                 field='pk')
-    carton_to_target = ForeignKeyField(CartonToTarget,
-                                       column_name='carton_to_target_pk',
-                                       field='pk')
-
-    class Meta:
-        table_name = 'assignment'
 
 
 class CartonToTarget(TargetdbBase):
@@ -242,6 +224,25 @@ class CartonToTarget(TargetdbBase):
         table_name = 'carton_to_target'
 
 
+class Assignment(TargetdbBase):
+    design = ForeignKeyField(Design,
+                             column_name='design_pk',
+                             field='pk')
+    instrument = ForeignKeyField(Instrument,
+                                 column_name='instrument_pk',
+                                 field='pk')
+    pk = AutoField()
+    positioner = ForeignKeyField(Positioner,
+                                 column_name='positioner_pk',
+                                 field='pk')
+    carton_to_target = ForeignKeyField(CartonToTarget,
+                                       column_name='carton_to_target_pk',
+                                       field='pk')
+
+    class Meta:
+        table_name = 'assignment'
+
+
 class Magnitude(TargetdbBase):
     bp = FloatField(null=True)
     g = FloatField(null=True)
@@ -260,5 +261,5 @@ class Magnitude(TargetdbBase):
         table_name = 'magnitude'
 
 
-AssignmentDeferred.set_model(Assignment)
+# AssignmentDeferred.set_model(Assignment)
 CartonToTargetDeferred.set_model(CartonToTarget)
