@@ -6,5 +6,6 @@ create table catalogdb.mwm_tess_ob (
     ra double precision,
     dec double precision,
     h_mag double precision,
+    instrument varchar,
     cadence varchar
 );
