@@ -5,6 +5,7 @@
 # --------------------------------------------------------------------------
 # Gaia DR2 5496276314480471040   97.1905111991394   -55.9171573520957   8.326
 
+instrument = "APOGEE"
 
 fout = open("mwm_tess_ob.csv", "w")
 
@@ -21,8 +22,8 @@ for line in f1:
     ra = tags[3]
     dec = tags[4]
     h_mag = tags[5]
-    cadence = "apogee_bright_8x1"
-    print(gaia_dr2_id, ra, dec, h_mag, cadence, sep=',', file=fout)
+    cadence = "bright_8x1"
+    print(gaia_dr2_id, ra, dec, h_mag, instrument, cadence, sep=',', file=fout)
 
 f1.close()
 
@@ -40,13 +41,13 @@ for line in f2:
     dec = tags[4]
     h_mag = tags[5]
     h_mag = float(h_mag)
-    # if H < 11 then use apogee_bright_8x2
-    # if H > =11 then use  apogee_bright_8x4
+    # if H < 11 then use bright_8x2
+    # if H > =11 then use bright_8x4
     if (h_mag < 11):
-        cadence = "apogee_bright_8x2"
+        cadence = "bright_8x2"
     else:
-        cadence = "apogee_bright_8x4"
-    print(gaia_dr2_id, ra, dec, h_mag, cadence, sep=',', file=fout)
+        cadence = "bright_8x4"
+    print(gaia_dr2_id, ra, dec, h_mag, instrument, cadence, sep=',', file=fout)
 
 f2.close()
 fout.close()
