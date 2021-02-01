@@ -182,5 +182,31 @@ class Queue(OpsdbBase):
         cls.delete().where(cls.position is not None).execute()
         database.execute_sql("SELECT setval('queue_pk_seq', 1);")
 
+    @classmethod
+    def rm(cls, field_id):
+        """Remove a field from the queue.
+           Only fields are removed; removing a single design would
+           violate cadence so that functionality is not offered.
+        """
+
+        rm_designs = cls.select()\
+                        .join(targetdb.Design,
+                              on=(targetdb.Design.pk == cls.design_pk))\
+                        .join(targetdb.Field)\
+                        .where(targetdb.Field.field_id == field_id)
+
+        positions = [d.position for d in rm_designs]
+        pos = max(positions)
+
+        # delete returns number of records deleted
+        num_rm = cls.delete()\
+                    .where(cls.position << positions)\
+                    .execute()
+
+        cls.update(position=cls.position - num_rm)\
+           .where(cls.position > pos)\
+           .execute()
+
+
     class Meta:
         table_name = "queue"

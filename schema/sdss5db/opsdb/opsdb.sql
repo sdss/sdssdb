@@ -12,16 +12,16 @@ SET search_path TO opsdb;
 
 CREATE TABLE opsdb.configuration (
     pk SERIAL PRIMARY KEY NOT NULL,
-    configuration_id BIGINT,
-    design_pk BIGINT,
+    configuration_id INTEGER,
+    design_pk INTEGER,
     comment TEXT,
     temperature TEXT,
     epoch REAL);
 
 CREATE TABLE opsdb.target_to_focal (
     pk SERIAL PRIMARY KEY NOT NULL,
-    target_pk SMALLINT,
-    configuration_pk SMALLINT,
+    target_pk INTEGER,
+    configuration_pk INTEGER,
     xfocal REAL,
     yfocal REAL);
 
@@ -31,12 +31,12 @@ CREATE TABLE opsdb.completion_status (
 
 CREATE TABLE opsdb.design_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
-    design_pk SMALLINT,
+    design_pk INTEGER,
     completion_status_pk SMALLINT);
 
 CREATE TABLE opsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,
-    configuration_pk SMALLINT,
+    configuration_pk INTEGER,
     survey_pk SMALLINT,
     exposure_no BIGINT,
     comment TEXT,
@@ -61,7 +61,7 @@ CREATE TABLE opsdb.exposure_flavor (
 
 CREATE TABLE opsdb.camera_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
-    exposure_pk SMALLINT,
+    exposure_pk INTEGER,
     camera_pk SMALLINT,
     ql_sn2 REAL,
     sn2 REAL,
@@ -69,7 +69,7 @@ CREATE TABLE opsdb.camera_frame (
 
 CREATE TABLE opsdb.queue(
     pk SERIAL PRIMARY KEY NOT NULL,
-    design_pk SMALLINT,
+    design_pk INTEGER,
     position SMALLINT);
 
 -- Foreign keys
