@@ -192,6 +192,7 @@ class CantatGaudinTable1(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
+    cluster = TextField(null=True)
 
     class Meta:
         table_name = 'cantat_gaudin_table1'
