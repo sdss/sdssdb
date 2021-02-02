@@ -13,6 +13,7 @@ from sdssdb.utils.ingest import to_csv
 
 
 assert database.connected
+database.become_admin()
 
 
 def main():
@@ -28,7 +29,7 @@ def main():
     cursor = database.cursor()
     fileobj = open(file_ + '.csv')
     fileobj.readline()  # Read header
-    cursor.copy_from(fileobj, 'catalogdb.gaia_unwise_agn', sep=',')
+    cursor.copy_from(fileobj, 'catalogdb.gaia_unwise_agn', sep='\t')
     database.commit()
 
 
