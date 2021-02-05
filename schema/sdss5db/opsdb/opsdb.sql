@@ -32,7 +32,8 @@ CREATE TABLE opsdb.completion_status (
 CREATE TABLE opsdb.design_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
     design_pk INTEGER,
-    completion_status_pk SMALLINT);
+    completion_status_pk SMALLINT,
+    mjd INTEGER);
 
 CREATE TABLE opsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,

@@ -66,9 +66,10 @@ class DesignToStatus(OpsdbBase):
     design = ForeignKeyField(targetdb.Design,
                              column_name='design_pk',
                              field='pk')
-    configuration = ForeignKeyField(CompletionStatus,
-                                    column_name='completion_status_pk',
-                                    field='pk')
+    status = ForeignKeyField(CompletionStatus,
+                             column_name='completion_status_pk',
+                             field='pk')
+    mjd = FloatField()
 
     class Meta:
         table_name = 'design_to_status'
@@ -183,11 +184,16 @@ class Queue(OpsdbBase):
         database.execute_sql("SELECT setval('queue_pk_seq', 1);")
 
     @classmethod
-    def rm(cls, field_id):
+    def rm(cls, field):
         """Remove a field from the queue.
            Only fields are removed; removing a single design would
            violate cadence so that functionality is not offered.
         """
+
+        if isinstance(field, targetdb.Field):
+            field_id = field.field_id
+        else:
+            field_id = field
 
         rm_designs = cls.select()\
                         .join(targetdb.Design,
