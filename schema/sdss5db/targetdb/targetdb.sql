@@ -76,7 +76,7 @@ CREATE TABLE targetdb.cadence (
     delta_max REAL[],
     delta_min REAL[],
     -- epoch_max_length is days
-    epoch_max_length REAL[]);
+    max_length REAL[]);
 
 CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,

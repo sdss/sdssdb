@@ -48,7 +48,7 @@ class Cadence(TargetdbBase):
     nexp = ArrayField(field_class=SmallIntegerField, null=True)
     pk = AutoField()
     skybrightness = ArrayField(field_class=FloatField, null=True)
-    epoch_max_length = ArrayField(field_class=FloatField, null=True)
+    max_length = ArrayField(field_class=FloatField, null=True)
 
     class Meta:
         table_name = 'cadence'
