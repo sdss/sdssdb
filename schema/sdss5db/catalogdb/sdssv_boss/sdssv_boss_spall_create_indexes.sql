@@ -9,4 +9,7 @@ create index on catalogdb.sdssv_boss_spall(plate, mjd);
 create index on catalogdb.sdssv_boss_spall(sn_median_all);
 create index on catalogdb.sdssv_boss_spall(zwarning);
 create index on catalogdb.sdssv_boss_spall(firstcarton);
+create index on catalogdb.sdssv_boss_spall(z_err);
+create index on catalogdb.sdssv_boss_spall(programname);
+create index on catalogdb.sdssv_boss_spall(specprimary);
 \o
