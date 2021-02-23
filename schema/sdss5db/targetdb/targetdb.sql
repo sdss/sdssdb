@@ -73,7 +73,7 @@ CREATE TABLE targetdb.cadence (
     skybrightness REAL[],
     delta_max REAL[],
     delta_min REAL[],
-    nexp INTEGER[],
+    nexposures INTEGER[],
     max_length REAL[]);
 
 CREATE TABLE targetdb.instrument (
