@@ -68,12 +68,13 @@ CREATE TABLE targetdb.carton_to_target (
 CREATE TABLE targetdb.cadence (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT NOT NULL,
-    nexposures SMALLINT,
-    delta REAL[],
+    nepochs INTEGER,
+    delta DOUBLE PRECSION[],
     skybrightness REAL[],
     delta_max REAL[],
     delta_min REAL[],
-    instrument_pk INTEGER[]);
+    nexp INTEGER[],
+    max_length REAL[]);
 
 CREATE TABLE targetdb.instrument (
 	pk SERIAL PRIMARY KEY NOT NULL,
