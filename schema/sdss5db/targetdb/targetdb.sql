@@ -4,7 +4,7 @@ targetDB schema version v0.5.0
 
 Created Jan 2018 - J. Sánchez-Gallego
 Updated Feb 2020 - J. Sánchez-Gallego
-Updated May 2020 - J. Sánchez-Gallego
+Updated Feb 2021 - J. Donor
 
 */
 
@@ -31,12 +31,16 @@ CREATE TABLE targetdb.version (
 
 CREATE TABLE targetdb.magnitude (
     pk SERIAL PRIMARY KEY NOT NULL,
+    optical_prov TEXT,
     g REAL,
     r REAL,
     i REAL,
+    j REAL,
+    k REAL,
     z REAL,
     h REAL,
     bp REAL,
+    gaia_g REAL,
     rp REAL,
     carton_to_target_pk BIGINT);
 
@@ -60,6 +64,9 @@ CREATE TABLE targetdb.carton_to_target (
     pk SERIAL PRIMARY KEY NOT NULL,
     lambda_eff REAL,
     instrument_pk INTEGER,
+    delta_ra DOUBLE PRECISION,
+    delta_dec DOUBLE PRECISION,
+    intertial BOOLEAN,
     value REAL,
     carton_pk SMALLINT,
     target_pk BIGINT,
