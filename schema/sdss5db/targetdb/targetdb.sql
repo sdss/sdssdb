@@ -247,6 +247,10 @@ CREATE INDEX CONCURRENTLY catalogid_idx
 	ON targetdb.target
 	USING BTREE(catalogid);
 
+CREATE INDEX ON targetdb.cadence(label);
+
+CREATE INDEX ON targetdb.cadence(nepochs);
+
 -- This doesn't seem to be loaded unless it's run manually inside a PSQL console.
 CREATE INDEX CONCURRENTLY ON targetdb.target (q3c_ang2ipix(ra, dec));
 CLUSTER target_q3c_ang2ipix_idx on targetdb.target;
