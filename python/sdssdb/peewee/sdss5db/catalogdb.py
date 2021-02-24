@@ -468,6 +468,13 @@ class Zari18pms(CatalogdbModel):
 
     source = BigIntegerField(primary_key=True)
 
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source',
+        object_id_name='source',
+        backref='+')
+
     class Meta:
         table_name = 'zari18pms'
 
@@ -475,6 +482,13 @@ class Zari18pms(CatalogdbModel):
 class Zari18ums(CatalogdbModel):
 
     source = BigIntegerField(primary_key=True)
+
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source',
+        object_id_name='source',
+        backref='+')
 
     class Meta:
         table_name = 'zari18ums'
