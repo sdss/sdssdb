@@ -2,22 +2,22 @@ from astropy.io import fits
 
 
 # input_dir and output_dir must end with /
-input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v0.5/sdssv_erosita_homogenise_superset_v0.1.2/erosita_superset_agn/'  # noqa: E501
+input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v0.5/sdssv_erosita_homogenise_superset_v0.1.3/erosita_superset_agn/'  # noqa: E501
 
-output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v0.5/sdssv_erosita_homogenise_superset_v0.1.2/csv/erosita_superset_agn/'  # noqa: E501
+output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v0.5/sdssv_erosita_homogenise_superset_v0.1.3/csv/erosita_superset_agn/'  # noqa: E501
 
 input_fits_file_list =\
-    ['sdssv_spiders_erass1_update_v05_agn_eFEDS_official_lsdr8_ext0_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_eFEDS_official_lsdr8_extlike6to14_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_gaiadr2_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_lsdr8_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_ps1dr2_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_skymapperdr2_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_nway_lsdr8_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_SEP_catwise2020_gaiadr2_MS_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_SEP_catwise2020_gaiadr2_v0.1.2.fits',
-     'sdssv_spiders_erass1_update_v05_agn_SEP_catwise2020_v0.1.2.fits']
+    ['sdssv_spiders_erass1_update_v05_agn_eFEDS_official_lsdr8_ext0_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_eFEDS_official_lsdr8_extlike6to14_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_gaiadr2_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_lsdr8_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_ps1dr2_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_skymapperdr2_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_nway_catwise2020_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_nway_lsdr8_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_SEP_catwise2020_gaiadr2_MS_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_SEP_catwise2020_gaiadr2_v0.1.3.fits',
+     'sdssv_spiders_erass1_update_v05_agn_SEP_catwise2020_v0.1.3.fits']
 
 for input_fits_file in input_fits_file_list:
     output_csv_file = input_fits_file.replace('fits', 'csv')
