@@ -285,10 +285,13 @@ CREATE INDEX CONCURRENTLY target_pk_idx
 CREATE INDEX CONCURRENTLY cadence_pk_idx
     ON targetdb.carton_to_target
     USING BTREE(cadence_pk);
+CREATE INDEX CONCURRENTLY c2t_instrument_pk_idx
+    ON targetdb.carton_to_target
+    USING BTREE(instrument_pk);
 
-CREATE INDEX CONCURRENTLY assignment_target_pk_idx
+CREATE INDEX CONCURRENTLY assignment_c2t_pk_idx
     ON targetdb.assignment
-    USING BTREE(target_pk);
+    USING BTREE(carton_to_target_pk);
 CREATE INDEX CONCURRENTLY positioner_pk_idx
     ON targetdb.assignment
     USING BTREE(positioner_pk);
@@ -302,6 +305,9 @@ CREATE INDEX CONCURRENTLY design_pk_idx
 CREATE INDEX CONCURRENTLY field_pk_idx
     ON targetdb.design
     USING BTREE(field_pk);
+CREATE INDEX CONCURRENTLY field_field_id_idx
+    ON targetdb.field
+    USING BTREE(field_id);
 
 CREATE INDEX CONCURRENTLY field_cadence_pk_idx
     ON targetdb.field
