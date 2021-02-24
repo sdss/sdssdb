@@ -192,7 +192,8 @@ class CantatGaudinTable1(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
-    cluster = TextField(null=True)
+    cluster = CharField()
+    source_id = BigIntegerField()
 
     class Meta:
         table_name = 'cantat_gaudin_table1'
@@ -224,6 +225,13 @@ class CantatGaudinNodup(CatalogdbModel):
 class Sagitta(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source_id',
+        object_id_name='source_id',
+        backref='+')
 
     class Meta:
         table_name = 'sagitta'
@@ -460,6 +468,13 @@ class Zari18pms(CatalogdbModel):
 
     source = BigIntegerField(primary_key=True)
 
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source',
+        object_id_name='source',
+        backref='+')
+
     class Meta:
         table_name = 'zari18pms'
 
@@ -467,6 +482,13 @@ class Zari18pms(CatalogdbModel):
 class Zari18ums(CatalogdbModel):
 
     source = BigIntegerField(primary_key=True)
+
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source',
+        object_id_name='source',
+        backref='+')
 
     class Meta:
         table_name = 'zari18ums'
@@ -739,6 +761,14 @@ class CatWISEReject(CatalogdbModel):
 
     class Meta:
         table_name = 'catwise_reject'
+
+
+class CatWISE2020(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'catwise2020'
 
 
 class Watchdog(CatalogdbModel):
@@ -1299,6 +1329,14 @@ class Skies_v1(CatalogdbModel):
 
     class Meta:
         table_name = 'skies_v1'
+
+
+class SuperCosmos(CatalogdbModel):
+
+    objid = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'supercosmos'
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
