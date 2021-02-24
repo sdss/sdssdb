@@ -763,6 +763,14 @@ class CatWISEReject(CatalogdbModel):
         table_name = 'catwise_reject'
 
 
+class CatWISE2020(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'catwise2020'
+
+
 class Watchdog(CatalogdbModel):
 
     gaia_source_id = BigIntegerField(primary_key=True)
