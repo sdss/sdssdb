@@ -219,9 +219,9 @@ class CartonToTarget(TargetdbBase):
                              on_delete='CASCADE')
     priority = IntegerField()
     value = FloatField()
-    instrument_pk = ForeignKeyField(Instrument,
-                                    column_name='instrument_pk',
-                                    field='pk')
+    instrument = ForeignKeyField(Instrument,
+                                 column_name='instrument_pk',
+                                 field='pk')
 
     class Meta:
         table_name = 'carton_to_target'
