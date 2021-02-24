@@ -1309,6 +1309,14 @@ class Skies_v1(CatalogdbModel):
         table_name = 'skies_v1'
 
 
+class SuperCosmos(CatalogdbModel):
+
+    objid = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'supercosmos'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
