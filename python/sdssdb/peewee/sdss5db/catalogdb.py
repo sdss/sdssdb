@@ -226,6 +226,13 @@ class Sagitta(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
 
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source_id',
+        object_id_name='source_id',
+        backref='+')
+
     class Meta:
         table_name = 'sagitta'
 
