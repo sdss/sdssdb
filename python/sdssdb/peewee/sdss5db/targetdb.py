@@ -219,6 +219,9 @@ class CartonToTarget(TargetdbBase):
                              on_delete='CASCADE')
     priority = IntegerField()
     value = FloatField()
+    instrument_pk = ForeignKeyField(Instrument,
+                                    column_name='instrument_pk',
+                                    field='pk')
 
     class Meta:
         table_name = 'carton_to_target'
@@ -252,6 +255,10 @@ class Magnitude(TargetdbBase):
     pk = AutoField()
     r = FloatField(null=True)
     rp = FloatField(null=True)
+    gaia_g = FloatField(null=True)
+    j = FloatField(null=True)
+    k = FloatField(null=True)
+    optical_prov = TextField(null=True)
     carton_to_target = ForeignKeyField(column_name='carton_to_target_pk',
                                        field='pk',
                                        model=CartonToTarget,
