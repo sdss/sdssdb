@@ -5,4 +5,5 @@ create index on catalogdb.sdssv_plateholes_meta(designid);
 create index on catalogdb.sdssv_plateholes_meta(locationid);
 create index on catalogdb.sdssv_plateholes_meta(programname);
 create index on catalogdb.sdssv_plateholes_meta(defaultsurveymode);
+create index on catalogdb.sdssv_plateholes_meta(isvalid);
 \o
