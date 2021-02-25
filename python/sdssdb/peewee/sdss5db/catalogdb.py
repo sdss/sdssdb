@@ -440,6 +440,12 @@ class TIC_v8(CatalogdbModel):
         table_name = 'tic_v8'
 
 
+class TIC_v8_Extended(TIC_v8):
+
+    class Meta:
+        table_name = 'tic_v8_extended'
+
+
 class MWM_TESS_OB(CatalogdbModel):
 
     gaia_dr2_id = BigIntegerField(primary_key=True)
