@@ -8,10 +8,10 @@
 
 import warnings
 
-from peewee import (AutoField, BigAutoField, BigIntegerField, CharField,
-                    DeferredThroughModel, DoubleField, FloatField,
-                    ForeignKeyField, IntegerField, ManyToManyField, TextField)
-
+from peewee import (AutoField, BigAutoField, BigIntegerField,
+                    CharField, DeferredThroughModel, DoubleField,
+                    FixedCharField, FloatField, ForeignKeyField,
+                    IntegerField, ManyToManyField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from sdssdb.exceptions import SdssdbUserWarning
@@ -755,7 +755,7 @@ class Gaia_DR2_WD(CatalogdbModel):
 
 class CatWISE(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    source_id = FixedCharField(primary_key=True)
 
     class Meta:
         table_name = 'catwise'
@@ -763,7 +763,7 @@ class CatWISE(CatalogdbModel):
 
 class CatWISEReject(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    source_id = FixedCharField(primary_key=True)
 
     class Meta:
         table_name = 'catwise_reject'
@@ -771,7 +771,7 @@ class CatWISEReject(CatalogdbModel):
 
 class CatWISE2020(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    source_id = FixedCharField(primary_key=True)
 
     class Meta:
         table_name = 'catwise2020'
