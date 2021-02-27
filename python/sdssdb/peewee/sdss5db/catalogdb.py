@@ -63,6 +63,15 @@ class Catalog(CatalogdbModel):
         table_name = 'catalog'
         use_reflection = False
 
+    @property
+    def run_id(self):
+        """Returns the ``run_id`` for this object."""
+
+        RUN_N_BITS = 11  # Number of left-most bits reserved for the run_id
+        run_id_mask = (2**RUN_N_BITS - 1) << (64 - RUN_N_BITS)
+
+        return (self.catalogid & run_id_mask) >> (64 - RUN_N_BITS)
+
 
 class AllWise(CatalogdbModel):
 
