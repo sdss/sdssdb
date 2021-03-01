@@ -48,7 +48,7 @@ class Cadence(TargetdbBase):
     nexp = ArrayField(field_class=SmallIntegerField, null=True)
     pk = AutoField()
     skybrightness = ArrayField(field_class=FloatField, null=True)
-    epoch_max_length = ArrayField(field_class=FloatField, null=True)
+    max_length = ArrayField(field_class=FloatField, null=True)
 
     class Meta:
         table_name = 'cadence'
@@ -219,6 +219,9 @@ class CartonToTarget(TargetdbBase):
                              on_delete='CASCADE')
     priority = IntegerField()
     value = FloatField()
+    instrument = ForeignKeyField(Instrument,
+                                 column_name='instrument_pk',
+                                 field='pk')
 
     class Meta:
         table_name = 'carton_to_target'
@@ -252,6 +255,10 @@ class Magnitude(TargetdbBase):
     pk = AutoField()
     r = FloatField(null=True)
     rp = FloatField(null=True)
+    gaia_g = FloatField(null=True)
+    j = FloatField(null=True)
+    k = FloatField(null=True)
+    optical_prov = TextField(null=True)
     carton_to_target = ForeignKeyField(column_name='carton_to_target_pk',
                                        field='pk',
                                        model=CartonToTarget,

@@ -4,7 +4,7 @@ targetDB schema version v0.5.0
 
 Created Jan 2018 - J. Sánchez-Gallego
 Updated Feb 2020 - J. Sánchez-Gallego
-Updated May 2020 - J. Sánchez-Gallego
+Updated Feb 2021 - J. Donor
 
 */
 
@@ -31,12 +31,16 @@ CREATE TABLE targetdb.version (
 
 CREATE TABLE targetdb.magnitude (
     pk SERIAL PRIMARY KEY NOT NULL,
+    optical_prov TEXT,
     g REAL,
     r REAL,
     i REAL,
+    j REAL,
+    k REAL,
     z REAL,
     h REAL,
     bp REAL,
+    gaia_g REAL,
     rp REAL,
     carton_to_target_pk BIGINT);
 
@@ -60,6 +64,9 @@ CREATE TABLE targetdb.carton_to_target (
     pk SERIAL PRIMARY KEY NOT NULL,
     lambda_eff REAL,
     instrument_pk INTEGER,
+    delta_ra DOUBLE PRECISION,
+    delta_dec DOUBLE PRECISION,
+    intertial BOOLEAN,
     value REAL,
     carton_pk SMALLINT,
     target_pk BIGINT,
@@ -76,7 +83,7 @@ CREATE TABLE targetdb.cadence (
     delta_max REAL[],
     delta_min REAL[],
     -- epoch_max_length is days
-    epoch_max_length REAL[]);
+    max_length REAL[]);
 
 CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -279,9 +286,13 @@ CREATE INDEX CONCURRENTLY cadence_pk_idx
     ON targetdb.carton_to_target
     USING BTREE(cadence_pk);
 
-CREATE INDEX CONCURRENTLY assignment_target_pk_idx
+CREATE INDEX CONCURRENTLY c2t_instrument_pk_idx
+    ON targetdb.carton_to_target
+    USING BTREE(instrument_pk);
+
+CREATE INDEX CONCURRENTLY assignment_c2t_pk_idx
     ON targetdb.assignment
-    USING BTREE(target_pk);
+    USING BTREE(carton_to_target_pk);
 CREATE INDEX CONCURRENTLY positioner_pk_idx
     ON targetdb.assignment
     USING BTREE(positioner_pk);
@@ -295,6 +306,9 @@ CREATE INDEX CONCURRENTLY design_pk_idx
 CREATE INDEX CONCURRENTLY field_pk_idx
     ON targetdb.design
     USING BTREE(field_pk);
+CREATE INDEX CONCURRENTLY field_field_id_idx
+    ON targetdb.field
+    USING BTREE(field_id);
 
 CREATE INDEX CONCURRENTLY field_cadence_pk_idx
     ON targetdb.field

@@ -8,10 +8,10 @@
 
 import warnings
 
-from peewee import (AutoField, BigAutoField, BigIntegerField, CharField,
-                    DeferredThroughModel, DoubleField, FloatField,
-                    ForeignKeyField, IntegerField, ManyToManyField, TextField)
-
+from peewee import (AutoField, BigAutoField, BigIntegerField,
+                    CharField, DeferredThroughModel, DoubleField,
+                    FixedCharField, FloatField, ForeignKeyField,
+                    IntegerField, ManyToManyField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from sdssdb.exceptions import SdssdbUserWarning
@@ -440,6 +440,12 @@ class TIC_v8(CatalogdbModel):
         table_name = 'tic_v8'
 
 
+class TIC_v8_Extended(TIC_v8):
+
+    class Meta:
+        table_name = 'tic_v8_extended'
+
+
 class MWM_TESS_OB(CatalogdbModel):
 
     gaia_dr2_id = BigIntegerField(primary_key=True)
@@ -749,7 +755,7 @@ class Gaia_DR2_WD(CatalogdbModel):
 
 class CatWISE(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    source_id = FixedCharField(primary_key=True)
 
     class Meta:
         table_name = 'catwise'
@@ -757,7 +763,7 @@ class CatWISE(CatalogdbModel):
 
 class CatWISEReject(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    source_id = FixedCharField(primary_key=True)
 
     class Meta:
         table_name = 'catwise_reject'
@@ -765,7 +771,7 @@ class CatWISEReject(CatalogdbModel):
 
 class CatWISE2020(CatalogdbModel):
 
-    source_id = BigIntegerField(primary_key=True)
+    source_id = FixedCharField(primary_key=True)
 
     class Meta:
         table_name = 'catwise2020'
@@ -1160,6 +1166,19 @@ class TESS_TOI(CatalogdbModel):
 
     class Meta:
         table_name = 'tess_toi'
+
+
+class TESS_TOI_v05(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    tic = ForeignKeyField(TIC_v8,
+                          column_name='ticid',
+                          object_id_name='ticid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'tess_toi_v05'
 
 
 class XMM_OM_SUSS_4_1(CatalogdbModel):
