@@ -130,7 +130,7 @@ class ReflectMeta(ModelBase):
                 database.models[fpath] = Model
 
         # Don't do anything if this model doesn't want reflection.
-        if getattr(meta, 'use_reflection', False):
+        if getattr(meta, 'use_reflection', True):
             cls.reflect(Model)
 
         return Model

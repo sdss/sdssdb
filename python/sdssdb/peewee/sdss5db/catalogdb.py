@@ -192,7 +192,8 @@ class CantatGaudinTable1(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
     pkey = BigIntegerField(primary_key=True)
-    cluster = TextField(null=True)
+    cluster = CharField()
+    source_id = BigIntegerField()
 
     class Meta:
         table_name = 'cantat_gaudin_table1'
@@ -224,6 +225,13 @@ class CantatGaudinNodup(CatalogdbModel):
 class Sagitta(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source_id',
+        object_id_name='source_id',
+        backref='+')
 
     class Meta:
         table_name = 'sagitta'
@@ -432,6 +440,21 @@ class TIC_v8(CatalogdbModel):
         table_name = 'tic_v8'
 
 
+class MWM_TESS_OB(CatalogdbModel):
+
+    gaia_dr2_id = BigIntegerField(primary_key=True)
+
+    gaiadr2_fk = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='gaia_dr2_id',  # local column name
+        object_id_name='gaia_dr2_id',  # same as local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'mwm_tess_ob'
+
+
 class Twoqz_sixqz(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
@@ -445,6 +468,13 @@ class Zari18pms(CatalogdbModel):
 
     source = BigIntegerField(primary_key=True)
 
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source',
+        object_id_name='source',
+        backref='+')
+
     class Meta:
         table_name = 'zari18pms'
 
@@ -452,6 +482,13 @@ class Zari18pms(CatalogdbModel):
 class Zari18ums(CatalogdbModel):
 
     source = BigIntegerField(primary_key=True)
+
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source',
+        object_id_name='source',
+        backref='+')
 
     class Meta:
         table_name = 'zari18ums'
@@ -724,6 +761,14 @@ class CatWISEReject(CatalogdbModel):
 
     class Meta:
         table_name = 'catwise_reject'
+
+
+class CatWISE2020(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'catwise2020'
 
 
 class Watchdog(CatalogdbModel):
@@ -1284,6 +1329,14 @@ class Skies_v1(CatalogdbModel):
 
     class Meta:
         table_name = 'skies_v1'
+
+
+class SuperCosmos(CatalogdbModel):
+
+    objid = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'supercosmos'
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
