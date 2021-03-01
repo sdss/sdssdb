@@ -184,7 +184,7 @@ class Queue(OpsdbBase):
         database.execute_sql("SELECT setval('queue_pk_seq', 1);")
 
     @classmethod
-    def rm(cls, field):
+    def rm(cls, field, returnPositions=False):
         """Remove a field from the queue.
            Only fields are removed; removing a single design would
            violate cadence so that functionality is not offered.
@@ -212,6 +212,9 @@ class Queue(OpsdbBase):
         cls.update(position=cls.position - num_rm)\
            .where(cls.position > pos)\
            .execute()
+
+        if returnPositions:
+            return positions
 
 
     class Meta:
