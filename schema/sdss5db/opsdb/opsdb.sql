@@ -71,7 +71,8 @@ CREATE TABLE opsdb.camera_frame (
 CREATE TABLE opsdb.queue(
     pk SERIAL PRIMARY KEY NOT NULL,
     design_pk INTEGER,
-    position SMALLINT);
+    position SMALLINT,
+    mjd_plan REAL);
 
 -- Foreign keys
 
@@ -148,7 +149,7 @@ INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 
 INSERT INTO opsdb.camera VALUES (1, 0, 'r1'), (2, 0, 'b1'), (3, 1, 'APOGEE');
 
-INSERT INTO opsdb.completion_status VALUES (1, 'not started'), (2, 'started'), (3, 'complete');
+INSERT INTO opsdb.completion_status VALUES (1, 'not started'), (2, 'started'), (3, 'done');
 
 -- Indices
 
@@ -202,7 +203,7 @@ $design$ LANGUAGE plpgsql;
 
 -- add to end of queue
 
-CREATE FUNCTION opsdb.appendQueue (design integer)
+CREATE FUNCTION opsdb.appendQueue (design integer, mjd real)
 RETURNS void AS $$
 
 declare
@@ -211,30 +212,42 @@ declare
 BEGIN
     SELECT MAX(position) INTO maxpos FROM opsdb.queue;
     IF maxpos IS NULL THEN SELECT 0 INTO maxpos; END IF;
-    INSERT INTO opsdb.queue  (design_pk, position)
-    VALUES (design, maxpos+1);
+    INSERT INTO opsdb.queue  (design_pk, position, mjd_plan)
+    VALUES (design, maxpos+1, mjd);
 END;
 $$ LANGUAGE plpgsql;
 
 -- insert at position
 
-CREATE FUNCTION opsdb.insertInQueue (design integer, pos integer)
+CREATE FUNCTION opsdb.insertInQueue (design integer, pos integer, exp_len real)
 RETURNS void AS $$
 
 declare
     _pk integer;
     _design integer;
     _pos integer;
+    _mjd_plan real;
+    _mjd_offset real;
+    _mjd_next real;
 
 BEGIN
-    FOR _pk, _design, _pos IN
+    IF exp_len IS NULL THEN
+        SELECT 0 INTO _mjd_offset;
+    ELSE
+        SELECT exp_len INTO _mjd_offset;
+    END IF;
+    FOR _pk, _design, _pos, _mjd_plan IN
         SELECT * FROM opsdb.queue
         WHERE position >= pos
     LOOP
+        IF _pos = pos THEN
+            SELECT _mjd_plan INTO _mjd_next;
+        END IF;
         UPDATE opsdb.queue SET position = _pos + 1 WHERE pk=_pk;
+        UPDATE opsdb.queue SET mjd_plan = _mjd_plan + _mjd_offset WHERE pk=_pk;
     END LOOP;
 
-    INSERT INTO opsdb.queue  (design_pk, position)
-    VALUES (design, pos);
+    INSERT INTO opsdb.queue  (design_pk, position, mjd_plan)
+    VALUES (design, pos, _mjd_next);
 END;
 $$ LANGUAGE plpgsql;

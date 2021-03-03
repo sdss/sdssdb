@@ -153,6 +153,7 @@ class Queue(OpsdbBase):
     #                         model=targetdb.Field)
     position = IntegerField()
     pk = AutoField()
+    mjd_plan = FloatField()
 
     @classmethod
     def pop(cls):
@@ -163,18 +164,26 @@ class Queue(OpsdbBase):
         return design_db
 
     @classmethod
-    def appendQueue(cls, design):
+    def appendQueue(cls, design, mjd_plan=None):
         if isinstance(design, targetdb.Design):
             design = design.pk
-        Select(columns=[fn.appendQueue(design)]).execute(database)
+        Select(columns=[fn.appendQueue(design, mjd_plan)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
     @classmethod
-    def insertInQueue(cls, design, position):
+    def insertInQueue(cls, design, position, exp_length=None):
+        """exp_length in days
+           this is the amount added to every mjd_plan AFTER position
+        """
+        if exp_length is None:
+            # set a default, ideally correct value passed as kwarg
+            # DB doesn't care if it's none
+            # if mjd_plan before is null, stays null regardless
+            exp_length = 18 / 60 / 24
         if isinstance(design, targetdb.Design):
             design = design.pk
-        Select(columns=[fn.insertInQueue(design, position)]).execute(database)
+        Select(columns=[fn.insertInQueue(design, position, exp_length)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
