@@ -72,7 +72,7 @@ CREATE TABLE opsdb.queue(
     pk SERIAL PRIMARY KEY NOT NULL,
     design_pk INTEGER,
     position SMALLINT,
-    mjd_plan REAL);
+    mjd_plan DOUBLE PRECISION);
 
 -- Foreign keys
 
