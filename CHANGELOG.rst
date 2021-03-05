@@ -5,6 +5,13 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.7 <2021-03-05>`
+* Multiple new tables for ``sdss5db.catalogdb`` related to SDSS-V target selection v0.5.
+* Modifications to ``apogeedb`` dump.
+* :bug:`-` Use refection only if ``use_reflection=True``.
+* :feature:`66` Update targetdb schema with changes to cadence, carton_to_target, and others.
+* Change default FK in TIC_v8 for ``Tycho2``.
+
 * :release:`0.4.6 <2020-11-12>`
 * :feature:`43` Add a database registry
 * Initial version of the ``sdss5db.opsdb`` schema.
