@@ -422,7 +422,8 @@ class TIC_v8(CatalogdbModel):
     id = BigIntegerField(primary_key=True)
 
     tycho2 = ForeignKeyField(Tycho2, field='tycid',
-                             column_name='tycho2', object_id_name='tycho2',
+                             column_name='tycho2_tycid',
+                             object_id_name='tycho2_tycid',
                              backref='tic')
 
     twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
