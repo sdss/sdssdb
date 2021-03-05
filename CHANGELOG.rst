@@ -5,6 +5,9 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.8 <2021-03-05>`
+* Fix name collision in previous version by changing the column_name of TIC_v8 foreign key.
+
 * :release:`0.4.7 <2021-03-05>`
 * Multiple new tables for ``sdss5db.catalogdb`` related to SDSS-V target selection v0.5.
 * Modifications to ``apogeedb`` dump.
