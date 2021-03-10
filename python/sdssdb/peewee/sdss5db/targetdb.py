@@ -222,6 +222,9 @@ class CartonToTarget(TargetdbBase):
     instrument = ForeignKeyField(Instrument,
                                  column_name='instrument_pk',
                                  field='pk')
+    delta_ra = DoubleField()
+    delta_dec = DoubleField()
+    inertial = BooleanField()
 
     class Meta:
         table_name = 'carton_to_target'
