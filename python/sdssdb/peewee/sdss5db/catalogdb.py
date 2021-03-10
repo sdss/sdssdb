@@ -412,6 +412,7 @@ class unWISE(CatalogdbModel):
 class Tycho2(CatalogdbModel):
 
     designation = TextField(primary_key=True)
+    tycid = IntegerField(null=False)
 
     class Meta:
         table_name = 'tycho2'
