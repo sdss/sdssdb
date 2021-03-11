@@ -131,7 +131,8 @@ class Exposure(OpsdbBase):
 class CameraFrame(OpsdbBase):
     exposure = ForeignKeyField(column_name='exposure_pk',
                                field='pk',
-                               model=Exposure)
+                               model=Exposure,
+                               backref="CameraFrames")
     camera = ForeignKeyField(column_name='camera_pk',
                              field='pk',
                              model=Camera)

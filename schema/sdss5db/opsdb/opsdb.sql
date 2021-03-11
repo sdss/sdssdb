@@ -31,21 +31,21 @@ CREATE TABLE opsdb.completion_status (
 
 CREATE TABLE opsdb.design_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
-    design_pk INTEGER,
+    design_pk INTEGER UNIQUE,
     completion_status_pk SMALLINT,
     mjd INTEGER);
 
 CREATE TABLE opsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,
-    configuration_pk INTEGER,
+    configuration_pk INTEGER NOT NULL,
     survey_pk SMALLINT,
     exposure_no BIGINT,
     comment TEXT,
-    start_time REAL,
+    start_time DOUBLE PRECISION,
     exposure_time REAL,
     -- exposure_status_pk SMALLINT,
-    exposure_flavor_pk SMALLINT,
-    camera_pk SMALLINT);
+    exposure_flavor_pk SMALLINT);
+    -- camera_pk SMALLINT);
 
 CREATE TABLE opsdb.survey (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -62,8 +62,8 @@ CREATE TABLE opsdb.exposure_flavor (
 
 CREATE TABLE opsdb.camera_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
-    exposure_pk INTEGER,
-    camera_pk SMALLINT,
+    exposure_pk INTEGER NOT NULL,
+    camera_pk SMALLINT NOT NULL,
     ql_sn2 REAL,
     sn2 REAL,
     comment TEXT);
@@ -121,13 +121,15 @@ ALTER TABLE ONLY opsdb.exposure
     ADD CONSTRAINT exposure_flavor_fk
     FOREIGN KEY (exposure_flavor_pk) REFERENCES opsdb.exposure_flavor(pk);
 
-ALTER TABLE ONLY opsdb.exposure
+ALTER TABLE ONLY opsdb.camera_frame
     ADD CONSTRAINT camera_fk
     FOREIGN KEY (camera_pk) REFERENCES opsdb.camera(pk);
 
 ALTER TABLE ONLY opsdb.camera_frame
     ADD CONSTRAINT exposure_fk
-    FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk);
+    FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.camera
     ADD CONSTRAINT instrument_fk
@@ -162,9 +164,9 @@ CREATE INDEX CONCURRENTLY target_pk_idx
     USING BTREE(target_pk);
 
 -- this probably isn't worth it with 4 statuses
--- CREATE INDEX CONCURRENTLY completion_status_pk_idx
---     ON opsdb.design_to_status
---     USING BTREE(completion_status_pk);
+CREATE INDEX CONCURRENTLY design_to_status_design_pk_idx
+    ON opsdb.design_to_status
+    USING BTREE(design_pk);
 
 CREATE INDEX CONCURRENTLY configuration_pk_idx
     ON opsdb.exposure
