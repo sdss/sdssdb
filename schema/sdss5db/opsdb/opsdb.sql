@@ -41,10 +41,10 @@ CREATE TABLE opsdb.exposure (
     survey_pk SMALLINT,
     exposure_no BIGINT,
     comment TEXT,
-    start_time DOUBLE PRECISION,
+    start_time TIMESTAMP,
     exposure_time REAL,
     -- exposure_status_pk SMALLINT,
-    exposure_flavor_pk SMALLINT);
+    exposure_flavor_pk SMALLINT NOT NULL);
     -- camera_pk SMALLINT);
 
 CREATE TABLE opsdb.survey (
@@ -163,7 +163,6 @@ CREATE INDEX CONCURRENTLY target_pk_idx
     ON opsdb.target_to_focal
     USING BTREE(target_pk);
 
--- this probably isn't worth it with 4 statuses
 CREATE INDEX CONCURRENTLY design_to_status_design_pk_idx
     ON opsdb.design_to_status
     USING BTREE(design_pk);
@@ -171,6 +170,10 @@ CREATE INDEX CONCURRENTLY design_to_status_design_pk_idx
 CREATE INDEX CONCURRENTLY configuration_pk_idx
     ON opsdb.exposure
     USING BTREE(configuration_pk);
+
+CREATE INDEX CONCURRENTLY start_time_idx
+    ON opsdb.exposure
+    USING BTREE(start_time);
 
 CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON opsdb.camera_frame
