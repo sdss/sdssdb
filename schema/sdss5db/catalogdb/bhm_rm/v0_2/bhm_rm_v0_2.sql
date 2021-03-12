@@ -166,3 +166,9 @@ CREATE INDEX ON catalogdb.bhm_rm_v0_2 (des_var_sn);
 CREATE INDEX ON catalogdb.bhm_rm_v0_2 (ps1_var_rms);
 CREATE INDEX ON catalogdb.bhm_rm_v0_2 (ps1_var_sn);
 CREATE INDEX ON catalogdb.bhm_rm_v0_2 (photo_bitmask);
+
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (field_name);
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (skewt_qso_prior);
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (optical_survey);
+CREATE INDEX ON catalogdb.bhm_rm_v0_2 (mg);
+
