@@ -285,6 +285,7 @@ CREATE INDEX CONCURRENTLY target_pk_idx
 CREATE INDEX CONCURRENTLY cadence_pk_idx
     ON targetdb.carton_to_target
     USING BTREE(cadence_pk);
+
 CREATE INDEX CONCURRENTLY c2t_instrument_pk_idx
     ON targetdb.carton_to_target
     USING BTREE(instrument_pk);

@@ -90,7 +90,7 @@ class Design(TargetdbBase):
                             field='pk',
                             model=Field,
                             null=True)
-    exposure = BigIntegerField(null=True)
+    exposure = IntegerField(null=True)
     pk = AutoField()
 
     class Meta:

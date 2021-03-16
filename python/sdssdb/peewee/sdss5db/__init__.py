@@ -26,7 +26,8 @@ class SDSS5dbDatabaseConnection(PeeweeDatabaseConnection):
         """
 
         modules = ['sdssdb.peewee.sdss5db.catalogdb',
-                   'sdssdb.peewee.sdss5db.targetdb']
+                   'sdssdb.peewee.sdss5db.targetdb',
+                   'sdssdb.peewee.sdss5db.opsdb']
 
         for module in modules:
             if module in sys.modules:
