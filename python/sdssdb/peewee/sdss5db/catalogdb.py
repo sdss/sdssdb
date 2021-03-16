@@ -63,6 +63,15 @@ class Catalog(CatalogdbModel):
         table_name = 'catalog'
         use_reflection = False
 
+    @property
+    def run_id(self):
+        """Returns the ``run_id`` for this object."""
+
+        RUN_N_BITS = 11  # Number of left-most bits reserved for the run_id
+        run_id_mask = (2**RUN_N_BITS - 1) << (64 - RUN_N_BITS)
+
+        return (self.catalogid & run_id_mask) >> (64 - RUN_N_BITS)
+
 
 class AllWise(CatalogdbModel):
 
@@ -403,6 +412,7 @@ class unWISE(CatalogdbModel):
 class Tycho2(CatalogdbModel):
 
     designation = TextField(primary_key=True)
+    tycid = IntegerField(null=False)
 
     class Meta:
         table_name = 'tycho2'
@@ -412,8 +422,9 @@ class TIC_v8(CatalogdbModel):
 
     id = BigIntegerField(primary_key=True)
 
-    tycho2 = ForeignKeyField(Tycho2, field='designation',
-                             column_name='tyc', object_id_name='tyc',
+    tycho2 = ForeignKeyField(Tycho2, field='tycid',
+                             column_name='tycho2_tycid',
+                             object_id_name='tycho2_tycid',
                              backref='tic')
 
     twomass_psc = ForeignKeyField(TwoMassPSC, field='designation',
