@@ -285,23 +285,32 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         self.connect_from_parameters(**dsn_params)
 
-    def become_admin(self):
-        """Becomes the admin user."""
+    def become_admin(self, admin=None):
+        """Becomes the admin user.
+
+        If ``admin=None`` defaults to the ``admin`` value in the current profile.
+
+        """
 
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
         assert 'admin' in self._config, 'admin user not defined in profile'
 
-        self.become(self._config['admin'])
+        self.become(admin or self._config['admin'])
 
-    def become_user(self):
-        """Becomes the read-only user."""
+    def become_user(self, user=None):
+        """Becomes the read-only user.
+
+        If ``user=None`` defaults to the ``user`` value in the current profile.
+
+        """
 
         assert self.profile is not None, \
             'this connection was not initialised from a profile. Try using become().'
 
-        user = self._config['user'] if 'user' in self._config else None
+        if user is None:
+            user = self._config['user'] if 'user' in self._config else None
 
         self.become(user)
 
