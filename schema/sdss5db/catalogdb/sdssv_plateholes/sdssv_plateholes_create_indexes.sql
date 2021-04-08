@@ -10,5 +10,4 @@ create index on catalogdb.sdssv_plateholes(yanny_uid);
 create index on catalogdb.sdssv_plateholes(firstcarton);
 create index on catalogdb.sdssv_plateholes(catalogid); 
 create index on catalogdb.sdssv_plateholes(sourcetype);
-create index on catalogdb.sdssv_plateholes(holetype);
 \o
