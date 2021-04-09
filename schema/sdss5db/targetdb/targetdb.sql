@@ -136,7 +136,7 @@ CREATE TABLE targetdb.field (
     version_pk SMALLINT,
     cadence_pk SMALLINT,
     observatory_pk SMALLINT,
-    priority SMALLINT);
+    priority SMALLINT DEFAULT 0);
 
 
 -- Table data
