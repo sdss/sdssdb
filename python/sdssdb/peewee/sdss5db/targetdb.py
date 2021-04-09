@@ -80,6 +80,7 @@ class Field(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
+    priority = SmallIntegerField(default=0)
 
     class Meta:
         table_name = 'field'

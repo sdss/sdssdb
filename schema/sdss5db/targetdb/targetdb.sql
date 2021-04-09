@@ -135,7 +135,8 @@ CREATE TABLE targetdb.field (
     slots_exposures INTEGER[][],
     version_pk SMALLINT,
     cadence_pk SMALLINT,
-    observatory_pk SMALLINT);
+    observatory_pk SMALLINT,
+    priority SMALLINT);
 
 
 -- Table data
