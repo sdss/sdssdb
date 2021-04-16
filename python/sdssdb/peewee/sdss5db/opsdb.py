@@ -8,12 +8,17 @@
 
 import datetime
 
-from peewee import (AutoField, BigIntegerField, FloatField,
-                    ForeignKeyField, TextField, IntegerField,
-                    DateTimeField, fn, Select)
+from peewee import (AutoField, BigIntegerField, DateTimeField,
+                    DeferredThroughModel, FloatField, ForeignKeyField,
+                    IntegerField, ManyToManyField, Select, TextField, fn)
+
+import sdssdb.peewee.sdss5db.targetdb as targetdb
 
 from .. import BaseModel
-from . import targetdb, database  # noqa
+from . import database  # noqa
+
+
+FieldToPriorityDeferred = DeferredThroughModel()
 
 
 class OpsdbBase(BaseModel):
@@ -21,6 +26,29 @@ class OpsdbBase(BaseModel):
     class Meta:
         schema = 'opsdb'
         database = database
+
+
+class FieldPriority(OpsdbBase):
+    pk = AutoField()
+    label = TextField()
+    fields = ManyToManyField(targetdb.Field,
+                            through_model=FieldToPriorityDeferred,
+                            backref='priority')
+
+    class Meta:
+        table_name = 'field_priority'
+
+
+class FieldToPriority(OpsdbBase):
+    pk = AutoField()
+    FieldPriority = ForeignKeyField(FieldPriority,
+                             column_name='field_priority_pk',
+                             field='pk')
+    field = ForeignKeyField(targetdb.Field,
+                             column_name='field_pk',
+                             field='pk')
+    class Meta:
+        table_name = 'field_to_priority'
 
 
 class Configuration(OpsdbBase):
@@ -228,6 +256,8 @@ class Queue(OpsdbBase):
         if returnPositions:
             return positions
 
-
     class Meta:
         table_name = "queue"
+
+
+FieldToPriorityDeferred.set_model(FieldToPriority)

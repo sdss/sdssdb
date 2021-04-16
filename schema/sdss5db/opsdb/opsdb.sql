@@ -74,7 +74,28 @@ CREATE TABLE opsdb.queue(
     position SMALLINT,
     mjd_plan DOUBLE PRECISION);
 
+CREATE TABLE opsdb.field_priority(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    label TEXT);
+
+CREATE TABLE opsdb.field_to_priority(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    field_pk INTEGER UNIQUE,
+    field_priority_pk INTEGER);
+
 -- Foreign keys
+
+ALTER TABLE ONLY opsdb.field_to_priority
+    ADD CONSTRAINT field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY opsdb.field_to_priority
+    ADD CONSTRAINT field_priority_fk
+    FOREIGN KEY (field_priority_pk) REFERENCES opsdb.field_priority(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.queue
     ADD CONSTRAINT queue_design_fk
@@ -152,6 +173,8 @@ INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 INSERT INTO opsdb.camera VALUES (1, 0, 'r1'), (2, 0, 'b1'), (3, 1, 'APOGEE');
 
 INSERT INTO opsdb.completion_status VALUES (1, 'not started'), (2, 'started'), (3, 'done');
+
+INSERT INTO opsdb.field_priority VALUES (0, 'disabled'), (1, 'top');
 
 -- Indices
 

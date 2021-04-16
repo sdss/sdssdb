@@ -7,10 +7,12 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 from peewee import (AutoField, BigIntegerField, BooleanField,
-                    DeferredThroughModel, DoubleField, FloatField,
-                    ForeignKeyField, IntegerField, ManyToManyField,
+                    DeferredThroughModel, DoubleField,
+                    FloatField, ForeignKeyField, IntegerField,
                     SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
+
+import sdssdb.peewee.sdss5db.opsdb as opsdb
 
 from .. import BaseModel
 from . import catalogdb, database  # noqa
@@ -63,6 +65,7 @@ class Observatory(TargetdbBase):
 
 
 class Field(TargetdbBase):
+
     pk = AutoField()
     field_id = IntegerField(null=False)
     racen = DoubleField(null=False)
@@ -80,7 +83,6 @@ class Field(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
-    priority = SmallIntegerField(default=0)
 
     class Meta:
         table_name = 'field'
