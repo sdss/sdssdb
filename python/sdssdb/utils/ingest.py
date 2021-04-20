@@ -539,7 +539,8 @@ def pluralize_collection(base, local_cls, referred_cls, constraint):
 
     Converts a camel-cased class name into a uncamelized, pluralized class
     name, e.g. ``'SomeTerm' -> 'some_terms'``. Used when auto-defining
-    relationship names. See https://docs.sqlalchemy.org/en/13/orm/extensions/automap.html#overriding-naming-schemes.
+    relationship names.
+    See https://docs.sqlalchemy.org/en/13/orm/extensions/automap.html#overriding-naming-schemes.
 
     Parameters
     ----------

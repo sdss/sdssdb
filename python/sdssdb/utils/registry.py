@@ -46,8 +46,8 @@ def update_db_registry() -> dict:
     for i in sdssdb_path.rglob('./'):
         # reject if not a directory, paths ending in '_' and if the parent
         # directory is not peewee or sqlalchemy
-        if not i.is_dir() or i.as_posix().endswith('_') \
-            or i.parent.stem not in ['peewee', 'sqlalchemy']:
+        if not i.is_dir() or i.as_posix().endswith('_') or \
+                i.parent.stem not in ['peewee', 'sqlalchemy']:
             continue
 
         # convert to string
@@ -193,5 +193,3 @@ def display_table(pprint: bool = None, mask_dups: bool = False,
         return
 
     return t
-
-

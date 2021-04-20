@@ -6,9 +6,8 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from peewee import (AutoField, BigIntegerField, BooleanField,
-                    DeferredThroughModel, DoubleField, FloatField,
-                    ForeignKeyField, IntegerField, ManyToManyField,
+from peewee import (AutoField, BooleanField, DeferredThroughModel,
+                    DoubleField, FloatField, ForeignKeyField, IntegerField,
                     SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 

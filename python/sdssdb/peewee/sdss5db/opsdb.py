@@ -228,6 +228,5 @@ class Queue(OpsdbBase):
         if returnPositions:
             return positions
 
-
     class Meta:
         table_name = "queue"
