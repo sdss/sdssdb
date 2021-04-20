@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.9 <2021-04-19>`
 * Add delta_ra, delta_dec and, inertial for ``CartonToTarget``.
 * Add ``tycid`` column to ``Tycho2`` to prevent import errors.
 * ``DatabaseConnection.become_admin`` and ``become_user`` now accept a user parameter. If not provided, defaults to the old behaviour (using the ``admin`` and ``user`` fields in the profile).
