@@ -221,7 +221,7 @@ class Queue(OpsdbBase):
     @classmethod
     def flushQueue(cls):
         cls.delete().where(cls.position is not None).execute()
-        database.execute_sql("SELECT setval('queue_pk_seq', 1);")
+        # database.execute_sql("SELECT setval('queue_pk_seq', 1);")
 
     @classmethod
     def rm(cls, field, returnPositions=False):
