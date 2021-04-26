@@ -129,7 +129,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                     if re.match(config[profile]['domain'], hostname):
                         self.profile = profile
                         self._config = config[profile].copy()
-                        self._config['host'] = None  # Use localhost.
+                        # If the profile host matches the current hostname set the
+                        # value to None to force using localhost to prevent cases
+                        # in which the loopback is not configured properly in PostgreSQL.
+                        if hostname == self._config['host']:
+                            self._config['host'] = None
                         break
 
         if connect:
