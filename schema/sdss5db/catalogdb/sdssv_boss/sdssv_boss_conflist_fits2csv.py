@@ -2,9 +2,9 @@ from astropy.io import fits
 
 
 # input_dir and output_dir must end with /
-input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/bhm/boss/spectro/redux/master/'  # noqa: E501
+input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_boss/update2021apr12/'  # noqa: E501
 
-output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_boss/'  # noqa: E501
+output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_boss/update2021apr12/'  # noqa: E501
 
 input_fits_file_list = ['conflist.fits']
 

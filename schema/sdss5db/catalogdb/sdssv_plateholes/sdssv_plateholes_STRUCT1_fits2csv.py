@@ -2,9 +2,9 @@ from astropy.io import fits
 
 
 # input_dir and output_dir must end with /
-input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_plateholes/update_19Feb2021/'  # noqa: E501
+input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_plateholes/update_07Apr2021/'  # noqa: E501
 
-output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_plateholes/update_19Feb2021/'  # noqa: E501
+output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/sdssv_plateholes/update_07Apr2021_csv/'  # noqa: E501
 
 input_fits_file_list = ['plateholes_STRUCT1.fits']
 
