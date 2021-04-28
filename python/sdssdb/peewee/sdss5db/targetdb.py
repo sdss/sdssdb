@@ -99,6 +99,7 @@ class Design(TargetdbBase):
 class Instrument(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
+    default_lambda_eff = FloatField()
 
     class Meta:
         table_name = 'instrument'
