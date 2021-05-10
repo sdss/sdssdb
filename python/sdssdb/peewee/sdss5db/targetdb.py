@@ -172,7 +172,7 @@ class Carton(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
-    last_run = DateTimeField()
+    run_on = DateTimeField()
 
     class Meta:
         table_name = 'carton'
