@@ -6,8 +6,9 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from peewee import (AutoField, BooleanField, DeferredThroughModel,
-                    DoubleField, FloatField, ForeignKeyField, IntegerField,
+from peewee import (AutoField, BooleanField, DateTimeField,
+                    DeferredThroughModel, DoubleField,
+                    FloatField, ForeignKeyField, IntegerField,
                     SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
@@ -171,6 +172,7 @@ class Carton(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
+    last_run = DateTimeField()
 
     class Meta:
         table_name = 'carton'

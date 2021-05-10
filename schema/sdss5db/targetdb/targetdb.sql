@@ -50,7 +50,8 @@ CREATE TABLE targetdb.carton (
     category_pk SMALLINT,
     version_pk SMALLINT,
     carton TEXT
-    program TEXT);
+    program TEXT,
+    run_on DATE);
 
 CREATE TABLE targetdb.mapper (
     pk SERIAL PRIMARY KEY NOT NULL,
