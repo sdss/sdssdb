@@ -74,17 +74,23 @@ CREATE TABLE targetdb.carton_to_target (
     cadence_pk SMALLINT,
     priority INTEGER);
 
-CREATE TABLE targetdb.cadence (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT NOT NULL,
-    nepochs INTEGER,
-    nexp SMALLINT[],
-    delta REAL[],
-    skybrightness REAL[],
-    delta_max REAL[],
-    delta_min REAL[],
-    -- epoch_max_length is days
-    max_length REAL[]);
+-- The create table SQL for targetdb.cadence is based
+-- on the information in the DefaultCadence.fits file.
+-- The fits file array length 15 is ignored by PostgreSQL array columns
+-- so it is not in the create table SQL.
+-- We use "pk serial" instead of the usual catalogdb "pk bigserial"
+-- for consistency with the rest of targetdb. 
+create table targetdb.cadence(
+    label text, -- format = '40A'
+    nepochs integer, -- format = 'J'
+    delta double precision[], -- format = '15D'
+    skybrightness real[], -- format = '15E'
+    delta_max real[], -- format = '15E'
+    delta_min real[], -- format = '15E'
+    nexp integer[], -- format = '15J' old name was nexposures
+    max_length real[], -- format = '15E'
+    pk serial primary key
+);
 
 CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -196,9 +202,7 @@ ALTER TABLE ONLY targetdb.carton_to_target
 
 ALTER TABLE ONLY targetdb.carton_to_target
     ADD CONSTRAINT cadence_fk
-    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED;;
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT carton_to_target_fk
