@@ -49,7 +49,7 @@ CREATE TABLE targetdb.carton (
     mapper_pk SMALLINT,
     category_pk SMALLINT,
     version_pk SMALLINT,
-    carton TEXT
+    carton TEXT,
     program TEXT,
     run_on DATE);
 
