@@ -113,7 +113,7 @@ CREATE TABLE targetdb.positioner_info (
     pk SERIAL PRIMARY KEY NOT NULL,
     apogee BOOLEAN NOT NULL,
     boss BOOLEAN NOT NULL,
-    fiducal BOOLEAN NOT NULL);
+    fiducial BOOLEAN NOT NULL);
 
 CREATE TABLE targetdb.observatory (
     pk SERIAL PRIMARY KEY NOT NULL,
