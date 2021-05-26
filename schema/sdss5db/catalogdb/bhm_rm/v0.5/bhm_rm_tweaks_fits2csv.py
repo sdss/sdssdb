@@ -7,7 +7,7 @@ input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/RM/bhm
 output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/RM/bhm_rm_tweaks/csv/'  # noqa: E501
 
 input_fits_file_list =\
-    ['vi_rm_targets_catv0b.fits']
+    ['vi_rm_targets_catv0.5.fits']
 
 for input_fits_file in input_fits_file_list:
     output_csv_file = input_fits_file.replace('fits', 'csv')
@@ -34,6 +34,7 @@ for input_fits_file in input_fits_file_list:
         line = line.rstrip(')')
         line = line.replace("'", "")
         line = line.replace('array([    ', '')
+        line = line.replace('array([', '')
         line = line.replace('], dtype=float32)', '')
         line = line.replace(', ', ',')
 
