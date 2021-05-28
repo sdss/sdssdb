@@ -81,7 +81,7 @@ CREATE TABLE targetdb.carton_to_target (
 -- We use "pk serial" instead of the usual catalogdb "pk bigserial"
 -- for consistency with the rest of targetdb. 
 create table targetdb.cadence(
-    label text, -- format = '40A'
+    label text not null, -- format = '40A'
     nepochs integer, -- format = 'J'
     delta double precision[], -- format = '15D'
     skybrightness real[], -- format = '15E'
