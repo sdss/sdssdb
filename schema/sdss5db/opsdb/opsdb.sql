@@ -83,6 +83,22 @@ CREATE TABLE opsdb.field_to_priority(
     field_pk INTEGER UNIQUE,
     field_priority_pk INTEGER);
 
+CREATE TABLE opsdb.quicklook(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    snr_standard REAL,
+    logsnr_hmag_coef REAL[],
+    exposure_pk INTEGER,
+    readnum INTEGER,
+    exptype TEXT);
+
+CREATE TABLE opsdb.quickred(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    exposure_pk INTEGER,
+    snr_standard NUMERIC,
+    logsnr_hmag_coef REAL[],
+    dither_pixpos NUMERIC,
+    snr_source text);
+
 -- Foreign keys
 
 ALTER TABLE ONLY opsdb.field_to_priority
@@ -156,6 +172,17 @@ ALTER TABLE ONLY opsdb.camera
     ADD CONSTRAINT instrument_fk
     FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk);
 
+ALTER TABLE ONLY opsdb.quicklook
+    ADD CONSTRAINT ql_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY opsdb.quickred
+    ADD CONSTRAINT qr_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 -- Table data
 
@@ -200,6 +227,14 @@ CREATE INDEX CONCURRENTLY start_time_idx
 
 CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON opsdb.camera_frame
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY ql_exposure_pk_idx
+    ON opsdb.quicklook
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY qr_exposure_pk_idx
+    ON opsdb.quickred
     USING BTREE(exposure_pk);
 
 -- pop function to retrieve next in queue and increment

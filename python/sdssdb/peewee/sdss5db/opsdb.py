@@ -175,6 +175,36 @@ class CameraFrame(OpsdbBase):
         table_name = 'camera_frame'
 
 
+class Quicklook(OpsdbBase):
+    pk = AutoField()
+    exposure_pk = ForeignKeyField(column_name='exposure_pk',
+                                  field='pk',
+                                  model=Exposure,
+                                  backref="Quicklook")
+    snr_standard = FloatField()
+    logsnr_hmag_coef = ArrayField(field_class=FloatField)
+    readnum = IntegerField()
+    exptype = TextField()
+
+    class Meta:
+        table_name = 'quicklook'
+
+
+class Quickred(OpsdbBase):
+    pk = AutoField()
+    exposure_pk = ForeignKeyField(column_name='exposure_pk',
+                                  field='pk',
+                                  model=Exposure,
+                                  backref="Quickred")
+    snr_standard = FloatField()
+    logsnr_hmag_coef = ArrayField(field_class=FloatField)
+    dither_pixpos = FloatField()
+    snr_source = TextField()
+
+    class Meta:
+        table_name = 'quickred'
+
+
 class Queue(OpsdbBase):
     design = ForeignKeyField(column_name='design_pk',
                              field='pk',
