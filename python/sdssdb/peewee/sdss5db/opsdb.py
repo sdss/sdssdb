@@ -11,6 +11,7 @@ import datetime
 from peewee import (AutoField, BigIntegerField, DateTimeField,
                     DeferredThroughModel, FloatField, ForeignKeyField,
                     IntegerField, ManyToManyField, Select, TextField, fn)
+from playhouse.postgres_ext import ArrayField
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
 
