@@ -90,7 +90,7 @@ create table targetdb.cadence(
     nexp integer[], -- format = '15J' old name was nexposures
     max_length real[], -- format = '15E'
     pk serial primary key,
-    obsmode_pk integer[]
+    obsmode_pk text[]
 );
 
 CREATE TABLE targetdb.instrument (
@@ -131,7 +131,7 @@ CREATE TABLE targetdb.design (
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
     field_pk INTEGER,
-    design_mode_pk INTEGER);
+    design_mode_pk TEXT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -147,16 +147,14 @@ CREATE TABLE targetdb.field (
     observatory_pk SMALLINT);
 
 CREATE TABLE targetdb.obsmode(
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT NOT NULL,
+    label TEXT PRIMARY KEY NOT NULL,
     min_moon_sep REAL,
     min_deltaV_KS91 REAL,
     min_twilight_ang REAL,
     max_airmass REAL);
 
 CREATE TABLE targetdb.design_mode(
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT NOT NULL,
+    label TEXT PRIMARY KEY NOT NULL,
     BOSS_skies_min INTEGER ,
     BOSS_skies_FOV DOUBLE PRECISION[],
     APOGEE_skies_min INTEGER ,
@@ -292,7 +290,7 @@ ALTER TABLE ONLY targetdb.magnitude
 
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_mode_fk
-    FOREIGN KEY (design_mode_pk) REFERENCES targetdb.design_mode(pk);
+    FOREIGN KEY (design_mode_pk) REFERENCES targetdb.design_mode(label);
 
 -- Indices
 
