@@ -84,12 +84,13 @@ create table targetdb.cadence(
     label text not null, -- format = '40A'
     nepochs integer, -- format = 'J'
     delta double precision[], -- format = '15D'
-    skybrightness real[], -- format = '15E'
+    -- skybrightness real[], -- format = '15E'
     delta_max real[], -- format = '15E'
     delta_min real[], -- format = '15E'
     nexp integer[], -- format = '15J' old name was nexposures
     max_length real[], -- format = '15E'
-    pk serial primary key
+    pk serial primary key,
+    obsmode_pk text[]
 );
 
 CREATE TABLE targetdb.instrument (
@@ -129,7 +130,8 @@ CREATE TABLE targetdb.assignment (
 CREATE TABLE targetdb.design (
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
-    field_pk INTEGER);
+    field_pk INTEGER,
+    design_mode_pk TEXT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -144,6 +146,34 @@ CREATE TABLE targetdb.field (
     cadence_pk SMALLINT,
     observatory_pk SMALLINT);
 
+CREATE TABLE targetdb.obsmode(
+    label TEXT PRIMARY KEY NOT NULL,
+    min_moon_sep REAL,
+    min_deltaV_KS91 REAL,
+    min_twilight_ang REAL,
+    max_airmass REAL);
+
+CREATE TABLE targetdb.design_mode(
+    label TEXT PRIMARY KEY NOT NULL,
+    BOSS_skies_min INTEGER ,
+    BOSS_skies_FOV DOUBLE PRECISION[],
+    APOGEE_skies_min INTEGER ,
+    APOGEE_skies_FOV DOUBLE PRECISION[],
+    BOSS_stds_min INTEGER,
+    BOSS_stds_mags_min DOUBLE PRECISION[],
+    BOSS_stds_mags_max DOUBLE PRECISION[],
+    BOSS_stds_FOV DOUBLE PRECISION[],
+    APOGEE_stds_min INTEGER ,
+    APOGEE_stds_mags_min DOUBLE PRECISION[],
+    APOGEE_stds_mags_max DOUBLE PRECISION[],
+    APOGEE_stds_FOV DOUBLE PRECISION[],
+    BOSS_bright_limit_targets_min DOUBLE PRECISION[],
+    BOSS_bright_limit_targets_max DOUBLE PRECISION[],
+    BOSS_sky_neighbors_targets DOUBLE PRECISION[],
+    APOGEE_bright_limit_targets_min DOUBLE PRECISION[],
+    APOGEE_bright_limit_targets_max DOUBLE PRECISION[],
+    APOGGE_trace_diff_targets DOUBLE PRECISION[] ,
+    APOGEE_sky_neighbors_targets DOUBLE PRECISION[])
 
 -- Table data
 
@@ -258,6 +288,9 @@ ALTER TABLE ONLY targetdb.magnitude
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY targetdb.design
+    ADD CONSTRAINT design_mode_fk
+    FOREIGN KEY (design_mode_pk) REFERENCES targetdb.design_mode(label);
 
 -- Indices
 
