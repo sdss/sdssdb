@@ -94,10 +94,10 @@ CREATE TABLE opsdb.quicklook(
 CREATE TABLE opsdb.quickred(
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure_pk INTEGER,
-    snr_standard NUMERIC,
+    snr_standard REAL,
     logsnr_hmag_coef REAL[],
-    dither_pixpos NUMERIC,
-    snr_source text);
+    dither_pixpos REAL,
+    snr_source TEXT);
 
 -- Foreign keys
 
