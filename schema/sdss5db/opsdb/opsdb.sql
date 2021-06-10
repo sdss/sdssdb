@@ -105,7 +105,6 @@ CREATE TABLE opsdb.quickred(
     snr_source TEXT,
     hmag_standard REAL,
     snr_standard_scale REAL,
-    snr_predict REAL,
     logsnr_hmag_coef_all REAL[],
     zeropt REAL);
 
