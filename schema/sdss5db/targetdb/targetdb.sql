@@ -174,7 +174,7 @@ CREATE TABLE targetdb.design_mode(
     BOSS_sky_neighbors_targets DOUBLE PRECISION[],
     APOGEE_bright_limit_targets_min DOUBLE PRECISION[],
     APOGEE_bright_limit_targets_max DOUBLE PRECISION[],
-    APOGGE_trace_diff_targets DOUBLE PRECISION[] ,
+    APOGEE_trace_diff_targets DOUBLE PRECISION[] ,
     APOGEE_sky_neighbors_targets DOUBLE PRECISION[])
 
 -- Table data
