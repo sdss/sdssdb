@@ -89,7 +89,12 @@ CREATE TABLE opsdb.quicklook(
     logsnr_hmag_coef REAL[],
     exposure_pk INTEGER,
     readnum INTEGER,
-    exptype TEXT);
+    exptype TEXT,
+    hmag_standard REAL,
+    snr_standard_scale REAL,
+    snr_predict REAL,
+    logsnr_hmag_coef_all REAL[],
+    zeropt REAL);
 
 CREATE TABLE opsdb.quickred(
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -97,7 +102,12 @@ CREATE TABLE opsdb.quickred(
     snr_standard REAL,
     logsnr_hmag_coef REAL[],
     dither_pixpos REAL,
-    snr_source TEXT);
+    snr_source TEXT,
+    hmag_standard REAL,
+    snr_standard_scale REAL,
+    snr_predict REAL,
+    logsnr_hmag_coef_all REAL[],
+    zeropt REAL);
 
 -- Foreign keys
 

@@ -186,6 +186,11 @@ class Quicklook(OpsdbBase):
     logsnr_hmag_coef = ArrayField(field_class=FloatField)
     readnum = IntegerField()
     exptype = TextField()
+    hmag_standard = FloatField()
+    snr_standard_scale = FloatField()
+    snr_predict = FloatField()
+    logsnr_hmag_coef_all = ArrayField(field_class=FloatField)
+    zeropt = FloatField()
 
     class Meta:
         table_name = 'quicklook'
@@ -201,6 +206,11 @@ class Quickred(OpsdbBase):
     logsnr_hmag_coef = ArrayField(field_class=FloatField)
     dither_pixpos = FloatField()
     snr_source = TextField()
+    hmag_standard = FloatField()
+    snr_standard_scale = FloatField()
+    snr_predict = FloatField()
+    logsnr_hmag_coef_all = ArrayField(field_class=FloatField)
+    zeropt = FloatField()
 
     class Meta:
         table_name = 'quickred'
