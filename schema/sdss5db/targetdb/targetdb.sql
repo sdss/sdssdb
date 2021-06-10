@@ -74,24 +74,26 @@ CREATE TABLE targetdb.carton_to_target (
     cadence_pk SMALLINT,
     priority INTEGER);
 
--- The create table SQL for targetdb.cadence is based
--- on the information in the DefaultCadence.fits file.
--- The fits file array length 15 is ignored by PostgreSQL array columns
--- so it is not in the create table SQL.
 -- We use "pk serial" instead of the usual catalogdb "pk bigserial"
 -- for consistency with the rest of targetdb. 
 create table targetdb.cadence(
-    label text not null, -- format = '40A'
-    nepochs integer, -- format = 'J'
-    delta double precision[], -- format = '15D'
-    -- skybrightness real[], -- format = '15E'
-    delta_max real[], -- format = '15E'
-    delta_min real[], -- format = '15E'
-    nexp integer[], -- format = '15J' old name was nexposures
-    max_length real[], -- format = '15E'
+    label text not null,
+    nepochs integer,
+    delta double precision[],
+    skybrightness real[],  -- TODO remove skybrightness later
+    delta_max real[],
+    delta_min real[],
+    nexp integer[],  -- old name was nexposures
+    max_length real[],
     pk serial primary key,
-    obsmode_pk text[]
+    obsmode_pk text[],
+    label_root text,
+    label_version text default ''
 );
+
+create unique index cadence_label_idx1 on targetdb.cadence(label);
+
+alter table targetdb.cadence add constraint label_constraint check (label = label_root || label_version);
 
 CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,
