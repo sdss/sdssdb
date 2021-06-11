@@ -155,27 +155,28 @@ CREATE TABLE targetdb.obsmode(
     min_twilight_ang REAL,
     max_airmass REAL);
 
-CREATE TABLE targetdb.design_mode(
-    label TEXT PRIMARY KEY NOT NULL,
-    BOSS_skies_min INTEGER ,
-    BOSS_skies_FOV DOUBLE PRECISION[],
-    APOGEE_skies_min INTEGER ,
-    APOGEE_skies_FOV DOUBLE PRECISION[],
-    BOSS_stds_min INTEGER,
-    BOSS_stds_mags_min DOUBLE PRECISION[],
-    BOSS_stds_mags_max DOUBLE PRECISION[],
-    BOSS_stds_FOV DOUBLE PRECISION[],
-    APOGEE_stds_min INTEGER ,
-    APOGEE_stds_mags_min DOUBLE PRECISION[],
-    APOGEE_stds_mags_max DOUBLE PRECISION[],
-    APOGEE_stds_FOV DOUBLE PRECISION[],
-    BOSS_bright_limit_targets_min DOUBLE PRECISION[],
-    BOSS_bright_limit_targets_max DOUBLE PRECISION[],
-    BOSS_sky_neighbors_targets DOUBLE PRECISION[],
-    APOGEE_bright_limit_targets_min DOUBLE PRECISION[],
-    APOGEE_bright_limit_targets_max DOUBLE PRECISION[],
-    APOGEE_trace_diff_targets DOUBLE PRECISION[] ,
-    APOGEE_sky_neighbors_targets DOUBLE PRECISION[])
+create table targetdb.design_mode(
+    label text primary key not null,
+    boss_skies_min integer,
+    boss_skies_fov double precision[],
+    apogee_skies_min integer,
+    apogee_skies_fov double precision[],
+    boss_stds_min integer,
+    boss_stds_mags_min double precision[],
+    boss_stds_mags_max double precision[],
+    boss_stds_fov double precision[],
+    apogee_stds_min integer,
+    apogee_stds_mags_min double precision[],
+    apogee_stds_mags_max double precision[],
+    apogee_stds_fov double precision[],
+    boss_bright_limit_targets_min double precision[],
+    boss_bright_limit_targets_max double precision[],
+    boss_trace_diff_targets double precision[],
+    boss_sky_neighbors_targets double precision[],
+    apogee_bright_limit_targets_min double precision[],
+    apogee_bright_limit_targets_max double precision[],
+    apogee_trace_diff_targets double precision[],
+    apogee_sky_neighbors_targets double precision[]);
 
 -- Table data
 
