@@ -171,11 +171,11 @@ create table targetdb.design_mode(
     apogee_stds_fov double precision[],
     boss_bright_limit_targets_min double precision[],
     boss_bright_limit_targets_max double precision[],
-    boss_trace_diff_targets double precision[],
+    boss_trace_diff_targets integer,
     boss_sky_neighbors_targets double precision[],
     apogee_bright_limit_targets_min double precision[],
     apogee_bright_limit_targets_max double precision[],
-    apogee_trace_diff_targets double precision[],
+    apogee_trace_diff_targets integer,
     apogee_sky_neighbors_targets double precision[]);
 
 -- Table data
