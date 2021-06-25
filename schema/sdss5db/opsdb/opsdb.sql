@@ -106,7 +106,8 @@ CREATE TABLE opsdb.quickred(
     hmag_standard REAL,
     snr_standard_scale REAL,
     logsnr_hmag_coef_all REAL[],
-    zeropt REAL);
+    zeropt REAL,
+    dither_named TEXT);
 
 -- Foreign keys
 

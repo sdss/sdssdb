@@ -211,6 +211,7 @@ class Quickred(OpsdbBase):
     snr_predict = FloatField()
     logsnr_hmag_coef_all = ArrayField(field_class=FloatField)
     zeropt = FloatField()
+    dither_named = TextField()
 
     class Meta:
         table_name = 'quickred'
