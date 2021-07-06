@@ -5,6 +5,9 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Add ``default_lambda_eff`` to ``targetdb.instrument``.
+* Add ``run_on`` field to ``targetdb.carton``.
+
 * :release:`0.4.9 <2021-04-19>`
 * Add delta_ra, delta_dec and, inertial for ``CartonToTarget``.
 * Add ``tycid`` column to ``Tycho2`` to prevent import errors.

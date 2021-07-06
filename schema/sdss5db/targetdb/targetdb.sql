@@ -49,8 +49,9 @@ CREATE TABLE targetdb.carton (
     mapper_pk SMALLINT,
     category_pk SMALLINT,
     version_pk SMALLINT,
-    carton TEXT
-    program TEXT);
+    carton TEXT,
+    program TEXT,
+    run_on DATE);
 
 CREATE TABLE targetdb.mapper (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -73,17 +74,26 @@ CREATE TABLE targetdb.carton_to_target (
     cadence_pk SMALLINT,
     priority INTEGER);
 
-CREATE TABLE targetdb.cadence (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT NOT NULL,
-    nepochs INTEGER,
-    nexp SMALLINT[],
-    delta REAL[],
-    skybrightness REAL[],
-    delta_max REAL[],
-    delta_min REAL[],
-    -- epoch_max_length is days
-    max_length REAL[]);
+-- We use "pk serial" instead of the usual catalogdb "pk bigserial"
+-- for consistency with the rest of targetdb. 
+create table targetdb.cadence(
+    label text not null,
+    nepochs integer,
+    delta double precision[],
+    skybrightness real[],  -- TODO remove skybrightness later
+    delta_max real[],
+    delta_min real[],
+    nexp integer[],  -- old name was nexposures
+    max_length real[],
+    pk serial primary key,
+    obsmode_pk text[],
+    label_root text,
+    label_version text default ''
+);
+
+create unique index cadence_label_idx1 on targetdb.cadence(label);
+
+alter table targetdb.cadence add constraint label_constraint check (label = label_root || label_version);
 
 CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -106,7 +116,7 @@ CREATE TABLE targetdb.positioner_info (
     pk SERIAL PRIMARY KEY NOT NULL,
     apogee BOOLEAN NOT NULL,
     boss BOOLEAN NOT NULL,
-    fiducal BOOLEAN NOT NULL);
+    fiducial BOOLEAN NOT NULL);
 
 CREATE TABLE targetdb.observatory (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -122,7 +132,8 @@ CREATE TABLE targetdb.assignment (
 CREATE TABLE targetdb.design (
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
-    field_pk INTEGER);
+    field_pk INTEGER,
+    design_mode_pk TEXT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -137,6 +148,35 @@ CREATE TABLE targetdb.field (
     cadence_pk SMALLINT,
     observatory_pk SMALLINT);
 
+CREATE TABLE targetdb.obsmode(
+    label TEXT PRIMARY KEY NOT NULL,
+    min_moon_sep REAL,
+    min_deltaV_KS91 REAL,
+    min_twilight_ang REAL,
+    max_airmass REAL);
+
+create table targetdb.design_mode(
+    label text primary key not null,
+    boss_skies_min integer,
+    boss_skies_fov double precision[],
+    apogee_skies_min integer,
+    apogee_skies_fov double precision[],
+    boss_stds_min integer,
+    boss_stds_mags_min double precision[],
+    boss_stds_mags_max double precision[],
+    boss_stds_fov double precision[],
+    apogee_stds_min integer,
+    apogee_stds_mags_min double precision[],
+    apogee_stds_mags_max double precision[],
+    apogee_stds_fov double precision[],
+    boss_bright_limit_targets_min double precision[],
+    boss_bright_limit_targets_max double precision[],
+    boss_trace_diff_targets double precision,
+    boss_sky_neighbors_targets double precision[],
+    apogee_bright_limit_targets_min double precision[],
+    apogee_bright_limit_targets_max double precision[],
+    apogee_trace_diff_targets double precision,
+    apogee_sky_neighbors_targets double precision[]);
 
 -- Table data
 
@@ -195,9 +235,7 @@ ALTER TABLE ONLY targetdb.carton_to_target
 
 ALTER TABLE ONLY targetdb.carton_to_target
     ADD CONSTRAINT cadence_fk
-    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED;;
+    FOREIGN KEY (cadence_pk) REFERENCES targetdb.cadence(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT carton_to_target_fk
@@ -253,6 +291,9 @@ ALTER TABLE ONLY targetdb.magnitude
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY targetdb.design
+    ADD CONSTRAINT design_mode_fk
+    FOREIGN KEY (design_mode_pk) REFERENCES targetdb.design_mode(label);
 
 -- Indices
 

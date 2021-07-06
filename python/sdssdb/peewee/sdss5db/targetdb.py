@@ -6,7 +6,8 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from peewee import (AutoField, BigIntegerField, BooleanField,
+
+from peewee import (AutoField, BooleanField, DateTimeField,
                     DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
                     SmallIntegerField, TextField)
@@ -40,6 +41,17 @@ class Version(TargetdbBase):
         table_name = 'version'
 
 
+class ObsMode(TargetdbBase):
+    label = TextField(null=False)
+    min_moon_sep = FloatField(null=True)
+    min_deltaV_KS91 = FloatField(null=True)
+    min_twilight_ang = FloatField(null=True)
+    max_airmass = FloatField(null=True)
+
+    class Meta:
+        table_name = 'obsmode'
+
+
 class Cadence(TargetdbBase):
     label = TextField(null=False)
     nepochs = IntegerField(null=True)
@@ -49,8 +61,9 @@ class Cadence(TargetdbBase):
     # instrument_pk = ArrayField(field_class=IntegerField, null=True)
     nexp = ArrayField(field_class=SmallIntegerField, null=True)
     pk = AutoField()
-    skybrightness = ArrayField(field_class=FloatField, null=True)
+    # skybrightness = ArrayField(field_class=FloatField, null=True)
     max_length = ArrayField(field_class=FloatField, null=True)
+    obsmode_pk = ArrayField(field_class=TextField, null=True)
 
     class Meta:
         table_name = 'cadence'
@@ -88,6 +101,32 @@ class Field(TargetdbBase):
         table_name = 'field'
 
 
+class DesignMode(TargetdbBase):
+    label = TextField(null=False)
+    BOSS_skies_min = IntegerField(null=True)
+    BOSS_skies_FOV = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_skies_min = IntegerField(null=True)
+    APOGEE_skies_FOV = ArrayField(field_class=DoubleField, null=True)
+    BOSS_stds_min = IntegerField(null=True)
+    BOSS_stds_mags_min = ArrayField(field_class=DoubleField, null=True)
+    BOSS_stds_mags_max = ArrayField(field_class=DoubleField, null=True)
+    BOSS_stds_FOV = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_stds_min = IntegerField(null=True)
+    APOGEE_stds_mags_min = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_stds_mags_max = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_stds_FOV = ArrayField(field_class=DoubleField, null=True)
+    BOSS_bright_limit_targets_min = ArrayField(field_class=DoubleField, null=True)
+    BOSS_bright_limit_targets_max = ArrayField(field_class=DoubleField, null=True)
+    BOSS_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_bright_limit_targets_min = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_bright_limit_targets_max = ArrayField(field_class=DoubleField, null=True)
+    APOGGE_trace_diff_targets = ArrayField(field_class=DoubleField, null=True)
+    APOGEE_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
+
+    class Meta:
+        table_name = 'design_mode'
+
+
 class Design(TargetdbBase):
     field = ForeignKeyField(column_name='field_pk',
                             field='pk',
@@ -95,6 +134,10 @@ class Design(TargetdbBase):
                             null=True)
     exposure = IntegerField(null=True)
     pk = AutoField()
+    design_mode_pk = ForeignKeyField(column_name='design_mode_pk',
+                                     field='label',
+                                     model=DesignMode,
+                                     null=True)
 
     class Meta:
         table_name = 'design'
@@ -103,6 +146,7 @@ class Design(TargetdbBase):
 class Instrument(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
+    default_lambda_eff = FloatField()
 
     class Meta:
         table_name = 'instrument'
@@ -174,6 +218,7 @@ class Carton(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
+    run_on = DateTimeField()
 
     class Meta:
         table_name = 'carton'
