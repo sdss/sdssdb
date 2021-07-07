@@ -1,20 +1,17 @@
 import psycopg2
 
-# input_dir and output_dir must end with /
+# input_dir must end with /
 input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/cadence/'  # noqa: E501
 
-output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/cadence/'  # noqa: E501
-
-# csv_file = 'DefaultCadences_v0.5.csv'
 csv_file = 'defaultCadences_v1.csv'
 
-f = open(output_dir + csv_file, "r")
+f = open(input_dir + csv_file, "r")
 num_lines = 0
 for line in f:
     num_lines = num_lines + 1
 f.close()
 
-print("loading targetdb.cadence from " + output_dir + csv_file)
+print("loading targetdb.cadence from " + input_dir + csv_file)
 print("loading " + str(num_lines) + " rows")
 
 label = [""] * num_lines
@@ -29,7 +26,7 @@ obsmode_pk = [""] * num_lines
 label_root = [""] * num_lines
 label_version = [""] * num_lines
 
-f = open(output_dir + csv_file, "r")
+f = open(input_dir + csv_file, "r")
 
 for i in range(num_lines):
     line = f.readline()
