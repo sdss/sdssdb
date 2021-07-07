@@ -1,0 +1,19 @@
+
+Below is the order of running the sql scripts:
+(remember to use & for the long running scripts)
+
+This example is for catalogdb.catalog_to_tic_v8.
+The order is the same for other catalogdb.catalog_to_XYZ tables. 
+
+catalogdb.catalog_to_tic_v8.copyto.sql &
+
+catalogdb.catalog_to_tic_v8.create_table.sql
+catalogdb.catalog_to_tic_v8.create_partitions.sql
+
+catalogdb.catalog_to_tic_v8.load.sql &
+catalogdb.catalog_to_tic_v8.create_pkey.sql &
+catalogdb.catalog_to_tic_v8.create_indexes.sql &
+
+catalogdb.catalog_to_tic_v8.rename_table.sql
+
+catalogdb.catalog_to_tic_v8.analyze.sql
