@@ -44,7 +44,7 @@ class Version(TargetdbBase):
 class ObsMode(TargetdbBase):
     label = TextField(null=False)
     min_moon_sep = FloatField(null=True)
-    min_deltaV_KS91 = FloatField(null=True)
+    min_deltav_ks91 = FloatField(null=True)
     min_twilight_ang = FloatField(null=True)
     max_airmass = FloatField(null=True)
 
@@ -61,7 +61,7 @@ class Cadence(TargetdbBase):
     # instrument_pk = ArrayField(field_class=IntegerField, null=True)
     nexp = ArrayField(field_class=SmallIntegerField, null=True)
     pk = AutoField()
-    # skybrightness = ArrayField(field_class=FloatField, null=True)
+    skybrightness = ArrayField(field_class=FloatField, null=True)
     max_length = ArrayField(field_class=FloatField, null=True)
     obsmode_pk = ArrayField(field_class=TextField, null=True)
 
@@ -131,7 +131,8 @@ class Design(TargetdbBase):
     field = ForeignKeyField(column_name='field_pk',
                             field='pk',
                             model=Field,
-                            null=True)
+                            null=True,
+                            backref="designs")
     exposure = IntegerField(null=True)
     pk = AutoField()
     design_mode_pk = ForeignKeyField(column_name='design_mode_pk',
