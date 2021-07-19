@@ -279,6 +279,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             raise RuntimeError('DB has not been initialised.')
 
         dsn_params = self.connection_params
+        dsn_params.pop('password', None)  # Do not keep the password since it may change.
+
         if dsn_params is None:
             raise RuntimeError('cannot determine the DSN parameters. '
                                'The DB may be disconnected.')
