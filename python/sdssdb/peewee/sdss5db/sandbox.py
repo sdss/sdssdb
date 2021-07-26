@@ -6,7 +6,7 @@
 # @Filename: sandbox.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-# Forked from targetdb.py on 2021-07-14
+# Forked from targetdb.py on 2021-07-26
 
 from peewee import (AutoField, BooleanField, DateTimeField,
                     DeferredThroughModel, DoubleField,
@@ -101,25 +101,25 @@ class Field(TargetdbBase):
 
 class DesignMode(TargetdbBase):
     label = TextField(null=False)
-    BOSS_skies_min = IntegerField(null=True)
-    BOSS_skies_FOV = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_skies_min = IntegerField(null=True)
-    APOGEE_skies_FOV = ArrayField(field_class=DoubleField, null=True)
-    BOSS_stds_min = IntegerField(null=True)
-    BOSS_stds_mags_min = ArrayField(field_class=DoubleField, null=True)
-    BOSS_stds_mags_max = ArrayField(field_class=DoubleField, null=True)
-    BOSS_stds_FOV = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_stds_min = IntegerField(null=True)
-    APOGEE_stds_mags_min = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_stds_mags_max = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_stds_FOV = ArrayField(field_class=DoubleField, null=True)
-    BOSS_bright_limit_targets_min = ArrayField(field_class=DoubleField, null=True)
-    BOSS_bright_limit_targets_max = ArrayField(field_class=DoubleField, null=True)
-    BOSS_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_bright_limit_targets_min = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_bright_limit_targets_max = ArrayField(field_class=DoubleField, null=True)
-    APOGGE_trace_diff_targets = ArrayField(field_class=DoubleField, null=True)
-    APOGEE_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
+    boss_skies_min = IntegerField(null=True)
+    boss_skies_fov = ArrayField(field_class=DoubleField, null=True)
+    apogee_skies_min = IntegerField(null=True)
+    apogee_skies_fov = ArrayField(field_class=DoubleField, null=True)
+    boss_stds_min = IntegerField(null=True)
+    boss_stds_mags_min = ArrayField(field_class=DoubleField, null=True)
+    boss_stds_mags_max = ArrayField(field_class=DoubleField, null=True)
+    boss_stds_fov = ArrayField(field_class=DoubleField, null=True)
+    apogee_stds_min = IntegerField(null=True)
+    apogee_stds_mags_min = ArrayField(field_class=DoubleField, null=True)
+    apogee_stds_mags_max = ArrayField(field_class=DoubleField, null=True)
+    apogee_stds_fov = ArrayField(field_class=DoubleField, null=True)
+    boss_bright_limit_targets_min = ArrayField(field_class=DoubleField, null=True)
+    boss_bright_limit_targets_max = ArrayField(field_class=DoubleField, null=True)
+    boss_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
+    apogee_bright_limit_targets_min = ArrayField(field_class=DoubleField, null=True)
+    apogee_bright_limit_targets_max = ArrayField(field_class=DoubleField, null=True)
+    apogee_trace_diff_targets = ArrayField(field_class=DoubleField, null=True)
+    apogee_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
 
     class Meta:
         table_name = 'design_mode'
