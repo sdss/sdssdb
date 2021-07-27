@@ -41,7 +41,7 @@ class Version(TargetdbBase):
 class ObsMode(TargetdbBase):
     label = TextField(null=False)
     min_moon_sep = FloatField(null=True)
-    min_deltaV_KS91 = FloatField(null=True)
+    min_deltav_ks91 = FloatField(null=True)
     min_twilight_ang = FloatField(null=True)
     max_airmass = FloatField(null=True)
 
@@ -51,7 +51,10 @@ class ObsMode(TargetdbBase):
 
 class Cadence(TargetdbBase):
     label = TextField(null=False)
+    label_version = TextField(null=False)
+    label_root = TextField(null=False)
     nepochs = IntegerField(null=True)
+    skybrightness = ArrayField(field_class=FloatField, null=True)
     delta = ArrayField(field_class=FloatField, null=True)
     delta_max = ArrayField(field_class=FloatField, null=True)
     delta_min = ArrayField(field_class=FloatField, null=True)
