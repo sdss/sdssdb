@@ -13,7 +13,7 @@ from peewee import (AutoField, BooleanField, DateTimeField,
                     SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
-import sdssdb.peewee.sdss5db.opsdb as opsdb
+# import sdssdb.peewee.sdss5db.opsdb as opsdb
 
 from .. import BaseModel
 from . import catalogdb, database  # noqa
