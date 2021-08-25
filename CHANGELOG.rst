@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.10 <2021-08-25>`
+* add priority to field table to opsdb
+* add apo5 profile
+* add apql tables to opsdb
 * Add ``default_lambda_eff`` to ``targetdb.instrument``.
 * Add ``run_on`` field to ``targetdb.carton``.
 * When calling `.DatabaseConnection.become`, ignore the password stored in the DSN parameters since the user/admin passwords will likely be different.
