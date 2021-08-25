@@ -33,8 +33,8 @@ class FieldPriority(OpsdbBase):
     pk = AutoField()
     label = TextField()
     fields = ManyToManyField(targetdb.Field,
-                            through_model=FieldToPriorityDeferred,
-                            backref='priority')
+                             through_model=FieldToPriorityDeferred,
+                             backref='priority')
 
     class Meta:
         table_name = 'field_priority'
@@ -43,11 +43,12 @@ class FieldPriority(OpsdbBase):
 class FieldToPriority(OpsdbBase):
     pk = AutoField()
     FieldPriority = ForeignKeyField(FieldPriority,
-                             column_name='field_priority_pk',
-                             field='pk')
+                                    column_name='field_priority_pk',
+                                    field='pk')
     field = ForeignKeyField(targetdb.Field,
-                             column_name='field_pk',
-                             field='pk')
+                            column_name='field_pk',
+                            field='pk')
+
     class Meta:
         table_name = 'field_to_priority'
 
