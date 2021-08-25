@@ -6,6 +6,7 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+
 from peewee import (AutoField, BooleanField, DateTimeField,
                     DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
@@ -61,7 +62,7 @@ class Cadence(TargetdbBase):
     # instrument_pk = ArrayField(field_class=IntegerField, null=True)
     nexp = ArrayField(field_class=SmallIntegerField, null=True)
     pk = AutoField()
-    # skybrightness = ArrayField(field_class=FloatField, null=True)
+    skybrightness = ArrayField(field_class=FloatField, null=True)
     max_length = ArrayField(field_class=FloatField, null=True)
     obsmode_pk = ArrayField(field_class=TextField, null=True)
 
@@ -78,6 +79,7 @@ class Observatory(TargetdbBase):
 
 
 class Field(TargetdbBase):
+
     pk = AutoField()
     field_id = IntegerField(null=False)
     racen = DoubleField(null=False)
@@ -130,7 +132,8 @@ class Design(TargetdbBase):
     field = ForeignKeyField(column_name='field_pk',
                             field='pk',
                             model=Field,
-                            null=True)
+                            null=True,
+                            backref="designs")
     exposure = IntegerField(null=True)
     pk = AutoField()
     design_mode_pk = ForeignKeyField(column_name='design_mode_pk',

@@ -8,12 +8,18 @@
 
 import datetime
 
-from peewee import (AutoField, BigIntegerField, FloatField,
-                    ForeignKeyField, TextField, IntegerField,
-                    DateTimeField, fn, Select)
+from peewee import (AutoField, BigIntegerField, DateTimeField,
+                    DeferredThroughModel, FloatField, ForeignKeyField,
+                    IntegerField, ManyToManyField, Select, TextField, fn)
+from playhouse.postgres_ext import ArrayField
+
+import sdssdb.peewee.sdss5db.targetdb as targetdb
 
 from .. import BaseModel
-from . import targetdb, database  # noqa
+from . import database  # noqa
+
+
+FieldToPriorityDeferred = DeferredThroughModel()
 
 
 class OpsdbBase(BaseModel):
@@ -21,6 +27,30 @@ class OpsdbBase(BaseModel):
     class Meta:
         schema = 'opsdb'
         database = database
+
+
+class FieldPriority(OpsdbBase):
+    pk = AutoField()
+    label = TextField()
+    fields = ManyToManyField(targetdb.Field,
+                             through_model=FieldToPriorityDeferred,
+                             backref='priority')
+
+    class Meta:
+        table_name = 'field_priority'
+
+
+class FieldToPriority(OpsdbBase):
+    pk = AutoField()
+    FieldPriority = ForeignKeyField(FieldPriority,
+                                    column_name='field_priority_pk',
+                                    field='pk')
+    field = ForeignKeyField(targetdb.Field,
+                            column_name='field_pk',
+                            field='pk')
+
+    class Meta:
+        table_name = 'field_to_priority'
 
 
 class Configuration(OpsdbBase):
@@ -147,6 +177,47 @@ class CameraFrame(OpsdbBase):
         table_name = 'camera_frame'
 
 
+class Quicklook(OpsdbBase):
+    pk = AutoField()
+    exposure_pk = ForeignKeyField(column_name='exposure_pk',
+                                  field='pk',
+                                  model=Exposure,
+                                  backref="Quicklook")
+    snr_standard = FloatField()
+    logsnr_hmag_coef = ArrayField(field_class=FloatField)
+    readnum = IntegerField()
+    exptype = TextField()
+    hmag_standard = FloatField()
+    snr_standard_scale = FloatField()
+    snr_predict = FloatField()
+    logsnr_hmag_coef_all = ArrayField(field_class=FloatField)
+    zeropt = FloatField()
+
+    class Meta:
+        table_name = 'quicklook'
+
+
+class Quickred(OpsdbBase):
+    pk = AutoField()
+    exposure_pk = ForeignKeyField(column_name='exposure_pk',
+                                  field='pk',
+                                  model=Exposure,
+                                  backref="Quickred")
+    snr_standard = FloatField()
+    logsnr_hmag_coef = ArrayField(field_class=FloatField)
+    dither_pixpos = FloatField()
+    snr_source = TextField()
+    hmag_standard = FloatField()
+    snr_standard_scale = FloatField()
+    snr_predict = FloatField()
+    logsnr_hmag_coef_all = ArrayField(field_class=FloatField)
+    zeropt = FloatField()
+    dither_named = TextField()
+
+    class Meta:
+        table_name = 'quickred'
+
+
 class Queue(OpsdbBase):
     design = ForeignKeyField(column_name='design_pk',
                              field='pk',
@@ -193,7 +264,7 @@ class Queue(OpsdbBase):
     @classmethod
     def flushQueue(cls):
         cls.delete().where(cls.position is not None).execute()
-        database.execute_sql("SELECT setval('queue_pk_seq', 1);")
+        # database.execute_sql("SELECT setval('queue_pk_seq', 1);")
 
     @classmethod
     def rm(cls, field, returnPositions=False):
@@ -230,3 +301,6 @@ class Queue(OpsdbBase):
 
     class Meta:
         table_name = "queue"
+
+
+FieldToPriorityDeferred.set_model(FieldToPriority)

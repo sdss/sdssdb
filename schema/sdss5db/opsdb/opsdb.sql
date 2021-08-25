@@ -74,7 +74,54 @@ CREATE TABLE opsdb.queue(
     position SMALLINT,
     mjd_plan DOUBLE PRECISION);
 
+CREATE TABLE opsdb.field_priority(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    label TEXT);
+
+CREATE TABLE opsdb.field_to_priority(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    field_pk INTEGER UNIQUE,
+    field_priority_pk INTEGER);
+
+CREATE TABLE opsdb.quicklook(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    snr_standard REAL,
+    logsnr_hmag_coef REAL[],
+    exposure_pk INTEGER,
+    readnum INTEGER,
+    exptype TEXT,
+    hmag_standard REAL,
+    snr_standard_scale REAL,
+    snr_predict REAL,
+    logsnr_hmag_coef_all REAL[],
+    zeropt REAL);
+
+CREATE TABLE opsdb.quickred(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    exposure_pk INTEGER,
+    snr_standard REAL,
+    logsnr_hmag_coef REAL[],
+    dither_pixpos REAL,
+    snr_source TEXT,
+    hmag_standard REAL,
+    snr_standard_scale REAL,
+    logsnr_hmag_coef_all REAL[],
+    zeropt REAL,
+    dither_named TEXT);
+
 -- Foreign keys
+
+ALTER TABLE ONLY opsdb.field_to_priority
+    ADD CONSTRAINT field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY opsdb.field_to_priority
+    ADD CONSTRAINT field_priority_fk
+    FOREIGN KEY (field_priority_pk) REFERENCES opsdb.field_priority(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.queue
     ADD CONSTRAINT queue_design_fk
@@ -135,6 +182,17 @@ ALTER TABLE ONLY opsdb.camera
     ADD CONSTRAINT instrument_fk
     FOREIGN KEY (instrument_pk) REFERENCES targetdb.instrument(pk);
 
+ALTER TABLE ONLY opsdb.quicklook
+    ADD CONSTRAINT ql_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY opsdb.quickred
+    ADD CONSTRAINT qr_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES opsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 -- Table data
 
@@ -152,6 +210,8 @@ INSERT INTO opsdb.survey VALUES (1, 'BHM'), (2, 'MWM');
 INSERT INTO opsdb.camera VALUES (1, 0, 'r1'), (2, 0, 'b1'), (3, 1, 'APOGEE');
 
 INSERT INTO opsdb.completion_status VALUES (1, 'not started'), (2, 'started'), (3, 'done');
+
+INSERT INTO opsdb.field_priority VALUES (0, 'disabled'), (1, 'top');
 
 -- Indices
 
@@ -177,6 +237,14 @@ CREATE INDEX CONCURRENTLY start_time_idx
 
 CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON opsdb.camera_frame
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY ql_exposure_pk_idx
+    ON opsdb.quicklook
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY qr_exposure_pk_idx
+    ON opsdb.quickred
     USING BTREE(exposure_pk);
 
 -- pop function to retrieve next in queue and increment
