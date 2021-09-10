@@ -6,6 +6,13 @@ apo:
     port: 5432
     domain: sdss4-[a-z0-9]+.apo.nmsu.edu
 
+lco5:
+    user: sdss_user
+    admin: sdss
+    host: sdss5-db
+    port: 5432
+    domain: sdss5-[a-z0-9]+.lco.cl
+
 apo5:
     user: sdss_user
     admin: sdss
