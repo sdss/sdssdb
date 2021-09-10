@@ -15,6 +15,7 @@ CREATE TABLE apogee_drp.visit (
     MJD	integer,
     TELESCOPE	text,
     APRED_VERS  text,
+    V_APRED     text,
     SURVEY	text,
     FIELD	text,
     PROGRAMNAME	text,

@@ -10,6 +10,7 @@ CREATE TABLE apogee_drp.visit_status (
     LOGFILE    text,
     ERRFILE    text,
     APRED_VERS  text,
+    V_APRED     text,
     INSTRUMENT  text,
     TELESCOPE   text,
     PLATETYPE   text,

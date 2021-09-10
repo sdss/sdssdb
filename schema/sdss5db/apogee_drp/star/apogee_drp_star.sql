@@ -14,6 +14,7 @@ CREATE TABLE apogee_drp.star (
     MJDEND	integer,
     TELESCOPE	text,
     APRED_VERS  text,
+    V_APRED     text,
     HEALPIX	integer,
     SNR	real,
     RA	double precision,

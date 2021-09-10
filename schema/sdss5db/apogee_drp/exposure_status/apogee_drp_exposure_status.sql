@@ -9,6 +9,7 @@ CREATE TABLE apogee_drp.exposure_status (
     EXPOSURE_PK text,
     PLANFILE    text,
     APRED_VERS  text,
+    V_APRED     text,
     INSTRUMENT  text,
     TELESCOPE   text,
     PLATETYPE   text,

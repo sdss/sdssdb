@@ -41,6 +41,7 @@ CREATE TABLE apogee_drp.rv_visit (
     N_COMPONENTS  int,
     RV_COMPONENTS real[3],
     APRED_VERS  text,
+    V_APRED     text,
     CREATED timestamp with time zone DEFAULT now() NOT NULL,
     UNIQUE(APRED_VERS,TELESCOPE,PLATE,MJD,FIBERID,STARVER)
 );

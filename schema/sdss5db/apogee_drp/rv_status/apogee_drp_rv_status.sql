@@ -8,6 +8,7 @@ CREATE TABLE apogee_drp.rv_status (
     PK SERIAL NOT NULL PRIMARY KEY,
     APOGEE_ID    text,
     APRED_VERS  text,
+    V_APRED     text,
     TELESCOPE   text,
     HEALPIX	integer,
     NVISITS	integer,
