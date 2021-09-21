@@ -1,0 +1,9 @@
+Contents are:
+
+bright_single_cadence_generator.py -- python script written by Joleen Carlberg + modified by Kevin Covey to generate bright single cadences.
+bright_single_cadences_v1.cfg -- configuration file with all cadences produced by bright_single_cadence_generator.py 
+mixed2_cadence_generator.py -- python script written by Joleen Carlberg + modified by Kevin Covey to generate mixed2 cadences.
+mixed2_single_cadences_v1.cfg -- configuration file with all cadences produced by mixed2_cadence_generator.py 
+defaultCadences_v1.cfg -- configuration file with an assortment of other default cadences that would be clumsy to autogenerate.
+LoadDeaultCadences_v1.ipynb -- python notebook that combines bright_single, mixed2, and defaultCadences into a single FITS table that can be imported into targetdb. 
+                               (should probably be recast as a script, but we will leave that for next time)  
