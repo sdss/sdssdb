@@ -154,38 +154,18 @@ class Instrument(TargetdbBase):
         table_name = 'instrument'
 
 
-class PositionerStatus(TargetdbBase):
-    label = TextField(null=True)
-    pk = AutoField()
-
-    class Meta:
-        table_name = 'positioner_status'
-
-
-class PositionerInfo(TargetdbBase):
-    apogee = BooleanField(null=False)
-    boss = BooleanField(null=False)
-    fiducial = BooleanField(null=False)
-    pk = AutoField()
-
-    class Meta:
-        table_name = 'positioner_info'
-
-
 class Positioner(TargetdbBase):
-    id = IntegerField(null=True)
+    id = IntegerField(null=True, primary_key=True)
     observatory = ForeignKeyField(column_name='observatory_pk',
                                   field='pk',
                                   model=Observatory)
-    pk = AutoField()
-    status = ForeignKeyField(column_name='positioner_status_pk',
-                             field='pk',
-                             model=PositionerStatus)
-    info = ForeignKeyField(column_name='positioner_info_pk',
-                           field='pk',
-                           model=PositionerInfo)
-    xcen = FloatField(null=True)
-    ycen = FloatField(null=True)
+    row = SmallIntegerField()
+    column = SmallIntegerField()
+    holeid = TextField()
+    fiducial = BooleanField(default=False)
+    disabled = BooleanField(default=False)
+    apogee = BooleanField()
+    boss = BooleanField()
 
     class Meta:
         table_name = 'positioner'
@@ -289,8 +269,8 @@ class Assignment(TargetdbBase):
                                  field='pk')
     pk = AutoField()
     positioner = ForeignKeyField(Positioner,
-                                 column_name='positioner_pk',
-                                 field='pk')
+                                 column_name='positioner_id',
+                                 field='id')
     carton_to_target = ForeignKeyField(CartonToTarget,
                                        column_name='carton_to_target_pk',
                                        field='pk')
