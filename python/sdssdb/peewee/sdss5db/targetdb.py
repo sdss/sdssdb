@@ -85,7 +85,7 @@ class Field(TargetdbBase):
     racen = DoubleField(null=False)
     deccen = DoubleField(null=False)
     position_angle = FloatField(null=True)
-    slots_exposures = IntegerField(null=False)
+    slots_exposures = ArrayField(field_class=IntegerField, null=True)
     cadence = ForeignKeyField(column_name='cadence_pk',
                               field='pk',
                               model=Cadence,

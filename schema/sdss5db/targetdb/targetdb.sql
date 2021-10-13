@@ -137,7 +137,7 @@ CREATE TABLE targetdb.field (
     position_angle REAL,
     -- slots_exposures is 2x24, for dark/bright x LST
     -- needs INTEGER b/c RM I think?
-    slots_exposures INTEGER,
+    slots_exposures INTEGER[][],
     version_pk SMALLINT,
     cadence_pk SMALLINT,
     observatory_pk SMALLINT);
