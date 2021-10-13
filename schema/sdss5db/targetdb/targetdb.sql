@@ -121,10 +121,10 @@ CREATE TABLE targetdb.assignment (
     carton_to_target_pk BIGINT,
     positioner_id SMALLINT,
     instrument_pk SMALLINT,
-    design_pk INTEGER);
+    design_id INTEGER);
 
 CREATE TABLE targetdb.design (
-    pk SERIAL PRIMARY KEY NOT NULL,
+    design_id SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
     field_pk INTEGER,
     design_mode_pk TEXT);
@@ -246,7 +246,7 @@ ALTER TABLE ONLY targetdb.assignment
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.design
@@ -319,9 +319,9 @@ CREATE INDEX CONCURRENTLY assignment_c2t_pk_idx
 CREATE INDEX CONCURRENTLY instrument_pk_idx
     ON targetdb.assignment
     USING BTREE(instrument_pk);
-CREATE INDEX CONCURRENTLY design_pk_idx
+CREATE INDEX CONCURRENTLY design_id_idx
     ON targetdb.assignment
-    USING BTREE(design_pk);
+    USING BTREE(design_id);
 
 CREATE INDEX CONCURRENTLY field_pk_idx
     ON targetdb.design
