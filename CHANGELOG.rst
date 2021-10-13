@@ -5,10 +5,18 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.11 <2021-10-12>`
+* Add cadences and engineering design modes.
+* Fix a bug with the documentation not building with Sphinx 4.
+* Add cadence generator scripts, cfg files, and notebook for merging.
+* Do not cache database field. This was causing issues when reflection was used multiple times in the same routine.
+* Add targetdb ``data_table``.
+* Add ``lco5`` profile for LCO.
+
 * :release:`0.4.10 <2021-08-25>`
-* add priority to field table to opsdb
-* add apo5 profile
-* add apql tables to opsdb
+* Add priority to field table to ``opsdb``
+* Add ``apo5`` profile.
+* Add ``apql`` tables to ``opsdb``.
 * Add ``default_lambda_eff`` to ``targetdb.instrument``.
 * Add ``run_on`` field to ``targetdb.carton``.
 * When calling `.DatabaseConnection.become`, ignore the password stored in the DSN parameters since the user/admin passwords will likely be different.
