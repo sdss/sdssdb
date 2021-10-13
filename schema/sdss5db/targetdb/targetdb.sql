@@ -5,6 +5,7 @@ targetDB schema version v0.5.0
 Created Jan 2018 - J. Sánchez-Gallego
 Updated Feb 2020 - J. Sánchez-Gallego
 Updated Feb 2021 - J. Donor
+Updated Oct 2021 - J. Sánchez-Gallego (updated positioner table).
 
 */
 
@@ -75,7 +76,7 @@ CREATE TABLE targetdb.carton_to_target (
     priority INTEGER);
 
 -- We use "pk serial" instead of the usual catalogdb "pk bigserial"
--- for consistency with the rest of targetdb. 
+-- for consistency with the rest of targetdb.
 create table targetdb.cadence(
     label text not null,
     nepochs integer,
@@ -99,28 +100,21 @@ CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
-CREATE TABLE targetdb.positioner (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    id INTEGER,
-    xcen REAL,
-    ycen REAL,
-    positioner_status_pk SMALLINT NOT NULL,
-    positioner_info_pk SMALLINT NOT NULL,
-    observatory_pk SMALLINT NOT NULL);
-
-CREATE TABLE targetdb.positioner_status (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT);
-
-CREATE TABLE targetdb.positioner_info (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    apogee BOOLEAN NOT NULL,
-    boss BOOLEAN NOT NULL,
-    fiducial BOOLEAN NOT NULL);
-
 CREATE TABLE targetdb.observatory (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT NOT NULL);
+
+CREATE TABLE targetdb.positioner (
+    id INTEGER PRIMARY KEY CHECK (id >= 1),
+    row INTEGER,
+    "column" INTEGER,
+    holeid TEXT,
+    observatory_pk SMALLINT NOT NULL REFERENCES targetdb.observatory(pk),
+    fiducial BOOLEAN DEFAULT false,
+    disabled BOOLEAN DEFAULT false,
+    apogee BOOLEAN,
+    boss BOOLEAN
+);
 
 CREATE TABLE targetdb.assignment (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -273,18 +267,6 @@ ALTER TABLE ONLY targetdb.field
     FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT positioner_status_fk
-    FOREIGN KEY (positioner_status_pk) REFERENCES targetdb.positioner_status(pk);
-
-ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT positioner_info_fk
-    FOREIGN KEY (positioner_info_pk) REFERENCES targetdb.positioner_info(pk);
-
-ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT observatory_fk
-    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
-
 ALTER TABLE ONLY targetdb.magnitude
     ADD CONSTRAINT carton_to_target_fk
     FOREIGN KEY (carton_to_target_pk) REFERENCES targetdb.carton_to_target(pk)
@@ -334,9 +316,6 @@ CREATE INDEX CONCURRENTLY c2t_instrument_pk_idx
 CREATE INDEX CONCURRENTLY assignment_c2t_pk_idx
     ON targetdb.assignment
     USING BTREE(carton_to_target_pk);
-CREATE INDEX CONCURRENTLY positioner_pk_idx
-    ON targetdb.assignment
-    USING BTREE(positioner_pk);
 CREATE INDEX CONCURRENTLY instrument_pk_idx
     ON targetdb.assignment
     USING BTREE(instrument_pk);
@@ -358,12 +337,10 @@ CREATE INDEX CONCURRENTLY observatory_pk_idx
     ON targetdb.field
     USING BTREE(observatory_pk);
 
-CREATE INDEX CONCURRENTLY positioner_status_pk_idx
-    ON targetdb.positioner
-    USING BTREE(positioner_status_pk);
-CREATE INDEX CONCURRENTLY positioner_info_pk_idx
-    ON targetdb.positioner
-    USING BTREE(positioner_info_pk);
 CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx
     ON targetdb.positioner
     USING BTREE(observatory_pk);
+
+CREATE INDEX CONCURRENTLY positioner_holeid_idx
+    ON targetdb.positioner
+    USING BTREE(holeid);
