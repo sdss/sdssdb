@@ -263,7 +263,8 @@ class CartonToTarget(TargetdbBase):
 class Assignment(TargetdbBase):
     design = ForeignKeyField(Design,
                              column_name='design_id',
-                             field='design_id')
+                             field='design_id',
+                             backref="assignments")
     instrument = ForeignKeyField(Instrument,
                                  column_name='instrument_pk',
                                  field='pk')
