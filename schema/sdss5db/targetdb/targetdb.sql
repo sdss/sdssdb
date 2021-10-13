@@ -125,7 +125,7 @@ CREATE TABLE targetdb.observatory (
 CREATE TABLE targetdb.assignment (
     pk SERIAL PRIMARY KEY NOT NULL,
     carton_to_target_pk BIGINT,
-    positioner_pk SMALLINT,
+    positioner_id SMALLINT,
     instrument_pk SMALLINT,
     design_pk INTEGER);
 
@@ -244,7 +244,7 @@ ALTER TABLE ONLY targetdb.assignment
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT positioner_fk
-    FOREIGN KEY (positioner_pk) REFERENCES targetdb.positioner(pk);
+    FOREIGN KEY (positioner_id) REFERENCES targetdb.positioner(id);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT instrument_fk
