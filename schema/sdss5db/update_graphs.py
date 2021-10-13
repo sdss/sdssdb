@@ -44,6 +44,12 @@ def create_graphs():
     tdb_graph.write_pdf(f'{cwd}/targetdb/sdss5db.targetdb.pdf')
     tdb_graph.write_png(f'{cwd}/targetdb/sdss5db.targetdb.png')
 
+    ops_graph = create_schema_graph(base=opsdb.OpsdbBase,
+                                    show_columns=True,
+                                    graph_options={'rankdir': 'TB'})
+    ops_graph.write_pdf(f'{cwd}/opsdb/sdss5db.opsdb.pdf')
+    ops_graph.write_png(f'{cwd}/opsdb/sdss5db.opsdb.png')
+
 
 if __name__ == '__main__':
 
@@ -53,6 +59,6 @@ if __name__ == '__main__':
     assert database.connected, 'database is not connected'
 
     # Import modules here to make sure all the relational tables are loaded.
-    from sdssdb.peewee.sdss5db import catalogdb, targetdb
+    from sdssdb.peewee.sdss5db import catalogdb, targetdb, opsdb
 
     create_graphs()
