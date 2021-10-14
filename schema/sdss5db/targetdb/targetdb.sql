@@ -104,24 +104,22 @@ CREATE TABLE targetdb.observatory (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT NOT NULL);
 
-CREATE TABLE targetdb.positioner (
-    id INTEGER PRIMARY KEY CHECK (id >= 1),
+CREATE TABLE targetdb.hole (
+    pk INTEGER PRIMARY KEY,
     row INTEGER,
     "column" INTEGER,
     holeid TEXT,
     observatory_pk SMALLINT NOT NULL REFERENCES targetdb.observatory(pk),
-    fiducial BOOLEAN DEFAULT false,
-    disabled BOOLEAN DEFAULT false,
-    apogee BOOLEAN,
-    boss BOOLEAN
+    UNIQUE (holeid, observatoryid)
 );
 
 CREATE TABLE targetdb.assignment (
     pk SERIAL PRIMARY KEY NOT NULL,
     carton_to_target_pk BIGINT,
-    positioner_id SMALLINT,
-    instrument_pk SMALLINT,
-    design_id INTEGER);
+    hole_pk SMALLINT REFERENCES targetdb.hole(pk),
+    instrument_pk SMALLINT REFERENCES instrument(pk),
+    design_id INTEGER REFERENCES design(id)
+);
 
 CREATE TABLE targetdb.design (
     design_id SERIAL PRIMARY KEY NOT NULL,
@@ -182,11 +180,6 @@ INSERT INTO targetdb.category VALUES
 
 INSERT INTO targetdb.mapper VALUES (0, 'MWM'), (1, 'BHM');
 
-INSERT INTO targetdb.positioner_info VALUES
-    (0, true, true, false), (1, false, true, false), (2, false, false, true);
-
-INSERT INTO targetdb.positioner_status VALUES (0, 'OK'), (1, 'KO');
-
 INSERT INTO targetdb.observatory VALUES (0, 'APO'), (1, 'LCO');
 
 
@@ -237,8 +230,8 @@ ALTER TABLE ONLY targetdb.assignment
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.assignment
-    ADD CONSTRAINT positioner_fk
-    FOREIGN KEY (positioner_id) REFERENCES targetdb.positioner(id);
+    ADD CONSTRAINT hole_fk
+    FOREIGN KEY (hole_pk) REFERENCES targetdb.hole(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT instrument_fk
@@ -316,12 +309,15 @@ CREATE INDEX CONCURRENTLY c2t_instrument_pk_idx
 CREATE INDEX CONCURRENTLY assignment_c2t_pk_idx
     ON targetdb.assignment
     USING BTREE(carton_to_target_pk);
-CREATE INDEX CONCURRENTLY instrument_pk_idx
+CREATE INDEX CONCURRENTLY assignment_instrument_pk_idx
     ON targetdb.assignment
     USING BTREE(instrument_pk);
-CREATE INDEX CONCURRENTLY design_id_idx
+CREATE INDEX CONCURRENTLY assignment_design_id_idx
     ON targetdb.assignment
     USING BTREE(design_id);
+CREATE INDEX CONCURRENTLY assignment_hole_pk_idx
+    ON targetdb.assignment
+    USING BTREE(hole_pk);
 
 CREATE INDEX CONCURRENTLY field_pk_idx
     ON targetdb.design
@@ -337,10 +333,9 @@ CREATE INDEX CONCURRENTLY observatory_pk_idx
     ON targetdb.field
     USING BTREE(observatory_pk);
 
-CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx
-    ON targetdb.positioner
+CREATE INDEX CONCURRENTLY hole_observatory_pk_idx
+    ON targetdb.hole
     USING BTREE(observatory_pk);
-
-CREATE INDEX CONCURRENTLY positioner_holeid_idx
-    ON targetdb.positioner
+CREATE INDEX CONCURRENTLY hole_holeid_idx
+    ON targetdb.hole
     USING BTREE(holeid);

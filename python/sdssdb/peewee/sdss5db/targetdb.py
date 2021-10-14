@@ -7,10 +7,10 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 
-from peewee import (AutoField, BooleanField, DateTimeField,
-                    DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField,
-                    SmallIntegerField, TextField)
+from peewee import (SQL, AutoField, BooleanField,
+                    DateTimeField, DeferredThroughModel,
+                    DoubleField, FloatField, ForeignKeyField,
+                    IntegerField, SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -154,21 +154,17 @@ class Instrument(TargetdbBase):
         table_name = 'instrument'
 
 
-class Positioner(TargetdbBase):
-    id = IntegerField(null=True, primary_key=True)
+class Hole(TargetdbBase):
+    pk = IntegerField(null=False, primary_key=True)
     observatory = ForeignKeyField(column_name='observatory_pk',
                                   field='pk',
                                   model=Observatory)
     row = SmallIntegerField()
     column = SmallIntegerField()
     holeid = TextField()
-    fiducial = BooleanField(default=False)
-    disabled = BooleanField(default=False)
-    apogee = BooleanField()
-    boss = BooleanField()
 
     class Meta:
-        table_name = 'positioner'
+        table_name = 'hole'
 
 
 class Category(TargetdbBase):
@@ -219,9 +215,6 @@ class Target(TargetdbBase):
     # designs = ManyToManyField(Design,
     #                           through_model=AssignmentDeferred,
     #                           backref='targets')
-    # positioners = ManyToManyField(Positioner,
-    #                               through_model=AssignmentDeferred,
-    #                               backref='targets')
     # instruments = ManyToManyField(Instrument,
     #                               through_model=AssignmentDeferred,
     #                               backref='targets')
@@ -269,15 +262,16 @@ class Assignment(TargetdbBase):
                                  column_name='instrument_pk',
                                  field='pk')
     pk = AutoField()
-    positioner = ForeignKeyField(Positioner,
-                                 column_name='positioner_id',
-                                 field='id')
+    hole = ForeignKeyField(Hole,
+                           column_name='hole_pk',
+                           field='pk')
     carton_to_target = ForeignKeyField(CartonToTarget,
                                        column_name='carton_to_target_pk',
                                        field='pk')
 
     class Meta:
         table_name = 'assignment'
+        constraints = [SQL('UNIQUE(holeid, observatory_pk)')]
 
 
 class Magnitude(TargetdbBase):
