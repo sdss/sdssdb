@@ -11,17 +11,16 @@ CREATE SCHEMA opsdb;
 SET search_path TO opsdb;
 
 CREATE TABLE opsdb.configuration (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    configuration_id INTEGER,
-    design_pk INTEGER,
+    configuration_id SERIAL PRIMARY KEY NOT NULL,
+    design_id INTEGER,
     comment TEXT,
     temperature TEXT,
     epoch REAL);
 
-CREATE TABLE opsdb.target_to_focal (
+CREATE TABLE opsdb.assignment_to_focal (
     pk SERIAL PRIMARY KEY NOT NULL,
-    target_pk INTEGER,
-    configuration_pk INTEGER,
+    assignment_pk INTEGER,
+    configuration_id INTEGER,
     xfocal REAL,
     yfocal REAL);
 
@@ -31,13 +30,13 @@ CREATE TABLE opsdb.completion_status (
 
 CREATE TABLE opsdb.design_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
-    design_pk INTEGER UNIQUE,
+    design_id INTEGER UNIQUE,
     completion_status_pk SMALLINT,
     mjd INTEGER);
 
 CREATE TABLE opsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,
-    configuration_pk INTEGER NOT NULL,
+    configuration_id INTEGER NOT NULL,
     survey_pk SMALLINT,
     exposure_no BIGINT,
     comment TEXT,
@@ -70,7 +69,7 @@ CREATE TABLE opsdb.camera_frame (
 
 CREATE TABLE opsdb.queue(
     pk SERIAL PRIMARY KEY NOT NULL,
-    design_pk INTEGER,
+    design_id INTEGER,
     position SMALLINT,
     mjd_plan DOUBLE PRECISION);
 
@@ -80,7 +79,7 @@ CREATE TABLE opsdb.field_priority(
 
 CREATE TABLE opsdb.field_to_priority(
     pk SERIAL PRIMARY KEY NOT NULL,
-    field_pk INTEGER UNIQUE,
+    field_id INTEGER UNIQUE,
     field_priority_pk INTEGER);
 
 CREATE TABLE opsdb.quicklook(
@@ -113,7 +112,7 @@ CREATE TABLE opsdb.quickred(
 
 ALTER TABLE ONLY opsdb.field_to_priority
     ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+    FOREIGN KEY (field_id) REFERENCES targetdb.field(field_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -125,28 +124,27 @@ ALTER TABLE ONLY opsdb.field_to_priority
 
 ALTER TABLE ONLY opsdb.queue
     ADD CONSTRAINT queue_design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk);
-
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
 ALTER TABLE ONLY opsdb.configuration
     ADD CONSTRAINT config_design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk);
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
-ALTER TABLE ONLY opsdb.target_to_focal
+ALTER TABLE ONLY opsdb.assignment_to_focal
     ADD CONSTRAINT configuration_fk
-    FOREIGN KEY (configuration_pk) REFERENCES opsdb.configuration(pk)
+    FOREIGN KEY (configuration_id) REFERENCES opsdb.configuration(configuration_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY opsdb.target_to_focal
-    ADD CONSTRAINT target_fk
-    FOREIGN KEY (target_pk) REFERENCES targetdb.target(pk)
+ALTER TABLE ONLY opsdb.assignment_to_focal
+    ADD CONSTRAINT assignment_fk
+    FOREIGN KEY (assignment_pk) REFERENCES targetdb.assignment(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.design_to_status
     ADD CONSTRAINT status_design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -158,7 +156,7 @@ ALTER TABLE ONLY opsdb.design_to_status
 
 ALTER TABLE ONLY opsdb.exposure
     ADD CONSTRAINT configuration_fk
-    FOREIGN KEY (configuration_pk) REFERENCES opsdb.configuration(pk);
+    FOREIGN KEY (configuration_id) REFERENCES opsdb.configuration(configuration_id);
 
 ALTER TABLE ONLY opsdb.exposure
     ADD CONSTRAINT survey_fk
@@ -196,7 +194,6 @@ ALTER TABLE ONLY opsdb.quickred
 
 -- Table data
 
-
 INSERT INTO opsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
     (5, 'Object'), (6, 'Dark'), (7, 'Sky'), (8, 'Calib'),
@@ -215,21 +212,21 @@ INSERT INTO opsdb.field_priority VALUES (0, 'disabled'), (1, 'top');
 
 -- Indices
 
-CREATE INDEX CONCURRENTLY design_pk_idx
+CREATE INDEX CONCURRENTLY design_id_idx
     ON opsdb.configuration
-    USING BTREE(design_pk);
+    USING BTREE(design_id);
 
-CREATE INDEX CONCURRENTLY target_pk_idx
-    ON opsdb.target_to_focal
-    USING BTREE(target_pk);
+CREATE INDEX CONCURRENTLY assignment_pk_idx
+    ON opsdb.assignment_to_focal
+    USING BTREE(assignment_pk);
 
-CREATE INDEX CONCURRENTLY design_to_status_design_pk_idx
+CREATE INDEX CONCURRENTLY design_to_status_design_id_idx
     ON opsdb.design_to_status
-    USING BTREE(design_pk);
+    USING BTREE(design_id);
 
-CREATE INDEX CONCURRENTLY configuration_pk_idx
+CREATE INDEX CONCURRENTLY configuration_id_idx
     ON opsdb.exposure
-    USING BTREE(configuration_pk);
+    USING BTREE(configuration_id);
 
 CREATE INDEX CONCURRENTLY start_time_idx
     ON opsdb.exposure
@@ -262,11 +259,11 @@ BEGIN
     FOR _pk, _design, _pos IN
         SELECT * FROM opsdb.queue
         ORDER BY position
-    LOOP 
+    LOOP
         IF _pos = 1 then
             design := _design;
             UPDATE opsdb.queue SET position = -1 WHERE pk=_pk;
-        ELSE 
+        ELSE
             UPDATE opsdb.queue SET position = _pos - 1 WHERE pk=_pk;
         END IF;
     END LOOP;
@@ -285,7 +282,7 @@ declare
 BEGIN
     SELECT MAX(position) INTO maxpos FROM opsdb.queue;
     IF maxpos IS NULL THEN SELECT 0 INTO maxpos; END IF;
-    INSERT INTO opsdb.queue  (design_pk, position, mjd_plan)
+    INSERT INTO opsdb.queue  (design_id, position, mjd_plan)
     VALUES (design, maxpos+1, mjd);
 END;
 $$ LANGUAGE plpgsql;
@@ -320,7 +317,7 @@ BEGIN
         UPDATE opsdb.queue SET mjd_plan = _mjd_plan + _mjd_offset WHERE pk=_pk;
     END LOOP;
 
-    INSERT INTO opsdb.queue  (design_pk, position, mjd_plan)
+    INSERT INTO opsdb.queue  (design_id, position, mjd_plan)
     VALUES (design, pos, _mjd_next);
 END;
 $$ LANGUAGE plpgsql;
