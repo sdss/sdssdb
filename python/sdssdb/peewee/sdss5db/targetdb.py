@@ -7,10 +7,10 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 
-from peewee import (SQL, AutoField, BooleanField,
-                    DateTimeField, DeferredThroughModel,
-                    DoubleField, FloatField, ForeignKeyField,
-                    IntegerField, SmallIntegerField, TextField)
+from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
+                    DateTimeField, DeferredThroughModel, DoubleField,
+                    FloatField, ForeignKeyField, IntegerField,
+                    SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -203,9 +203,7 @@ class Carton(TargetdbBase):
 
 
 class Target(TargetdbBase):
-    catalogid = ForeignKeyField(column_name='catalogid',
-                                model=catalogdb.Catalog,
-                                field='catalogid')
+    catalogid = BigIntegerField(null=False)
     dec = DoubleField(null=True)
     epoch = FloatField(null=True)
     pk = AutoField()
