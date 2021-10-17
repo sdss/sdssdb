@@ -9,8 +9,9 @@
 import datetime
 
 from peewee import (AutoField, BigIntegerField, DateTimeField,
-                    DeferredThroughModel, FloatField, ForeignKeyField,
-                    IntegerField, ManyToManyField, Select, TextField, fn)
+                    DeferredThroughModel, DoubleField,
+                    FloatField, ForeignKeyField, IntegerField,
+                    ManyToManyField, Select, TextField, fn)
 from playhouse.postgres_ext import ArrayField
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
@@ -60,7 +61,8 @@ class Configuration(OpsdbBase):
                              model=targetdb.Design)
     comment = TextField(null=True)
     temperature = TextField(null=True)
-    epoch = FloatField()
+    epoch = DoubleField()
+    calibration_version = TextField()
 
     class Meta:
         table_name = 'configuration'

@@ -15,7 +15,8 @@ CREATE TABLE opsdb.configuration (
     design_id INTEGER,
     comment TEXT,
     temperature TEXT,
-    epoch REAL);
+    epoch DOUBLE PRECISION,
+    calibration_version TEXT);
 
 CREATE TABLE opsdb.assignment_to_focal (
     pk SERIAL PRIMARY KEY NOT NULL,
