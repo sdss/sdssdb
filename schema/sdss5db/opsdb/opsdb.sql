@@ -22,7 +22,8 @@ CREATE TABLE opsdb.assignment_to_focal (
     assignment_pk INTEGER,
     configuration_id INTEGER,
     xfocal REAL,
-    yfocal REAL);
+    yfocal REAL,
+    positioner_id SMALLINT);
 
 CREATE TABLE opsdb.completion_status (
     pk SERIAL PRIMARY KEY NOT NULL,

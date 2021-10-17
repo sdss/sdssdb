@@ -76,6 +76,7 @@ class AssignmentToFocal(OpsdbBase):
                                     field='configuration_id')
     xfocal = FloatField()
     yfocal = FloatField()
+    positioner_id = IntegerField()
 
     class Meta:
         table_name = 'assignment_to_focal'
