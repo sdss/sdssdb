@@ -139,7 +139,6 @@ ALTER TABLE ONLY opsdb.assignment_to_focal
 ALTER TABLE ONLY opsdb.assignment_to_focal
     ADD CONSTRAINT assignment_fk
     FOREIGN KEY (assignment_pk) REFERENCES targetdb.assignment(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.design_to_status
