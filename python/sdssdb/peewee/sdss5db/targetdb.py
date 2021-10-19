@@ -136,10 +136,10 @@ class Design(TargetdbBase):
                             backref="designs")
     exposure = IntegerField(null=True)
     design_id = AutoField()
-    design_mode_pk = ForeignKeyField(column_name='design_mode_pk',
-                                     field='label',
-                                     model=DesignMode,
-                                     null=True)
+    design_mode = ForeignKeyField(column_name='design_mode_label',
+                                  field='label',
+                                  model=DesignMode,
+                                  null=True)
 
     class Meta:
         table_name = 'design'

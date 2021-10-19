@@ -125,7 +125,7 @@ CREATE TABLE targetdb.design (
     design_id SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
     field_pk INTEGER,
-    design_mode_pk TEXT);
+    design_mode_label TEXT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -268,7 +268,7 @@ ALTER TABLE ONLY targetdb.magnitude
 
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_mode_fk
-    FOREIGN KEY (design_mode_pk) REFERENCES targetdb.design_mode(label);
+    FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
 
 -- Indices
 
