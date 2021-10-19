@@ -81,7 +81,7 @@ CREATE TABLE opsdb.field_priority(
 
 CREATE TABLE opsdb.field_to_priority(
     pk SERIAL PRIMARY KEY NOT NULL,
-    field_id INTEGER UNIQUE,
+    field_id INTEGER,
     field_priority_pk INTEGER);
 
 CREATE TABLE opsdb.quicklook(
