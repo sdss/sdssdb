@@ -9,6 +9,7 @@ CREATE TABLE apogee_drp.exposure (
     NUM         integer,
     NREAD       integer,
     EXPTYPE     text,
+    ARCTYPE     text,
     PLATEID     text,
     EXPTIME     real,
     DATEOBS     text,
