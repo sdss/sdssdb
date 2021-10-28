@@ -82,6 +82,14 @@ class AllWise(CatalogdbModel):
         table_name = 'allwise'
 
 
+class BailerJonesEDR3(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'bailer_jones_edr3'
+
+
 class EROSITASupersetAGN(CatalogdbModel):
 
     pkey = BigIntegerField(primary_key=True)
