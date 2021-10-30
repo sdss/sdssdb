@@ -254,6 +254,21 @@ class Sagitta(CatalogdbModel):
         table_name = 'sagitta'
 
 
+class SagittaEDR3(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia_dr2 = ForeignKeyField(
+        model=Gaia_DR2,
+        field='source_id',
+        column_name='source_id',
+        object_id_name='source_id',
+        backref='+')
+
+    class Meta:
+        table_name = 'sagitta_edr3'
+
+
 class SDSSV_Plateholes_Meta(CatalogdbModel):
 
     yanny_uid = BigIntegerField(primary_key=True)
