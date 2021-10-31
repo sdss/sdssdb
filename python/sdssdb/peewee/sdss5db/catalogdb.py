@@ -1384,6 +1384,14 @@ class Skies_v1(CatalogdbModel):
         table_name = 'skies_v1'
 
 
+class Skies_v2(CatalogdbModel):
+
+    pix_32768 = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'skies_v2'
+
+
 class SuperCosmos(CatalogdbModel):
 
     objid = BigIntegerField(primary_key=True)
