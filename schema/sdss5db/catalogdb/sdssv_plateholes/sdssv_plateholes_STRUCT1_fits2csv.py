@@ -50,6 +50,8 @@ for input_fits_file in input_fits_file_list:
     for line in fin:
         num_lines_csv = num_lines_csv + 1
 
+        # The comma in the second parameter of replace() is used
+        # later for splitting in line.split(',')
         line = line.strip()
         line = line.rstrip(')')
         line = line.lstrip('(')
