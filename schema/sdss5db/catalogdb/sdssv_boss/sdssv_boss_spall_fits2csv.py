@@ -25,8 +25,8 @@ for input_fits_file in input_fits_file_list:
 
     ftemp1.close()
 
-    # Above loop prints each row on many lines
-    # Below loop prints each row on one line
+    # Above loop prints one row on many lines
+    # Below loop prints one row on one line
     ftemp1 = open('temp1', 'r')
     ftemp2 = open('temp2', 'w')
     line_out = ''
