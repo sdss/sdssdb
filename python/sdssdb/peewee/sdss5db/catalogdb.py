@@ -424,6 +424,36 @@ class SDSS_DR16_QSO(SDSS_DR14_QSO):
         table_name = 'sdss_dr16_qso'
 
 
+class SDSS_DR17_APOGEE_Allplates(CatalogdbModel):
+
+    class Meta:
+        table_name = 'sdss_dr17_apogee_allplates'
+
+
+class SDSS_DR17_APOGEE_Allstarlite(CatalogdbModel):
+
+    class Meta:
+        table_name = 'sdss_dr17_apogee_allstarlite'
+
+
+class SDSS_DR17_APOGEE_Allstar(CatalogdbModel):
+
+    class Meta:
+        table_name = 'sdss_dr17_apogee_allstar'
+
+
+class SDSS_DR17_APOGEE_Allvisit(CatalogdbModel):
+
+    class Meta:
+        table_name = 'sdss_dr17_apogee_allvisit'
+
+
+class SDSS_DR17_APOGEE_Allstarmerge(CatalogdbModel):
+
+    class Meta:
+        table_name = 'sdss_dr17_apogee_allstarmerge'
+
+
 class unWISE(CatalogdbModel):
 
     unwise_objid = TextField(primary_key=True)
