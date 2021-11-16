@@ -110,15 +110,15 @@ CREATE TABLE targetdb.hole (
     "column" INTEGER,
     holeid TEXT,
     observatory_pk SMALLINT NOT NULL REFERENCES targetdb.observatory(pk),
-    UNIQUE (holeid, observatoryid)
+    UNIQUE (holeid, observatory_pk)
 );
 
 CREATE TABLE targetdb.assignment (
     pk SERIAL PRIMARY KEY NOT NULL,
     carton_to_target_pk BIGINT,
-    hole_pk SMALLINT REFERENCES targetdb.hole(pk),
-    instrument_pk SMALLINT REFERENCES instrument(pk),
-    design_id INTEGER REFERENCES design(id)
+    hole_pk SMALLINT,
+    instrument_pk SMALLINT,
+    design_id INTEGER
 );
 
 CREATE TABLE targetdb.design (
