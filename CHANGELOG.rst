@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.4.12 <2021-11-16>`
+* Add ``skies_v2``, ``bailer_jones_dr3``, ``sagitta_edr3``, and APOGEE DR17 tables.
+* Several major modifications to ``targetdb`` and ``opsdb`` schemas.
+
 * :release:`0.4.11 <2021-10-12>`
 * Add cadences and engineering design modes.
 * Fix a bug with the documentation not building with Sphinx 4.
