@@ -9,8 +9,9 @@
 import datetime
 
 from peewee import (AutoField, BigIntegerField, DateTimeField,
-                    DeferredThroughModel, FloatField, ForeignKeyField,
-                    IntegerField, ManyToManyField, Select, TextField, fn)
+                    DeferredThroughModel, DoubleField,
+                    FloatField, ForeignKeyField, IntegerField,
+                    ManyToManyField, Select, TextField, fn)
 from playhouse.postgres_ext import ArrayField
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
@@ -46,43 +47,41 @@ class FieldToPriority(OpsdbBase):
                                     column_name='field_priority_pk',
                                     field='pk')
     field = ForeignKeyField(targetdb.Field,
-                            column_name='field_pk',
-                            field='pk')
+                            column_name='field_id',
+                            field='field_id')
 
     class Meta:
         table_name = 'field_to_priority'
 
 
 class Configuration(OpsdbBase):
-    pk = AutoField()
-    configuration_id = BigIntegerField()
-    design = ForeignKeyField(column_name='design_pk',
-                             field='pk',
+    configuration_id = AutoField()
+    design = ForeignKeyField(column_name='design_id',
+                             field='design_id',
                              model=targetdb.Design)
     comment = TextField(null=True)
     temperature = TextField(null=True)
-    epoch = FloatField()
+    epoch = DoubleField()
+    calibration_version = TextField()
 
     class Meta:
         table_name = 'configuration'
 
 
-class TargetTofocal(OpsdbBase):
+class AssignmentToFocal(OpsdbBase):
     pk = AutoField()
-    target = ForeignKeyField(targetdb.Target,
-                             column_name='target_pk',
-                             field='pk')
+    assignment = ForeignKeyField(targetdb.Assignment,
+                                 column_name='assignment_pk',
+                                 field='pk')
     configuration = ForeignKeyField(Configuration,
-                                    column_name='configuration_pk',
-                                    field='pk')
-    target = ForeignKeyField(targetdb.Target,
-                             column_name='target_pk',
-                             field='pk')
+                                    column_name='configuration_id',
+                                    field='configuration_id')
     xfocal = FloatField()
     yfocal = FloatField()
+    positioner_id = IntegerField()
 
     class Meta:
-        table_name = 'target_to_focal'
+        table_name = 'assignment_to_focal'
 
 
 class CompletionStatus(OpsdbBase):
@@ -96,8 +95,8 @@ class CompletionStatus(OpsdbBase):
 class DesignToStatus(OpsdbBase):
     pk = AutoField()
     design = ForeignKeyField(targetdb.Design,
-                             column_name='design_pk',
-                             field='pk')
+                             column_name='design_id',
+                             field='design_id')
     status = ForeignKeyField(CompletionStatus,
                              column_name='completion_status_pk',
                              field='pk')
@@ -136,8 +135,8 @@ class Camera(OpsdbBase):
 
 class Exposure(OpsdbBase):
     pk = AutoField()
-    configuration = ForeignKeyField(column_name='configuration_pk',
-                                    field='pk',
+    configuration = ForeignKeyField(column_name='configuration_id',
+                                    field='configuration_id',
                                     model=Configuration)
     survey = ForeignKeyField(column_name='survey_pk',
                              field='pk',
@@ -146,15 +145,9 @@ class Exposure(OpsdbBase):
     comment = TextField(null=True)
     start_time = DateTimeField(default=datetime.datetime.now)
     exposure_time = FloatField()
-    # exposure_status = ForeignKeyField(column_name='exposure_status_pk',
-    #                                   field='pk',
-    #                                   model=ExposureStatus)
     exposure_flavor = ForeignKeyField(column_name='exposure_flavor_pk',
                                       field='pk',
                                       model=ExposureFlavor)
-    # camera = ForeignKeyField(column_name='camera_pk',
-    #                          field='pk',
-    #                          model=Camera)
 
     class Meta:
         table_name = 'exposure'
@@ -219,12 +212,9 @@ class Quickred(OpsdbBase):
 
 
 class Queue(OpsdbBase):
-    design = ForeignKeyField(column_name='design_pk',
-                             field='pk',
+    design = ForeignKeyField(column_name='design_id',
+                             field='design_id',
                              model=targetdb.Design)
-    # field = ForeignKeyField(column_name='field_pk',
-    #                         field='pk',
-    #                         model=targetdb.Field)
     position = IntegerField()
     pk = AutoField()
     mjd_plan = FloatField()
@@ -240,8 +230,8 @@ class Queue(OpsdbBase):
     @classmethod
     def appendQueue(cls, design, mjd_plan=None):
         if isinstance(design, targetdb.Design):
-            design = design.pk
-        Select(columns=[fn.appendQueue(design, mjd_plan)]).execute(database)
+            design_id = design.design_id
+        Select(columns=[fn.appendQueue(design_id, mjd_plan)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
@@ -256,8 +246,10 @@ class Queue(OpsdbBase):
             # if mjd_plan before is null, stays null regardless
             exp_length = 18 / 60 / 24
         if isinstance(design, targetdb.Design):
-            design = design.pk
-        Select(columns=[fn.insertInQueue(design, position, exp_length)]).execute(database)
+            design_id = design.design_id
+        Select(columns=[fn.insertInQueue(design_id,
+                                         position,
+                                         exp_length)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
@@ -280,7 +272,7 @@ class Queue(OpsdbBase):
 
         rm_designs = cls.select()\
                         .join(targetdb.Design,
-                              on=(targetdb.Design.pk == cls.design_pk))\
+                              on=(targetdb.Design.design_id == cls.design_id))\
                         .join(targetdb.Field)\
                         .where(targetdb.Field.field_id == field_id)
 
@@ -288,12 +280,12 @@ class Queue(OpsdbBase):
         pos = max(positions)
 
         # delete returns number of records deleted
-        num_rm = cls.delete()\
-                    .where(cls.position << positions)\
+        num_rm = cls.delete() \
+                    .where(cls.position << positions) \
                     .execute()
 
-        cls.update(position=cls.position - num_rm)\
-           .where(cls.position > pos)\
+        cls.update(position=cls.position - num_rm) \
+           .where(cls.position > pos) \
            .execute()
 
         if returnPositions:

@@ -7,8 +7,8 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 
-from peewee import (AutoField, BooleanField, DateTimeField,
-                    DeferredThroughModel, DoubleField,
+from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
+                    DateTimeField, DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
                     SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
@@ -135,11 +135,11 @@ class Design(TargetdbBase):
                             null=True,
                             backref="designs")
     exposure = IntegerField(null=True)
-    pk = AutoField()
-    design_mode_pk = ForeignKeyField(column_name='design_mode_pk',
-                                     field='label',
-                                     model=DesignMode,
-                                     null=True)
+    design_id = AutoField()
+    design_mode = ForeignKeyField(column_name='design_mode_label',
+                                  field='label',
+                                  model=DesignMode,
+                                  null=True)
 
     class Meta:
         table_name = 'design'
@@ -154,41 +154,17 @@ class Instrument(TargetdbBase):
         table_name = 'instrument'
 
 
-class PositionerStatus(TargetdbBase):
-    label = TextField(null=True)
-    pk = AutoField()
-
-    class Meta:
-        table_name = 'positioner_status'
-
-
-class PositionerInfo(TargetdbBase):
-    apogee = BooleanField(null=False)
-    boss = BooleanField(null=False)
-    fiducial = BooleanField(null=False)
-    pk = AutoField()
-
-    class Meta:
-        table_name = 'positioner_info'
-
-
-class Positioner(TargetdbBase):
-    id = IntegerField(null=True)
+class Hole(TargetdbBase):
+    pk = IntegerField(null=False, primary_key=True)
     observatory = ForeignKeyField(column_name='observatory_pk',
                                   field='pk',
                                   model=Observatory)
-    pk = AutoField()
-    status = ForeignKeyField(column_name='positioner_status_pk',
-                             field='pk',
-                             model=PositionerStatus)
-    info = ForeignKeyField(column_name='positioner_info_pk',
-                           field='pk',
-                           model=PositionerInfo)
-    xcen = FloatField(null=True)
-    ycen = FloatField(null=True)
+    row = SmallIntegerField()
+    column = SmallIntegerField()
+    holeid = TextField()
 
     class Meta:
-        table_name = 'positioner'
+        table_name = 'hole'
 
 
 class Category(TargetdbBase):
@@ -227,9 +203,7 @@ class Carton(TargetdbBase):
 
 
 class Target(TargetdbBase):
-    catalogid = ForeignKeyField(column_name='catalogid',
-                                model=catalogdb.Catalog,
-                                field='catalogid')
+    catalogid = BigIntegerField(null=False)
     dec = DoubleField(null=True)
     epoch = FloatField(null=True)
     pk = AutoField()
@@ -239,9 +213,6 @@ class Target(TargetdbBase):
     # designs = ManyToManyField(Design,
     #                           through_model=AssignmentDeferred,
     #                           backref='targets')
-    # positioners = ManyToManyField(Positioner,
-    #                               through_model=AssignmentDeferred,
-    #                               backref='targets')
     # instruments = ManyToManyField(Instrument,
     #                               through_model=AssignmentDeferred,
     #                               backref='targets')
@@ -282,21 +253,23 @@ class CartonToTarget(TargetdbBase):
 
 class Assignment(TargetdbBase):
     design = ForeignKeyField(Design,
-                             column_name='design_pk',
-                             field='pk')
+                             column_name='design_id',
+                             field='design_id',
+                             backref="assignments")
     instrument = ForeignKeyField(Instrument,
                                  column_name='instrument_pk',
                                  field='pk')
     pk = AutoField()
-    positioner = ForeignKeyField(Positioner,
-                                 column_name='positioner_pk',
-                                 field='pk')
+    hole = ForeignKeyField(Hole,
+                           column_name='hole_pk',
+                           field='pk')
     carton_to_target = ForeignKeyField(CartonToTarget,
                                        column_name='carton_to_target_pk',
                                        field='pk')
 
     class Meta:
         table_name = 'assignment'
+        constraints = [SQL('UNIQUE(holeid, observatory_pk)')]
 
 
 class Magnitude(TargetdbBase):

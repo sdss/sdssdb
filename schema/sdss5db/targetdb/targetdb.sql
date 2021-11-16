@@ -5,6 +5,7 @@ targetDB schema version v0.5.0
 Created Jan 2018 - J. Sánchez-Gallego
 Updated Feb 2020 - J. Sánchez-Gallego
 Updated Feb 2021 - J. Donor
+Updated Oct 2021 - J. Sánchez-Gallego (updated positioner table).
 
 */
 
@@ -75,7 +76,7 @@ CREATE TABLE targetdb.carton_to_target (
     priority INTEGER);
 
 -- We use "pk serial" instead of the usual catalogdb "pk bigserial"
--- for consistency with the rest of targetdb. 
+-- for consistency with the rest of targetdb.
 create table targetdb.cadence(
     label text not null,
     nepochs integer,
@@ -99,41 +100,32 @@ CREATE TABLE targetdb.instrument (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
-CREATE TABLE targetdb.positioner (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    id INTEGER,
-    xcen REAL,
-    ycen REAL,
-    positioner_status_pk SMALLINT NOT NULL,
-    positioner_info_pk SMALLINT NOT NULL,
-    observatory_pk SMALLINT NOT NULL);
-
-CREATE TABLE targetdb.positioner_status (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT);
-
-CREATE TABLE targetdb.positioner_info (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    apogee BOOLEAN NOT NULL,
-    boss BOOLEAN NOT NULL,
-    fiducial BOOLEAN NOT NULL);
-
 CREATE TABLE targetdb.observatory (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT NOT NULL);
 
+CREATE TABLE targetdb.hole (
+    pk INTEGER PRIMARY KEY,
+    row INTEGER,
+    "column" INTEGER,
+    holeid TEXT,
+    observatory_pk SMALLINT NOT NULL REFERENCES targetdb.observatory(pk),
+    UNIQUE (holeid, observatory_pk)
+);
+
 CREATE TABLE targetdb.assignment (
     pk SERIAL PRIMARY KEY NOT NULL,
     carton_to_target_pk BIGINT,
-    positioner_pk SMALLINT,
+    hole_pk SMALLINT,
     instrument_pk SMALLINT,
-    design_pk INTEGER);
+    design_id INTEGER
+);
 
 CREATE TABLE targetdb.design (
-    pk SERIAL PRIMARY KEY NOT NULL,
+    design_id SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
     field_pk INTEGER,
-    design_mode_pk TEXT);
+    design_mode_label TEXT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -188,11 +180,6 @@ INSERT INTO targetdb.category VALUES
 
 INSERT INTO targetdb.mapper VALUES (0, 'MWM'), (1, 'BHM');
 
-INSERT INTO targetdb.positioner_info VALUES
-    (0, true, true, false), (1, false, true, false), (2, false, false, true);
-
-INSERT INTO targetdb.positioner_status VALUES (0, 'OK'), (1, 'KO');
-
 INSERT INTO targetdb.observatory VALUES (0, 'APO'), (1, 'LCO');
 
 
@@ -243,8 +230,8 @@ ALTER TABLE ONLY targetdb.assignment
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.assignment
-    ADD CONSTRAINT positioner_fk
-    FOREIGN KEY (positioner_pk) REFERENCES targetdb.positioner(pk);
+    ADD CONSTRAINT hole_fk
+    FOREIGN KEY (hole_pk) REFERENCES targetdb.hole(pk);
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT instrument_fk
@@ -252,7 +239,7 @@ ALTER TABLE ONLY targetdb.assignment
 
 ALTER TABLE ONLY targetdb.assignment
     ADD CONSTRAINT design_fk
-    FOREIGN KEY (design_pk) REFERENCES targetdb.design(pk)
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.design
@@ -273,18 +260,6 @@ ALTER TABLE ONLY targetdb.field
     FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT positioner_status_fk
-    FOREIGN KEY (positioner_status_pk) REFERENCES targetdb.positioner_status(pk);
-
-ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT positioner_info_fk
-    FOREIGN KEY (positioner_info_pk) REFERENCES targetdb.positioner_info(pk);
-
-ALTER TABLE ONLY targetdb.positioner
-    ADD CONSTRAINT observatory_fk
-    FOREIGN KEY (observatory_pk) REFERENCES targetdb.observatory(pk);
-
 ALTER TABLE ONLY targetdb.magnitude
     ADD CONSTRAINT carton_to_target_fk
     FOREIGN KEY (carton_to_target_pk) REFERENCES targetdb.carton_to_target(pk)
@@ -293,7 +268,7 @@ ALTER TABLE ONLY targetdb.magnitude
 
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_mode_fk
-    FOREIGN KEY (design_mode_pk) REFERENCES targetdb.design_mode(label);
+    FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
 
 -- Indices
 
@@ -334,15 +309,15 @@ CREATE INDEX CONCURRENTLY c2t_instrument_pk_idx
 CREATE INDEX CONCURRENTLY assignment_c2t_pk_idx
     ON targetdb.assignment
     USING BTREE(carton_to_target_pk);
-CREATE INDEX CONCURRENTLY positioner_pk_idx
-    ON targetdb.assignment
-    USING BTREE(positioner_pk);
-CREATE INDEX CONCURRENTLY instrument_pk_idx
+CREATE INDEX CONCURRENTLY assignment_instrument_pk_idx
     ON targetdb.assignment
     USING BTREE(instrument_pk);
-CREATE INDEX CONCURRENTLY design_pk_idx
+CREATE INDEX CONCURRENTLY assignment_design_id_idx
     ON targetdb.assignment
-    USING BTREE(design_pk);
+    USING BTREE(design_id);
+CREATE INDEX CONCURRENTLY assignment_hole_pk_idx
+    ON targetdb.assignment
+    USING BTREE(hole_pk);
 
 CREATE INDEX CONCURRENTLY field_pk_idx
     ON targetdb.design
@@ -358,12 +333,9 @@ CREATE INDEX CONCURRENTLY observatory_pk_idx
     ON targetdb.field
     USING BTREE(observatory_pk);
 
-CREATE INDEX CONCURRENTLY positioner_status_pk_idx
-    ON targetdb.positioner
-    USING BTREE(positioner_status_pk);
-CREATE INDEX CONCURRENTLY positioner_info_pk_idx
-    ON targetdb.positioner
-    USING BTREE(positioner_info_pk);
-CREATE INDEX CONCURRENTLY positioner_observatory_pk_idx
-    ON targetdb.positioner
+CREATE INDEX CONCURRENTLY hole_observatory_pk_idx
+    ON targetdb.hole
     USING BTREE(observatory_pk);
+CREATE INDEX CONCURRENTLY hole_holeid_idx
+    ON targetdb.hole
+    USING BTREE(holeid);
