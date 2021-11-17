@@ -224,14 +224,14 @@ class Queue(OpsdbBase):
         design = Select(columns=[fn.popQueue()]).execute(database)
         if design[0]["popqueue"] is None:
             return None
-        design_db = targetdb.Design.get(pk=design[0]["popqueue"])
+        design_db = targetdb.Design.get(design_id=design[0]["popqueue"])
         return design_db
 
     @classmethod
     def appendQueue(cls, design, mjd_plan=None):
         if isinstance(design, targetdb.Design):
-            design_id = design.design_id
-        Select(columns=[fn.appendQueue(design_id, mjd_plan)]).execute(database)
+            design = design.design_id
+        Select(columns=[fn.appendQueue(design, mjd_plan)]).execute(database)
         # queue_db = Queue.get(design=design)
         # return queue_db
 
@@ -246,8 +246,8 @@ class Queue(OpsdbBase):
             # if mjd_plan before is null, stays null regardless
             exp_length = 18 / 60 / 24
         if isinstance(design, targetdb.Design):
-            design_id = design.design_id
-        Select(columns=[fn.insertInQueue(design_id,
+            design = design.design_id
+        Select(columns=[fn.insertInQueue(design,
                                          position,
                                          exp_length)]).execute(database)
         # queue_db = Queue.get(design=design)
