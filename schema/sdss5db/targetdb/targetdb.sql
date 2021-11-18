@@ -105,7 +105,7 @@ CREATE TABLE targetdb.observatory (
     label TEXT NOT NULL);
 
 CREATE TABLE targetdb.hole (
-    pk INTEGER PRIMARY KEY,
+    pk SERIAL PRIMARY KEY NOT NULL,
     row INTEGER,
     "column" INTEGER,
     holeid TEXT,
