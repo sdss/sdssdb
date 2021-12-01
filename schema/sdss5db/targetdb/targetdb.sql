@@ -125,7 +125,9 @@ CREATE TABLE targetdb.design (
     design_id SERIAL PRIMARY KEY NOT NULL,
     exposure BIGINT,
     field_pk INTEGER,
-    design_mode_label TEXT);
+    design_mode_label TEXT,
+    mugatu_version TEXT NOT NULL,
+    run_on DATE);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,

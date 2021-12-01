@@ -6,6 +6,7 @@
 # @Filename: targetdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+import datetime
 
 from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
                     DateTimeField, DeferredThroughModel, DoubleField,
@@ -140,6 +141,8 @@ class Design(TargetdbBase):
                                   field='label',
                                   model=DesignMode,
                                   null=True)
+    mugatu_version = TextField()
+    run_on = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         table_name = 'design'
