@@ -142,7 +142,7 @@ class Design(TargetdbBase):
                                   model=DesignMode,
                                   null=True)
     mugatu_version = TextField()
-    run_on = DateTimeField(default=datetime.datetime.now)
+    run_on = DateTimeField(default=datetime.datetime.now())
 
     class Meta:
         table_name = 'design'

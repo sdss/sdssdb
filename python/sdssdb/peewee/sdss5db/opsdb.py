@@ -143,7 +143,7 @@ class Exposure(OpsdbBase):
                              model=Survey)
     exposure_no = BigIntegerField()
     comment = TextField(null=True)
-    start_time = DateTimeField(default=datetime.datetime.now)
+    start_time = DateTimeField(default=datetime.datetime.now())
     exposure_time = FloatField()
     exposure_flavor = ForeignKeyField(column_name='exposure_flavor_pk',
                                       field='pk',
