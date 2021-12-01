@@ -126,7 +126,7 @@ CREATE TABLE targetdb.design (
     exposure BIGINT,
     field_pk INTEGER,
     design_mode_label TEXT,
-    mugatu_version TEXT NOT NULL,
+    mugatu_version TEXT,
     run_on DATE);
 
 CREATE TABLE targetdb.field (
