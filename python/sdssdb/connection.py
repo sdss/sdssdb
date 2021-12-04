@@ -122,6 +122,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
             # Initially set location to local.
             self.profile = 'local'
+            self._config = config[self.profile].copy()
 
             # Tries to find a profile whose domain matches the hostname
             for profile in config:
