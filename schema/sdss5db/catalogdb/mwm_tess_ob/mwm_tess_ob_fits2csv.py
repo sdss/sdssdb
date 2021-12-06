@@ -1,0 +1,25 @@
+from astropy.io import fits
+
+
+hdu = fits.open('TESS_CVZ_OBAF_EBs.fits', memmap=True)
+data = hdu[1].data
+num_lines_fits = len(data)
+
+ftemp = open('temp1', 'w')
+
+for i in range(num_lines_fits):
+    print(data[i], file=ftemp)
+
+ftemp.close()
+
+fin = open('temp1', 'r')
+fout = open('TESS_CVZ_OBAF_EBs.csv', 'w')
+
+for line in fin:
+    line = line.strip()
+    line = line.lstrip('(')
+    line = line.rstrip(')')
+    print(line, file=fout)
+
+fin.close()
+fout.close()

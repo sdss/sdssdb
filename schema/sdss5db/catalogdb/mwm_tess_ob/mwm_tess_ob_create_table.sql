@@ -1,5 +1,5 @@
--- Based on the information in the below csv files.
--- mwm_tess_ob_8x1_GaiaID.csv  mwm_tess_ob_8x3_GaiaID.csv
+-- Based on the information in the below fits files.
+-- TESS_CVZ_OBAF_EBs.fits
 
 create table catalogdb.mwm_tess_ob (
     gaia_dr2_id bigint,
