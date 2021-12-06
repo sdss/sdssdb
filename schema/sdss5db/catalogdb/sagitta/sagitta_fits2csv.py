@@ -19,6 +19,8 @@ for line in fin:
     line = line.strip()
     line = line.lstrip('(')
     line = line.rstrip(')')
+    line = line.replace("'", "")
+    line = line.replace(', ', ',')
     print(line, file=fout)
 
 fin.close()
