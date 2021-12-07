@@ -146,7 +146,7 @@ ALTER TABLE ONLY opsdb.assignment_to_focal
 ALTER TABLE ONLY opsdb.design_to_status
     ADD CONSTRAINT status_design_fk
     FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.design_to_status
@@ -290,7 +290,7 @@ $$ LANGUAGE plpgsql;
 
 -- insert at position
 
-CREATE FUNCTION opsdb.insertInQueue (design integer, pos integer, exp_len real)
+CREATE FUNCTION opsdb.insertInQueue (design integer, pos integer, exp_len real, mjd real)
 RETURNS void AS $$
 
 declare
@@ -317,6 +317,10 @@ BEGIN
         UPDATE opsdb.queue SET position = _pos + 1 WHERE pk=_pk;
         UPDATE opsdb.queue SET mjd_plan = _mjd_plan + _mjd_offset WHERE pk=_pk;
     END LOOP;
+
+    IF _mjd_next IS NULL THEN
+        SELECT mjd INTO _mjd_next;
+    END IF;
 
     INSERT INTO opsdb.queue  (design_id, position, mjd_plan)
     VALUES (design, pos, _mjd_next);

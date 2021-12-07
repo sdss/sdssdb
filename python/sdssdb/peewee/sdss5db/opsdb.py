@@ -232,11 +232,9 @@ class Queue(OpsdbBase):
         if isinstance(design, targetdb.Design):
             design = design.design_id
         Select(columns=[fn.appendQueue(design, mjd_plan)]).execute(database)
-        # queue_db = Queue.get(design=design)
-        # return queue_db
 
     @classmethod
-    def insertInQueue(cls, design, position, exp_length=None):
+    def insertInQueue(cls, design, position, exp_length=None, mjd=None):
         """exp_length in days
            this is the amount added to every mjd_plan AFTER position
         """
@@ -249,9 +247,8 @@ class Queue(OpsdbBase):
             design = design.design_id
         Select(columns=[fn.insertInQueue(design,
                                          position,
-                                         exp_length)]).execute(database)
-        # queue_db = Queue.get(design=design)
-        # return queue_db
+                                         exp_length,
+                                         mjd)]).execute(database)
 
     @classmethod
     def flushQueue(cls):
@@ -266,15 +263,15 @@ class Queue(OpsdbBase):
         """
 
         if isinstance(field, targetdb.Field):
-            field_id = field.field_id
+            field_pk = field.field_pk
         else:
-            field_id = field
+            field_pk = field
 
         rm_designs = cls.select()\
                         .join(targetdb.Design,
                               on=(targetdb.Design.design_id == cls.design_id))\
                         .join(targetdb.Field)\
-                        .where(targetdb.Field.field_id == field_id)
+                        .where(targetdb.Field.field_pk == field_pk)
 
         positions = [d.position for d in rm_designs]
         pos = max(positions)
