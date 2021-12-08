@@ -271,7 +271,7 @@ class Queue(OpsdbBase):
                         .join(targetdb.Design,
                               on=(targetdb.Design.design_id == cls.design_id))\
                         .join(targetdb.Field)\
-                        .where(targetdb.Field.field_pk == field_pk)
+                        .where(targetdb.Field.pk == field_pk)
 
         positions = [d.position for d in rm_designs]
         pos = max(positions)
