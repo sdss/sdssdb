@@ -47,8 +47,8 @@ class FieldToPriority(OpsdbBase):
                                     column_name='field_priority_pk',
                                     field='pk')
     field = ForeignKeyField(targetdb.Field,
-                            column_name='field_id',
-                            field='field_id')
+                            column_name='field_pk',
+                            field='pk')
 
     class Meta:
         table_name = 'field_to_priority'

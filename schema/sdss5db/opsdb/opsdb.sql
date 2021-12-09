@@ -81,7 +81,7 @@ CREATE TABLE opsdb.field_priority(
 
 CREATE TABLE opsdb.field_to_priority(
     pk SERIAL PRIMARY KEY NOT NULL,
-    field_id INTEGER,
+    field_pk INTEGER,
     field_priority_pk INTEGER);
 
 CREATE TABLE opsdb.quicklook(
@@ -114,7 +114,7 @@ CREATE TABLE opsdb.quickred(
 
 ALTER TABLE ONLY opsdb.field_to_priority
     ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_id) REFERENCES targetdb.field(field_id)
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
