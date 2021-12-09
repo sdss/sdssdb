@@ -38,7 +38,7 @@ CREATE TABLE opsdb.design_to_status (
 
 CREATE TABLE opsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,
-    configuration_id INTEGER NOT NULL,
+    configuration_id INTEGER,
     survey_pk SMALLINT,
     exposure_no BIGINT,
     comment TEXT,
