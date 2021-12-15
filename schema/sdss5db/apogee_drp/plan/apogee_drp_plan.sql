@@ -13,6 +13,10 @@ CREATE TABLE apogee_drp.plan (
     INSTRUMENT  text,
     MJD		integer,
     PLATE	integer,
+    CONFIGID    text,
+    DESIGNID    text,
+    FIELDID     text,
+    FPS         boolean,
     PLATETYPE	text,
     CREATED timestamp with time zone DEFAULT now() NOT NULL
 );
