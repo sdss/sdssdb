@@ -396,3 +396,11 @@ VACUUM ANALYZE catalogdb.tycho2;
 
 ALTER TABLE catalogdb.tycho2 ALTER COLUMN designation SET STATISTICS 5000;
 ALTER INDEX catalogdb.tycho2_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STATISTICS 5000;
+
+CREATE INDEX ON catalogdb.tycho2 (q3c_ang2ipix(radeg, dedeg));
+
+CREATE INDEX ON catalogdb.tycho2 (btmag);
+
+CREATE INDEX ON catalogdb.tycho2 (vtmag);
+
+
