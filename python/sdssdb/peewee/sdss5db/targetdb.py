@@ -148,6 +148,25 @@ class Design(TargetdbBase):
         table_name = 'design'
 
 
+class DesignModeValue(TargetdbBase):
+    pk = IntegerField(null=False, primary_key=True)
+    design = ForeignKeyField(Design,
+                             column_name='design_id',
+                             field='design_id',
+                             backref="design_mode_values")
+    boss_skies_min_value = IntegerField(null=True)
+    boss_skies_fov_value = DoubleField(null=True)
+    apogee_skies_min_value = IntegerField(null=True)
+    apogee_skies_fov_value = DoubleField(null=True)
+    boss_stds_min_value = IntegerField(null=True)
+    boss_stds_fov_value = DoubleField(null=True)
+    apogee_stds_min_value = IntegerField(null=True)
+    apogee_stds_fov_value = DoubleField(null=True)
+
+    class Meta:
+        table_name = 'design_mode_value'
+
+
 class Instrument(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
