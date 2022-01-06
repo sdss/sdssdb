@@ -11,7 +11,7 @@ import datetime
 from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
                     DateTimeField, DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
-                    SmallIntegerField, TextField)
+                    SmallIntegerField, TextField, fn)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -101,6 +101,27 @@ class Field(TargetdbBase):
 
     class Meta:
         table_name = 'field'
+
+
+class FieldReservation(TargetdbBase):
+    field_id = IntegerField(null=False)
+
+    @classmethod
+    def requestNext(cls, N=1, commit=True, commissioning=False):
+        """inserts N new ids after max id and returns list of new ids"""
+        if commissioning:
+            next_id = cls.select(fn.MAX(cls.field_id))\
+                         .where(cls.field_id < 99999).scalar() + 1
+        else:
+            next_id = cls.select(fn.MAX(cls.field_id)).scalar() + 1
+        ids = [next_id + i for i in range(N)]
+        if commit:
+            db_format = [{"field_id": i} for i in ids]
+            cls.insert_many(db_format).execute()
+        return ids
+
+    class Meta:
+        table_name = 'field_reservation'
 
 
 class DesignMode(TargetdbBase):

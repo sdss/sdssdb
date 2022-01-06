@@ -172,6 +172,13 @@ create table targetdb.design_mode(
     apogee_trace_diff_targets double precision,
     apogee_sky_neighbors_targets double precision[]);
 
+create table targetdb.field_reservation (
+    field_id integer primary key not null);
+
+-- The below query can be used to initially populate field_reservation
+-- insert into targetdb.field_reservation (field_id)
+-- select distinct field_id from targetdb.field order by field_id;
+
 -- Table data
 
 INSERT INTO targetdb.instrument VALUES (0, 'BOSS'), (1, 'APOGEE');
