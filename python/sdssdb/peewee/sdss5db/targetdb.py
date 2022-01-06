@@ -107,9 +107,13 @@ class FieldReservation(TargetdbBase):
     field_id = IntegerField(null=False)
 
     @classmethod
-    def requestNext(cls, N=1, commit=True):
+    def requestNext(cls, N=1, commit=True, commissioning=False):
         """inserts N new ids after max id and returns list of new ids"""
-        next_id = cls.select(fn.MAX(cls.field_id)).scalar() + 1
+        if commissioning:
+            next_id = cls.select(fn.MAX(cls.field_id))\
+                         .where(cls.field_id < 99999).scalar() + 1
+        else:
+            next_id = cls.select(fn.MAX(cls.field_id)).scalar() + 1
         ids = [next_id + i for i in range(N)]
         if commit:
             db_format = [{"field_id": i} for i in ids]
