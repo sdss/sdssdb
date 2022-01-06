@@ -154,13 +154,22 @@ class DesignModeValue(TargetdbBase):
                              column_name='design_id',
                              field='design_id',
                              backref="design_mode_values")
+    design_pass = BooleanField(null=True)
+    boss_skies_min_pass = BooleanField(null=True)
     boss_skies_min_value = IntegerField(null=True)
+    boss_skies_fov_pass = BooleanField(null=True)
     boss_skies_fov_value = DoubleField(null=True)
+    apogee_skies_min_pass = BooleanField(null=True)
     apogee_skies_min_value = IntegerField(null=True)
+    apogee_skies_fov_pass = BooleanField(null=True)
     apogee_skies_fov_value = DoubleField(null=True)
+    boss_stds_min_pass = BooleanField(null=True)
     boss_stds_min_value = IntegerField(null=True)
+    boss_stds_fov_pass = BooleanField(null=True)
     boss_stds_fov_value = DoubleField(null=True)
+    apogee_stds_min_pass = BooleanField(null=True)
     apogee_stds_min_value = IntegerField(null=True)
+    apogee_stds_fov_pass = BooleanField(null=True)
     apogee_stds_fov_value = DoubleField(null=True)
 
     class Meta:
