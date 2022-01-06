@@ -148,7 +148,7 @@ class Design(TargetdbBase):
         table_name = 'design'
 
 
-class DesignModeValue(TargetdbBase):
+class DesignModeCheckResults(TargetdbBase):
     pk = IntegerField(null=False, primary_key=True)
     design = ForeignKeyField(Design,
                              column_name='design_id',
