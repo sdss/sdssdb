@@ -154,7 +154,16 @@ class DesignModeValue(TargetdbBase):
                              column_name='design_id',
                              field='design_id',
                              backref="design_mode_values")
-    design_pass = BooleanField(null=True)
+    # whether or not design passes recent
+    # validation and should be observed
+    design_pass = BooleanField(null=False)
+
+    # bitmask to describe current status of
+    # design validation
+    design_status = IntegerField(null=True)
+
+    # values and passing status for design-wide
+    # designmode criteria
     boss_skies_min_pass = BooleanField(null=True)
     boss_skies_min_value = IntegerField(null=True)
     boss_skies_fov_pass = BooleanField(null=True)
