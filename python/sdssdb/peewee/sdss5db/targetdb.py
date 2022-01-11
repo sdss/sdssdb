@@ -181,6 +181,16 @@ class DesignModeCheckResults(TargetdbBase):
     apogee_stds_fov_pass = BooleanField(null=True)
     apogee_stds_fov_value = DoubleField(null=True)
 
+    # just passing status for target-specific
+    # designmode criteria
+    boss_stds_mags_pass = BooleanField(null=True)
+    apogee_stds_mags_pass = BooleanField(null=True)
+    boss_bright_limit_targets_pass = BooleanField(null=True)
+    apogee_bright_limit_targets_pass = BooleanField(null=True)
+    boss_sky_neighbors_targets_pass = BooleanField(null=True)
+    apogee_sky_neighbors_targets_pass = BooleanField(null=True)
+    apogee_trace_diff_targets_pass = BooleanField(null=True)
+
     class Meta:
         table_name = 'design_mode_value'
 
