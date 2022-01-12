@@ -169,6 +169,53 @@ class Design(TargetdbBase):
         table_name = 'design'
 
 
+class DesignModeCheckResults(TargetdbBase):
+    pk = IntegerField(null=False, primary_key=True)
+    design = ForeignKeyField(Design,
+                             column_name='design_id',
+                             field='design_id',
+                             backref="design_mode_values")
+    # whether or not design passes recent
+    # validation and should be observed
+    design_pass = BooleanField(null=False)
+
+    # bitmask to describe current status of
+    # design validation
+    design_status = IntegerField(null=True)
+
+    # values and passing status for design-wide
+    # designmode criteria
+    boss_skies_min_pass = BooleanField(null=True)
+    boss_skies_min_value = IntegerField(null=True)
+    boss_skies_fov_pass = BooleanField(null=True)
+    boss_skies_fov_value = DoubleField(null=True)
+    apogee_skies_min_pass = BooleanField(null=True)
+    apogee_skies_min_value = IntegerField(null=True)
+    apogee_skies_fov_pass = BooleanField(null=True)
+    apogee_skies_fov_value = DoubleField(null=True)
+    boss_stds_min_pass = BooleanField(null=True)
+    boss_stds_min_value = IntegerField(null=True)
+    boss_stds_fov_pass = BooleanField(null=True)
+    boss_stds_fov_value = DoubleField(null=True)
+    apogee_stds_min_pass = BooleanField(null=True)
+    apogee_stds_min_value = IntegerField(null=True)
+    apogee_stds_fov_pass = BooleanField(null=True)
+    apogee_stds_fov_value = DoubleField(null=True)
+
+    # just passing status for target-specific
+    # designmode criteria
+    boss_stds_mags_pass = BooleanField(null=True)
+    apogee_stds_mags_pass = BooleanField(null=True)
+    boss_bright_limit_targets_pass = BooleanField(null=True)
+    apogee_bright_limit_targets_pass = BooleanField(null=True)
+    boss_sky_neighbors_targets_pass = BooleanField(null=True)
+    apogee_sky_neighbors_targets_pass = BooleanField(null=True)
+    apogee_trace_diff_targets_pass = BooleanField(null=True)
+
+    class Meta:
+        table_name = 'design_mode_value'
+
+
 class Instrument(TargetdbBase):
     label = TextField(null=True)
     pk = AutoField()
