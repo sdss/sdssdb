@@ -175,6 +175,35 @@ create table targetdb.design_mode(
 create table targetdb.field_reservation (
     field_id integer primary key not null);
 
+create table targetdb.design_mode_check_results (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    design_id INTEGER,
+    design_pass BOOLEAN NOT NULL,
+    design_status INTEGER,
+    boss_skies_min_pass BOOLEAN,
+    boss_skies_min_value INTEGER,
+    boss_skies_fov_pass BOOLEAN,
+    boss_skies_fov_value DOUBLE PRECISION,
+    apogee_skies_min_pass BOOLEAN,
+    apogee_skies_min_value INTEGER,
+    apogee_skies_fov_pass BOOLEAN,
+    apogee_skies_fov_value DOUBLE PRECISION,
+    boss_stds_min_pass BOOLEAN,
+    boss_stds_min_value INTEGER,
+    boss_stds_fov_pass BOOLEAN,
+    boss_stds_fov_value DOUBLE PRECISION,
+    apogee_stds_min_pass BOOLEAN,
+    apogee_stds_min_value INTEGER,
+    apogee_stds_fov_pass BOOLEAN,
+    apogee_stds_fov_value DOUBLE PRECISION,
+    boss_stds_mags_pass BOOLEAN,
+    apogee_stds_mags_pass BOOLEAN,
+    boss_bright_limit_targets_pass BOOLEAN,
+    apogee_bright_limit_targets_pass BOOLEAN,
+    boss_sky_neighbors_targets_pass BOOLEAN,
+    apogee_sky_neighbors_targets_pass BOOLEAN,
+    apogee_trace_diff_targets_pass BOOLEAN);
+
 -- The below query can be used to initially populate field_reservation
 -- insert into targetdb.field_reservation (field_id)
 -- select distinct field_id from targetdb.field order by field_id;
@@ -278,6 +307,10 @@ ALTER TABLE ONLY targetdb.magnitude
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_mode_fk
     FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
+
+ALTER TABLE ONLY targetdb.design_mode_check_results
+    ADD CONSTRAINT design_id_fk
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
 -- Indices
 
