@@ -174,7 +174,7 @@ class DesignModeCheckResults(TargetdbBase):
     design = ForeignKeyField(Design,
                              column_name='design_id',
                              field='design_id',
-                             backref="design_mode_values")
+                             backref="design_mode_check_resultss")
     # whether or not design passes recent
     # validation and should be observed
     design_pass = BooleanField(null=False)
