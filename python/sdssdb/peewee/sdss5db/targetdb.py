@@ -213,7 +213,7 @@ class DesignModeCheckResults(TargetdbBase):
     apogee_trace_diff_targets_pass = BooleanField(null=True)
 
     class Meta:
-        table_name = 'design_mode_value'
+        table_name = 'design_mode_check_results'
 
 
 class Instrument(TargetdbBase):
