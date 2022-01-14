@@ -175,6 +175,10 @@ create table targetdb.design_mode(
 create table targetdb.field_reservation (
     field_id integer primary key not null);
 
+-- The below query can be used to initially populate field_reservation
+-- insert into targetdb.field_reservation (field_id)
+-- select distinct field_id from targetdb.field order by field_id;
+
 create table targetdb.design_mode_check_results (
     pk SERIAL PRIMARY KEY NOT NULL,
     design_id INTEGER,
@@ -203,10 +207,6 @@ create table targetdb.design_mode_check_results (
     boss_sky_neighbors_targets_pass BOOLEAN,
     apogee_sky_neighbors_targets_pass BOOLEAN,
     apogee_trace_diff_targets_pass BOOLEAN);
-
--- The below query can be used to initially populate field_reservation
--- insert into targetdb.field_reservation (field_id)
--- select distinct field_id from targetdb.field order by field_id;
 
 -- Table data
 

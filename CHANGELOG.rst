@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.5.0 <2021-11-16>`
+* Add ``targetdb.field_reservation`` and associated peewee util
+* Add ``targetdb.design_mode_value`` table
+* Bug fixes found during commissioning
+
 * :release:`0.4.13 <2021-11-16>`
 * Add ``mugatu_version``, and ``run_on`` to ``targetdb.design``
 * Minor bug fixes
