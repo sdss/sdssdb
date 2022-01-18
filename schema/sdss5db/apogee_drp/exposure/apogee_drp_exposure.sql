@@ -19,6 +19,9 @@ CREATE TABLE apogee_drp.exposure (
     MJD         int,
     OBSERVATORY text,
     DITHPIX     real,
+    GANGSTATE   text,
+    SHUTTER	text,
+    CALSHUTTER	text,
     CREATED timestamp with time zone DEFAULT now() NOT NULL,
     UNIQUE(NUM,OBSERVATORY)
 );
