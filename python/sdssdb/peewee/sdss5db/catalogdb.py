@@ -743,6 +743,14 @@ class BHM_CSC(CatalogdbModel):
         table_name = 'bhm_csc'
 
 
+class BHM_CSC_v2(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'bhm_csc_v2'
+
+
 class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
