@@ -382,3 +382,7 @@ CREATE INDEX CONCURRENTLY hole_observatory_pk_idx
 CREATE INDEX CONCURRENTLY hole_holeid_idx
     ON targetdb.hole
     USING BTREE(holeid);
+
+CREATE INDEX CONCURRENTLY asignment_hash_idx
+    ON targetdb.design
+    USING BTREE(asignment_hash);
