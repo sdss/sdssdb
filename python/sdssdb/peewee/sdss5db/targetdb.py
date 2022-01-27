@@ -11,7 +11,7 @@ import datetime
 from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
                     DateTimeField, DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
-                    SmallIntegerField, TextField, fn)
+                    SmallIntegerField, TextField, fn, UUIDField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -164,6 +164,7 @@ class Design(TargetdbBase):
                                   null=True)
     mugatu_version = TextField()
     run_on = DateTimeField(default=datetime.datetime.now())
+    asignment_hash = UUIDField()
 
     class Meta:
         table_name = 'design'

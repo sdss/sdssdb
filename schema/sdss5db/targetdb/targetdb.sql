@@ -127,7 +127,8 @@ CREATE TABLE targetdb.design (
     field_pk INTEGER,
     design_mode_label TEXT,
     mugatu_version TEXT,
-    run_on DATE);
+    run_on DATE,
+    asignment_hash UUID);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
