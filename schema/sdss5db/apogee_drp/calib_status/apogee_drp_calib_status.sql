@@ -6,7 +6,6 @@ APOGEE DRP CALIB_STATUS information
 
 CREATE TABLE apogee_drp.calib_status (
     PK SERIAL NOT NULL PRIMARY KEY,
-    EXPOSURE_PK text,
     LOGFILE    text,
     APRED_VERS  text,
     V_APRED     text,
