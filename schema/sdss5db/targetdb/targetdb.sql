@@ -128,7 +128,7 @@ CREATE TABLE targetdb.design (
     design_mode_label TEXT,
     mugatu_version TEXT,
     run_on DATE,
-    asignment_hash UUID);
+    assignment_hash UUID);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -385,4 +385,4 @@ CREATE INDEX CONCURRENTLY hole_holeid_idx
 
 CREATE INDEX CONCURRENTLY asignment_hash_idx
     ON targetdb.design
-    USING BTREE(asignment_hash);
+    USING BTREE(assignment_hash);
