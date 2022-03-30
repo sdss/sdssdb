@@ -101,6 +101,7 @@ class DesignToStatus(OpsdbBase):
                              column_name='completion_status_pk',
                              field='pk')
     mjd = FloatField()
+    manual = BooleanField(null=False)
 
     class Meta:
         table_name = 'design_to_status'

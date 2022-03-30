@@ -34,7 +34,8 @@ CREATE TABLE opsdb.design_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
     design_id INTEGER UNIQUE,
     completion_status_pk SMALLINT,
-    mjd INTEGER);
+    mjd INTEGER,
+    manual BOOL);
 
 CREATE TABLE opsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,
