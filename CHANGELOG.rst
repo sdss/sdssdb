@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.5.2 <2022-04-01>`
+* Add assignment_hash to ``targetdb.design``
+* Add more magnitudes to targetdb
+* Add ``manual`` column to ``opsdb.design_to_status``
+
 * :release:`0.5.0 <2021-11-16>`
 * Add ``targetdb.field_reservation`` and associated peewee util
 * Add ``targetdb.design_mode_value`` table
