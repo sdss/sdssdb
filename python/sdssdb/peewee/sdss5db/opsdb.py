@@ -11,7 +11,8 @@ import datetime
 from peewee import (AutoField, BigIntegerField, DateTimeField,
                     DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
-                    ManyToManyField, Select, TextField, fn)
+                    ManyToManyField, BooleanField,
+                    Select, TextField, fn)
 from playhouse.postgres_ext import ArrayField
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
@@ -101,6 +102,7 @@ class DesignToStatus(OpsdbBase):
                              column_name='completion_status_pk',
                              field='pk')
     mjd = FloatField()
+    manual = BooleanField(default=False)
 
     class Meta:
         table_name = 'design_to_status'
