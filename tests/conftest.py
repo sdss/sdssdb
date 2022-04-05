@@ -88,10 +88,10 @@ def database(request, postgresql_noproc):
         issqla = 'sqladbs' in request.module.__name__ or 'sqlalchemy' in request.module.__name__
         # initialize the test database
         # uses https://github.com/ClearcodeHQ/pytest-postgresql
-        # janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '13')
+        janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14')
         print(postgresql_noproc.user, postgresql_noproc.host,postgresql_noproc.port, 'test', postgresql_noproc.version, "test", postgresql_noproc.password if hasattr(postgresql_noproc, 'password') else None)
-        janitor = DatabaseJanitor(postgresql_noproc.user, postgresql_noproc.host,
-                                  postgresql_noproc.port, 'test', postgresql_noproc.version, password="test")
+        # janitor = DatabaseJanitor(postgresql_noproc.user, postgresql_noproc.host,
+        #                           postgresql_noproc.port, 'test', postgresql_noproc.version, password="test")
         janitor.init()
         db = sqla_prepdb() if issqla else pw_prepdb()
         yield db
