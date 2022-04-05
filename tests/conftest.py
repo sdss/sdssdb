@@ -78,7 +78,7 @@ def skipdb(database):
 
 
 @pytest.fixture(scope='module')
-def database(request, postgresql_noproc):
+def database(request):
     ''' Module fixture to initialize a real database or a test postgresql database '''
     if hasattr(request, 'param'):
         # yield a real database
@@ -88,8 +88,8 @@ def database(request, postgresql_noproc):
         issqla = 'sqladbs' in request.module.__name__ or 'sqlalchemy' in request.module.__name__
         # initialize the test database
         # uses https://github.com/ClearcodeHQ/pytest-postgresql
-        janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14', password="test")
-        print(postgresql_noproc.user, postgresql_noproc.host,postgresql_noproc.port, 'test', postgresql_noproc.version, "test", postgresql_noproc.password if hasattr(postgresql_noproc, 'password') else None)
+        janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14')
+        #print(postgresql_noproc.user, postgresql_noproc.host,postgresql_noproc.port, 'test', postgresql_noproc.version, "test", postgresql_noproc.password if hasattr(postgresql_noproc, 'password') else None)
         # janitor = DatabaseJanitor(postgresql_noproc.user, postgresql_noproc.host,
         #                           postgresql_noproc.port, 'test', postgresql_noproc.version, password="test")
         janitor.init()
