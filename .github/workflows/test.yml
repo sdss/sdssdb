@@ -7,30 +7,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # # Service containers to run
-    # services:
-    #   # Label used to access the service container
-    #   postgres:
-    #     # Docker Hub image
-    #     image: postgres:14
-    #     # Provide the password for postgres
-    #     env:
-    #       POSTGRES_USER: postgres
-    #       POSTGRES_PASSWORD: postgres
-    #       POSTGRES_DB: test
-    #     # Set health checks to wait until postgres has started
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
+    # Service containers to run
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:14
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-      - uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: '13'
-          postgresql db: test
-          postgresql user: postgres
+      # - uses: harmon758/postgresql-action@v1
+      #   with:
+      #     postgresql version: '13'
+      #     postgresql db: test
+      #     postgresql user: postgres
       # - uses: CasperWA/postgresql-action@v1.2
       #   with:
       #     postgresql version: '14'
