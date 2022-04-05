@@ -566,7 +566,7 @@ class SQLADatabaseConnection(DatabaseConnection):
         db_params['port'] = db_params.pop('port', 5432)
         if db_params['username']:
             db_params['password'] = self._get_password(**db_params)
-        db_connection_string = url.URL(**db_params)
+        db_connection_string = url.URL.create(**db_params)
         self._connect_params = params
         return db_connection_string
 

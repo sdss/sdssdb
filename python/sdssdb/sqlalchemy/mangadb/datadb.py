@@ -18,9 +18,9 @@ from operator import eq, ge, gt, le, lt, ne
 import numpy as np
 from astropy.io import fits
 from sdssdb.sqlalchemy.mangadb import MangaBase, database, sampledb
+import sqlalchemy
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
-from sqlalchemy.engine import reflection
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.orm import deferred, relationship
@@ -737,7 +737,7 @@ def define_relations():
     Fibers.fibertype = relationship(FiberType, backref="fibers")
     Fibers.targettype = relationship(TargetType, backref="fibers")
 
-    insp = reflection.Inspector.from_engine(database.engine)
+    insp = sqlalchemy.inspect(database.engine)
     fks = insp.get_foreign_keys(Spaxel.__table__.name, schema='mangadatadb')
     if fks:
         Spaxel.cube = relationship(Cube, backref='spaxels')
