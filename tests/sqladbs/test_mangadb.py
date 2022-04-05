@@ -35,9 +35,9 @@ class TestDataDB(object):
         rows = session.query(datadb.Wavelength).all()
         assert len(rows) == 2
         assert rows[0].bintype == 'LOG'
-        assert rows[0].wavelength[0] == 3621.6
+        assert rows[0].wavelength[0] == 3621.596
         assert rows[1].bintype == 'NAN'
-        assert rows[1].wavelength[0] != 3621.6
+        assert rows[1].wavelength[0] != 3621.596
 
     def test_cube_count(self, session):
         ''' test of a simple table count '''
