@@ -61,8 +61,8 @@ jobs:
           pip install ".[dev]"
         #if: steps.cache.outputs.cache-hit != 'true'
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
       - name: Test with pytest
         run: |
