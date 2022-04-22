@@ -89,15 +89,13 @@ def database(request, postgresql_noproc):
         # initialize the test database
         # uses https://github.com/ClearcodeHQ/pytest-postgresql
         #janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14', password="test")
-        #print(postgresql_noproc.user, postgresql_noproc.host,postgresql_noproc.port, 'test', postgresql_noproc.version, "test", postgresql_noproc.password if hasattr(postgresql_noproc, 'password') else None)
-        # janitor = DatabaseJanitor(postgresql_noproc.user, postgresql_noproc.host,
-        #                           postgresql_noproc.port, 'test', postgresql_noproc.version, password="test")
-        #janitor.init()
-        with DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14', password="test"):
-            db = sqla_prepdb() if issqla else pw_prepdb()
-            yield db
-            db = None
-        #janitor.drop()
+        janitor = DatabaseJanitor(postgresql_noproc.user, postgresql_noproc.host,
+                                  postgresql_noproc.port, 'test', postgresql_noproc.version, password="test")
+        janitor.init()
+        db = sqla_prepdb() if issqla else pw_prepdb()
+        yield db
+        db = None
+        janitor.drop()
 
 
 def determine_scope(fixture_name, config):
