@@ -67,4 +67,4 @@ jobs:
       - name: Test with pytest
         run: |
           pip install pytest
-          pytest --postgresql-host=localhost --postgresql-port 5432 --postgresql-password=test --postgresql-dbname=test
+          pytest --postgresql-host=localhost --postgresql-port 5432 --postgresql-password=test --postgresql-dbname=test tests/test_connection.py

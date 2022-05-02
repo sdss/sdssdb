@@ -93,7 +93,7 @@ def database(request, postgresql_noproc):
                                   postgresql_noproc.port, 'test', postgresql_noproc.version, password="test")
 
         janitor.init()
-        db = sqla_prepdb() if issqla else pw_prepdb()
+        db = sqla_prepdb() #if issqla else pw_prepdb()
         yield db
         db = None
         janitor.drop()
