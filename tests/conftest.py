@@ -78,7 +78,7 @@ def dropdb():
 
 
 @pytest.fixture(scope='module')
-def database(dropdb, request):
+def database(dropdb, request, postgresql_nooproc):
     ''' Module fixture to initialize a real database or a test postgresql database '''
     if hasattr(request, 'param'):
         # yield a real database
@@ -88,7 +88,10 @@ def database(dropdb, request):
         issqla = 'sqladbs' in request.module.__name__ or 'sqlalchemy' in request.module.__name__
         # initialize the test database
         # uses https://github.com/ClearcodeHQ/pytest-postgresql
-        janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14', password="test")
+        #janitor = DatabaseJanitor('postgres', 'localhost', 5432, 'test', '14', password="test")
+        janitor = DatabaseJanitor(postgresql_nooproc.user, postgresql_nooproc.host,
+                                  postgresql_nooproc.port, 'test', postgresql_nooproc.version, password="test")
+
         janitor.init()
         db = sqla_prepdb() if issqla else pw_prepdb()
         yield db
