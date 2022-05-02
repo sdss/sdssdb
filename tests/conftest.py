@@ -78,7 +78,7 @@ def dropdb():
 
 
 @pytest.fixture(scope='module')
-def database(dropdb, request, postgresql_noproc):
+def database(request, postgresql_noproc):
     ''' Module fixture to initialize a real database or a test postgresql database '''
     if hasattr(request, 'param'):
         # yield a real database
