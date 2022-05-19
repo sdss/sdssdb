@@ -68,6 +68,7 @@ CREATE TABLE targetdb.carton_to_target (
     instrument_pk INTEGER,
     delta_ra DOUBLE PRECISION,
     delta_dec DOUBLE PRECISION,
+    offset BOOLEAN,
     intertial BOOLEAN,
     value REAL,
     carton_pk SMALLINT,
