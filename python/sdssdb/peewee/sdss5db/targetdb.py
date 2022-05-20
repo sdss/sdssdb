@@ -317,6 +317,7 @@ class CartonToTarget(TargetdbBase):
                                  field='pk')
     delta_ra = DoubleField()
     delta_dec = DoubleField()
+    offset = BooleanField(default=False)
     inertial = BooleanField()
 
     class Meta:
