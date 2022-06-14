@@ -165,6 +165,7 @@ class Design(TargetdbBase):
     mugatu_version = TextField()
     run_on = DateTimeField(default=datetime.datetime.now())
     assignment_hash = UUIDField()
+    field_exposure = IntegerField()
 
     class Meta:
         table_name = 'design'
