@@ -145,6 +145,14 @@ CREATE TABLE targetdb.field (
     cadence_pk SMALLINT,
     observatory_pk SMALLINT);
 
+CREATE TABLE targetdb.design_to_field (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    design_id INTEGER,
+    field_pk INTEGER,
+    exposure BIGINT,
+    field_exposure BIGINT);
+
+
 CREATE TABLE targetdb.obsmode(
     label TEXT PRIMARY KEY NOT NULL,
     min_moon_sep REAL,

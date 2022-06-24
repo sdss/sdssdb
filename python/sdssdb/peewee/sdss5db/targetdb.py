@@ -151,11 +151,11 @@ class DesignMode(TargetdbBase):
 
 
 class Design(TargetdbBase):
-    field = ForeignKeyField(column_name='field_pk',
-                            field='pk',
-                            model=Field,
-                            null=True,
-                            backref="designs")
+    # field = ForeignKeyField(column_name='field_pk',
+    #                         field='pk',
+    #                         model=Field,
+    #                         null=True,
+    #                         backref="designs")
     exposure = IntegerField(null=True)
     design_id = AutoField()
     design_mode = ForeignKeyField(column_name='design_mode_label',
@@ -169,6 +169,21 @@ class Design(TargetdbBase):
 
     class Meta:
         table_name = 'design'
+
+
+class designToField(TargetdbBase):
+    pk = AutoField()
+    design = ForeignKeyField(model=Design,
+                             column_name='design_id',
+                             field='design_id',)
+    field = ForeignKeyField(column_name='field_pk',
+                            field='pk',
+                            model=Field)
+    exposure = IntegerField()
+    field_exposure = IntegerField()
+
+    class Meta:
+        table_name = 'design_to_field'
 
 
 class DesignModeCheckResults(TargetdbBase):
