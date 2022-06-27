@@ -6,7 +6,6 @@
 #      (2) replace " by nothing
 #      (3) replace null by nothing
 #
-# Do not put this file into sdss github since you run this program only ONCE.
 # sed -i -e '1,1000d' temp1.csv
 # sed -i -e 's/"//g' temp1.csv
 # sed -i -e 's/null//g' temp1.csv
@@ -59,7 +58,7 @@ for i in range(len(list_of_csv_files)):
     print("", file=fpgscript)
     print("sed -i -e 's/\"//g' " + full_csv_nometa_file, file=fpgscript)
     print("", file=fpgscript)
-    print("sed -i -e 's/null//g' " + full_csv_nometa_file , file=fpgscript)
+    print("sed -i -e 's/null//g' " + full_csv_nometa_file, file=fpgscript)
     fpgscript.close()
 
     print("sed start:", csv_file)
