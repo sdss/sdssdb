@@ -171,7 +171,7 @@ class Design(TargetdbBase):
         table_name = 'design'
 
 
-class designToField(TargetdbBase):
+class DesignToField(TargetdbBase):
     pk = AutoField()
     design = ForeignKeyField(model=Design,
                              column_name='design_id',
