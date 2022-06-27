@@ -1,5 +1,5 @@
-# Program: gaia_dr3_csv2csv.py
-# Aim: Do below changes to Gaia DR3 CSV files
+# Program: gaia_dr3_source_csv2csv.py
+# Aim: Do below changes to Gaia DR3 source CSV files
 #      The original CSV files are not modified.
 #      The modified files have the extension nometa.csv.
 #      (1) remove 1000 lines of metadata at beginning of the file.

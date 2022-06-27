@@ -1,9 +1,9 @@
-# Program: gaia_dr3_load.py
-# Aim: load gaia dr3 csv files into the postgreSQL sdss5db database.
+# Program: gaia_dr3_source_load.py
+# Aim: load gaia_dr3_source csv files into the postgreSQL sdss5db database.
 #
 # The program checks so that it does not reload csv files which already
 # have a csv.load.out file.
-# run gaia_dr3_csv2csv.py before running this program
+# run gaia_dr3_source_csv2csv.py before running this program
 
 import glob
 import os.path
