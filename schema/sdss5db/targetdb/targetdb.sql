@@ -124,13 +124,13 @@ CREATE TABLE targetdb.assignment (
 
 CREATE TABLE targetdb.design (
     design_id SERIAL PRIMARY KEY NOT NULL,
-    exposure BIGINT,
+    -- exposure BIGINT,
     field_pk INTEGER,
     design_mode_label TEXT,
     mugatu_version TEXT,
     run_on DATE,
-    assignment_hash UUID,
-    field_exposure BIGINT);
+    assignment_hash UUID);
+    -- field_exposure BIGINT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
