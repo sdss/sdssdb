@@ -327,7 +327,7 @@ ALTER TABLE ONLY targetdb.design_to_field
     ADD CONSTRAINT field_fk
     FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk);
 
-ALTER TABLE ONLY targetdb.design
+ALTER TABLE ONLY targetdb.design_to_field
     ADD CONSTRAINT d2f_design_id_fk
     FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
