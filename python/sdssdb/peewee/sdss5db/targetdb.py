@@ -156,7 +156,7 @@ class Design(TargetdbBase):
     #                         model=Field,
     #                         null=True,
     #                         backref="designs")
-    exposure = IntegerField(null=True)
+    # exposure = IntegerField(null=True)
     design_id = AutoField()
     design_mode = ForeignKeyField(column_name='design_mode_label',
                                   field='label',
@@ -165,7 +165,7 @@ class Design(TargetdbBase):
     mugatu_version = TextField()
     run_on = DateTimeField(default=datetime.datetime.now())
     assignment_hash = UUIDField()
-    field_exposure = IntegerField()
+    # field_exposure = IntegerField()
 
     class Meta:
         table_name = 'design'
