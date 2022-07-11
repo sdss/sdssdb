@@ -291,10 +291,10 @@ ALTER TABLE ONLY targetdb.assignment
     FOREIGN KEY (design_id) REFERENCES targetdb.design(id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.design
-    ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+-- ALTER TABLE ONLY targetdb.design
+--     ADD CONSTRAINT field_fk
+--     FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+--     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT cadence_fk
@@ -321,6 +321,14 @@ ALTER TABLE ONLY targetdb.design
 
 ALTER TABLE ONLY targetdb.design_mode_check_results
     ADD CONSTRAINT design_id_fk
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
+
+ALTER TABLE ONLY targetdb.design_to_field
+    ADD CONSTRAINT field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk);
+
+ALTER TABLE ONLY targetdb.design
+    ADD CONSTRAINT d2f_design_id_fk
     FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
 -- Indices
@@ -396,3 +404,10 @@ CREATE INDEX CONCURRENTLY hole_holeid_idx
 CREATE INDEX CONCURRENTLY asignment_hash_idx
     ON targetdb.design
     USING BTREE(assignment_hash);
+
+CREATE INDEX CONCURRENTLY field_fk_idx
+    ON targetdb.design_to_field
+    USING BTREE(field_pk);
+CREATE INDEX CONCURRENTLY d2f_design_id_fk_idx
+    ON targetdb.design_to_field
+    USING BTREE(design_id);
