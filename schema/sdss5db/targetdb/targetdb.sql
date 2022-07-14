@@ -125,7 +125,7 @@ CREATE TABLE targetdb.assignment (
 CREATE TABLE targetdb.design (
     design_id SERIAL PRIMARY KEY NOT NULL,
     -- exposure BIGINT,
-    field_pk INTEGER,
+    -- field_pk INTEGER,
     design_mode_label TEXT,
     mugatu_version TEXT,
     run_on DATE,
