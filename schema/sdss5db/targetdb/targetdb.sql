@@ -124,13 +124,13 @@ CREATE TABLE targetdb.assignment (
 
 CREATE TABLE targetdb.design (
     design_id SERIAL PRIMARY KEY NOT NULL,
-    exposure BIGINT,
-    field_pk INTEGER,
+    -- exposure BIGINT,
+    -- field_pk INTEGER,
     design_mode_label TEXT,
     mugatu_version TEXT,
     run_on DATE,
-    assignment_hash UUID,
-    field_exposure BIGINT);
+    assignment_hash UUID);
+    -- field_exposure BIGINT);
 
 CREATE TABLE targetdb.field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -144,6 +144,14 @@ CREATE TABLE targetdb.field (
     version_pk SMALLINT,
     cadence_pk SMALLINT,
     observatory_pk SMALLINT);
+
+CREATE TABLE targetdb.design_to_field (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    design_id INTEGER,
+    field_pk INTEGER,
+    exposure BIGINT,
+    field_exposure BIGINT);
+
 
 CREATE TABLE targetdb.obsmode(
     label TEXT PRIMARY KEY NOT NULL,
@@ -283,10 +291,10 @@ ALTER TABLE ONLY targetdb.assignment
     FOREIGN KEY (design_id) REFERENCES targetdb.design(id)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY targetdb.design
-    ADD CONSTRAINT field_fk
-    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE;
+-- ALTER TABLE ONLY targetdb.design
+--     ADD CONSTRAINT field_fk
+--     FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+--     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.field
     ADD CONSTRAINT cadence_fk
@@ -313,6 +321,14 @@ ALTER TABLE ONLY targetdb.design
 
 ALTER TABLE ONLY targetdb.design_mode_check_results
     ADD CONSTRAINT design_id_fk
+    FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
+
+ALTER TABLE ONLY targetdb.design_to_field
+    ADD CONSTRAINT field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk);
+
+ALTER TABLE ONLY targetdb.design_to_field
+    ADD CONSTRAINT d2f_design_id_fk
     FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
 -- Indices
@@ -388,3 +404,10 @@ CREATE INDEX CONCURRENTLY hole_holeid_idx
 CREATE INDEX CONCURRENTLY asignment_hash_idx
     ON targetdb.design
     USING BTREE(assignment_hash);
+
+CREATE INDEX CONCURRENTLY field_fk_idx
+    ON targetdb.design_to_field
+    USING BTREE(field_pk);
+CREATE INDEX CONCURRENTLY d2f_design_id_fk_idx
+    ON targetdb.design_to_field
+    USING BTREE(design_id);
