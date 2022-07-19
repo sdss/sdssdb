@@ -129,7 +129,8 @@ CREATE TABLE targetdb.design (
     design_mode_label TEXT,
     mugatu_version TEXT,
     run_on DATE,
-    assignment_hash UUID);
+    assignment_hash UUID,
+    design_version SMALLINT);
     -- field_exposure BIGINT);
 
 CREATE TABLE targetdb.field (
