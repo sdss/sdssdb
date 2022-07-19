@@ -320,6 +320,11 @@ ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_mode_fk
     FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
 
+ALTER TABLE ONLY targetdb.design
+    ADD CONSTRAINT design_version_fk
+    FOREIGN KEY (design_version) REFERENCES targetdb.version(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
 ALTER TABLE ONLY targetdb.design_mode_check_results
     ADD CONSTRAINT design_id_fk
     FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
