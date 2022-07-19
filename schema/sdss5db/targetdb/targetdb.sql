@@ -130,7 +130,7 @@ CREATE TABLE targetdb.design (
     mugatu_version TEXT,
     run_on DATE,
     assignment_hash UUID,
-    design_version SMALLINT);
+    design_version_pk SMALLINT);
     -- field_exposure BIGINT);
 
 CREATE TABLE targetdb.field (
@@ -322,7 +322,7 @@ ALTER TABLE ONLY targetdb.design
 
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_version_fk
-    FOREIGN KEY (design_version) REFERENCES targetdb.version(pk)
+    FOREIGN KEY (design_version_pk) REFERENCES targetdb.version(pk)
     ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.design_mode_check_results

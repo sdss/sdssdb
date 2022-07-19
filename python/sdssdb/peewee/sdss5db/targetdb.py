@@ -165,7 +165,7 @@ class Design(TargetdbBase):
     mugatu_version = TextField()
     run_on = DateTimeField(default=datetime.datetime.now())
     assignment_hash = UUIDField()
-    version = ForeignKeyField(column_name='design_version',
+    version = ForeignKeyField(column_name='design_version_pk',
                               field='pk',
                               model=Version)
     # field_exposure = IntegerField()
