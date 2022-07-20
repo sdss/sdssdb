@@ -7,11 +7,24 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 import datetime
+import os
 
-from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
-                    DateTimeField, DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField,
-                    SmallIntegerField, TextField, fn, UUIDField)
+from peewee import (
+    SQL,
+    AutoField,
+    BigIntegerField,
+    BooleanField,
+    DateTimeField,
+    DeferredThroughModel,
+    DoubleField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    SmallIntegerField,
+    TextField,
+    UUIDField,
+    fn
+)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -169,6 +182,35 @@ class Design(TargetdbBase):
 
     class Meta:
         table_name = 'design'
+
+    @property
+    def field(self):
+        """Gets the Field entry for a design."""
+
+        rs_version = os.environ.get('RS_VERSION', None)
+        if rs_version is None:
+            raise ValueError("$RS_VERSION not defined.")
+
+        fields = (Field.select()
+                  .join(DesignToField)
+                  .join(Design)
+                  .where(Design.design_id == self.design_id))
+
+        # Fields that match the current RS version.
+        fields_version = (fields.switch(Field)
+                          .join(Version)
+                          .where(Version.plan == rs_version)
+                          .where(Version.robostrategy == True))  # noqa
+
+        n_fields = fields_version.count()
+        if n_fields > 1:
+            raise ValueError(f"Multiple fields found for design {self.design_id}.")
+        elif n_fields == 1:
+            return fields_version.first()
+        else:
+            # Fallback for commissioning designs and other designs without
+            # an associated RS version.
+            return fields.first()
 
 
 class DesignToField(TargetdbBase):
