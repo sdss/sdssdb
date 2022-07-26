@@ -462,6 +462,12 @@ class SDSS_DR17_APOGEE_Allstarmerge(CatalogdbModel):
         table_name = 'sdss_dr17_apogee_allstarmerge'
 
 
+class SDSS_DR19p_Speclite(CatalogdbModel):
+
+    class Meta:
+        table_name = 'sdss_dr19p_speclite'
+
+
 class unWISE(CatalogdbModel):
 
     unwise_objid = TextField(primary_key=True)
