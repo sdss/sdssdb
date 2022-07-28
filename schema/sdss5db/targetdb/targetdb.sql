@@ -129,7 +129,8 @@ CREATE TABLE targetdb.design (
     design_mode_label TEXT,
     mugatu_version TEXT,
     run_on DATE,
-    assignment_hash UUID);
+    assignment_hash UUID,
+    design_version_pk SMALLINT);
     -- field_exposure BIGINT);
 
 CREATE TABLE targetdb.field (
@@ -318,6 +319,11 @@ ALTER TABLE ONLY targetdb.magnitude
 ALTER TABLE ONLY targetdb.design
     ADD CONSTRAINT design_mode_fk
     FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
+
+ALTER TABLE ONLY targetdb.design
+    ADD CONSTRAINT design_version_fk
+    FOREIGN KEY (design_version_pk) REFERENCES targetdb.version(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY targetdb.design_mode_check_results
     ADD CONSTRAINT design_id_fk
