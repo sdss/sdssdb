@@ -438,24 +438,6 @@ class SDSS_DR17_APOGEE_Allplates(CatalogdbModel):
         table_name = 'sdss_dr17_apogee_allplates'
 
 
-class SDSS_DR17_APOGEE_Allstarlite(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr17_apogee_allstarlite'
-
-
-class SDSS_DR17_APOGEE_Allstar(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr17_apogee_allstar'
-
-
-class SDSS_DR17_APOGEE_Allvisit(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr17_apogee_allvisit'
-
-
 class SDSS_DR17_APOGEE_Allstarmerge(CatalogdbModel):
 
     class Meta:
