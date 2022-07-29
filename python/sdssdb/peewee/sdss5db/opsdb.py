@@ -277,6 +277,7 @@ class Queue(OpsdbBase):
         rm_designs = cls.select()\
                         .join(targetdb.Design,
                               on=(targetdb.Design.design_id == cls.design_id))\
+                        .join(targetdb.DesignToField)\
                         .join(targetdb.Field)\
                         .where(targetdb.Field.pk == field_pk)
 
