@@ -183,6 +183,98 @@ class Gaia_DR2_Neighbourhood(CatalogdbModel):
         table_name = 'gaia_dr2_neighbourhood'
 
 
+class Gedr3spur_main(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gedr3spur_main'
+
+
+class Gaia_edr3_allwise_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_allwise_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_allwise_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_allwise_neighbourhood'
+
+
+class Gaia_edr3_panstarrs1_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_panstarrs1_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_panstarrs1_neighbourhood'
+
+
+class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_sdssdr13_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_sdssdr13_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_sdssdr13_neighbourhood'
+
+
+class Gaia_edr3_skymapperdr2_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_skymapperdr2_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_skymapperdr2_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_skymapperdr2_neighbourhood'
+
+
+class Gaia_edr3_tmass_psc_xsc_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_tmass_psc_xsc_neighbourhood'
+
+
+class Gaia_edr3_tycho2tdsc_merge_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_tycho2tdsc_merge_neighbourhood'
+
+
 class Gaia_DR2_Clean(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
@@ -195,6 +287,14 @@ class Gaia_DR2_Clean(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_clean'
+
+
+class Galex_GR7_Gaia_DR3(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'galex_gr7_gaia_dr3'
 
 
 class GUVCat(CatalogdbModel):
@@ -434,17 +534,23 @@ class SDSS_DR16_QSO(SDSS_DR14_QSO):
 
 class SDSS_DR17_APOGEE_Allplates(CatalogdbModel):
 
+    plate_visit_id = TextField(primary_key=True)
+
     class Meta:
         table_name = 'sdss_dr17_apogee_allplates'
 
 
 class SDSS_DR17_APOGEE_Allstarmerge(CatalogdbModel):
 
+    apogee_id = TextField(primary_key=True)
+
     class Meta:
         table_name = 'sdss_dr17_apogee_allstarmerge'
 
 
 class SDSS_DR19p_Speclite(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'sdss_dr19p_speclite'
@@ -519,6 +625,14 @@ class MWM_TESS_OB(CatalogdbModel):
 
     class Meta:
         table_name = 'mwm_tess_ob'
+
+
+class MWM_Validation_Hot_Catalog(CatalogdbModel):
+
+    gaia_edr3_source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'mwm_validation_hot_catalog'
 
 
 class Twoqz_sixqz(CatalogdbModel):
