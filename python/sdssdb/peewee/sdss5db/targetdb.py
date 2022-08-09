@@ -430,6 +430,9 @@ class Magnitude(TargetdbBase):
 
 class AssignedTargets(TargetdbBase):
     program = TextField()
+    carton_pk = ForeignKeyField(column_name="carton_pk",
+                                field="pk",
+                                model=Carton)
     c2t_pk = ForeignKeyField(column_name="c2t_pk",
                              field="pk",
                              model=CartonToTarget)
@@ -446,11 +449,17 @@ class AssignedTargets(TargetdbBase):
     field_pk = ForeignKeyField(column_name="field_pk",
                                field="pk",
                                model=Field)
-    observatory = TextField()
-    version = TextField()
+    observatory_pk = ForeignKeyField(column_name="observatory_pk",
+                                     field="pk",
+                                     model=Observatory)
+    version_pk = ForeignKeyField(column_name="version_pk",
+                                 field="pk",
+                                 model=Version)
     cadence_pk = ForeignKeyField(column_name="cadence_pk",
                                  field="pk",
                                  model=Cadence)
+    mjd = FloatField()
+    completion_status_pk = IntegerField()
 
     class Meta:
         table_name = 'assigned_targets'
