@@ -695,6 +695,21 @@ class Legacy_Survey_DR8(CatalogdbModel):
         table_name = 'legacy_survey_dr8'
 
 
+class Legacy_Survey_DR10a(CatalogdbModel):
+
+    ls_id = BigIntegerField(primary_key=True)
+    ref_cat = TextField()
+    ref_id = BigIntegerField()
+
+    gaia = ForeignKeyField(Gaia_DR3,
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid',
+                           backref='legacy_survey')
+
+    class Meta:
+        table_name = 'legacy_survey_dr10a'
+
+
 class eBOSS_Target_v5(CatalogdbModel):
 
     sdss = ForeignKeyField(SDSS_DR13_PhotoObj,
