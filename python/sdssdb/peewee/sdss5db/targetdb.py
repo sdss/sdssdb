@@ -428,5 +428,42 @@ class Magnitude(TargetdbBase):
         table_name = 'magnitude'
 
 
+class AssignedTargets(TargetdbBase):
+    program = TextField()
+    carton_pk = ForeignKeyField(column_name="carton_pk",
+                                field="pk",
+                                model=Carton)
+    c2t_pk = ForeignKeyField(column_name="c2t_pk",
+                             field="pk",
+                             model=CartonToTarget)
+    target_pk = ForeignKeyField(column_name="target_pk",
+                                field="pk",
+                                model=Target)
+    assignment_pk = ForeignKeyField(column_name="assignment_pk",
+                                    field="pk",
+                                    model=Assignment)
+    design_id = ForeignKeyField(column_name="design_id",
+                                field="design_id",
+                                model=Design)
+    field_id = IntegerField()
+    field_pk = ForeignKeyField(column_name="field_pk",
+                               field="pk",
+                               model=Field)
+    observatory_pk = ForeignKeyField(column_name="observatory_pk",
+                                     field="pk",
+                                     model=Observatory)
+    version_pk = ForeignKeyField(column_name="version_pk",
+                                 field="pk",
+                                 model=Version)
+    cadence_pk = ForeignKeyField(column_name="cadence_pk",
+                                 field="pk",
+                                 model=Cadence)
+    mjd = FloatField()
+    completion_status_pk = IntegerField()
+
+    class Meta:
+        table_name = 'assigned_targets'
+
+
 # AssignmentDeferred.set_model(Assignment)
 CartonToTargetDeferred.set_model(CartonToTarget)
