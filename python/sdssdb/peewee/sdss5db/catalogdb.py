@@ -1378,6 +1378,19 @@ class TESS_TOI_v05(CatalogdbModel):
         table_name = 'tess_toi_v05'
 
 
+class TESS_TOI_v1(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    tic = ForeignKeyField(TIC_v8,
+                          column_name='ticid',
+                          object_id_name='ticid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'tess_toi_v1'
+
+
 class XMM_OM_SUSS_4_1(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
