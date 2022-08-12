@@ -19,4 +19,4 @@ INNER JOIN targetdb.observatory as o on (f.observatory_pk = o.pk)
 INNER JOIN targetdb.version as v on (f.version_pk = v.pk)
 WITH DATA;
 
-54733197
+create unique index at_assn_idx on targetdb.assigned_targets (assignment_pk);
