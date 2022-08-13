@@ -410,3 +410,5 @@ CREATE INDEX ON catalogdb.tycho2 (vtmag);
 ALTER TABLE catalogdb.tycho2 ADD COLUMN designation2 TEXT;
 UPDATE catalogdb.tycho2 SET designation2 = tyc1::TEXT || '-' || tyc2::TEXT  || '-' || tyc3::TEXT;
 
+CREATE UNIQUE INDEX ON catalogdb.tycho2 (designation2);
+
