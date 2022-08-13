@@ -255,6 +255,14 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour'
 
 
+class Gaia_edr3_tmass_psc_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tmass_psc_best_neighbour'
+
+
 class Gaia_edr3_gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
 
     class Meta:
