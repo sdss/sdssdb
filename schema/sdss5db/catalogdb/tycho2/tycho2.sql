@@ -403,4 +403,12 @@ CREATE INDEX ON catalogdb.tycho2 (btmag);
 
 CREATE INDEX ON catalogdb.tycho2 (vtmag);
 
+-- Added the designation2 column so that it has no padding by 0.
+-- designation2 can be used for foreign key
+-- from gaia_edr3_tycho2tdsc_merge_best_neighbour(original_ext_source_id)
+-- to tycho2(designation2)
+ALTER TABLE catalogdb.tycho2 ADD COLUMN designation2 TEXT;
+UPDATE catalogdb.tycho2 SET designation2 = tyc1::TEXT || '-' || tyc2::TEXT  || '-' || tyc3::TEXT;
+
+CREATE UNIQUE INDEX ON catalogdb.tycho2 (designation2);
 
