@@ -305,6 +305,94 @@ class Galex_GR7_Gaia_DR3(CatalogdbModel):
         table_name = 'galex_gr7_gaia_dr3'
 
 
+class Gaia_dr3_astrophysical_parameters(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_astrophysical_parameters'
+
+
+class Gaia_dr3_xp_summary(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_xp_summary'
+
+
+class Gaia_dr3_xp_continuous_mean_spectrum(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_xp_continuous_mean_spectrum'
+
+
+class Gaia_dr3_xp_sampled_mean_spectrum(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_xp_sampled_mean_spectrum'
+
+
+class Gaia_dr3_qso_candidates(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_qso_candidates'
+
+
+class Gaia_dr3_galaxy_candidates(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_galaxy_candidates'
+
+
+class Gaia_dr3_synthetic_photometry_gspc(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_synthetic_photometry_gspc'
+
+
+class Gaia_dr3_vari_agn(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_vari_agn'
+
+
+class Gaia_dr3_nss_two_body_orbit(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_nss_two_body_orbit'
+
+
+class Gaia_dr3_nss_acceleration_astro(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_nss_acceleration_astro'
+
+
+class Gaia_dr3_nss_non_linear_spectro(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_nss_non_linear_spectro'
+
+
 class GUVCat(CatalogdbModel):
 
     objid = BigIntegerField(primary_key=True)
