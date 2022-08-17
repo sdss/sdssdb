@@ -1,7 +1,6 @@
 \o sdss_dr19p_speclite_create_indexes.out
 
 CREATE INDEX ON catalogdb.sdss_dr19p_speclite(catalogid);
-CREATE INDEX ON catalogdb.sdss_dr19p_speclite(specobjid);
 CREATE INDEX ON catalogdb.sdss_dr19p_speclite(bestobjid);
 CREATE INDEX ON catalogdb.sdss_dr19p_speclite(plate, mjd, fiberid);
 CREATE INDEX ON catalogdb.sdss_dr19p_speclite(mjd);
