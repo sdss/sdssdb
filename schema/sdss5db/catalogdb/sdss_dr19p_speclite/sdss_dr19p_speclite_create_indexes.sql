@@ -10,4 +10,8 @@ CREATE INDEX ON catalogdb.sdss_dr19p_speclite(z_err);
 CREATE INDEX ON catalogdb.sdss_dr19p_speclite(sn_median_all);
 CREATE INDEX ON catalogdb.sdss_dr19p_speclite(q3c_ang2ipix(plug_ra, plug_dec));
 
+CREATE UNIQUE INDEX ON catalogdb.sdss_dr19p_speclite(mjd, plate, fiberid);
+
+ALTER TABLE catalogdb.gaia_dr2_wd_sdss ADD foreign key (mjd, plate, fiber) references catalogdb.sdss_dr19p_speclite(mjd, plate, fiberid);
+
 ANALYZE catalogdb.sdss_dr19p_speclite;
