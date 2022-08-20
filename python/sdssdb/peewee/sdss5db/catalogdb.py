@@ -255,12 +255,15 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour'
 
 
-class Gaia_edr3_tmass_psc_best_neighbour(CatalogdbModel):
+# The below table is a subset of the above
+# gaia_edr3_tmass_psc_xsc_best_neighbour table.
+# This is not a standard gaia_edr3 table.
+class Gaia_edr3_tmass_psc_xsc_best_neighbour2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
 
     class Meta:
-        table_name = 'gaia_edr3_tmass_psc_best_neighbour'
+        table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour2'
 
 
 class Gaia_edr3_gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
@@ -275,6 +278,17 @@ class Gaia_edr3_tycho2tdsc_merge_best_neighbour(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour'
+
+
+# The below  table is a subset of the above
+# gaia_edr3_tycho2tdsc_merge_best_neighbour table.
+# This is not a standard gaia_edr3 table.
+class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour2'
 
 
 class Gaia_edr3_gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):

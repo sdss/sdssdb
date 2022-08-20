@@ -1,7 +1,7 @@
 -- https://gea.esac.esa.int/archive/documentation/GEDR3/Gaia_archive/chap_datamodel/sec_dm_crossmatches/ssec_dm_tmass_psc_xsc_best_neighbour.html
 -- below table only contains the psc rows of the above data
 
-create table catalogdb.gaia_edr3_tmass_psc_best_neighbour(
+create table catalogdb.gaia_edr3_tmass_psc_xsc_best_neighbour2(
 source_id bigint, -- Unique Gaia source identifier (long)
 original_ext_source_id text, -- Original External Catalogue source identifier (string)
 angular_distance real, -- Angular Distance between the two sources (float, Angle[arcsec])
