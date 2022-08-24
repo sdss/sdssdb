@@ -167,12 +167,134 @@ class Gaia_EDR3(CatalogdbModel):
         table_name = 'gaia_edr3_source'
 
 
+class Gaia_DR3(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_source'
+
+
 class Gaia_DR2_Neighbourhood(CatalogdbModel):
 
     pkey = BigIntegerField(primary_key=True)
 
     class Meta:
         table_name = 'gaia_dr2_neighbourhood'
+
+
+class Gedr3spur_main(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gedr3spur_main'
+
+
+class Gaia_edr3_allwise_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_allwise_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_allwise_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_allwise_neighbourhood'
+
+
+class Gaia_edr3_panstarrs1_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_panstarrs1_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_panstarrs1_neighbourhood'
+
+
+class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_sdssdr13_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_sdssdr13_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_sdssdr13_neighbourhood'
+
+
+class Gaia_edr3_skymapperdr2_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_skymapperdr2_best_neighbour'
+
+
+class Gaia_edr3_gaia_edr3_skymapperdr2_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_skymapperdr2_neighbourhood'
+
+
+class Gaia_edr3_tmass_psc_xsc_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour'
+
+
+# The below table is a subset of the above
+# gaia_edr3_tmass_psc_xsc_best_neighbour table.
+# This is not a standard gaia_edr3 table.
+class Gaia_edr3_tmass_psc_xsc_best_neighbour2(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour2'
+
+
+class Gaia_edr3_gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_tmass_psc_xsc_neighbourhood'
+
+
+class Gaia_edr3_tycho2tdsc_merge_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour'
+
+
+# The below  table is a subset of the above
+# gaia_edr3_tycho2tdsc_merge_best_neighbour table.
+# This is not a standard gaia_edr3 table.
+class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour2'
+
+
+class Gaia_edr3_gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):
+
+    class Meta:
+        table_name = 'gaia_edr3_tycho2tdsc_merge_neighbourhood'
 
 
 class Gaia_DR2_Clean(CatalogdbModel):
@@ -187,6 +309,105 @@ class Gaia_DR2_Clean(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr2_clean'
+
+
+class Galex_GR7_Gaia_DR3(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'galex_gr7_gaia_dr3'
+
+
+class Gaia_dr3_astrophysical_parameters(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_astrophysical_parameters'
+
+
+class Gaia_dr3_xp_summary(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_xp_summary'
+
+
+class Gaia_dr3_xp_continuous_mean_spectrum(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_xp_continuous_mean_spectrum'
+
+
+class Gaia_dr3_xp_sampled_mean_spectrum(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_xp_sampled_mean_spectrum'
+
+
+class Gaia_dr3_qso_candidates(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_qso_candidates'
+
+
+class Gaia_dr3_galaxy_candidates(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_galaxy_candidates'
+
+
+class Gaia_dr3_synthetic_photometry_gspc(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_synthetic_photometry_gspc'
+
+
+class Gaia_dr3_vari_agn(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_vari_agn'
+
+
+class Gaia_dr3_nss_two_body_orbit(CatalogdbModel):
+
+    # There are duplicate source_id in the table
+    # gaia_dr3_nss_two_body_orbit.
+    # Hence, source_id is not a primary key
+    # for this table.
+
+    class Meta:
+        table_name = 'gaia_dr3_nss_two_body_orbit'
+
+
+class Gaia_dr3_nss_acceleration_astro(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_nss_acceleration_astro'
+
+
+class Gaia_dr3_nss_non_linear_spectro(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_nss_non_linear_spectro'
 
 
 class GUVCat(CatalogdbModel):
@@ -426,32 +647,26 @@ class SDSS_DR16_QSO(SDSS_DR14_QSO):
 
 class SDSS_DR17_APOGEE_Allplates(CatalogdbModel):
 
+    plate_visit_id = TextField(primary_key=True)
+
     class Meta:
         table_name = 'sdss_dr17_apogee_allplates'
 
 
-class SDSS_DR17_APOGEE_Allstarlite(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr17_apogee_allstarlite'
-
-
-class SDSS_DR17_APOGEE_Allstar(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr17_apogee_allstar'
-
-
-class SDSS_DR17_APOGEE_Allvisit(CatalogdbModel):
-
-    class Meta:
-        table_name = 'sdss_dr17_apogee_allvisit'
-
-
 class SDSS_DR17_APOGEE_Allstarmerge(CatalogdbModel):
+
+    apogee_id = TextField(primary_key=True)
 
     class Meta:
         table_name = 'sdss_dr17_apogee_allstarmerge'
+
+
+class SDSS_DR19p_Speclite(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdss_dr19p_speclite'
 
 
 class unWISE(CatalogdbModel):
@@ -525,6 +740,14 @@ class MWM_TESS_OB(CatalogdbModel):
         table_name = 'mwm_tess_ob'
 
 
+class MWM_Validation_Hot_Catalog(CatalogdbModel):
+
+    gaia_edr3_source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'mwm_validation_hot_catalog'
+
+
 class Twoqz_sixqz(CatalogdbModel):
     # BigIntegerField is fine even though table column pkey
     # is a bigserial column
@@ -583,6 +806,21 @@ class Legacy_Survey_DR8(CatalogdbModel):
 
     class Meta:
         table_name = 'legacy_survey_dr8'
+
+
+class Legacy_Survey_DR10a(CatalogdbModel):
+
+    ls_id = BigIntegerField(primary_key=True)
+    ref_cat = TextField()
+    ref_id = BigIntegerField()
+
+    gaia = ForeignKeyField(Gaia_DR3,
+                           column_name='gaia_sourceid',
+                           object_id_name='gaia_sourceid',
+                           backref='legacy_survey')
+
+    class Meta:
+        table_name = 'legacy_survey_dr10a'
 
 
 class eBOSS_Target_v5(CatalogdbModel):
@@ -1251,6 +1489,19 @@ class TESS_TOI_v05(CatalogdbModel):
 
     class Meta:
         table_name = 'tess_toi_v05'
+
+
+class TESS_TOI_v1(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    tic = ForeignKeyField(TIC_v8,
+                          column_name='ticid',
+                          object_id_name='ticid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'tess_toi_v1'
 
 
 class XMM_OM_SUSS_4_1(CatalogdbModel):

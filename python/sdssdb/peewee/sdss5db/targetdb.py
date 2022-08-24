@@ -7,11 +7,24 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 import datetime
+import os
 
-from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
-                    DateTimeField, DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField,
-                    SmallIntegerField, TextField, fn, UUIDField)
+from peewee import (
+    SQL,
+    AutoField,
+    BigIntegerField,
+    BooleanField,
+    DateTimeField,
+    DeferredThroughModel,
+    DoubleField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    SmallIntegerField,
+    TextField,
+    UUIDField,
+    fn
+)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -151,12 +164,12 @@ class DesignMode(TargetdbBase):
 
 
 class Design(TargetdbBase):
-    field = ForeignKeyField(column_name='field_pk',
-                            field='pk',
-                            model=Field,
-                            null=True,
-                            backref="designs")
-    exposure = IntegerField(null=True)
+    # field = ForeignKeyField(column_name='field_pk',
+    #                         field='pk',
+    #                         model=Field,
+    #                         null=True,
+    #                         backref="designs")
+    # exposure = IntegerField(null=True)
     design_id = AutoField()
     design_mode = ForeignKeyField(column_name='design_mode_label',
                                   field='label',
@@ -165,9 +178,57 @@ class Design(TargetdbBase):
     mugatu_version = TextField()
     run_on = DateTimeField(default=datetime.datetime.now())
     assignment_hash = UUIDField()
+    version = ForeignKeyField(column_name='design_version_pk',
+                              field='pk',
+                              model=Version)
+    # field_exposure = IntegerField()
 
     class Meta:
         table_name = 'design'
+
+    @property
+    def field(self):
+        """Gets the Field entry for a design."""
+
+        rs_version = os.environ.get('RS_VERSION', None)
+        if rs_version is None:
+            raise ValueError("$RS_VERSION not defined.")
+
+        fields = (Field.select()
+                  .join(DesignToField)
+                  .join(Design)
+                  .where(Design.design_id == self.design_id))
+
+        # Fields that match the current RS version.
+        fields_version = (fields.switch(Field)
+                          .join(Version)
+                          .where(Version.plan == rs_version)
+                          .where(Version.robostrategy == True))  # noqa
+
+        n_fields = fields_version.count()
+        if n_fields > 1:
+            raise ValueError(f"Multiple fields found for design {self.design_id}.")
+        elif n_fields == 1:
+            return fields_version.first()
+        else:
+            # Fallback for commissioning designs and other designs without
+            # an associated RS version.
+            return fields.first()
+
+
+class DesignToField(TargetdbBase):
+    pk = AutoField()
+    design = ForeignKeyField(model=Design,
+                             column_name='design_id',
+                             field='design_id',)
+    field = ForeignKeyField(column_name='field_pk',
+                            field='pk',
+                            model=Field)
+    exposure = IntegerField()
+    field_exposure = IntegerField()
+
+    class Meta:
+        table_name = 'design_to_field'
 
 
 class DesignModeCheckResults(TargetdbBase):
@@ -317,6 +378,7 @@ class CartonToTarget(TargetdbBase):
                                  field='pk')
     delta_ra = DoubleField()
     delta_dec = DoubleField()
+    can_offset = BooleanField(default=False)
     inertial = BooleanField()
 
     class Meta:
@@ -364,6 +426,43 @@ class Magnitude(TargetdbBase):
 
     class Meta:
         table_name = 'magnitude'
+
+
+class AssignedTargets(TargetdbBase):
+    program = TextField()
+    carton_pk = ForeignKeyField(column_name="carton_pk",
+                                field="pk",
+                                model=Carton)
+    c2t_pk = ForeignKeyField(column_name="c2t_pk",
+                             field="pk",
+                             model=CartonToTarget)
+    target_pk = ForeignKeyField(column_name="target_pk",
+                                field="pk",
+                                model=Target)
+    assignment_pk = ForeignKeyField(column_name="assignment_pk",
+                                    field="pk",
+                                    model=Assignment)
+    design_id = ForeignKeyField(column_name="design_id",
+                                field="design_id",
+                                model=Design)
+    field_id = IntegerField()
+    field_pk = ForeignKeyField(column_name="field_pk",
+                               field="pk",
+                               model=Field)
+    observatory_pk = ForeignKeyField(column_name="observatory_pk",
+                                     field="pk",
+                                     model=Observatory)
+    version_pk = ForeignKeyField(column_name="version_pk",
+                                 field="pk",
+                                 model=Version)
+    cadence_pk = ForeignKeyField(column_name="cadence_pk",
+                                 field="pk",
+                                 model=Cadence)
+    mjd = FloatField()
+    completion_status_pk = IntegerField()
+
+    class Meta:
+        table_name = 'assigned_targets'
 
 
 # AssignmentDeferred.set_model(Assignment)

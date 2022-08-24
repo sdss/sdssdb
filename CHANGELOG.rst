@@ -5,6 +5,15 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.5.4 <2022-05-19>`
+* Add ``targetdb.design_to_field`` table
+* Improve offset support
+* New catalogs: gaia DR3
+
+* :release:`0.5.3 <2022-05-19>`
+* Support opsdb_apo or opsdb_lco depending on OBSERVATORY environment variable
+* New catalogs: gaia eDR3, skies_v2, legacy_survey_dr10a
+
 * :release:`0.5.2 <2022-04-01>`
 * Add assignment_hash to ``targetdb.design``
 * Add more magnitudes to targetdb

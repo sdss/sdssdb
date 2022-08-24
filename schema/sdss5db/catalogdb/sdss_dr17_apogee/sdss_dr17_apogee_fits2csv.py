@@ -7,9 +7,7 @@ input_dir = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/sds
 output_dir = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/sdss_dr17_apogee/'  # noqa: E501
 
 input_fits_file_list = ['allPlates-dr17-synspec.fits',
-                        'allStarLite-dr17-synspec.fits',
-                        'allStar-dr17-synspec.fits',
-                        'allVisit-dr17-synspec.fits']
+                        'allStarMergeTargOnly-dr17-synspec.fits']
 
 for input_fits_file in input_fits_file_list:
     output_csv_file = input_fits_file.replace('fits', 'csv')

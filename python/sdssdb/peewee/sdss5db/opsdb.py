@@ -6,6 +6,7 @@
 # @Filename: opsdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+import os
 import datetime
 
 from peewee import (AutoField, BigIntegerField, DateTimeField,
@@ -27,7 +28,11 @@ FieldToPriorityDeferred = DeferredThroughModel()
 class OpsdbBase(BaseModel):
 
     class Meta:
-        schema = 'opsdb'
+        observatory = os.getenv("OBSERVATORY")
+        if observatory == "APO":
+            schema = 'opsdb_apo'
+        else:
+            schema = 'opsdb_lco'
         database = database
 
 
@@ -272,6 +277,7 @@ class Queue(OpsdbBase):
         rm_designs = cls.select()\
                         .join(targetdb.Design,
                               on=(targetdb.Design.design_id == cls.design_id))\
+                        .join(targetdb.DesignToField)\
                         .join(targetdb.Field)\
                         .where(targetdb.Field.pk == field_pk)
 
