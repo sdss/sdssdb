@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# encoding: utf-8
-find $CATALOGDB_DIR/legacysurvey/dr10/north/sweep/ -name "sweep-*.csv"  | xargs -I {} sh -c "echo {} && psql -U sdss sdss5db -c \"\copy catalogdb.legacy_survey_dr10 FROM {} WITH HEADER DELIMITER ',' CSV;\""
-find $CATALOGDB_DIR/legacysurvey/dr10/south/sweep/ -name "sweep-*.csv"  | xargs -I {} sh -c "echo {} && psql -U sdss sdss5db -c \"\copy catalogdb.legacy_survey_dr10 FROM {} WITH HEADER DELIMITER ',' CSV;\""
