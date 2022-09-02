@@ -661,6 +661,14 @@ class SDSS_DR17_APOGEE_Allstarmerge(CatalogdbModel):
         table_name = 'sdss_dr17_apogee_allstarmerge'
 
 
+class SDSS_DR17_APOGEE_Allvisits(CatalogdbModel):
+
+    visit_id = TextField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdss_dr17_apogee_allvisits'
+
+
 class SDSS_DR19p_Speclite(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
