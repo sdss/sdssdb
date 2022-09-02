@@ -6,8 +6,10 @@ input_dir = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/sds
 
 output_dir = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/sdss_dr17_apogee/'  # noqa: E501
 
-input_fits_file_list = ['allPlates-dr17-synspec.fits',
-                        'allStarMergeTargOnly-dr17-synspec.fits']
+# input_fits_file_list = ['allPlates-dr17-synspec.fits',
+#                        'allStarMergeTargOnly-dr17-synspec.fits']
+
+input_fits_file_list = ['sdss_dr17_apogee_allVisits.fits']
 
 for input_fits_file in input_fits_file_list:
     output_csv_file = input_fits_file.replace('fits', 'csv')
@@ -34,7 +36,7 @@ for input_fits_file in input_fits_file_list:
     line_out = ''
     for line in ftemp1:
         line = line.strip()
-        if(line == 'ENDOFLINE'):
+        if (line == 'ENDOFLINE'):
             print(line_out, file=ftemp2)
             line_out = ''
         else:
@@ -75,10 +77,10 @@ for input_fits_file in input_fits_file_list:
         line_out = ''
         delimiter = ';'
         for i in range(len(tags)):
-            if(tags[i] == '{'):
+            if (tags[i] == '{'):
                 delimiter = ','
                 line_out = line_out + '{'
-            elif(tags[i] == '}'):
+            elif (tags[i] == '}'):
                 delimiter = ';'
                 line_out = line_out.rstrip(',') + '};'
             else:
@@ -87,7 +89,7 @@ for input_fits_file in input_fits_file_list:
         print(line_out, file=fout)
 
     print("num_lines_csv:", num_lines_csv)
-    if(num_lines_fits != num_lines_csv):
+    if (num_lines_fits != num_lines_csv):
         print("error:num_lines_fits != num_lines_csv")
     fin.close()
     fout.close()
