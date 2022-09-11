@@ -333,7 +333,7 @@ def get_database_columns(database, schema=None):
     for table_name, cdef in pks:
         cols = list(map(lambda x: x.strip(),
                         pk_re.match(cdef).group(1).split(',')))
-        pk_map[table_name] = cols
+        pk_map[table_name.replace(schema + '.', '')] = cols
 
     # Compile the information in the metadata dictionary.
     for table_name in attrs_map:
