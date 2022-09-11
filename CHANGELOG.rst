@@ -5,7 +5,15 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
-* :release:`0.5.4 <2022-05-19>`
+* :release:`0.5.5 <2022-09-11>`
+* :feature:`127` Add ``Design.field`` attribute.
+* Use full hostname for sdss5-db at APO.
+* Fixes to opsdb, targetdb.
+* Update default Cadences to v2.
+* Fix issue with ``get_database_columns``.
+* Multiple additions to ``catalogdb`` for v1.
+
+* :release:`0.5.4 <2022-07-15>`
 * Add ``targetdb.design_to_field`` table
 * Improve offset support
 * New catalogs: gaia DR3
