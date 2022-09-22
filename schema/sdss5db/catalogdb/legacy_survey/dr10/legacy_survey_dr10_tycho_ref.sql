@@ -1,5 +1,8 @@
 -- See the below link for ref_cat values
 -- https://www.legacysurvey.org/dr8/files/
+--
+-- create an index on ref_cat before running this SQL script
+
 
 \o legacy_survey_dr10_tycho_ref.out
 
