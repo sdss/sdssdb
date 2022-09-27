@@ -21,5 +21,6 @@ create index on catalogdb.legacy_survey_dr10(nobs_z);
 create index on catalogdb.legacy_survey_dr10(parallax);
 create index on catalogdb.legacy_survey_dr10(type);
 create index on catalogdb.legacy_survey_dr10(survey_primary);
-
+create index on catalogdb.legacy_survey_dr10(ref_id);
+create index on catalogdb.legacy_survey_dr10(ref_cat);
 \o

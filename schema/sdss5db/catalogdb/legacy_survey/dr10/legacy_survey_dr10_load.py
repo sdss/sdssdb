@@ -11,10 +11,10 @@ import os.path
 DEBUG = False
 
 # Note that csv_dir and csvout_dir must end with /
-# Run this program once with 'north' and once with 'south' in csv_dir.
+# Run this program once with 'north' and once with 'south'
+# in csv_dir and csvout_dir.
 csv_dir = "/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/legacysurvey/dr10/south/sweep/"  # noqa E501
 csvout_dir = "/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/legacysurvey/dr10/south/csvout/"  # noqa E501
-# csvout_dir = csv_dir + "csvout/"
 
 
 list_of_csv_files = glob.glob(csv_dir + "sweep*.csv")

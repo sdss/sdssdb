@@ -19,5 +19,7 @@ create index on catalogdb.legacy_survey_dr10a(nobs_r);
 create index on catalogdb.legacy_survey_dr10a(nobs_i);
 create index on catalogdb.legacy_survey_dr10a(nobs_z);
 create index on catalogdb.legacy_survey_dr10a(parallax);
+create index on catalogdb.legacy_survey_dr10a(ref_id);
+create index on catalogdb.legacy_survey_dr10a(ref_cat);
 
 \o
