@@ -37,6 +37,11 @@ with open('mixed2_single_cadences'+label_version+'.cfg','w') as f:
             f.write(' nexp='+ ' 1'*i + '\n')
             f.write(' max_length= 0.20 0.20' + ' 0.20' * (i-2) + '\n')
             f.write(' obsmode_pk= dark_plane dark_plane' + ' bright_time'*(i-2) + '\n')
+            f.write(' min_moon_sep =  35 35 ' + ' 15'*(i-2) + '\n')
+            f.write(' min_deltav_ks91 = -1.5 -1.5 ' + ' -3'*(i-2) + '\n')
+            f.write(' min_twilight_ang = 15 15 ' + ' 8'*(i-2) + '\n')
+            f.write(' max_airmass = 1.6 1.6 ' + ' 2'*(i-2) + '\n')
+
 
         else:  #In this case, do up to 18 in the sequence then revert to unconstrainted
             for one_del in delta_sequence[0:17]:
@@ -48,6 +53,10 @@ with open('mixed2_single_cadences'+label_version+'.cfg','w') as f:
             f.write(' nexp='+ ' 1'*i + '\n')
             f.write(' max_length= 0.20 0.20' + ' 0.20'*18 + ' 10000.00'*(i-20) + '\n')
             f.write(' obsmode_pk= dark_plane dark_plane' + ' bright_time'*18 + ' bright_time'*(i-20) + '\n')
+            f.write(' min_moon_sep =  35 35 ' + ' 15'*18 + ' 15'*(i-20) + '\n')
+            f.write(' min_deltav_ks91 = -1.5 -1.5 ' + ' -3'*18 + ' -3'*(i-20) + '\n')
+            f.write(' min_twilight_ang = 15 15 ' + ' 15'*18 + ' 8'*(i-20) + '\n')
+            f.write(' max_airmass = 1.6 1.6 ' + ' 1.6'*18 + ' 2'*(i-20) + '\n')
 
        
         f.write('\n\n')
