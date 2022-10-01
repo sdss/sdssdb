@@ -129,5 +129,7 @@ fitbits smallint ,
 sersic real ,
 sersic_ivar real ,
 survey_primary boolean,
-ls_id bigint
+ls_id bigint,
+gaia_dr2_source_id bigint,
+gaia_dr3_source_id bigint
 );
