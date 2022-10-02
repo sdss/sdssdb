@@ -14,7 +14,7 @@ DEBUG = False
 # Run this program once with 'north' and once with 'south'
 # in csv_dir and csvout_dir.
 
-for hem in ["noth", "south"]:
+for hem in ["north", "south"]:
     csv_dir = f"/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/legacysurvey/dr10/{hem}/sweep_csv/"  # noqa E501
     csvout_dir = f"/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/legacysurvey/dr10/{hem}/csvout/"  # noqa E501
 
