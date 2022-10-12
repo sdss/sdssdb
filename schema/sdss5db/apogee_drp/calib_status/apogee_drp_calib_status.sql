@@ -19,7 +19,7 @@ CREATE TABLE apogee_drp.calib_status (
     FIELDID     text,
     PBSKEY      text,
     CHECKTIME   timestamp,
-    NUM         integer,
+    NUM         text,
     CALFILE	text,
     SUCCESS3D	boolean,
     SUCCESS2D	boolean,
