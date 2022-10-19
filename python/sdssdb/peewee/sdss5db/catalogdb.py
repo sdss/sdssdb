@@ -1519,13 +1519,29 @@ class XMM_OM_SUSS_4_1(CatalogdbModel):
     class Meta:
         table_name = 'xmm_om_suss_4_1'
 
-class XMM_OM_SUSS_50(CatalogdbModel):
+
+class XMM_OM_SUSS_5_0(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
 
     class Meta:
-        table_name = 'xmm_om_suss_50'
+        table_name = 'xmm_om_suss_5_0'
 
+
+class HECATE_1_1(CatalogdbModel):
+
+    pgc = IntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'hecate_1_1'
+
+
+class MILLIQUAS_7_7(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'milliquas_7_7'
 
 
 class GeometricDistances_Gaia_DR2(CatalogdbModel):
