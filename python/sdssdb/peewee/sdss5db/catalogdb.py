@@ -1519,6 +1519,14 @@ class XMM_OM_SUSS_4_1(CatalogdbModel):
     class Meta:
         table_name = 'xmm_om_suss_4_1'
 
+class XMM_OM_SUSS_50(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'xmm_om_suss_50'
+
+
 
 class GeometricDistances_Gaia_DR2(CatalogdbModel):
 
