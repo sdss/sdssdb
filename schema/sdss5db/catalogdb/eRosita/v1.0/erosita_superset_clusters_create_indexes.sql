@@ -11,4 +11,6 @@ create index on catalogdb.erosita_superset_v1_clusters(xmatch_metric);
 create index on catalogdb.erosita_superset_v1_clusters(opt_cat);
 create index on catalogdb.erosita_superset_v1_clusters(ls_id);
 create index on catalogdb.erosita_superset_v1_clusters(target_priority);
+create index on catalogdb.erosita_superset_v1_clusters(eromapper_lambda);
+create index on catalogdb.erosita_superset_v1_clusters(eromapper_z_lambda);
 \o

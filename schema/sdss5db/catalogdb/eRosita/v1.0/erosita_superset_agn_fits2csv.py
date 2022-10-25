@@ -7,9 +7,14 @@ input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosit
 output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_vXXX/csv/erosita_superset_agn/'  # noqa: E501
 
 input_fits_file_list =\
-    ['sdssv_erosita_erass3_update_v1.0_agn_nway_lsdr10_vXXX.fits',
-     'sdssv_erosita_erass3_update_v1.0_agn_nway_catwise2020_gaiaedr3_vXXX.fits',
-     'sdssv_erosita_erass3_update_v1.0_agn_nway_catwise2020_gaiaedr3_sep_vXXX.fits']
+    [
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr9_vXXX.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_vXXX.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_nomask_vXXX.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_cw2020_gedr3_vXXX.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_gedr3_vXXX.fits',
+        'sdssv_spiders_erass3_update_v1_0_tda_nway_lsdr10_vXXX.fits',
+    ]
 
 for input_fits_file in input_fits_file_list:
     output_csv_file = input_fits_file.replace('fits', 'csv')

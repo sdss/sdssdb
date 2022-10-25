@@ -5,6 +5,7 @@ create table catalogdb.erosita_superset_v1_agn (
 ero_version char(24),
 ero_detuid char(32),
 ero_flux real,
+ero_flux_type char(16),
 ero_mjd text,
 ero_morph char(9),
 ero_det_like real,
