@@ -2,18 +2,18 @@ from astropy.io import fits
 
 
 # input_dir and output_dir must end with /
-input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_vXXX/erosita_superset_agn/'  # noqa: E501
+input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_v1.0.3/erosita_superset_agn/'  # noqa: E501
 
-output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_vXXX/csv/erosita_superset_agn/'  # noqa: E501
+output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_v1.0.3/csv/erosita_superset_agn/'  # noqa: E501
 
 input_fits_file_list =\
     [
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr9_vXXX.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_vXXX.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_nomask_vXXX.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_cw2020_gedr3_vXXX.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_gedr3_vXXX.fits',
-        'sdssv_spiders_erass3_update_v1_0_tda_nway_lsdr10_vXXX.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr9_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_nomask_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_cw2020_gedr3_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_gedr3_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_tda_nway_lsdr10_v1.0.3.fits',
     ]
 
 for input_fits_file in input_fits_file_list:
