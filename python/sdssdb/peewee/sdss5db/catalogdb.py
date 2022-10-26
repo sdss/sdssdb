@@ -135,6 +135,11 @@ class TwoMassPSC(CatalogdbModel):
     pts_key = IntegerField(primary_key=True)
     designation = TextField()
 
+    allwise = ForeignKeyField(AllWise,
+                              field='tmass_key',
+                              column_name='pts_key',
+                              backref='+')
+
     class Meta:
         table_name = 'twomass_psc'
 
@@ -178,6 +183,14 @@ class Gaia_DR3(CatalogdbModel):
 class Gaia_DR2_Neighbourhood(CatalogdbModel):
 
     pkey = BigIntegerField(primary_key=True)
+    dr2_source_id = ForeignKeyField(Gaia_DR2,
+                                    field='source_id',
+                                    column_name='dr2_source_id',
+                                    backref='+')
+    dr3_source_id = ForeignKeyField(Gaia_DR3,
+                                    field='source_id',
+                                    column_name='dr3_source_id',
+                                    backref='+')
 
     class Meta:
         table_name = 'gaia_dr2_neighbourhood'
@@ -194,6 +207,14 @@ class Gedr3spur_main(CatalogdbModel):
 class Gaia_edr3_allwise_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
+    external = ForeignKeyField(AllWise,
+                               field='designation',
+                               column_name='original_ext_source_id',
+                               backref='+')
 
     class Meta:
         table_name = 'gaia_edr3_allwise_best_neighbour'
@@ -208,6 +229,10 @@ class Gaia_edr3_gaia_edr3_allwise_neighbourhood(CatalogdbModel):
 class Gaia_edr3_panstarrs1_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
 
     class Meta:
         table_name = 'gaia_edr3_panstarrs1_best_neighbour'
@@ -222,6 +247,10 @@ class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
 class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
 
     class Meta:
         table_name = 'gaia_edr3_sdssdr13_best_neighbour'
@@ -261,6 +290,14 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour(CatalogdbModel):
 class Gaia_edr3_tmass_psc_xsc_best_neighbour2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
+    external = ForeignKeyField(TwoMassPSC,
+                               field='designation',
+                               column_name='original_ext_source_id',
+                               backref='+')
 
     class Meta:
         table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour2'
@@ -286,6 +323,10 @@ class Gaia_edr3_tycho2tdsc_merge_best_neighbour(CatalogdbModel):
 class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
 
     class Meta:
         table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour2'
@@ -689,6 +730,10 @@ class Tycho2(CatalogdbModel):
 
     designation = TextField(primary_key=True)
     tycid = IntegerField(null=False)
+    gaia_xmatch = ForeignKeyField(Gaia_edr3_tycho2tdsc_merge_best_neighbour2,
+                                  field='original_ext_source_id',
+                                  column_name='designation2',
+                                  backref='+')
 
     class Meta:
         table_name = 'tycho2'
@@ -829,6 +874,25 @@ class Legacy_Survey_DR10a(CatalogdbModel):
 
     class Meta:
         table_name = 'legacy_survey_dr10a'
+
+
+class Legacy_Survey_DR10(CatalogdbModel):
+
+    ls_id = BigIntegerField(primary_key=True)
+    ref_cat = TextField()
+    ref_id = BigIntegerField()
+
+    gaia2 = ForeignKeyField(Gaia_DR2,
+                            field='source_id',
+                            column_name='gaia_dr2_source_id',
+                            backref='+')
+    gaia3 = ForeignKeyField(Gaia_DR3,
+                            field='source_id',
+                            column_name='gaia_dr3_source_id',
+                            backref='+')
+
+    class Meta:
+        table_name = 'legacy_survey_dr10'
 
 
 class eBOSS_Target_v5(CatalogdbModel):
@@ -1060,6 +1124,11 @@ class Gaia_DR2_WD(CatalogdbModel):
                           column_name='source_id',
                           object_id_name='source_id',
                           backref='+')
+
+    wd = ForeignKeyField(Gaia_DR2_WD_SDSS,
+                         field='wd',
+                         column_name='wd',
+                         backref='+')
 
     @property
     def sdss(self):
@@ -1324,6 +1393,10 @@ class PS1_g18(CatalogdbModel):
 class Panstarrs1(CatalogdbModel):
 
     catid_objid = BigIntegerField(primary_key=True)
+    extid_hi_lo = ForeignKeyField(Gaia_edr3_panstarrs1_best_neighbour,
+                                  field='original_ext_source_id',
+                                  column_name='extid_hi_lo',
+                                  backref='+')
 
     class Meta:
         table_name = 'panstarrs1'
@@ -1638,6 +1711,21 @@ class SDSS_DR13_PhotoObj_Primary(CatalogdbModel):
                           column_name='objid',
                           object_id_name='objid',
                           backref='+')
+
+    tic_ext = ForeignKeyField(TIC_v8_Extended,
+                              field='sdss',
+                              column_name='objid',
+                              backref='+')
+
+    sdss19p = ForeignKeyField(SDSS_DR19p_Speclite,
+                              field='bestobjid',
+                              column_name='objid',
+                              backref='+')
+
+    gaia_xmatch = ForeignKeyField(Gaia_edr3_sdssdr13_best_neighbour,
+                                  field='original_ext_source_id',
+                                  column_name='objid',
+                                  backref='+')
 
     class Meta:
         table_name = 'sdss_dr13_photoobj_primary'
