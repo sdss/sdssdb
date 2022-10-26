@@ -121,6 +121,7 @@ class EROSITASupersetCompactobjects(CatalogdbModel):
     class Meta:
         table_name = 'erosita_superset_compactobjects'
 
+
 class EROSITASupersetv1AGN(CatalogdbModel):
 
     pkey = BigIntegerField(primary_key=True)
