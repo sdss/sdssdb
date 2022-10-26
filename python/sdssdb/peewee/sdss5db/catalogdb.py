@@ -121,6 +121,37 @@ class EROSITASupersetCompactobjects(CatalogdbModel):
     class Meta:
         table_name = 'erosita_superset_compactobjects'
 
+class EROSITASupersetv1AGN(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_v1_agn'
+
+
+class EROSITASupersetv1Clusters(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_v1_clusters'
+
+
+class EROSITASupersetv1Stars(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_v1_stars'
+
+
+class EROSITASupersetv1Compactobjects(CatalogdbModel):
+
+    pkey = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'erosita_superset_v1_compactobjects'
+
 
 class ElbadryRix(CatalogdbModel):
 
