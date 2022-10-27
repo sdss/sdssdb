@@ -8,10 +8,20 @@
 
 import warnings
 
-from peewee import (AutoField, BigAutoField, BigIntegerField,
-                    CharField, DeferredThroughModel, DoubleField,
-                    FixedCharField, FloatField, ForeignKeyField,
-                    IntegerField, ManyToManyField, TextField)
+from peewee import (
+    AutoField,
+    BigAutoField,
+    BigIntegerField,
+    CharField,
+    DeferredThroughModel,
+    DoubleField,
+    FixedCharField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    ManyToManyField,
+    TextField
+)
 from playhouse.postgres_ext import ArrayField
 
 from sdssdb.exceptions import SdssdbUserWarning
@@ -77,6 +87,7 @@ class AllWise(CatalogdbModel):
 
     cntr = BigIntegerField(primary_key=True)
     designation = TextField()
+    tmass_key = BigIntegerField()
 
     class Meta:
         table_name = 'allwise'
@@ -239,6 +250,8 @@ class Gedr3spur_main(CatalogdbModel):
 class Gaia_edr3_allwise_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
     gaia_dr3 = ForeignKeyField(Gaia_DR3,
                                field='source_id',
                                column_name='source_id',
@@ -261,6 +274,8 @@ class Gaia_edr3_gaia_edr3_allwise_neighbourhood(CatalogdbModel):
 class Gaia_edr3_panstarrs1_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
     gaia_dr3 = ForeignKeyField(Gaia_DR3,
                                field='source_id',
                                column_name='source_id',
@@ -279,6 +294,8 @@ class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
 class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
     gaia_dr3 = ForeignKeyField(Gaia_DR3,
                                field='source_id',
                                column_name='source_id',
@@ -355,6 +372,8 @@ class Gaia_edr3_tycho2tdsc_merge_best_neighbour(CatalogdbModel):
 class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
     gaia_dr3 = ForeignKeyField(Gaia_DR3,
                                field='source_id',
                                column_name='source_id',
@@ -745,6 +764,7 @@ class SDSS_DR17_APOGEE_Allvisits(CatalogdbModel):
 class SDSS_DR19p_Speclite(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
+    bestobjid = BigIntegerField()
 
     class Meta:
         table_name = 'sdss_dr19p_speclite'
@@ -1096,6 +1116,7 @@ class BHM_CSC_v2(CatalogdbModel):
 class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
+    wd = TextField()
 
     @property
     def specobj(self):
