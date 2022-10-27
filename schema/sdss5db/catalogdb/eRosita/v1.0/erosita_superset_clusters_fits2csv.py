@@ -30,7 +30,6 @@ for input_fits_file in input_fits_file_list:
         line = line.strip()
         line = line.lstrip('(')
         line = line.rstrip(')')
-        line = line.replace(' array([nan, nan], dtype=float32),', '')
         line = line.replace(', ', ',')
         line = line.replace("'", "")
         print(line, file=fout)
