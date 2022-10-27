@@ -9,5 +9,5 @@ create index on catalogdb.erosita_superset_v1_compactobjects(ero_flags);
 create index on catalogdb.erosita_superset_v1_compactobjects(xmatch_method,xmatch_version);
 create index on catalogdb.erosita_superset_v1_compactobjects(xmatch_metric);
 create index on catalogdb.erosita_superset_v1_compactobjects(opt_cat);
-create index on catalogdb.erosita_superset_v1_compactobject(gaia_dr3_source_id);
+create index on catalogdb.erosita_superset_v1_compactobjects(gaia_dr3_source_id);
 \o
