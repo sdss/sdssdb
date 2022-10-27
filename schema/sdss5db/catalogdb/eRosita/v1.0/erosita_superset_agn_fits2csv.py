@@ -8,12 +8,12 @@ output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosi
 
 input_fits_file_list =\
     [
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr9_v1.0.3.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_v1.0.3.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_lsdr10_nomask_v1.0.3.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_cw2020_gedr3_v1.0.3.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_gedr3_v1.0.3.fits',
-        'sdssv_spiders_erass3_update_v1_0_tda_nway_lsdr10_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr9_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_nomask_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_cw2020_gedr3_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_gedr3_v1.0.3.fits',
+        'sdssv_spiders_erass3_update_v1_0_tda_nway_rf_lsdr10_v1.0.3.fits',
     ]
 
 for input_fits_file in input_fits_file_list:
