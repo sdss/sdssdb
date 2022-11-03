@@ -265,7 +265,7 @@ class Gaia_edr3_allwise_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_allwise_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_allwise_neighbourhood(CatalogdbModel):
+class Gaia_edr3_allwise_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_allwise_neighbourhood'
@@ -285,7 +285,7 @@ class Gaia_edr3_panstarrs1_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_panstarrs1_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
+class Gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_panstarrs1_neighbourhood'
@@ -334,7 +334,7 @@ class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_sdssdr13_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_sdssdr13_neighbourhood(CatalogdbModel):
+class Gaia_edr3_sdssdr13_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_sdssdr13_neighbourhood'
@@ -348,7 +348,7 @@ class Gaia_edr3_skymapperdr2_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_skymapperdr2_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_skymapperdr2_neighbourhood(CatalogdbModel):
+class Gaia_edr3_skymapperdr2_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_skymapperdr2_neighbourhood'
@@ -381,7 +381,7 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour2(CatalogdbModel):
         table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour2'
 
 
-class Gaia_edr3_gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
+class Gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_tmass_psc_xsc_neighbourhood'
@@ -412,7 +412,7 @@ class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(CatalogdbModel):
         table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour2'
 
 
-class Gaia_edr3_gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):
+class Gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_tycho2tdsc_merge_neighbourhood'
