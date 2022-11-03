@@ -265,7 +265,7 @@ class Gaia_edr3_allwise_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_allwise_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_allwise_neighbourhood(CatalogdbModel):
+class Gaia_edr3_allwise_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_allwise_neighbourhood'
@@ -285,10 +285,39 @@ class Gaia_edr3_panstarrs1_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_panstarrs1_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
+class Gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_panstarrs1_neighbourhood'
+
+
+# Note this is Gaia_dr3 and not Gaia_edr3
+class Gaia_dr3_ravedr6_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
+
+    class Meta:
+        table_name = 'gaia_dr3_ravedr6_best_neighbour'
+
+
+class Gaia_dr3_ravedr6_neighbourhood(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
+
+    class Meta:
+        table_name = 'gaia_dr3_ravedr6_neighbourhood'
 
 
 class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
@@ -305,7 +334,7 @@ class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_sdssdr13_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_sdssdr13_neighbourhood(CatalogdbModel):
+class Gaia_edr3_sdssdr13_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_sdssdr13_neighbourhood'
@@ -319,7 +348,7 @@ class Gaia_edr3_skymapperdr2_best_neighbour(CatalogdbModel):
         table_name = 'gaia_edr3_skymapperdr2_best_neighbour'
 
 
-class Gaia_edr3_gaia_edr3_skymapperdr2_neighbourhood(CatalogdbModel):
+class Gaia_edr3_skymapperdr2_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_skymapperdr2_neighbourhood'
@@ -352,7 +381,7 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour2(CatalogdbModel):
         table_name = 'gaia_edr3_tmass_psc_xsc_best_neighbour2'
 
 
-class Gaia_edr3_gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
+class Gaia_edr3_tmass_psc_xsc_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_tmass_psc_xsc_neighbourhood'
@@ -383,7 +412,7 @@ class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(CatalogdbModel):
         table_name = 'gaia_edr3_tycho2tdsc_merge_best_neighbour2'
 
 
-class Gaia_edr3_gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):
+class Gaia_edr3_tycho2tdsc_merge_neighbourhood(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_edr3_tycho2tdsc_merge_neighbourhood'
@@ -473,6 +502,14 @@ class Gaia_dr3_vari_agn(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr3_vari_agn'
+
+
+class Gaia_dr3_vari_rrlyrae(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_vari_rrlyrae'
 
 
 class Gaia_dr3_nss_two_body_orbit(CatalogdbModel):
