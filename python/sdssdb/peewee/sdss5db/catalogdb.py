@@ -504,6 +504,14 @@ class Gaia_dr3_vari_agn(CatalogdbModel):
         table_name = 'gaia_dr3_vari_agn'
 
 
+class Gaia_dr3_vari_rrlyrae(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'gaia_dr3_vari_rrlyrae'
+
+
 class Gaia_dr3_nss_two_body_orbit(CatalogdbModel):
 
     # There are duplicate source_id in the table
