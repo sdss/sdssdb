@@ -291,6 +291,35 @@ class Gaia_edr3_gaia_edr3_panstarrs1_neighbourhood(CatalogdbModel):
         table_name = 'gaia_edr3_panstarrs1_neighbourhood'
 
 
+# Note this is Gaia_dr3 and not Gaia_edr3
+class Gaia_dr3_ravedr6_best_neighbour(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
+
+    class Meta:
+        table_name = 'gaia_dr3_ravedr6_best_neighbour'
+
+
+class Gaia_dr3_ravedr6_neighbourhood(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+    original_ext_source_id = TextField()
+
+    gaia_dr3 = ForeignKeyField(Gaia_DR3,
+                               field='source_id',
+                               column_name='source_id',
+                               backref='+')
+
+    class Meta:
+        table_name = 'gaia_dr3_ravedr6_neighbourhood'
+
+
 class Gaia_edr3_sdssdr13_best_neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
