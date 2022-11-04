@@ -1,1 +1,1 @@
-create index on catalogdb.gaia_dr3_vari_rrlyrae();
+create index on catalogdb.gaia_dr3_vari_rrlyrae(solution_id);
