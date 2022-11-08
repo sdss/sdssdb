@@ -30,6 +30,19 @@ from .. import BaseModel
 from . import database
 
 
+# When adding a foreign key like below to a peewee model class
+#
+# gaia_xmatch = ForeignKeyField(Gaia_edr3_sdssdr13_best_neighbour,
+#                               field='original_ext_source_id',
+#                               column_name='objid',
+#                               backref='+')
+#
+# one needs to add the below line to the peewee model class
+# for the remote table Gaia_edr3_sdssdr13_best_neighbour
+#
+# original_ext_source_id = TextField()
+
+
 class CatalogdbModel(BaseModel):
 
     class Meta:
@@ -927,6 +940,20 @@ class Zari18ums(CatalogdbModel):
 
     class Meta:
         table_name = 'zari18ums'
+
+
+class Xpfeh_gaia_dr3(CatalogdbModel):
+
+    source_id = BigIntegerField(primary_key=True)
+
+    gaia_dr3 = ForeignKeyField(
+        model=Gaia_DR3,
+        field='source_id',
+        column_name='source_id',
+        backref='+')
+
+    class Meta:
+        table_name = 'xpfeh_gaia_dr3'
 
 
 class Legacy_Survey_DR8(CatalogdbModel):
