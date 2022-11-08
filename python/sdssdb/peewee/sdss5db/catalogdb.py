@@ -956,7 +956,6 @@ class Xpfeh_gaia_dr3(CatalogdbModel):
         table_name = 'xpfeh_gaia_dr3'
 
 
-
 class Legacy_Survey_DR8(CatalogdbModel):
 
     ls_id = BigIntegerField(primary_key=True)
