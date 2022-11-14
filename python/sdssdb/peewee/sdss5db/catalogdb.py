@@ -560,6 +560,61 @@ class GUVCat(CatalogdbModel):
         table_name = 'guvcat'
 
 
+class Galah_dr3(CatalogdbModel):
+
+    sobject_id = BigIntegerField(primary_key=True)
+
+    dr2_source_id = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='dr2_source_id',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    dr3_source_id = ForeignKeyField(
+        model=Gaia_DR3,  # remote model
+        field='source_id',  # remote column name
+        column_name='dr3_source_id',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'galah_dr3'
+
+
+class Visual_binary_gaia_dr3(CatalogdbModel):
+
+    source_id1 = BigIntegerField(primary_key=True)
+
+    dr2_source_id1 = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='dr2_source_id1',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    dr2_source_id2 = ForeignKeyField(
+        model=Gaia_DR2,  # remote model
+        field='source_id',  # remote column name
+        column_name='dr2_source_id2',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    # The LHS variable name dr3_source_id1
+    # is different from the RHS local column_name
+    # because source_id1 is the primary key above.
+    dr3_source_id1 = ForeignKeyField(
+        model=Gaia_DR3,  # remote model
+        field='source_id',  # remote column name
+        column_name='source_id1',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    dr3_source_id2 = ForeignKeyField(
+        model=Gaia_DR3,  # remote model
+        field='source_id',  # remote column name
+        column_name='source_id2',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'visual_binary_gaia_dr3'
+
+
 class KeplerInput_DR10(CatalogdbModel):
 
     kic_kepler_id = BigIntegerField(primary_key=True)
