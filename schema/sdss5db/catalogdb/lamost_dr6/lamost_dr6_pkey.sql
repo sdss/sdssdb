@@ -1,0 +1,3 @@
+-- There is no primary key for catalogdb.lamost_dr6 
+-- since the columns obsid and source_id
+-- both have duplicates.
