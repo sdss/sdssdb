@@ -615,6 +615,23 @@ class Visual_binary_gaia_dr3(CatalogdbModel):
         table_name = 'visual_binary_gaia_dr3'
 
 
+class Lamost_dr6(CatalogdbModel):
+
+    # There are duplicate source_id
+    # in the table lamost_dr6.
+    # Hence, source_id is not a primary key
+    # for this table.
+
+    dr3_source_id = ForeignKeyField(
+        model=Gaia_DR3,  # remote model
+        field='source_id',  # remote column name
+        column_name='source_id',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'lamost_dr6'
+
+
 class KeplerInput_DR10(CatalogdbModel):
 
     kic_kepler_id = BigIntegerField(primary_key=True)
