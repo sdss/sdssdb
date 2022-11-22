@@ -632,6 +632,23 @@ class Lamost_dr6(CatalogdbModel):
         table_name = 'lamost_dr6'
 
 
+class WD_gaia_dr3(CatalogdbModel):
+
+    gaiaedr3 = BigIntegerField(primary_key=True)
+
+    # source_id for Gaia edr3 and Gaia dr3 is the same.
+    # So below we have foreign key from local column gaiaedr3 to
+    # remote column gaia_dr3_source(source_id).
+    dr3_source_id = ForeignKeyField(
+        model=Gaia_DR3,  # remote model
+        field='source_id',  # remote column name
+        column_name='gaiaedr3',  # local column name
+        backref='+')  # '+' means do not create backref
+
+    class Meta:
+        table_name = 'wd_gaia_dr3'
+
+
 class KeplerInput_DR10(CatalogdbModel):
 
     kic_kepler_id = BigIntegerField(primary_key=True)
