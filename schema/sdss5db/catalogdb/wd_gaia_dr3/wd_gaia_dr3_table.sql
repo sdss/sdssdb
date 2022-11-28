@@ -1,17 +1,22 @@
 -- based on information for maincat.dat at the below link.
 -- https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/508/3877/ReadMe
 --
--- In the above ReadMe, 
+-- Note that the above Readme has information for other .dat files also.
+-- So while reading it, check that you are reading the section for maincat.dat.
+--
+-- In the maincat.dat section in the above ReadMe, 
 -- (1) Many columns have names which only differ
 -- by upper case and lower case.
 -- Such columns have been renamed as noted in the comments below.
+-- Whenever, two or more columns have the same name then all the columns
+-- have been  renamed so that there is no column with the original name.
 -- For example there are columns with names Gmag, GMAG, gmag.
 -- These have been replaced as below
--- Gmag -> gmag, GMAG -> gmag_abs, gmag -> gmag_sdss 
+-- Gmag -> gmag_vega, GMAG -> gmag_abs, gmag -> gmag_sdss 
 --
 -- (2) Many columns have names with dashes.
 -- These have been renamed to replace dashes with underscores.
--- For example, BP-RP hase been replaced with BP_RP.
+-- For example, BP-RP has been replaced with BP_RP.
 --
 -- (3) Many columns have names with / and ().
 -- These have been renamed with underscores.
@@ -97,7 +102,7 @@ o_gmag bigint,
 fg double precision,
 e_fg double precision,
 rfg double precision,
-gmag double precision,  -- Gmag -> gmag. ReadMe has Gmag, GMAG and gmag columns.
+gmag_vega double precision,  -- Gmag -> gmag_vega. ReadMe has Gmag, GMAG and gmag columns.
 e_gmag double precision,
 fgcorr double precision,
 gmagcorr double precision,
