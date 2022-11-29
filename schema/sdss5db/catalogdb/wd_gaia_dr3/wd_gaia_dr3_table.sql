@@ -102,7 +102,7 @@ o_gmag bigint,
 fg double precision,
 e_fg double precision,
 rfg double precision,
-gmag_vega double precision,  -- Gmag -> gmag_vega. ReadMe has Gmag, GMAG and gmag columns.
+gmag_vega double precision,  -- ReadMe Gmag -> gmag_vega. ReadMe has Gmag, GMAG and gmag columns.
 e_gmag double precision,
 fgcorr double precision,
 gmagcorr double precision,
@@ -126,7 +126,7 @@ nrpblend bigint,
 mode bigint,
 e_bp_rp double precision,
 e_bp_rp_corr double precision,
-gmag_abs double precision,  --  GMAG -> gmag_abs. ReadMe has Gmag, GMAG and gmag columns.
+gmag_abs double precision,  --  ReadMe GMAG -> gmag_abs. ReadMe has Gmag, GMAG and gmag columns.
 bp_rp double precision,
 bp_g double precision,
 g_rp double precision,
@@ -168,17 +168,17 @@ massmix double precision,
 e_massmix double precision,
 chisqmix double precision,
 rgeo double precision,
-b_rgeo1 double precision,  -- we rename these b_rgeo1 and b_rgeo1
-b_rgeo2 double precision,  -- since they both have same name in ReadMe
+b_rgeo1 double precision,  -- ReadMe b_rgeo -> b_rgeo1
+b_rgeo2 double precision,  -- ReadMe B_rgeo -> b_rgeo2
 rpgeo double precision,
-b_rpgeo1 double precision,  -- we rename these b_rpgeo1 and b_rpgeo1
-b_rpgeo2 double precision,  -- since they both have same name in ReadMe
+b_rpgeo1 double precision,  -- ReadMe b_rpgeo -> b_rpgeo1
+b_rpgeo2 double precision,  -- ReadMe B_rpgeo -> b_rpgeo2
 fidel_v1 double precision,
 sdss12 text,
 sdssclean bigint,
 umag_sdss double precision,
 e_umag_sdss double precision,
-gmag_sdss double precision,  -- gmag -> gmag_sdss. ReadMe has Gmag, GMAG and gmag columns.
+gmag_sdss double precision,  --  ReadMe gmag -> gmag_sdss. ReadMe has Gmag, GMAG and gmag columns.
 e_gmag_sdss double precision,
 rmag_sdss double precision,
 e_rmag_sdsss double precision,
