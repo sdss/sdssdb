@@ -1,7 +1,7 @@
 -- based on information for maincat.dat at the below link.
 -- https://cdsarc.cds.unistra.fr/ftp/J/MNRAS/508/3877/ReadMe
 --
--- Note that the above Readme has information for other .dat files also.
+-- Note that the above ReadMe has information for other .dat files also.
 -- So while reading it, check that you are reading the section for maincat.dat.
 --
 -- In the maincat.dat section in the above ReadMe, 
