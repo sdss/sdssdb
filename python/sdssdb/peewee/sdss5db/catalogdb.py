@@ -1871,6 +1871,14 @@ class BHM_RM_v0(CatalogdbModel):
         table_name = 'bhm_rm_v0'
 
 
+class BHM_RM_v1(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'bhm_rm_v1'
+
+
 class BHM_RM_v0_2(BHM_RM_v0):
     pass
 
