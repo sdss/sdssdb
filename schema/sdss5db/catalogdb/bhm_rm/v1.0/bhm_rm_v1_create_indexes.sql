@@ -11,7 +11,7 @@ create index on catalogdb.bhm_rm_v1(rm_known_spec);
 create index on catalogdb.bhm_rm_v1(rm_core);
 create index on catalogdb.bhm_rm_v1(rm_var);
 create index on catalogdb.bhm_rm_v1(rm_ancillary);
-create index on catalogdb.bhm_rm_v1(rm_rm_xrayqso);
+create index on catalogdb.bhm_rm_v1(rm_xrayqso);
 create index on catalogdb.bhm_rm_v1(rm_unsuitable);
 create index on catalogdb.bhm_rm_v1(mag_g);
 create index on catalogdb.bhm_rm_v1(mag_r);
