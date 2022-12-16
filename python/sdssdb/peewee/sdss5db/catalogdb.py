@@ -1875,6 +1875,31 @@ class BHM_RM_v1(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
 
+    lsdr8 = ForeignKeyField(Legacy_Survey_DR8,
+                            field='ls_id',
+                            column_name='ls_id_dr8',
+                            backref='+')
+
+    lsdr10 = ForeignKeyField(Legacy_Survey_DR10,
+                             field='ls_id',
+                             column_name='ls_id_dr10',
+                             backref='+')
+
+    gaia2 = ForeignKeyField(Gaia_DR2,
+                            field='source_id',
+                            column_name='gaia_dr2_source_id',
+                            backref='+')
+
+    gaia3 = ForeignKeyField(Gaia_DR3,
+                            field='source_id',
+                            column_name='gaia_dr3_source_id',
+                            backref='+')
+
+    ps1 = ForeignKeyField(Panstarrs1,
+                          field='catid_objid',
+                          column_name='panstarrs1_catid_objid',
+                          backref='+')
+
     class Meta:
         table_name = 'bhm_rm_v1'
 
