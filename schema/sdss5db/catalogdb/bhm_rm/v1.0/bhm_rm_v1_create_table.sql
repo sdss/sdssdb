@@ -23,5 +23,5 @@ gaia_dr2_source_id bigint,
 gaia_dr3_source_id bigint,
 panstarrs1_catid_objid bigint,
 rm_unsuitable boolean,
-rm_xrayqso integer,
+rm_xrayqso integer
 );
