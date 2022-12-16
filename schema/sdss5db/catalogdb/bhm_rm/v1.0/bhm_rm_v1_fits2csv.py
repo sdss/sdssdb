@@ -26,8 +26,7 @@ for input_fits_file in input_fits_file_list:
     fin = open('temp1', 'r')
     fout = open(output_dir + output_csv_file, 'w')
 
-    # We use ; as the CSV delimiter since comma
-    # is used as the delimiter for the array elements
+    # We use ',' as the CSV delimiter
     for line in fin:
         line = line.strip()
         line = line.lstrip('(')
@@ -38,21 +37,7 @@ for input_fits_file in input_fits_file_list:
         line = line.replace('], dtype=float32)', '')
         line = line.replace(', ', ',')
 
-        tags = line.split(',')
-
-        line_out = ''
-        for i in range(10):
-            line_out = line_out + tags[i] + ';'
-
-        line_out = line_out + '{'
-        for i in range(10, 15):
-            line_out = line_out + tags[i] + ','
-
-        line_out = line_out.rstrip(',')
-        line_out = line_out + '};'
-        line_out = line_out + tags[15] + ';' + tags[16]
-
-        print(line_out, file=fout)
+        print(line, file=fout)
 
     fin.close()
     fout.close()
