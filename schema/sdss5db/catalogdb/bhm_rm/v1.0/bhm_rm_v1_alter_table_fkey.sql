@@ -9,4 +9,5 @@ alter table catalogdb.bhm_rm_v1 add foreign key (ls_id_dr10) references catalogd
 alter table catalogdb.bhm_rm_v1 add foreign key (gaia_dr2_source_id) references catalogdb.gaia_dr2_source(source_id);
 alter table catalogdb.bhm_rm_v1 add foreign key (gaia_dr3_source_id) references catalogdb.gaia_dr3_source(source_id);
 alter table catalogdb.bhm_rm_v1 add foreign key (panstarrs1_catid_objid) references catalogdb.panstarrs1(catid_objid);
+analyze catalogdb.bhm_rm_v1;
 \o
