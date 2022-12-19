@@ -1265,6 +1265,7 @@ class BHM_CSC_v2(CatalogdbModel):
     class Meta:
         table_name = 'bhm_csc_v2'
 
+# note that BHM_CSC_v3 is below Panstarrs1 to allow foreign key linking
 
 class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
@@ -1606,6 +1607,29 @@ class Panstarrs1(CatalogdbModel):
 
     class Meta:
         table_name = 'panstarrs1'
+
+
+class BHM_CSC_v3(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    lsdr10 = ForeignKeyField(Legacy_Survey_DR10,
+                             field='ls_id',
+                             column_name='ls_dr10_lsid',
+                             backref='+')
+
+    gaia3 = ForeignKeyField(Gaia_DR3,
+                            field='source_id',
+                            column_name='gaia_dr3_srcid',
+                            backref='+')
+
+    ps1 = ForeignKeyField(Panstarrs1,
+                          field='catid_objid',
+                          column_name='panstarrs1_ippobjid',
+                          backref='+')
+
+    class Meta:
+        table_name = 'bhm_csc_v3'
 
 
 class GLIMPSE(CatalogdbModel):
