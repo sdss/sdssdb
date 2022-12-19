@@ -1,0 +1,30 @@
+-- The create table statement is based on the information
+-- in the CSC_GAIA_LS10_PS1_2M_2022dec.fits
+
+create table catalogdb.bhm_csc_v3 (
+    csc21p_id text,              -- format = '22A'
+    csc21p_ensemble text,        -- format = '14A'
+    ra double precision,         -- format = 'D'
+    dec double precision,        -- format = 'D'
+    best_oir_cat text,           -- format = '10A'
+    best_mag real,               -- format = 'E'
+    mag_type text,               -- format = '10A'
+    gaia_dr3_srcid bigint,       -- format = 'K'
+    ls_dr10_lsid bigint,         -- format = 'K'
+    ls_dr10_objid integer,       -- format = 'J'
+    ls_dr10_brickid integer,     -- format = 'J'
+    ls_dr10_release smallint,    -- format = 'I'
+    ps21p_objid bigint,          -- format = 'K'
+    ps21p_ippobjid  bigint,      -- format = 'K'
+    tmass_designation  text,     -- format = '20A'
+    tmass_ra double precision,   -- format = 'D'
+    tmass_dec double precision,  -- format = 'D'
+    tmass_h   real,              -- format = 'E'
+    csc21p_ra double precision,  -- format = 'D'
+    csc21p_dec double precision, -- format = 'D'
+    logfx double precision,      -- format = 'D'
+    xband text,                  -- format = '1A'
+    extent boolean,              -- format = 'L'
+    xsig double precision,       -- format = 'D'
+    xpriority integer            -- format = 'J'
+);
