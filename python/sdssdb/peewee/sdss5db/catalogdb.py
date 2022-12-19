@@ -1267,6 +1267,7 @@ class BHM_CSC_v2(CatalogdbModel):
 
 # note that BHM_CSC_v3 is below Panstarrs1 to allow foreign key linking
 
+
 class Gaia_DR2_WD_SDSS(CatalogdbModel):
 
     pk = BigIntegerField(primary_key=True)
@@ -1627,6 +1628,11 @@ class BHM_CSC_v3(CatalogdbModel):
                           field='catid_objid',
                           column_name='panstarrs1_ippobjid',
                           backref='+')
+
+    twomass = ForeignKeyField(TwoMassPSC,
+                              field='designation',
+                              column_name='tmass_designation',
+                              backref='+')
 
     class Meta:
         table_name = 'bhm_csc_v3'
