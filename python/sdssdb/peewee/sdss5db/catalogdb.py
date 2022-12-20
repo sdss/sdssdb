@@ -1624,16 +1624,6 @@ class BHM_CSC_v3(CatalogdbModel):
                             column_name='gaia_dr3_srcid',
                             backref='+')
 
-    ps1 = ForeignKeyField(Panstarrs1,
-                          field='catid_objid',
-                          column_name='panstarrs1_ippobjid',
-                          backref='+')
-
-    twomass = ForeignKeyField(TwoMassPSC,
-                              field='designation',
-                              column_name='tmass_designation',
-                              backref='+')
-
     class Meta:
         table_name = 'bhm_csc_v3'
 
