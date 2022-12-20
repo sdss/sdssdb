@@ -1624,6 +1624,11 @@ class BHM_CSC_v3(CatalogdbModel):
                             column_name='gaia_dr3_srcid',
                             backref='+')
 
+    twomass = ForeignKeyField(TwoMassPSC,
+                              field='designation',
+                              column_name='tmass_designation',
+                              backref='+')
+
     class Meta:
         table_name = 'bhm_csc_v3'
 
