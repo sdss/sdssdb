@@ -92,28 +92,28 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">auxdb</td>
             <td class="danger"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangaauxdb_schema.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangaauxdb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">dapdb</td>
             <td class="danger"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangadapdb_schema.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangadapdb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">datadb</td>
             <td class="danger"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangadatadb_schema.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangadatadb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">sampledb</td>
             <td class="danger"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/raw/master/docs/dbschema/mangasampledb_schema.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangasampledb_schema.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">sdss5db</td>
@@ -134,7 +134,7 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">sas</td>
             <td class="danger"></td>
             <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="../../../../schema/archive/archive_sas.pdf"></a></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/archive/archive_sas.pdf"></a></td>
         </tr>
         </tbody>
     </table>
