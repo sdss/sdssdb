@@ -465,5 +465,17 @@ class AssignedTargets(TargetdbBase):
         table_name = 'assigned_targets'
 
 
+class AssignmentStatus(TargetdbBase):
+    pk = AutoField()
+    assignment_pk = ForeignKeyField(column_name="assignment_pk",
+                                    field="pk",
+                                    model=Assignment)
+    mjd = FloatField()
+    status = IntegerField()
+
+    class Meta:
+        table_name = 'assignment_status'
+
+
 # AssignmentDeferred.set_model(Assignment)
 CartonToTargetDeferred.set_model(CartonToTarget)
