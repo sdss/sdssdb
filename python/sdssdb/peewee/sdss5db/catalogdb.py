@@ -706,7 +706,7 @@ class Sagitta(CatalogdbModel):
         table_name = 'sagitta'
 
 
-class SagittaEDR3(CatalogdbModel):
+class Sagitta_EDR3(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
 
