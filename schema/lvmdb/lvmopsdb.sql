@@ -29,7 +29,7 @@ CREATE TABLE lvmopsdb.tile (
     Status INTEGER);
 
 CREATE TABLE lvmopsdb.observation (
-    pk SERIAL PRIMARY KEY NOT NULL
+    ObsID SERIAL PRIMARY KEY NOT NULL
     -- # SCI, CAL, FLAT, DARK, BIAS, TEST, ...
     TileID INTEGER,
     JD REAL,
@@ -58,14 +58,14 @@ CREATE TABLE lvmopsdb.sky (
     dec DOUBLE PRECISION,
     h_alpha_flux REAL);
 
-CREATE TABLE lvmopsdb.observation_to_standard (
+CREATE TABLE lvmopsdb.exposure_to_standard (
     pk SERIAL PRIMARY KEY NOT NULL,
-    observation_pk INTEGER,
+    exposure_pk INTEGER,
     standard_pk INTEGER);
 
-CREATE TABLE lvmopsdb.observation_to_sky (
+CREATE TABLE lvmopsdb.exposure_to_sky (
     pk SERIAL PRIMARY KEY NOT NULL,
-    observation_pk INTEGER,
+    exposure_pk INTEGER,
     sky_pk INTEGER);
 
 CREATE TABLE lvmopsdb.exposure (
@@ -104,15 +104,75 @@ CREATE TABLE lvmopsdb.completion_status (
 
 ALTER TABLE ONLY lvmopsdb.observation
     ADD CONSTRAINT tile_id_fk
-    FOREIGN KEY (TileID) REFERENCES lvmopsdb.tile(TileID);
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.observation
-    ADD CONSTRAINT obs_type_fk
-    FOREIGN KEY (obs_type_pk) REFERENCES lvmopsdb.obs_type(pk);
+ALTER TABLE ONLY lvmopsdb.weather
+    ADD CONSTRAINT weather_ObsID_fk
+    FOREIGN KEY (ObsID) REFERENCES lvmopsdb.observation(ObsID)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
--- TODO --
--- add FK constraints once schema is finalized
--- ---- --
+ALTER TABLE ONLY lvmopsdb.exposure
+    ADD CONSTRAINT exposure_ObsID_fk
+    FOREIGN KEY (ObsID) REFERENCES lvmopsdb.observation(ObsID)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.camera_frame
+    ADD CONSTRAINT cf_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.camera_frame
+    ADD CONSTRAINT camera_fk
+    FOREIGN KEY (camera_pk) REFERENCES lvmopsdb.camera(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_standard
+    ADD CONSTRAINT e2stan_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_sky
+    ADD CONSTRAINT e2sky_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_standard
+    ADD CONSTRAINT e2stan_standard_fk
+    FOREIGN KEY (standard_pk) REFERENCES lvmopsdb.standard(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_sky
+    ADD CONSTRAINT e2sky_sky_fk
+    FOREIGN KEY (sky_pk) REFERENCES lvmopsdb.sky(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_status
+    ADD CONSTRAINT e2stat_exposure_fk
+    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_status
+    ADD CONSTRAINT e2stat_status_fk
+    FOREIGN KEY (status_pk) REFERENCES lvmopsdb.completion_status(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure
+    ADD CONSTRAINT exposure_flavor_fk
+    FOREIGN KEY (exposure_flavor_pk) REFERENCES lvmopsdb.exposure_flavor(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 INSERT INTO lvmopsdb.obs_type VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
