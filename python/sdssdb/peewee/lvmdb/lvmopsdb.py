@@ -10,7 +10,7 @@ import os
 import datetime
 
 from peewee import (AutoField, FloatField, ForeignKeyField,
-                    IntegerField, TextField)
+                    IntegerField, TextField, DoubleField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -29,9 +29,9 @@ class Tile(LVMOpsBase):
     # TargetIndex = IntegerField(null=True)
     Target = TextField(null=False)
     Telescope = TextField(null=False)
-    RA = FloatField(null=True, default=0)
-    DEC = FloatField(null=True, default=0)
-    PA = FloatField(null=True, default=0)
+    RA = DoubleField(null=True, default=0)
+    DEC = DoubleField(null=True, default=0)
+    PA = DoubleField(null=True, default=0)
     TargetPriority = IntegerField(null=True, default=0)
     TilePriority = IntegerField(null=True, default=0)
     AirmassLimit = FloatField(null=True, default=0)
@@ -46,24 +46,12 @@ class Tile(LVMOpsBase):
         table_name = 'tile'
 
 
-class ObsType(LVMOpsBase):
-    pk = AutoField()
-    label = TextField()
-
-    class meta:
-        table_name = 'obs_type'
-
-
 class Observation(LVMOpsBase):
-    ObsID = AutoField()
-    # ObsType = TextField(null=False)
-    obs_type = ForeignKeyField(Model=ObsType,
-                               column_name='obs_type_pk',
-                               field='pk')
+    obs_id = AutoField()\
     # presumably a tile will at some point be observed more than once
-    TileID = ForeignKeyField(column_name='TileID',
-                             field='TileID',
-                             Model=Tile, backref='observations')
+    tile = ForeignKeyField(column_name='TileID',
+                           field='TileID',
+                           Model=Tile, backref='observations')
     JD = FloatField(null=False)
     LST = FloatField(null=True)
     Hz = FloatField(null=True)
@@ -74,11 +62,133 @@ class Observation(LVMOpsBase):
         table_name = 'observation'
 
 
-# this seems bad
-# use env variables
-# class Metadata(LVMOpsBase):
-#     Key = CharField(unique=True)
-#     Value = CharField()
+class Weather(LVMOpsBase):
+    pk = AutoField()\
+    observation = ForeignKeyField(column_name='obs_id',
+                                  field='obs_id',
+                                  Model=Observation, backref='weather')
+    seeing = FloatField(null=True)
+    cloud_cover = FloatField(null=True)
+    transparency = FloatField(null=True)
 
-#     class Meta:
-#         table_name = 'metadata'
+    class Meta:
+        table_name = 'weather'
+
+
+class Standard(LVMOpsBase):
+    pk = AutoField()\
+
+    ra = DoubleField(null=True)
+    dec = DoubleField(null=True)
+    b_mag = FloatField(null=True)
+    v_mag = FloatField(null=True)
+
+    class Meta:
+        table_name = 'standard'
+
+
+class Sky(LVMOpsBase):
+    pk = AutoField()\
+
+    ra = DoubleField(null=True)
+    dec = DoubleField(null=True)
+    h_alpha_flux = FloatField(null=True)
+
+    class Meta:
+        table_name = 'sky'
+
+
+class ExposureFlavor(LVMOpsBase):
+    label = TextField()
+    pk = AutoField()
+
+    class Meta:
+        table_name = 'exposure_flavor'
+
+
+class Exposure(LVMOpsBase):
+    pk = AutoField()\
+    # presumably a tile will at some point be observed more than once
+    observation = ForeignKeyField(column_name='obs_id',
+                                  field='obs_id',
+                                  Model=Observation, backref='exposures')
+    exposure_no = BigIntegerField()
+    start_time = DateTimeField(default=datetime.datetime.now())
+    exposure_time = FloatField()
+    exposure_flavor = ForeignKeyField(column_name='exposure_flavor_pk',
+                                      field='pk',
+                                      model=ExposureFlavor)
+
+    class Meta:
+        table_name = 'exposure'
+
+
+class ExposureToStandard(LVMOpsBase):
+    pk = AutoField()\
+    # presumably a tile will at some point be observed more than once
+    exposure = ForeignKeyField(column_name='exposure_pk',
+                               field='pk',
+                               Model=Exposure)
+    standard = ForeignKeyField(column_name='standard_pk',
+                               field='pk',
+                               Model=Standard)
+
+    class Meta:
+        table_name = 'exposure_to_standard'
+
+class ExposureToSky(LVMOpsBase):
+    pk = AutoField()\
+    # presumably a tile will at some point be observed more than once
+    exposure = ForeignKeyField(column_name='exposure_pk',
+                               field='pk',
+                               Model=Exposure)
+    sky = ForeignKeyField(column_name='sky_pk',
+                          field='pk',
+                          Model=Sky)
+
+    class Meta:
+        table_name = 'exposure_to_sky'
+
+
+class Camera(LVMOpsBase):
+    label = TextField()
+    pk = AutoField()
+
+    class Meta:
+        table_name = 'camera'
+
+
+class CameraFrame(LVMOpsBase):
+    pk = AutoField()
+    exposure = ForeignKeyField(column_name='exposure_pk',
+                               field='pk',
+                               model=Exposure,
+                               backref="CameraFrames")
+    camera = ForeignKeyField(column_name='camera_pk',
+                             field='pk',
+                             model=Camera)
+
+    class Meta:
+        table_name = 'camera'
+
+
+class CompletionStatus(LVMOpsBase):
+    label = TextField()
+    pk = AutoField()
+
+    class Meta:
+        table_name = 'completion_status'
+
+
+class ExposureToStatus(LVMOpsBase):
+    pk = AutoField()\
+    # presumably a tile will at some point be observed more than once
+    exposure = ForeignKeyField(column_name='exposure_pk',
+                               field='pk',
+                               Model=Exposure)
+    standard = ForeignKeyField(column_name='completion_status_pk',
+                               field='pk',
+                               Model=Standard)
+
+    class Meta:
+        table_name = 'exposure_to_status'

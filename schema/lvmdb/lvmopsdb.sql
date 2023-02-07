@@ -29,7 +29,7 @@ CREATE TABLE lvmopsdb.tile (
     Status INTEGER);
 
 CREATE TABLE lvmopsdb.observation (
-    ObsID SERIAL PRIMARY KEY NOT NULL
+    obs_id SERIAL PRIMARY KEY NOT NULL
     -- # SCI, CAL, FLAT, DARK, BIAS, TEST, ...
     TileID INTEGER,
     JD REAL,
@@ -40,7 +40,7 @@ CREATE TABLE lvmopsdb.observation (
 
 CREATE TABLE lvmopsdb.weather (
     pk SERIAL PRIMARY KEY NOT NULL,
-    observation_pk INTEGER,
+    obs_id INTEGER,
     seeing REAL,
     cloud_cover REAL,
     transparency REAL);
@@ -109,14 +109,14 @@ ALTER TABLE ONLY lvmopsdb.observation
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY lvmopsdb.weather
-    ADD CONSTRAINT weather_ObsID_fk
-    FOREIGN KEY (ObsID) REFERENCES lvmopsdb.observation(ObsID)
+    ADD CONSTRAINT weather_obs_id_fk
+    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY lvmopsdb.exposure
-    ADD CONSTRAINT exposure_ObsID_fk
-    FOREIGN KEY (ObsID) REFERENCES lvmopsdb.observation(ObsID)
+    ADD CONSTRAINT exposure_obs_id_fk
+    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -181,9 +181,33 @@ INSERT INTO lvmopsdb.obs_type VALUES
 INSERT INTO lvmopsdb.completion_status VALUES 
     (1, 'not started'), (2, 'started'), (3, 'done');
 
--- CREATE INDEX CONCURRENTLY tile_id_idx
---     ON lvmopsdb.tile
---     USING BTREE(TileID);
+CREATE INDEX CONCURRENTLY obs_id_idx
+    ON lvmopsdb.exposure
+    USING BTREE(obs_id);
+
+CREATE INDEX CONCURRENTLY start_time_idx
+    ON lvmopsdb.exposure
+    USING BTREE(start_time);
+
+CREATE INDEX CONCURRENTLY exposure_pk_idx
+    ON lvmopsdb.camera_frame
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY e2stat_exposure_pk_idx
+    ON lvmopsdb.exposure_to_status
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY e2stat_stat_pk_idx
+    ON lvmopsdb.exposure_to_status
+    USING BTREE(status_pk);
+
+CREATE INDEX CONCURRENTLY e2sky_exposure_pk_idx
+    ON lvmopsdb.exposure_to_sky
+    USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY e2sky_sky_pk_idx
+    ON lvmopsdb.exposure_to_sky
+    USING BTREE(sky_pk);
 
 -- TODO --
 -- check what needs indexing, not much? small db.
