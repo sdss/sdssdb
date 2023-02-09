@@ -6,6 +6,7 @@ create index on catalogdb.erosita_superset_v1_agn(ero_detuid);
 create index on catalogdb.erosita_superset_v1_agn(ero_flux);
 create index on catalogdb.erosita_superset_v1_agn(ero_det_like);
 create index on catalogdb.erosita_superset_v1_agn(ero_flags);
+create index on catalogdb.erosita_superset_v1_agn(ero_morph);
 create index on catalogdb.erosita_superset_v1_agn(xmatch_method,xmatch_version);
 create index on catalogdb.erosita_superset_v1_agn(xmatch_metric);
 create index on catalogdb.erosita_superset_v1_agn(xmatch_flags);

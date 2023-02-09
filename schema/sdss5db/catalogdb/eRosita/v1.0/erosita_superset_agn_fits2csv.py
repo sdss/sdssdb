@@ -2,19 +2,21 @@ from astropy.io import fits
 
 
 # input_dir and output_dir must end with /
-input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_v1.0.5/erosita_superset_agn/'  # noqa: E501
+input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_v1.0.6/erosita_superset_agn/'  # noqa: E501
 
-output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_v1.0.5/csv/erosita_superset_agn/'  # noqa: E501
+output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/eRosita/erosita_for_catalogdb_v1.0/sdssv_erosita_homogenise_superset_v1.0.6/csv/erosita_superset_agn/'  # noqa: E501
 
 input_fits_file_list =\
     [
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr9_v1.0.5.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_v1.0.5.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_nomask_v1.0.5.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_cw2020_gedr3_v1.0.5.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_gedr3_v1.0.5.fits',
-        'sdssv_spiders_erass3_update_v1_0_tda_nway_rf_lsdr10_v1.0.5.fits',
-        'sdssv_spiders_erass3_update_v1_0_agn_sep_gedr3_lsdr10_v1.0.5.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr9_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_nomask_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_lsdr10_nomask_06Feb23_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_cw2020_gedr3_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_nway_rf_gedr3_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_tda_nway_rf_lsdr10_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_sep_gedr3_lsdr10_v1.0.6.fits',
+        'sdssv_spiders_erass3_update_v1_0_agn_erass1_hard_lsdr10_v1.0.6.fits',
     ]
 
 for input_fits_file in input_fits_file_list:
