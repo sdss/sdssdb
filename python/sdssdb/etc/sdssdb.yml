@@ -30,7 +30,7 @@ lco:
 lvm:
     user: sdss_user
     admin: sdss
-    host: sdss5-db
+    host: lvm-webapp
     port: 5432
     domain: lvm-[a-z0-9]+.lco.cl
 

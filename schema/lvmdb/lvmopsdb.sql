@@ -8,33 +8,33 @@ Created Jan 2023 - J. Donor
 
 CREATE SCHEMA lvmopsdb;
 
-SET search_path TO opsdb;
+SET search_path TO lvmopsdb;
 
 CREATE TABLE lvmopsdb.tile (
-    TileID SERIAL PRIMARY KEY NOT NULL,
-    Target TEXT,
-    Telescope TEXT,
-    RA DOUBLE PRECISION,
-    DEC DOUBLE PRECISION,
-    PA DOUBLE PRECISION,
-    TargetPriority INTEGER,
-    TilePriority INTEGER,
-    AirmassLimit REAL,
-    LunationLimit REAL,
-    HzLimit REAL,
-    MoonDistanceLimit REAL,
-    TotalExptime REAL,
-    VisitExptime REAL,
-    Status INTEGER);
+    tile_id SERIAL PRIMARY KEY NOT NULL,
+    target_index INTEGER,
+    target TEXT,
+    telescope TEXT,
+    ra DOUBLE PRECISION,
+    dec DOUBLE PRECISION,
+    pa DOUBLE PRECISION,
+    target_priority INTEGER,
+    tile_priority INTEGER,
+    airmass_limit REAL,
+    lunation_limit REAL,
+    hz_limit REAL,
+    moon_distance_limit REAL,
+    total_exptime REAL,
+    visit_exptime REAL);
 
 CREATE TABLE lvmopsdb.observation (
     obs_id SERIAL PRIMARY KEY NOT NULL,
-    TileID INTEGER,
-    JD REAL,
-    LST REAL,
-    Hz REAL,
-    Alt REAL,
-    Lunation REAL);
+    tile_id INTEGER,
+    jd REAL,
+    lst REAL,
+    hz REAL,
+    alt REAL,
+    lunation REAL);
 
 CREATE TABLE lvmopsdb.weather (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE lvmopsdb.completion_status (
 
 ALTER TABLE ONLY lvmopsdb.observation
     ADD CONSTRAINT tile_id_fk
-    FOREIGN KEY (TileID) REFERENCES lvmopsdb.tile(TileID)
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 

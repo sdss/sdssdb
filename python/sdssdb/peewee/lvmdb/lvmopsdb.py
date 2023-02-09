@@ -26,22 +26,21 @@ class LVMOpsBase(BaseModel):
 
 
 class Tile(LVMOpsBase):
-    TileID = AutoField()
-    # TargetIndex = IntegerField(null=True)
-    Target = TextField(null=False)
-    Telescope = TextField(null=False)
-    RA = DoubleField(null=True, default=0)
-    DEC = DoubleField(null=True, default=0)
-    PA = DoubleField(null=True, default=0)
-    TargetPriority = IntegerField(null=True, default=0)
-    TilePriority = IntegerField(null=True, default=0)
-    AirmassLimit = FloatField(null=True, default=0)
-    LunationLimit = FloatField(null=True, default=0)
-    HzLimit = FloatField(null=True, default=0)
-    MoonDistanceLimit = FloatField(null=True, default=0)
-    TotalExptime = FloatField(null=True, default=0)
-    VisitExptime = FloatField(null=True, default=0)
-    Status = IntegerField(null=False)
+    tile_id = AutoField()
+    target_index = IntegerField(null=True)
+    target = TextField(null=False)
+    telescope = TextField(null=False)
+    ra = DoubleField(null=True, default=0)
+    dec = DoubleField(null=True, default=0)
+    pa = DoubleField(null=True, default=0)
+    target_priority = IntegerField(null=True, default=0)
+    tile_priority = IntegerField(null=True, default=0)
+    airmass_limit = FloatField(null=True, default=0)
+    lunation_limit = FloatField(null=True, default=0)
+    hz_limit = FloatField(null=True, default=0)
+    moon_distance_limit = FloatField(null=True, default=0)
+    total_exptime = FloatField(null=True, default=0)
+    visit_exptime = FloatField(null=True, default=0)
 
     class Meta:
         table_name = 'tile'
@@ -50,14 +49,14 @@ class Tile(LVMOpsBase):
 class Observation(LVMOpsBase):
     obs_id = AutoField()
     # presumably a tile will at some point be observed more than once
-    tile = ForeignKeyField(column_name='TileID',
-                           field='TileID',
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
                            model=Tile, backref='observations')
-    JD = FloatField(null=False)
-    LST = FloatField(null=True)
-    Hz = FloatField(null=True)
-    Alt = FloatField(null=True)
-    Lunation = FloatField(null=True)
+    jd = FloatField(null=False)
+    lst = FloatField(null=True)
+    hz = FloatField(null=True)
+    alt = FloatField(null=True)
+    lunation = FloatField(null=True)
 
     class Meta:
         table_name = 'observation'
