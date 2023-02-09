@@ -11,8 +11,7 @@ CREATE SCHEMA lvmopsdb;
 SET search_path TO opsdb;
 
 CREATE TABLE lvmopsdb.tile (
-    TileID SERIAL PRIMARY KEY NOT NULL
-    -- TargetIndex INTEGER,
+    TileID SERIAL PRIMARY KEY NOT NULL,
     Target TEXT,
     Telescope TEXT,
     RA DOUBLE PRECISION,
@@ -29,8 +28,7 @@ CREATE TABLE lvmopsdb.tile (
     Status INTEGER);
 
 CREATE TABLE lvmopsdb.observation (
-    obs_id SERIAL PRIMARY KEY NOT NULL
-    -- # SCI, CAL, FLAT, DARK, BIAS, TEST, ...
+    obs_id SERIAL PRIMARY KEY NOT NULL,
     TileID INTEGER,
     JD REAL,
     LST REAL,
@@ -70,7 +68,7 @@ CREATE TABLE lvmopsdb.exposure_to_sky (
 
 CREATE TABLE lvmopsdb.exposure (
     pk SERIAL PRIMARY KEY NOT NULL,
-    observation_pk INTEGER,
+    obs_id INTEGER,
     exposure_no BIGINT,
     start_time TIMESTAMP,
     exposure_time REAL,
@@ -104,7 +102,7 @@ CREATE TABLE lvmopsdb.completion_status (
 
 ALTER TABLE ONLY lvmopsdb.observation
     ADD CONSTRAINT tile_id_fk
-    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    FOREIGN KEY (TileID) REFERENCES lvmopsdb.tile(TileID)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -164,7 +162,7 @@ ALTER TABLE ONLY lvmopsdb.exposure_to_status
 
 ALTER TABLE ONLY lvmopsdb.exposure_to_status
     ADD CONSTRAINT e2stat_status_fk
-    FOREIGN KEY (status_pk) REFERENCES lvmopsdb.completion_status(pk)
+    FOREIGN KEY (completion_status_pk) REFERENCES lvmopsdb.completion_status(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -174,7 +172,7 @@ ALTER TABLE ONLY lvmopsdb.exposure
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-INSERT INTO lvmopsdb.obs_type VALUES
+INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
     (5, 'Calib'), (6, 'Dark'), (7, 'Sky');
 
@@ -199,7 +197,7 @@ CREATE INDEX CONCURRENTLY e2stat_exposure_pk_idx
 
 CREATE INDEX CONCURRENTLY e2stat_stat_pk_idx
     ON lvmopsdb.exposure_to_status
-    USING BTREE(status_pk);
+    USING BTREE(completion_status_pk);
 
 CREATE INDEX CONCURRENTLY e2sky_exposure_pk_idx
     ON lvmopsdb.exposure_to_sky
