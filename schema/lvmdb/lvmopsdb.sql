@@ -54,7 +54,9 @@ CREATE TABLE lvmopsdb.sky (
     pk SERIAL PRIMARY KEY NOT NULL,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
-    h_alpha_flux REAL);
+    i_ha REAL,
+    g_sb REAL,
+    irdc_flag BOOL);
 
 CREATE TABLE lvmopsdb.exposure_to_standard (
     pk SERIAL PRIMARY KEY NOT NULL,
