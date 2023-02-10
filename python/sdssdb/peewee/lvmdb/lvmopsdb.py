@@ -21,12 +21,12 @@ from . import database  # noqa
 class LVMOpsBase(BaseModel):
 
     class Meta:
-        schema = "opsdb"
+        schema = "lvmopsdb"
         database = database
 
 
 class Tile(LVMOpsBase):
-    tile_id = AutoField()
+    tile_id = IntegerField(primary_key=True)
     target_index = IntegerField(null=True)
     target = TextField(null=False)
     telescope = TextField(null=False)
