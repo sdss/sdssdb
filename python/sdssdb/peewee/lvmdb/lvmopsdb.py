@@ -11,7 +11,7 @@ import datetime
 
 from peewee import (AutoField, FloatField, ForeignKeyField,
                     IntegerField, TextField, DoubleField,
-                    BigIntegerField, DateTimeField)
+                    BigIntegerField, DateTimeField, BooleanField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -92,7 +92,9 @@ class Sky(LVMOpsBase):
 
     ra = DoubleField(null=True)
     dec = DoubleField(null=True)
-    h_alpha_flux = FloatField(null=True)
+    i_ha = FloatField(null=True)
+    g_sb = FloatField(null=True)
+    irdc_flag = BooleanField(null=True)
 
     class Meta:
         table_name = 'sky'
