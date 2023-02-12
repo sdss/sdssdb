@@ -148,14 +148,17 @@ class ReflectMeta(ModelBase):
 
         # Lists tables in the schema. This is a bit of a hack but
         # faster than using database.table_exists because it's cached.
-        # NOTE: JSG: I'm disabling caching for now because it seems to
-        # prevent reflection working on tables that change dynamically.
-        # In the future we should find a better way.
-        database.get_fields(table_name, schema, cache=False)
+        database.get_fields(table_name, schema)
         schema_tables = database._metadata[schema].keys()
 
         if table_name not in schema_tables:
-            return
+            # Give it another try without caching. This is sometimes necessary
+            # for tables things like catalog_to_X table that are created
+            # dynamically.
+            database.get_fields(table_name, schema, cache=False)
+            schema_tables = database._metadata[schema].keys()
+            if table_name not in schema_tables:
+                return
 
         for index in meta.indexes:
             if hasattr(index, 'reflected') and index.reflected:
