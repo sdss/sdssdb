@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.6.1 <2022-01-19>`
+* Don't count observed designs in ``queue.rm``.
+* Add ``assignmentStatus`` table to targetdb.
+* Update auto schemas.
+
 * :release:`0.6.0 <2022-12-29>`
 * Many additions to ``sdss5db``, mainly related to target selection v1. See the `commit list <https://github.com/sdss/sdssdb/compare/0.5.5...0.6.0>`__ for details.
 
