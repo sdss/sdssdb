@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.6.2 <2022-02-12>`
+* Rename ``SagittaEDR3`` to ``Sagitta_EDR3``.
+* Update to allow for v1.0.6 of eROSITA superset catalogues.
+* Speed up loading of reflected tables by caching results except if the table is not found in the schema.
+
 * :release:`0.6.1 <2022-01-19>`
 * Don't count observed designs in ``queue.rm``.
 * Add ``assignmentStatus`` table to targetdb.
