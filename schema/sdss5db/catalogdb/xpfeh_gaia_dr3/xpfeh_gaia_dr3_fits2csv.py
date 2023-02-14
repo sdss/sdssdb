@@ -1,7 +1,7 @@
 from astropy.io import fits
 
 input_dir = '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/xpfeh_gaia_dr3/'
-input_file = 'RGB-allsky-xgboost.fits'
+input_file = 'table-1.fits'
 
 output_dir = input_dir
 output_file = input_file.replace('fits', 'csv')
