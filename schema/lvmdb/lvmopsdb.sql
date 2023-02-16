@@ -209,6 +209,20 @@ CREATE INDEX CONCURRENTLY e2sky_sky_pk_idx
     ON lvmopsdb.exposure_to_sky
     USING BTREE(sky_pk);
 
--- TODO --
--- check what needs indexing, not much? small db.
--- ---- --
+CREATE INDEX CONCURRENTLY tile_qc3_index
+    ON lvmopsdb.tile 
+    (q3c_ang2ipix(ra, dec));
+
+CLUSTER tile_qc3_index ON lvmopsdb.tile;
+
+CREATE INDEX CONCURRENTLY sky_qc3_index
+    ON lvmopsdb.sky 
+    (q3c_ang2ipix(ra, dec));
+
+CLUSTER sky_qc3_index ON lvmopsdb.sky;
+
+CREATE INDEX CONCURRENTLY standard_qc3_index
+    ON lvmopsdb.standard 
+    (q3c_ang2ipix(ra, dec));
+
+CLUSTER standard_qc3_index ON lvmopsdb.standard;
