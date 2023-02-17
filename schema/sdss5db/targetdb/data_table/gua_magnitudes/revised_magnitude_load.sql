@@ -67,7 +67,7 @@ WHERE
 
 CREATE INDEX ON targetdb.revised_magnitude(pk);
 CREATE INDEX ON targetdb.revised_magnitude(carton_to_target_pk);
-CLUSTER targetdb.revised_magnitude USING carton_to_target_pk;
+CLUSTER targetdb.revised_magnitude USING revised_magnitude_carton_to_target_pk_idx;
 ANALYZE targetdb.revised_magnitude;
 
 \o
