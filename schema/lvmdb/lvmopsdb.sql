@@ -74,7 +74,36 @@ CREATE TABLE lvmopsdb.exposure (
     exposure_no BIGINT,
     start_time TIMESTAMP,
     exposure_time REAL,
-    exposure_flavor_pk SMALLINT NOT NULL);
+    exposure_flavor_pk SMALLINT NOT NULL,
+    -- 
+    -- fields from DRP database
+    --
+    -- datetime added to DB
+    date_time DATETIME,
+    mjd BIGINT,
+    spec VARCHAR(3),
+    camera VARCHAR(2),
+    -- hemisphere, can be inferred from obs_id?
+    hemi VARCHAR(1),
+    -- sdR-[HEMI]-[CAMERA]-[EXPNUM]
+    label TEXT,
+    reduction_started DATETIME,
+    reduction_finished DATETIME,
+    -- this is a bitmask for reduction status, taking values: RAW, IN_PROGRESS, FINISHED, FAILED
+    status_ BIGINT,
+    -- this is a bitmask to state the quality of the quick and full data reduction (we will define this soon!)
+    quick_quality BIGINT,
+    full_quality BIGINT);
+
+-- this table will store information about the master calibration frames of several flavors: bias, dark, pixelflat, fiberflat and arc
+-- it is related to the exposures table above: one 'master_calib' can have many pks in 'exposure', corresponding to calibration frames
+CREATE TABLE lvmopsdb.master_calib (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    -- created at
+    date_time DATETIME,
+    -- naming convention for the master calibration
+    label TEXT,
+    quality BIGINT);
 
 CREATE TABLE lvmopsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
