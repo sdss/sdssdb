@@ -428,6 +428,28 @@ class Magnitude(TargetdbBase):
         table_name = 'magnitude'
 
 
+class RevisedMagnitude(TargetdbBase):
+    bp = FloatField(null=True)
+    g = FloatField(null=True)
+    h = FloatField(null=True)
+    i = FloatField(null=True)
+    z = FloatField(null=True)
+    pk = AutoField()
+    r = FloatField(null=True)
+    rp = FloatField(null=True)
+    gaia_g = FloatField(null=True)
+    j = FloatField(null=True)
+    k = FloatField(null=True)
+    optical_prov = TextField(null=True)
+    carton_to_target = ForeignKeyField(column_name='carton_to_target_pk',
+                                       field='pk',
+                                       model=CartonToTarget,
+                                       backref='revised_magnitudes')
+
+    class Meta:
+        table_name = 'revised_magnitude'
+
+
 class AssignedTargets(TargetdbBase):
     program = TextField()
     carton_pk = ForeignKeyField(column_name="carton_pk",
