@@ -2085,48 +2085,53 @@ else:
 
 for rtname in all_tables:
     if rtname.startswith('catalog_to_'):
+        direction = 'to'
+    elif rtname.startswith('catalog_from_'):
+        direction = 'from'
+    else:
+        continue
 
-        tname = rtname[len('catalog_to_'):]
-        fname = 'catalogdb.' + tname
+    tname = rtname[len(f'catalog_{direction}_'):]
+    fname = 'catalogdb.' + tname
 
-        if fname not in database.models:
-            warnings.warn(f'{rtname}: cannot find related table {tname!r}',
-                          SdssdbUserWarning)
-            continue
+    if fname not in database.models:
+        warnings.warn(f'{rtname}: cannot find related table {tname!r}',
+                      SdssdbUserWarning)
+        continue
 
-        rel_model = database.models[fname]
-        model_name = 'CatalogTo' + rel_model.__name__
+    rel_model = database.models[fname]
+    model_name = f'Catalog{direction.capitalize()}' + rel_model.__name__
 
-        class Meta:
-            table_name = rtname
-            primary_key = False
+    class Meta:
+        table_name = rtname
+        primary_key = False
 
-        RelationalModel = type(model_name, (CatalogdbModel,), {'Meta': Meta})
+    RelationalModel = type(model_name, (CatalogdbModel,), {'Meta': Meta})
 
-        RelationalModel._meta.add_field('catalog',
-                                        ForeignKeyField(Catalog,
-                                                        column_name='catalogid',
-                                                        backref='+'))
-        RelationalModel._meta.add_field('target',
-                                        ForeignKeyField(rel_model,
+    RelationalModel._meta.add_field('catalog',
+                                    ForeignKeyField(Catalog,
+                                                    column_name='catalogid',
+                                                    backref='+'))
+    RelationalModel._meta.add_field('target',
+                                    ForeignKeyField(rel_model,
+                                                    column_name='target_id',
+                                                    backref='+'))
+    RelationalModel._meta.add_field('version',
+                                    ForeignKeyField(Version,
+                                                    column_name='version_id',
+                                                    backref='+'))
+
+    # Add a many-to-many to Catalog
+    Catalog._meta.add_field(rel_model.__name__.lower(),
+                            ManyToManyField(rel_model,
+                                            through_model=RelationalModel,
+                                            backref='+'))
+
+    if tname == 'sdss_dr13_photoobj_primary':
+        RelationalModel._meta.add_field('sdss_dr13_photoobj',
+                                        ForeignKeyField(SDSS_DR13_PhotoObj,
                                                         column_name='target_id',
-                                                        backref='+'))
-        RelationalModel._meta.add_field('version',
-                                        ForeignKeyField(Version,
-                                                        column_name='version_id',
+                                                        field='objid',
                                                         backref='+'))
 
-        # Add a many-to-many to Catalog
-        Catalog._meta.add_field(rel_model.__name__.lower(),
-                                ManyToManyField(rel_model,
-                                                through_model=RelationalModel,
-                                                backref='+'))
-
-        if tname == 'sdss_dr13_photoobj_primary':
-            RelationalModel._meta.add_field('sdss_dr13_photoobj',
-                                            ForeignKeyField(SDSS_DR13_PhotoObj,
-                                                            column_name='target_id',
-                                                            field='objid',
-                                                            backref='+'))
-
-        globals()[model_name] = RelationalModel
+    globals()[model_name] = RelationalModel
