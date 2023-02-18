@@ -9,22 +9,10 @@
 import datetime
 import os
 
-from peewee import (
-    SQL,
-    AutoField,
-    BigIntegerField,
-    BooleanField,
-    DateTimeField,
-    DeferredThroughModel,
-    DoubleField,
-    FloatField,
-    ForeignKeyField,
-    IntegerField,
-    SmallIntegerField,
-    TextField,
-    UUIDField,
-    fn
-)
+from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
+                    DateTimeField, DeferredThroughModel, DoubleField,
+                    FloatField, ForeignKeyField, IntegerField,
+                    SmallIntegerField, TextField, UUIDField, fn)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
