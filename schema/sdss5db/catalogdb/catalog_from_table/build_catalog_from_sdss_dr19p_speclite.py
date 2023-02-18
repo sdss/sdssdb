@@ -3,22 +3,39 @@
 #
 # @Author: Tom Dwelly
 # @Date: Jan-2023
-# @Filename: build_catalog_from_sdss_dr19p_speclite
+# @Filename: build_catalog_from_sdss_dr19p_speclite.py
 # @License: BSD 3-Clause
 # @Copyright: Tom Dwelly
 
-import sys
-import os
 import argparse
+import os
 import random
 import string
-# import peewee
-# from peewee import Model, fn
+import sys
 
 from sdssdb.peewee.sdss5db import database
 
 
+# import peewee
+# from peewee import Model, fn
+
+# is_execute_sql = True
+# means print and execute the SQL statements
+#
+# is_execute_sql = False
+# means only print the SQL statements
+# but do not execute them
+#
+# If you make any code changes then first run this progam with
+# is_execute_sql = False
+# and check the SQL statements.
+# After that, run the program with
+# is_execute_sql = True
+is_execute_sql = False
+
 # https://pynative.com/python-generate-random-string/#h-how-to-create-a-random-string-in-python
+
+
 def get_random_string(length):
     # choose from all lowercase letters + digits
     chars = string.ascii_lowercase + string.digits
@@ -29,9 +46,10 @@ def get_random_string(length):
 def execute_sql(q):
     print("# running the following SQL command:")
     print(q)
-    cursor = database.execute_sql(q)
-    database.commit()
-    return cursor
+    if is_execute_sql is True:
+        cursor = database.execute_sql(q)
+        database.commit()
+        return cursor
 
 
 if __name__ == '__main__':
@@ -77,6 +95,14 @@ if __name__ == '__main__':
     table_nph12 = f'{temp_prefix}_nph12'
     table_ph3 = f'{temp_prefix}_ph3'
     table_ph123 = f'{temp_prefix}_ph123'
+
+    if (temp_schema != 'sandbox'):
+        print("error: temp_schema != 'sandbox'")
+        sys.exit()
+
+    if ('catalog_from' not in table_output):
+        print("error: 'catalog_from' not in table_output")
+        sys.exit()
 
     print(f"Starting phase1 - using temp table: {temp_schema}.{table_ph1}")
 
