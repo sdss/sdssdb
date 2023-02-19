@@ -220,7 +220,7 @@ if __name__ == '__main__':
         f'{temp_schema}.{table_ph2b} AS ph2\n'
         'ON ph2.target_id = s.pk\n'
         'WHERE ph2.target_id is Null;\n'
-        'ANALYZE {temp_schema}.{table_nph12};'
+        f'ANALYZE {temp_schema}.{table_nph12};'
     )
     cursor = execute_sql(qstr)
 
