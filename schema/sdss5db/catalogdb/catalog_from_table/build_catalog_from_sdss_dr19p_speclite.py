@@ -13,7 +13,7 @@ import random
 import string
 import sys
 
-from sdssdb.peewee.sdss5db import database
+from sdssdb.peewee.sdss5db import catalogdb, database
 
 
 # import peewee
@@ -53,6 +53,9 @@ def execute_sql(q):
 
 
 if __name__ == '__main__':
+
+    catalogdb.database.become_admin()
+
     print('Command line: ' + ' '.join(sys.argv))
 
     parser = argparse.ArgumentParser(
