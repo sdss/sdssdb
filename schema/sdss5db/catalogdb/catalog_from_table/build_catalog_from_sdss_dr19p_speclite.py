@@ -31,7 +31,7 @@ from sdssdb.peewee.sdss5db import database
 # and check the SQL statements.
 # After that, run the program with
 # is_execute_sql = True
-is_execute_sql = False
+is_execute_sql = True
 
 # https://pynative.com/python-generate-random-string/#h-how-to-create-a-random-string-in-python
 
@@ -103,6 +103,13 @@ if __name__ == '__main__':
     if ('catalog_from' not in table_output):
         print("error: 'catalog_from' not in table_output")
         sys.exit()
+
+    if (is_execute_sql is True):
+        print("warning: is_execute_sql is True.")
+        print("SQL statements will be printed and executed.")
+    else:
+        print("warning: is_execute_sql is False.")
+        print("SQL statements will be printed but not executed.")
 
     print(f"Starting phase1 - using temp table: {temp_schema}.{table_ph1}")
 
@@ -180,7 +187,7 @@ if __name__ == '__main__':
 
     # now remove unwanted crossmatch versions and index
     qstr = (
-        f'DELETE FROM {temp_schema}.{table_ph2};\n'
+        f'DELETE FROM {temp_schema}.{table_ph2}\n'
         f'WHERE version_id != {version_id};\n'
         f'CREATE INDEX ON {temp_schema}.{table_ph2}(target_id);\n'
         f'ANALYZE {temp_schema}.{table_ph2};\n'
