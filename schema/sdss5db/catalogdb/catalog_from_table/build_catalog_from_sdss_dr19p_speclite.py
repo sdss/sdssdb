@@ -217,7 +217,7 @@ if __name__ == '__main__':
         f'INTO  {temp_schema}.{table_nph12}\n'
         f'FROM  {temp_schema}.{table_nph1} AS s\n'
         'LEFT OUTER JOIN  \n'
-        '{temp_schema}.{table_ph2b} AS ph2\n'
+        f'{temp_schema}.{table_ph2b} AS ph2\n'
         'ON ph2.target_id = s.pk\n'
         'WHERE ph2.target_id is Null;\n'
         'ANALYZE {temp_schema}.{table_nph12};'
