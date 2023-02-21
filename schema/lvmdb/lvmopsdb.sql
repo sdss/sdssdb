@@ -79,31 +79,31 @@ CREATE TABLE lvmopsdb.exposure (
     -- fields from DRP database
     --
     -- datetime added to DB
-    date_time DATETIME,
-    mjd BIGINT,
-    spec VARCHAR(3),
-    camera VARCHAR(2),
+    date_time DATETIME, -- drop for start_time
+    mjd BIGINT, -- drop because jd is already in observation? but it is float/real.
+    spec VARCHAR(3), -- move to camera frame
+    camera VARCHAR(2), -- move to camera frame
     -- hemisphere, can be inferred from obs_id?
-    hemi VARCHAR(1),
+    hemi VARCHAR(1), -- would probably be in tile, or drop altogether
     -- sdR-[HEMI]-[CAMERA]-[EXPNUM]
-    label TEXT,
-    reduction_started DATETIME,
-    reduction_finished DATETIME,
+    label TEXT, -- keep!
+    reduction_started DATETIME, -- move to camera frame if needed
+    reduction_finished DATETIME, -- move to camera frame if needed
     -- this is a bitmask for reduction status, taking values: RAW, IN_PROGRESS, FINISHED, FAILED
-    status_ BIGINT,
+    status_ BIGINT, -- separate table with camera_frame_pk foreign keys
     -- this is a bitmask to state the quality of the quick and full data reduction (we will define this soon!)
-    quick_quality BIGINT,
-    full_quality BIGINT);
+    quick_quality BIGINT, -- this is sn2 in camera frame
+    full_quality BIGINT); -- this would be a separate sn2, have to have a way to update, are you sure?
 
 -- this table will store information about the master calibration frames of several flavors: bias, dark, pixelflat, fiberflat and arc
 -- it is related to the exposures table above: one 'master_calib' can have many pks in 'exposure', corresponding to calibration frames
 CREATE TABLE lvmopsdb.master_calib (
     pk SERIAL PRIMARY KEY NOT NULL,
     -- created at
-    date_time DATETIME,
+    created_at TIMESTAMP,
     -- naming convention for the master calibration
     label TEXT,
-    quality BIGINT);
+    quality BIGINT); -- what is this quality?
 
 CREATE TABLE lvmopsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
