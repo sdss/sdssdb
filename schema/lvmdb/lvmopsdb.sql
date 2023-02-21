@@ -75,31 +75,11 @@ CREATE TABLE lvmopsdb.exposure (
     start_time TIMESTAMP,
     exposure_time REAL,
     exposure_flavor_pk SMALLINT NOT NULL,
-    -- 
-    -- fields from DRP database
-    --
-    -- datetime added to DB
-    date_time DATETIME, -- drop for start_time
-    mjd BIGINT, -- drop because jd is already in observation? but it is float/real.
-    spec VARCHAR(3), -- move to camera frame
-    camera VARCHAR(2), -- move to camera frame
-    -- hemisphere, can be inferred from obs_id?
-    hemi VARCHAR(1), -- would probably be in tile, or drop altogether
-    -- sdR-[HEMI]-[CAMERA]-[EXPNUM]
-    label TEXT, -- keep!
-    reduction_started DATETIME, -- move to camera frame if needed
-    reduction_finished DATETIME, -- move to camera frame if needed
-    -- this is a bitmask for reduction status, taking values: RAW, IN_PROGRESS, FINISHED, FAILED
-    status_ BIGINT, -- separate table with camera_frame_pk foreign keys
-    -- this is a bitmask to state the quality of the quick and full data reduction (we will define this soon!)
-    quick_quality BIGINT, -- this is sn2 in camera frame
-    full_quality BIGINT); -- this would be a separate sn2, have to have a way to update, are you sure?
+    -- label format sdR-[HEMI]-[CAMERA]-[EXPNUM]
+    label TEXT);
 
--- this table will store information about the master calibration frames of several flavors: bias, dark, pixelflat, fiberflat and arc
--- it is related to the exposures table above: one 'master_calib' can have many pks in 'exposure', corresponding to calibration frames
 CREATE TABLE lvmopsdb.master_calib (
     pk SERIAL PRIMARY KEY NOT NULL,
-    -- created at
     created_at TIMESTAMP,
     -- naming convention for the master calibration
     label TEXT,
@@ -107,7 +87,11 @@ CREATE TABLE lvmopsdb.master_calib (
 
 CREATE TABLE lvmopsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
-    instrument_pk SMALLINT,
+    spectrograph_pk SMALLINT,
+    label TEXT);
+
+CREATE TABLE lvmopsdb.spectrograph (
+    pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
 CREATE TABLE lvmopsdb.exposure_flavor (
@@ -118,7 +102,21 @@ CREATE TABLE lvmopsdb.camera_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure_pk INTEGER NOT NULL,
     camera_pk SMALLINT NOT NULL,
-    sn2 REAL);
+    sn2 REAL,
+    reduction_started TIMESTAMP,
+    reduction_finished TIMESTAMP);
+
+CREATE TABLE lvmopsdb.master_to_camera_frame (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    master_calib_pk INTEGER,
+    camera_frame_pk BIGINT):
+
+-- allows arbitrary number and types of flags for any number of camera_frames
+CREATE TABLE lvmopsdb.reduction_status_flag (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    camera_frame_pk BIGINT,
+    label TEXT,
+    active BOOL);
 
 CREATE TABLE lvmopsdb.exposure_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
