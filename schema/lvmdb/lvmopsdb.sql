@@ -83,7 +83,7 @@ CREATE TABLE lvmopsdb.master_calib (
     created_at TIMESTAMP,
     -- naming convention for the master calibration
     label TEXT,
-    quality BIGINT); -- what is this quality?
+    quality BIGINT); -- 64-bit bitmask
 
 CREATE TABLE lvmopsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
