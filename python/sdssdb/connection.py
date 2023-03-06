@@ -566,7 +566,7 @@ class SQLADatabaseConnection(DatabaseConnection):
         db_params['port'] = db_params.pop('port', 5432)
         if db_params['username']:
             db_params['password'] = self._get_password(**db_params)
-        db_connection_string = url.URL(**db_params)
+        db_connection_string = url.URL.create(**db_params)
         self._connect_params = params
         return db_connection_string
 
@@ -627,8 +627,8 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size,
                                     pool_recycle=pool_recycle)
-        self.metadata = MetaData(bind=self.engine)
-        self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
+        self.metadata = MetaData()
+        self.Session = scoped_session(sessionmaker(bind=self.engine,
                                                    expire_on_commit=expire_on_commit))
 
     def add_base(self, base, prepare=True):
