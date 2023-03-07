@@ -237,7 +237,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'To set it in runtime change the dbname '
                                'attribute.')
 
-        params = {key: params[key] for key in params if params[key]}
+        params = {key: params[key] for key in params if params[key] is not None}
 
         return self._conn(dbname, **params)
 
