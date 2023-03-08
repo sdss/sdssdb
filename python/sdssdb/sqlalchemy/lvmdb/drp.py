@@ -102,7 +102,7 @@ class PolySearch:
 
     @hybrid_method
     def poly_search(self, poly):
-        """Returns a query with the rows inside a region on the sky."""
+        """ Returns a query with the rows that fall within a polygon region on the sky. """
 
         assert hasattr(self, self.ra_col) and hasattr(self, self.dec_col), \
             'this model class does not have ra/dec columns.'
@@ -144,7 +144,7 @@ class RSS(PolySearch, Base):
 
     @hybrid_method
     def in_poly(self, ra, dec):
-        """Returns a query with the rows inside a region on the sky."""
+        """Returns a query with the rows where the input points falls within a tile footprint """
 
         assert hasattr(self, self.ra_col) and hasattr(self, self.dec_col), \
             'this model class does not have ra/dec columns.'
@@ -161,9 +161,9 @@ class RSS(PolySearch, Base):
 
     @hybrid_method
     def poly_intersect(self, poly):
-        """Returns a query with the rows inside a region on the sky."""
+        """Returns a query with the rows that intersect with the input sky polygon region """
 
-        assert hasattr(cls, cls.ra_col) and hasattr(cls, cls.dec_col), \
+        assert hasattr(self, self.ra_col) and hasattr(self, self.dec_col), \
             'this model class does not have ra/dec columns.'
         poly_tup = f"'{tuple(poly)}'"
         return text(f"polygon {poly_tup} && drp.rss.footprint")

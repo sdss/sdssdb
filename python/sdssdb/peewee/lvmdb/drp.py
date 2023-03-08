@@ -57,7 +57,7 @@ class PolySearch:
 
     @hybrid_method
     def poly_search(self, poly):
-        """Returns a query with the rows inside a region on the sky."""
+        """ Returns a query with the rows that fall within a polygon region on the sky. """
 
         assert hasattr(self, self.ra_col) and hasattr(self, self.dec_col), \
             'this model class does not have ra/dec columns.'
@@ -146,7 +146,7 @@ class Rss(PolySearch, DRPBase):
 
     @hybrid_method
     def in_poly(self, ra, dec):
-        """Returns a query with the rows inside a region on the sky."""
+        """Returns a query with the rows where the input points falls within a tile footprint """
 
         assert hasattr(self, self.ra_col) and hasattr(self, self.dec_col), \
             'this model class does not have ra/dec columns.'
@@ -160,6 +160,23 @@ class Rss(PolySearch, DRPBase):
             'this model class does not have ra/dec columns.'
 
         return fn.q3c_in_poly(ra, dec, cls.footprint)
+
+    @hybrid_method
+    def poly_intersect(self, poly):
+        """Returns a query with the rows that intersect with the input sky polygon region """
+
+        assert hasattr(self, self.ra_col) and hasattr(self, self.dec_col), \
+            'this model class does not have ra/dec columns.'
+        poly_cast = f"'{tuple(poly)}'::polygon"
+        return SQL(f"polygon {poly_cast} && footprint")
+
+    @poly_intersect.expression
+    def poly_intersect(cls, poly):
+
+        assert hasattr(cls, cls.ra_col) and hasattr(cls, cls.dec_col), \
+            'this model class does not have ra/dec columns.'
+        poly_cast = f"'{tuple(poly)}'::polygon"
+        return SQL(f"polygon {poly_cast} && footprint")
 
 
 class Header(DRPBase):
