@@ -74,11 +74,24 @@ CREATE TABLE lvmopsdb.exposure (
     exposure_no BIGINT,
     start_time TIMESTAMP,
     exposure_time REAL,
-    exposure_flavor_pk SMALLINT NOT NULL);
+    exposure_flavor_pk SMALLINT NOT NULL,
+    -- label format sdR-[HEMI]-[CAMERA]-[EXPNUM]
+    label TEXT);
+
+CREATE TABLE lvmopsdb.master_calib (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    created_at TIMESTAMP,
+    -- naming convention for the master calibration
+    label TEXT,
+    quality BIGINT); -- 64-bit bitmask
 
 CREATE TABLE lvmopsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
-    instrument_pk SMALLINT,
+    spectrograph_pk SMALLINT,
+    label TEXT);
+
+CREATE TABLE lvmopsdb.spectrograph (
+    pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
 CREATE TABLE lvmopsdb.exposure_flavor (
@@ -89,7 +102,21 @@ CREATE TABLE lvmopsdb.camera_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
     exposure_pk INTEGER NOT NULL,
     camera_pk SMALLINT NOT NULL,
-    sn2 REAL);
+    sn2 REAL,
+    reduction_started TIMESTAMP,
+    reduction_finished TIMESTAMP);
+
+CREATE TABLE lvmopsdb.master_to_camera_frame (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    master_calib_pk INTEGER,
+    camera_frame_pk BIGINT):
+
+-- allows arbitrary number and types of flags for any number of camera_frames
+CREATE TABLE lvmopsdb.reduction_status_flag (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    camera_frame_pk BIGINT,
+    label TEXT,
+    active BOOL);
 
 CREATE TABLE lvmopsdb.exposure_to_status (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -209,6 +236,20 @@ CREATE INDEX CONCURRENTLY e2sky_sky_pk_idx
     ON lvmopsdb.exposure_to_sky
     USING BTREE(sky_pk);
 
--- TODO --
--- check what needs indexing, not much? small db.
--- ---- --
+CREATE INDEX CONCURRENTLY tile_qc3_index
+    ON lvmopsdb.tile 
+    (q3c_ang2ipix(ra, dec));
+
+CLUSTER tile_qc3_index ON lvmopsdb.tile;
+
+CREATE INDEX CONCURRENTLY sky_qc3_index
+    ON lvmopsdb.sky 
+    (q3c_ang2ipix(ra, dec));
+
+CLUSTER sky_qc3_index ON lvmopsdb.sky;
+
+CREATE INDEX CONCURRENTLY standard_qc3_index
+    ON lvmopsdb.standard 
+    (q3c_ang2ipix(ra, dec));
+
+CLUSTER standard_qc3_index ON lvmopsdb.standard;
