@@ -7,7 +7,7 @@ input_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/RM/v1.
 output_dir = '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/RM/v1.1/csv/'  # noqa: E501
 
 input_fits_file_list =\
-    ['bhm_rm_v1_1_XXMar2023.fits']
+    ['bhm_rm_v1_1_16Mar2023.fits']
 
 for input_fits_file in input_fits_file_list:
     output_csv_file = input_fits_file.replace('fits', 'csv')
