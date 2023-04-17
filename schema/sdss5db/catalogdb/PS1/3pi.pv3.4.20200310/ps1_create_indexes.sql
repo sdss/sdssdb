@@ -11,4 +11,5 @@ create index on catalogdb.panstarrs1(g_flags);
 create index on catalogdb.panstarrs1(r_flags);
 create index on catalogdb.panstarrs1(i_flags);
 create index on catalogdb.panstarrs1(z_flags);
+create index on catalogdb.panstarrs1(r_chp_psf);
 \o

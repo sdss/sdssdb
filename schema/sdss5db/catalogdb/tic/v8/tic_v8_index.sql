@@ -41,3 +41,7 @@ ALTER INDEX catalogdb.tic_v8_q3c_ang2ipix_idx ALTER COLUMN q3c_ang2ipix SET STAT
 -- For Solar Neighbourhood Census
 
 CREATE INDEX tic_v8_plx_minus_e_plx ON catalogdb.tic_v8 ((plx-e_plx));
+
+-- For ops_std_boss_ps1dr2 carton
+
+CREATE INDEX on catalogdb.tic_v8(ebv);
