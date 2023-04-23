@@ -18,4 +18,6 @@ create index on catalogdb.gaia_dr3_source(bp_g);
 create index on catalogdb.gaia_dr3_source(g_rp);
 create index on catalogdb.gaia_dr3_source((parallax - parallax_error));
 create index on catalogdb.gaia_dr3_source((parallax / parallax_error));
+create index on catalogdb.gaia_dr3_source(parallax_over_error);
+create index on catalogdb.gaia_dr3_source(ruwe);
 \o
