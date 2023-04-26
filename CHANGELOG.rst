@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Add ``catalogdb.rave_dr6_xgaiae3`` (Gaia DR3 cross-match for RAVE DR6).
+
 * :release:`0.6.2 <2022-02-12>`
 * Rename ``SagittaEDR3`` to ``Sagitta_EDR3``.
 * Update to allow for v1.0.6 of eROSITA superset catalogues.
