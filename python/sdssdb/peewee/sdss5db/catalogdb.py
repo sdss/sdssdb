@@ -2077,6 +2077,22 @@ class SuperCosmos(CatalogdbModel):
         table_name = 'supercosmos'
 
 
+class RAVE_DR6_Gauguin_Madera(CatalogdbModel):
+
+    rave_obs_id = TextField(primary_key=True)
+
+    class Meta:
+        table_name = 'rave_dr6_gauguin_madera'
+
+
+class RAVE_DR6_Gaia_DR3_XMatch(CatalogdbModel):
+
+    obsid = TextField(primary_key=True)
+
+    class Meta:
+        table_name = 'rave_dr6_xgaiae3'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
