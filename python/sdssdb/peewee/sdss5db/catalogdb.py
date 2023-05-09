@@ -2093,6 +2093,20 @@ class RAVE_DR6_Gaia_DR3_XMatch(CatalogdbModel):
         table_name = 'rave_dr6_xgaiae3'
 
 
+class Gaia_Stellar_Parameters(CatalogdbModel):
+
+    gdr3_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(Gaia_DR3,
+                           field='source_id',
+                           column_name='gdr3_source_id',
+                           object_id_name='gdr3_source_id',
+                           backref='stellar_parameters')
+
+    class Meta:
+        table_name = 'gaia_stellar_parameters'
+
+
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
