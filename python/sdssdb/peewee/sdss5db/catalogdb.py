@@ -96,6 +96,22 @@ class Catalog(CatalogdbModel):
         return (self.catalogid & run_id_mask) >> (64 - RUN_N_BITS)
 
 
+class Catalog_ver25_to_ver31_full_unique(CatalogdbModel):
+
+    id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'catalog_ver25_to_ver31_full_unique'
+
+
+class Catalog_ver25_to_ver31_full_all(CatalogdbModel):
+
+    id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'catalog_ver25_to_ver31_full_all'
+
+
 class AllWise(CatalogdbModel):
 
     cntr = BigIntegerField(primary_key=True)
