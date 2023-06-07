@@ -78,13 +78,6 @@ CREATE TABLE lvmopsdb.exposure (
     -- label format sdR-[HEMI]-[CAMERA]-[EXPNUM]
     label TEXT);
 
-CREATE TABLE lvmopsdb.master_calib (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    created_at TIMESTAMP,
-    -- naming convention for the master calibration
-    label TEXT,
-    quality BIGINT); -- 64-bit bitmask
-
 CREATE TABLE lvmopsdb.camera (
     pk SERIAL PRIMARY KEY NOT NULL,
     spectrograph_pk SMALLINT,
@@ -106,26 +99,11 @@ CREATE TABLE lvmopsdb.camera_frame (
     reduction_started TIMESTAMP,
     reduction_finished TIMESTAMP);
 
-CREATE TABLE lvmopsdb.master_to_camera_frame (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    master_calib_pk INTEGER,
-    camera_frame_pk BIGINT):
-
--- allows arbitrary number and types of flags for any number of camera_frames
-CREATE TABLE lvmopsdb.reduction_status_flag (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    camera_frame_pk BIGINT,
-    label TEXT,
-    active BOOL);
-
-CREATE TABLE lvmopsdb.exposure_to_status (
-    pk SERIAL PRIMARY KEY NOT NULL,
-    exposure_pk INTEGER,
-    completion_status_pk SMALLINT);
-
 CREATE TABLE lvmopsdb.completion_status (
     pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT);
+    tile_id INTEGER,
+    done BOOL,
+    by_pipeline BOOL);
 
 -- foreign keys
 
@@ -198,6 +176,12 @@ ALTER TABLE ONLY lvmopsdb.exposure_to_status
 ALTER TABLE ONLY lvmopsdb.exposure
     ADD CONSTRAINT exposure_flavor_fk
     FOREIGN KEY (exposure_flavor_pk) REFERENCES lvmopsdb.exposure_flavor(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.completion_status
+    ADD CONSTRAINT comp_tile_id_fk
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 

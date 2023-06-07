@@ -176,21 +176,12 @@ class CameraFrame(LVMOpsBase):
 
 class CompletionStatus(LVMOpsBase):
     label = TextField()
-    pk = AutoField()
+    done = BooleanField()
+    by_pipeline = BooleanField()
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
+                           model=Tile, backref='observations')
 
     class Meta:
         table_name = 'completion_status'
 
-
-class ExposureToStatus(LVMOpsBase):
-    pk = AutoField()
-    # presumably a tile will at some point be observed more than once
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               field='pk',
-                               model=Exposure)
-    standard = ForeignKeyField(column_name='completion_status_pk',
-                               field='pk',
-                               model=Standard)
-
-    class Meta:
-        table_name = 'exposure_to_status'
