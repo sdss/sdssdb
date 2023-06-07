@@ -325,6 +325,9 @@ class Plate(TargetdbBase):
     plate_id = IntegerField(null=False)
     racen = FloatField()
     deccen = FloatField()
+    cadence = TextField()
+    mode = TextField()
+    equiv_designs = IntegerField()
 
     class Meta:
         table_name = 'plate'
@@ -343,3 +346,18 @@ class PlateToCatalog(TargetdbBase):
 
     class Meta:
         table_name = 'plate_to_catalog'
+
+
+class Epoch(TargetdbBase):
+    pk = AutoField()
+    plate_id = ForeignKeyField(column_name='plate_id',
+                            field='plate_id',
+                            model=Plate,
+                            null=False)
+    apogee_sn2 = FloatField()
+    r_sn2 = FloatField()
+    b_sn2 = FloatField()
+    mjd = FloatField()
+
+    class Meta:
+        table_name = 'epoch'
