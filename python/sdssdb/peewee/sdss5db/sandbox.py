@@ -336,9 +336,9 @@ class Plate(TargetdbBase):
 class PlateToCatalog(TargetdbBase):
     pk = AutoField()
     plate_id = ForeignKeyField(column_name='plate_id',
-                            field='plate_id',
-                            model=Plate,
-                            null=False)
+                               field='plate_id',
+                               model=Plate,
+                               null=False)
     catalogid = ForeignKeyField(column_name='catalogid',
                                 field='catalogid',
                                 model=catalogdb.Catalog,
@@ -351,9 +351,9 @@ class PlateToCatalog(TargetdbBase):
 class Epoch(TargetdbBase):
     pk = AutoField()
     plate_id = ForeignKeyField(column_name='plate_id',
-                            field='plate_id',
-                            model=Plate,
-                            null=False)
+                               field='plate_id',
+                               model=Plate,
+                               null=False)
     apogee_sn2 = FloatField()
     r_sn2 = FloatField()
     b_sn2 = FloatField()

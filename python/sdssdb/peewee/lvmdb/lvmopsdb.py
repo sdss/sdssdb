@@ -6,13 +6,11 @@
 # @Filename: lvmopsdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-import os
 import datetime
 
 from peewee import (AutoField, FloatField, ForeignKeyField,
                     IntegerField, TextField, DoubleField,
                     BigIntegerField, DateTimeField, BooleanField)
-from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
 from . import database  # noqa
@@ -137,6 +135,7 @@ class ExposureToStandard(LVMOpsBase):
 
     class Meta:
         table_name = 'exposure_to_standard'
+
 
 class ExposureToSky(LVMOpsBase):
     pk = AutoField()
