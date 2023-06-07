@@ -319,3 +319,45 @@ class Magnitude(TargetdbBase):
 
 # AssignmentDeferred.set_model(Assignment)
 CartonToTargetDeferred.set_model(CartonToTarget)
+
+
+class Plate(TargetdbBase):
+    plate_id = IntegerField(null=False)
+    racen = FloatField()
+    deccen = FloatField()
+    cadence = TextField()
+    mode = TextField()
+    equiv_designs = IntegerField()
+
+    class Meta:
+        table_name = 'plate'
+
+
+class PlateToCatalog(TargetdbBase):
+    pk = AutoField()
+    plate_id = ForeignKeyField(column_name='plate_id',
+                               field='plate_id',
+                               model=Plate,
+                               null=False)
+    catalogid = ForeignKeyField(column_name='catalogid',
+                                field='catalogid',
+                                model=catalogdb.Catalog,
+                                null=False)
+
+    class Meta:
+        table_name = 'plate_to_catalog'
+
+
+class Epoch(TargetdbBase):
+    pk = AutoField()
+    plate_id = ForeignKeyField(column_name='plate_id',
+                               field='plate_id',
+                               model=Plate,
+                               null=False)
+    apogee_sn2 = FloatField()
+    r_sn2 = FloatField()
+    b_sn2 = FloatField()
+    mjd = FloatField()
+
+    class Meta:
+        table_name = 'epoch'

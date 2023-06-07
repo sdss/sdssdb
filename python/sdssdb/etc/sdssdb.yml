@@ -27,6 +27,13 @@ lco:
     port: 5432
     domain: lco.cl
 
+lvm:
+    user: sdss_user
+    admin: sdss
+    host: lvm-webapp
+    port: 5432
+    domain: lvm-[a-z0-9]+.lco.cl
+
 local:
     domain: null
 
