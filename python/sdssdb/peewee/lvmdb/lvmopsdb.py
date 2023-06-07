@@ -183,4 +183,3 @@ class CompletionStatus(LVMOpsBase):
 
     class Meta:
         table_name = 'completion_status'
-
