@@ -1,2 +1,6 @@
 ﻿dark_single_4x1_v2;4;{-1.,-1.,-1.,-1.};{0.35,0.35,0.35,0.35};{-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.};{1,1,1,1};{0.2,0.2,0.2,0.2};{"dark_plane","dark_plane","dark_plane","dark_plane"};dark_single_4x1;_v2 
 dark_single_2x1_v2;2;{-1.,-1.};{0.35,0.35};{-1.,-1.};{-1.,-1.};{1,1};{0.2,0.2};{"dark_plane","dark_plane"};dark_single_2x1;_v2 
+dark_single_4x1;4;{-1.,-1.,-1.,-1.};{0.35,0.35,0.35,0.35};{-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.};{1,1,1,1};{0.2,0.2,0.2,0.2};{"dark_plane","dark_plane","dark_plane","dark_plane"};dark_single_4x1; 
+dark_single_2x1;2;{-1.,-1.};{0.35,0.35};{-1.,-1.};{-1.,-1.};{1,1};{0.2,0.2};{"dark_plane","dark_plane"};dark_single_2x1; 
+dark_single_4x1_v1;4;{-1.,-1.,-1.,-1.};{0.35,0.35,0.35,0.35};{-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.};{1,1,1,1};{0.2,0.2,0.2,0.2};{"dark_plane","dark_plane","dark_plane","dark_plane"};dark_single_4x1;_v1 
+dark_single_2x1_v1;2;{-1.,-1.};{0.35,0.35};{-1.,-1.};{-1.,-1.};{1,1};{0.2,0.2};{"dark_plane","dark_plane"};dark_single_2x1;_v1 
