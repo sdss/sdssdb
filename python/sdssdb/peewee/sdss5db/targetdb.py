@@ -46,7 +46,8 @@ class ObsMode(TargetdbBase):
     min_moon_sep = FloatField(null=True)
     min_deltav_ks91 = FloatField(null=True)
     min_twilight_ang = FloatField(null=True)
-    max_airmass = FloatField(null=True)
+    max_airmass_apo = FloatField(null=True)
+    max_airmass_lco = FloatField(null=True)
 
     class Meta:
         table_name = 'obsmode'
