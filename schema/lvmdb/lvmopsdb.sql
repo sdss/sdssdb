@@ -8,8 +8,6 @@ Created Jan 2023 - J. Donor
 
 CREATE SCHEMA lvmopsdb;
 
-SET search_path TO lvmopsdb;
-
 CREATE TABLE lvmopsdb.tile (
     tile_id SERIAL PRIMARY KEY NOT NULL,
     target_index INTEGER,
@@ -101,7 +99,7 @@ CREATE TABLE lvmopsdb.camera_frame (
 
 CREATE TABLE lvmopsdb.completion_status (
     pk SERIAL PRIMARY KEY NOT NULL,
-    tile_id INTEGER,
+    obs_id INTEGER,
     done BOOL,
     by_pipeline BOOL);
 
@@ -161,18 +159,6 @@ ALTER TABLE ONLY lvmopsdb.exposure_to_sky
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_status
-    ADD CONSTRAINT e2stat_exposure_fk
-    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED;
-
-ALTER TABLE ONLY lvmopsdb.exposure_to_status
-    ADD CONSTRAINT e2stat_status_fk
-    FOREIGN KEY (completion_status_pk) REFERENCES lvmopsdb.completion_status(pk)
-    ON UPDATE CASCADE ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED;
-
 ALTER TABLE ONLY lvmopsdb.exposure
     ADD CONSTRAINT exposure_flavor_fk
     FOREIGN KEY (exposure_flavor_pk) REFERENCES lvmopsdb.exposure_flavor(pk)
@@ -180,17 +166,14 @@ ALTER TABLE ONLY lvmopsdb.exposure
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY lvmopsdb.completion_status
-    ADD CONSTRAINT comp_tile_id_fk
-    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ADD CONSTRAINT comp_obs_id_fk
+    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
 INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
     (5, 'Calib'), (6, 'Dark'), (7, 'Sky');
-
-INSERT INTO lvmopsdb.completion_status VALUES 
-    (1, 'not started'), (2, 'started'), (3, 'done');
 
 CREATE INDEX CONCURRENTLY obs_id_idx
     ON lvmopsdb.exposure
@@ -203,14 +186,6 @@ CREATE INDEX CONCURRENTLY start_time_idx
 CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON lvmopsdb.camera_frame
     USING BTREE(exposure_pk);
-
-CREATE INDEX CONCURRENTLY e2stat_exposure_pk_idx
-    ON lvmopsdb.exposure_to_status
-    USING BTREE(exposure_pk);
-
-CREATE INDEX CONCURRENTLY e2stat_stat_pk_idx
-    ON lvmopsdb.exposure_to_status
-    USING BTREE(completion_status_pk);
 
 CREATE INDEX CONCURRENTLY e2sky_exposure_pk_idx
     ON lvmopsdb.exposure_to_sky
