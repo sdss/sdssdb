@@ -55,6 +55,7 @@ class Observation(LVMOpsBase):
     hz = FloatField(null=True)
     alt = FloatField(null=True)
     lunation = FloatField(null=True)
+    dither_pos = IntegerField(null=True)
 
     class Meta:
         table_name = 'observation'
@@ -177,9 +178,10 @@ class CompletionStatus(LVMOpsBase):
     label = TextField()
     done = BooleanField()
     by_pipeline = BooleanField()
-    tile = ForeignKeyField(column_name='tile_id',
-                           field='tile_id',
-                           model=Tile, backref='observations')
+    observation = ForeignKeyField(column_name='obs_id',
+                                  field='obs_id',
+                                  model=Observation,
+                                  backref='observations')
 
     class Meta:
         table_name = 'completion_status'

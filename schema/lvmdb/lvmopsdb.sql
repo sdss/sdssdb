@@ -32,7 +32,8 @@ CREATE TABLE lvmopsdb.observation (
     lst REAL,
     hz REAL,
     alt REAL,
-    lunation REAL);
+    lunation REAL,
+    dither_pos INTEGER);
 
 CREATE TABLE lvmopsdb.weather (
     pk SERIAL PRIMARY KEY NOT NULL,
