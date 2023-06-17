@@ -25,15 +25,19 @@ CREATE TABLE lvmopsdb.tile (
     total_exptime REAL,
     visit_exptime REAL);
 
+CREATE TABLE lvmopsdb.dither (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    tile_id INTEGER,
+    position INTEGER);
+
 CREATE TABLE lvmopsdb.observation (
     obs_id SERIAL PRIMARY KEY NOT NULL,
-    tile_id INTEGER,
+    dither_pk INTEGER,
     jd REAL,
     lst REAL,
     hz REAL,
     alt REAL,
-    lunation REAL,
-    dither_pos INTEGER);
+    lunation REAL);
 
 CREATE TABLE lvmopsdb.weather (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -57,14 +61,14 @@ CREATE TABLE lvmopsdb.sky (
     g_sb REAL,
     irdc_flag BOOL);
 
-CREATE TABLE lvmopsdb.exposure_to_standard (
+CREATE TABLE lvmopsdb.observation_to_standard (
     pk SERIAL PRIMARY KEY NOT NULL,
-    exposure_pk INTEGER,
+    obs_id INTEGER,
     standard_pk INTEGER);
 
-CREATE TABLE lvmopsdb.exposure_to_sky (
+CREATE TABLE lvmopsdb.observation_to_sky (
     pk SERIAL PRIMARY KEY NOT NULL,
-    exposure_pk INTEGER,
+    obs_id INTEGER,
     sky_pk INTEGER);
 
 CREATE TABLE lvmopsdb.exposure (
@@ -100,15 +104,21 @@ CREATE TABLE lvmopsdb.camera_frame (
 
 CREATE TABLE lvmopsdb.completion_status (
     pk SERIAL PRIMARY KEY NOT NULL,
-    obs_id INTEGER,
+    dither_pk INTEGER UNIQUE,
     done BOOL,
     by_pipeline BOOL);
 
 -- foreign keys
 
-ALTER TABLE ONLY lvmopsdb.observation
-    ADD CONSTRAINT tile_id_fk
+ALTER TABLE ONLY lvmopsdb.dither
+    ADD CONSTRAINT dither_tile_id_fk
     FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.observation
+    ADD CONSTRAINT dither_pk_fk
+    FOREIGN KEY (dither_pk) REFERENCES lvmopsdb.dither(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -136,26 +146,26 @@ ALTER TABLE ONLY lvmopsdb.camera_frame
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_standard
-    ADD CONSTRAINT e2stan_exposure_fk
-    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+ALTER TABLE ONLY lvmopsdb.observation_to_standard
+    ADD CONSTRAINT o2stan_exposure_fk
+    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_sky
-    ADD CONSTRAINT e2sky_exposure_fk
-    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+ALTER TABLE ONLY lvmopsdb.observation_to_sky
+    ADD CONSTRAINT o2sky_exposure_fk
+    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_standard
-    ADD CONSTRAINT e2stan_standard_fk
+ALTER TABLE ONLY lvmopsdb.observation_to_standard
+    ADD CONSTRAINT o2stan_standard_fk
     FOREIGN KEY (standard_pk) REFERENCES lvmopsdb.standard(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_sky
-    ADD CONSTRAINT e2sky_sky_fk
+ALTER TABLE ONLY lvmopsdb.observation_to_sky
+    ADD CONSTRAINT o2sky_sky_fk
     FOREIGN KEY (sky_pk) REFERENCES lvmopsdb.sky(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
@@ -167,8 +177,8 @@ ALTER TABLE ONLY lvmopsdb.exposure
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY lvmopsdb.completion_status
-    ADD CONSTRAINT comp_obs_id_fk
-    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
+    ADD CONSTRAINT comp_dither_fk
+    FOREIGN KEY (dither_pk) REFERENCES lvmopsdb.dither(pk)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -188,14 +198,6 @@ CREATE INDEX CONCURRENTLY exposure_pk_idx
     ON lvmopsdb.camera_frame
     USING BTREE(exposure_pk);
 
-CREATE INDEX CONCURRENTLY e2sky_exposure_pk_idx
-    ON lvmopsdb.exposure_to_sky
-    USING BTREE(exposure_pk);
-
-CREATE INDEX CONCURRENTLY e2sky_sky_pk_idx
-    ON lvmopsdb.exposure_to_sky
-    USING BTREE(sky_pk);
-
 CREATE INDEX CONCURRENTLY tile_qc3_index
     ON lvmopsdb.tile 
     (q3c_ang2ipix(ra, dec));
@@ -213,3 +215,16 @@ CREATE INDEX CONCURRENTLY standard_qc3_index
     (q3c_ang2ipix(ra, dec));
 
 CLUSTER standard_qc3_index ON lvmopsdb.standard;
+
+grant usage on schema lvmopsdb to sdss_user;
+
+GRANT ALL on lvmopsdb.dither,
+lvmopsdb.observation,
+lvmopsdb.weather,
+lvmopsdb.observation_to_standard,
+lvmopsdb.observation_to_sky,
+lvmopsdb.exposure,
+lvmopsdb.completion_status to sdss_user;
+
+grant select on all tables in schema lvmopsdb to sdss_user;
+grant usage on all sequences in schema lvmopsdb to sdss_user;

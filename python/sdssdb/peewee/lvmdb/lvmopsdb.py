@@ -44,18 +44,28 @@ class Tile(LVMOpsBase):
         table_name = 'tile'
 
 
+class Dither(LVMOpsBase):
+    pk = AutoField()
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
+                           model=Tile, backref='dithers')
+    position = IntegerField(null=True)
+
+    class Meta:
+        table_name = 'dither'
+
+
 class Observation(LVMOpsBase):
     obs_id = AutoField()
     # presumably a tile will at some point be observed more than once
-    tile = ForeignKeyField(column_name='tile_id',
-                           field='tile_id',
-                           model=Tile, backref='observations')
+    dither = ForeignKeyField(column_name='dither_pk',
+                             field='pk',
+                             model=Dither, backref='observations')
     jd = FloatField(null=False)
     lst = FloatField(null=True)
     hz = FloatField(null=True)
     alt = FloatField(null=True)
     lunation = FloatField(null=True)
-    dither_pos = IntegerField(null=True)
 
     class Meta:
         table_name = 'observation'
@@ -124,32 +134,32 @@ class Exposure(LVMOpsBase):
         table_name = 'exposure'
 
 
-class ExposureToStandard(LVMOpsBase):
+class ObservationToStandard(LVMOpsBase):
     pk = AutoField()
     # presumably a tile will at some point be observed more than once
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               field='pk',
-                               model=Exposure)
+    observation = ForeignKeyField(column_name='obs_id',
+                                  field='obs_id',
+                                  model=Observation)
     standard = ForeignKeyField(column_name='standard_pk',
                                field='pk',
                                model=Standard)
 
     class Meta:
-        table_name = 'exposure_to_standard'
+        table_name = 'observation_to_standard'
 
 
-class ExposureToSky(LVMOpsBase):
+class ObservationToSky(LVMOpsBase):
     pk = AutoField()
     # presumably a tile will at some point be observed more than once
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               field='pk',
-                               model=Exposure)
+    observation = ForeignKeyField(column_name='obs_id',
+                                  field='obs_id',
+                                  model=Observation)
     sky = ForeignKeyField(column_name='sky_pk',
                           field='pk',
                           model=Sky)
 
     class Meta:
-        table_name = 'exposure_to_sky'
+        table_name = 'observation_to_sky'
 
 
 class Camera(LVMOpsBase):
@@ -175,13 +185,12 @@ class CameraFrame(LVMOpsBase):
 
 
 class CompletionStatus(LVMOpsBase):
-    label = TextField()
+    pk = TextField()
     done = BooleanField()
     by_pipeline = BooleanField()
-    observation = ForeignKeyField(column_name='obs_id',
-                                  field='obs_id',
-                                  model=Observation,
-                                  backref='observations')
+    dither = ForeignKeyField(column_name='dither_pk',
+                             field='pk',
+                             model=Dither)
 
     class Meta:
         table_name = 'completion_status'
