@@ -301,4 +301,26 @@ class Queue(OpsdbBase):
         table_name = "queue"
 
 
+class PriorityVersion(OpsdbBase):
+    pk = AutoField()
+    label = TextField()
+
+    class Meta:
+        table_name = 'priority_version'
+
+
+class BasePriority(OpsdbBase):
+    pk = AutoField()
+    priority = IntegerField()
+    field = ForeignKeyField(targetdb.Field,
+                            column_name='field_pk',
+                            field='pk')
+    version = ForeignKeyField(PriorityVersion,
+                            column_name='version_pk',
+                            field='pk')
+
+    class Meta:
+        table_name = 'base_priority'
+
+
 FieldToPriorityDeferred.set_model(FieldToPriority)

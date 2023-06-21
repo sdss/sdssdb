@@ -111,7 +111,29 @@ CREATE TABLE opsdb.quickred(
     zeropt REAL,
     dither_named TEXT);
 
+CREATE TABLE opsdb.base_priority(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    field_pk INTEGER,
+    priority INTEGER,
+    version_pk INTEGER);
+
+CREATE TABLE opsdb.priority_version(
+    pk SERIAL PRECISION KEY NOT NULL,
+    label TEXT);
+
 -- Foreign keys
+
+ALTER TABLE ONLY opsdb.base_priority
+    ADD CONSTRAINT field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY opsdb.base_priority
+    ADD CONSTRAINT pri_version_fk
+    FOREIGN KEY (version_pk) REFERENCES opsdb.priority_version(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.field_to_priority
     ADD CONSTRAINT field_fk
