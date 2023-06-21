@@ -104,6 +104,7 @@ class Sky(LVMOpsBase):
     i_ha = FloatField(null=True)
     g_sb = FloatField(null=True)
     irdc_flag = BooleanField(null=True)
+    darkest_wham_flag = BooleanField(null=True)
 
     class Meta:
         table_name = 'sky'
