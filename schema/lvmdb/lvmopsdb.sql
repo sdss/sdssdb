@@ -50,8 +50,13 @@ CREATE TABLE lvmopsdb.standard (
     pk SERIAL PRIMARY KEY NOT NULL,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
-    b_mag REAL,
-    v_mag REAL);
+    phot_g_mean_m REAL,
+    phot_bp_mean_ REAL,
+    phot_rp_mean_ REAL,
+    source_id BIGINT,
+    bg_rp_sb REAL,
+    bg_g_sb REAL,
+    bg_bp_sb REAL);
 
 CREATE TABLE lvmopsdb.sky (
     pk SERIAL PRIMARY KEY NOT NULL,
