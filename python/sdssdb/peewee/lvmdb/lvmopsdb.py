@@ -89,8 +89,13 @@ class Standard(LVMOpsBase):
 
     ra = DoubleField(null=True)
     dec = DoubleField(null=True)
-    b_mag = FloatField(null=True)
-    v_mag = FloatField(null=True)
+    phot_g_mean_mag = FloatField(null=True)
+    phot_bp_mean_mag = FloatField(null=True)
+    phot_rp_mean_mag = FloatField(null=True)
+    source_id = BigIntegerField(null=True)
+    bg_rp_sb = FloatField(null=True)
+    bg_g_sb = FloatField(null=True)
+    bg_bp_sb = FloatField(null=True)
 
     class Meta:
         table_name = 'standard'

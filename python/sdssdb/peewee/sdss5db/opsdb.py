@@ -316,8 +316,8 @@ class BasePriority(OpsdbBase):
                             column_name='field_pk',
                             field='pk')
     version = ForeignKeyField(PriorityVersion,
-                            column_name='version_pk',
-                            field='pk')
+                              column_name='version_pk',
+                              field='pk')
 
     class Meta:
         table_name = 'base_priority'
