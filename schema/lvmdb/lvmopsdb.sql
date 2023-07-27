@@ -113,6 +113,31 @@ CREATE TABLE lvmopsdb.completion_status (
     done BOOL,
     by_pipeline BOOL);
 
+CREATE TABLE lvmopsdb.telescope (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    telescope TEXT,
+    shortname TEXT);
+
+CREATE TABLE lvmopsdb.guider_frame (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    frameno SMALLINT,
+    mjd SMALLINT,
+    n_sources SMALLINT,
+    fwhm REAL,
+    ra DOUBLE PRECISION,
+    dec DOUBLE PRECISION,
+    ra_offset REAL,
+    dec_offset REAL,
+    separation REAL,
+    mode TEXT,
+    ax0_applied REAL,
+    ax1_applied REAL);
+
+CREATE TABLE lvmopsdb.exposure_to_guider_frame (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    guider_frame_pk INTEGER,
+    exposure_pk INTEGER);
+
 -- foreign keys
 
 ALTER TABLE ONLY lvmopsdb.dither
@@ -187,9 +212,25 @@ ALTER TABLE ONLY lvmopsdb.completion_status
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY lvmopsdb.exposure_to_guider_frame
+    ADD CONSTRAINT exposure_to_guider_frame_exposure_pk_fk
+    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.exposure_to_guider_frame
+    ADD CONSTRAINT exposure_to_guider_frame_guider_frame_pk_fk
+    FOREIGN KEY (guider_frame_pk) REFERENCES lvmopsdb.guider_frame(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
 INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
     (5, 'Calib'), (6, 'Dark'), (7, 'Sky');
+
+INSERT INTO lvmopsdb.telescope VALUES
+    (1, 'Science', 'sci'), (2, 'SkyW', 'skyw'),
+    (3, 'SkyE', 'skye'), (4, 'Spec', 'spec');
 
 CREATE INDEX CONCURRENTLY obs_id_idx
     ON lvmopsdb.exposure
@@ -204,19 +245,19 @@ CREATE INDEX CONCURRENTLY exposure_pk_idx
     USING BTREE(exposure_pk);
 
 CREATE INDEX CONCURRENTLY tile_qc3_index
-    ON lvmopsdb.tile 
+    ON lvmopsdb.tile
     (q3c_ang2ipix(ra, dec));
 
 CLUSTER tile_qc3_index ON lvmopsdb.tile;
 
 CREATE INDEX CONCURRENTLY sky_qc3_index
-    ON lvmopsdb.sky 
+    ON lvmopsdb.sky
     (q3c_ang2ipix(ra, dec));
 
 CLUSTER sky_qc3_index ON lvmopsdb.sky;
 
 CREATE INDEX CONCURRENTLY standard_qc3_index
-    ON lvmopsdb.standard 
+    ON lvmopsdb.standard
     (q3c_ang2ipix(ra, dec));
 
 CLUSTER standard_qc3_index ON lvmopsdb.standard;
