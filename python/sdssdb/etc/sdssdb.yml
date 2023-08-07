@@ -62,6 +62,11 @@ operations:
     port: 5432
     domain: operations.sdss.*
 
+pipelines:
+    host: pipelines.sdss.org
+    port: 5432
+    domain: pipelines.sdss.*
+    
 manga:
     user: sdss
     host: manga.wasatch.peaks
