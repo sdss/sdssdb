@@ -141,7 +141,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             if self.connected and self.profile == previous_profile:
                 pass
             elif self.dbname is not None:
-                self.connect()
+                self.connect(**self._config)
 
         return self.connected
 
@@ -236,8 +236,6 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                                'DatabaseConnection was instantiated. '
                                'To set it in runtime change the dbname '
                                'attribute.')
-
-        params = {key: params[key] for key in params if params[key]}
 
         return self._conn(dbname, **params)
 
