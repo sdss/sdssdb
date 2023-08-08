@@ -5,7 +5,12 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.6.4 <2022-08-08>`
 * Add ``catalogdb.rave_dr6_xgaiae3`` (Gaia DR3 cross-match for RAVE DR6).
+* Add LVM schema and model classes
+* Updates and fixes for cadences and obsmodes
+* Add 'pipelines' profile
+* Implement fine-grain field priorities
 
 * :release:`0.6.2 <2022-02-12>`
 * Rename ``SagittaEDR3`` to ``Sagitta_EDR3``.
