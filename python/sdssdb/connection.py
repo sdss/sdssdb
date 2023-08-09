@@ -380,7 +380,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         if 'password' not in params:
             pgpass_params = {key: value
-                             for key,value in params.copy().items()
+                             for key, value in params.copy().items()
                              if value is not None}
 
             try:
