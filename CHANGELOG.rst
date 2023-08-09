@@ -5,19 +5,22 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
-* :release:`0.6.4 <2022-08-08>`
+* :release:`0.6.5 <2023-08-09>`
+* Hotfix for a bug introduced in 0.6.4 that would prevent a connection to fail without errors when a profile was not present on import.
+
+* :release:`0.6.4 <2023-08-08>`
 * Add ``catalogdb.rave_dr6_xgaiae3`` (Gaia DR3 cross-match for RAVE DR6).
 * Add LVM schema and model classes
 * Updates and fixes for cadences and obsmodes
 * Add 'pipelines' profile
 * Implement fine-grain field priorities
 
-* :release:`0.6.2 <2022-02-12>`
+* :release:`0.6.2 <2023-02-12>`
 * Rename ``SagittaEDR3`` to ``Sagitta_EDR3``.
 * Update to allow for v1.0.6 of eROSITA superset catalogues.
 * Speed up loading of reflected tables by caching results except if the table is not found in the schema.
 
-* :release:`0.6.1 <2022-01-19>`
+* :release:`0.6.1 <2023-01-19>`
 * Don't count observed designs in ``queue.rm``.
 * Add ``assignmentStatus`` table to targetdb.
 * Update auto schemas.
