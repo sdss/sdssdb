@@ -379,8 +379,12 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         """Connects to the DB and tests the connection."""
 
         if 'password' not in params:
+            pgpass_params = {key: value
+                             for key,value in params.copy().items()
+                             if value is not None}
+
             try:
-                params['password'] = pgpasslib.getpass(dbname=dbname, **params)
+                params['password'] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
             except pgpasslib.FileNotFound:
                 params['password'] = None
 
