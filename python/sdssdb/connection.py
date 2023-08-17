@@ -8,6 +8,7 @@
 
 import abc
 import importlib
+import os
 import re
 import socket
 
@@ -24,11 +25,23 @@ from peewee import OperationalError, PostgresqlDatabase
 from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import Introspector, UnknownField
 
+import sdssdb
 from sdssdb import config, log
 from sdssdb.utils.internals import get_database_columns
 
 
 __all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
+
+
+def _should_autoconnect():
+    """Determines whether we should autoconnect."""
+
+    if 'SDSSDB_AUTOCONNECT' in os.environ:
+        envvar_autoconnect = os.environ['SDSSDB_AUTOCONNECT'].lower()
+        if envvar_autoconnect == '0' or envvar_autoconnect == 'false':
+            return False
+    else:
+        return sdssdb.autoconnect
 
 
 class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
@@ -52,9 +65,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         user, database server hostname, and port for a given location. If
         not provided, the profile is automatically determined based on the
         current domain, or defaults to ``local``.
-    autoconnect : bool
+    autoconnect : bool or None
         Whether to autoconnect to the database using the profile parameters.
-        Requites `.dbname` to be set.
+        Requites `.dbname` to be set. If `None`, whether to autoconnect is
+        defined, in order, by the existence of an environment variable
+        ``$SDSSDB_AUTOCONNECT`` or by ``sdssdb.autoconnect``. If they are
+        set to ``0`` or ``false`` the database won't autoconnect. Note that
+        this must be set before importing any model classes.
     dbversion : str
         A database version.  If specified, appends to dbname as
         "dbname_dbversion" and becomes the dbname used for connection strings.
@@ -70,7 +87,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     #: # Whether to call Model.reflect() in Peewee after a connection.
     auto_reflect = True
 
-    def __init__(self, dbname=None, profile=None, autoconnect=True, dbversion=None):
+    def __init__(self, dbname=None, profile=None, autoconnect=None, dbversion=None):
 
         self.profile = None
         self._config = {}
@@ -81,6 +98,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             self.dbname = f'{self.dbname}_{self.dbversion}'
 
         self.set_profile(profile=profile, connect=False)
+
+        if autoconnect is None:
+            autoconnect = _should_autoconnect()
 
         if autoconnect and self.dbname:
             self.connect(dbname=self.dbname, silent_on_fail=True)

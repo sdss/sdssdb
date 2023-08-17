@@ -5,6 +5,9 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.6.6 <2023-08-17>`
+* Added the option to disable database autoconnection by setting ``sdssdb.autoconnect = False`` or an environment variable ``SDSSDB_AUTOCONNECT=false``.
+
 * :release:`0.6.5 <2023-08-09>`
 * Hotfix for a bug introduced in 0.6.4 that would prevent a connection to fail without errors when a profile was not present on import.
 

@@ -34,4 +34,4 @@ class SDSS5dbDatabaseConnection(PeeweeDatabaseConnection):
                 importlib.reload(sys.modules[module])
 
 
-database = SDSS5dbDatabaseConnection(autoconnect=True)  # noqa
+database = SDSS5dbDatabaseConnection()

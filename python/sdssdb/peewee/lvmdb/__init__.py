@@ -32,4 +32,4 @@ class LVMdbDatabaseConnection(PeeweeDatabaseConnection):
                 importlib.reload(sys.modules[module])
 
 
-database = LVMdbDatabaseConnection(autoconnect=True)  # noqa
+database = LVMdbDatabaseConnection()  # noqa

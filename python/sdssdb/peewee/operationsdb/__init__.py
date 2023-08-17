@@ -1,6 +1,6 @@
 # flake8: noqa
 
-from sdssdb.connection import PeeweeDatabaseConnection
+from sdssdb.connection import PeeweeDatabaseConnection, _should_autoconnect
 from sdssdb.peewee import BaseModel
 
 
@@ -14,7 +14,7 @@ elif database.profile == 'lco':
 else:
     database_name = None
 
-if database_name:
+if database_name and _should_autoconnect():
     database.connect(dbname=database_name, silent_on_fail=True)
 
 
@@ -24,6 +24,4 @@ class OperationsDBModel(BaseModel):
         database = database
 
 
-from . import platedb
-from . import mangadb
-from . import apogeeqldb
+from . import apogeeqldb, mangadb, platedb

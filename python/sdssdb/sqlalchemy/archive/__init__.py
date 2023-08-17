@@ -24,4 +24,4 @@ class ArchiveDatabaseConnection(SQLADatabaseConnection):
     base = ArchiveBase
 
 
-database = ArchiveDatabaseConnection(autoconnect=True, profile='local')
+database = ArchiveDatabaseConnection(profile='local')

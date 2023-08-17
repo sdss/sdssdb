@@ -23,4 +23,4 @@ class MANGAdbDatabaseConnection(SQLADatabaseConnection):
     base = MangaBase
 
 
-database = MANGAdbDatabaseConnection(autoconnect=True)
+database = MANGAdbDatabaseConnection()

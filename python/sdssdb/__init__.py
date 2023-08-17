@@ -19,5 +19,7 @@ log = get_logger(NAME)
 # ~/.config/sdss/sdssdb.yml and ~/.sdssdb/sdssdb.yml).
 config = get_config(NAME)
 
+autoconnect = True
+
 from .connection import PeeweeDatabaseConnection  # noqa
 from .connection import SQLADatabaseConnection  # noqa
