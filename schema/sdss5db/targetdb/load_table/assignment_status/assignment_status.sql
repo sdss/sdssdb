@@ -68,3 +68,23 @@ update targetdb.assignment_status assn_stat
 set status = 1, mjd = new_stat.mjd
 from new_stat
 where new_stat.pk = assn_stat.pk;
+
+-- "orphaned" designs from both observatories
+with new_stat as (
+select stat.pk
+from targetdb.assignment_status as stat
+join targetdb.assignment as assn on assn.pk = stat.assignment_pk
+join targetdb.carton_to_target as c2t on c2t.pk = assn.carton_to_target_pk
+join targetdb.cadence as cad on cad.pk = c2t.cadence_pk
+where stat.status = 1 and cad.label like '%x1%'
+and assn.design_id in 
+(57900, 43705, 117191, 117193, 120943, 121590, 129252, 129569, 
+129799, 129649, 119033, 130833, 130200, 117550, 185828, 186333, 
+186403, 203741, 209171, 180378, 185915, 185764, 185896, 186070, 
+202311)
+)
+
+update targetdb.assignment_status assn_stat
+set status = 0, mjd = null
+from new_stat
+where new_stat.pk = assn_stat.pk;
