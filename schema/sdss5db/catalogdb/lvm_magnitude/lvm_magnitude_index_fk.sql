@@ -6,4 +6,4 @@ create index on catalogdb.lvm_magnitude (lmag_vega);
 
 alter table catalogdb.lvm_magnitude add foreign key (source_id) references catalogdb.gaia_dr3_source(source_id);
 
-analyze table catalogdb.lvm_magnitude;
+analyze catalogdb.lvm_magnitude;
