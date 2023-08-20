@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Added files to create ``catalogdb.lvm_magnitude``.
+
 * :release:`0.6.6 <2023-08-17>`
 * Added the option to disable database autoconnection by setting ``sdssdb.autoconnect = False`` or an environment variable ``SDSSDB_AUTOCONNECT=false``.
 
