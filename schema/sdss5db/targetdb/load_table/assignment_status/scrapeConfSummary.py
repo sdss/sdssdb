@@ -41,7 +41,8 @@ def checkObs(obs="APO", base="", start=0):
         thisdir = os.path.join(obs_dir, sdir)
         sum_files = os.listdir(thisdir)
         for s in sum_files:
-            if start > int(s):
+            cfg = s.split("-")[-1].split(".")[0]
+            if start > int(cfg):
                 continue
             sum_name = os.path.join(thisdir, s)
             summary = yanny.yanny(sum_name)
