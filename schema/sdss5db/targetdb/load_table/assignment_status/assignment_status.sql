@@ -14,7 +14,9 @@ asn.pk, d2s.completion_status_pk, d2s.mjd
 from targetdb.assignment as asn
 join targetdb.design as des on asn.design_id = des.design_id
 join opsdb_apo.design_to_status as d2s on d2s.design_id = des.design_id
-where true ON CONFLICT DO NOTHING;
+join targetdb.hole as hole on asn.hole_pk = hole.pk
+join targetdb.observatory as obs on hole.observatory_pk = obs.pk
+where obs.label = 'APO' ON CONFLICT DO NOTHING;
 
 insert into targetdb.assignment_status (pk, assignment_pk, status, mjd)
 select nextval('targetdb.assignment_status_pk_seq'), 
@@ -22,7 +24,9 @@ asn.pk, d2s.completion_status_pk, d2s.mjd
 from targetdb.assignment as asn
 join targetdb.design as des on asn.design_id = des.design_id
 join opsdb_lco.design_to_status as d2s on d2s.design_id = des.design_id
-where true ON CONFLICT DO NOTHING;
+join targetdb.hole as hole on asn.hole_pk = hole.pk
+join targetdb.observatory as obs on hole.observatory_pk = obs.pk
+where obs.label = 'LCO' ON CONFLICT DO NOTHING;
 
 update targetdb.assignment_status set status = 0, mjd = null
 where status = 1 or status = 2;
@@ -34,7 +38,10 @@ with boss_stat as (
 select stat.pk
 from targetdb.assignment_status as stat
 join targetdb.assignment as assn on assn.pk = stat.assignment_pk
+join targetdb.hole as hole on assn.hole_pk = hole.pk
+join targetdb.observatory as obs on hole.observatory_pk = obs.pk
 where stat.mjd < 60000 and assn.instrument_pk = 0
+and obs.label = 'LCO'
 )
 
 update targetdb.assignment_status assn_stat
@@ -42,11 +49,15 @@ set status = 0, mjd = null
 from boss_stat
 where boss_stat.pk = assn_stat.pk;
 
+-- actually this is unnecessary? Nothing is done before 59853
 with ap_stat as (
 select stat.pk
 from targetdb.assignment_status as stat
 join targetdb.assignment as assn on assn.pk = stat.assignment_pk
+join targetdb.hole as hole on assn.hole_pk = hole.pk
+join targetdb.observatory as obs on hole.observatory_pk = obs.pk
 where stat.mjd < 59853 and assn.instrument_pk = 1
+and obs.label = 'LCO'
 )
 
 update targetdb.assignment_status assn_stat
