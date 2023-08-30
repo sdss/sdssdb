@@ -127,7 +127,8 @@ def updateAssnStat(obs="APO", base="", start=0):
 
     # print(f"draft, if live would mark {len(setNotDone)} not done")
 
-    AssnStat.update(status=0).where(AssnStat.pk << setNotDone).execute()
+    AssnStat.update(status=0)\
+            .where(AssnStat.assignment_pk << setNotDone).execute()
 
 
 if __name__ == "__main__":
