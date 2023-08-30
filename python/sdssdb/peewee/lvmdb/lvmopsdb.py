@@ -23,6 +23,15 @@ class LVMOpsBase(BaseModel):
         database = database
 
 
+class Version(LVMOpsBase):
+    pk = IntegerField(primary_key=True)
+    label = TextField(null=False)
+    sched_tag = TextField(null=False)
+
+    class Meta:
+        table_name = 'version'
+
+
 class Tile(LVMOpsBase):
     tile_id = IntegerField(primary_key=True)
     target_index = IntegerField(null=True)
@@ -39,6 +48,9 @@ class Tile(LVMOpsBase):
     moon_distance_limit = FloatField(null=True, default=0)
     total_exptime = FloatField(null=True, default=0)
     visit_exptime = FloatField(null=True, default=0)
+    version_pk = ForeignKeyField(column_name='version_pk',
+                                 field='pk',
+                                 model=Version)
 
     class Meta:
         table_name = 'tile'
