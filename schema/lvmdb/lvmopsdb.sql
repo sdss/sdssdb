@@ -23,7 +23,13 @@ CREATE TABLE lvmopsdb.tile (
     hz_limit REAL,
     moon_distance_limit REAL,
     total_exptime REAL,
-    visit_exptime REAL);
+    visit_exptime REAL,
+    version_pk INTEGER);
+
+CREATE TABLE lvmopsdb.version (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    label TEXT,
+    sched_tag TEXT);
 
 CREATE TABLE lvmopsdb.dither (
     pk SERIAL PRIMARY KEY NOT NULL,
