@@ -23,7 +23,7 @@ list_of_csv_files.sort()
 fout = open(csvout_dir + "load.csv.out", "a")
 
 if DEBUG is True:
-    list_of_csv_files = [csv_dir + "GUVCat_AIS_glat00_05N_fov055_wExtObjFlag.csv"]
+    list_of_csv_files = [csv_dir + "GUVCat_AIS_glat00_05N_fov055_wExtObjFlag.csv"]  # noqa E501
 
 for i in range(len(list_of_csv_files)):
     full_csv_file = list_of_csv_files[i]
@@ -75,7 +75,7 @@ for i in range(len(list_of_csv_files)):
     print(csvout_file, ":loaded:", num_rows_loaded, file=fout, flush=True)
     fcsvout.close()
 
-    if(num_lines != num_rows_loaded):
+    if (num_lines != num_rows_loaded):
         print("load error:num_lines!=num_rows_loaded", csv_file)
         print("load error:num_lines!=num_rows_loaded",
               csv_file, file=fout, flush=True)
