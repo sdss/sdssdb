@@ -3,7 +3,7 @@ CREATE INDEX ON catalogdb.twomass_psc (q3c_ang2ipix(ra, decl));
 
 CREATE UNIQUE INDEX ON catalogdb.twomass_psc(designation);
 
--- CREATE INDEX ON catalogdb.twomass_psc (j_m);
+CREATE INDEX ON catalogdb.twomass_psc (j_m);
 CREATE INDEX ON catalogdb.twomass_psc (h_m);
 CREATE INDEX ON catalogdb.twomass_psc (k_m);
 CREATE INDEX ON catalogdb.twomass_psc (ph_qual);
