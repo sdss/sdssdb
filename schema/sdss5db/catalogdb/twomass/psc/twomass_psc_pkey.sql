@@ -1,0 +1,6 @@
+-- This alter table statement is for reference only.
+-- Do not run this alter table statement. 
+-- The primary key is created in the
+-- create table statement for twomass_psc.
+--
+-- alter table catalogdb.twomass_psc add primary key (pts_key);
