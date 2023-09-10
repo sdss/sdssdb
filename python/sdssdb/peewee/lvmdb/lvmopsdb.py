@@ -8,9 +8,17 @@
 
 import datetime
 
-from peewee import (AutoField, FloatField, ForeignKeyField,
-                    IntegerField, TextField, DoubleField,
-                    BigIntegerField, DateTimeField, BooleanField)
+from peewee import (
+    AutoField,
+    BigIntegerField,
+    BooleanField,
+    DateTimeField,
+    DoubleField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    TextField
+)
 
 from .. import BaseModel
 from . import database  # noqa
@@ -97,7 +105,7 @@ class Weather(LVMOpsBase):
 
 
 class Standard(LVMOpsBase):
-    pk = AutoField()\
+    pk = AutoField()
 
     ra = DoubleField(null=True)
     dec = DoubleField(null=True)
@@ -114,7 +122,7 @@ class Standard(LVMOpsBase):
 
 
 class Sky(LVMOpsBase):
-    pk = AutoField()\
+    pk = AutoField()
 
     ra = DoubleField(null=True)
     dec = DoubleField(null=True)
@@ -213,3 +221,103 @@ class CompletionStatus(LVMOpsBase):
 
     class Meta:
         table_name = 'completion_status'
+
+
+class GuiderFrame(LVMOpsBase):
+    pk = AutoField(primary_key=True)
+    mjd = IntegerField()
+    frameno = IntegerField()
+    telescope = TextField()
+    solved = BooleanField()
+    n_cameras_solved = IntegerField()
+    guide_mode = TextField()
+    fwhm = FloatField()
+    zero_point = FloatField()
+    x_ff_pixel = FloatField()
+    z_ff_pixel = FloatField()
+    ra = FloatField()
+    dec = FloatField()
+    pa = FloatField()
+    ra_field = FloatField()
+    dec_field = FloatField()
+    pa_field = FloatField()
+    ra_off = FloatField()
+    dec_off = FloatField()
+    pa_off = FloatField()
+    axis0_off = FloatField()
+    axis1_off = FloatField()
+    applied = BooleanField()
+    ax0_applied = FloatField()
+    ax1_applied = FloatField()
+    rot_applied = FloatField()
+    exposure_no = ForeignKeyField(column_name='exposure_no',
+                                  field='exposure_no',
+                                  model=Exposure)
+
+    class Meta:
+        table_name = 'guider_frame'
+
+
+class AGCamFrame(LVMOpsBase):
+    pk = AutoField(primary_key=True)
+    mjd = IntegerField()
+    frameno = IntegerField()
+    telescope = TextField()
+    camera = TextField()
+    date_obs = TextField()
+    exptime = FloatField()
+    kmirror_drot = FloatField()
+    focusdt = FloatField()
+    fwhm = FloatField()
+    pa = FloatField()
+    zero_point = FloatField()
+    stacked = BooleanField()
+    solved = BooleanField()
+    wcs_mode = TextField()
+    exposure_no = ForeignKeyField(column_name='exposure_no',
+                                  field='exposure_no',
+                                  model=Exposure)
+
+    class Meta:
+        table_name = 'agcam_frame'
+
+
+class GuiderCoAdd(LVMOpsBase):
+    pk = AutoField(primary_key=True)
+    mjd = IntegerField()
+    telescope = TextField()
+    frame0 = IntegerField()
+    framen = IntegerField()
+    nframes = IntegerField()
+    obstime0 = TextField()
+    obstimen = TextField()
+    fwhm0 = FloatField()
+    fwhmn = FloatField()
+    fwhmmed = FloatField()
+    pacoeffa = FloatField()
+    pacoeffb = FloatField()
+    pamin = FloatField()
+    pamax = FloatField()
+    padrift = FloatField()
+    zeropt = FloatField()
+    solved = BooleanField()
+    ncamsol = IntegerField()
+    xffpix = FloatField()
+    zffpix = FloatField()
+    rafield = FloatField()
+    decfield = FloatField()
+    pafield = FloatField()
+    rameas = FloatField()
+    decmeas = FloatField()
+    pameas = FloatField()
+    warnpa = BooleanField()
+    warnpadr = BooleanField()
+    warntran = BooleanField()
+    warnmatc = BooleanField()
+    warnfwhm = BooleanField()
+    exposure_no = ForeignKeyField(column_name='exposure_no',
+                                  field='exposure_no',
+                                  model=Exposure)
+
+    class Meta:
+        table_name = 'guider_coadd'

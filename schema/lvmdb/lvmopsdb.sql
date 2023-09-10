@@ -126,23 +126,95 @@ CREATE TABLE lvmopsdb.telescope (
 
 CREATE TABLE lvmopsdb.guider_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
+    mjd INTEGER,
     frameno SMALLINT,
-    mjd SMALLINT,
-    n_sources SMALLINT,
+    telescope TEXT,
+    solved BOOLEAN,
+    n_cameras_solved SMALLINT,
+    guide_mode TEXT,
     fwhm REAL,
+    zero_point REAL,
+    x_ff_pixel REAL,
+    z_ff_pixel REAL,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
-    ra_offset REAL,
-    dec_offset REAL,
-    separation REAL,
-    mode TEXT,
+    pa REAL,
+    ra_field DOUBLE PRECISION,
+    dec_field DOUBLE PRECISION,
+    pa_field REAL,
+    ra_off REAL,
+    dec_off REAL,
+    pa_off REAL,
+    axis0_off REAL,
+    axis1_off REAL,
+    applied BOOLEAN,
     ax0_applied REAL,
-    ax1_applied REAL);
+    ax1_applied REAL,
+    rot_applied REAL,
+    exposure_no INTEGER
+);
 
-CREATE TABLE lvmopsdb.exposure_to_guider_frame (
+CREATE TABLE lvmopsdb.agcam_frame (
     pk SERIAL PRIMARY KEY NOT NULL,
-    guider_frame_pk INTEGER,
-    exposure_pk INTEGER);
+    mjd INTEGER,
+    frameno SMALLINT,
+    telescope TEXT,
+    camera TEXT,
+    date_obs TEXT,
+    exptime REAL,
+    kmirror_drot REAL,
+    focusdt REAL,
+    fwhm REAL,
+    pa REAL,
+    zero_point REAL,
+    stacked BOOLEAN,
+    solved BOOLEAN,
+    wcs_mode TEXT,
+    exposure_no INTEGER
+);
+
+CREATE TABLE lvmopsdb.guider_coadd (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    mjd INTEGER,
+    telescope TEXT,
+    frame0 SMALLINT,
+    framen SMALLINT,
+    nframes SMALLINT,
+    obstime0 TEXT,
+    obstimen TEXT,
+    fwhm0 REAL,
+    fwhmn REAL,
+    fwhmmed REAL,
+    pacoeffa REAL,
+    pacoeffb REAL,
+    pamin REAL,
+    pamax REAL,
+    padrift REAL,
+    zeropt REAL,
+    solved BOOLEAN,
+    ncamsol SMALLINT,
+    xffpix REAL,
+    zffpix REAL,
+    rafield DOUBLE PRECISION,
+    decfield DOUBLE PRECISION,
+    pafield REAL,
+    rameas DOUBLE PRECISION,
+    decmeas DOUBLE PRECISION,
+    pameas REAL,
+    warnpa BOOLEAN,
+    warnpadr BOOLEAN,
+    warntran BOOLEAN,
+    warnmatc BOOLEAN,
+    warnfwhm BOOLEAN,
+    exposure_no INTEGER
+);
+
+
+-- constraints
+
+ALTER TABLE ONLY lvmopsdb.exposure
+    ADD CONSTRAINT exposure_no_unique UNIQUE (exposure_no);
+
 
 -- foreign keys
 
@@ -218,15 +290,21 @@ ALTER TABLE ONLY lvmopsdb.completion_status
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_guider_frame
-    ADD CONSTRAINT exposure_to_guider_frame_exposure_pk_fk
-    FOREIGN KEY (exposure_pk) REFERENCES lvmopsdb.exposure(pk)
+ALTER TABLE ONLY lvmopsdb.guider_frame
+    ADD CONSTRAINT guider_frame_exposure_no_fk
+    FOREIGN KEY (exposure_no) REFERENCES lvmopsdb.exposure(exposure_no)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.exposure_to_guider_frame
-    ADD CONSTRAINT exposure_to_guider_frame_guider_frame_pk_fk
-    FOREIGN KEY (guider_frame_pk) REFERENCES lvmopsdb.guider_frame(pk)
+ALTER TABLE ONLY lvmopsdb.agcam_frame
+    ADD CONSTRAINT agcam_frame_exposure_no_fk
+    FOREIGN KEY (exposure_no) REFERENCES lvmopsdb.exposure(exposure_no)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.guider_coadd
+    ADD CONSTRAINT guider_coadd_exposure_no_fk
+    FOREIGN KEY (exposure_no) REFERENCES lvmopsdb.exposure(exposure_no)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
@@ -267,6 +345,10 @@ CREATE INDEX CONCURRENTLY standard_qc3_index
     (q3c_ang2ipix(ra, dec));
 
 CLUSTER standard_qc3_index ON lvmopsdb.standard;
+
+CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_coadd (exposure_no);
+CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_frame (exposure_no);
+CREATE INDEX CONCURRENTLY ON lvmopsdb.agcam_frame (exposure_no);
 
 grant usage on schema lvmopsdb to sdss_user;
 
