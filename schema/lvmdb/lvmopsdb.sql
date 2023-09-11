@@ -211,10 +211,10 @@ CREATE TABLE lvmopsdb.guider_coadd (
 
 CREATE TABLE lvmopsdb.overhead (
     pk SERIAL PRIMARY KEY NOT NULL,
-    observer_id INTEGER,
+    observer_id BIGINT,
     stage TEXT,
-    start_time REAL,
-    end_time REAL,
+    start_time DOUBLE PRECISION,
+    end_time DOUBLE PRECISION,
     duration REAL
 );
 
