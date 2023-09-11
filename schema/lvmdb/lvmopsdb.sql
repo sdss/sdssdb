@@ -209,6 +209,15 @@ CREATE TABLE lvmopsdb.guider_coadd (
     exposure_no INTEGER
 );
 
+CREATE TABLE lvmopsdb.overhead (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    observer_id INTEGER,
+    stage TEXT,
+    start_time REAL,
+    end_time REAL,
+    duration REAL
+);
+
 
 -- constraints
 
@@ -349,6 +358,9 @@ CLUSTER standard_qc3_index ON lvmopsdb.standard;
 CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_coadd (exposure_no);
 CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_frame (exposure_no);
 CREATE INDEX CONCURRENTLY ON lvmopsdb.agcam_frame (exposure_no);
+
+CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (observer_id);
+CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (stage);
 
 grant usage on schema lvmopsdb to sdss_user;
 

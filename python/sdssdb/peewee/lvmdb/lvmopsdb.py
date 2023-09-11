@@ -321,3 +321,15 @@ class GuiderCoAdd(LVMOpsBase):
 
     class Meta:
         table_name = 'guider_coadd'
+
+
+class Overhead(LVMOpsBase):
+    pk = AutoField(primary_key=True)
+    observer_id = IntegerField()
+    stage = TextField()
+    start_time = FloatField()
+    end_time = FloatField()
+    duration = FloatField()
+
+    class Meta:
+        table_name = 'overhead'
