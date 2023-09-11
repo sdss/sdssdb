@@ -2113,6 +2113,22 @@ class RAVE_DR6_Gaia_DR3_XMatch(CatalogdbModel):
         table_name = 'rave_dr6_xgaiae3'
 
 
+class SDSS_ID_flat(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdss_id_flat'
+
+
+class SDSS_ID_stacked(CatalogdbModel):
+
+    sdss_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdss_id_stacked'
+
+
 class Gaia_Stellar_Parameters(CatalogdbModel):
 
     gdr3_source_id = BigIntegerField(primary_key=True)
