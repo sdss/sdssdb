@@ -212,6 +212,7 @@ CREATE TABLE lvmopsdb.guider_coadd (
 CREATE TABLE lvmopsdb.overhead (
     pk SERIAL PRIMARY KEY NOT NULL,
     observer_id BIGINT,
+    tile_id INTEGER,
     stage TEXT,
     start_time DOUBLE PRECISION,
     end_time DOUBLE PRECISION,
@@ -360,6 +361,7 @@ CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_frame (exposure_no);
 CREATE INDEX CONCURRENTLY ON lvmopsdb.agcam_frame (exposure_no);
 
 CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (observer_id);
+CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (tile_id);
 CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (stage);
 
 grant usage on schema lvmopsdb to sdss_user;

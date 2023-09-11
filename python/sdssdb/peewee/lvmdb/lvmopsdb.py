@@ -326,6 +326,7 @@ class GuiderCoAdd(LVMOpsBase):
 class Overhead(LVMOpsBase):
     pk = AutoField(primary_key=True)
     observer_id = BigIntegerField()
+    tile_id = IntegerField()
     stage = TextField()
     start_time = DoubleField()
     end_time = DoubleField()
