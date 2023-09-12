@@ -63,13 +63,13 @@ CREATE TABLE targetdb.category (
     label TEXT);
 
 CREATE TABLE targetdb.carton_to_target (
-    pk SERIAL PRIMARY KEY NOT NULL,
+    pk BIGSERIAL PRIMARY KEY NOT NULL,
     lambda_eff REAL,
     instrument_pk INTEGER,
     delta_ra DOUBLE PRECISION,
     delta_dec DOUBLE PRECISION,
     can_offset BOOLEAN DEFAULT false,
-    intertial BOOLEAN,
+    inertial BOOLEAN,
     value REAL,
     carton_pk SMALLINT,
     target_pk BIGINT,
