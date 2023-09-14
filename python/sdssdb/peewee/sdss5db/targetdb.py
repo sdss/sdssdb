@@ -9,6 +9,8 @@
 import datetime
 import os
 
+import numpy as np
+
 from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
                     DateTimeField, DeferredThroughModel, DoubleField,
                     FloatField, ForeignKeyField, IntegerField,
@@ -196,7 +198,10 @@ class Design(TargetdbBase):
 
         n_fields = fields_version.count()
         if n_fields > 1:
-            raise ValueError(f"Multiple fields found for design {self.design_id}.")
+            # raise ValueError(f"Multiple fields found for design {self.design_id}.")
+            max_pk = np.max([f.pk for f in fields_version])
+            w_max = np.where([f.pk == max_pk for f in fields_version])[0][0]
+            return fields_version[w_max]
         elif n_fields == 1:
             return fields_version.first()
         else:
