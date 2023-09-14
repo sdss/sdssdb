@@ -47,9 +47,9 @@ CREATE TABLE targetdb.magnitude (
 
 CREATE TABLE targetdb.carton (
     pk SERIAL PRIMARY KEY NOT NULL,
-    mapper_pk SMALLINT,
-    category_pk SMALLINT,
-    version_pk SMALLINT,
+    mapper_pk INTEGER,
+    category_pk INTEGER,
+    version_pk INTEGER,
     carton TEXT,
     program TEXT,
     run_on DATE);
@@ -71,9 +71,9 @@ CREATE TABLE targetdb.carton_to_target (
     can_offset BOOLEAN DEFAULT false,
     inertial BOOLEAN,
     value REAL,
-    carton_pk SMALLINT,
+    carton_pk INTEGER,
     target_pk BIGINT,
-    cadence_pk SMALLINT,
+    cadence_pk INTEGER,
     priority INTEGER);
 
 -- We use "pk serial" instead of the usual catalogdb "pk bigserial"
@@ -110,15 +110,15 @@ CREATE TABLE targetdb.hole (
     row INTEGER,
     "column" INTEGER,
     holeid TEXT,
-    observatory_pk SMALLINT NOT NULL REFERENCES targetdb.observatory(pk),
+    observatory_pk INTEGER NOT NULL REFERENCES targetdb.observatory(pk),
     UNIQUE (holeid, observatory_pk)
 );
 
 CREATE TABLE targetdb.assignment (
     pk SERIAL PRIMARY KEY NOT NULL,
     carton_to_target_pk BIGINT,
-    hole_pk SMALLINT,
-    instrument_pk SMALLINT,
+    hole_pk INTEGER,
+    instrument_pk INTEGER,
     design_id INTEGER
 );
 
@@ -130,7 +130,7 @@ CREATE TABLE targetdb.design (
     mugatu_version TEXT,
     run_on DATE,
     assignment_hash UUID,
-    design_version_pk SMALLINT);
+    design_version_pk INTEGER);
     -- field_exposure BIGINT);
 
 CREATE TABLE targetdb.field (
@@ -142,9 +142,9 @@ CREATE TABLE targetdb.field (
     -- slots_exposures is 2x24, for dark/bright x LST
     -- needs INTEGER b/c RM I think?
     slots_exposures INTEGER[][],
-    version_pk SMALLINT,
-    cadence_pk SMALLINT,
-    observatory_pk SMALLINT);
+    version_pk INTEGER,
+    cadence_pk INTEGER,
+    observatory_pk INTEGER);
 
 CREATE TABLE targetdb.design_to_field (
     pk SERIAL PRIMARY KEY NOT NULL,
