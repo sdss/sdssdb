@@ -1,0 +1,370 @@
+# !usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+
+from sqlalchemy import (ARRAY, BigInteger, Boolean, CheckConstraint, Column, Date, Float,
+                        ForeignKey, Integer, SmallInteger, Text, UniqueConstraint, text)
+from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
+
+from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
+
+
+SCHEMA = 'targetdb'
+
+
+class Base(AbstractConcreteBase, SDSS5dbBase):
+    __abstract__ = True
+    _schema = SCHEMA
+    _relations = 'define_relations'
+
+    @declared_attr
+    def __table_args__(cls):
+        return {'schema': cls._schema}
+
+
+class Cadence(Base):
+    __tablename__ = 'cadence'
+    __table_args__ = (
+        CheckConstraint('label = (label_root || label_version)'),
+        {'schema': 'targetdb'}
+    )
+
+    label = Column(Text, nullable=False, unique=True)
+    nepochs = Column(Integer, index=True)
+    delta = Column(ARRAY(Float(precision=53)))
+    skybrightness = Column(ARRAY(Float()))
+    delta_max = Column(ARRAY(Float()))
+    delta_min = Column(ARRAY(Float()))
+    nexp = Column(ARRAY(Integer()))
+    max_length = Column(ARRAY(Float()))
+    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.cadence_pk_seq1'::regclass)"))
+    obsmode_pk = Column(ARRAY(Text()))
+    label_root = Column(Text)
+    label_version = Column(Text, server_default=text("''::text"))
+
+
+class CadenceDr18(Base):
+    __tablename__ = 'cadence_dr18'
+
+    label = Column(Text, unique=True)
+    nepochs = Column(Integer, index=True)
+    delta = Column(ARRAY(Float(precision=53)))
+    skybrightness = Column(ARRAY(Float()))
+    delta_max = Column(ARRAY(Float()))
+    delta_min = Column(ARRAY(Float()))
+    nexp = Column(ARRAY(Integer()))
+    max_length = Column(ARRAY(Float()))
+    pk = Column(BigInteger, primary_key=True)
+    obsmode_pk = Column(ARRAY(Text()))
+    label_root = Column(Text)
+    label_version = Column(Text)
+
+
+class Category(Base):
+    __tablename__ = 'category'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.category_pk_seq'::regclass)"))
+    label = Column(Text)
+
+
+class DesignMode(Base):
+    __tablename__ = 'design_mode'
+
+    label = Column(Text, primary_key=True)
+    boss_skies_min = Column(Integer)
+    boss_skies_fov = Column(ARRAY(Float(precision=53)))
+    apogee_skies_min = Column(Integer)
+    apogee_skies_fov = Column(ARRAY(Float(precision=53)))
+    boss_stds_min = Column(Integer)
+    boss_stds_mags_min = Column(ARRAY(Float(precision=53)))
+    boss_stds_mags_max = Column(ARRAY(Float(precision=53)))
+    boss_stds_fov = Column(ARRAY(Float(precision=53)))
+    apogee_stds_min = Column(Integer)
+    apogee_stds_mags_min = Column(ARRAY(Float(precision=53)))
+    apogee_stds_mags_max = Column(ARRAY(Float(precision=53)))
+    apogee_stds_fov = Column(ARRAY(Float(precision=53)))
+    boss_bright_limit_targets_min = Column(ARRAY(Float(precision=53)))
+    boss_bright_limit_targets_max = Column(ARRAY(Float(precision=53)))
+    boss_trace_diff_targets = Column(Float(53))
+    boss_sky_neighbors_targets = Column(ARRAY(Float(precision=53)))
+    apogee_bright_limit_targets_min = Column(ARRAY(Float(precision=53)))
+    apogee_bright_limit_targets_max = Column(ARRAY(Float(precision=53)))
+    apogee_trace_diff_targets = Column(Float(53))
+    apogee_sky_neighbors_targets = Column(ARRAY(Float(precision=53)))
+
+
+class FieldReservation(Base):
+    __tablename__ = 'field_reservation'
+
+    field_id = Column(Integer, primary_key=True)
+
+
+class Instrument(Base):
+    __tablename__ = 'instrument'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.instrument_pk_seq'::regclass)"))
+    label = Column(Text)
+    default_lambda_eff = Column(Float)
+
+
+class Mapper(Base):
+    __tablename__ = 'mapper'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.survey_pk_seq'::regclass)"))
+    label = Column(Text)
+
+
+class Observatory(Base):
+    __tablename__ = 'observatory'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.observatory_pk_seq'::regclass)"))
+    label = Column(Text, nullable=False)
+
+
+class Obsmode(Base):
+    __tablename__ = 'obsmode'
+
+    label = Column(Text, primary_key=True)
+    min_moon_sep = Column(Float)
+    min_deltav_ks91 = Column(Float)
+    min_twilight_ang = Column(Float)
+    max_airmass_apo = Column(Float)
+    max_airmass_lco = Column(Float)
+
+
+class PositionerStatu(Base):
+    __tablename__ = 'positioner_status'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.positioner_status_pk_seq'::regclass)"))
+    label = Column(Text)
+
+
+class RevisedMagnitude(Base):
+    __tablename__ = 'revised_magnitude'
+
+    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"))
+    g = Column(Float)
+    r = Column(Float)
+    i = Column(Float)
+    h = Column(Float, index=True)
+    bp = Column(Float)
+    rp = Column(Float)
+    carton_to_target_pk = Column(ForeignKey('targetdb.carton_to_target.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    z = Column(Float)
+    j = Column(Float)
+    k = Column(Float)
+    gaia_g = Column(Float)
+    optical_prov = Column(Text)
+
+    carton_to_target = relationship('CartonToTarget')
+
+
+class Target(Base):
+    __tablename__ = 'target'
+
+    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.target_pk_seq'::regclass)"))
+    ra = Column(Float(53))
+    dec = Column(Float(53))
+    pmra = Column(Float)
+    pmdec = Column(Float)
+    epoch = Column(Float)
+    parallax = Column(Float)
+    catalogid = Column(BigInteger, index=True)
+
+
+class Version(Base):
+    __tablename__ = 'version'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.plan_pk_seq'::regclass)"))
+    plan = Column(Text, unique=True)
+    tag = Column(Text)
+    target_selection = Column(Boolean)
+    robostrategy = Column(Boolean)
+
+
+class Carton(Base):
+    __tablename__ = 'carton'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.program_pk_seq'::regclass)"))
+    mapper_pk = Column(ForeignKey('targetdb.mapper.pk', ondelete='CASCADE', onupdate='CASCADE'))
+    category_pk = Column(ForeignKey('targetdb.category.pk', ondelete='CASCADE', onupdate='CASCADE'))
+    version_pk = Column(ForeignKey('targetdb.version.pk', ondelete='CASCADE', onupdate='CASCADE'))
+    carton = Column(Text)
+    program = Column(Text)
+    run_on = Column(Date)
+
+    category = relationship('Category')
+    mapper = relationship('Mapper')
+    version = relationship('Version')
+
+
+class Design(Base):
+    __tablename__ = 'design'
+
+    design_id = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_id_seq'::regclass)"))
+    design_mode_label = Column(ForeignKey('targetdb.design_mode.label'))
+    mugatu_version = Column(Text)
+    run_on = Column(Date)
+    assignment_hash = Column(UUID, index=True)
+    design_version_pk = Column(SmallInteger)
+
+    design_mode = relationship('DesignMode')
+
+
+class Field(Base):
+    __tablename__ = 'field'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.field_pk_seq'::regclass)"))
+    racen = Column(Float(53), nullable=False)
+    deccen = Column(Float(53), nullable=False)
+    version_pk = Column(ForeignKey('targetdb.version.pk', ondelete='CASCADE', onupdate='CASCADE'))
+    cadence_pk = Column(ForeignKey('targetdb.cadence.pk'), index=True)
+    observatory_pk = Column(ForeignKey('targetdb.observatory.pk'), index=True)
+    position_angle = Column(Float)
+    slots_exposures = Column(ARRAY(Integer()))
+    field_id = Column(Integer, index=True)
+
+    cadence = relationship('Cadence')
+    observatory = relationship('Observatory')
+    version = relationship('Version')
+
+
+class Hole(Base):
+    __tablename__ = 'hole'
+    __table_args__ = (
+        UniqueConstraint('holeid', 'observatory_pk'),
+        {'schema': 'targetdb'}
+    )
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.hole_pk_seq'::regclass)"))
+    row = Column(Integer)
+    column = Column(Integer)
+    holeid = Column(Text, index=True)
+    observatory_pk = Column(ForeignKey('targetdb.observatory.pk'), nullable=False, index=True)
+
+    observatory = relationship('Observatory')
+
+
+class CartonToTarget(Base):
+    __tablename__ = 'carton_to_target'
+
+    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.program_to_target_pk_seq'::regclass)"))
+    lambda_eff = Column(Float)
+    carton_pk = Column(ForeignKey('targetdb.carton.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    target_pk = Column(ForeignKey('targetdb.target.pk', deferrable=True, initially='DEFERRED'), index=True)
+    cadence_pk = Column(ForeignKey('targetdb.cadence.pk'), index=True)
+    priority = Column(Integer, index=True)
+    value = Column(Float)
+    instrument_pk = Column(ForeignKey('targetdb.instrument.pk'), index=True)
+    delta_ra = Column(Float(53))
+    delta_dec = Column(Float(53))
+    inertial = Column(Boolean)
+    can_offset = Column(Boolean, server_default=text("false"))
+
+    cadence = relationship('Cadence')
+    carton = relationship('Carton')
+    instrument = relationship('Instrument')
+    target = relationship('Target')
+
+
+class DesignModeCheckResult(Base):
+    __tablename__ = 'design_mode_check_results'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_mode_check_results_pk_seq'::regclass)"))
+    design_id = Column(ForeignKey('targetdb.design.design_id'))
+    design_pass = Column(Boolean, nullable=False)
+    design_status = Column(Integer)
+    boss_skies_min_pass = Column(Boolean)
+    boss_skies_min_value = Column(Integer)
+    boss_skies_fov_pass = Column(Boolean)
+    boss_skies_fov_value = Column(Float(53))
+    apogee_skies_min_pass = Column(Boolean)
+    apogee_skies_min_value = Column(Integer)
+    apogee_skies_fov_pass = Column(Boolean)
+    apogee_skies_fov_value = Column(Float(53))
+    boss_stds_min_pass = Column(Boolean)
+    boss_stds_min_value = Column(Integer)
+    boss_stds_fov_pass = Column(Boolean)
+    boss_stds_fov_value = Column(Float(53))
+    apogee_stds_min_pass = Column(Boolean)
+    apogee_stds_min_value = Column(Integer)
+    apogee_stds_fov_pass = Column(Boolean)
+    apogee_stds_fov_value = Column(Float(53))
+    boss_stds_mags_pass = Column(Boolean)
+    apogee_stds_mags_pass = Column(Boolean)
+    boss_bright_limit_targets_pass = Column(Boolean)
+    apogee_bright_limit_targets_pass = Column(Boolean)
+    boss_sky_neighbors_targets_pass = Column(Boolean)
+    apogee_sky_neighbors_targets_pass = Column(Boolean)
+    apogee_trace_diff_targets_pass = Column(Boolean)
+
+    design = relationship('Design')
+
+
+class DesignToField(Base):
+    __tablename__ = 'design_to_field'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_to_field_pk_seq'::regclass)"))
+    design_id = Column(ForeignKey('targetdb.design.design_id'), index=True)
+    field_pk = Column(ForeignKey('targetdb.field.pk'), index=True)
+    exposure = Column(BigInteger)
+    field_exposure = Column(BigInteger)
+
+    design = relationship('Design')
+    field = relationship('Field')
+
+
+class Assignment(Base):
+    __tablename__ = 'assignment'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.assignment_pk_seq'::regclass)"))
+    carton_to_target_pk = Column(ForeignKey('targetdb.carton_to_target.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    hole_pk = Column(ForeignKey('targetdb.hole.pk'), index=True)
+    instrument_pk = Column(ForeignKey('targetdb.instrument.pk'), index=True)
+    design_id = Column(ForeignKey('targetdb.design.design_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+
+    carton_to_target = relationship('CartonToTarget')
+    design = relationship('Design')
+    hole = relationship('Hole')
+    instrument = relationship('Instrument')
+
+
+class Magnitude(Base):
+    __tablename__ = 'magnitude'
+
+    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"))
+    g = Column(Float)
+    r = Column(Float)
+    i = Column(Float)
+    h = Column(Float, index=True)
+    bp = Column(Float)
+    rp = Column(Float)
+    carton_to_target_pk = Column(ForeignKey('targetdb.carton_to_target.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    z = Column(Float)
+    j = Column(Float)
+    k = Column(Float)
+    gaia_g = Column(Float)
+    optical_prov = Column(Text)
+
+    carton_to_target = relationship('CartonToTarget')
+
+
+class AssignmentStatu(Base):
+    __tablename__ = 'assignment_status'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.assignment_status_pk_seq'::regclass)"))
+    assignment_pk = Column(ForeignKey('targetdb.assignment.pk'))
+    status = Column(Integer)
+    mjd = Column(Float)
+
+    assignment = relationship('Assignment')
+
+
+def define_relations():
+    pass
+
+
+# prepare the base
+database.add_base(Base)
