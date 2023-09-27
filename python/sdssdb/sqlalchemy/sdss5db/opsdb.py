@@ -28,7 +28,7 @@ class Base(AbstractConcreteBase, SDSS5dbBase):
 class BasePriority(Base):
     __tablename__ = 'base_priority'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.base_priority_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.base_priority_pk_seq'::regclass)"))
     field_pk = Column(Integer)
     priority = Column(Integer)
     version_pk = Column(Integer)
@@ -37,35 +37,35 @@ class BasePriority(Base):
 class CompletionStatus(Base):
     __tablename__ = 'completion_status'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.completion_status_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.completion_status_pk_seq'::regclass)"))
     label = Column(Text)
 
 
 class ExposureFlavor(Base):
     __tablename__ = 'exposure_flavor'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.exposure_flavor_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.exposure_flavor_pk_seq'::regclass)"))
     label = Column(Text)
 
 
 class FieldPriority(Base):
     __tablename__ = 'field_priority'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.field_priority_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.field_priority_pk_seq'::regclass)"))
     label = Column(Text)
 
 
 class PriorityVersion(Base):
     __tablename__ = 'priority_version'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.priority_version_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.priority_version_pk_seq'::regclass)"))
     label = Column(Text)
 
 
 class Survey(Base):
     __tablename__ = 'survey'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.survey_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.survey_pk_seq'::regclass)"))
     label = Column(Text)
 
 
@@ -100,7 +100,7 @@ class Instrument(Base):
     __tablename__ = 'instrument'
     __table_args__ = {'schema': 'targetdb'}
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.instrument_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('targetdb.instrument_pk_seq'::regclass)"))
     label = Column(Text)
     default_lambda_eff = Column(Float)
 
@@ -108,7 +108,7 @@ class Instrument(Base):
 class Camera(Base):
     __tablename__ = 'camera'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.camera_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.camera_pk_seq'::regclass)"))
     instrument_pk = Column(ForeignKey('targetdb.instrument.pk'))
     label = Column(Text)
 
@@ -118,9 +118,9 @@ class Camera(Base):
 class FieldToPriority(Base):
     __tablename__ = 'field_to_priority'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.field_to_priority_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.field_to_priority_pk_seq'::regclass)"))
     field_pk = Column(Integer)
-    field_priority_pk = Column(ForeignKey('opsdb_apo.field_priority.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
+    field_priority_pk = Column(ForeignKey(f'{Base._schema}.field_priority.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
 
     field_priority = relationship('FieldPriority')
 
@@ -129,7 +129,7 @@ class Design(Base):
     __tablename__ = 'design'
     __table_args__ = {'schema': 'targetdb'}
 
-    design_id = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_id_seq'::regclass)"))
+    design_id = Column(Integer, primary_key=True, server_default=text(f"nextval('targetdb.design_id_seq'::regclass)"))
     design_mode_label = Column(ForeignKey('targetdb.design_mode.label'))
     mugatu_version = Column(Text)
     run_on = Column(Date)
@@ -142,7 +142,7 @@ class Design(Base):
 class Configuration(Base):
     __tablename__ = 'configuration'
 
-    configuration_id = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.configuration_configuration_id_seq'::regclass)"))
+    configuration_id = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.configuration_configuration_id_seq'::regclass)"))
     design_id = Column(ForeignKey('targetdb.design.design_id'), index=True)
     comment = Column(Text)
     temperature = Column(Text)
@@ -155,20 +155,20 @@ class Configuration(Base):
 class DesignToStatus(Base):
     __tablename__ = 'design_to_status'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.design_to_status_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.design_to_status_pk_seq'::regclass)"))
     design_id = Column(ForeignKey('targetdb.design.design_id', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), unique=True)
-    completion_status_pk = Column(ForeignKey('opsdb_apo.completion_status.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
+    completion_status_pk = Column(ForeignKey(f'{Base._schema}.completion_status.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
     mjd = Column(Float)
     manual = Column(Boolean, server_default=text("false"))
 
-    completion_statu = relationship('CompletionStatu')
+    completion_statu = relationship('CompletionStatus')
     design = relationship('Design', uselist=False)
 
 
 class Queue(Base):
     __tablename__ = 'queue'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.queue_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.queue_pk_seq'::regclass)"))
     design_id = Column(ForeignKey('targetdb.design.design_id'))
     position = Column(SmallInteger)
     mjd_plan = Column(Float(53))
@@ -179,9 +179,9 @@ class Queue(Base):
 class AssignmentToFocal(Base):
     __tablename__ = 'assignment_to_focal'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.assignment_to_focal_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.assignment_to_focal_pk_seq'::regclass)"))
     assignment_pk = Column(Integer, index=True)
-    configuration_id = Column(ForeignKey('opsdb_apo.configuration.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
+    configuration_id = Column(ForeignKey(f'{Base._schema}.configuration.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
     xfocal = Column(Float)
     yfocal = Column(Float)
     positioner_id = Column(SmallInteger)
@@ -192,14 +192,14 @@ class AssignmentToFocal(Base):
 class Exposure(Base):
     __tablename__ = 'exposure'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.exposure_pk_seq'::regclass)"))
-    configuration_id = Column(ForeignKey('opsdb_apo.configuration.configuration_id'), index=True)
-    survey_pk = Column(ForeignKey('opsdb_apo.survey.pk'))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.exposure_pk_seq'::regclass)"))
+    configuration_id = Column(ForeignKey(f'{Base._schema}.configuration.configuration_id'), index=True)
+    survey_pk = Column(ForeignKey(f'{Base._schema}.survey.pk'))
     exposure_no = Column(BigInteger)
     comment = Column(Text)
     start_time = Column(DateTime, index=True)
     exposure_time = Column(Float)
-    exposure_flavor_pk = Column(ForeignKey('opsdb_apo.exposure_flavor.pk'), nullable=False)
+    exposure_flavor_pk = Column(ForeignKey(f'{Base._schema}.exposure_flavor.pk'), nullable=False)
 
     configuration = relationship('Configuration')
     exposure_flavor = relationship('ExposureFlavor')
@@ -209,9 +209,9 @@ class Exposure(Base):
 class CameraFrame(Base):
     __tablename__ = 'camera_frame'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.camera_frame_pk_seq'::regclass)"))
-    exposure_pk = Column(ForeignKey('opsdb_apo.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), nullable=False, index=True)
-    camera_pk = Column(ForeignKey('opsdb_apo.camera.pk'), nullable=False)
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.camera_frame_pk_seq'::regclass)"))
+    exposure_pk = Column(ForeignKey(f'{Base._schema}.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), nullable=False, index=True)
+    camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), nullable=False)
     ql_sn2 = Column(Float)
     sn2 = Column(Float)
     comment = Column(Text)
@@ -223,10 +223,10 @@ class CameraFrame(Base):
 class Quicklook(Base):
     __tablename__ = 'quicklook'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.quicklook_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.quicklook_pk_seq'::regclass)"))
     snr_standard = Column(Float)
     logsnr_hmag_coef = Column(ARRAY(Float()))
-    exposure_pk = Column(ForeignKey('opsdb_apo.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    exposure_pk = Column(ForeignKey(f'{Base._schema}.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
     readnum = Column(Integer)
     exptype = Column(Text)
     hmag_standard = Column(Float)
@@ -241,8 +241,8 @@ class Quicklook(Base):
 class Quickred(Base):
     __tablename__ = 'quickred'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('opsdb_apo.quickred_pk_seq'::regclass)"))
-    exposure_pk = Column(ForeignKey('opsdb_apo.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.quickred_pk_seq'::regclass)"))
+    exposure_pk = Column(ForeignKey(f'{Base._schema}.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
     snr_standard = Column(Float)
     logsnr_hmag_coef = Column(ARRAY(Float()))
     dither_pixpos = Column(Float)
