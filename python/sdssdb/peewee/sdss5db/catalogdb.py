@@ -2142,25 +2142,6 @@ class Gaia_Stellar_Parameters(CatalogdbModel):
         table_name = 'gaia_stellar_parameters'
 
 
-_Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
-_APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
-
-
-class Gaia_Stellar_Parameters(CatalogdbModel):
-    gdr3_source_id = BigIntegerField(primary_key=True)
-
-    gaia = ForeignKeyField(
-        Gaia_DR3,
-        field='source_id',
-        column_name='gdr3_source_id',
-        object_id_name='gdr3_source_id',
-        backref='stellar_parameters',
-    )
-
-    class Meta:
-        table_name = 'gaia_stellar_parameters'
-
-
 class AllStar_DR17_synspec_rev1(CatalogdbModel):
     apstar_id = TextField(primary_key=True)
 
@@ -2182,6 +2163,10 @@ class AllStar_DR17_synspec_rev1(CatalogdbModel):
 
     class Meta:
         table_name = 'allstar_dr17_synspec_rev1'
+
+
+_Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
+_APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
 
 # Add relational tables to namespace.
