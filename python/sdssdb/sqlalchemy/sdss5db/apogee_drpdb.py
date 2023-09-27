@@ -7,6 +7,7 @@
 from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, DateTime, Float,
                         ForeignKey, Index, Integer, SmallInteger, Text, UniqueConstraint, text)
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
+from sqlalchemy.orm import relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -113,6 +114,8 @@ class ExposureStatus(Base):
     designid = Column(Text)
     fieldid = Column(Text)
 
+    exposure = relationship('Exposure')
+
 
 class MasterCalibrationStatus(Base):
     __tablename__ = 'mastercal_status'
@@ -213,6 +216,9 @@ class RvVisit(Base):
     apred_vers = Column(Text)
     created = Column(DateTime(True), nullable=False, server_default=text("now()"))
     v_apred = Column(Text)
+
+    star = relationship('Star')
+    visit = relationship('Visit')
 
 
 class Star(Base):
