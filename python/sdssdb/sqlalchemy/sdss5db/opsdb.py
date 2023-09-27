@@ -69,33 +69,6 @@ class Survey(Base):
     label = Column(Text)
 
 
-class DesignMode(Base):
-    __tablename__ = 'design_mode'
-    __table_args__ = {'schema': 'targetdb'}
-
-    label = Column(Text, primary_key=True)
-    boss_skies_min = Column(Integer)
-    boss_skies_fov = Column(ARRAY(Float(precision=53)))
-    apogee_skies_min = Column(Integer)
-    apogee_skies_fov = Column(ARRAY(Float(precision=53)))
-    boss_stds_min = Column(Integer)
-    boss_stds_mags_min = Column(ARRAY(Float(precision=53)))
-    boss_stds_mags_max = Column(ARRAY(Float(precision=53)))
-    boss_stds_fov = Column(ARRAY(Float(precision=53)))
-    apogee_stds_min = Column(Integer)
-    apogee_stds_mags_min = Column(ARRAY(Float(precision=53)))
-    apogee_stds_mags_max = Column(ARRAY(Float(precision=53)))
-    apogee_stds_fov = Column(ARRAY(Float(precision=53)))
-    boss_bright_limit_targets_min = Column(ARRAY(Float(precision=53)))
-    boss_bright_limit_targets_max = Column(ARRAY(Float(precision=53)))
-    boss_trace_diff_targets = Column(Float(53))
-    boss_sky_neighbors_targets = Column(ARRAY(Float(precision=53)))
-    apogee_bright_limit_targets_min = Column(ARRAY(Float(precision=53)))
-    apogee_bright_limit_targets_max = Column(ARRAY(Float(precision=53)))
-    apogee_trace_diff_targets = Column(Float(53))
-    apogee_sky_neighbors_targets = Column(ARRAY(Float(precision=53)))
-
-
 class Instrument(Base):
     __tablename__ = 'instrument'
     __table_args__ = {'schema': 'targetdb'}
@@ -123,20 +96,6 @@ class FieldToPriority(Base):
     field_priority_pk = Column(ForeignKey(f'{Base._schema}.field_priority.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
 
     field_priority = relationship('FieldPriority')
-
-
-class Design(Base):
-    __tablename__ = 'design'
-    __table_args__ = {'schema': 'targetdb'}
-
-    design_id = Column(Integer, primary_key=True, server_default=text(f"nextval('targetdb.design_id_seq'::regclass)"))
-    design_mode_label = Column(ForeignKey('targetdb.design_mode.label'))
-    mugatu_version = Column(Text)
-    run_on = Column(Date)
-    assignment_hash = Column(UUID, index=True)
-    design_version_pk = Column(SmallInteger)
-
-    design_mode = relationship('DesignMode')
 
 
 class Configuration(Base):

@@ -47,23 +47,6 @@ class Cadence(Base):
     label_version = Column(Text, server_default=text("''::text"))
 
 
-class CadenceDr18(Base):
-    __tablename__ = 'cadence_dr18'
-
-    label = Column(Text, unique=True)
-    nepochs = Column(Integer, index=True)
-    delta = Column(ARRAY(Float(precision=53)))
-    skybrightness = Column(ARRAY(Float()))
-    delta_max = Column(ARRAY(Float()))
-    delta_min = Column(ARRAY(Float()))
-    nexp = Column(ARRAY(Integer()))
-    max_length = Column(ARRAY(Float()))
-    pk = Column(BigInteger, primary_key=True)
-    obsmode_pk = Column(ARRAY(Text()))
-    label_root = Column(Text)
-    label_version = Column(Text)
-
-
 class Category(Base):
     __tablename__ = 'category'
 
@@ -136,7 +119,7 @@ class Obsmode(Base):
     max_airmass_lco = Column(Float)
 
 
-class PositionerStatu(Base):
+class PositionerStatus(Base):
     __tablename__ = 'positioner_status'
 
     pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.positioner_status_pk_seq'::regclass)"))
@@ -353,7 +336,7 @@ class Magnitude(Base):
     carton_to_target = relationship('CartonToTarget')
 
 
-class AssignmentStatu(Base):
+class AssignmentStatus(Base):
     __tablename__ = 'assignment_status'
 
     pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.assignment_status_pk_seq'::regclass)"))
