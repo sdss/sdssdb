@@ -50,6 +50,12 @@ def create_graphs():
     ops_graph.write_pdf(f'{cwd}/opsdb/sdss5db.opsdb.pdf')
     ops_graph.write_png(f'{cwd}/opsdb/sdss5db.opsdb.png')
 
+    apo_graph = create_schema_graph(base=apogee_drpdb.ApogeeDRPDBmodel,
+                                    show_columns=True,
+                                    graph_options={'rankdir': 'TB'})
+    apo_graph.write_pdf(f'{cwd}/apogee_drpdb/sdss5db.apogee_drpdb.pdf')
+    apo_graph.write_png(f'{cwd}/apogee_drpdb/sdss5db.apogee_drpdb.png')
+
 
 if __name__ == '__main__':
 
@@ -59,6 +65,6 @@ if __name__ == '__main__':
     assert database.connected, 'database is not connected'
 
     # Import modules here to make sure all the relational tables are loaded.
-    from sdssdb.peewee.sdss5db import catalogdb, targetdb, opsdb
+    from sdssdb.peewee.sdss5db import catalogdb, targetdb, opsdb, apogee_drpdb
 
     create_graphs()

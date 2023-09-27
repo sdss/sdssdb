@@ -47,6 +47,10 @@ Currently, we support the following databases and schemas:
 * **sdss5db**: the SDSS-V development database.
     * *catalogdb*: schema for source catalogues used for target selection.
     * *targetdb*: schema with the results of the target selection and positioner information.
+    * *opsdb*: schema for the operations database
+    * *apogee_drpdb*: schema with the results of the MWM DRP
+    * *boss_drp*: schema with the results of the BHM DRP
+
 * **archive**: the SDSS science archive database.
     * *sas*: schema for SAS.
 
@@ -119,15 +123,36 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="active">sdss5db</td>
             <td class="active">catalogdb</td>
             <td class="success"></td>
-            <td class="danger"></td>
+            <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">targetdb</td>
             <td class="success"></td>
-            <td class="danger"></td>
+            <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/targetdb/sdss5db.targetdb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">opsdb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/opsdb/sdss5db.opsdb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">apogee_drpdb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/apogee_drpdb/sdss5db.apogee_drpdb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">boss_drp</td>
+            <td class="danger"></td>
+            <td class="danger"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/boss_drp/sdss5db.boss_drp.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">archive</td>
