@@ -20,7 +20,7 @@ from peewee import (
     ForeignKeyField,
     IntegerField,
     ManyToManyField,
-    TextField
+    TextField,
 )
 from playhouse.postgres_ext import ArrayField
 
@@ -28,7 +28,6 @@ from sdssdb.exceptions import SdssdbUserWarning
 
 from .. import BaseModel
 from . import database
-
 
 # When adding a foreign key like below to a peewee model class
 #
@@ -2145,6 +2144,44 @@ class Gaia_Stellar_Parameters(CatalogdbModel):
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
+
+
+class Gaia_Stellar_Parameters(CatalogdbModel):
+    gdr3_source_id = BigIntegerField(primary_key=True)
+
+    gaia = ForeignKeyField(
+        Gaia_DR3,
+        field='source_id',
+        column_name='gdr3_source_id',
+        object_id_name='gdr3_source_id',
+        backref='stellar_parameters',
+    )
+
+    class Meta:
+        table_name = 'gaia_stellar_parameters'
+
+
+class AllStar_DR17_synspec_rev1(CatalogdbModel):
+    apstar_id = TextField(primary_key=True)
+
+    gaia_dr3 = ForeignKeyField(
+        Gaia_DR3,
+        field='source_id',
+        column_name='gaiaedr3_source_id',
+        object_id_name='gaiaedr3_source_id',
+        backref='allstar_dr17',
+    )
+
+    twomass_psc = ForeignKeyField(
+        TwoMassPSC,
+        field='designation',
+        column_name='twomass_designation',
+        object_id_name='twomass_designation',
+        backref='allstar_dr17',
+    )
+
+    class Meta:
+        table_name = 'allstar_dr17_synspec_rev1'
 
 
 # Add relational tables to namespace.
