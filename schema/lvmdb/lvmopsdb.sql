@@ -378,3 +378,4 @@ grant select on all tables in schema lvmopsdb to sdss_user;
 grant usage on all sequences in schema lvmopsdb to sdss_user;
 
 alter table lvmopsdb.sky add column darkest_wham_flag bool;
+alter table lvmopsdb.sky add column valid bool;

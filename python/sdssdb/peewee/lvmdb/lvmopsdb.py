@@ -131,6 +131,7 @@ class Sky(LVMOpsBase):
     irdc_flag = BooleanField(null=True)
     darkest_wham_flag = BooleanField(null=True)
     name = TextField(null=True)
+    valid = TextField(null=True)
 
     class Meta:
         table_name = 'sky'
