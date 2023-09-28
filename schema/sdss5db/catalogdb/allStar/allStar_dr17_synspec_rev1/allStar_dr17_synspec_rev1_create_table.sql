@@ -234,3 +234,5 @@ CREATE TABLE catalogdb.allstar_dr17_synspec_rev1(
     yb_fe_flag INTEGER,
     visit_pk INTEGER[100]
 );
+
+\copy catalogdb.allstar_dr17_synspec_rev1 from '/uufs/chpc.utah.edu/common/home/sdss50/sdsswork/target/catalogs/allStar-dr17-synspec_rev1.csv' CSV HEADER;
