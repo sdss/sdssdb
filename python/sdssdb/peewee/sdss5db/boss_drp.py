@@ -315,4 +315,3 @@ class BossSpectrumLine(BossBase):
 
     class Meta:
         table_name = 'boss_spectrum_line'
-
