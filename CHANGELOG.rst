@@ -5,7 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.7.0 <2023-09-28>`
+* Added complete SQLAlchemy models for ``sdss5db``.
 * Added files to create ``catalogdb.lvm_magnitude``.
+* Added ``allStar-dr17-synspec_rev1`` table and models.
 
 * :release:`0.6.6 <2023-08-17>`
 * Added the option to disable database autoconnection by setting ``sdssdb.autoconnect = False`` or an environment variable ``SDSSDB_AUTOCONNECT=false``.
