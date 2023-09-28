@@ -128,6 +128,14 @@ class PositionerStatus(Base):
 
 
 class RevisedMagnitude(Base):
+    """Revised optical magnitudes.
+
+    This table contains SDSS g,r,i,z magnitudes calculated from Gaia DR3 XP
+    spectra (see Gaia_dr3_synthetic_photometry_gspc). This only applies
+    to v0.1 and v0.5. For v1 targets with r<15 automatically use XP synthetic
+    magnitudes.
+
+    """
     __tablename__ = 'revised_magnitude'
 
     pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"))
