@@ -150,8 +150,8 @@ Note that the level of readiness is not necessarily identical in both Peewee and
         <tr>
             <td></td>
             <td class="active">boss_drp</td>
-            <td class="danger"></td>
-            <td class="danger"></td>
+            <td class="success"></td>
+            <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/boss_drp/sdss5db.boss_drp.pdf"></a></td>
         </tr>
         <tr>
