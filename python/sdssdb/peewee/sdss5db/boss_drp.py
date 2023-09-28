@@ -183,17 +183,17 @@ class BossSpectrum(BossBase):
     calibflux = FloatField(null=True)
     calibflux_ivar = FloatField(null=True)
     optical_prov = CharField(null=True)
-    mag = ArrayField(null=True)  # ARRAY
-    psfmag = ArrayField(null=True)  # ARRAY
-    fiber2mag = ArrayField(null=True)  # ARRAY
-    catdb_mag = ArrayField(null=True)  # ARRAY
+    mag = ArrayField(FloatField, null=True)  # ARRAY
+    psfmag = ArrayField(FloatField, null=True)  # ARRAY
+    fiber2mag = ArrayField(FloatField, null=True)  # ARRAY
+    catdb_mag = ArrayField(FloatField, null=True)  # ARRAY
     gaia_bp_mag = FloatField(null=True)
     gaia_rp_mag = FloatField(null=True)
     gaia_g_mag = FloatField(null=True)
     gaia_id = BigIntegerField(null=True)
-    wise_mag = ArrayField(null=True)  # ARRAY
-    twomass_mag = ArrayField(null=True)  # ARRAY
-    guvcat_mag = ArrayField(null=True)  # ARRAY
+    wise_mag = ArrayField(FloatField, null=True)  # ARRAY
+    twomass_mag = ArrayField(FloatField, null=True)  # ARRAY
+    guvcat_mag = ArrayField(FloatField, null=True)  # ARRAY
     ebv = FloatField(null=True)
     ebv_type = CharField(null=True)
     fiber_ra = DoubleField(null=True)
@@ -220,7 +220,7 @@ class BossSpectrum(BossBase):
     spec2_g = FloatField(null=True)
     spec2_r = FloatField(null=True)
     spec2_i = FloatField(null=True)
-    sn_median = ArrayField(null=True)  # ARRAY
+    sn_median = ArrayField(FloatField, null=True)  # ARRAY
     sn_median_all = FloatField(null=True)
     airmass = FloatField(null=True)
     seeing20 = FloatField(null=True)
@@ -238,11 +238,11 @@ class BossSpectrum(BossBase):
     specboss = SmallIntegerField(null=True)
     boss_specobj_id = IntegerField(null=True)
     nspecobs = SmallIntegerField(null=True)
-    spectroflux = ArrayField(null=True)  # ARRAY
-    spectroflux_ivar = ArrayField(null=True)  # ARRAY
-    spectrosynflux = ArrayField(null=True)  # ARRAY
-    spectrosynflux_ivar = ArrayField(null=True)  # ARRAY
-    spectroskyflux = ArrayField(null=True)  # ARRAY
+    spectroflux = ArrayField(FloatField, null=True)  # ARRAY
+    spectroflux_ivar = ArrayField(FloatField, null=True)  # ARRAY
+    spectrosynflux = ArrayField(FloatField, null=True)  # ARRAY
+    spectrosynflux_ivar = ArrayField(FloatField, null=True)  # ARRAY
+    spectroskyflux = ArrayField(FloatField, null=True)  # ARRAY
     wavemin = FloatField(null=True)
     wavemax = FloatField(null=True)
     wcoverage = FloatField(null=True)
