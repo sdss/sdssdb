@@ -69,15 +69,6 @@ class Survey(Base):
     label = Column(Text)
 
 
-class Instrument(Base):
-    __tablename__ = 'instrument'
-    __table_args__ = {'schema': 'targetdb'}
-
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.instrument_pk_seq'::regclass)"))
-    label = Column(Text)
-    default_lambda_eff = Column(Float)
-
-
 class Camera(Base):
     __tablename__ = 'camera'
 
