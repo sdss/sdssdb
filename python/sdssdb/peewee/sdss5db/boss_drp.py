@@ -139,6 +139,7 @@ class BossField(BossBase):
     n_target_qso = IntegerField(null=True)
     n_target_main = IntegerField(null=True)
     n_target_lrg1 = IntegerField(null=True)
+    n_target_lrg2 = IntegerField(null=True)
     n_target_elg = IntegerField(null=True)
     success_main = FloatField(null=True)
     success_lrg1 = FloatField(null=True)
@@ -151,6 +152,7 @@ class BossField(BossBase):
     public = CharField(null=True)
     qualcomments = CharField(null=True)
     moon_frac = FloatField(null=True)
+    field_cadence = CharField(null=True)
     created = DateTimeField(null=True)
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
@@ -161,7 +163,7 @@ class BossField(BossBase):
 class BossSpectrum(BossBase):
     id = AutoField()
     boss_version = ForeignKeyField(column_name='boss_version_id', field='id', model=BossVersion)
-    field = SmallIntegerField(null=True)
+    field = IntegerField(null=True)
     mjd = IntegerField(null=True)
     mjd_final = FloatField(null=True)
     obs = CharField(null=True)
@@ -180,13 +182,14 @@ class BossSpectrum(BossBase):
     catalogid = BigIntegerField(null=True)
     sdss_id = BigIntegerField(null=True)
     specobjid = BigIntegerField(null=True)
-    calibflux = FloatField(null=True)
-    calibflux_ivar = FloatField(null=True)
+    calibflux = ArrayField(FloatField, null=True)  # ARRAY
+    calibflux_ivar = ArrayField(FloatField, null=True)  # ARRAY
     optical_prov = CharField(null=True)
     mag = ArrayField(FloatField, null=True)  # ARRAY
     psfmag = ArrayField(FloatField, null=True)  # ARRAY
     fiber2mag = ArrayField(FloatField, null=True)  # ARRAY
     catdb_mag = ArrayField(FloatField, null=True)  # ARRAY
+    gri_gaia_transform = BigIntegerField(null=True)
     gaia_bp_mag = FloatField(null=True)
     gaia_rp_mag = FloatField(null=True)
     gaia_g_mag = FloatField(null=True)
@@ -203,6 +206,8 @@ class BossSpectrum(BossBase):
     racat = DoubleField(null=True)
     deccat = DoubleField(null=True)
     coord_epoch = FloatField(null=True)
+    delta_ra = DoubleField(null=True)
+    delta_dec = DoubleField(null=True)
     pmra = FloatField(null=True)
     pmdec = FloatField(null=True)
     parallax = FloatField(null=True)
