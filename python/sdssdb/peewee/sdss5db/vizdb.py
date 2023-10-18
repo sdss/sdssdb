@@ -8,10 +8,8 @@
 # Database: sdss5db
 # Peewee version: 3.13.2
 
-from peewee import (AutoField, BigIntegerField, BlobField, BooleanField, CharField, DateTimeField,
-                    FloatField, ForeignKeyField, IntegerField, DoubleField, SmallIntegerField, TextField)
-from peewee import SQL
-from playhouse.postgres_ext import ArrayField
+from peewee import (AutoField, BigIntegerField, BooleanField,
+                    DoubleField, SmallIntegerField, TextField)
 
 from .. import BaseModel
 from . import database  # noqa
