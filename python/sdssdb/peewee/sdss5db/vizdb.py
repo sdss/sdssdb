@@ -53,7 +53,6 @@ class SDSSidStacked(VizBase):
         print_fields = ['sdss_id', 'ra_sdss_id', 'dec_sdss_id']
 
 
-
 class SDSSidToPipes(VizBase):
 
     sdss_id = BigIntegerField(null=False, primary_key=True)
@@ -79,5 +78,3 @@ class DbMetadata(VizBase):
     class Meta:
         table_name = 'db_metadata'
         print_fields = ['schema', 'table_name', 'column_name', 'display_name']
-
-
