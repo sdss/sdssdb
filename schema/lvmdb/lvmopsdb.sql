@@ -62,7 +62,8 @@ CREATE TABLE lvmopsdb.standard (
     source_id BIGINT,
     bg_rp_sb REAL,
     bg_g_sb REAL,
-    bg_bp_sb REAL);
+    bg_bp_sb REAL,
+    valid BOOL);
 
 CREATE TABLE lvmopsdb.sky (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -70,7 +71,8 @@ CREATE TABLE lvmopsdb.sky (
     dec DOUBLE PRECISION,
     i_ha REAL,
     g_sb REAL,
-    irdc_flag BOOL);
+    irdc_flag BOOL,
+    valid BOOL);
 
 CREATE TABLE lvmopsdb.observation_to_standard (
     pk SERIAL PRIMARY KEY NOT NULL,

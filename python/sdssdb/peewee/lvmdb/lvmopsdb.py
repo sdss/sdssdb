@@ -116,6 +116,7 @@ class Standard(LVMOpsBase):
     bg_rp_sb = FloatField(null=True)
     bg_g_sb = FloatField(null=True)
     bg_bp_sb = FloatField(null=True)
+    valid = TextField(null=True)
 
     class Meta:
         table_name = 'standard'
