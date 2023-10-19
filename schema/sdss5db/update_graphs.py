@@ -62,6 +62,12 @@ def create_graphs():
     boss_graph.write_pdf(f'{cwd}/boss_drp/sdss5db.boss_drp.pdf')
     boss_graph.write_png(f'{cwd}/boss_drp/sdss5db.boss_drp.png')
 
+    viz_graph = create_schema_graph(base=vizdb.VizBase,
+                                     show_columns=True,
+                                     graph_options={'rankdir': 'TB'})
+    viz_graph.write_pdf(f'{cwd}/vizdb/sdss5db.vizdb.pdf')
+    viz_graph.write_png(f'{cwd}/vizdb/sdss5db.vizdb.png')
+
 
 if __name__ == '__main__':
 
@@ -71,6 +77,6 @@ if __name__ == '__main__':
     assert database.connected, 'database is not connected'
 
     # Import modules here to make sure all the relational tables are loaded.
-    from sdssdb.peewee.sdss5db import catalogdb, targetdb, opsdb, apogee_drpdb, boss_drp
+    from sdssdb.peewee.sdss5db import catalogdb, targetdb, opsdb, apogee_drpdb, boss_drp, vizdb
 
     create_graphs()

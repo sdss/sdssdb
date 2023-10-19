@@ -50,9 +50,11 @@ Currently, we support the following databases and schemas:
     * *opsdb*: schema for the operations database
     * *apogee_drpdb*: schema with the results of the MWM DRP
     * *boss_drp*: schema with the results of the BHM DRP
-
+    * *vizdb*: primary schema for the data visualization webapp
 * **archive**: the SDSS science archive database.
     * *sas*: schema for SAS.
+* **lvmdb**: the LVM database
+    * *lvmopsdb*: schema for the LVM operations database at LCO
 
 Note that the level of readiness is not necessarily identical in both Peewee and SQLAlchemy. This table summarises what schemas are available for each library. Green indicates fully supported, yellow partial support, and red means that there are currently not model classes available for that schema. You can download the graph visualisation of the schema, showing the tables, columns, and relations between tables.
 
@@ -153,6 +155,13 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="success"></td>
             <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/boss_drp/sdss5db.boss_drp.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">vizdb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/vizdb/sdss5db.vizdb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">archive</td>
