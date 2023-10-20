@@ -55,7 +55,8 @@ class SDSSidStacked(VizBase):
 
 class SDSSidToPipes(VizBase):
 
-    sdss_id = BigIntegerField(null=False, primary_key=True)
+    pk = AutoField(primary_key=True)
+    sdss_id = BigIntegerField(null=False)
     in_boss = BooleanField(null=False)
     in_apogee = BooleanField(null=False)
     in_astra = BooleanField(null=False)

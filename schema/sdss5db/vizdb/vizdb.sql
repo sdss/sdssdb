@@ -16,14 +16,18 @@ CREATE MATERIALIZED VIEW vizdb.sdss_id_stacked
 AS (select * from catalogdb.sdss_id_stacked)
 WITH DATA;
 
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdss_id_stacked USING BTREE(sdss_id);
+
 
 CREATE MATERIALIZED VIEW vizdb.sdss_id_flat
 AS (select * from catalogdb.sdss_id_flat)
 WITH DATA;
 
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(pk);
+
 
 CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes AS
-SELECT s.sdss_id,
+SELECT row_number() over(order by s.sdss_id) as pk, s.sdss_id,
        (b.sdss_id IS NOT NULL) AS in_boss,
        (v.star_pk IS NOT NULL) AS in_apogee,
        (a.sdss_id IS NOT NULL) AS in_astra
@@ -39,6 +43,9 @@ LEFT JOIN astra_050.source AS a ON s.sdss_id = a.sdss_id
 LEFT JOIN astra_050.apogee_visit_spectrum as v on v.source_pk=a.pk
 --LEFT JOIN astra_050.boss_visit_spectrum as o on o.source_pk=a.pk
 WITH DATA;
+
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(pk);
+CREATE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(sdss_id);
 
 
 -- Refresh the views with the following commands:
@@ -56,4 +63,8 @@ CREATE TABLE vizdb.db_metadata (
     description TEXT,
     unit TEXT,
     sql_type TEXT);
+
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(pk);
+CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(schema);
+CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(column_name);
 

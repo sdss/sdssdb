@@ -49,7 +49,7 @@ class SDSSidFlat(Base):
     ra_sdss_id = Column('ra_sdss_id', Float(53))
     dec_sdss_id = Column('dec_sdss_id', Float(53))
     n_associated = Column('n_associated', SmallInteger)
-    pk = Column('pk', BigInteger, primary_key=True)
+    pk = Column('pk', BigInteger, null=False, primary_key=True)
     ra_catalogid = Column('ra_catalogid', Float(53))
     dec_catalogid = Column('dec_catalogid', Float(53))
 
@@ -70,7 +70,8 @@ class SDSSidToPipes(Base):
     __tablename__ = 'sdssid_to_pipes'
     print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra']
 
-    sdss_id = Column('sdss_id', BigInteger, primary_key=True)
+    pk = Column('pk', BigInteger, null=False, primary_key=True)
+    sdss_id = Column('sdss_id', BigInteger)
     in_boss = Column('in_boss', Boolean)
     in_apogee = Column('in_apogee', Boolean)
     in_astra = Column('in_astra', Boolean)
