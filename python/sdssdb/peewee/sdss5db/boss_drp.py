@@ -9,8 +9,9 @@
 # Peewee version: 3.15.1
 
 
-from peewee import (AutoField, BigIntegerField, BlobField, BooleanField, CharField, DateTimeField,
-                    FloatField, ForeignKeyField, IntegerField, DoubleField, SmallIntegerField)
+from peewee import (AutoField, BigIntegerField, BigBitField, BooleanField,
+                    CharField, DateTimeField, FloatField, ForeignKeyField,
+                    IntegerField, DoubleField, SmallIntegerField)
 from peewee import SQL
 from playhouse.postgres_ext import ArrayField
 
@@ -177,7 +178,7 @@ class BossSpectrum(BossBase):
     survey = CharField(null=True)
     cadence = CharField(null=True)
     firstcarton = CharField(null=True)
-    sdss5_target_flags = BlobField(null=True)
+    sdss5_target_flags = BigBitField(null=True)
     objtype = CharField(null=True)
     catalogid = BigIntegerField(null=True)
     sdss_id = BigIntegerField(null=True)
