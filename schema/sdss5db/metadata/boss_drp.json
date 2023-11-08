@@ -1662,7 +1662,7 @@
      {"schema":"boss_drp",
      "table_name":"boss_field",
      "column_name":"n_galaxy",
-     "display_name":"Number of Galaxies,
+     "display_name":"Number of Galaxies",
      "sql_type":"integer",
      "description":"Number of Galaxies",
      "unit":"None"},
@@ -1834,9 +1834,6 @@
      "sql_type":"timestamp",
      "description":"Time row was last updated",
      "unit":"None"},
-     
-     
-     
      {"schema":"boss_drp",
      "table_name":"boss_version",
      "column_name":"id",
@@ -1907,6 +1904,5 @@
      "sql_type":"timestamp",
      "description":"Time row was last updated",
      "unit":"None"}
-     
 ]
 }
