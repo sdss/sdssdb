@@ -99,3 +99,27 @@ update targetdb.assignment_status assn_stat
 set status = 0, mjd = null
 from new_stat
 where new_stat.pk = assn_stat.pk;
+
+-- add a new RS run
+
+select max(des.design_id)
+from targetdb.design as des
+join targetdb.design_to_field as d2f on d2f.design_id = des.design_id
+join targetdb.field as f on d2f.field_pk = f.pk
+join targetdb.version as v on f.version_pk = v.pk
+where v.plan = 'eta-5';
+
+--> 447859 this time
+
+insert into targetdb.assignment_status (pk, assignment_pk, status, mjd)
+select nextval('targetdb.assignment_status_pk_seq'), 
+asn.pk, 0, null
+from targetdb.assignment as asn
+join targetdb.design as des on asn.design_id = des.design_id
+join targetdb.hole as hole on asn.hole_pk = hole.pk
+join targetdb.observatory as obs on hole.observatory_pk = obs.pk
+join targetdb.design_to_field as d2f on d2f.design_id = des.design_id
+join targetdb.field as f on d2f.field_pk = f.pk
+join targetdb.version as v on f.version_pk = v.pk
+where v.plan = 'eta-6' and des.design_id > 447859
+ON CONFLICT DO NOTHING;
