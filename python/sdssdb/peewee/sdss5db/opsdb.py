@@ -24,7 +24,7 @@ from peewee import (
     TextField,
     fn
 )
-from playhouse.postgres_ext import ArrayField
+from playhouse.postgres_ext import ArrayField, DateTimeTZField
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
 
@@ -341,8 +341,8 @@ class Overhead(OpsdbBase):
                                     backref='overheads')
     macro = TextField()
     stage = TextField()
-    start_time = DateTimeField()
-    end_time = DateTimeField()
+    start_time = DateTimeTZField()
+    end_time = DateTimeTZField()
     elapsed = FloatField()
     success = BooleanField()
 
