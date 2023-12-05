@@ -126,8 +126,8 @@ CREATE TABLE opsdb.overhead(
     configuration_id INTEGER,
     macro TEXT,
     stage TEXT,
-    start_time TIMESTAMP,
-    end_time TIMESTAMP,
+    start_time TIMESTAMPTZ,
+    end_time TIMESTAMPTZ,
     elapsed REAL,
     success BOOLEAN);
 
