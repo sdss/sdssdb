@@ -8,9 +8,6 @@
 
 import datetime
 import os
-from logging import config
-
-from pyparsing import col
 
 from peewee import (
     AutoField,
