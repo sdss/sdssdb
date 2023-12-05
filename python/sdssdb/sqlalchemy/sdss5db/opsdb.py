@@ -7,10 +7,21 @@
 
 import os
 
-from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, DateTime, Float,
-                        ForeignKey, Integer, SmallInteger, Text, text)
-from sqlalchemy.orm import relationship
+from sqlalchemy import (
+    ARRAY,
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    SmallInteger,
+    Text,
+    text
+)
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
+from sqlalchemy.orm import relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -204,6 +215,21 @@ class Quickred(Base):
     dither_named = Column(Text)
 
     exposure = relationship('Exposure')
+
+
+class Overhead(Base):
+    __tablename__ = 'overhead'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.overhead_pk_seq'::regclass)"))
+    configuration_id = Column(ForeignKey('targetdb.overhead.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    macro = Column(Text)
+    stage = Column(Text)
+    start_time = Column(DateTime)
+    end_time = Column(DateTime)
+    elapsed = Column(Float)
+    success = Column(Boolean)
+
+    configuration = relationship('Configuration')
 
 
 def define_relations():
