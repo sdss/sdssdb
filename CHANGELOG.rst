@@ -5,9 +5,13 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.8.1 <2023-12-05>`
+* Added ``opsdb.overhead`` table and models for Peewee and SQLAlchemy.
+* Updated GitHub workflows.
+
 * :release:`0.8.0 <2023-10-23>`
 * Added new schema for ``vizdb`` schema in ``sdss5db``.
-* Added new peewee and sqlalchemy ORMs for ``vizdb`` schema. 
+* Added new peewee and sqlalchemy ORMs for ``vizdb`` schema.
 
 * :release:`0.7.0 <2023-09-28>`
 * Added complete SQLAlchemy models for ``sdss5db``.
