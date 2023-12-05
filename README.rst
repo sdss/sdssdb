@@ -1,7 +1,7 @@
 sdssdb
 ======
 
-|python| |docs| |travis|
+|python| |docs|
 
 `SDSS <https://sdss.org>`__ product for database management.
 
@@ -30,8 +30,5 @@ How to use
     :alt: Documentation Status
     :scale: 100%
     :target: https://sdssdb.readthedocs.io/en/latest/?badge=latest
-
-.. |travis| image:: https://travis-ci.org/sdss/sdssdb.svg?branch=main
-    :target: https://travis-ci.org/sdss/sdssdb
 
 .. |Python application| image:: https://github.com/sdss/sdssdb/workflows/Python%20application/badge.svg
