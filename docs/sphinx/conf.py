@@ -323,4 +323,5 @@ def generate_schema_graphs():
 
 
 def setup(app):
-    generate_schema_graphs()
+    # generate_schema_graphs()
+    pass
