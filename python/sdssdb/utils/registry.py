@@ -92,7 +92,7 @@ def list_databases(orm: str = None, with_schema: bool = False) -> Union[dict, li
     ValueError
         when input orm is not either peewee or sqlalchemy
     """
-    if orm and type(orm) != str:
+    if orm and type(orm) != str:  # flake8: noqa
         raise TypeError(f'Input {orm} must be a string.')
 
     if orm and orm not in ['peewee', 'pw', 'sqla', 'sqlalchemy']:
