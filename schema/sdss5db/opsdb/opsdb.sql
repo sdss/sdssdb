@@ -121,6 +121,16 @@ CREATE TABLE opsdb.priority_version(
     pk SERIAL PRECISION KEY NOT NULL,
     label TEXT);
 
+CREATE TABLE opsdb.overhead(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    configuration_id INTEGER,
+    macro TEXT,
+    stage TEXT,
+    start_time DATE,
+    end_time DATE,
+    elapsed REAL,
+    success BOOLEAN);
+
 -- Foreign keys
 
 ALTER TABLE ONLY opsdb.base_priority
@@ -216,6 +226,12 @@ ALTER TABLE ONLY opsdb.quickred
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY opsdb.overhead
+    ADD CONSTRAINT configuration_id_fk
+    FOREIGN KEY (configuration_id) REFERENCES opsdb.configuration(configuration_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
 -- Table data
 
 INSERT INTO opsdb.exposure_flavor VALUES
@@ -267,6 +283,10 @@ CREATE INDEX CONCURRENTLY ql_exposure_pk_idx
 CREATE INDEX CONCURRENTLY qr_exposure_pk_idx
     ON opsdb.quickred
     USING BTREE(exposure_pk);
+
+CREATE INDEX CONCURRENTLY overhead_configuration_id_idx
+    ON opsdb.overhead
+    USING BTREE(configuration_id);
 
 -- pop function to retrieve next in queue and increment
 

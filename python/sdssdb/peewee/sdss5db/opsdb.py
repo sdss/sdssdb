@@ -6,14 +6,27 @@
 # @Filename: opsdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-import os
 import datetime
+import os
+from logging import config
 
-from peewee import (AutoField, BigIntegerField, DateTimeField,
-                    DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField,
-                    ManyToManyField, BooleanField,
-                    Select, TextField, fn)
+from pyparsing import col
+
+from peewee import (
+    AutoField,
+    BigIntegerField,
+    BooleanField,
+    DateTimeField,
+    DeferredThroughModel,
+    DoubleField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    ManyToManyField,
+    Select,
+    TextField,
+    fn
+)
 from playhouse.postgres_ext import ArrayField
 
 import sdssdb.peewee.sdss5db.targetdb as targetdb
@@ -321,6 +334,23 @@ class BasePriority(OpsdbBase):
 
     class Meta:
         table_name = 'base_priority'
+
+
+class Overhead(OpsdbBase):
+    pk = AutoField()
+    configuration = ForeignKeyField(Configuration,
+                                    column_name='configuration_id',
+                                    field='configuration_id',
+                                    backref='overheads')
+    macro = TextField()
+    stage = TextField()
+    start_time = DateTimeField()
+    end_time = DateTimeField()
+    elapsed = FloatField()
+    success = BooleanField()
+
+    class Meta:
+        table_name = 'overhead'
 
 
 FieldToPriorityDeferred.set_model(FieldToPriority)
