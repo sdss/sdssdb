@@ -124,6 +124,7 @@ CREATE TABLE opsdb.priority_version(
 CREATE TABLE opsdb.overhead(
     pk SERIAL PRIMARY KEY NOT NULL,
     configuration_id INTEGER,
+    macro_id INTEGER,
     macro TEXT,
     stage TEXT,
     start_time TIMESTAMPTZ,

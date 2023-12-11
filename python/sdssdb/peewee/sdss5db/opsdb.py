@@ -339,6 +339,7 @@ class Overhead(OpsdbBase):
                                     column_name='configuration_id',
                                     field='configuration_id',
                                     backref='overheads')
+    macro_id = IntegerField()
     macro = TextField()
     stage = TextField()
     start_time = DateTimeTZField()

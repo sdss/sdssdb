@@ -220,8 +220,7 @@ class Quickred(Base):
 class Overhead(Base):
     __tablename__ = 'overhead'
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.overhead_pk_seq'::regclass)"))
-    configuration_id = Column(ForeignKey('targetdb.overhead.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    macro_id = Column(Integer)
     macro = Column(Text)
     stage = Column(Text)
     start_time = Column(DateTime)
