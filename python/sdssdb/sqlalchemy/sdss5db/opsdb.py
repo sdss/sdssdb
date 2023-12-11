@@ -6,6 +6,7 @@
 # flake8: noqa=E501
 
 import os
+from ast import In
 
 from sqlalchemy import (
     ARRAY,
@@ -220,6 +221,8 @@ class Quickred(Base):
 class Overhead(Base):
     __tablename__ = 'overhead'
 
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.overhead_pk_seq'::regclass)"))
+    configuration_id = Column(ForeignKey(f'{Base._schema}.configuration.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
     macro_id = Column(Integer)
     macro = Column(Text)
     stage = Column(Text)
