@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.8.3 <2023-12-11>`
+* Add column ``macro_id`` to ``opsdb.overhead``.
+* Fix hardcoded schema in SQLAlchemy ``opsdb.overhead`` model.
+
 * :release:`0.8.2 <2023-12-05>`
 * Change ``DATE`` to ``TIMESTAMPTZ`` for the datetime columns in ``opsdb.overhead`` and models. Fixed the SQLAlchemy ``Overhead`` model which was in ``targetdb`` by mistake.
 
