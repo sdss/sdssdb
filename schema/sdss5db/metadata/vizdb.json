@@ -1,0 +1,257 @@
+{
+  "metadata": [
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "catalogid21",
+      "display_name": "CatalogID 21",
+      "sql_type": "bigint",
+      "description": "Catalog id for v0.1 cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "catalogid25",
+      "display_name": "CatalogID 25",
+      "sql_type": "bigint",
+      "description": "Catalog id for v0.5 cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "catalogid31",
+      "display_name": "CatalogID 31",
+      "sql_type": "bigint",
+      "description": "Catalog id for v1 cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "ra_sdss_id",
+      "display_name": "RA",
+      "sql_type": "double precision",
+      "description": "Right Ascension of the most recent cross-match catalogid associated with an sdss_id",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "dec_sdss_id",
+      "display_name": "Dec",
+      "sql_type": "double precision",
+      "description": "Declination of the most recent cross-match catalogid associated with an sdss_id",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "sdss_id",
+      "display_name": "SDSS ID",
+      "sql_type": "bigint",
+      "description": "The common, unifiying, SDSS ID of an on-sky object",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "sdss_id",
+      "display_name": "SDSS ID",
+      "sql_type": "bigint",
+      "description": "The common, unifiying, SDSS ID of an on-sky object",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "catalogid",
+      "display_name": "Catalog ID",
+      "sql_type": "bigint",
+      "description": "catalog ID of an object in a given cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "version_id",
+      "display_name": "Version ID",
+      "sql_type": "smallint",
+      "description": "The version number of the cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "ra_sdss_id",
+      "display_name": "RA (sdss_id)",
+      "sql_type": "double precision",
+      "description": "Right Ascension of the most recent cross-match catalogid associated with an sdss_id",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "dec_sdss_id",
+      "display_name": "Dec (sdss_id)",
+      "sql_type": "double precision",
+      "description": "Declination of the most recent cross-match catalogid associated with an sdss_id",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "n_associated",
+      "display_name": "N_Associated",
+      "sql_type": "smallint",
+      "description": "Total number of sdss_ids associated with that catalogid.  Proxy for the trustworthiness/uniqueness of the sdss_id process for that source.",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "ra_catalogid",
+      "display_name": "RA (catalog)",
+      "sql_type": "double precision",
+      "description": "Right Ascension of the specific catalog id",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "dec_catalogid",
+      "display_name": "Dec (catalog)",
+      "sql_type": "double precision",
+      "description": "Declination of the specific catalog id",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "bigint",
+      "description": "Primary Key of the sdss_id_flat table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "schema",
+      "display_name": "Schema",
+      "sql_type": "text",
+      "description": "The database schema name",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "table_name",
+      "display_name": "Table Name",
+      "sql_type": "text",
+      "description": "The database table name",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "column_name",
+      "display_name": "Column Name",
+      "sql_type": "text",
+      "description": "The database column name",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "display_name",
+      "display_name": "Display Name",
+      "sql_type": "text",
+      "description": "A more user-friedly, human-readable name for the database column",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "description",
+      "display_name": "Description",
+      "sql_type": "text",
+      "description": "A description of the database column",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "unit",
+      "display_name": "Unit",
+      "sql_type": "text",
+      "description": "The physical unit if any of the database column",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "db_metadata",
+      "column_name": "sql_type",
+      "display_name": "SQL Type",
+      "sql_type": "text",
+      "description": "The data type of the database column",
+      "unit": "None"
+    },
+
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the sdssid_to_pipes table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "sdss_id",
+      "display_name": "SDSS ID",
+      "sql_type": "bigint",
+      "description": "The common, unifiying, SDSS ID of an on-sky object",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "in_boss",
+      "display_name": "In BOSS",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id is in the boss reduction tables",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "In APOGEE",
+      "display_name": "Unit",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id is in the apogee reduction tables",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "In Astra",
+      "display_name": "SQL Type",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id is in the astra reduction tables",
+      "unit": "None"
+    }
+  ]
+}
