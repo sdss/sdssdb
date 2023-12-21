@@ -238,8 +238,8 @@
     {
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
-      "column_name": "In APOGEE",
-      "display_name": "Unit",
+      "column_name": "in_apogee",
+      "display_name": "In APOGEE",
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id is in the apogee reduction tables",
       "unit": "None"
@@ -247,8 +247,8 @@
     {
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
-      "column_name": "In Astra",
-      "display_name": "SQL Type",
+      "column_name": "in_astra",
+      "display_name": "In APOGEE",
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id is in the astra reduction tables",
       "unit": "None"
