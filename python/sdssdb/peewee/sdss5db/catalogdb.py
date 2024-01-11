@@ -2036,6 +2036,14 @@ class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
         table_name = 'sdss_dr16_specobj'
 
 
+class SDSS_DR17_SpecObj(CatalogdbModel):
+
+    specobjid = CharField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdss_dr17_specobj'
+
+
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
