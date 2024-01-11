@@ -2036,6 +2036,15 @@ class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
         table_name = 'sdss_dr16_specobj'
 
 
+class SDSS_DR17_SpecObj(CatalogdbModel):
+    # The column specobjid has data type varchar since
+    # it has values which do not fit in bigint.
+    specobjid = CharField(primary_key=True)
+
+    class Meta:
+        table_name = 'sdss_dr17_specobj'
+
+
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
