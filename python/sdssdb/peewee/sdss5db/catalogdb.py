@@ -2037,7 +2037,8 @@ class SDSS_DR16_SpecObj(SDSS_DR14_SpecObj):
 
 
 class SDSS_DR17_SpecObj(CatalogdbModel):
-
+    # The column specobjid has data type varchar since
+    # it has values which do not fit in bigint.
     specobjid = CharField(primary_key=True)
 
     class Meta:

@@ -9,6 +9,9 @@
 -- the data type varchar since the corresponding columns in
 -- the file specObj-dr17.fits have the data type character.
 --
+-- The column specobjid has data type varchar since
+-- it has values which do not fit in bigint.
+--
 -- See the below link for the data model
 -- https://data.sdss.org/datamodel/files/SPECTRO_REDUX/specObj.html
 
