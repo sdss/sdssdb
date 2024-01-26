@@ -736,6 +736,46 @@ class Sagitta_EDR3(CatalogdbModel):
         table_name = 'sagitta_edr3'
 
 
+class Mangadapall(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'mangadapall'
+
+
+class Mangadrpall(CatalogdbModel):
+
+    plateifu = CharField(primary_key=True)
+
+    class Meta:
+        table_name = 'mangadrpall'
+
+
+class Mangatarget(CatalogdbModel):
+
+    mangaid = CharField(primary_key=True)
+
+    class Meta:
+        table_name = 'mangatarget'
+
+
+class Mastar_goodstars(CatalogdbModel):
+
+    mangaid = CharField(primary_key=True)
+
+    class Meta:
+        table_name = 'mastar_goodstars'
+
+
+class Mastar_goodvisits(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'mastar_goodvisits'
+
+
 class SDSSV_Plateholes_Meta(CatalogdbModel):
 
     yanny_uid = BigIntegerField(primary_key=True)
