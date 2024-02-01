@@ -111,6 +111,14 @@ class Catalog_ver25_to_ver31_full_all(CatalogdbModel):
         table_name = 'catalog_ver25_to_ver31_full_all'
 
 
+class Target_non_carton(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'target_non_carton'
+
+
 class AllWise(CatalogdbModel):
 
     cntr = BigIntegerField(primary_key=True)
