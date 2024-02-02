@@ -21,7 +21,8 @@ from sqlalchemy.exc import OperationalError as OpError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import peewee
-from peewee import OperationalError, PostgresqlDatabase
+from peewee import OperationalError
+from playhouse.pool import PooledPostgresqlExtDatabase
 from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import Introspector, UnknownField
 
@@ -357,7 +358,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         pass
 
 
-class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
+class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
     """Peewee database connection implementation.
 
     Attributes
@@ -376,8 +377,12 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         self._metadata = {}
 
         autorollback = kwargs.pop('autorollback', True)
+        max_connections = kwargs.pop('max_connections', 10)
+        stale_timeout = kwargs.pop('stale_timeout', None)
 
-        PostgresqlDatabase.__init__(self, None, autorollback=autorollback)
+        PooledPostgresqlExtDatabase.__init__(self, None, autorollback=autorollback,
+                                             stale_timeout=stale_timeout,
+                                             max_connections=max_connections)
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
@@ -408,16 +413,16 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
             except pgpasslib.FileNotFound:
                 params['password'] = None
 
-        PostgresqlDatabase.init(self, dbname, **params)
+        PooledPostgresqlExtDatabase.init(self, dbname, **params)
         self._metadata = {}
 
         try:
-            PostgresqlDatabase.connect(self)
+            PooledPostgresqlExtDatabase.connect(self)
             self.dbname = dbname
         except OperationalError as ee:
             if not silent_on_fail:
                 log.warning(f'failed to connect to database {self.database!r}: {ee}')
-            PostgresqlDatabase.init(self, None)
+            PooledPostgresqlExtDatabase.init(self, None)
 
         if self.is_connection_usable() and self.auto_reflect:
             with self.atomic():
