@@ -12,6 +12,7 @@ from peewee import (
     AutoField,
     BigAutoField,
     BigIntegerField,
+    BooleanField,
     CharField,
     DeferredThroughModel,
     DoubleField,
@@ -2220,6 +2221,58 @@ class AllStar_DR17_synspec_rev1(CatalogdbModel):
 
     class Meta:
         table_name = 'allstar_dr17_synspec_rev1'
+
+
+class ToO_Target(CatalogdbModel):
+    too_id = IntegerField(primary_key=True)
+    fiber_type = TextField()
+    catalogid = IntegerField()
+    sdss_id = IntegerField()
+    gaia_dr3_source_id = IntegerField()
+    twomass_pts_key = IntegerField()
+    sky_brightness_mode = TextField()
+    ra = FloatField()
+    dec = FloatField()
+    pmra = FloatField()
+    pmdec = FloatField()
+    epoch = FloatField()
+    parallax = FloatField()
+    lambda_eff = FloatField()
+    u_mag = FloatField()
+    g_mag = FloatField()
+    r_mag = FloatField()
+    i_mag = FloatField()
+    z_mag = FloatField()
+    optical_prov = TextField()
+    gaia_bp_mag = FloatField()
+    gaia_rp_mag = FloatField()
+    gaia_g_mag = FloatField()
+    h_mag = FloatField()
+    delta_ra = FloatField()
+    delta_dec = FloatField()
+    inertial = BooleanField()
+    n_exposures = IntegerField()
+    priority = IntegerField()
+    active = BooleanField()
+    expiration_date = IntegerField()
+    observed = BooleanField()
+
+    gaia_dr3 = ForeignKeyField(
+        Gaia_DR3,
+        field='source_id',
+        column_name='gaia_dr3_source_id',
+        backref="+",
+    )
+    twomass_psc = ForeignKeyField(
+        TwoMassPSC,
+        field='pts_key',
+        column_name='twomass_pts_key',
+        backref="+",
+    )
+
+    class Meta:
+        table_name = "too_target"
+        reflect = False
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
