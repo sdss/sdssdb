@@ -2230,13 +2230,33 @@ class ToO_Target(CatalogdbModel):
     sdss_id = IntegerField()
     gaia_dr3_source_id = IntegerField()
     twomass_pts_key = IntegerField()
-    sky_brightness_mode = TextField()
     ra = FloatField()
     dec = FloatField()
     pmra = FloatField()
     pmdec = FloatField()
     epoch = FloatField()
     parallax = FloatField()
+
+    gaia_dr3 = ForeignKeyField(
+        Gaia_DR3,
+        field='source_id',
+        column_name='gaia_dr3_source_id',
+        backref="+",
+    )
+    twomass_psc = ForeignKeyField(
+        TwoMassPSC,
+        field='pts_key',
+        column_name='twomass_pts_key',
+        backref="+",
+    )
+
+    class Meta:
+        table_name = "too_target"
+        reflect = False
+
+
+class ToO_Metadata(CatalogdbModel):
+    sky_brightness_mode = TextField()
     lambda_eff = FloatField()
     u_mag = FloatField()
     g_mag = FloatField()
@@ -2256,23 +2276,6 @@ class ToO_Target(CatalogdbModel):
     active = BooleanField()
     expiration_date = IntegerField()
     observed = BooleanField()
-
-    gaia_dr3 = ForeignKeyField(
-        Gaia_DR3,
-        field='source_id',
-        column_name='gaia_dr3_source_id',
-        backref="+",
-    )
-    twomass_psc = ForeignKeyField(
-        TwoMassPSC,
-        field='pts_key',
-        column_name='twomass_pts_key',
-        backref="+",
-    )
-
-    class Meta:
-        table_name = "too_target"
-        reflect = False
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)

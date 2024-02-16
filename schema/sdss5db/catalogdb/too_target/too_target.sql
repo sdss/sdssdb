@@ -5,13 +5,31 @@ CREATE TABLE catalogdb.too_target (
     sdss_id BIGINT,
     gaia_dr3_source_id BIGINT,
     twomass_pts_key INTEGER,
-    sky_brightness_mode TEXT,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
     pmra REAL,
     pmdec REAL,
     epoch REAL,
-    parallax REAL,
+    parallax REAL
+);
+
+ALTER TABLE ONLY catalogdb.too_target
+    ADD CONSTRAINT gaia_dr3_source_id_fk
+    FOREIGN KEY (gaia_dr3_source_id) REFERENCES catalogdb.gaia_dr3_source(source_id);
+
+ALTER TABLE ONLY catalogdb.too_target
+    ADD CONSTRAINT twomass_pts_key_fk
+    FOREIGN KEY (twomass_pts_key) REFERENCES catalogdb.twomass_psc(pts_key);
+
+CREATE INDEX ON catalogdb.too_target (catalogid);
+CREATE INDEX ON catalogdb.too_target (sdss_id);
+CREATE INDEX ON catalogdb.too_target (gaia_dr3_source_id);
+CREATE INDEX ON catalogdb.too_target (twomass_pts_key);
+CREATE INDEX ON catalogdb.too_target (q3c_ang2ipix(ra, dec));
+
+CREATE TABLE catalogdb.too_metadata (
+    too_id BIGINT PRIMARY KEY,
+    sky_brightness_mode TEXT,
     lambda_eff REAL,
     u_mag REAL,
     g_mag REAL,
@@ -32,17 +50,3 @@ CREATE TABLE catalogdb.too_target (
     expiration_date INTEGER,
     observed BOOLEAN
 );
-
-ALTER TABLE ONLY catalogdb.too_target
-    ADD CONSTRAINT gaia_dr3_source_id_fk
-    FOREIGN KEY (gaia_dr3_source_id) REFERENCES catalogdb.gaia_dr3_source(source_id);
-
-ALTER TABLE ONLY catalogdb.too_target
-    ADD CONSTRAINT twomass_pts_key_fk
-    FOREIGN KEY (twomass_pts_key) REFERENCES catalogdb.twomass_psc(pts_key);
-
-CREATE INDEX ON catalogdb.too_target (catalogid);
-CREATE INDEX ON catalogdb.too_target (sdss_id);
-CREATE INDEX ON catalogdb.too_target (gaia_dr3_source_id);
-CREATE INDEX ON catalogdb.too_target (twomass_pts_key);
-CREATE INDEX ON catalogdb.too_target (q3c_ang2ipix(ra, dec));
