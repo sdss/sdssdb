@@ -784,6 +784,46 @@ class Mastar_goodvisits(CatalogdbModel):
         table_name = 'mastar_goodvisits'
 
 
+class Marvels_dr11_star(CatalogdbModel):
+
+    starname = CharField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr11_star'
+
+
+class Marvels_dr11_velocitycurve_ccf(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr11_velocitycurve_ccf'
+
+
+class Marvels_dr11_velocitycurve_dfdi(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr11_velocitycurve_dfdi'
+
+
+class Marvels_dr12_star(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr12_star'
+
+
+class Marvels_dr12_velocitycurve_uf1d(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr12_velocitycurve_uf1d'
+
+
 class SDSSV_Plateholes_Meta(CatalogdbModel):
 
     yanny_uid = BigIntegerField(primary_key=True)
