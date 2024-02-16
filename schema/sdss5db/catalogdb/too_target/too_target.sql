@@ -28,7 +28,7 @@ CREATE INDEX ON catalogdb.too_target (twomass_pts_key);
 CREATE INDEX ON catalogdb.too_target (q3c_ang2ipix(ra, dec));
 
 CREATE TABLE catalogdb.too_metadata (
-    too_id BIGINT PRIMARY KEY,
+    too_id BIGINT PRIMARY KEY REFERENCES catalogdb.too_target(too_id),
     sky_brightness_mode TEXT,
     lambda_eff REAL,
     u_mag REAL,
