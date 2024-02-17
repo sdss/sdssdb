@@ -2256,6 +2256,7 @@ class ToO_Target(CatalogdbModel):
 
 
 class ToO_Metadata(CatalogdbModel):
+    too_id = IntegerField(primary_key=True)
     sky_brightness_mode = TextField()
     lambda_eff = FloatField()
     u_mag = FloatField()
@@ -2276,6 +2277,10 @@ class ToO_Metadata(CatalogdbModel):
     active = BooleanField()
     expiration_date = IntegerField()
     observed = BooleanField()
+
+    class Meta:
+        table_name = "too_metadata"
+        reflect = False
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
