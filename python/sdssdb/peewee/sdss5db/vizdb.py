@@ -79,3 +79,25 @@ class DbMetadata(VizBase):
     class Meta:
         table_name = 'db_metadata'
         print_fields = ['schema', 'table_name', 'column_name', 'display_name']
+
+
+class Releases(VizBase):
+
+    pk = AutoField()
+    release = TextField(null=True)
+    run2d = TextField(null=True)
+    run1d = TextField(null=True)
+    apred_vers = TextField(null=True)
+    v_astra = TextField(null=True)
+    v_speccomp = TextField(null=True)
+    v_targ = TextField(null=True)
+    drpver = TextField(null=True)
+    dapver = TextField(null=True)
+    apstar_vers = TextField(null=True)
+    aspcap_vers = TextField(null=True)
+    results_vers = TextField(null=True)
+    public = BooleanField(null=False)
+
+    class Meta:
+        table_name = 'releases'
+        print_fields = ['release']
