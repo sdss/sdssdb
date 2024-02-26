@@ -252,6 +252,123 @@
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id is in the astra reduction tables",
       "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "release",
+      "display_name": "Data Release",
+      "sql_type": "text",
+      "description": "The SDSS Data Release",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "run2d",
+      "display_name": "Run2D",
+      "sql_type": "text",
+      "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "run1d",
+      "display_name": "Run1D",
+      "sql_type": "text",
+      "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "apred_vers",
+      "display_name": "Apred Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "v_astra",
+      "display_name": "Astra Version",
+      "sql_type": "text",
+      "description": "Software tag for the MWM Astra pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "v_speccomp",
+      "display_name": "Speccomp Version",
+      "sql_type": "text",
+      "description": "Software tag for the EFEDS VAC",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "v_targ",
+      "display_name": "MOS Target Version",
+      "sql_type": "text",
+      "description": "Software tag for the MOS targeting catalogs",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "drpver",
+      "display_name": "DRP Version",
+      "sql_type": "text",
+      "description": "Software tag for the MaNGA data reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "dapver",
+      "display_name": "DAP Version",
+      "sql_type": "text",
+      "description": "Software tag for the MaNGA data analysis pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "apstar_vers",
+      "display_name": "Apstar Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "aspcap_vers",
+      "display_name": "ASPCAP Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "results_vers",
+      "display_name": "Results Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "public",
+      "display_name": "Public",
+      "sql_type": "text",
+      "description": "Flag if the data release is public or not",
+      "unit": "None"
     }
   ]
 }
