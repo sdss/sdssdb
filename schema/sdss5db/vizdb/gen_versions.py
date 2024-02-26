@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 import ast
-import sys
 from collections import ChainMap
 
 
@@ -59,7 +58,7 @@ def create_df() -> list[dict]:
     return df.to_dict(orient='records')
 
 
-def load_to_db(rows):
+def load_to_db(rows: list):
     """ load into the vizdb.releases table """
     from sdssdb.peewee.sdss5db import database, vizdb
 
@@ -67,7 +66,3 @@ def load_to_db(rows):
 
     with database.atomic():
         vizdb.Release.bulk_create(data)
-
-
-if __name__ == '__main__':
-    print(sys.argv[1:])
