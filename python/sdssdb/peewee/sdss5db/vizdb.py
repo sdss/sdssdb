@@ -9,7 +9,7 @@
 # Peewee version: 3.13.2
 
 from peewee import (AutoField, BigIntegerField, BooleanField,
-                    DoubleField, SmallIntegerField, TextField)
+                    DoubleField, IntegerField, SmallIntegerField, TextField)
 
 from .. import BaseModel
 from . import database  # noqa
@@ -97,6 +97,8 @@ class Releases(VizBase):
     aspcap_vers = TextField(null=True)
     results_vers = TextField(null=True)
     public = BooleanField(null=False)
+    mjd_cutoff_apo = IntegerField(null=False)
+    mjd_cutoff_lco = IntegerField(null=False)
 
     class Meta:
         table_name = 'releases'

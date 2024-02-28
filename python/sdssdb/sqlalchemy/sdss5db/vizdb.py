@@ -95,6 +95,8 @@ class Releases(Base):
     aspcap_vers = Column(Text)
     results_vers = Column(Text)
     public = Column(Boolean)
+    mjd_cutoff_apo = Column(Integer)
+    mjd_cutoff_lco = Column(Integer)
 
 
 def define_relations():
