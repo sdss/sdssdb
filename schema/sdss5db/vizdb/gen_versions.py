@@ -4,6 +4,11 @@
 import ast
 from collections import ChainMap
 
+def fix_list(df, col):
+    """ fix columns with list values """
+    nn = df[col].notnull()
+    df.loc[nn, col] = df[nn][col].apply(lambda x: ','.join(map(str, ast.literal_eval(x))) if '[' in x else x)
+    return df
 
 def create_df() -> list[dict]:
     """ Create the releases dataframe
@@ -36,13 +41,10 @@ def create_df() -> list[dict]:
 
     df = pd.DataFrame.from_records(dd, columns=cols)
 
-    # fill nans
-    df = df.fillna('None')
-
     # adjust multi-valued keys to comma-separated strings
-    df['run2d'] = df['run2d'].apply(lambda x: ','.join(map(str, ast.literal_eval(x))) if '[' in x else x)
-    df['run1d'] = df['run1d'].apply(lambda x: ','.join(map(str, ast.literal_eval(x))) if '[' in x else x)
-    df['apred_vers'] = df['apred_vers'].apply(lambda x: ','.join(map(str, ast.literal_eval(x))) if '[' in x else x)
+    df = fix_list(df, 'run2d')
+    df = fix_list(df, 'run1d')
+    df = fix_list(df, 'apred_vers')
 
     # drop legacy rows
     df = df.set_index('release', drop=False)
@@ -50,6 +52,7 @@ def create_df() -> list[dict]:
     df = df.drop(sub.index)
 
     # add mjd cutoffs
+    # todo - move this to the datamodel
     df.loc['DR18', 'mjd_cutoff_apo'] = 59392
     df.loc['DR19', 'mjd_cutoff_apo'] = 60280
     df.loc['DR19', 'mjd_cutoff_lco'] = 60280
@@ -70,13 +73,11 @@ def create_df() -> list[dict]:
     df = pd.concat([df, pd.DataFrame([('WORK')], columns=['release'])])
 
     # fill nans
-    df = df.fillna('None')
+    #df = df.fillna('None')
+    df = df.fillna('None').replace('None', None)
 
     # create the public column
     df['public'] = df['release'].apply(lambda x: 'DR' in x)
-
-    # add MJD cutoffs
-
 
     return df.to_dict(orient='records')
 
@@ -85,7 +86,7 @@ def load_to_db(rows: list):
     """ load into the vizdb.releases table """
     from sdssdb.peewee.sdss5db import database, vizdb
 
-    data = [vizdb.Release(**row) for row in rows]
+    data = [vizdb.Releases(**row) for row in rows]
 
     with database.atomic():
-        vizdb.Release.bulk_create(data)
+        vizdb.Releases.bulk_create(data)
