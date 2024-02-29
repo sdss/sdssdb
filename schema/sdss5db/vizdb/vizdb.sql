@@ -77,3 +77,24 @@ CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(schema);
 CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(column_name);
 
+
+CREATE TABLE vizdb.releases (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    release TEXT,
+    run2d TEXT[],
+    run1d TEXT[],
+    apred_vers TEXT[],
+    v_astra TEXT,
+    v_speccomp TEXT,
+    v_targ TEXT,
+    drpver TEXT,
+    dapver TEXT,
+    apstar_vers TEXT,
+    aspcap_vers TEXT,
+    results_vers TEXT,
+    mprocver TEXT,
+    public BOOLEAN,
+    mjd_cutoff_apo INTEGER,
+    mjd_cutoff_lco INTEGER
+);
+CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);

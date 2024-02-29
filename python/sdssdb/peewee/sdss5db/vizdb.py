@@ -9,7 +9,8 @@
 # Peewee version: 3.13.2
 
 from peewee import (AutoField, BigIntegerField, BooleanField,
-                    DoubleField, SmallIntegerField, TextField)
+                    DoubleField, IntegerField, SmallIntegerField, TextField)
+from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
 from . import database  # noqa
@@ -79,3 +80,27 @@ class DbMetadata(VizBase):
     class Meta:
         table_name = 'db_metadata'
         print_fields = ['schema', 'table_name', 'column_name', 'display_name']
+
+
+class Releases(VizBase):
+
+    pk = AutoField()
+    release = TextField(null=True)
+    run2d = ArrayField(TextField, null=True)
+    run1d = ArrayField(TextField, null=True)
+    apred_vers = ArrayField(TextField, null=True)
+    v_astra = TextField(null=True)
+    v_speccomp = TextField(null=True)
+    v_targ = TextField(null=True)
+    drpver = TextField(null=True)
+    dapver = TextField(null=True)
+    apstar_vers = TextField(null=True)
+    aspcap_vers = TextField(null=True)
+    results_vers = TextField(null=True)
+    public = BooleanField(null=False)
+    mjd_cutoff_apo = IntegerField(null=False)
+    mjd_cutoff_lco = IntegerField(null=False)
+
+    class Meta:
+        table_name = 'releases'
+        print_fields = ['release']
