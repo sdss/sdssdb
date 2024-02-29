@@ -51,6 +51,7 @@ Currently, we support the following databases and schemas:
     * *apogee_drpdb*: schema with the results of the MWM DRP
     * *boss_drp*: schema with the results of the BHM DRP
     * *vizdb*: primary schema for the data visualization webapp
+    * *astradb*: primary schema for the Astra pipeline
 * **archive**: the SDSS science archive database.
     * *sas*: schema for SAS.
 * **lvmdb**: the LVM database
@@ -162,6 +163,13 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td class="success"></td>
             <td class="success"></td>
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/vizdb/sdss5db.vizdb.pdf"></a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">astradb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/astradb/sdss5db.astradb.pdf"></a></td>
         </tr>
         <tr>
             <td class="active">archive</td>
