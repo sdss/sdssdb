@@ -7,7 +7,8 @@
 
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import BigInteger, Boolean, Column, Float, Integer, SmallInteger, Text, text
+from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Integer,
+                        SmallInteger, Text, text)
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -83,9 +84,9 @@ class Releases(Base):
 
     pk = Column('pk', BigInteger, primary_key=True)
     release = Column(Text)
-    run2d = Column(Text)
-    run1d = Column(Text)
-    apred_vers = Column(Text)
+    run2d = Column(ARRAY(Text()))
+    run1d = Column(ARRAY(Text()))
+    apred_vers = Column(ARRAY(Text()))
     v_astra = Column(Text)
     v_speccomp = Column(Text)
     v_targ = Column(Text)

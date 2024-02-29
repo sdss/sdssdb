@@ -81,9 +81,9 @@ CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(column_name);
 CREATE TABLE vizdb.releases (
     pk SERIAL PRIMARY KEY NOT NULL,
     release TEXT,
-    run2d TEXT,
-    run1d TEXT,
-    apred_vers TEXT,
+    run2d TEXT[],
+    run1d TEXT[],
+    apred_vers TEXT[],
     v_astra TEXT,
     v_speccomp TEXT,
     v_targ TEXT,

@@ -7,7 +7,7 @@ from collections import ChainMap
 def fix_list(df, col):
     """ fix columns with list values """
     nn = df[col].notnull()
-    df.loc[nn, col] = df[nn][col].apply(lambda x: ','.join(map(str, ast.literal_eval(x))) if '[' in x else x)
+    df.loc[nn, col] = df[nn][col].apply(lambda x: list(map(str, ast.literal_eval(x))) if x and '[' in x else [x] if x else x)
     return df
 
 def create_df() -> list[dict]:
@@ -41,7 +41,7 @@ def create_df() -> list[dict]:
 
     df = pd.DataFrame.from_records(dd, columns=cols)
 
-    # adjust multi-valued keys to comma-separated strings
+    # adjust multi-valued keys to lists
     df = fix_list(df, 'run2d')
     df = fix_list(df, 'run1d')
     df = fix_list(df, 'apred_vers')
@@ -73,7 +73,6 @@ def create_df() -> list[dict]:
     df = pd.concat([df, pd.DataFrame([('WORK')], columns=['release'])])
 
     # fill nans
-    #df = df.fillna('None')
     df = df.fillna('None').replace('None', None)
 
     # create the public column

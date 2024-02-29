@@ -10,6 +10,7 @@
 
 from peewee import (AutoField, BigIntegerField, BooleanField,
                     DoubleField, IntegerField, SmallIntegerField, TextField)
+from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
 from . import database  # noqa
@@ -85,9 +86,9 @@ class Releases(VizBase):
 
     pk = AutoField()
     release = TextField(null=True)
-    run2d = TextField(null=True)
-    run1d = TextField(null=True)
-    apred_vers = TextField(null=True)
+    run2d = ArrayField(TextField, null=True)
+    run1d = ArrayField(TextField, null=True)
+    apred_vers = ArrayField(TextField, null=True)
     v_astra = TextField(null=True)
     v_speccomp = TextField(null=True)
     v_targ = TextField(null=True)
