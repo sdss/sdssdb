@@ -1118,6 +1118,22 @@ class Grok(AstraBase):
         table_name = 'grok'
         primary_key = False
 
+class GrokRotation(AstraBase):
+    task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.grok_rotation_task_pk_seq'::regclass)")], unique=True)
+    source_pk_id = IntegerField(index=True, null=True)
+    spectrum_pk_id = IntegerField(index=True)
+    v_astra = TextField()
+    created = DateTimeField()
+    t_elapsed = FloatField(null=True)
+    t_overhead = FloatField(null=True)
+    tag = TextField(index=True)
+    vsini = FloatField(null=True)
+    chi2 = FloatField(null=True)
+    w = ArrayField(column_name='W', null=True)  # ARRAY
+
+    class Meta:
+        table_name = 'grok_rotation'
+        primary_key = False
 
 class HotPayne(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.hot_payne_task_pk_seq'::regclass)")], unique=True)
