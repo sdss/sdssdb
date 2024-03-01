@@ -7,6 +7,8 @@
 # Database: sdss5db
 # Peewee version: 3.17.1
 
+# flake8: noqa=E501,E741
+
 from peewee import (AutoField, BigIntegerField, BlobField, BooleanField,
                     DateTimeField, DoubleField, FloatField, IntegerField,
                     SQL, TextField)
@@ -72,6 +74,7 @@ class ApogeeCoaddedSpectrumInApStar(AstraBase):
             (('release', 'apred', 'apstar', 'obj', 'telescope', 'healpix', 'field', 'prefix'), True),
         )
 
+
 class ApogeeCombinedSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_combined_spectrum_pk_seq'::regclass)")], unique=True)
     spectrum_pk_id = IntegerField(null=True, unique=True)
@@ -123,6 +126,7 @@ class ApogeeCombinedSpectrum(AstraBase):
         )
         primary_key = False
 
+
 class ApogeeMadgicsVisitSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_madgics_visit_spectrum_pk_seq'::regclass)")], unique=True)
     spectrum_pk_id = IntegerField(null=True, unique=True)
@@ -141,6 +145,7 @@ class ApogeeMadgicsVisitSpectrum(AstraBase):
             (('release', 'telescope', 'field', 'plate', 'mjd', 'fiber'), True),
         )
         primary_key = False
+
 
 class ApogeeNet(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.a_net_task_pk_seq'::regclass)")], unique=True)
@@ -165,6 +170,7 @@ class ApogeeNet(AstraBase):
     class Meta:
         table_name = 'apogee_net'
         primary_key = False
+
 
 class ApogeeNetV2(AstraBase):
     task_pk = AutoField()
@@ -191,6 +197,7 @@ class ApogeeNetV2(AstraBase):
 
     class Meta:
         table_name = 'apogee_net_v2'
+
 
 class ApogeeRestFrameVisitSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_rest_frame_visit_spectrum_pk_seq'::regclass)")], unique=True)
@@ -256,6 +263,7 @@ class ApogeeRestFrameVisitSpectrum(AstraBase):
         )
         primary_key = False
 
+
 class ApogeeVisitSpectrum(AstraBase):
     pk = AutoField()
     spectrum_pk_id = IntegerField(null=True, unique=True)
@@ -314,6 +322,7 @@ class ApogeeVisitSpectrum(AstraBase):
             (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
         )
 
+
 class ApogeeVisitSpectrumInApStar(AstraBase):
     pk = AutoField()
     source_pk = IntegerField(index=True, null=True)
@@ -338,6 +347,7 @@ class ApogeeVisitSpectrumInApStar(AstraBase):
         indexes = (
             (('release', 'apred', 'apstar', 'obj', 'telescope', 'healpix', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True),
         )
+
 
 class Aspcap(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.aspcap_task_pk_seq2'::regclass)")], unique=True)
@@ -576,6 +586,7 @@ class AstroNNdist(AstraBase):
         table_name = 'astro_n_ndist'
         primary_key = False
 
+
 class AstroNn(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.astro_nn_task_pk_seq'::regclass)")], unique=True)
     source_pk_id = IntegerField(index=True, null=True)
@@ -635,6 +646,7 @@ class AstroNn(AstraBase):
         table_name = 'astro_nn'
         primary_key = False
 
+
 class BossCombinedSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.boss_combined_spectrum_pk_seq'::regclass)")], unique=True)
     spectrum_pk_id = IntegerField(null=True, unique=True)
@@ -675,6 +687,7 @@ class BossCombinedSpectrum(AstraBase):
         )
         primary_key = False
 
+
 class BossNet(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.b_net_task_pk_seq'::regclass)")], unique=True)
     source_pk_id = IntegerField(index=True, null=True)
@@ -697,6 +710,7 @@ class BossNet(AstraBase):
     class Meta:
         table_name = 'boss_net'
         primary_key = False
+
 
 class BossRestFrameVisitSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.boss_rest_frame_visit_spectrum_pk_seq'::regclass)")], unique=True)
@@ -777,6 +791,7 @@ class BossRestFrameVisitSpectrum(AstraBase):
         )
         primary_key = False
 
+
 class BossVisitSpectrum(AstraBase):
     pk = AutoField()
     spectrum_pk_id = IntegerField(null=True, unique=True)
@@ -849,6 +864,7 @@ class BossVisitSpectrum(AstraBase):
             (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
         )
 
+
 class Corv(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.corv_task_pk_seq'::regclass)")], unique=True)
     source_pk_id = IntegerField(index=True, null=True)
@@ -873,6 +889,7 @@ class Corv(AstraBase):
     class Meta:
         table_name = 'corv'
         primary_key = False
+
 
 class FerreChemicalAbundances(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ferre_chemical_abundances_task_pk_seq1'::regclass)")], unique=True)
@@ -1002,6 +1019,7 @@ class FerreCoarse(AstraBase):
         table_name = 'ferre_coarse'
         primary_key = False
 
+
 class FerreStellarParameters(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ferre_stellar_parameters_task_pk_seq'::regclass)")], unique=True)
     source_pk_id = IntegerField(index=True)
@@ -1066,6 +1084,7 @@ class FerreStellarParameters(AstraBase):
         table_name = 'ferre_stellar_parameters'
         primary_key = False
 
+
 class Grok(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.grok_task_pk_seq3'::regclass)")], unique=True)
     source_pk_id = IntegerField(null=True)
@@ -1118,6 +1137,7 @@ class Grok(AstraBase):
         table_name = 'grok'
         primary_key = False
 
+
 class GrokRotation(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.grok_rotation_task_pk_seq'::regclass)")], unique=True)
     source_pk_id = IntegerField(index=True, null=True)
@@ -1134,6 +1154,7 @@ class GrokRotation(AstraBase):
     class Meta:
         table_name = 'grok_rotation'
         primary_key = False
+
 
 class HotPayne(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.hot_payne_task_pk_seq'::regclass)")], unique=True)
@@ -1254,6 +1275,7 @@ class HotPayne(AstraBase):
     class Meta:
         table_name = 'hot_payne'
         primary_key = False
+
 
 class LineForest(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.line_forest_task_pk_seq1'::regclass)")], unique=True)
@@ -1601,6 +1623,7 @@ class MDwarfType(AstraBase):
         table_name = 'm_dwarf_type'
         primary_key = False
 
+
 class NmfRectify(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.nmf_rectify_task_pk_seq'::regclass)")], unique=True)
     source_pk_id = IntegerField(index=True, null=True)
@@ -1621,6 +1644,7 @@ class NmfRectify(AstraBase):
     class Meta:
         table_name = 'nmf_rectify'
         primary_key = False
+
 
 class Slam(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.slam_task_pk_seq'::regclass)")], unique=True)
@@ -1655,6 +1679,7 @@ class Slam(AstraBase):
     class Meta:
         table_name = 'slam'
         primary_key = False
+
 
 class SnowWhite(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.snow_white_task_pk_seq'::regclass)")], unique=True)
@@ -1705,6 +1730,7 @@ class SnowWhite(AstraBase):
     class Meta:
         table_name = 'snow_white'
         primary_key = False
+
 
 class Source(AstraBase):
     pk = AutoField()
@@ -1846,12 +1872,14 @@ class Source(AstraBase):
     class Meta:
         table_name = 'source'
 
+
 class Spectrum(AstraBase):
     pk = AutoField()
     spectrum_type_flags = BigIntegerField()
 
     class Meta:
         table_name = 'spectrum'
+
 
 class SpectrumClassification(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.spectrum_classification_task_pk_seq'::regclass)")], unique=True)
@@ -1879,6 +1907,7 @@ class SpectrumClassification(AstraBase):
     class Meta:
         table_name = 'spectrum_classification'
         primary_key = False
+
 
 class TheCannon(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.the_cannon_task_pk_seq'::regclass)")], unique=True)
@@ -1959,6 +1988,7 @@ class TheCannon(AstraBase):
     class Meta:
         table_name = 'the_cannon'
         primary_key = False
+
 
 class ThePayne(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.the_payne_task_pk_seq'::regclass)")], unique=True)
