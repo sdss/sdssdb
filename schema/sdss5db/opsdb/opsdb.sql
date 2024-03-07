@@ -1,6 +1,6 @@
 /*
 
-opsDB schema version v0.1.0
+opsDB schema version v0.8.4
 
 Created Sep 2020 - J. Donor
 
@@ -24,7 +24,10 @@ CREATE TABLE opsdb.assignment_to_focal (
     configuration_id INTEGER,
     xfocal REAL,
     yfocal REAL,
-    positioner_id SMALLINT);
+    positioner_id SMALLINT,
+    catalogid BIGINT,
+    collided BOOLEAN,
+    replaced BOOLEAN);
 
 CREATE TABLE opsdb.completion_status (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -118,7 +121,7 @@ CREATE TABLE opsdb.base_priority(
     version_pk INTEGER);
 
 CREATE TABLE opsdb.priority_version(
-    pk SERIAL PRECISION KEY NOT NULL,
+    pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
 CREATE TABLE opsdb.overhead(
