@@ -28,6 +28,7 @@ class SDSS5dbDatabaseConnection(PeeweeDatabaseConnection):
         modules = ['sdssdb.peewee.sdss5db.catalogdb',
                    'sdssdb.peewee.sdss5db.targetdb',
                    'sdssdb.peewee.sdss5db.opsdb',
+                   'sdssdb.peewee.sdss5db.astradb',
                    'sdssdb.peewee.sdss5db.apogee_drpdb',
                    'sdssdb.peewee.sdss5db.boss_drp',
                    'sdssdb.peewee.sdss5db.vizdb']
