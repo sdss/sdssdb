@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.9.0 <2024-03-08>`
+* Add new schema for ``astra`` to ``sdss5db``.
+* Added new peewee and sqlalchemy ORMs for ``astra`` schema.
+* Added legacy survey sql schema files
+
 * :release:`0.8.3 <2023-12-11>`
 * Add column ``macro_id`` to ``opsdb.overhead``.
 * Fix hardcoded schema in SQLAlchemy ``opsdb.overhead`` model.
