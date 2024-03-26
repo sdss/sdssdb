@@ -26,6 +26,9 @@ CREATE TABLE lvmopsdb.tile (
     visit_exptime REAL,
     version_pk INTEGER);
 
+ALTER TABLE lvmopsdb.tile
+ADD COLUMN disabled BOOLEAN DEFAULT FALSE;
+
 CREATE TABLE lvmopsdb.version (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT,

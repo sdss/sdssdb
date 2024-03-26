@@ -59,6 +59,7 @@ class Tile(LVMOpsBase):
     version_pk = ForeignKeyField(column_name='version_pk',
                                  field='pk',
                                  model=Version)
+    disabled = BooleanField(null=False, default=False)
 
     class Meta:
         table_name = 'tile'
