@@ -9,14 +9,14 @@ ANALYZE apogee_drp.star;
 CREATE INDEX ON apogee_drp.star USING BTREE (telescope);
 CREATE INDEX ON apogee_drp.star USING BTREE (healpix);
 CREATE INDEX ON apogee_drp.star USING BTREE (hmag);
-CREATE INDEX ON apogee_drp.star USING BTREE (gaiadr2_plx);
-CREATE INDEX ON apogee_drp.star USING BTREE (gaiadr2_pmra);
-CREATE INDEX ON apogee_drp.star USING BTREE (gaiadr2_pmdec);
-CREATE INDEX ON apogee_drp.star USING BTREE (gaiadr2_gmag);
-CREATE INDEX ON apogee_drp.star USING BTREE (gaiadr2_bpmag);
-CREATE INDEX ON apogee_drp.star USING BTREE (gaiadr2_rpmag);
+CREATE INDEX ON apogee_drp.star USING BTREE (gaia_plx);
+CREATE INDEX ON apogee_drp.star USING BTREE (gaia_pmra);
+CREATE INDEX ON apogee_drp.star USING BTREE (gaia_pmdec);
+CREATE INDEX ON apogee_drp.star USING BTREE (gaia_gmag);
+CREATE INDEX ON apogee_drp.star USING BTREE (gaia_bpmag);
+CREATE INDEX ON apogee_drp.star USING BTREE (gaia_rpmag);
 CREATE INDEX ON apogee_drp.star USING BTREE (hmag);
-CREATE INDEX ON apogee_drp.star USING BTREE (vheliobary);
+CREATE INDEX ON apogee_drp.star USING BTREE (vrad);
 
 
 /*

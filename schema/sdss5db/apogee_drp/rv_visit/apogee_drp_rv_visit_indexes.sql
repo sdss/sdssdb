@@ -27,5 +27,5 @@ CREATE INDEX ON apogee_drp.rv_visit USING BTREE (fiberid);
 CREATE INDEX ON apogee_drp.rv_visit USING BTREE (mjd);
 CREATE INDEX ON apogee_drp.rv_visit USING BTREE (telescope);
 CREATE INDEX ON apogee_drp.rv_visit USING BTREE (hmag);
-CREATE INDEX ON apogee_drp.rv_visit USING BTREE (vheliobary);
+CREATE INDEX ON apogee_drp.rv_visit USING BTREE (vrad);
 

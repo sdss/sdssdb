@@ -13,11 +13,11 @@ CREATE INDEX ON apogee_drp.visit USING BTREE (telescope);
 CREATE INDEX ON apogee_drp.visit USING BTREE (field);
 CREATE INDEX ON apogee_drp.visit USING BTREE (hmag);
 CREATE INDEX ON apogee_drp.visit USING BTREE (catalogid);
-CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_plx);
-CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_pmra);
-CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_pmdec);
-CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_bpmag);
-CREATE INDEX ON apogee_drp.visit USING BTREE (gaiadr2_rpmag);
+CREATE INDEX ON apogee_drp.visit USING BTREE (gaia_plx);
+CREATE INDEX ON apogee_drp.visit USING BTREE (gaia_pmra);
+CREATE INDEX ON apogee_drp.visit USING BTREE (gaia_pmdec);
+CREATE INDEX ON apogee_drp.visit USING BTREE (gaia_bpmag);
+CREATE INDEX ON apogee_drp.visit USING BTREE (gaia_rpmag);
 
 
 /*
