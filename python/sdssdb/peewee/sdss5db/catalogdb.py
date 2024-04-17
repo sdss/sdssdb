@@ -2224,14 +2224,14 @@ class AllStar_DR17_synspec_rev1(CatalogdbModel):
 
 
 class ToO_Target(CatalogdbModel):
-    too_id = IntegerField(primary_key=True)
+    too_id = BigIntegerField(primary_key=True)
     fiber_type = TextField()
     catalogid = IntegerField()
     sdss_id = IntegerField()
     gaia_dr3_source_id = IntegerField()
     twomass_pts_key = IntegerField()
-    ra = FloatField()
-    dec = FloatField()
+    ra = DoubleField()
+    dec = DoubleField()
     pmra = FloatField()
     pmdec = FloatField()
     epoch = FloatField()
