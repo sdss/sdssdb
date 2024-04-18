@@ -43,6 +43,7 @@ CREATE TABLE catalogdb.too_metadata (
     h_mag REAL,
     delta_ra REAL,
     delta_dec REAL,
+    can_offset BOOLEAN,
     inertial BOOLEAN,
     n_exposures SMALLINT,
     priority SMALLINT,
