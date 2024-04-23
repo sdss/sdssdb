@@ -2344,7 +2344,7 @@ if database.connected and database.is_connection_usable():
 
         if fname not in database.models and is_connected:
             warnings.warn(f'{rtname}: cannot find related table {tname!r}',
-                        SdssdbUserWarning)
+                          SdssdbUserWarning)
             continue
 
         rel_model = database.models[fname]
@@ -2410,8 +2410,8 @@ else:
                                 'plan_id': TextField(),
                                 'added_by_phase': IntegerField(),
                                 'version': ForeignKeyField(Version,
-                                                          column_name='version_id',
-                                                          backref='+'),
+                                                           column_name='version_id',
+                                                           backref='+'),
                                 'target': ForeignKeyField(model,
                                                           column_name='target_id',
                                                           field=model._meta.primary_key,
