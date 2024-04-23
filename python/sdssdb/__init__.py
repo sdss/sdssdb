@@ -6,7 +6,15 @@ from sdsstools import get_config, get_logger, get_package_version
 
 
 warnings.filterwarnings(
-    'ignore', '.*Skipped unsupported reflection of expression-based index .*q3c.*')
+    'ignore',
+    '.*Skipped unsupported reflection of expression-based index .*q3c.*',
+)
+
+warnings.filterwarnings(
+    'ignore',
+    '.*invalid escape sequence.*',
+    category=SyntaxWarning,
+)
 
 
 NAME = 'sdssdb'

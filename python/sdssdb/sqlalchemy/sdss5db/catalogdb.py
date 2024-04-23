@@ -657,6 +657,20 @@ class CatalogToTIC_v8_Extended(Base):
     best = Column(Boolean, nullable=False, index=True)
 
 
+class CatalogToToO_Target(Base):
+    __tablename__ = 'catalog_to_too_target'
+    __table_args__ = (
+        Index('catalog_to_too_target_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
+        {'schema': 'catalogdb'}
+    )
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+
+
 class CatalogToTwoMassPSC(Base):
     __tablename__ = 'catalog_to_twomass_psc'
 
@@ -10125,6 +10139,52 @@ class TESS_TOI(Base):
     pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".tess_toi_pk_seq'::regclass)"))
 
     tic_v8 = relationship('TicV8')
+
+
+class ToO_Target(Base):
+    __tablename__ = 'too_target'
+
+    too_id = Column(BigInteger(primary_key=True))
+    fiber_type = Column(String(20))
+    catalogid = Column(Integer)
+    sdss_id = Column(Integer)
+    gaia_dr3_source_id = Column(Integer)
+    twomass_pts_key = Column(Integer)
+    ra = Column(Float)
+    dec = Column(Float)
+    pmra = Column(Float)
+    pmdec = Column(Float)
+    epoch = Column(Float)
+    parallax = Column(Float)
+
+    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3.source_id'), index=True)
+    gaia_dr3_source_id = Column(ForeignKey('catalogdb.twomass_pts_key.twomass_pts_key'), index=True)
+
+
+class ToO_Metadata(Base):
+    __tablename__ = 'too_metadata'
+
+    too_id = Column(BigInteger(primary_key=True))
+    sky_brightness_mode = Column(String(20))
+    lambda_eff = Column(Float)
+    u_mag = Column(Float)
+    g_mag = Column(Float)
+    r_mag = Column(Float)
+    i_mag = Column(Float)
+    z_mag = Column(Float)
+    optical_prov = Column(String(20))
+    gaia_bp_mag = Column(Float)
+    gaia_rp_mag = Column(Float)
+    gaia_g_mag = Column(Float)
+    h_mag = Column(Float)
+    delta_ra = Column(Float)
+    delta_dec = Column(Float)
+    inertial = Column(Boolean)
+    n_exposures = Column(Integer)
+    priority = Column(Integer)
+    active = Column(Boolean)
+    expiration_date = Column(Integer)
+    observed = Column(Boolean)
 
 
 def define_relations():

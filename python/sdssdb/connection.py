@@ -416,7 +416,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
             self.dbname = dbname
         except OperationalError as ee:
             if not silent_on_fail:
-                log.warning(f'failed to connect to database {self.database!r}: {ee}')
+                log.warning(f'failed connecting to database {self.database!r}: {ee}')
             PostgresqlDatabase.init(self, None)
 
         if self.is_connection_usable() and self.auto_reflect:
