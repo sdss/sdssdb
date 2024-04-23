@@ -95,6 +95,9 @@ class AssignmentToFocal(OpsdbBase):
     xfocal = FloatField()
     yfocal = FloatField()
     positioner_id = IntegerField()
+    catalogid = BigIntegerField()
+    collided = BooleanField()
+    replaced = BooleanField()
 
     class Meta:
         table_name = 'assignment_to_focal'
