@@ -2342,7 +2342,7 @@ if database.connected and database.is_connection_usable():
         tname = rtname[len(f'catalog_{direction}_'):]
         fname = 'catalogdb.' + tname
 
-        if fname not in database.models and is_connected:
+        if fname not in database.models:
             warnings.warn(f'{rtname}: cannot find related table {tname!r}',
                           SdssdbUserWarning)
             continue
