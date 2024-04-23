@@ -7,7 +7,8 @@
 
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import BigInteger, Boolean, Column, Float, Integer, SmallInteger, Text, text
+from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Integer,
+                        SmallInteger, Text, text)
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -75,6 +76,28 @@ class SDSSidToPipes(Base):
     in_boss = Column('in_boss', Boolean)
     in_apogee = Column('in_apogee', Boolean)
     in_astra = Column('in_astra', Boolean)
+
+
+class Releases(Base):
+    __tablename__ = 'releases'
+    print_fields = ['release']
+
+    pk = Column('pk', BigInteger, primary_key=True)
+    release = Column(Text)
+    run2d = Column(ARRAY(Text()))
+    run1d = Column(ARRAY(Text()))
+    apred_vers = Column(ARRAY(Text()))
+    v_astra = Column(Text)
+    v_speccomp = Column(Text)
+    v_targ = Column(Text)
+    drpver = Column(Text)
+    dapver = Column(Text)
+    apstar_vers = Column(Text)
+    aspcap_vers = Column(Text)
+    results_vers = Column(Text)
+    public = Column(Boolean)
+    mjd_cutoff_apo = Column(Integer)
+    mjd_cutoff_lco = Column(Integer)
 
 
 def define_relations():
