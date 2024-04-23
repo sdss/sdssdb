@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.10.0 <2024-04-23>`
+* Add ``catalogdb.too_target`` and ``catalogdb.too_metadata`` tables and models.
+* Add new cadences.
+* Add ``disabled`` flag to tile.
+
 * :release:`0.9.0 <2024-03-08>`
 * Add new schema for ``astra`` to ``sdss5db``.
 * Added new peewee and sqlalchemy ORMs for ``astra`` schema.
