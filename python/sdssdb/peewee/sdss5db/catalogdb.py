@@ -3084,7 +3084,7 @@ class CatalogToUVOT_SSC_1(CatalogdbModel):
     distance = FloatField()
 
     class Meta:
-        table_name = "catalog_to_uvot_ssc_1"
+        table_name = "catalog_to_uvotssc1"
         primary_key = False
         reflect = False
 
