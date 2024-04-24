@@ -3144,3 +3144,22 @@ class CatalogTounWISE(CatalogdbModel):
         table_name = "catalog_to_unwise"
         primary_key = False
         reflect = False
+
+
+class CatalogToToOTarget(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(ToO_Target,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        table_name = "catalog_to_too_target"
+        primary_key = False
+        reflect = False
