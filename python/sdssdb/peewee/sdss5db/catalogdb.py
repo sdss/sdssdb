@@ -19,13 +19,12 @@ from peewee import (
     ForeignKeyField,
     IntegerField,
     ManyToManyField,
-    TextField
+    TextField,
 )
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
 from . import database
-
 
 # When adding a foreign key like below to a peewee model class
 #
@@ -3146,7 +3145,7 @@ class CatalogTounWISE(CatalogdbModel):
         reflect = False
 
 
-class CatalogToToOTarget(CatalogdbModel):
+class CatalogToToO_Target(CatalogdbModel):
     catalog = ForeignKeyField(Catalog,
                               column_name='catalogid',
                               backref='+')
