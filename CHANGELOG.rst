@@ -6,7 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * :release:`0.11.0 <2024-04-24>`
-* Explicitely define ``CatalogToXXX`` models instead of loading them dynamically.
+* Explicitly define ``CatalogToXXX`` models instead of loading them dynamically.
 
 * :release:`0.10.0 <2024-04-23>`
 * Add ``catalogdb.too_target`` and ``catalogdb.too_metadata`` tables and models.
