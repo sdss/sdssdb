@@ -6,8 +6,6 @@
 # @Filename: catalogdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-import warnings
-
 from peewee import (
     AutoField,
     BigAutoField,
@@ -21,14 +19,13 @@ from peewee import (
     ForeignKeyField,
     IntegerField,
     ManyToManyField,
-    TextField,
+    TextField
 )
 from playhouse.postgres_ext import ArrayField
 
-from sdssdb.exceptions import SdssdbUserWarning
-
 from .. import BaseModel
 from . import database
+
 
 # When adding a foreign key like below to a peewee model class
 #
@@ -2327,97 +2324,823 @@ _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
 _APOGEE_Star_Visit_Deferred.set_model(SDSS_DR16_APOGEE_Star_AllVisit)
 
 
-# Add relational tables to namespace.
-if database.connected and database.is_connection_usable():
-    all_tables = database.get_tables('catalogdb')
+# Explicitely defined catalog_to_XXX models.
+class CatalogFromSDSS_DR19p_Speclite(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR19p_Speclite,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
 
-    for rtname in all_tables:
-        if rtname.startswith('catalog_to_'):
-            direction = 'to'
-        elif rtname.startswith('catalog_from_'):
-            direction = 'from'
-        else:
-            continue
+    class Meta:
+        tablename = "catalog_to_sdss_dr19p_speclite"
+        primary_key = False
+        reflect = False
 
-        tname = rtname[len(f'catalog_{direction}_'):]
-        fname = 'catalogdb.' + tname
 
-        if fname not in database.models:
-            warnings.warn(f'{rtname}: cannot find related table {tname!r}',
-                          SdssdbUserWarning)
-            continue
+class CatalogToAllStar_DR17_synspec_rev1(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(AllStar_DR17_synspec_rev1,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
 
-        rel_model = database.models[fname]
-        model_name = f'Catalog{direction.capitalize()}' + rel_model.__name__
+    class Meta:
+        tablename = "catalog_to_allstar_dr17_synspec_rev1"
+        primary_key = False
+        reflect = False
 
-        class Meta:
-            table_name = rtname
-            primary_key = False
 
-        RelationalModel = type(model_name, (CatalogdbModel,), {'Meta': Meta})
+class CatalogToAllWise(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(AllWise,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
 
-        RelationalModel._meta.add_field('catalog',
-                                        ForeignKeyField(Catalog,
-                                                        column_name='catalogid',
-                                                        backref='+'))
-        RelationalModel._meta.add_field('target',
-                                        ForeignKeyField(rel_model,
-                                                        column_name='target_id',
-                                                        backref='+'))
-        RelationalModel._meta.add_field('version',
-                                        ForeignKeyField(Version,
-                                                        column_name='version_id',
-                                                        backref='+'))
+    class Meta:
+        tablename = "catalog_to_allwise"
+        primary_key = False
+        reflect = False
 
-        # Add a many-to-many to Catalog
-        Catalog._meta.add_field(rel_model.__name__.lower(),
-                                ManyToManyField(rel_model,
-                                                through_model=RelationalModel,
-                                                backref='+'))
 
-        if tname == 'sdss_dr13_photoobj_primary':
-            RelationalModel._meta.add_field('sdss_dr13_photoobj',
-                                            ForeignKeyField(SDSS_DR13_PhotoObj,
-                                                            column_name='target_id',
-                                                            field='objid',
-                                                            backref='+'))
+class CatalogToBHM_CSC(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(BHM_CSC,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
 
-        globals()[model_name] = RelationalModel
+    class Meta:
+        tablename = "catalog_to_bhm_csc"
+        primary_key = False
+        reflect = False
 
-else:
-    # If the database is not connected, we can't reflect the relational tables.
-    # Instead we create a mock CatalogTo_ class for each table.
 
-    for model in CatalogdbModel.__subclasses__():
-        tname = model._meta.table_name
-        if tname.startswith('catalog_to_'):
-            continue
+class CatalogToBHM_RM_v0(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(BHM_RM_v0,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
 
-        rel_tname = 'catalog_to_' + tname
-        model_name = f'CatalogTo{model.__name__}'
+    class Meta:
+        tablename = "catalog_to_bhm_rm_v0"
+        primary_key = False
+        reflect = False
 
-        class Meta:
-            table_name = rel_tname
-            primary_key = False
 
-        RelationalModel = type(model_name,
-                               (CatalogdbModel,),
-                               {'Meta': Meta,
-                                'catalogid': BigIntegerField(),
-                                'target_id': model._meta.primary_key.__class__(),
-                                'best': BooleanField(),
-                                'version_id': IntegerField(),
-                                'plan_id': TextField(),
-                                'added_by_phase': IntegerField(),
-                                'version': ForeignKeyField(Version,
-                                                           column_name='version_id',
-                                                           backref='+'),
-                                'target': ForeignKeyField(model,
-                                                          column_name='target_id',
-                                                          field=model._meta.primary_key,
-                                                          backref='+'),
-                                'catalog': ForeignKeyField(Catalog,
-                                                           column_name='catalogid',
-                                                           backref='+')})
+class CatalogToBHM_RM_v0_2(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(BHM_RM_v0_2,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
 
-        globals()[model_name] = RelationalModel
+    class Meta:
+        tablename = "catalog_to_bhm_rm_v0"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToBHM_eFEDS_Veto(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(BHM_eFEDS_Veto,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_bhm_efeds_veto"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToCatWISE(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(CatWISE,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_catwise"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToCatWISE2020(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(CatWISE2020,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_catwise2020"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGLIMPSE(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(GLIMPSE,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_glimpse"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGLIMPSE360(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(GLIMPSE360,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_glimpse360"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGUVCat(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(GUVCat,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_guvcat"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGaiaQSO(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(GaiaQSO,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_gaiaqso"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGaia_DR2(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Gaia_DR2,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_gaia_dr2_source"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGaia_DR2_WD_SDSS(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Gaia_DR2_WD_SDSS,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_gaia_dr2_wd_sdss"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGaia_DR3(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Gaia_DR3,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_gaia_dr3_source"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToGaia_unWISE_AGN(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Gaia_unWISE_AGN,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_gaia_unwise_agn"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToKeplerInput_DR10(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(KeplerInput_DR10,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_kepler_input_10"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToLegacy_Survey_DR10(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Legacy_Survey_DR10,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_legacy_survey_dr10"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToLegacy_Survey_DR10a(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Legacy_Survey_DR10a,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_legacy_survey_dr10a"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToLegacy_Survey_DR8(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Legacy_Survey_DR8,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_legacy_survey_dr8"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToMILLIQUAS_7_7(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(MILLIQUAS_7_7,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_milliquas_7_7"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToPS1_g18(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(PS1_g18,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_ps1_g18"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToPanstarrs1(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Panstarrs1,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_panstarrs1"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSDSS_DR13_PhotoObj(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR13_PhotoObj,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_sdss_dr13_photoobj"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSDSS_DR13_PhotoObj_Primary(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR13_PhotoObj_Primary,
+                             column_name='target_id',
+                             backref='+')
+    sdss_dr13_photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                                         column_name='target_id',
+                                         field='objid',
+                                         backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_sdss_dr13_photoobj_primary"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSDSS_DR16_APOGEE_Star(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR16_APOGEE_Star,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_sdss_dr16_apogee_star"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSDSS_DR16_SpecObj(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR16_SpecObj,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_sdss_dr16_specobj"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSDSS_DR19p_Speclite(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR19p_Speclite,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_sdss_dr19p_speclite"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSkies_v1(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Skies_v1,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_skies_v1"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSkies_v2(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Skies_v2,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_skies_v2"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSkyMapper_DR1_1(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SkyMapper_DR1_1,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_skymapper_dr1_1"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSkyMapper_DR2(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SkyMapper_DR2,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_skymapper_dr2"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSuperCosmos(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SuperCosmos,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_supercosmos"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToTIC_v8(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(TIC_v8,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_tic_v8"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToTIC_v8_Extended(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(TIC_v8_Extended,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_tic_v8_extended"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToTwoMassPSC(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(TwoMassPSC,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_twomass_psc"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToTwoqz_sixqz(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Twoqz_sixqz,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_twoqz_sixqz"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToTycho2(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Tycho2,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_tycho2"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToUVOT_SSC_1(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(UVOT_SSC_1,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_uvot_ssc_1"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToXMM_OM_SUSS_4_1(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(XMM_OM_SUSS_4_1,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_xmm_om_suss_4_1"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToXMM_OM_SUSS_5_0(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(XMM_OM_SUSS_5_0,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_xmm_om_suss_5_0"
+        primary_key = False
+        reflect = False
+
+
+class CatalogTounWISE(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(unWISE,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        tablename = "catalog_to_unwise"
+        primary_key = False
+        reflect = False
