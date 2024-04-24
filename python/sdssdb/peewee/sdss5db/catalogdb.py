@@ -2837,7 +2837,7 @@ class CatalogToSDSS_DR16_APOGEE_Star(CatalogdbModel):
     distance = FloatField()
 
     class Meta:
-        table_name = "catalog_to_sdss_dr16_apogee_star"
+        table_name = "catalog_to_sdss_dr16_apogeestar"
         primary_key = False
         reflect = False
 
