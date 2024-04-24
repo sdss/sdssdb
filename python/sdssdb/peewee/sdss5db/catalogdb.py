@@ -2567,7 +2567,7 @@ class CatalogToGaiaQSO(CatalogdbModel):
     distance = FloatField()
 
     class Meta:
-        table_name = "catalog_to_gaiaqso"
+        table_name = "catalog_to_gaia_qso"
         primary_key = False
         reflect = False
 
