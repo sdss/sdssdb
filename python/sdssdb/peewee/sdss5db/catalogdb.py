@@ -2307,6 +2307,7 @@ class ToO_Metadata(CatalogdbModel):
     h_mag = FloatField()
     delta_ra = FloatField()
     delta_dec = FloatField()
+    can_offset = BooleanField()
     inertial = BooleanField()
     n_exposures = IntegerField()
     priority = IntegerField()

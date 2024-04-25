@@ -5,6 +5,9 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.11.2 <2024-04-24>`
+* Add column ``can_offset`` to ``too_metadata``.
+
 * :release:`0.11.1 <2024-04-24>`
 * Fix typo in `CatalogToToO_Target` model name.
 
