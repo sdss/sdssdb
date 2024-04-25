@@ -1,3 +1,32 @@
 \o marvels_dr11_star_load.out
 
 \copy catalogdb.marvels_dr11_star from '/uufs/chpc.utah.edu/common/home/sdss10/sdss5/target/catalogs/marvels/dr11/dr11_marvelsStar_ndelee.csv' csv header;
+
+
+-- Create a new column for the twomass_designation that can be used to join with the
+-- twomass_psc table (twomass_name has TWOMASS-J in front of each designation).
+ALTER TABLE catalogdb.marvels_dr11_star ADD column twomass_designation TEXT;
+
+UPDATE catalogdb.marvels_dr11_star m
+    SET twomass_designation = t.designation
+    FROM catalogdb.twomass_psc t WHERE t.designation = SUBSTRING(m.twomass_name, 10, 1000);
+
+CREATE INDEX ON catalogdb.marvels_dr11_star (twomass_designation);
+
+ALTER TABLE catalogdb.marvels_dr11_star
+    ADD CONSTRAINT twomass_designation_fk
+    FOREIGN KEY (twomass_designation) REFERENCES catalogdb.twomass_psc(designation);
+
+
+-- Same for tycho2.designation.
+ALTER TABLE catalogdb.marvels_dr11_star ADD column tycho2_designation TEXT;
+
+UPDATE catalogdb.marvels_dr11_star m
+    SET tycho2_designation = t.designation
+    FROM tycho2 t WHERE t.designation = SUBSTRING(m.tyc_name, 5, 1000);
+
+CREATE INDEX ON catalogdb.marvels_dr11_star (tycho2_designation);
+
+ALTER TABLE catalogdb.marvels_dr11_star
+    ADD CONSTRAINT tycho2_designation_fk
+    FOREIGN KEY (tycho2_designation) REFERENCES catalogdb.tycho2(designation);

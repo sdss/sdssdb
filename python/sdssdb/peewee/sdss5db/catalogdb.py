@@ -781,46 +781,6 @@ class Mastar_goodvisits(CatalogdbModel):
         table_name = 'mastar_goodvisits'
 
 
-class Marvels_dr11_star(CatalogdbModel):
-
-    starname = CharField(primary_key=True)
-
-    class Meta:
-        table_name = 'marvels_dr11_star'
-
-
-class Marvels_dr11_velocitycurve_ccf(CatalogdbModel):
-
-    pk = BigIntegerField(primary_key=True)
-
-    class Meta:
-        table_name = 'marvels_dr11_velocitycurve_ccf'
-
-
-class Marvels_dr11_velocitycurve_dfdi(CatalogdbModel):
-
-    pk = BigIntegerField(primary_key=True)
-
-    class Meta:
-        table_name = 'marvels_dr11_velocitycurve_dfdi'
-
-
-class Marvels_dr12_star(CatalogdbModel):
-
-    pk = BigIntegerField(primary_key=True)
-
-    class Meta:
-        table_name = 'marvels_dr12_star'
-
-
-class Marvels_dr12_velocitycurve_uf1d(CatalogdbModel):
-
-    pk = BigIntegerField(primary_key=True)
-
-    class Meta:
-        table_name = 'marvels_dr12_velocitycurve_uf1d'
-
-
 class SDSSV_Plateholes_Meta(CatalogdbModel):
 
     yanny_uid = BigIntegerField(primary_key=True)
@@ -2257,6 +2217,56 @@ class AllStar_DR17_synspec_rev1(CatalogdbModel):
 
     class Meta:
         table_name = 'allstar_dr17_synspec_rev1'
+
+
+class Marvels_dr11_star(CatalogdbModel):
+
+    starname = CharField(primary_key=True)
+
+    twomass_psc = ForeignKeyField(TwoMassPSC,
+                                  field='designation',
+                                  column_name='twomass_designation',
+                                  backref='marvels_dr11_star')
+
+    tycho2 = ForeignKeyField(Tycho2,
+                             field='designation',
+                             column_name='tycho2_designation',
+                             backref='marvels_dr11_star')
+
+    class Meta:
+        table_name = 'marvels_dr11_star'
+
+
+class Marvels_dr11_velocitycurve_ccf(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr11_velocitycurve_ccf'
+
+
+class Marvels_dr11_velocitycurve_dfdi(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr11_velocitycurve_dfdi'
+
+
+class Marvels_dr12_star(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr12_star'
+
+
+class Marvels_dr12_velocitycurve_uf1d(CatalogdbModel):
+
+    pk = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = 'marvels_dr12_velocitycurve_uf1d'
 
 
 class ToO_Target(CatalogdbModel):
