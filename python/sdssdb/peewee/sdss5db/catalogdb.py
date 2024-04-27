@@ -2255,7 +2255,21 @@ class Marvels_dr11_velocitycurve_dfdi(CatalogdbModel):
 
 class Marvels_dr12_star(CatalogdbModel):
 
+    # For catalogdb.marvels_dr11_star, primary key is the starname column.
+    # However, for catalogdb.marvels_dr12_star,
+    # the starname column is not unique.
+    # Hence, we use the below bigserial primary key.
     pk = BigIntegerField(primary_key=True)
+
+    twomass_psc = ForeignKeyField(TwoMassPSC,
+                                  field='designation',
+                                  column_name='twomass_designation',
+                                  backref='marvels_dr12_star')
+
+    tycho2 = ForeignKeyField(Tycho2,
+                             field='designation',
+                             column_name='tycho2_designation',
+                             backref='marvels_dr12_star')
 
     class Meta:
         table_name = 'marvels_dr12_star'

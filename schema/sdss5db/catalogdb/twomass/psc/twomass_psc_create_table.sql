@@ -71,5 +71,3 @@ CREATE TABLE catalogdb.twomass_psc (
     coadd smallint
 ) WITHOUT OIDS;
 
-ALTER TABLE catalogdb.twomass_psc
-    ADD CONSTRAINT twomass_psc_designation_uniq UNIQUE (designation);
