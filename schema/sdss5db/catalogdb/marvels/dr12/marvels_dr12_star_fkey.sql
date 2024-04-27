@@ -1,3 +1,6 @@
+-- Create a new column for the twomass_designation that 
+-- can be used to join with the
+-- twomass_psc table (twomass_name has TWOMASS-J in front of each designation).
 ALTER TABLE catalogdb.marvels_dr12_star ADD column twomass_designation TEXT;
 
 UPDATE catalogdb.marvels_dr12_star m
@@ -10,6 +13,7 @@ ALTER TABLE catalogdb.marvels_dr12_star
    ADD CONSTRAINT twomass_designation_fk
    FOREIGN KEY (twomass_designation) REFERENCES catalogdb.twomass_psc(designation);
 
+-- Same for tycho2_designation column.
 ALTER TABLE catalogdb.marvels_dr12_star ADD column tycho2_designation TEXT;
 
 UPDATE catalogdb.marvels_dr12_star m
