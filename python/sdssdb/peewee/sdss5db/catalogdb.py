@@ -2258,7 +2258,7 @@ class Marvels_dr12_star(CatalogdbModel):
     # For catalogdb.marvels_dr11_star, primary key is the starname column.
     # However, for catalogdb.marvels_dr12_star,
     # the starname column is not unique.
-    # Hence, we use the below bigserial primary key. 
+    # Hence, we use the below bigserial primary key.
     pk = BigIntegerField(primary_key=True)
 
     twomass_psc = ForeignKeyField(TwoMassPSC,
