@@ -147,6 +147,10 @@ class AssignmentToFocal(Base):
     xfocal = Column(Float)
     yfocal = Column(Float)
     positioner_id = Column(SmallInteger)
+    fiber_type = Column(Text)
+    assigned = Column(Boolean)
+    collided = Column(Boolean)
+    replaced = Column(Boolean)    
 
     configuration = relationship('Configuration')
 

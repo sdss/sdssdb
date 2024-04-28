@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Add columns ``fiber_type`` and ``assigned`` to ``opsdb.assignment_to_focal``.
+
 * :release:`0.11.2 <2024-04-24>`
 * Add column ``can_offset`` to ``too_metadata``.
 
