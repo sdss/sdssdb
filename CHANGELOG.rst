@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.11.3 <2024-04-28>`
 * Add columns ``fiber_type`` and ``assigned`` to ``opsdb.assignment_to_focal``.
 
 * :release:`0.11.2 <2024-04-24>`
