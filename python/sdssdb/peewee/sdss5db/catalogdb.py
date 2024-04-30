@@ -20,11 +20,13 @@ from peewee import (
     IntegerField,
     ManyToManyField,
     TextField,
+    TimestampField
 )
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
 from . import database
+
 
 # When adding a foreign key like below to a peewee model class
 #
@@ -2296,6 +2298,7 @@ class ToO_Target(CatalogdbModel):
     pmdec = FloatField()
     epoch = FloatField()
     parallax = FloatField()
+    added_date = TimestampField()
 
     gaia_dr3 = ForeignKeyField(
         Gaia_DR3,
@@ -2336,8 +2339,10 @@ class ToO_Metadata(CatalogdbModel):
     n_exposures = IntegerField()
     priority = IntegerField()
     active = BooleanField()
-    expiration_date = IntegerField()
+    observe_from_mjd = IntegerField()
+    observe_until_mjd = IntegerField()
     observed = BooleanField()
+    last_modified_date = TimestampField()
 
     class Meta:
         table_name = "too_metadata"

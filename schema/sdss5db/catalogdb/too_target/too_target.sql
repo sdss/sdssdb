@@ -10,7 +10,8 @@ CREATE TABLE catalogdb.too_target (
     pmra REAL,
     pmdec REAL,
     epoch REAL,
-    parallax REAL
+    parallax REAL,
+    added_date TIMESTAMP (0) WITH TIME ZONE
 );
 
 ALTER TABLE ONLY catalogdb.too_target
@@ -48,6 +49,8 @@ CREATE TABLE catalogdb.too_metadata (
     n_exposures SMALLINT,
     priority SMALLINT,
     active BOOLEAN,
-    expiration_date INTEGER,
-    observed BOOLEAN
+    observe_from_mjd INTEGER,
+    observe_until_mjd INTEGER,
+    observed BOOLEAN,
+    last_modified_date TIMESTAMP (0) WITH TIME ZONE
 );
