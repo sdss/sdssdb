@@ -14,7 +14,6 @@
 -- PLATEID varchar,  -- format = '20A'
 --
 --
-
 -- We use the below "SQL update" command to ensure that
 -- only those objid values which
 -- exist in the table sdss_dr13_photoobj_primary are put in 
@@ -25,6 +24,11 @@
 -- and to not sdss_dr13_photoobj_primary. This is because
 -- sdss_dr13_photoobj_primary is a materialized view and cannot be used
 -- for foreign keys.
+--
+-- Note that after the "SQL update" command, the contents 
+-- of the bestobjid_bigint column will be different 
+-- on operations server and pipelines server
+-- since the pipelines server only has subset of sdss_dr13_photoobj_primary.
 
 alter table catalogdb.sdss_dr17_specobj add column bestobjid_bigint bigint;
 update catalogdb.sdss_dr17_specobj s set (bestobjid_bigint) = (select p.objid from sdss_dr13_photoobj_primary p where p.objid=s.bestobjid::bigint);
