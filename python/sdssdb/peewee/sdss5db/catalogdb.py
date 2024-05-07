@@ -2088,6 +2088,11 @@ class SDSS_DR17_SpecObj(CatalogdbModel):
     # it has values which do not fit in bigint.
     specobjid = CharField(primary_key=True)
 
+    sdss_dr13_photoobj = ForeignKeyField(SDSS_DR13_PhotoObj,
+                                         field='objid',
+                                         column_name='bestobjid_bigint',
+                                         backref='sdss_dr17_specobj')
+
     class Meta:
         table_name = 'sdss_dr17_specobj'
 
