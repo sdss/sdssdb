@@ -3180,6 +3180,63 @@ class CatalogTounWISE(CatalogdbModel):
         reflect = False
 
 
+class CatalogToMarvels_dr11_star(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Marvels_dr11_star,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        table_name = "catalog_to_marvels_dr11_star"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToMarvels_dr12_star(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(Marvels_dr12_star,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        table_name = "catalog_to_marvels_dr12_star"
+        primary_key = False
+        reflect = False
+
+
+class CatalogToSDSS_DR17_SpecObj(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog,
+                              column_name='catalogid',
+                              backref='+')
+    target = ForeignKeyField(SDSS_DR17_SpecObj,
+                             column_name='target_id',
+                             backref='+')
+    version = ForeignKeyField(Version,
+                              column_name='version_id',
+                              backref='+')
+    best = BooleanField()
+    distance = FloatField()
+
+    class Meta:
+        table_name = "catalog_to_sdss_dr17_specobj"
+        primary_key = False
+        reflect = False
+
+
 class CatalogToToO_Target(CatalogdbModel):
     catalog = ForeignKeyField(Catalog,
                               column_name='catalogid',
