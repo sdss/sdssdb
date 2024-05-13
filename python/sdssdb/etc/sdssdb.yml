@@ -90,3 +90,7 @@ tunnel_operations:
     admin: sdss
     host: localhost
     port: 7502
+
+tunnel_pipelines:
+    host: localhost
+    port: 7602
