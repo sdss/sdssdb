@@ -22,13 +22,12 @@ from sqlalchemy import (
     SmallInteger,
     String,
     Text,
-    text
+    text,
 )
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
-
 
 SCHEMA = 'catalogdb'
 
@@ -10204,6 +10203,103 @@ class ToO_Metadata(Base):
     observe_until_mjd = Column(Integer)
     observed = Column(Boolean)
     last_modified_date = Column(DateTime)
+
+class SDSS_ID_To_Catalog(Base):
+    __tablename__ = 'sdss_id_to_catalog'
+
+    pk = Column(Float)
+    sdss_id = Column(Float)
+    catalogid = Column(Float,)
+    version_id = Column(Integer)
+    allstar_dr17_synspec_rev1_apstar_id = Column(String(20))
+    allwise_cntr = Column(Float)
+    bhm_rm_v0_pk = Column(Float)
+    bhm_rm_v0_2_pk = Column(Float)
+    catwise_source_id = Column(String(20))
+    catwise2020_source_id = Column(String(20))
+    gaia_dr2_source_source_id = Column(Float)
+    gaia_dr3_source_source_id = Column(Float)
+    glimpse_pk = Column(Float)
+    guvcat_objid = Column(Float)
+    legacy_survey_dr10_ls_id = Column(Float)
+    legacy_survey_dr8_ls_id = Column(Float)
+    panstarrs1_catid_objid = Column(Float)
+    ps1_g18_objid = Column(Float)
+    sdss_dr13_photoobj_objid = Column(Float)
+    skymapper_dr1_1_object_id = Column(Float)
+    skymapper_dr2_object_id = Column(Float)
+    supercosmos_objid = Column(Float)
+    tic_v8_id = Column(Float)
+    twomass_psc_pts_key = Column(Integer)
+    tycho2_designation = Column(String(20))
+    unwise_unwise_objid = Column(String(20))
+
+    allstar_dr17_synspec_rev1_apstar_id = Column(
+        ForeignKey('catalogdb.allstar_dr17_synspec_rev1.apstar_id'),
+        index=True)
+    allwise_cntr = Column(
+        ForeignKey('catalogdb.allwise.cntr'),
+        index=True)
+    bhm_rm_v0_pk = Column(
+        ForeignKey('catalogdb.bhm_rm_v0.pk'),
+        index=True)
+    bhm_rm_v0_2_pk = Column(
+        ForeignKey('catalogdb.bhm_rm_v0_2.pk'),
+        index=True)
+    catwise_source_id = Column(
+        ForeignKey('catalogdb.catwise.source_id'),
+        index=True)
+    catwise2020_source_id = Column(
+        ForeignKey('catalogdb.catwise2020.source_id'),
+        index=True)
+    gaia_dr2_source_source_id = Column(
+        ForeignKey('catalogdb.gaia_dr2_source.source_id'),
+        index=True)
+    gaia_dr3_source_source_id = Column(
+        ForeignKey('catalogdb.gaia_dr3_source.source_id'),
+        index=True)
+    glimpse_pk = Column(
+        ForeignKey('catalogdb.glimpse.pk'),
+        index=True)
+    guvcat_objid = Column(
+        ForeignKey('catalogdb.guvcat.objid'),
+        index=True)
+    legacy_survey_dr10_ls_id = Column(
+        ForeignKey('catalogdb.legacy_survey_dr10.ls_id'),
+        index=True)
+    legacy_survey_dr8_ls_id = Column(
+        ForeignKey('catalogdb.legacy_survey_dr8.ls_id'),
+        index=True)
+    panstarrs1_catid_objid = Column(
+        ForeignKey('catalogdb.panstarrs1.catid_objid'),
+        index=True)
+    ps1_g18_objid = Column(
+        ForeignKey('catalogdb.ps1_g18.objid'),
+        index=True)
+    sdss_dr13_photoobj_objid = Column(
+        ForeignKey('catalogdb.sdss_dr13_photoobj.objid'),
+        index=True)
+    skymapper_dr1_1_object_id = Column(
+        ForeignKey('catalogdb.skymapper_dr1_1.object_id'),
+        index=True)
+    skymapper_dr2_object_id = Column(
+        ForeignKey('catalogdb.skymapper_dr2.object_id'),
+        index=True)
+    supercosmos_objid = Column(
+        ForeignKey('catalogdb.supercosmos.objid'),
+        index=True)
+    tic_v8_id = Column(
+        ForeignKey('catalogdb.tic_v8.id'),
+        index=True)
+    twomass_psc_pts_key = Column(
+        ForeignKey('catalogdb.twomass_psc.pts_key'),
+        index=True)
+    tycho2_designation = Column(
+        ForeignKey('catalogdb.tycho2.designation'),
+        index=True)
+    unwise_unwise_objid = Column(
+        ForeignKey('catalogdb.unwise.unwise_objid'),
+        index=True)
 
 
 def define_relations():

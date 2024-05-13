@@ -20,13 +20,12 @@ from peewee import (
     IntegerField,
     ManyToManyField,
     TextField,
-    TimestampField
+    TimestampField,
 )
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
 from . import database
-
 
 # When adding a foreign key like below to a peewee model class
 #
@@ -3252,5 +3251,128 @@ class CatalogToToO_Target(CatalogdbModel):
 
     class Meta:
         table_name = "catalog_to_too_target"
+        primary_key = False
+        reflect = False
+
+
+class SDSS_ID_To_Catalog(CatalogdbModel):
+    pk = BigIntegerField()
+    sdss_id = BigIntegerField()
+    catalogid = BigIntegerField(),
+    version_id = IntegerField(),
+    allstar_dr17_synspec_rev1_apstar_id = TextField()
+    allwise_cntr = BigIntegerField()
+    bhm_rm_v0_pk = BigIntegerField()
+    bhm_rm_v0_2_pk = BigIntegerField()
+    catwise_source_id = TextField()
+    catwise2020_source_id = TextField()
+    gaia_dr2_source_source_id = BigIntegerField()
+    gaia_dr3_source_source_id = BigIntegerField()
+    glimpse_pk = BigIntegerField()
+    guvcat_objid = BigIntegerField()
+    legacy_survey_dr10_ls_id = BigIntegerField()
+    legacy_survey_dr8_ls_id = BigIntegerField()
+    panstarrs1_catid_objid = BigIntegerField()
+    ps1_g18_objid = BigIntegerField()
+    sdss_dr13_photoobj_objid = BigIntegerField()
+    skymapper_dr1_1_object_id = BigIntegerField()
+    skymapper_dr2_object_id = BigIntegerField()
+    supercosmos_objid = BigIntegerField()
+    tic_v8_id = BigIntegerField()
+    twomass_psc_pts_key = IntegerField()
+    tycho2_designation = TextField()
+    unwise_unwise_objid = TextField()
+
+    allstar_dr17_synspec_rev1 = ForeignKeyField(
+        AllStar_DR17_synspec_rev1,
+        column_name='allstar_dr17_synspec_rev1_apstar_id',
+        backref='+')
+    allwise = ForeignKeyField(
+        AllWise,
+        column_name='allwise_cntr',
+        backref='+')
+    bhm_rm_v0 = ForeignKeyField(
+        BHM_RM_v0,
+        column_name='bhm_rm_v0_pk',
+        backref='+')
+    bhm_rm_v0_2 = ForeignKeyField(
+        BHM_RM_v0_2,
+        column_name='bhm_rm_v0_2_pk',
+        backref='+')
+    catwise = ForeignKeyField(
+        CatWISE,
+        column_name='catwise_source_id',
+        backref='+')
+    catwise2020 = ForeignKeyField(
+        CatWISE2020,
+        column_name='catwise2020_source_id',
+        backref='+')
+    gaia_dr2_source = ForeignKeyField(
+        Gaia_DR2,
+        column_name='gaia_dr2_source_source_id',
+        backref='+')
+    gaia_dr3_source = ForeignKeyField(
+        Gaia_DR3,
+        column_name='gaia_dr3_source_source_id',
+        backref='+')
+    glimpse = ForeignKeyField(
+        GLIMPSE,
+        column_name='glimpse_pk',
+        backref='+')
+    guvcat = ForeignKeyField(
+        GUVCat,
+        column_name='guvcat_objid',
+        backref='+')
+    legacy_survey_dr10 = ForeignKeyField(
+        Legacy_Survey_DR10,
+        column_name='legacy_survey_dr10_ls_id',
+        backref='+')
+    legacy_survey_dr8 = ForeignKeyField(
+        Legacy_Survey_DR8,
+        column_name='legacy_survey_dr8_ls_id',
+        backref='+')
+    panstarrs1 = ForeignKeyField(
+        Panstarrs1,
+        column_name='panstarrs1_catid_objid',
+        backref='+')
+    ps1_g18 = ForeignKeyField(
+        PS1_g18,
+        column_name='ps1_g18_objid',
+        backref='+')
+    sdss_dr13_photoobj = ForeignKeyField(
+        SDSS_DR13_PhotoObj,
+        column_name='sdss_dr13_photoobj_objid',
+        backref='+')
+    skymapper_dr1_1 = ForeignKeyField(
+        SkyMapper_DR1_1,
+        column_name='skymapper_dr1_1_object_id',
+        backref='+')
+    skymapper_dr2 = ForeignKeyField(
+        SkyMapper_DR2,
+        column_name='skymapper_dr2_object_id',
+        backref='+')
+    supercosmos = ForeignKeyField(
+        SuperCosmos,
+        column_name='supercosmos_objid',
+        backref='+')
+    tic_v8 = ForeignKeyField(
+        TIC_v8,
+        column_name='tic_v8_id',
+        backref='+')
+    twomass_psc = ForeignKeyField(
+        TwoMassPSC,
+        column_name='twomass_psc_pts_key',
+        backref='+')
+    tycho2 = ForeignKeyField(
+        Tycho2,
+        column_name='tycho2_designation',
+        backref='+')
+    unwise = ForeignKeyField(
+        unWISE,
+        column_name='unwise_unwise_objid',
+        backref='+')
+
+    class Meta:
+        table_name = "sdss_id_to_catalog"
         primary_key = False
         reflect = False
