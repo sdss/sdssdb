@@ -1,3 +1,6 @@
+-- This is for pipeline server.
+-- See the below link
+-- https://github.com/sdss/sdssdb/blob/main/schema/sdss5db/catalogdb/manga/mangatarget_specobjid.md
 
 create table catalogdb.mangaTarget (
 ------------------------------------------------------------------------------
@@ -184,7 +187,8 @@ create table catalogdb.mangaTarget (
     ifutargsizeanc smallint NOT NULL, --/U fibers --/D The ideal IFU size for the ancillary program
     manga_target3 bigint NOT NULL, --/D Targeting bitmask for the ancillary samples
     priorityanc int NOT NULL, --/D The ancillary program's priority for this object
-    unalloc smallint NOT NULL --/D Set to 1 if an ancillary target has been allocated an IFU the was not allocated to a main sample galaxy, otherwise 0
+    unalloc smallint NOT NULL, --/D Set to 1 if an ancillary target has been allocated an IFU the was not allocated to a main sample galaxy, otherwise 0
+    specobjid text -- This is a new column. See the comment at top of this file.
 );
 
 
