@@ -1,4 +1,4 @@
-\o mangatarget_indexes.out
+\o mangatarget_indexes_pipelines.out
 
 create index on catalogdb.mangatarget(q3c_ang2ipix(catalog_ra, catalog_dec));
 create index on catalogdb.mangatarget(q3c_ang2ipix(tilera, tiledec));
