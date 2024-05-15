@@ -758,12 +758,9 @@ class Mangadrpall(CatalogdbModel):
         table_name = 'mangadrpall'
 
 
-class Mangatarget(CatalogdbModel):
-
-    mangaid = CharField(primary_key=True)
-
-    class Meta:
-        table_name = 'mangatarget'
+# See later for model Mangatarget for table mangatarget.
+# It has to be put after SDSS_DR17_SpecObj since it has foreign key to
+# SDSS_DR17_SpecObj.
 
 
 class Mastar_goodstars(CatalogdbModel):
@@ -2094,6 +2091,18 @@ class SDSS_DR17_SpecObj(CatalogdbModel):
 
     class Meta:
         table_name = 'sdss_dr17_specobj'
+
+
+class Mangatarget(CatalogdbModel):
+
+    mangaid = CharField(primary_key=True)
+    sdss_dr17_specobj = ForeignKeyField(SDSS_DR17_SpecObj,  # remote table model
+                                        field='specobjid',  # remote column
+                                        column_name='specobjid',  # local column
+                                        backref='mangatarget')  # local table
+
+    class Meta:
+        table_name = 'mangatarget'
 
 
 class Gaia_DR2_TwoMass_Best_Neighbour(CatalogdbModel):
