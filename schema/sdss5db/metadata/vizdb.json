@@ -369,6 +369,105 @@
       "sql_type": "text",
       "description": "Flag if the data release is public or not",
       "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "unique_id",
+      "display_name": "Unique ID",
+      "sql_type": "text",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "sdss_id",
+      "display_name": "PK",
+      "sql_type": "text",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "catalogid",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "field",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "mjd",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "run2d",
+      "display_name": "PK",
+      "sql_type": "text",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "run1d",
+      "display_name": "PK",
+      "sql_type": "text",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "coadd",
+      "display_name": "PK",
+      "sql_type": "text",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "boss_spectrum_id",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "specobjid",
+      "display_name": "specObj ID",
+      "sql_type": "numeric[20]",
+      "description": "Primary key of the db_metadata table",
+      "unit": "None"
     }
   ]
 }
