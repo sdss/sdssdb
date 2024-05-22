@@ -3,11 +3,13 @@
 vizdb schema version v0.1.0
 
 Created Oct 2023 - B. Cherinka
+Modified May 2024 - Joel Brownstein
 
 */
 
 
 CREATE SCHEMA vizdb;
+ALTER SCHEMA vizdb OWNER TO sdss;
 
 SET search_path TO vizdb;
 
@@ -72,6 +74,7 @@ CREATE TABLE vizdb.db_metadata (
     description TEXT,
     unit TEXT,
     sql_type TEXT);
+ALTER TABLE vizdb.db_metadata OWNER TO sdss;
 
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(schema);
@@ -97,4 +100,21 @@ CREATE TABLE vizdb.releases (
     mjd_cutoff_apo INTEGER,
     mjd_cutoff_lco INTEGER
 );
+ALTER TABLE vizdb.releases OWNER TO sdss;
 CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
+
+CREATE TABLE vizdb.allspec (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    unique_id TEXT,
+    sdss_id TEXT,
+    catalogid INTEGER,
+    field INTEGER,
+    mjd INTEGER,
+    run2d TEXT,
+    run1d TEXT,
+    coadd TEXT,
+    boss_spectrum_id INTEGER,
+    specobjid NUMERIC(20)
+);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(unique_id);
+ALTER TABLE vizdb.allspec OWNER TO sdss;
