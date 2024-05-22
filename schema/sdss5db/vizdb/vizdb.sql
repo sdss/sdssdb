@@ -104,114 +104,17 @@ ALTER TABLE vizdb.releases OWNER TO sdss;
 CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
 
 CREATE TABLE vizdb.allspec (
-
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "pk,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "unique_id TEXT,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "sdss_id TEXT,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "catalogid INTEGER,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "field INTEGER,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "mjd INTEGER,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "run2d TEXT,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "run1d TEXT,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "coadd TEXT,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "boss_spectrum_id INTEGER,
-      "display_name": "PK",
-      "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "specobjid
-      "display_name": "specobj id",
-      "sql_type": "numeric[20]",
-      "description": "Primary key of the db_metadata table",
-      "unit": "None"
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": ");
+    pk SERIAL PRIMARY KEY NOT NULL,
+    unique_id TEXT,
+    sdss_id TEXT,
+    catalogid INTEGER,
+    field INTEGER,
+    mjd INTEGER,
+    run2d TEXT,
+    run1d TEXT,
+    coadd TEXT,
+    boss_spectrum_id INTEGER,
+    specobjid NUMERIC(20)
+);
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(unique_id);
 ALTER TABLE vizdb.allspec OWNER TO sdss;
