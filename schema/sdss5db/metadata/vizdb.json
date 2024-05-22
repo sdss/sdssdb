@@ -376,7 +376,7 @@
       "column_name": "pk",
       "display_name": "PK",
       "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
+      "description": "allspec",
       "unit": "None"
     },
     {
@@ -385,79 +385,79 @@
       "column_name": "unique_id",
       "display_name": "Unique ID",
       "sql_type": "text",
-      "description": "Primary key of the db_metadata table",
+      "description": "allspec",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "sdss_id",
-      "display_name": "PK",
+      "display_name": "sdss_id",
       "sql_type": "text",
-      "description": "Primary key of the db_metadata table",
+      "description": "allspec",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "catalogid",
-      "display_name": "PK",
+      "display_name": "catalogid",
       "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
+      "description": "allspec",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "field",
-      "display_name": "PK",
+      "display_name": "Field",
       "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
+      "description": "BHM Field (or Plate in the plate era)",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "mjd",
-      "display_name": "PK",
+      "display_name": "MJD",
       "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
+      "description": "MJD",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "run2d",
-      "display_name": "PK",
+      "display_name": "run2d",
       "sql_type": "text",
-      "description": "Primary key of the db_metadata table",
+      "description": "idlspec2d version",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "run1d",
-      "display_name": "PK",
+      "display_name": "run1d",
       "sql_type": "text",
-      "description": "Primary key of the db_metadata table",
+      "description": "idlspec1d version",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "coadd",
-      "display_name": "PK",
+      "display_name": "coadd",
       "sql_type": "text",
-      "description": "Primary key of the db_metadata table",
+      "description": "either epoch, daily, or custom (allepoch for IPL-3)",
       "unit": "None"
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
       "column_name": "boss_spectrum_id",
-      "display_name": "PK",
+      "display_name": "BOSS Spectrum ID",
       "sql_type": "integer",
-      "description": "Primary key of the db_metadata table",
+      "description": "join to boss_drp.boss_spectrum table for summary info from idlspec2d spAll",
       "unit": "None"
     },
     {
@@ -466,7 +466,7 @@
       "column_name": "specobjid",
       "display_name": "specObj ID",
       "sql_type": "numeric[20]",
-      "description": "Primary key of the db_metadata table",
+      "description": "sdss/boss spectrograph reduction id from idlspec2d",
       "unit": "None"
     }
   ]
