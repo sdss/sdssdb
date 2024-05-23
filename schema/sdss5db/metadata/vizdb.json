@@ -454,10 +454,10 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "release_id",
-      "display_name": "Data Release ID",
+      "column_name": "releases_pk",
+      "display_name": "Releases Table PK",
       "sql_type": "integer",
-      "description": "join to the vizdb.releases table",
+      "description": "join to the pk of the vizdb.releases table",
       "unit": "None"
     },
     {

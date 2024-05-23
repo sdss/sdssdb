@@ -105,15 +105,16 @@ CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
 
 CREATE TABLE vizdb.allspec (
     pk SERIAL PRIMARY KEY NOT NULL,
-    unique_id TEXT,
-    sdss_id INT8,
-    catalogid INTEGER,
+    releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
+    boss_spectrum_id INTEGER REFERENCES boss_drp.boss_spectrum(id),
+    unique_id TEXT NOT NULL,
+    sdss_id INT8 NOT NULL,
+    catalogid INTEGER NOT NULL,
     field INTEGER,
     mjd INTEGER,
     run2d TEXT,
     run1d TEXT,
     coadd TEXT,
-    boss_spectrum_id INTEGER,
     specobjid NUMERIC(20)
 );
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(unique_id);

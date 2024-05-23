@@ -103,7 +103,7 @@ class AllSpec(Base):
     __tablename__ = 'allspec'
     print_fields = ['unique_id', 'sdss_id', 'field', 'mjd', 'coadd', 'specobjid']
     pk = Column('pk', Integer, primary_key=True)
-    release_id = Column('release_id', Integer)
+    releases_pk = Column('releases_pk', Integer)
     boss_spectrum_id = Column('boss_spectrum_id', Integer)
     unique_id = Column('unique_id', Text)
     sdss_id = Column('sdss_id', BigInteger)
