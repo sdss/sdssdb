@@ -7,8 +7,8 @@
 
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Integer,
-                        SmallInteger, Text, text)
+from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Integer, Numeric, 
+                        SmallInteger,Text, text)
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -98,6 +98,21 @@ class Releases(Base):
     public = Column(Boolean)
     mjd_cutoff_apo = Column(Integer)
     mjd_cutoff_lco = Column(Integer)
+    
+class AllSpec(Base):
+    __tablename__ = 'allspec'
+    print_fields = ['unique_id', 'sdss_id', 'field', 'mjd', 'coadd', 'specobjid']
+    pk = Column('pk', Integer, primary_key=True)
+    release_id = Column('release_id', Integer)
+    boss_spectrum_id = Column('boss_spectrum_id', Integer)
+    unique_id = Column('unique_id', Text)
+    sdss_id = Column('sdss_id', BigInteger)
+    catalogid = Column('catalogid', BigInteger)
+    field = Column('field', Integer)
+    run2d = Column('run2d', Text)
+    run1d = Column('run1d', Text)
+    coadd = Column('coadd', Text)
+    specobjid = Column('specobjid', Numeric(20))
 
 
 def define_relations():

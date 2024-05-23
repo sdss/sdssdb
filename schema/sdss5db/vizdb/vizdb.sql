@@ -106,7 +106,7 @@ CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
 CREATE TABLE vizdb.allspec (
     pk SERIAL PRIMARY KEY NOT NULL,
     unique_id TEXT,
-    sdss_id TEXT,
+    sdss_id INT8,
     catalogid INTEGER,
     field INTEGER,
     mjd INTEGER,

@@ -393,7 +393,7 @@
       "table_name": "allspec",
       "column_name": "sdss_id",
       "display_name": "sdss_id",
-      "sql_type": "text",
+      "sql_type": "bigint",
       "description": "allspec",
       "unit": "None"
     },
@@ -449,6 +449,15 @@
       "display_name": "coadd",
       "sql_type": "text",
       "description": "either epoch, daily, or custom (allepoch for IPL-3)",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "release_id",
+      "display_name": "Data Release ID",
+      "sql_type": "integer",
+      "description": "join to the vizdb.releases table",
       "unit": "None"
     },
     {

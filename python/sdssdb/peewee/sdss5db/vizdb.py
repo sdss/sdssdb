@@ -104,3 +104,20 @@ class Releases(VizBase):
     class Meta:
         table_name = 'releases'
         print_fields = ['release']
+
+class AllSpec(VizBase):
+    pk = AutoField()
+    release_id = IntegerField()
+    boss_spectrum_id = IntegerField()
+    unique_id = TextField()
+    sdss_id = BigIntegerField()
+    catalogid = BigIntegerField()
+    field = IntegerField(null=True)
+    run2d = TextField(null=True)
+    run1d = TextField(null=True)
+    coadd = TextField(null=True)
+    specobjid = AutoField()
+
+    class Meta:
+        table_name = 'allspec'
+        print_fields = ['unique_id', 'sdss_id', 'field', 'mjd', 'coadd', 'specobjid']
