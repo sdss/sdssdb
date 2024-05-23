@@ -107,7 +107,7 @@ class Releases(VizBase):
 
 class AllSpec(VizBase):
     pk = AutoField()
-    release_id = IntegerField()
+    releases_pk = IntegerField()
     boss_spectrum_id = IntegerField(null=True)
     unique_id = TextField()
     sdss_id = BigIntegerField()
