@@ -106,7 +106,8 @@ class Releases(VizBase):
         print_fields = ['release']
 
 class AllSpec(VizBase):
-    pk = AutoField()
+
+    pk = IntegerField()
     releases_pk = IntegerField()
     boss_spectrum_id = IntegerField(null=True)
     unique_id = TextField()
