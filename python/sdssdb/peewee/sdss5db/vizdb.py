@@ -114,6 +114,7 @@ class AllSpec(VizBase):
     sdss_id = BigIntegerField()
     catalogid = BigIntegerField()
     field = IntegerField(null=True)
+    mjd = IntegerField(null=True)
     run2d = TextField(null=True)
     run1d = TextField(null=True)
     coadd = TextField(null=True)

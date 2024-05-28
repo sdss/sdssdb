@@ -109,7 +109,7 @@ CREATE TABLE vizdb.allspec (
     boss_spectrum_id INTEGER REFERENCES boss_drp.boss_spectrum(id),
     unique_id TEXT NOT NULL,
     sdss_id INT8 NOT NULL,
-    catalogid INTEGER NOT NULL,
+    catalogid INT8 NOT NULL,
     field INTEGER,
     mjd INTEGER,
     run2d TEXT,
