@@ -115,6 +115,7 @@ CREATE TABLE vizdb.allspec (
     run2d TEXT,
     run1d TEXT,
     coadd TEXT,
+    specobjid_pipeline INT8,
     specobjid NUMERIC(20)
 );
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(unique_id);

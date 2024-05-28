@@ -118,6 +118,7 @@ class AllSpec(VizBase):
     run2d = TextField(null=True)
     run1d = TextField(null=True)
     coadd = TextField(null=True)
+    specobjid_pipeline = IntegerField(null=True)
     specobjid = AutoField()
 
     class Meta:
