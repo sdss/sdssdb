@@ -287,7 +287,7 @@ class SpecObj(VizBase):
     instrument = CharField(max_length=32)
     programname = CharField(max_length=32)
     chunk = CharField(max_length=32)
-    plate_run = CharField(max_length=32)
+    plate_run = CharField(max_length=32)"""
     mjd = IntegerField()
     plate = SmallIntegerField()
     fiberid = SmallIntegerField()
@@ -321,7 +321,7 @@ class SpecObj(VizBase):
     ra = DoubleField()
     dec = DoubleField()
     ra_hms = CharField(max_length=12)
-    dec_dms = CharField(max_length=12)"""
+    dec_dms = CharField(max_length=12)
     cx = DoubleField()
     cy = DoubleField()
     cz = DoubleField()
