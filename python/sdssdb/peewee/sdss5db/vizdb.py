@@ -128,7 +128,7 @@ class AllSpec(VizBase):
 
 class eBossPlate(VizBase):
     plate_id = AutoField(primary_key=True)
-    tree_id = SmallInteger(primary_key=True)
+    tree_id = SmallIntegerField(primary_key=True)
     first_release = CharField(max_length=32)
     plate = SmallIntegerField()
     mjd = IntegerField()
@@ -269,7 +269,7 @@ class eBossPlate(VizBase):
 
 class SpecObj(VizBase):
     specobj_id = AutoField(primary_key=True)
-    tree_id = SmallInteger(primary_key=True)
+    tree_id = SmallIntegerField(primary_key=True)
     bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
