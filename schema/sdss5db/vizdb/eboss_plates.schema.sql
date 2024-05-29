@@ -7,7 +7,7 @@
 
 -- Started on 2024-05-28 19:27:08 MDT
 
-CREATE TABLE vizdb.eboss_plate (
+CREATE TABLE vizdb.plate (
     plate_id numeric(20,0) NOT NULL,
     first_release character varying(32) NOT NULL,
     plate smallint NOT NULL,
@@ -146,14 +146,14 @@ CREATE TABLE vizdb.eboss_plate (
 );
 
 
-ALTER TABLE vizdb.eboss_plate ALTER TABLE sdss;
+ALTER TABLE vizdb.plate OWNER TO sdss;
 
 --
 -- TOC entry 198 (class 1259 OID 9310029)
--- Name: eboss_specobj; Type: TABLE; Schema: vizdb; Owner: eboss
+-- Name: specobj; Type: TABLE; Schema: vizdb; Owner: sdss
 --
 
-CREATE TABLE vizdb.eboss_specobj (
+CREATE TABLE vizdb.specobj (
     specobj_id numeric(20,0) NOT NULL,
     bestobj_id bigint,
     fluxobj_id bigint,
@@ -358,112 +358,112 @@ CREATE TABLE vizdb.eboss_specobj (
 );
 
 
-ALTER TABLE vizdb.eboss_specobj ALTER TABLE sdss;
+ALTER TABLE vizdb.specobj OWNER TO sdss;
 
 --
 -- TOC entry 3548 (class 2606 OID 9310052)
--- Name: eboss_plate eboss_plate_pkey; Type: CONSTRAINT; Schema: vizdb; Owner: eboss
+-- Name: plate plate_pkey; Type: CONSTRAINT; Schema: vizdb; Owner: sdss
 --
 
-ALTER TABLE ONLY vizdb.eboss_plate
-    ADD CONSTRAINT eboss_plate_pkey PRIMARY KEY (tree_id, plate_id);
+ALTER TABLE ONLY vizdb.plate
+    ADD CONSTRAINT plate_pkey PRIMARY KEY (tree_id, plate_id);
 
 
 --
 -- TOC entry 3550 (class 2606 OID 9310054)
--- Name: eboss_plate eboss_plate_plate_id_tree_id_key; Type: CONSTRAINT; Schema: vizdb; Owner: eboss
+-- Name: plate plate_plate_id_tree_id_key; Type: CONSTRAINT; Schema: vizdb; Owner: sdss
 --
 
-ALTER TABLE ONLY vizdb.eboss_plate
-    ADD CONSTRAINT eboss_plate_plate_id_tree_id_key UNIQUE (plate_id, tree_id);
+ALTER TABLE ONLY vizdb.plate
+    ADD CONSTRAINT plate_plate_id_tree_id_key UNIQUE (plate_id, tree_id);
 
 
 --
 -- TOC entry 3556 (class 2606 OID 9310056)
--- Name: eboss_specobj eboss_specobj_pkey; Type: CONSTRAINT; Schema: vizdb; Owner: eboss
+-- Name: specobj specobj_pkey; Type: CONSTRAINT; Schema: vizdb; Owner: sdss
 --
 
-ALTER TABLE ONLY vizdb.eboss_specobj
-    ADD CONSTRAINT eboss_specobj_pkey PRIMARY KEY (tree_id, specobj_id);
+ALTER TABLE ONLY vizdb.specobj
+    ADD CONSTRAINT specobj_pkey PRIMARY KEY (tree_id, specobj_id);
 
 
 --
 -- TOC entry 3559 (class 2606 OID 9310059)
--- Name: eboss_specobj eboss_specobj_specobj_id_tree_id_key; Type: CONSTRAINT; Schema: vizdb; Owner: eboss
+-- Name: specobj specobj_specobj_id_tree_id_key; Type: CONSTRAINT; Schema: vizdb; Owner: sdss
 --
 
-ALTER TABLE ONLY vizdb.eboss_specobj
-    ADD CONSTRAINT eboss_specobj_specobj_id_tree_id_key UNIQUE (specobj_id, tree_id);
+ALTER TABLE ONLY vizdb.specobj
+    ADD CONSTRAINT specobj_specobj_id_tree_id_key UNIQUE (specobj_id, tree_id);
 
 
 --
 -- TOC entry 3551 (class 1259 OID 9310061)
--- Name: eboss_plate_tree_id_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: plate_tree_id_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_plate_tree_id_ix ON vizdb.eboss_plate USING btree (tree_id);
+CREATE INDEX plate_tree_id_ix ON vizdb.plate USING btree (tree_id);
 
 
 --
 -- TOC entry 3552 (class 1259 OID 9310062)
--- Name: eboss_plate_tree_id_mjd_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: plate_tree_id_mjd_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_plate_tree_id_mjd_ix ON vizdb.eboss_plate USING btree (tree_id, mjd);
+CREATE INDEX plate_tree_id_mjd_ix ON vizdb.plate USING btree (tree_id, mjd);
 
 
 --
 -- TOC entry 3553 (class 1259 OID 9310063)
--- Name: eboss_plate_tree_id_plate_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: plate_tree_id_plate_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_plate_tree_id_plate_ix ON vizdb.eboss_plate USING btree (tree_id, plate);
+CREATE INDEX plate_tree_id_plate_ix ON vizdb.plate USING btree (tree_id, plate);
 
 
 --
 -- TOC entry 3554 (class 1259 OID 9310064)
--- Name: eboss_plate_tree_id_plate_mjd_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: plate_tree_id_plate_mjd_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_plate_tree_id_plate_mjd_ix ON vizdb.eboss_plate USING btree (tree_id, plate, mjd);
+CREATE INDEX plate_tree_id_plate_mjd_ix ON vizdb.plate USING btree (tree_id, plate, mjd);
 
 
 --
 -- TOC entry 3557 (class 1259 OID 9310065)
--- Name: eboss_specobj_plate_mjd_id_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: specobj_plate_mjd_id_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_specobj_plate_mjd_id_ix ON vizdb.eboss_specobj USING btree (plate, mjd);
+CREATE INDEX specobj_plate_mjd_id_ix ON vizdb.specobj USING btree (plate, mjd);
 
 
 --
 -- TOC entry 3560 (class 1259 OID 9310066)
--- Name: eboss_specobj_tree_id_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: specobj_tree_id_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_specobj_tree_id_ix ON vizdb.eboss_specobj USING btree (tree_id);
+CREATE INDEX specobj_tree_id_ix ON vizdb.specobj USING btree (tree_id);
 
 
 --
 -- TOC entry 3561 (class 1259 OID 9310067)
--- Name: eboss_specobj_tree_id_mjd_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: specobj_tree_id_mjd_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_specobj_tree_id_mjd_ix ON vizdb.eboss_specobj USING btree (tree_id, mjd);
+CREATE INDEX specobj_tree_id_mjd_ix ON vizdb.specobj USING btree (tree_id, mjd);
 
 
 --
 -- TOC entry 3562 (class 1259 OID 9310069)
--- Name: eboss_specobj_tree_id_plate_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: specobj_tree_id_plate_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_specobj_tree_id_plate_ix ON vizdb.eboss_specobj USING btree (tree_id, plate);
+CREATE INDEX specobj_tree_id_plate_ix ON vizdb.specobj USING btree (tree_id, plate);
 
 
 --
 -- TOC entry 3563 (class 1259 OID 9310070)
--- Name: eboss_specobj_tree_id_plate_mjd_ix; Type: INDEX; Schema: vizdb; Owner: eboss
+-- Name: specobj_tree_id_plate_mjd_ix; Type: INDEX; Schema: vizdb; Owner: sdss
 --
 
-CREATE INDEX eboss_specobj_tree_id_plate_mjd_ix ON vizdb.eboss_specobj USING btree (tree_id, plate, mjd);
+CREATE INDEX specobj_tree_id_plate_mjd_ix ON vizdb.specobj USING btree (tree_id, plate, mjd);
 
