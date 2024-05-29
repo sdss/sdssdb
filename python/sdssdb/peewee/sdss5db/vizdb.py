@@ -11,7 +11,6 @@
 from peewee import (AutoField, BigIntegerField, BooleanField, CharField,
                     DoubleField, ForeignKeyField, FloatField, IntegerField,
                     SmallIntegerField, TextField)
-from peewee import CompositeKey
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -266,10 +265,9 @@ class Plate(VizBase):
 
     class Meta:
         table_name = 'plate'
-        #primary_key = CompositeKey('plate_id', 'tree_id')
         print_fields = ['plate_id', 'tree_id', 'plate', 'mjd', 'survey', 'instrument']
 
-"""class SpecObj(VizBase):
+class SpecObj(VizBase):
     specobj_id = AutoField()
     tree_id = SmallIntegerField()
     bestobj_id = BigIntegerField()
@@ -474,6 +472,5 @@ class Plate(VizBase):
 
     class Meta:
         table_name = 'specobj'
-        #primary_key = CompositeKey('specobj_id', 'tree_id')
         print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
-"""
+
