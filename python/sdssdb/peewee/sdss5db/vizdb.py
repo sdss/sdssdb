@@ -9,8 +9,8 @@
 # Peewee version: 3.13.2
 
 from peewee import (AutoField, BigIntegerField, BooleanField, CharField,
-                    DoubleField, FloatField, IntegerField, SmallIntegerField,
-                    TextField)
+                    DoubleField, ForeignKeyField, FloatField, IntegerField,
+                    SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
