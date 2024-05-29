@@ -273,7 +273,7 @@ class SpecObj(VizBase):
     bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
-    plate_id = AutoField()
+    plate_id = DecimalField(20)
     science_primary = SmallIntegerField()
     sdss_primary = SmallIntegerField()
     legacy_primary = SmallIntegerField()
