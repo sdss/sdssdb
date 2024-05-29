@@ -270,7 +270,7 @@ class Plate(VizBase):
 class SpecObj(VizBase):
     specobj_id = AutoField()
     tree_id = SmallIntegerField()
-    """bestobj_id = BigIntegerField()
+    bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
     plate_id = AutoField()
@@ -468,7 +468,7 @@ class SpecObj(VizBase):
     load_version = IntegerField()
     specprimary = SmallIntegerField()
     field = SmallIntegerField()
-    catalogid = BigIntegerField()"""
+    catalogid = BigIntegerField()
 
     class Meta:
         table_name = 'specobj'
