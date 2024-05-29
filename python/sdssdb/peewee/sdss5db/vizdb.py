@@ -267,9 +267,9 @@ class Plate(VizBase):
         table_name = 'plate'
         print_fields = ['plate_id', 'tree_id', 'plate', 'mjd', 'survey', 'instrument']
 
-class SpecObj(VizBase):
+class Specobj(VizBase):
     specobj_id = AutoField()
-    tree_id = AutoField()
+    tree_id = SmallIntegerField()
     bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
