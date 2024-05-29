@@ -269,7 +269,7 @@ class Plate(VizBase):
 
 class SpecObj(VizBase):
     specobj_id = AutoField()
-    tree_id = SmallIntegerField()
+    tree_id = AutoField()
     bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
