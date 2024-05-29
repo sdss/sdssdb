@@ -129,7 +129,7 @@ class AllSpec(VizBase):
 
 class Plate(VizBase):
     plate_id = AutoField()
-    tree_id = SmallIntegerField()
+    tree_id = AutoField()
     first_release = CharField(max_length=32)
     plate = SmallIntegerField()
     mjd = IntegerField()
@@ -271,7 +271,7 @@ class Plate(VizBase):
 
 class SpecObj(VizBase):
     specobj_id = AutoField()
-    tree_id = SmallIntegerField()
+    tree_id = AutoField()
     bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
