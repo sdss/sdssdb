@@ -129,7 +129,7 @@ class AllSpec(VizBase):
 
 class Plate(VizBase):
     plate_id = AutoField()
-    tree_id = AutoField()
+    tree_id = SmallIntegerField()
     first_release = CharField(max_length=32)
     plate = SmallIntegerField()
     mjd = IntegerField()
@@ -271,7 +271,7 @@ class Plate(VizBase):
 
 class SpecObj(VizBase):
     specobj_id = AutoField()
-    tree_id = AutoField()
+    tree_id = SmallIntegerField()
     bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
@@ -474,5 +474,5 @@ class SpecObj(VizBase):
 
     class Meta:
         table_name = 'specobj'
-        #primary_key = CompositeKey('plate_id', 'tree_id')
+        primary_key = CompositeKey('specobj_id', 'tree_id')
         print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
