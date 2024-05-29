@@ -273,7 +273,7 @@ class SpecObj(VizBase):
     """bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
-    plate_id = AutoField()
+    plate_id = AutoField()"""
     science_primary = SmallIntegerField()
     sdss_primary = SmallIntegerField()
     legacy_primary = SmallIntegerField()
@@ -287,7 +287,7 @@ class SpecObj(VizBase):
     instrument = CharField(max_length=32)
     programname = CharField(max_length=32)
     chunk = CharField(max_length=32)
-    plate_run = CharField(max_length=32)"""
+    plate_run = CharField(max_length=32)
     mjd = IntegerField()
     plate = SmallIntegerField()
     fiberid = SmallIntegerField()
