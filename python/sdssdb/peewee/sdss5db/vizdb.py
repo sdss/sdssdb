@@ -270,10 +270,10 @@ class Plate(VizBase):
 class SpecObj(VizBase):
     specobj_id = AutoField()
     tree_id = SmallIntegerField()
-    """bestobj_id = BigIntegerField()
+    bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
-    plate_id = AutoField()"""
+    #plate_id = AutoField()
     science_primary = SmallIntegerField()
     sdss_primary = SmallIntegerField()
     legacy_primary = SmallIntegerField()
