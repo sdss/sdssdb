@@ -270,7 +270,7 @@ class Plate(VizBase):
 class SpecObj(VizBase):
     specobj_id = AutoField()
     tree_id = SmallIntegerField()
-    bestobj_id = BigIntegerField()
+    """bestobj_id = BigIntegerField()
     fluxobj_id = BigIntegerField()
     targetobj_id = BigIntegerField()
     plate_id = AutoField()
@@ -321,7 +321,7 @@ class SpecObj(VizBase):
     ra = DoubleField()
     dec = DoubleField()
     ra_hms = CharField(max_length=12)
-    dec_dms = CharField(max_length=12)
+    dec_dms = CharField(max_length=12)"""
     cx = DoubleField()
     cy = DoubleField()
     cz = DoubleField()
