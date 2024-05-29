@@ -8,7 +8,7 @@
 # Database: sdss5db
 # Peewee version: 3.13.2
 
-from peewee import (AutoField, BigIntegerField, BooleanField, CharField, DecimalField
+from peewee import (AutoField, BigIntegerField, BooleanField, CharField, DecimalField,
                     DoubleField, ForeignKeyField, FloatField, IntegerField,
                     SmallIntegerField, TextField)
 from playhouse.postgres_ext import ArrayField
