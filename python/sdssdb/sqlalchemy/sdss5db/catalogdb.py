@@ -10234,70 +10234,70 @@ class SDSS_ID_To_Catalog(Base):
     tycho2_designation = Column(String(20))
     unwise_unwise_objid = Column(String(20))
 
-    allstar_dr17_synspec_rev1_apstar_id = Column(
+    allstar_dr17_synspec_rev1__apstar_id = Column(
         ForeignKey('catalogdb.allstar_dr17_synspec_rev1.apstar_id'),
         index=True)
-    allwise_cntr = Column(
+    allwise__cntr = Column(
         ForeignKey('catalogdb.allwise.cntr'),
         index=True)
-    bhm_rm_v0_pk = Column(
+    bhm_rm_v0__pk = Column(
         ForeignKey('catalogdb.bhm_rm_v0.pk'),
         index=True)
-    bhm_rm_v0_2_pk = Column(
+    bhm_rm_v0_2__pk = Column(
         ForeignKey('catalogdb.bhm_rm_v0_2.pk'),
         index=True)
-    catwise_source_id = Column(
+    catwise__source_id = Column(
         ForeignKey('catalogdb.catwise.source_id'),
         index=True)
-    catwise2020_source_id = Column(
+    catwise2020__source_id = Column(
         ForeignKey('catalogdb.catwise2020.source_id'),
         index=True)
-    gaia_dr2_source_source_id = Column(
+    gaia_dr2_source__source_id = Column(
         ForeignKey('catalogdb.gaia_dr2_source.source_id'),
         index=True)
-    gaia_dr3_source_source_id = Column(
+    gaia_dr3_source__source_id = Column(
         ForeignKey('catalogdb.gaia_dr3_source.source_id'),
         index=True)
-    glimpse_pk = Column(
+    glimpse__pk = Column(
         ForeignKey('catalogdb.glimpse.pk'),
         index=True)
-    guvcat_objid = Column(
+    guvcat__objid = Column(
         ForeignKey('catalogdb.guvcat.objid'),
         index=True)
-    legacy_survey_dr10_ls_id = Column(
+    legacy_survey_dr10__ls_id = Column(
         ForeignKey('catalogdb.legacy_survey_dr10.ls_id'),
         index=True)
-    legacy_survey_dr8_ls_id = Column(
+    legacy_survey_dr8__ls_id = Column(
         ForeignKey('catalogdb.legacy_survey_dr8.ls_id'),
         index=True)
-    panstarrs1_catid_objid = Column(
+    panstarrs1__catid_objid = Column(
         ForeignKey('catalogdb.panstarrs1.catid_objid'),
         index=True)
-    ps1_g18_objid = Column(
+    ps1_g18__objid = Column(
         ForeignKey('catalogdb.ps1_g18.objid'),
         index=True)
-    sdss_dr13_photoobj_objid = Column(
+    sdss_dr13_photoobj__objid = Column(
         ForeignKey('catalogdb.sdss_dr13_photoobj.objid'),
         index=True)
-    skymapper_dr1_1_object_id = Column(
+    skymapper_dr1_1__object_id = Column(
         ForeignKey('catalogdb.skymapper_dr1_1.object_id'),
         index=True)
-    skymapper_dr2_object_id = Column(
+    skymapper_dr2__object_id = Column(
         ForeignKey('catalogdb.skymapper_dr2.object_id'),
         index=True)
-    supercosmos_objid = Column(
+    supercosmos__objid = Column(
         ForeignKey('catalogdb.supercosmos.objid'),
         index=True)
-    tic_v8_id = Column(
+    tic_v8__id = Column(
         ForeignKey('catalogdb.tic_v8.id'),
         index=True)
-    twomass_psc_pts_key = Column(
+    twomass_psc__pts_key = Column(
         ForeignKey('catalogdb.twomass_psc.pts_key'),
         index=True)
-    tycho2_designation = Column(
+    tycho2__designation = Column(
         ForeignKey('catalogdb.tycho2.designation'),
         index=True)
-    unwise_unwise_objid = Column(
+    unwise__unwise_objid = Column(
         ForeignKey('catalogdb.unwise.unwise_objid'),
         index=True)
 

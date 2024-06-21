@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Updated ``sdss_id_to_catalog`` view models to use double underscore separating table name from primary key.
+
 * :release:`0.11.4 <2024-04-30>`
 * Add columns ``too_metadata.last_modified_date``, ``too_target.observe_from_mjd``, and ``too_target.added_date``.
 * Rename column ``too_target.expiration_date`` to ``too_target.observe_until_mjd``.

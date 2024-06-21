@@ -3294,91 +3294,91 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
 
     allstar_dr17_synspec_rev1 = ForeignKeyField(
         AllStar_DR17_synspec_rev1,
-        column_name='allstar_dr17_synspec_rev1_apstar_id',
+        column_name='allstar_dr17_synspec_rev1__apstar_id',
         backref='+')
     allwise = ForeignKeyField(
         AllWise,
-        column_name='allwise_cntr',
+        column_name='allwise__cntr',
         backref='+')
     bhm_rm_v0 = ForeignKeyField(
         BHM_RM_v0,
-        column_name='bhm_rm_v0_pk',
+        column_name='bhm_rm_v0__pk',
         backref='+')
     bhm_rm_v0_2 = ForeignKeyField(
         BHM_RM_v0_2,
-        column_name='bhm_rm_v0_2_pk',
+        column_name='bhm_rm_v0_2__pk',
         backref='+')
     catwise = ForeignKeyField(
         CatWISE,
-        column_name='catwise_source_id',
+        column_name='catwise__source_id',
         backref='+')
     catwise2020 = ForeignKeyField(
         CatWISE2020,
-        column_name='catwise2020_source_id',
+        column_name='catwise2020__source_id',
         backref='+')
     gaia_dr2_source = ForeignKeyField(
         Gaia_DR2,
-        column_name='gaia_dr2_source_source_id',
+        column_name='gaia_dr2_source__source_id',
         backref='+')
     gaia_dr3_source = ForeignKeyField(
         Gaia_DR3,
-        column_name='gaia_dr3_source_source_id',
+        column_name='gaia_dr3_source__source_id',
         backref='+')
     glimpse = ForeignKeyField(
         GLIMPSE,
-        column_name='glimpse_pk',
+        column_name='glimpse__pk',
         backref='+')
     guvcat = ForeignKeyField(
         GUVCat,
-        column_name='guvcat_objid',
+        column_name='guvcat__objid',
         backref='+')
     legacy_survey_dr10 = ForeignKeyField(
         Legacy_Survey_DR10,
-        column_name='legacy_survey_dr10_ls_id',
+        column_name='legacy_survey_dr10__ls_id',
         backref='+')
     legacy_survey_dr8 = ForeignKeyField(
         Legacy_Survey_DR8,
-        column_name='legacy_survey_dr8_ls_id',
+        column_name='legacy_survey_dr8__ls_id',
         backref='+')
     panstarrs1 = ForeignKeyField(
         Panstarrs1,
-        column_name='panstarrs1_catid_objid',
+        column_name='panstarrs1__catid_objid',
         backref='+')
     ps1_g18 = ForeignKeyField(
         PS1_g18,
-        column_name='ps1_g18_objid',
+        column_name='ps1_g18__objid',
         backref='+')
     sdss_dr13_photoobj = ForeignKeyField(
         SDSS_DR13_PhotoObj,
-        column_name='sdss_dr13_photoobj_objid',
+        column_name='sdss_dr13_photoobj__objid',
         backref='+')
     skymapper_dr1_1 = ForeignKeyField(
         SkyMapper_DR1_1,
-        column_name='skymapper_dr1_1_object_id',
+        column_name='skymapper_dr1_1__object_id',
         backref='+')
     skymapper_dr2 = ForeignKeyField(
         SkyMapper_DR2,
-        column_name='skymapper_dr2_object_id',
+        column_name='skymapper_dr2__object_id',
         backref='+')
     supercosmos = ForeignKeyField(
         SuperCosmos,
-        column_name='supercosmos_objid',
+        column_name='supercosmos__objid',
         backref='+')
     tic_v8 = ForeignKeyField(
         TIC_v8,
-        column_name='tic_v8_id',
+        column_name='tic_v8__id',
         backref='+')
     twomass_psc = ForeignKeyField(
         TwoMassPSC,
-        column_name='twomass_psc_pts_key',
+        column_name='twomass_psc__pts_key',
         backref='+')
     tycho2 = ForeignKeyField(
         Tycho2,
-        column_name='tycho2_designation',
+        column_name='tycho2__designation',
         backref='+')
     unwise = ForeignKeyField(
         unWISE,
-        column_name='unwise_unwise_objid',
+        column_name='unwise__unwise_objid',
         backref='+')
 
     class Meta:
