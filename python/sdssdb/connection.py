@@ -12,23 +12,20 @@ import os
 import re
 import socket
 
+import peewee
 import pgpasslib
 import six
-
+from peewee import OperationalError, PostgresqlDatabase
+from playhouse.postgres_ext import ArrayField
+from playhouse.reflection import Introspector, UnknownField
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.engine import url
 from sqlalchemy.exc import OperationalError as OpError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-import peewee
-from peewee import OperationalError, PostgresqlDatabase
-from playhouse.postgres_ext import ArrayField
-from playhouse.reflection import Introspector, UnknownField
-
 import sdssdb
 from sdssdb import config, log
 from sdssdb.utils.internals import get_database_columns
-
 
 __all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
 
