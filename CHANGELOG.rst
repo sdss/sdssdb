@@ -7,6 +7,7 @@ This document records the main changes to the ``sdssdb`` code.
 
 * Updated ``sdss_id_to_catalog`` view models to use double underscore separating table name from primary key.
 * Very significantly speed up the reflection of the database by caching the schema metadata.
+* Add ``targetdb`` ``targeting_generation`` and ``targeting_generation_to_target`` tables and models.
 
 * :release:`0.11.4 <2024-04-30>`
 * Add columns ``too_metadata.last_modified_date``, ``too_target.observe_from_mjd``, and ``too_target.added_date``.
