@@ -106,7 +106,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         return '<{} (dbname={!r}, profile={!r}, connected={})>'.format(
             self.__class__.__name__, self.dbname, self.profile, self.connected)
 
-    def set_profile(self, profile=None, connect=True):
+    def set_profile(self, profile=None, connect=True, **params):
         """Sets the profile from the configuration file.
 
         Parameters
@@ -116,6 +116,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             determine the profile.
         connect : bool
             If True, tries to connect to the database using the new profile.
+        params
+            Connection parameters (``user``, ``host``, ``port``, ``password``)
+            that will override the profile values.
 
         Returns
         -------
@@ -153,6 +156,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                         if hostname == self._config['host']:
                             self._config['host'] = None
                         break
+
+        self._config.update(params)
 
         if connect:
             if self.connected and self.profile == previous_profile:
