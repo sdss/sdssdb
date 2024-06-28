@@ -529,6 +529,21 @@ class TargetingGenerationToCarton(TargetdbBase):
         table_name = 'targeting_generation_to_carton'
 
 
+class TargetingGenerationToVersion(TargetdbBase):
+    pk = AutoField()
+    targeting_generation_pk = ForeignKeyField(column_name="generation_pk",
+                                              field="pk",
+                                              model=TargetingGeneration,
+                                              backref='+')
+    version_pk = ForeignKeyField(column_name="version_pk",
+                                 field="pk",
+                                 model=Version,
+                                 backref='+')
+
+    class Meta:
+        table_name = 'targeting_generation_to_carton'
+
+
 # AssignmentDeferred.set_model(Assignment)
 CartonToTargetDeferred.set_model(CartonToTarget)
 TargetingGenerationToCartonDeferred.set_model(TargetingGenerationToCarton)
