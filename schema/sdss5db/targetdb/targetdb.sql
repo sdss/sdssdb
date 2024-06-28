@@ -222,7 +222,8 @@ create table targetdb.design_mode_check_results (
 
 CREATE TABLE targetdb.targeting_generation (
     pk SERIAL PRIMARY KEY NOT NULL,
-    label TEXT
+    label TEXT,
+    first_release TEXT
 );
 
 CREATE TABLE targetdb.targeting_generation_to_carton (
@@ -230,6 +231,12 @@ CREATE TABLE targetdb.targeting_generation_to_carton (
     generation_pk INTEGER,
     carton_pk INTEGER
 );
+
+CREATE TABLE targetdb.targeting_generation_to_version (
+    generation_pk INTEGER,
+    version_pk INTEGER
+);
+
 
 -- Table data
 
@@ -356,6 +363,15 @@ ALTER TABLE ONLY targetdb.targeting_generation_to_carton
     ADD CONSTRAINT carton_fk
     FOREIGN KEY (carton_pk) REFERENCES targetdb.carton(pk);
 
+ALTER TABLE ONLY targetdb.targeting_generation_to_version
+    ADD CONSTRAINT generation_fk
+    FOREIGN KEY (generation_pk) REFERENCES targetdb.targeting_generation(pk);
+
+ALTER TABLE ONLY targetdb.targeting_generation_to_version
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk);
+
+
 -- Indices
 
 CREATE INDEX CONCURRENTLY carton_to_target_pk_idx
@@ -444,3 +460,11 @@ CREATE INDEX CONCURRENTLY targeting_generation_to_carton_generation_pk_idx
 CREATE INDEX CONCURRENTLY targeting_generation_to_carton_carton_pk_idx
     ON targetdb.targeting_generation_to_carton
     USING BTREE(carton_pk);
+
+CREATE INDEX CONCURRENTLY targeting_generation_to_version_generation_pk_idx
+    ON targetdb.targeting_generation_to_version
+    USING BTREE(generation_pk);
+
+CREATE INDEX CONCURRENTLY targeting_generation_to_version_carton_pk_idx
+    ON targetdb.targeting_generation_to_version
+    USING BTREE(version_pk);
