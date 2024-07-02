@@ -384,6 +384,8 @@ class TargetingGenerationToCarton(Base):
     pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.targeting_generation_to_carton_pk_seq'::regclass)"))
     generation_pk = Column(ForeignKey('targetdb.generation.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
     carton_pk = Column(ForeignKey('targetdb.carton.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    rs_stage = Column(Text, nullable=True)
+    rs_active = Column(Boolean, nullable=False)
 
     carton = relationship('Carton')
     targeting_generation = relationship('TargetingGeneration')

@@ -524,6 +524,8 @@ class TargetingGenerationToCarton(TargetdbBase):
                                 field="pk",
                                 model=Carton,
                                 backref='+')
+    rs_stage = TextField()
+    rs_active = BooleanField()
 
     class Meta:
         table_name = 'targeting_generation_to_carton'
