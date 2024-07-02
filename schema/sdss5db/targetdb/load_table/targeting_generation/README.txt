@@ -165,7 +165,7 @@ ARGIND>=2 && stage!="0" && NF == 3 {\
     printf("%s,%s,%s,%s\n",tg_pk,pk[c_p],stage,"true");} \
 ARGIND>=2 && $1~/\[Cartons\]/ {stage="srd"} \
 ARGIND>=2 && $1~/\[CartonsOpen\]/ {stage="open"} \
-' ~/SDSSV/dr19/minidb/carton_versions.psv ~/SDSSV/dr19/minidb/category.psv ${RSCONFIG}/etc/robostrategy-${TG}.cfg >> ${OUTFILE}
+' ~/SDSSV/dr19/minidb/carton_versions.psv ${RSCONFIG}/etc/robostrategy-${TG}.cfg >> ${OUTFILE}
     
 
 # now deal with v0.plates
