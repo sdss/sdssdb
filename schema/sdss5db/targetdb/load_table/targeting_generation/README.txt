@@ -61,7 +61,7 @@ pk,label,first_release
 
 The mapping of targeting_generation to version_pk can be extracted from rsconfig:
 
-gawk '$1~/\[Cartons\]/ {flag=1} $1=="version" && flag==1 {printf("%-30s %8s\n",FILENAME,$3); flag=0} ' etc/robostrategy-eta-?.cfg etc/robostrategy-zeta-?.cfg 
+gawk '$1~/\[Cartons\]/ {flag=1} $1=="version" && flag==1 {printf("%-30s %8s\n",FILENAME,$3); flag=0} ' ~/SDSSV/gitwork/rsconfig/etc/robostrategy-eta-?.cfg ~/SDSSV/gitwork/rsconfig/etc/robostrategy-zeta-?.cfg 
 
 etc/robostrategy-eta-3.cfg        1.0.2
 etc/robostrategy-eta-4.cfg        1.0.2
@@ -78,7 +78,7 @@ etc/robostrategy-zeta-4.cfg       0.5.5
 
 Combining this info, then targeting_generation_to_version.csv contains:
 
-generation_pk,version_pk  | notes
+generation_pk,version_pk  | notes (not added to csv)
 2,105                     (epsilon-7-core-0, v0.5.epsilon-7-core-0)
 3,118                     (zeta-0, v0.5.2)
 5,124                     (zeta-3, v0.5.5)
@@ -94,11 +94,33 @@ generation_pk,version_pk  | notes
 
 # now - populating the 'targeting_generation_to_carton.csv' file
 
-# work from teh relevant robostrategy config files:
+# work from the relevant robostrategy config files:
 # first get a list of all possible cartons+versions
 
-\copy (select c.pk,c.carton,v.plan from carton as c join targetdb.version as v on c.version_pk = v.pk) TO '/home/tdwelly/scratch/carton_versions.psv' with CSV header DELIMITER '|'
+\copy (select c.pk,c.carton,v.plan from carton as c join targetdb.version as v on c.version_pk = v.pk) TO '/home/tdwelly/SDSSV/dr19/minidb/carton_versions.psv' with CSV header DELIMITER '|'
  
+
+# here's the mapping from category to category_pk
+sdss5db=> select * from category;
+ pk |        label         
+----+----------------------
+  0 | science
+  1 | standard_apogee
+  2 | standard_boss
+  3 | guide
+  4 | sky_apogee
+  5 | sky_boss
+  8 | open_fiber
+  6 | standard
+  7 | sky
+  9 | veto_location_boss
+ 10 | veto_location_apogee
+ 11 | ops_sky
+(12 rows)
+
+\copy (select pk,label from category) TO '/home/tdwelly/SDSSV/dr19/minidb/category.psv' with CSV header DELIMITER '|'
+
+# we can actually ignore the categorry because the carton_pk is already linked to a category_pk in targetdb!!
 
 declare -A TG_PK
 
@@ -111,32 +133,39 @@ TG_PK["1.0.4"]="8"
 TG_PK["epsilon-7-core-0"]="2"
 TG_PK["0.plates"]="1"
 
-rm ~/scratch/targeting_generation_to_carton.csv
-echo "generation_pk,carton_pk" >  ~/scratch/targeting_generation_to_carton.csv
+OUTFILE=~/SDSSV/dr19/minidb/targeting_generation_to_carton.csv
+RSCONFIG=~/SDSSV/gitwork/rsconfig
+
+echo "generation_pk,carton_pk,rs_stage,rs_active" > $OUTFILE
+
 for TG in "0.5.2" "0.5.3" "0.5.5" "1.0.2" "1.0.3" "1.0.4"; do
-    gawk -v tg_pk="${TG_PK[${TG}]}" --field-separator='|' '\
+    gawk -v tg_pk="${TG_PK[${TG}]}" \
+    --field-separator='|' '\
     ARGIND==1 {c_p=sprintf("%s#%s", $2, $3);pk[c_p]=$1;} \
     ARGIND>=2 && $2!~/carton/ {\
-        gsub(/ /,"",$2);gsub(/ /,"",$3); \
+        for(i=1;i<=NF;i++){gsub(/ /,"",$i);} \
         c_p=sprintf("%s#%s", $2, $3); \
-        printf("%s,%s\n",tg_pk,pk[c_p])\
-    }' ~/scratch/carton_versions.psv etc/cartons-${TG}.txt >> ~/scratch/targeting_generation_to_carton.csv
+        printf("%s,%s,%s,%s\n",tg_pk,pk[c_p],$5,($6=="y"?"true":"false"))\
+    }' ~/SDSSV/dr19/minidb/carton_versions.psv ${RSCONFIG}/etc/cartons-${TG}.txt >> $OUTFILE
 done
 
 
 # now deal with epsilon-7-core-0
 # go straight to the rs config file
+# have to make up the stage,active flags
 
 TG=epsilon-7-core-0
 gawk -v tg_pk="${TG_PK[${TG}]}" '\
+BEGIN {stage = "0"} \
 ARGIND==1 {FS="|"; c_p=sprintf("%s#%s", $2, $3);pk[c_p]=$1;} \
 ARGIND>=2 {FS=" ";} \
-ARGIND>=2 && $1~/\[CartonsExtra\]/ {flag=0} \
-ARGIND>=2 && flag==1 && NF == 3 {\
+ARGIND>=2 && ($1~/\[CartonsExtra\]/ || $1~/\[CartonsOpenPriorityAdjust\]/) {stage="0"} \
+ARGIND>=2 && stage!="0" && NF == 3 {\
     c_p=sprintf("%s#%s", $1, $3); \
-    printf("%s,%s\n",tg_pk,pk[c_p]);} \
-ARGIND>=2 && $1~/\[Cartons\]/ {flag=1} \
-' ~/scratch/carton_versions.psv etc/robostrategy-${TG}.cfg >> ~/scratch/targeting_generation_to_carton.csv
+    printf("%s,%s,%s,%s\n",tg_pk,pk[c_p],stage,"true");} \
+ARGIND>=2 && $1~/\[Cartons\]/ {stage="srd"} \
+ARGIND>=2 && $1~/\[CartonsOpen\]/ {stage="open"} \
+' ~/SDSSV/dr19/minidb/carton_versions.psv ~/SDSSV/dr19/minidb/category.psv ${RSCONFIG}/etc/robostrategy-${TG}.cfg >> ${OUTFILE}
     
 
 # now deal with v0.plates
@@ -145,73 +174,8 @@ ARGIND>=2 && $1~/\[Cartons\]/ {flag=1} \
 ~/SDSSV/dr19/minidb/bhm_cartons_v0.txt
 ~/SDSSV/dr19/minidb/mwm_cartons_v0.txt
 
-REMEMBER THAT WE NEED TO ADD OPS CARTONS
+REMEMBER THAT WE ALSO NEED TO ADD OPS CARTONS
 
-# just extract info manually:
-
-# these are thecarton-versions we need:
-
- carton_pk |                  carton                   | version_pk | plan  |  tag
------------+-------------------------------------------+------------+-------+-------
-       278 | bhm_aqmes_med                             |         49 | 0.1.0 | 0.1.0
-       280 | bhm_aqmes_med-faint                       |         49 | 0.1.0 | 0.1.0
-       286 | bhm_aqmes_wide3                           |         49 | 0.1.0 | 0.1.0
-       287 | bhm_aqmes_wide3-faint                     |         49 | 0.1.0 | 0.1.0
-       288 | bhm_aqmes_wide2                           |         49 | 0.1.0 | 0.1.0
-       289 | bhm_aqmes_wide2-faint                     |         49 | 0.1.0 | 0.1.0
-       290 | bhm_aqmes_bonus-dark                      |         49 | 0.1.0 | 0.1.0
-       291 | bhm_aqmes_bonus-bright                    |         49 | 0.1.0 | 0.1.0
-       307 | bhm_csc_boss-dark                         |         49 | 0.1.0 | 0.1.0
-       308 | bhm_csc_boss-bright                       |         49 | 0.1.0 | 0.1.0
-       309 | bhm_csc_apogee                            |         49 | 0.1.0 | 0.1.0
-       310 | bhm_gua_dark                              |         49 | 0.1.0 | 0.1.0
-       311 | bhm_gua_bright                            |         49 | 0.1.0 | 0.1.0
-       340 | bhm_rm_core                               |         49 | 0.1.0 | 0.1.0
-       341 | bhm_rm_known-spec                         |         49 | 0.1.0 | 0.1.0
-       342 | bhm_rm_var                                |         49 | 0.1.0 | 0.1.0
-       343 | bhm_rm_ancillary                          |         49 | 0.1.0 | 0.1.0
-       356 | bhm_spiders_agn-efeds                     |         49 | 0.1.0 | 0.1.0
-       357 | bhm_spiders_clusters-efeds-sdss-redmapper |         49 | 0.1.0 | 0.1.0
-       358 | bhm_spiders_clusters-efeds-hsc-redmapper  |         49 | 0.1.0 | 0.1.0
-       359 | bhm_spiders_clusters-efeds-ls-redmapper   |         49 | 0.1.0 | 0.1.0
-       360 | bhm_spiders_clusters-efeds-erosita        |         49 | 0.1.0 | 0.1.0
-
-"carton_pk"|"carton"|"version_pk"|"plan"|"tag"
-126|"mwm_snc_100pc"       |49|"0.1.0"|"0.1.0"
-127|"mwm_snc_250pc"       |49|"0.1.0"|"0.1.0"
-128|"mwm_cb_300pc"        |49|"0.1.0"|"0.1.0"
-134|"mwm_cb_cvcandidates" |49|"0.1.0"|"0.1.0"
-140|"mwm_halo_sm"	  |49|"0.1.0"|"0.1.0"
-143|"mwm_halo_bb"	  |49|"0.1.0"|"0.1.0"
-144|"mwm_yso_s1"	  |49|"0.1.0"|"0.1.0"
-145|"mwm_yso_s2"	  |49|"0.1.0"|"0.1.0"
-146|"mwm_yso_s2-5"	  |49|"0.1.0"|"0.1.0"
-147|"mwm_yso_s3"	  |49|"0.1.0"|"0.1.0"
-148|"mwm_yso_ob"	  |49|"0.1.0"|"0.1.0"
-149|"mwm_yso_cmz"	  |49|"0.1.0"|"0.1.0"
-150|"mwm_yso_cluster"	  |49|"0.1.0"|"0.1.0"
-158|"mwm_rv_long-fps"	  |49|"0.1.0"|"0.1.0"
-160|"mwm_rv_long-bplates" |49|"0.1.0"|"0.1.0"
-163|"mwm_ob_cepheids"	  |49|"0.1.0"|"0.1.0"
-164|"mwm_rv_short-fps"	  |49|"0.1.0"|"0.1.0"
-165|"mwm_rv_short-bplates"|49|"0.1.0"|"0.1.0"
-236|"mwm_ob_core"	  |49|"0.1.0"|"0.1.0"
-241|"mwm_rv_short-rm"     |49|"0.1.0"|"0.1.0"
-242|"mwm_rv_long-rm"      |49|"0.1.0"|"0.1.0"
-259|"mwm_wd_core"         |49|"0.1.0"|"0.1.0"
-273|"mwm_gg_core"         |49|"0.1.0"|"0.1.0"
-274|"mwm_planet_tess"     |49|"0.1.0"|"0.1.0"
-279|"mwm_cb_gaiagalex"    |49|"0.1.0"|"0.1.0"
-281|"mwm_tessrgb_core"    |49|"0.1.0"|"0.1.0"
-361|"mwm_cb_uvex1"        |49|"0.1.0"|"0.1.0"
-362|"mwm_cb_uvex2"        |49|"0.1.0"|"0.1.0"
-363|"mwm_dust_core"       |49|"0.1.0"|"0.1.0"
-364|"mwm_cb_uvex3"        |49|"0.1.0"|"0.1.0"
-366|"mwm_cb_uvex4"        |49|"0.1.0"|"0.1.0"
-367|"mwm_cb_uvex5"        |49|"0.1.0"|"0.1.0"
-375|"mwm_legacy_ir2opt"   |54|"0.1.1"|"0.1.1"
-378|"mwm_rv_long_bplates" |62|"0.1.4"|"0.1.5"
-### 769|"mwm_erosita_stars"|81|"0.0.0-test"|NULL  - this has been dropped
 
 # get the ops cartons via a simple search of targetdb - NEEDS CHECKING
 
@@ -224,91 +188,41 @@ join targetdb.version as v
     on c.version_pk = v.pk
 where carton ~ 'ops' and
       v.plan < '0.3.0'
+      and not plan = '0.0.0-test'
 order by c.pk;
- carton_pk |       carton       | version_pk |    plan    |  tag
------------+--------------------+------------+------------+-------
-       257 | ops_std_boss       |         49 | 0.1.0      | 0.1.0
-       319 | ops_std_eboss      |         49 | 0.1.0      | 0.1.0
-       325 | ops_sky_apogee     |         49 | 0.1.0      | 0.1.0
-       351 | ops_std_boss-red   |         49 | 0.1.0      | 0.1.0
-       368 | ops_sky_boss       |         49 | 0.1.0      | 0.1.0
-       376 | ops_apogee_stds    |         55 | 0.1.2      | 0.1.2
-       377 | ops_std_boss_tic   |         56 | 0.1.3      | 0.1.4
-       522 | ops_std_boss_lsdr8 |         81 | 0.0.0-test |
-       526 | ops_std_boss_tic   |         81 | 0.0.0-test |
-(9 rows)
 
-echo "1,278
-1,280
-1,286
-1,287
-1,288
-1,289
-1,290
-1,291
-1,307
-1,308
-1,309
-1,310
-1,311
-1,340
-1,341
-1,342
-1,343
-1,356
-1,357
-1,358
-1,359
-1,360
-1,126
-1,127
-1,128
-1,134
-1,140
-1,143
-1,144
-1,145
-1,146
-1,147
-1,148
-1,149
-1,150
-1,158
-1,160
-1,163
-1,164
-1,165
-1,236
-1,241
-1,242
-1,259
-1,273
-1,274
-1,279
-1,281
-1,361
-1,362
-1,363
-1,364
-1,366
-1,367
-1,375
-1,378
-1,257
-1,319
-1,325
-1,351
-1,368
-1,376
-1,377" >> ~/scratch/targeting_generation_to_carton.csv
+ carton_pk |      carton      | version_pk | plan  |  tag
+-----------+------------------+------------+-------+-------
+       257 | ops_std_boss     |         49 | 0.1.0 | 0.1.0
+       319 | ops_std_eboss    |         49 | 0.1.0 | 0.1.0
+       325 | ops_sky_apogee   |         49 | 0.1.0 | 0.1.0
+       351 | ops_std_boss-red |         49 | 0.1.0 | 0.1.0
+       368 | ops_sky_boss     |         49 | 0.1.0 | 0.1.0
+       376 | ops_apogee_stds  |         55 | 0.1.2 | 0.1.2
+       377 | ops_std_boss_tic |         56 | 0.1.3 | 0.1.4
+(7 rows)
+
+# So, easiest to go back and make a clean db query following the rules above - these are the carton-versions we need:
+
+\copy (select c.pk as carton_pk,c.carton,c.version_pk,v.plan from carton as c join targetdb.version as v on c.version_pk = v.pk where (carton ~ 'bhm' or carton ~ 'mwm' or carton ~ 'ops') and v.plan < '0.3.0' and not plan = '0.0.0-test' order by c.pk) TO '/home/tdwelly/SDSSV/dr19/minidb/targeting_generation_0.plates.psv' with CSV header DELIMITER '|'
+
+# format into desired shape:
+
+TG="0.plates"
+gawk -v tg_pk="${TG_PK[${TG}]}" \
+    --field-separator='|' '// {n++; \
+if(n>1) { \
+stage="plates"; \
+printf("%s,%s,%s,%s\n",tg_pk,$1,stage,"true");} \
+}' ~/SDSSV/dr19/minidb/targeting_generation_0.plates.psv >> ${OUTFILE}
 
 
-cp ~/scratch/targeting_generation_to_carton.csv ~/SDSSV/gitwork/sdssdb/schema/sdss5db/targetdb/load_table/targeting_generation
+cp $OUTFILE ~/SDSSV/gitwork/sdssdb/schema/sdss5db/targetdb/load_table/targeting_generation/
  
 
 \cd /home/dwelly/SDSSV/gitwork/sdssdb/schema/sdss5db/targetdb/load_table/targeting_generation
 
-# now do a test load into sandbox (replace targetdb with sandbox)
+# now do a test load into sandbox (replacing targetdb with sandbox)
 
 CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_temp (
     pk INTEGER,
@@ -331,17 +245,21 @@ INSERT INTO sandbox.targeting_generation (pk, label, first_release)
 
 CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_carton_temp (
     generation_pk INTEGER,
-    carton_pk INTEGER
+    carton_pk INTEGER,
+    rs_stage TEXT,
+    rs_active BOOLEAN
 );
 
 \copy targeting_generation_to_carton_temp FROM 'targeting_generation_to_carton.csv' WITH CSV HEADER;
 
 CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_carton (
     generation_pk INTEGER,
-    carton_pk INTEGER
+    carton_pk INTEGER,
+    rs_stage TEXT,
+    rs_active BOOLEAN
 );
 
-INSERT INTO sandbox.targeting_generation_to_carton (generation_pk, carton_pk)
+INSERT INTO sandbox.targeting_generation_to_carton (generation_pk, carton_pk, rs_stage, rs_active)
     SELECT * FROM targeting_generation_to_carton_temp ON CONFLICT DO NOTHING;
 
 
@@ -364,6 +282,6 @@ INSERT INTO sandbox.targeting_generation_to_version (generation_pk, version_pk)
 
 # do some test queries:
 
-sdss5db=> select c.pk,c.carton,v.plan,count(*),array_agg(tg.label),min(tg.first_release) from sandbox.targeting_generation_to_carton as tg2c join carton as c on tg2c.carton_pk = c.pk join targetdb.version as v on c.version_pk = v.pk join sandbox.targeting_generation as tg on tg2c.generation_pk = tg.pk where tg.first_release <= 'dr19' group by c.pk,c.carton,v.plan;
+sdss5db=> select c.pk,c.carton,v.plan,count(*),array_agg(tg.label),min(tg.first_release) from sandbox.targeting_generation_to_carton as tg2c join carton as c on tg2c.carton_pk = c.pk join targetdb.version as v on c.version_pk = v.pk join sandbox.targeting_generation as tg on tg2c.generation_pk = tg.pk where tg.first_release <= 'dr19' group by c.pk,c.carton,v.plan order by c.pk;
 
 etc etc

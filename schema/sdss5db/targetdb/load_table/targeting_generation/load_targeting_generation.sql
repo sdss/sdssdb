@@ -27,16 +27,20 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_carton_temp (
 
 CREATE TABLE IF NOT EXISTS targetdb.targeting_generation_to_carton (
     generation_pk INTEGER,
-    carton_pk INTEGER
+    carton_pk INTEGER,
+    rs_stage TEXT,
+    rs_active BOOLEAN
 );
 
-INSERT INTO targetdb.targeting_generation_to_carton (generation_pk, carton_pk)
+INSERT INTO targetdb.targeting_generation_to_carton (generation_pk, carton_pk, rs_stage, rs_active)
     SELECT * FROM targeting_generation_to_carton_temp ON CONFLICT DO NOTHING;
 
 
 CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_version_temp (
     generation_pk INTEGER,
-    version_pk INTEGER
+    version_pk INTEGER,
+    rs_stage TEXT,
+    rs_active BOOLEAN
 );
 
 \copy targeting_generation_to_version_temp FROM 'targeting_generation_to_version.csv' WITH CSV HEADER;

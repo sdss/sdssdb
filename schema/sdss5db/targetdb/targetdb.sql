@@ -229,7 +229,9 @@ CREATE TABLE targetdb.targeting_generation (
 CREATE TABLE targetdb.targeting_generation_to_carton (
     pk SERIAL PRIMARY KEY NOT NULL,
     generation_pk INTEGER,
-    carton_pk INTEGER
+    carton_pk INTEGER,
+    rs_stage TEXT,
+    rs_active BOOLEAN
 );
 
 CREATE TABLE targetdb.targeting_generation_to_version (
