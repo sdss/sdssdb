@@ -39,7 +39,7 @@ CREATE TABLE apogee_drp.star (
     APOGEE2_TARGET4	integer,
     SDSS5_TARGET_CARTON_PKS  text,
     SDSS5_TARGET_CARTONS  text,
-    SDSS5_TARGET_FLGAS    bytea,
+    SDSS5_TARGET_FLAGSHEX  text,
     CATALOGID		bigint,
     VERSION_ID          text,
     SDSS_ID             bigint,
