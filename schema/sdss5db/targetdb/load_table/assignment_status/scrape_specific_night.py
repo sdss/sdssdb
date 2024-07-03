@@ -131,9 +131,9 @@ def updateDB(obs="APO", badTargsFile=""):
     d2s = opsdb.DesignToStatus
 
     if obs == "APO":
-        dbVersion = targetdb.Version.get(plan="eta-6")
+        dbVersion = targetdb.Version.get(plan="eta-9")
     else:
-        dbVersion = targetdb.Version.get(plan="eta-7")
+        dbVersion = targetdb.Version.get(plan="eta-9")
 
     boss = targetdb.Instrument.get(label="BOSS")
 
