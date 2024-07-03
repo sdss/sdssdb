@@ -50,6 +50,8 @@ CREATE TABLE apogee_drp.visit (
     CATALOGID		bigint,
     VERSION_ID          text,
     SDSS_ID		bigint,
+    RA_SDSS_ID		double precision,
+    DEC_SDSS_ID	      	double precision,
     GAIA_RELEASE        text,
     GAIA_SOURCEID	bigint,
     GAIA_PLX		real,
