@@ -6,6 +6,8 @@
 # @Filename: database.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+from __future__ import annotations
+
 import abc
 import importlib
 import os
@@ -39,6 +41,30 @@ def _should_autoconnect():
             return False
     else:
         return sdssdb.autoconnect
+
+
+def get_database_uri(
+    dbname: str,
+    host: str | None = None,
+    port: int | None = None,
+    user: str | None = None,
+    password: str | None = None,
+):
+    """Returns the URI to the database."""
+
+    if user is None and password is None:
+        auth: str = ""
+    elif password is None:
+        auth: str = f"{user}@"
+    else:
+        auth: str = f"{user}:{password}@"
+
+    host_port: str = f"{host or ''}" if port is None else f"{host or ''}:{port}"
+
+    if auth == "" and host_port == "":
+        return f"postgresql://{dbname}"
+
+    return f"postgresql://{auth}{host_port}/{dbname}"
 
 
 class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
@@ -278,7 +304,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         return config[profile]
 
-    @abc.abstractproperty
+    def get_connection_uri(self):
+        """Returns the URI to the database connection."""
+
+        params = self.connection_params
+        if not self.connected or params is None:
+            raise RuntimeError('The database is not connected.')
+
+        return get_database_uri(self.dbname, **params)
+
+    @abc.abstractmethod
     def connection_params(self):
         """Returns a dictionary with the connection parameters.
 
