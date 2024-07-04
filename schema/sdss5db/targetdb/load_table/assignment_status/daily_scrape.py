@@ -32,7 +32,7 @@ def scrapeRecent(obs="APO", mjd_today=00000, base="",
 
     doneDesigns = [d.design_id for d in doneDesigns]
 
-    base_dir = os.getenv('SDSSCORE_TEST_DIR')
+    base_dir = os.getenv('SDSSCORE_DIR')
 
     obs_dir = os.path.join(base_dir, f"{obs.lower()}/summary_files")
 
@@ -120,9 +120,9 @@ def updateDB(obs="APO", badTargsFile=""):
     d2s = opsdb.DesignToStatus
 
     if obs == "APO":
-        dbVersion = targetdb.Version.get(plan="eta-8")
+        dbVersion = targetdb.Version.get(plan="eta-9")
     else:
-        dbVersion = targetdb.Version.get(plan="eta-8")
+        dbVersion = targetdb.Version.get(plan="eta-9")
 
     boss = targetdb.Instrument.get(label="BOSS")
 
