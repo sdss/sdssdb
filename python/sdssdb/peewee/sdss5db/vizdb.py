@@ -106,6 +106,35 @@ class Releases(VizBase):
         table_name = 'releases'
         print_fields = ['release']
 
+class Multiplex(Base):
+
+    pk = IntegerField()
+    releases_pk = IntegerField(null=True)
+    boss_field_id = IntegerField(null=True)
+    sdss_phase = SmallIntegerField(null=True)
+    observatory = TextField(null=True)
+    instrument = TextField(null=True)
+    plate = IntegerField(null=True)
+    field = IntegerField(null=True)
+    run2d = TextField(null=True)
+    run1d = TextField(null=True)
+    racen = DoubleField(null=True)
+    deccem = DoubleField(null=True)
+    racen_hms = TextField(null=True)
+    deccen_dms = TextField(null=True)
+    quality = TextField(null=True)
+    programname = TextField(null=True)
+    survey = TextField(null=True)
+    created = DateTimeField()
+    modified = DateTimeField()
+
+
+    class Meta:
+        table_name = 'multiplex'
+        print_fields = ['instrument', 'observatory', 'plate', 'field']
+
+
+
 class AllSpec(VizBase):
 
     pk = IntegerField()
@@ -153,6 +182,8 @@ class AllSpec(VizBase):
     class Meta:
         table_name = 'allspec'
         print_fields = ['unique_id', 'sdss_id', 'field', 'mjd', 'coadd', 'specobjid']
+
+
 
 class Plate(VizBase):
     plate_id = AutoField()
@@ -294,6 +325,8 @@ class Plate(VizBase):
     class Meta:
         table_name = 'plate'
         print_fields = ['plate_id', 'tree_id', 'plate', 'mjd', 'survey', 'instrument']
+
+
 
 class SpecObj(VizBase):
     specobj_id = AutoField()
