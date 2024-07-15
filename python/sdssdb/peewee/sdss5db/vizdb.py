@@ -10,7 +10,7 @@
 
 from peewee import (AutoField, BigIntegerField, BooleanField, CharField, DecimalField,
                     DoubleField, ForeignKeyField, FloatField, IntegerField,
-                    SmallIntegerField, TextField)
+                    SmallIntegerField, TextField, DateTimeField)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -146,8 +146,8 @@ class AllSpec(VizBase):
     specprimary = SmallIntegerField(null=True)
     specobjid_pipeline = IntegerField(null=True)
     specobjid = AutoField()
-    created = AutoField()
-    modified = AutoField()
+    created = DateTimeField()
+    modified = DateTimeField()
 
 
     class Meta:
