@@ -33,7 +33,6 @@ class Source(AstraBase):
     gaia_dr3_source_id = BigIntegerField(null=True)
     tic_v8_id = BigIntegerField(null=True)
     healpix = IntegerField(null=True)
-    carton_0 = TextField()
     lead = TextField(null=True)
     version_id = IntegerField(null=True)
     catalogid = BigIntegerField(null=True)
