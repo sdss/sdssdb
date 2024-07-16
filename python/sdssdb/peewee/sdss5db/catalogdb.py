@@ -2381,7 +2381,10 @@ class CatalogFromSDSS_DR19p_Speclite(CatalogdbModel):
     distance = FloatField()
 
     class Meta:
-        table_name = "catalog_to_sdss_dr19p_speclite"
+        # The target table is deliberately named 'catalog_from_X'
+        # in order to differentiate it from the usual mapping logic
+        # in "catalog_to_X" tables
+        table_name = "catalog_from_sdss_dr19p_speclite"
         primary_key = False
         reflect = False
 
