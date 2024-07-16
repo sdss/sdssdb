@@ -106,7 +106,7 @@ class Releases(VizBase):
         table_name = 'releases'
         print_fields = ['release']
 
-class Multiplex(Base):
+class Multiplex(VizBase):
 
     pk = IntegerField()
     releases_pk = IntegerField(null=True)
