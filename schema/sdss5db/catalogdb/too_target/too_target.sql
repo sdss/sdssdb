@@ -10,7 +10,8 @@ CREATE TABLE catalogdb.too_target (
     pmra REAL,
     pmdec REAL,
     epoch REAL,
-    parallax REAL
+    parallax REAL,
+    added_date TIMESTAMP (0) WITH TIME ZONE
 );
 
 ALTER TABLE ONLY catalogdb.too_target
@@ -48,6 +49,23 @@ CREATE TABLE catalogdb.too_metadata (
     n_exposures SMALLINT,
     priority SMALLINT,
     active BOOLEAN,
-    expiration_date INTEGER,
-    observed BOOLEAN
+    observe_from_mjd INTEGER,
+    observe_until_mjd INTEGER,
+    observed BOOLEAN,
+    last_modified_date TIMESTAMP (0) WITH TIME ZONE
 );
+
+CREATE TABLE catalogdb.catalog_to_too_target (
+    catalogid BIGINT,
+    target_id BIGINT,
+    version_id SMALLINT,
+    distance REAL,
+    best BOOLEAN,
+    plan_id TEXT,
+    added_by_phase SMALLINT
+);
+
+CREATE INDEX catalog_to_too_target_catalogid_idx ON catalogdb.catalog_to_too_target(catalogid);
+CREATE INDEX catalog_to_too_target_target_id_idx ON catalogdb.catalog_to_too_target(target_id);
+CREATE INDEX catalog_to_too_target_best_idx ON catalogdb.catalog_to_too_target(best);
+CREATE INDEX catalog_to_too_target_version_id_idx ON catalogdb.catalog_to_too_target(version_id);

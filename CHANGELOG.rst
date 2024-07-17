@@ -5,6 +5,35 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Add method ``get_database_uri()`` to ``DatabaseConnection``.
+
+* :release:`0.12.0 <2024-06-28>`
+* Updated ``sdss_id_to_catalog`` view models to use double underscore separating table name from primary key.
+* Very significantly speed up the reflection of the database by caching the schema metadata.
+* Add ``targetdb`` ``targeting_generation`` and ``targeting_generation_to_target`` tables and models.
+* Allow passing additional connection parameters to ``set_profile()`` which will override the profile defaults.
+
+* :release:`0.11.4 <2024-04-30>`
+* Add columns ``too_metadata.last_modified_date``, ``too_target.observe_from_mjd``, and ``too_target.added_date``.
+* Rename column ``too_target.expiration_date`` to ``too_target.observe_until_mjd``.
+
+* :release:`0.11.3 <2024-04-28>`
+* Add columns ``fiber_type`` and ``assigned`` to ``opsdb.assignment_to_focal``.
+
+* :release:`0.11.2 <2024-04-24>`
+* Add column ``can_offset`` to ``too_metadata``.
+
+* :release:`0.11.1 <2024-04-24>`
+* Fix typo in `CatalogToToO_Target` model name.
+
+* :release:`0.11.0 <2024-04-24>`
+* Explicitly define ``CatalogToXXX`` models instead of loading them dynamically.
+
+* :release:`0.10.0 <2024-04-23>`
+* Add ``catalogdb.too_target`` and ``catalogdb.too_metadata`` tables and models.
+* Add new cadences.
+* Add ``disabled`` flag to tile.
+
 * :release:`0.9.0 <2024-03-08>`
 * Add new schema for ``astra`` to ``sdss5db``.
 * Added new peewee and sqlalchemy ORMs for ``astra`` schema.

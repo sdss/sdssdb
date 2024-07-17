@@ -25,7 +25,9 @@ CREATE TABLE opsdb.assignment_to_focal (
     xfocal REAL,
     yfocal REAL,
     positioner_id SMALLINT,
+    fiber_type TEXT,
     catalogid BIGINT,
+    assigned BOOLEAN,
     collided BOOLEAN,
     replaced BOOLEAN);
 

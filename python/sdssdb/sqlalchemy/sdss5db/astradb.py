@@ -33,7 +33,6 @@ class Source(Base):
     gaia_dr3_source_id = Column(BigInteger)
     tic_v8_id = Column(BigInteger)
     healpix = Column(Integer)
-    carton_0 = Column(Text, nullable=False)
     lead = Column(Text)
     version_id = Column(Integer)
     catalogid = Column(BigInteger)

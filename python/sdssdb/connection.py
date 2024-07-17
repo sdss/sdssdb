@@ -6,29 +6,28 @@
 # @Filename: database.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+from __future__ import annotations
+
 import abc
 import importlib
 import os
 import re
 import socket
 
+import peewee
 import pgpasslib
 import six
-
+from peewee import OperationalError, PostgresqlDatabase
+from playhouse.postgres_ext import ArrayField
+from playhouse.reflection import Introspector, UnknownField
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.engine import url
 from sqlalchemy.exc import OperationalError as OpError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-import peewee
-from peewee import OperationalError, PostgresqlDatabase
-from playhouse.postgres_ext import ArrayField
-from playhouse.reflection import Introspector, UnknownField
-
 import sdssdb
 from sdssdb import config, log
 from sdssdb.utils.internals import get_database_columns
-
 
 __all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
 
@@ -42,6 +41,30 @@ def _should_autoconnect():
             return False
     else:
         return sdssdb.autoconnect
+
+
+def get_database_uri(
+    dbname: str,
+    host: str | None = None,
+    port: int | None = None,
+    user: str | None = None,
+    password: str | None = None,
+):
+    """Returns the URI to the database."""
+
+    if user is None and password is None:
+        auth: str = ""
+    elif password is None:
+        auth: str = f"{user}@"
+    else:
+        auth: str = f"{user}:{password}@"
+
+    host_port: str = f"{host or ''}" if port is None else f"{host or ''}:{port}"
+
+    if auth == "" and host_port == "":
+        return f"postgresql://{dbname}"
+
+    return f"postgresql://{auth}{host_port}/{dbname}"
 
 
 class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
@@ -109,7 +132,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         return '<{} (dbname={!r}, profile={!r}, connected={})>'.format(
             self.__class__.__name__, self.dbname, self.profile, self.connected)
 
-    def set_profile(self, profile=None, connect=True):
+    def set_profile(self, profile=None, connect=True, **params):
         """Sets the profile from the configuration file.
 
         Parameters
@@ -119,6 +142,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             determine the profile.
         connect : bool
             If True, tries to connect to the database using the new profile.
+        params
+            Connection parameters (``user``, ``host``, ``port``, ``password``)
+            that will override the profile values.
 
         Returns
         -------
@@ -156,6 +182,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                         if hostname == self._config['host']:
                             self._config['host'] = None
                         break
+
+        self._config.update(params)
 
         if connect:
             if self.connected and self.profile == previous_profile:
@@ -276,7 +304,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         return config[profile]
 
-    @abc.abstractproperty
+    def get_connection_uri(self):
+        """Returns the URI to the database connection."""
+
+        params = self.connection_params
+        if not self.connected or params is None:
+            raise RuntimeError('The database is not connected.')
+
+        return get_database_uri(self.dbname, **params)
+
+    @abc.abstractmethod
     def connection_params(self):
         """Returns a dictionary with the connection parameters.
 

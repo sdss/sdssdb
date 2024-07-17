@@ -95,7 +95,9 @@ class AssignmentToFocal(OpsdbBase):
     xfocal = FloatField()
     yfocal = FloatField()
     positioner_id = IntegerField()
+    fiber_type = TextField()
     catalogid = BigIntegerField()
+    assigned = BooleanField()
     collided = BooleanField()
     replaced = BooleanField()
 
