@@ -3296,7 +3296,7 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
     tycho2__designation = TextField()
     unwise__unwise_objid = TextField()
 
-    allstar_dr17_synspec_rev1 = ForeignKeyField(
+    """allstar_dr17_synspec_rev1 = ForeignKeyField(
         AllStar_DR17_synspec_rev1,
         column_name='allstar_dr17_synspec_rev1_apstar_id',
         backref='+')
@@ -3384,6 +3384,7 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
         unWISE,
         column_name='unwise_unwise_objid',
         backref='+')
+    """
 
     class Meta:
         table_name = "sdss_id_to_catalog"
