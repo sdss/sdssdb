@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.12.1 <2024-07-19>`
+* add cadence dark_flexible_3x1.csv
+* fixing removed column from astra source table
+* Fix table name in peewee model for catalog_from_sdss_speclite_dr19p
 * Add method ``get_database_uri()`` to ``DatabaseConnection``.
 
 * :release:`0.12.0 <2024-06-28>`
