@@ -173,7 +173,7 @@ class AllSpec(VizBase):
     zwarning_noqso = IntegerField(null=True)
     znum_noqso = IntegerField(null=True)
     specprimary = SmallIntegerField(null=True)
-    specobjid_pipeline = IntegerField(null=True)
+    specobjid_pipeline = BigIntegerField(null=True)
     specobjid = AutoField()
     created = DateTimeField()
     modified = DateTimeField()
