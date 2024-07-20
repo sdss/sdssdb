@@ -114,6 +114,7 @@ class Multiplex(VizBase):
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)
     instrument = TextField(null=True)
+    unique_id = TextField()
     plate = IntegerField(null=True)
     field = IntegerField(null=True)
     mjd = IntegerField(null=True)

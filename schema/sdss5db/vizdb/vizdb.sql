@@ -157,6 +157,7 @@ CREATE TABLE vizdb.multiplex (
     sdss_phase INT2 NOT NULL,
     observatory TEXT,
     instrument TEXT,
+    unique_id TEXT NOT NULL,
     plate INT4,
     field INT4,
     mjd INT4,

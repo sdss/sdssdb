@@ -157,6 +157,7 @@ class Multiplex(Base):
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
     instrument = Column('instrument', Text)
+    unique_id = Column('unique_id', Text)
     plate = Column('plate', Integer)
     field = Column('field', Integer)
     run2d = Column('run2d', Text)
