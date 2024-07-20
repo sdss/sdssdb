@@ -167,6 +167,8 @@ CREATE TABLE vizdb.multiplex (
     deccen REAL NOT NULL,
     racen_hms TEXT,
     deccen_dms TEXT,
+    healpix INT4,
+    healpixgrp INT2,
     quality TEXT,
     programname TEXT,
     survey TEXT,

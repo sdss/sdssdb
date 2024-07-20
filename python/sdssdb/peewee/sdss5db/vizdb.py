@@ -124,6 +124,8 @@ class Multiplex(VizBase):
     deccen = DoubleField(null=True)
     racen_hms = TextField(null=True)
     deccen_dms = TextField(null=True)
+    healpix = IntegerField(null=True)
+    healpixgrp = SmallIntegerField(null=True)
     quality = TextField(null=True)
     programname = TextField(null=True)
     survey = TextField(null=True)
