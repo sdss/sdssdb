@@ -116,6 +116,7 @@ class Multiplex(VizBase):
     instrument = TextField(null=True)
     plate = IntegerField(null=True)
     field = IntegerField(null=True)
+    mjd = IntegerField(null=True)
     run2d = TextField(null=True)
     run1d = TextField(null=True)
     racen = DoubleField(null=True)
@@ -131,7 +132,7 @@ class Multiplex(VizBase):
 
     class Meta:
         table_name = 'multiplex'
-        print_fields = ['instrument', 'observatory', 'plate', 'field']
+        print_fields = ['instrument', 'observatory', 'plate', 'field', 'mjd']
 
 
 
