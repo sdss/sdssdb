@@ -121,7 +121,7 @@ class Multiplex(VizBase):
     run2d = TextField(null=True)
     run1d = TextField(null=True)
     racen = DoubleField(null=True)
-    deccem = DoubleField(null=True)
+    deccen = DoubleField(null=True)
     racen_hms = TextField(null=True)
     deccen_dms = TextField(null=True)
     quality = TextField(null=True)
