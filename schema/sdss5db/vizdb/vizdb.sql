@@ -164,7 +164,7 @@ CREATE TABLE vizdb.multiplex (
     run2d TEXT,
     run1d TEXT,
     racen REAL NOT NULL,
-    decen REAL NOT NULL,
+    deccen REAL NOT NULL,
     racen_hms TEXT,
     deccen_dms TEXT,
     quality TEXT,
