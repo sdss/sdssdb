@@ -153,7 +153,7 @@ CREATE TABLE vizdb.multiplex (
     pk SERIAL PRIMARY KEY NOT NULL,
     releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
     field_id INTEGER REFERENCES boss_drp.boss_field(id),
-    plate_id INTEGER,
+    plate_id NUMERIC(20),
     sdss_phase INT2 NOT NULL,
     observatory TEXT,
     instrument TEXT,
