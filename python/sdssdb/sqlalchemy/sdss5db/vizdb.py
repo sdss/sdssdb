@@ -154,7 +154,7 @@ class Multiplex(Base):
     pk = Column('pk', Integer, primary_key=True)
     releases_pk = Column('releases_pk', Integer)
     field_id = Column('field_id', Integer)
-    plate_id = Column('plate_id', Integer)
+    plate_id = Column('plate_id', Numeric(20))
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
     instrument = Column('instrument', Text)
