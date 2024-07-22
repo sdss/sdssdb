@@ -153,7 +153,8 @@ class Multiplex(Base):
     print_fields = ['plate', 'field']
     pk = Column('pk', Integer, primary_key=True)
     releases_pk = Column('releases_pk', Integer)
-    boss_field_id = Column('boss_field_id', Integer)
+    field_id = Column('field_id', Integer)
+    plate_id = Column('plate_id', Integer)
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
     instrument = Column('instrument', Text)

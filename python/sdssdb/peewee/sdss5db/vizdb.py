@@ -110,7 +110,8 @@ class Multiplex(VizBase):
 
     pk = IntegerField()
     releases_pk = IntegerField(null=True)
-    boss_field_id = IntegerField(null=True)
+    field_id = IntegerField(null=True)
+    plate_id = IntegerField(null=True)
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)
     instrument = TextField(null=True)
