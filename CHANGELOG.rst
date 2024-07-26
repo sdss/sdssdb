@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Use Markdown for the README file. The old README.rst was giving trouble when packaging the app.
+
 * :release:`0.12.1 <2024-07-19>`
 * add cadence dark_flexible_3x1.csv
 * fixing removed column from astra source table
