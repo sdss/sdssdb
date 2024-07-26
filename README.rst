@@ -22,7 +22,7 @@ How to use
     >>> targets = catalogdb.GaiaDR2Source.select().where(catalogdb.GaiaDR2Source.phot_g_mean_mag < 15)
 
 
-.. |python| image:: https://img.shields.io/badge/python-3.6%2B-green.svg
+.. |python| image:: ![Versions](https://img.shields.io/badge/python->=3.6-blue)
     :alt: Requires Python 3.6+
     :scale: 100%
 
