@@ -6,6 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * Use Markdown for the README file. The old README.rst was giving trouble when packaging the app.
+* Fix issues with the caching of the schema during reflection. Added a ``force`` option to ``reflection_options`` to force the schema information to be refreshed. Additionally, if the table does not exist in the schema metadata, the metadata will be refreshed.
 
 * :release:`0.12.1 <2024-07-19>`
 * add cadence dark_flexible_3x1.csv
