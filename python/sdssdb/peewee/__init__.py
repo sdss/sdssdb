@@ -143,13 +143,19 @@ class ReflectMeta(ModelBase):
         table_name = meta.table_name
         schema = meta.schema
 
+        opts = getattr(meta, 'reflection_options', {})
+
         if not database or not database.connected:
             return
 
         # Lists tables in the schema. This is a bit of a hack but
         # faster than using database.table_exists because it's cached.
         metadata = database._metadata
-        if schema not in metadata or len(metadata[schema]) == 0:
+        force = opts.get('force', False)
+        if (schema not in metadata
+              or len(metadata[schema]) == 0
+              or table_name not in metadata[schema]
+              or force):
             database.get_fields(table_name, schema, cache=False)
 
         schema_tables = metadata[schema].keys()
@@ -164,8 +170,7 @@ class ReflectMeta(ModelBase):
         if not database.is_connection_usable():
             raise peewee.DatabaseError('database not connected.')
 
-        if hasattr(meta, 'reflection_options'):
-            opts = meta.reflection_options
+        if opts:
             skip_fks = opts.get('skip_foreign_keys', False)
             use_peewee_reflection = opts.get('use_peewee_reflection', True)
         else:
