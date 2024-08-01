@@ -255,6 +255,15 @@
     },
     {
       "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "has_been_observed",
+      "display_name": "Has Been Observed",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id target has been observed or not",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
       "table_name": "releases",
       "column_name": "release",
       "display_name": "Data Release",
