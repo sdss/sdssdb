@@ -69,13 +69,14 @@ class SDSSidStacked(Base):
 
 class SDSSidToPipes(Base):
     __tablename__ = 'sdssid_to_pipes'
-    print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra']
+    print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra', 'has_been_observed']
 
     pk = Column('pk', BigInteger, primary_key=True)
     sdss_id = Column('sdss_id', BigInteger)
     in_boss = Column('in_boss', Boolean)
     in_apogee = Column('in_apogee', Boolean)
     in_astra = Column('in_astra', Boolean)
+    has_been_observed = Column('has_been_observed', Boolean)
 
 
 class Releases(Base):

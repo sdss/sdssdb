@@ -39,7 +39,8 @@ CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes AS
 SELECT row_number() over(order by s.sdss_id) as pk, s.sdss_id,
        (b.sdss_id IS NOT NULL) AS in_boss,
        (v.star_pk IS NOT NULL) AS in_apogee,
-       (a.sdss_id IS NOT NULL) AS in_astra
+       (a.sdss_id IS NOT NULL) AS in_astra,
+       (b.sdss_id IS NOT NULL OR v.star_pk IS NOT NULL OR a.sdss_id IS NOT NULL) AS has_been_observed
     --    b.id as boss_spectrum_pk,
     --    v.star_pk as apogee_star_pk,
     --    v.visit_pk as apogee_visit_pk,
