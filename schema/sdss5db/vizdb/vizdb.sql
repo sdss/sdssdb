@@ -35,7 +35,7 @@ CLUSTER sdss_id_flat_q3c_ang2ipix_idx ON vizdb.sdss_id_flat;
 ANALYZE vizdb.sdss_id_flat;
 
 
-CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes2 AS
+CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes AS
 SELECT row_number() over(order by s.sdss_id) as pk, s.sdss_id,
        (b.sdss_id IS NOT NULL) AS in_boss,
        (v.star_pk IS NOT NULL) AS in_apogee,
