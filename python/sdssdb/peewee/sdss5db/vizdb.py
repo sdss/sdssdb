@@ -61,10 +61,11 @@ class SDSSidToPipes(VizBase):
     in_boss = BooleanField(null=False)
     in_apogee = BooleanField(null=False)
     in_astra = BooleanField(null=False)
+    has_been_observed = BooleanField(null=False)
 
     class Meta:
         table_name = 'sdssid_to_pipes'
-        print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra']
+        print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra', 'has_been_observed']
 
 
 class DbMetadata(VizBase):
