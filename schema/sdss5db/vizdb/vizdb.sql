@@ -99,3 +99,8 @@ CREATE TABLE vizdb.releases (
     mjd_cutoff_lco INTEGER
 );
 CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
+
+
+-- GRANT permissions
+GRANT USAGE ON SCHEMA vizdb TO sdss;
+GRANT SELECT ON vizdb.sdssid_to_pipes TO sdss;
