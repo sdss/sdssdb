@@ -6,6 +6,8 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * One more attempt at fixing the various issues with reflection. Reloading the fields each time a table was not found worked well for ``operations`` but not so much for ``pipelines`` because so many tables are missing. This time, we will only refresh the fields if the table is not found in the schema metadata *and* it exists in the database.
+* Fixed column names in ``SDSS_ID_To_Catalog`` models (#260).
+* Adds new column to ``vizdb.sdssid_to_pipes`` view (#259).
 
 * :release:`0.12.1 <2024-07-29>`
 * Use Markdown for the README file. The old README.rst was giving trouble when packaging the app.
