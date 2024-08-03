@@ -156,6 +156,12 @@ class ReflectMeta(ModelBase):
               or len(metadata[schema]) == 0
               or table_name not in metadata[schema]
               or force):
+
+            # Check if the table actually exists. If it does not, return now
+            # and don't waste time reloading the fields.
+            if not database.table_exists(table_name, schema=schema):
+                return
+
             database.get_fields(table_name, schema, cache=False)
 
         schema_tables = metadata[schema].keys()
