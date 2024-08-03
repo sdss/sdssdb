@@ -10159,7 +10159,7 @@ class TESS_TOI(Base):
 class ToO_Target(Base):
     __tablename__ = 'too_target'
 
-    too_id = Column(BigInteger(primary_key=True))
+    too_id = Column(BigInteger, primary_key=True)
     fiber_type = Column(String(20))
     catalogid = Column(Integer)
     sdss_id = Column(Integer)
@@ -10180,7 +10180,7 @@ class ToO_Target(Base):
 class ToO_Metadata(Base):
     __tablename__ = 'too_metadata'
 
-    too_id = Column(BigInteger(primary_key=True))
+    too_id = Column(BigInteger, primary_key=True)
     sky_brightness_mode = Column(String(20))
     lambda_eff = Column(Float)
     u_mag = Column(Float)
