@@ -3270,8 +3270,8 @@ class CatalogToToO_Target(CatalogdbModel):
 class SDSS_ID_To_Catalog(CatalogdbModel):
     pk = BigIntegerField()
     sdss_id = BigIntegerField()
-    catalogid = BigIntegerField(),
-    version_id = IntegerField(),
+    catalogid = BigIntegerField()
+    version_id = IntegerField()
     allstar_dr17_synspec_rev1__apstar_id = TextField()
     allwise__cntr = BigIntegerField()
     bhm_rm_v0__pk = BigIntegerField()
