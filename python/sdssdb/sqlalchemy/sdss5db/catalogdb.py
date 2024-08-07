@@ -10209,7 +10209,7 @@ class SDSS_ID_To_Catalog(Base):
 
     pk = Column(Float)
     sdss_id = Column(Float)
-    catalogid = Column(Float,)
+    catalogid = Column(Float)
     version_id = Column(Integer)
     allstar_dr17_synspec_rev1__apstar_id = Column(String(20))
     allwise__cntr = Column(Float)
