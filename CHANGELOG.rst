@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.12.4 <2024-08-07>`
 * Fix ``catalogid`` and ``version_id`` fields in ``SDSS_ID_To_Catalog`` model.
 
 * :release:`0.12.3 <2024-08-02>`
