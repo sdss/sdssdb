@@ -6,7 +6,6 @@
 # @Filename: catalogdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from typing import Text
 from peewee import (
     AutoField,
     BigAutoField,
