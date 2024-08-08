@@ -6,6 +6,7 @@
 # @Filename: catalogdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+from typing import Text
 from peewee import (
     AutoField,
     BigAutoField,
@@ -2328,7 +2329,7 @@ class ToO_Target(CatalogdbModel):
 
     class Meta:
         table_name = "too_target"
-        reflect = False
+        use_reflection = False
 
 
 class ToO_Metadata(CatalogdbModel):
@@ -2359,7 +2360,7 @@ class ToO_Metadata(CatalogdbModel):
 
     class Meta:
         table_name = "too_metadata"
-        reflect = False
+        use_reflection = False
 
 
 _Gaia_DR2_TwoMass_Deferred.set_model(Gaia_DR2_TwoMass_Best_Neighbour)
@@ -2386,7 +2387,7 @@ class CatalogFromSDSS_DR19p_Speclite(CatalogdbModel):
         # in "catalog_to_X" tables
         table_name = "catalog_from_sdss_dr19p_speclite"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToAllStar_DR17_synspec_rev1(CatalogdbModel):
@@ -2405,7 +2406,7 @@ class CatalogToAllStar_DR17_synspec_rev1(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_allstar_dr17_synspec_rev1"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToAllWise(CatalogdbModel):
@@ -2424,7 +2425,7 @@ class CatalogToAllWise(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_allwise"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToBHM_CSC(CatalogdbModel):
@@ -2443,7 +2444,7 @@ class CatalogToBHM_CSC(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_bhm_csc"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToBHM_RM_v0(CatalogdbModel):
@@ -2462,7 +2463,7 @@ class CatalogToBHM_RM_v0(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_bhm_rm_v0"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToBHM_RM_v0_2(CatalogdbModel):
@@ -2481,7 +2482,7 @@ class CatalogToBHM_RM_v0_2(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_bhm_rm_v0"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToBHM_eFEDS_Veto(CatalogdbModel):
@@ -2500,7 +2501,7 @@ class CatalogToBHM_eFEDS_Veto(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_bhm_efeds_veto"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToCatWISE(CatalogdbModel):
@@ -2519,7 +2520,7 @@ class CatalogToCatWISE(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_catwise"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToCatWISE2020(CatalogdbModel):
@@ -2538,7 +2539,7 @@ class CatalogToCatWISE2020(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_catwise2020"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGLIMPSE(CatalogdbModel):
@@ -2557,7 +2558,7 @@ class CatalogToGLIMPSE(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_glimpse"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGLIMPSE360(CatalogdbModel):
@@ -2576,7 +2577,7 @@ class CatalogToGLIMPSE360(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_glimpse360"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGUVCat(CatalogdbModel):
@@ -2595,7 +2596,7 @@ class CatalogToGUVCat(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_guvcat"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGaiaQSO(CatalogdbModel):
@@ -2614,7 +2615,7 @@ class CatalogToGaiaQSO(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_gaia_qso"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGaia_DR2(CatalogdbModel):
@@ -2633,7 +2634,7 @@ class CatalogToGaia_DR2(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_gaia_dr2_source"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGaia_DR2_WD_SDSS(CatalogdbModel):
@@ -2652,7 +2653,7 @@ class CatalogToGaia_DR2_WD_SDSS(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_gaia_dr2_wd_sdss"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGaia_DR3(CatalogdbModel):
@@ -2671,7 +2672,7 @@ class CatalogToGaia_DR3(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_gaia_dr3_source"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToGaia_unWISE_AGN(CatalogdbModel):
@@ -2690,7 +2691,7 @@ class CatalogToGaia_unWISE_AGN(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_gaia_unwise_agn"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToKeplerInput_DR10(CatalogdbModel):
@@ -2709,7 +2710,7 @@ class CatalogToKeplerInput_DR10(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_kepler_input_10"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToLegacy_Survey_DR10(CatalogdbModel):
@@ -2728,7 +2729,7 @@ class CatalogToLegacy_Survey_DR10(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_legacy_survey_dr10"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToLegacy_Survey_DR10a(CatalogdbModel):
@@ -2747,7 +2748,7 @@ class CatalogToLegacy_Survey_DR10a(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_legacy_survey_dr10a"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToLegacy_Survey_DR8(CatalogdbModel):
@@ -2766,7 +2767,7 @@ class CatalogToLegacy_Survey_DR8(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_legacy_survey_dr8"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToMILLIQUAS_7_7(CatalogdbModel):
@@ -2785,7 +2786,7 @@ class CatalogToMILLIQUAS_7_7(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_milliquas_7_7"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToPS1_g18(CatalogdbModel):
@@ -2804,7 +2805,7 @@ class CatalogToPS1_g18(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_ps1_g18"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToPanstarrs1(CatalogdbModel):
@@ -2823,7 +2824,7 @@ class CatalogToPanstarrs1(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_panstarrs1"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSDSS_DR13_PhotoObj(CatalogdbModel):
@@ -2842,7 +2843,7 @@ class CatalogToSDSS_DR13_PhotoObj(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_sdss_dr13_photoobj"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSDSS_DR13_PhotoObj_Primary(CatalogdbModel):
@@ -2865,7 +2866,7 @@ class CatalogToSDSS_DR13_PhotoObj_Primary(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_sdss_dr13_photoobj_primary"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSDSS_DR16_APOGEE_Star(CatalogdbModel):
@@ -2884,7 +2885,7 @@ class CatalogToSDSS_DR16_APOGEE_Star(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_sdss_dr16_apogeestar"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSDSS_DR16_SpecObj(CatalogdbModel):
@@ -2903,7 +2904,7 @@ class CatalogToSDSS_DR16_SpecObj(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_sdss_dr16_specobj"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSDSS_DR19p_Speclite(CatalogdbModel):
@@ -2922,7 +2923,7 @@ class CatalogToSDSS_DR19p_Speclite(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_sdss_dr19p_speclite"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSkies_v1(CatalogdbModel):
@@ -2941,7 +2942,7 @@ class CatalogToSkies_v1(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_skies_v1"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSkies_v2(CatalogdbModel):
@@ -2960,7 +2961,7 @@ class CatalogToSkies_v2(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_skies_v2"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSkyMapper_DR1_1(CatalogdbModel):
@@ -2979,7 +2980,7 @@ class CatalogToSkyMapper_DR1_1(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_skymapper_dr1_1"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSkyMapper_DR2(CatalogdbModel):
@@ -2998,7 +2999,7 @@ class CatalogToSkyMapper_DR2(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_skymapper_dr2"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSuperCosmos(CatalogdbModel):
@@ -3017,7 +3018,7 @@ class CatalogToSuperCosmos(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_supercosmos"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToTIC_v8(CatalogdbModel):
@@ -3036,7 +3037,7 @@ class CatalogToTIC_v8(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_tic_v8"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToTIC_v8_Extended(CatalogdbModel):
@@ -3055,7 +3056,7 @@ class CatalogToTIC_v8_Extended(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_tic_v8_extended"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToTwoMassPSC(CatalogdbModel):
@@ -3074,7 +3075,7 @@ class CatalogToTwoMassPSC(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_twomass_psc"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToTwoqz_sixqz(CatalogdbModel):
@@ -3093,7 +3094,7 @@ class CatalogToTwoqz_sixqz(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_twoqz_sixqz"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToTycho2(CatalogdbModel):
@@ -3112,7 +3113,7 @@ class CatalogToTycho2(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_tycho2"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToUVOT_SSC_1(CatalogdbModel):
@@ -3131,7 +3132,7 @@ class CatalogToUVOT_SSC_1(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_uvotssc1"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToXMM_OM_SUSS_4_1(CatalogdbModel):
@@ -3150,7 +3151,7 @@ class CatalogToXMM_OM_SUSS_4_1(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_xmm_om_suss_4_1"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToXMM_OM_SUSS_5_0(CatalogdbModel):
@@ -3169,7 +3170,7 @@ class CatalogToXMM_OM_SUSS_5_0(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_xmm_om_suss_5_0"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogTounWISE(CatalogdbModel):
@@ -3188,7 +3189,7 @@ class CatalogTounWISE(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_unwise"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToMarvels_dr11_star(CatalogdbModel):
@@ -3207,7 +3208,7 @@ class CatalogToMarvels_dr11_star(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_marvels_dr11_star"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToMarvels_dr12_star(CatalogdbModel):
@@ -3226,7 +3227,7 @@ class CatalogToMarvels_dr12_star(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_marvels_dr12_star"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToSDSS_DR17_SpecObj(CatalogdbModel):
@@ -3245,7 +3246,7 @@ class CatalogToSDSS_DR17_SpecObj(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_sdss_dr17_specobj"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class CatalogToToO_Target(CatalogdbModel):
@@ -3264,7 +3265,7 @@ class CatalogToToO_Target(CatalogdbModel):
     class Meta:
         table_name = "catalog_to_too_target"
         primary_key = False
-        reflect = False
+        use_reflection = False
 
 
 class SDSS_ID_To_Catalog(CatalogdbModel):
@@ -3417,4 +3418,4 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
     class Meta:
         table_name = "sdss_id_to_catalog"
         primary_key = False
-        reflect = False
+        use_reflection = False

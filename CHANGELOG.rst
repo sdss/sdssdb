@@ -6,6 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * Add missing columns to the ``SDSS_ID_To_Catalog`` models (the columns were being completed via reflection).
+* Change ``reflection=False`` to ``use_reflection=False`` in many ``catalogdb`` models. The previous setting was incorrect and was causing the models to be reflected.
 
 * :release:`0.12.4 <2024-08-07>`
 * Fix ``catalogid`` and ``version_id`` fields in ``SDSS_ID_To_Catalog`` model.
