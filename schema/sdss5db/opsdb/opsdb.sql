@@ -137,6 +137,19 @@ CREATE TABLE opsdb.overhead(
     elapsed REAL,
     success BOOLEAN);
 
+CREATE TABLE opsdb.pred_snr (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    model_id TEXT,
+    pred_time TIMESTAMPTZ,
+    camera_pk SMALLINT,
+    design_mode_label TEXT,
+    pred_snr REAL,
+    pred_flag INTEGER,
+    num_gfas INTEGER,
+    num_gfa_exps INTEGER,
+    first_gfa_expid INTEGER,
+    last_gfa_expid INTEGER);
+
 -- Foreign keys
 
 ALTER TABLE ONLY opsdb.base_priority
@@ -238,6 +251,14 @@ ALTER TABLE ONLY opsdb.overhead
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY opsdb.pred_snr
+    ADD CONSTRAINT camera_fk
+    FOREIGN KEY (camera_pk) REFERENCES opsdb.camera(pk);
+
+ALTER TABLE ONLY opsdb.pred_snr
+    ADD CONSTRAINT design_mode_fk
+    FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
+
 -- Table data
 
 INSERT INTO opsdb.exposure_flavor VALUES
@@ -293,6 +314,22 @@ CREATE INDEX CONCURRENTLY qr_exposure_pk_idx
 CREATE INDEX CONCURRENTLY overhead_configuration_id_idx
     ON opsdb.overhead
     USING BTREE(configuration_id);
+
+CREATE INDEX CONCURRENTLY pred_snr_camera_pk_idx
+    ON opsdb.pred_snr
+    USING BTREE(camera_pk);
+
+CREATE INDEX CONCURRENTLY pred_snr_design_mode_label_idx
+    ON opsdb.pred_snr
+    USING BTREE(design_mode_label);
+
+CREATE INDEX CONCURRENTLY pred_snr_pred_time_idx
+    ON opsdb.pred_snr
+    USING BTREE(pred_time);
+
+CREATE INDEX CONCURRENTLY pred_snr_model_id_idx
+    ON opsdb.pred_snr
+    USING BTREE(model_id);
 
 -- pop function to retrieve next in queue and increment
 

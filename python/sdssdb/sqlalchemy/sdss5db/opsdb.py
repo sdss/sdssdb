@@ -150,7 +150,7 @@ class AssignmentToFocal(Base):
     fiber_type = Column(Text)
     assigned = Column(Boolean)
     collided = Column(Boolean)
-    replaced = Column(Boolean)    
+    replaced = Column(Boolean)
 
     configuration = relationship('Configuration')
 
@@ -236,6 +236,26 @@ class Overhead(Base):
     success = Column(Boolean)
 
     configuration = relationship('Configuration')
+
+
+class PredSnr(Base):
+    __tablename__ = 'pred_snr'
+
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_pk_seq'::regclass)"))
+    model_id = Column(Text, index=True)
+    pred_time = Column(DateTime, index=True)
+    camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), index=True)
+    design_mode_label = Column(ForeignKey('targetdb.design_mode.label'), index=True)
+
+    pred_snr = Column(Float)
+    pred_flag = Column(Integer)
+    num_gfas = Column(Integer)
+    num_gfa_exps = Column(Integer)
+    first_gfa_expid = Column(Integer)
+    last_gfa_expid = Column(Integer)
+
+    camera = relationship('Camera')
+    design_mode = relationship('DesignMode')
 
 
 def define_relations():

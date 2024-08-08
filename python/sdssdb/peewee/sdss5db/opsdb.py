@@ -356,4 +356,25 @@ class Overhead(OpsdbBase):
         table_name = 'overhead'
 
 
+class PredSnr(OpsdbBase):
+    pk = AutoField()
+    model_id = TextField()
+    pred_time = DateTimeTZField()
+    camera_pk = ForeignKeyField(Camera,
+                                column_name='camera_pk',
+                                field='pk')
+    design_mode_label = ForeignKeyField(column_name='design_mode_label',
+                                        field='label',
+                                        model=targetdb.DesignMode)
+    pred_snr = FloatField()
+    pred_flag = IntegerField()
+    num_gfas = IntegerField()
+    num_gfa_exps = IntegerField()
+    first_gfa_expid = IntegerField()
+    last_gfa_expid = IntegerField()
+
+    class Meta:
+        table_name = 'pred_snr'
+
+
 FieldToPriorityDeferred.set_model(FieldToPriority)
