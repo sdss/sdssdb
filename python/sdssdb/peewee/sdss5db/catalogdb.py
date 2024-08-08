@@ -3272,6 +3272,7 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
     sdss_id = BigIntegerField()
     catalogid = BigIntegerField()
     version_id = IntegerField()
+    lead = TextField()
     allstar_dr17_synspec_rev1__apstar_id = TextField()
     allwise__cntr = BigIntegerField()
     bhm_rm_v0__pk = BigIntegerField()
@@ -3284,9 +3285,14 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
     guvcat__objid = BigIntegerField()
     legacy_survey_dr10__ls_id = BigIntegerField()
     legacy_survey_dr8__ls_id = BigIntegerField()
+    mangatarget__mangaid = TextField()
+    marvels_dr11_star__starname = TextField()
+    marvels_dr12_star__pk = BigIntegerField()
+    mastar_goodstars__mangaid = TextField()
     panstarrs1__catid_objid = BigIntegerField()
     ps1_g18__objid = BigIntegerField()
     sdss_dr13_photoobj__objid = BigIntegerField()
+    sdss_dr17_specobj__specobjid = TextField()
     skymapper_dr1_1__object_id = BigIntegerField()
     skymapper_dr2__object_id = BigIntegerField()
     supercosmos__objid = BigIntegerField()
@@ -3343,6 +3349,26 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
         Legacy_Survey_DR8,
         column_name='legacy_survey_dr8__ls_id',
         backref='+')
+    mangatarget = ForeignKeyField(
+        Mangatarget,
+        column_name='mangatarget__mangaid',
+        backref='+'
+    )
+    marvels_dr11_star = ForeignKeyField(
+        Marvels_dr11_star,
+        column_name='marvels_dr11_star__starname',
+        backref='+'
+    )
+    marvels_dr12_star = ForeignKeyField(
+        Marvels_dr12_star,
+        column_name='marvels_dr12_star__pk',
+        backref='+'
+    )
+    mastar_goodstars = ForeignKeyField(
+        Mastar_goodstars,
+        column_name='mastar_goodstars__mangaid',
+        backref='+'
+    )
     panstarrs1 = ForeignKeyField(
         Panstarrs1,
         column_name='panstarrs1__catid_objid',
@@ -3354,6 +3380,10 @@ class SDSS_ID_To_Catalog(CatalogdbModel):
     sdss_dr13_photoobj = ForeignKeyField(
         SDSS_DR13_PhotoObj,
         column_name='sdss_dr13_photoobj__objid',
+        backref='+')
+    sdss_dr17_specobj = ForeignKeyField(
+        SDSS_DR17_SpecObj,
+        column_name='sdss_dr17_specobj__specobjid',
         backref='+')
     skymapper_dr1_1 = ForeignKeyField(
         SkyMapper_DR1_1,

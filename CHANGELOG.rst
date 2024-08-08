@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Add missing columns to the ``SDSS_ID_To_Catalog`` models (the columns were being completed via reflection).
+
 * :release:`0.12.4 <2024-08-07>`
 * Fix ``catalogid`` and ``version_id`` fields in ``SDSS_ID_To_Catalog`` model.
 
