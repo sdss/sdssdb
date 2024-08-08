@@ -246,13 +246,10 @@ class PredSnr(Base):
     pred_time = Column(DateTime, index=True)
     camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), index=True)
     design_mode_label = Column(ForeignKey('targetdb.design_mode.label'), index=True)
-
     pred_snr = Column(Float)
     pred_flag = Column(Integer)
     num_gfas = Column(Integer)
-    num_gfa_exps = Column(Integer)
-    first_gfa_expid = Column(Integer)
-    last_gfa_expid = Column(Integer)
+    gfa_expid = Column(Integer)
 
     camera = relationship('Camera')
     design_mode = relationship('DesignMode')

@@ -146,9 +146,7 @@ CREATE TABLE opsdb.pred_snr (
     pred_snr REAL,
     pred_flag INTEGER,
     num_gfas INTEGER,
-    num_gfa_exps INTEGER,
-    first_gfa_expid INTEGER,
-    last_gfa_expid INTEGER);
+    gfa_expid INTEGER);
 
 -- Foreign keys
 

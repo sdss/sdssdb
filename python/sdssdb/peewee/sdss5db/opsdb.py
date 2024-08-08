@@ -369,9 +369,7 @@ class PredSnr(OpsdbBase):
     pred_snr = FloatField()
     pred_flag = IntegerField()
     num_gfas = IntegerField()
-    num_gfa_exps = IntegerField()
-    first_gfa_expid = IntegerField()
-    last_gfa_expid = IntegerField()
+    gfa_expid = IntegerField()
 
     class Meta:
         table_name = 'pred_snr'
