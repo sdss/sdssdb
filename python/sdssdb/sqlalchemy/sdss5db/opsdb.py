@@ -15,6 +15,7 @@ from sqlalchemy import (
     Column,
     DateTime,
     Float,
+    Double,
     ForeignKey,
     Integer,
     SmallInteger,
@@ -253,6 +254,20 @@ class PredSnr(Base):
 
     camera = relationship('Camera')
     design_mode = relationship('DesignMode')
+
+
+class PredSnrPar(Base):
+    __tablename__ = 'pred_snr_par'
+
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_par_pk_seq'::regclass)"))
+    pred_snr_pk = Column(ForeignKey(f'{Base._schema}.pred_snr.pk'), index=True)
+    label = Column(Text, index=True)
+    datatype = Column(Text)
+    value_f = Column(Double)
+    value_i = Column(BigInteger)
+    value_s = Column(Text)
+
+    pred_snr = relationship('PredSnr')
 
 
 def define_relations():

@@ -140,13 +140,22 @@ CREATE TABLE opsdb.overhead(
 CREATE TABLE opsdb.pred_snr (
     pk SERIAL PRIMARY KEY NOT NULL,
     model_id TEXT,
-    pred_time TIMESTAMPTZ,
+    pred_time TIMESTAMP,
     camera_pk SMALLINT,
     design_mode_label TEXT,
     pred_snr REAL,
     pred_flag INTEGER,
     num_gfas INTEGER,
     gfa_expid INTEGER);
+
+CREATE TABLE opsdb.pred_snr_par (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    pred_snr_pk BIGINT,
+    label TEXT,
+    datatype TEXT,
+    value_f DOUBLE PRECISION,
+    value_i BIGINT,
+    value_s TEXT);
 
 -- Foreign keys
 
@@ -257,6 +266,11 @@ ALTER TABLE ONLY opsdb.pred_snr
     ADD CONSTRAINT design_mode_fk
     FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
 
+ALTER TABLE ONLY opsdb.pred_snr_par
+    ADD CONSTRAINT pred_snr_fk
+    FOREIGN KEY (pred_snr_pk) REFERENCES opsdb.pred_snr(pk);
+
+
 -- Table data
 
 INSERT INTO opsdb.exposure_flavor VALUES
@@ -328,6 +342,14 @@ CREATE INDEX CONCURRENTLY pred_snr_pred_time_idx
 CREATE INDEX CONCURRENTLY pred_snr_model_id_idx
     ON opsdb.pred_snr
     USING BTREE(model_id);
+
+CREATE INDEX CONCURRENTLY pred_snr_par_pred_snr_pk_idx
+    ON opsdb.pred_snr_par
+    USING BTREE(pred_snr_pk);
+
+CREATE INDEX CONCURRENTLY pred_snr_label_idx
+    ON opsdb.pred_snr_par
+    USING BTREE(label);
 
 -- pop function to retrieve next in queue and increment
 

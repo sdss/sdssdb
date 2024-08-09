@@ -359,7 +359,7 @@ class Overhead(OpsdbBase):
 class PredSnr(OpsdbBase):
     pk = AutoField()
     model_id = TextField()
-    pred_time = DateTimeTZField()
+    pred_time = DateTimeField()
     camera_pk = ForeignKeyField(Camera,
                                 column_name='camera_pk',
                                 field='pk')
@@ -373,6 +373,21 @@ class PredSnr(OpsdbBase):
 
     class Meta:
         table_name = 'pred_snr'
+
+
+class PredSnrPar(OpsdbBase):
+    pk = AutoField()
+    pred_snr_pk = ForeignKeyField(PredSnr,
+                                  column_name='pred_snr_pk',
+                                  field='pk')
+    label = TextField()
+    datatype = TextField()
+    value_f = DoubleField()
+    value_i = IntegerField()
+    value_s = TextField()
+
+    class Meta:
+        table_name = 'pred_snr_par'
 
 
 FieldToPriorityDeferred.set_model(FieldToPriority)
