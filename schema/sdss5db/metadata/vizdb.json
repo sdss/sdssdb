@@ -232,7 +232,7 @@
       "column_name": "in_boss",
       "display_name": "In BOSS",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id is in the boss reduction tables",
+      "description": "Flag indicating if the sdss_id has been reduced by the SDSS-V boss pipeline",
       "unit": "None"
     },
     {
@@ -241,7 +241,7 @@
       "column_name": "in_apogee",
       "display_name": "In APOGEE",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id is in the apogee reduction tables",
+      "description": "Flag indicating if the sdss_id has been reduced by the SDSS-V apogee pipeline",
       "unit": "None"
     },
     {
@@ -250,7 +250,7 @@
       "column_name": "in_astra",
       "display_name": "In APOGEE",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id is in the astra reduction tables",
+      "description": "Flag indicating if the sdss_id has been reduced by the Astra pipeline, either sdss5 or dr17 release data.",
       "unit": "None"
     },
     {
@@ -259,7 +259,7 @@
       "column_name": "has_been_observed",
       "display_name": "Has Been Observed",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id target has been observed or not",
+      "description": "Flag indicating if the sdss_id target has been observed or not, either in sdss5 or dr17 release data.",
       "unit": "None"
     },
     {
