@@ -55,6 +55,8 @@ def scrapeRecent(obs="APO", mjd_today=00000, base="",
     for sub in check_mid_level:
         sum_files = os.listdir(sub)
         for s in sum_files:
+            if "parquet" in s:
+                continue
             sum_name = os.path.join(sub, s)
             timeStamp = os.path.getctime(sum_name)
             if (unixNow - timeStamp) / secInDay > n_days:
