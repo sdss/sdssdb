@@ -1,0 +1,168 @@
+
+
+
+====== on pipelines ================
+
+For each subset table, make a new table like below
+based on current catalogdb.legacy_survey_dr10
+(We make a new table each time so that the table
+legacy_survey_dr10_with_duplicates does not have old duplicates
+and so does not become too big.
+If the table is too big then the "SELECT DISTINCT" will take too much time.
+Hence, we only want to allow new duplicates.)
+
+minicatdb.legacy_survey_dr10_with_duplicates
+
+Then insert new rows from operations server CSV into above table.
+Since the table allows duplicates, this is straight forward.
+
+then run a query like below to make the final table without duplicates
+as shown below.
+
+select  distinct on(ls_id) *  insert into minicatdb.legacy_survey_dr10
+from minicatdb.legacy_survey_dr10_with_duplicates
+
+then rename the schema for the table as shown below.
+
+alter table minicatdb.legacy_survey_dr10 set schema catalogdb;
+
+==============================
+
+on operations server
+
+before every new run issue below sed command. 
+replace 2030dec31  with appropriate timestamp.
+
+sed 's/2024jan27/2030dec31/g' operations_minicatdb_rename.sql > operations_minicatdb_rename.2030dec31.sql
+
+run operations_minicatdb_rename.2030dec31.sql
+
+============================ 
+If the operations catalogdb.target_non_carton is updated since the last update.
+then copy catalogdb.target_non_carton to pipelines as below
+
+on operations server:
+cd minicat
+run
+target_non_carton_copyto.sql
+
+on pipelines server:
+cd minicat/pipedb
+run
+target_non_carton_create_table.sql
+target_non_carton_create_indexes.sql
+target_non_carton_copyfrom.sql
+
+======= on operations server ==============
+
+catalog_to_x tables are complete on pipelines.
+Hence we do not need to update catalog_to_x tables on pipelines
+after below updates.
+
+run in the below order.
+
+Choose one option out of below (1), (2), (3).
+(1) if you are running for sources from targetdb.target use below
+minicatdb_catalog_carton.sql (first) 
+
+(2) if you are running for sources from catalogdb.target_non_carton use below 
+minicatdb_catalog_non_carton.sql (first)
+
+(3) if you are running for sources from catalog_to_x for legacy cartons
+(e.g. marvels_dr11_star) use below
+minicatdb_catalog_legacy.sql (first)
+
+Rest of the steps are the same for above case (1), (2),and  (3).
+
+minicatdb_tic_v8.sql (second)
+(this is used by minicatdb_gaia_dr2_source.sql)
+
+minicatdb_gaia_dr3_source.sql (third) 
+(this is used by minicatdb_gaia_dr3_astro.sql)
+
+minicatdb_sdss_dr13_photoobj_primary.sql (fourth)
+(this is used by minicatdb_sdss_dr13_photoobj.sql)
+
+etc. (order of rest of the tables does not matter)
+
+minicatdb_allwise.sql
+minicatdb_catwise2020.sql
+minicatdb_catwise.sql
+minicatdb_gaia_dr2_source.sql
+minicatdb_gaia_dr3_astro.sql     (gaia_dr3_source is already done above)
+minicatdb_legacy_survey_dr10.sql
+minicatdb_legacy_survey_dr8.sql
+minicatdb_panstarrs1.sql
+minicatdb_sdss_dr13_photoobj.sql  (photobj_primary is already done above)
+minicatdb_supercosmos.sql
+minicatdb_unwise.sql
+
+
+after all minicatdb*.sql are run then run below
+ *copyto*sql to produce the .csv files
+(do not run all *copyto.sql since some are not for the subset procedure)
+
+catalog_copyto.sql
+tic_v8_copyto.sql
+gaia_dr3_source_copyto.sql
+sdss_dr13_photoobj_primary_copyto.sql
+
+allwise_copyto.sql
+catwise2020_copyto.sql
+catwise_copyto.sql
+gaia_dr2_source_copyto.sql
+gaia_dr3_astro_copyto.sql     (gaia_dr3_source is already done above)
+legacy_survey_dr10_copyto.sql
+legacy_survey_dr8_copyto.sql
+panstarrs1_copyto.sql
+sdss_dr13_photoobj_copyto.sql  (photobj_primary is already done above)
+supercosmos_copyto.sql
+unwise_copyto.sql
+
+
+Run below only if the catalog_to_x tables have been changed 
+(i.e. after a crossmatch.)
+ *copyto_catalog_to_x.sql
+
+
+===== on pipelines server ===============
+
+cd minicat/pipedb
+create tables from the scripts *sql
+
+(for tables which are not in the pipedb directory,
+create tables from github repo sdssdb schema directory)
+
+for tables which have serial or bigserial pk,
+create an integer or bigint pk column
+before running copyfrom. This will ensure
+that the number of columns in the CSV file from operations server
+and the number of columns in the table on pipelines server match.
+
+cd minicat
+run *copyfrom*sql (use same list of tables as above *copyto*sql)
+(it will use the csv produced on operations server)
+use the same list of files as the above *copyto*sql on the operations server
+
+cd minicat/pipedb
+create pkey and indexes (do not create fkey)
+grant read permissions for catalogdb on pipelines server
+
+==================================
+This is for future reference.
+catalogdb.twomass_psc is complete on pipelines.
+
+So it is loaded one time only.
+
+After the loading, run the below command one time only.
+
+ psql -d sdss5db -a -f  update_twomass_psc.sql &
+
+-- After loading the original data into pipelines catalogdb.twomass_psc, 
+-- the designation column has extra space at end.
+-- Hence, run the below update command after loading the original
+-- complete twomass_psc data into the pipelines catalogdb.twmoass_psc
+update catalogdb.twomass_psc set designation = rtrim(designation);
+
+
+======================================
