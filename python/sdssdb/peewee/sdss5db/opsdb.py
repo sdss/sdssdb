@@ -367,7 +367,8 @@ class PredSnr(OpsdbBase):
     design_mode_label = ForeignKeyField(column_name='design_mode_label',
                                         field='label',
                                         model=targetdb.DesignMode)
-    pred_snr = FloatField()
+    pred_type = TextField()
+    pred_value = FloatField()
     pred_flag = IntegerField()
     num_gfas = IntegerField()
     gfa_expid = IntegerField()

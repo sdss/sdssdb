@@ -144,7 +144,8 @@ CREATE TABLE opsdb.pred_snr (
     pred_time TIMESTAMP,
     camera_pk SMALLINT,
     design_mode_label TEXT,
-    pred_snr REAL,
+    pred_type TEXT,
+    pred_value REAL,
     pred_flag INTEGER,
     num_gfas INTEGER,
     gfa_expid INTEGER,
@@ -341,6 +342,10 @@ CREATE INDEX CONCURRENTLY pred_snr_design_mode_label_idx
 CREATE INDEX CONCURRENTLY pred_snr_pred_time_idx
     ON opsdb.pred_snr
     USING BTREE(pred_time);
+
+CREATE INDEX CONCURRENTLY pred_snr_pred_type_idx
+    ON opsdb.pred_snr
+    USING BTREE(pred_type);
 
 CREATE INDEX CONCURRENTLY pred_snr_gfa_date_obs_idx
     ON opsdb.pred_snr
