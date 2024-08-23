@@ -149,8 +149,7 @@ CREATE TABLE opsdb.pred_snr (
     pred_flag INTEGER,
     num_gfas INTEGER,
     gfa_expid INTEGER,
-    gfa_date_obs TIMESTAMP,
-    );
+    gfa_date_obs TIMESTAMP);
 
 CREATE TABLE opsdb.pred_snr_par (
     pk SERIAL PRIMARY KEY NOT NULL,
