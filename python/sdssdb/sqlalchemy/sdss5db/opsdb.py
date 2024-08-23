@@ -243,6 +243,7 @@ class PredSnr(Base):
     __tablename__ = 'pred_snr'
 
     pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_pk_seq'::regclass)"))
+    robodamus_version = Column(Text, index=True)
     model_id = Column(Text, index=True)
     pred_time = Column(DateTime, index=True)
     camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), index=True)
@@ -251,6 +252,7 @@ class PredSnr(Base):
     pred_flag = Column(Integer)
     num_gfas = Column(Integer)
     gfa_expid = Column(Integer)
+    gfa_date_obs = Column(DateTime, index=True)
 
     camera = relationship('Camera')
     design_mode = relationship('DesignMode')

@@ -358,6 +358,7 @@ class Overhead(OpsdbBase):
 
 class PredSnr(OpsdbBase):
     pk = AutoField()
+    robodamus_version = TextField()
     model_id = TextField()
     pred_time = DateTimeField()
     camera_pk = ForeignKeyField(Camera,
@@ -370,6 +371,7 @@ class PredSnr(OpsdbBase):
     pred_flag = IntegerField()
     num_gfas = IntegerField()
     gfa_expid = IntegerField()
+    gfa_date_obs = DateTimeField()
 
     class Meta:
         table_name = 'pred_snr'

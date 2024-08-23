@@ -139,6 +139,7 @@ CREATE TABLE opsdb.overhead(
 
 CREATE TABLE opsdb.pred_snr (
     pk SERIAL PRIMARY KEY NOT NULL,
+    robodamus_version TEXT,
     model_id TEXT,
     pred_time TIMESTAMP,
     camera_pk SMALLINT,
@@ -146,7 +147,9 @@ CREATE TABLE opsdb.pred_snr (
     pred_snr REAL,
     pred_flag INTEGER,
     num_gfas INTEGER,
-    gfa_expid INTEGER);
+    gfa_expid INTEGER,
+    gfa_date_obs TIMESTAMP,
+    );
 
 CREATE TABLE opsdb.pred_snr_par (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -339,9 +342,17 @@ CREATE INDEX CONCURRENTLY pred_snr_pred_time_idx
     ON opsdb.pred_snr
     USING BTREE(pred_time);
 
+CREATE INDEX CONCURRENTLY pred_snr_gfa_date_obs_idx
+    ON opsdb.pred_snr
+    USING BTREE(gfa_date_obs);
+
 CREATE INDEX CONCURRENTLY pred_snr_model_id_idx
     ON opsdb.pred_snr
     USING BTREE(model_id);
+
+CREATE INDEX CONCURRENTLY pred_snr_robodamus_version_idx
+    ON opsdb.pred_snr
+    USING BTREE(robodamus_version);
 
 CREATE INDEX CONCURRENTLY pred_snr_par_pred_snr_pk_idx
     ON opsdb.pred_snr_par
