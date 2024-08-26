@@ -23,15 +23,26 @@ minicatdb.legacy_survey_dr10_with_duplicates
 Then insert new rows from operations server CSV into above table.
 Since the table allows duplicates, this is straight forward.
 
+So run
+copyfrom_all_pipelines.sh
+
 then run a query like below to make the final table without duplicates
 as shown below.
 
 select  distinct on(ls_id) *  insert into minicatdb.legacy_survey_dr10
 from minicatdb.legacy_survey_dr10_with_duplicates
 
+So run
+create_distinct_tables_pipelines.sh 
+
 then rename the schema for the table as shown below.
+(do this when the pipelines team allows this step)
 
 alter table minicatdb.legacy_survey_dr10 set schema catalogdb;
+
+So run
+
+pipelines_minicatdb_rename.sql
 
 ==============================
 
