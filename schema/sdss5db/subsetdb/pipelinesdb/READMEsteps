@@ -3,9 +3,16 @@
 
 ====== on pipelines ================
 
-For each subset table, make a new table like below
-based on current catalogdb.legacy_survey_dr10
-(We make a new table each time so that the table
+on pipelines run
+pipelines_drop_minicatdb_with_duplicates.sql
+
+on pipelines run
+create_duplicates_tables_pipelines.sh
+
+For each subset table, make a new with_duplicates table.
+For example for catalogdb.legacy_survey_dr10
+we make the table catalogdb.legacy_survey_dr10_with_duplicates.
+(We make a new with_duplicates table each time so that the table
 legacy_survey_dr10_with_duplicates does not have old duplicates
 and so does not become too big.
 If the table is too big then the "SELECT DISTINCT" will take too much time.

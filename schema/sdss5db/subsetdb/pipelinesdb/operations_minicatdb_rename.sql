@@ -56,8 +56,6 @@ alter table minicatdb.sdss_dr13_photoobj_primary rename to sdss_dr13_photoobj_pr
 
 alter table minicatdb.supercosmos rename to supercosmos_2024jan27;
 
-alter table minicatdb.targetdb_target_distinct rename to targetdb_target_distinct_2024jan27;
-
 alter table minicatdb.tic_v8 rename to tic_v8_2024jan27;
 
 alter table minicatdb.unwise rename to unwise_2024jan27;
