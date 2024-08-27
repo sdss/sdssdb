@@ -35,7 +35,8 @@ from minicatdb.legacy_survey_dr10_with_duplicates
 So run
 create_distinct_tables_pipelines.sh 
 
-Then create indexes onthe catalogdb.x tables
+Then create primary key and indexes on the catalogdb.x tables.
+(even though below is called create_indexes, it also creates the primary key)
 create_indexes_pipelines.sh 
 
 Then rename the schema for the table as shown below.
