@@ -1,7 +1,5 @@
 -- run this on pipelines only
 
-\o minicatdb_count.out 
-
 select count(1) from minicatdb.catalog;
 
 select count(1) from minicatdb.allwise;
@@ -24,7 +22,9 @@ select count(1) from minicatdb.panstarrs1;
 
 select count(1) from minicatdb.sdss_dr13_photoobj;
 
-select count(1) from minicatdb.sdss_dr13_photoobj_primary;
+-- catalogdb.sdss_dr13_photoobj_primary is the complete table on pipelines.
+-- Hence there is no minicatdb.sdss_dr13_photoobj_primary table.
+-- select count(1) from minicatdb.sdss_dr13_photoobj_primary;
 
 select count(1) from minicatdb.supercosmos;
 
