@@ -1,0 +1,16 @@
+alter table minicatdb.gaia_dr3_astrophysical_parameters add primary key(source_id);
+
+create index on minicatdb.gaia_dr3_astrophysical_parameters(classprob_dsc_combmod_quasar);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(classprob_dsc_combmod_galaxy);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(classprob_dsc_combmod_star);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(classprob_dsc_combmod_whitedwarf);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(classprob_dsc_combmod_binarystar);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(teff_gspphot);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(logg_gspphot);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(mh_gspphot);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(teff_esphs);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(teff_esphs_uncertainty);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(logg_esphs);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(logg_esphs_uncertainty);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(vsini_esphs);
+create index on minicatdb.gaia_dr3_astrophysical_parameters(vsini_esphs_uncertainty);

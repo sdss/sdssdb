@@ -35,7 +35,10 @@ from minicatdb.legacy_survey_dr10_with_duplicates
 So run
 create_distinct_tables_pipelines.sh 
 
-then rename the schema for the table as shown below.
+Then create indexes onthe catalogdb.x tables
+create_indexes_pipelines.sh 
+
+Then rename the schema for the table as shown below.
 (do this when the pipelines team allows this step)
 
 alter table minicatdb.legacy_survey_dr10 set schema catalogdb;
@@ -43,6 +46,8 @@ alter table minicatdb.legacy_survey_dr10 set schema catalogdb;
 So run
 
 pipelines_minicatdb_rename.sql
+
+
 
 ==============================
 
