@@ -13,7 +13,7 @@ psql -d sdss5db -a -f legacy_survey_dr10_distinct.sql
 psql -d sdss5db -a -f legacy_survey_dr8_distinct.sql
 psql -d sdss5db -a -f panstarrs1_distinct.sql
 psql -d sdss5db -a -f sdss_dr13_photoobj_distinct.sql
-psql -d sdss5db -a -f sdss_dr13_photoobj_primary_distinct.sql
+# psql -d sdss5db -a -f sdss_dr13_photoobj_primary_distinct.sql
 psql -d sdss5db -a -f supercosmos_distinct.sql
 psql -d sdss5db -a -f tic_v8_distinct.sql
 psql -d sdss5db -a -f unwise_distinct.sql

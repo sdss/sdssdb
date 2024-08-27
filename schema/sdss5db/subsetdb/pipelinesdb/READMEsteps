@@ -100,6 +100,11 @@ minicatdb_gaia_dr3_source.sql (third)
 
 minicatdb_sdss_dr13_photoobj_primary.sql (fourth)
 (this is used by minicatdb_sdss_dr13_photoobj.sql)
+However, we do not need to copy minicatdb_sdss_dr13_photoobj_primary
+to pipelines since pipelines has the full 
+catalogdb.sdss_dr13_photoobj_primary.
+This is because catalogdb.sdss_dr13_photoobj_primary
+has only a few columns.
 
 etc. (order of rest of the tables does not matter)
 

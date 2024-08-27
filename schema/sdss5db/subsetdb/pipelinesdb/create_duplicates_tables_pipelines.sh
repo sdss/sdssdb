@@ -13,7 +13,7 @@ psql -d sdss5db -a -f legacy_survey_dr10_duplicates.sql
 psql -d sdss5db -a -f legacy_survey_dr8_duplicates.sql
 psql -d sdss5db -a -f panstarrs1_duplicates.sql
 psql -d sdss5db -a -f sdss_dr13_photoobj_duplicates.sql
-psql -d sdss5db -a -f sdss_dr13_photoobj_primary_duplicates.sql
+# psql -d sdss5db -a -f sdss_dr13_photoobj_primary_duplicates.sql
 psql -d sdss5db -a -f supercosmos_duplicates.sql
 psql -d sdss5db -a -f tic_v8_duplicates.sql
 psql -d sdss5db -a -f unwise_duplicates.sql

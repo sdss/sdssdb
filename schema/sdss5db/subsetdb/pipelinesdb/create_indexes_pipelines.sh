@@ -12,7 +12,7 @@ psql -d sdss5db -a -f legacy_survey_dr10_create_indexes.sql
 psql -d sdss5db -a -f legacy_survey_dr8_create_indexes.sql
 psql -d sdss5db -a -f panstarrs1_create_indexes.sql
 psql -d sdss5db -a -f sdss_dr13_photoobj_create_indexes.sql
-psql -d sdss5db -a -f sdss_dr13_photoobj_primary_create_indexes.sql
+# psql -d sdss5db -a -f sdss_dr13_photoobj_primary_create_indexes.sql
 psql -d sdss5db -a -f supercosmos_create_indexes.sql
 psql -d sdss5db -a -f tic_v8_create_indexes.sql
 psql -d sdss5db -a -f unwise_create_indexes.sql

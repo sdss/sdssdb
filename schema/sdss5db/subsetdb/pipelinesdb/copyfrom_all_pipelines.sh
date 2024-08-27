@@ -12,7 +12,7 @@ psql -d sdss5db -a -f legacy_survey_dr10_copyfrom.sql
 psql -d sdss5db -a -f legacy_survey_dr8_copyfrom.sql
 psql -d sdss5db -a -f panstarrs1_copyfrom.sql
 psql -d sdss5db -a -f sdss_dr13_photoobj_copyfrom.sql
-psql -d sdss5db -a -f sdss_dr13_photoobj_primary_copyfrom.sql
+# psql -d sdss5db -a -f sdss_dr13_photoobj_primary_copyfrom.sql
 psql -d sdss5db -a -f supercosmos_copyfrom.sql
 psql -d sdss5db -a -f tic_v8_copyfrom.sql
 psql -d sdss5db -a -f unwise_copyfrom.sql
