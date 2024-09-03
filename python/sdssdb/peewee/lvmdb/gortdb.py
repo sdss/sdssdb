@@ -6,9 +6,12 @@
 # @Filename: gortdb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+# fmt: on
+
 from __future__ import annotations
 
 import datetime
+
 from peewee import (
     AutoField,
     BigIntegerField,
@@ -18,13 +21,12 @@ from peewee import (
     FloatField,
     ForeignKeyField,
     IntegerField,
-    TextField
+    TextField,
 )
 from playhouse.postgres_ext import JSONField
 
 from .. import BaseModel
 from . import database
-from .lvmopsdb import Exposure as LVMOpsDBExposure
 
 
 class GortDBBase(BaseModel):
@@ -43,7 +45,7 @@ class Overhead(GortDBBase):
     duration = FloatField()
 
     class Meta:
-        table_name = 'overhead'
+        table_name = "overhead"
 
 
 class Event(GortDBBase):
@@ -54,7 +56,7 @@ class Event(GortDBBase):
     payload = JSONField()
 
     class Meta:
-        table_name = 'event'
+        table_name = "event"
 
 
 class Notification(GortDBBase):
@@ -68,7 +70,7 @@ class Notification(GortDBBase):
     slack = BooleanField()
 
     class Meta:
-        table_name = 'notification'
+        table_name = "notification"
 
 
 class Exposure(GortDBBase):
@@ -84,7 +86,7 @@ class Exposure(GortDBBase):
     header = JSONField()
 
     class Meta:
-        table_name = 'exposure'
+        table_name = "exposure"
 
 
 class NightLog(GortDBBase):
@@ -93,15 +95,15 @@ class NightLog(GortDBBase):
     sent = BooleanField()
 
     class Meta:
-        table_name = 'night_log'
+        table_name = "night_log"
 
 
 class NightLogComment(GortDBBase):
     pk = AutoField(primary_key=True)
-    night_log = ForeignKeyField(model=NightLog,
-                                column_name='night_log_pk',
-                                backref='comments')
+    night_log = ForeignKeyField(
+        model=NightLog, column_name="night_log_pk", backref="comments"
+    )
     comment = TextField()
 
     class Meta:
-        table_name = 'night_log_comment'
+        table_name = "night_log_comment"
