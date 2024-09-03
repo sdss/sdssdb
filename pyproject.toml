@@ -146,5 +146,8 @@ sdss = ["sdsstools"]
 sqla = ["sqlalchemy"]
 peewee = ["peewee", "playhouse"]
 
+[tool.ruff.format]
+preview = true
+
 [tool.coverage.run]
 branch = true

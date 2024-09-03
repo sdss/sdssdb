@@ -36,7 +36,7 @@ from sdssdb.utils.internals import get_database_columns
 __all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnection"]
 
 
-if use_psycopg3.lower() in ["true", "1"]:
+if use_psycopg3 is True:
     try:
         import psycopg  # noqa
         from playhouse.psycopg3_ext import Psycopg3Database as PostgresqlDatabase
@@ -75,7 +75,7 @@ def get_database_uri(
     else:
         auth: str = f"{user}:{password}@"
 
-    host_port: str = f"{host or ''}" if port is None else f"{host or ''}:{port}"
+    host_port: str = f"{host or ""}" if port is None else f"{host or ""}:{port}"
 
     if auth == "" and host_port == "":
         return f"postgresql://{dbname}"
