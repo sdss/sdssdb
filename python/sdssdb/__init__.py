@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+import os
 import warnings
 
 from sqlalchemy.exc import MovedIn20Warning
@@ -32,6 +33,8 @@ log = get_logger(NAME)
 config = get_config(NAME)
 
 autoconnect = True
+use_psycopg3 = os.environ.get("SDSSDB_PSYCOPG3", "false")
+
 
 from .connection import PeeweeDatabaseConnection  # noqa
 from .connection import SQLADatabaseConnection  # noqa
