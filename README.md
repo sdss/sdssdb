@@ -2,8 +2,7 @@
 
 ![Versions](https://img.shields.io/badge/python->=3.6-blue)
 [![Documentation Status](https://readthedocs.org/projects/sdssdb/badge/?version=latest)](https://sdssdb.readthedocs.io/en/latest/?badge=latest)
-[![Python application](https://github.com/sdss/sdssdb/actions/workflows/pythonapp.yml/badge.svg)](https://github.com/sdss/sdssdb/actions/workflows/pythonapp.yml)
-
+[![Test](https://github.com/sdss/sdssdb/actions/workflows/test.yml/badge.svg)](https://github.com/sdss/sdssdb/actions/workflows/test.yml)
 
 [SDSS](https://sdss.org>) product for database management.
 
