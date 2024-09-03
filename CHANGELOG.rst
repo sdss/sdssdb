@@ -5,6 +5,7 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.13.0 <2024-09-03>`
 * :feature:`264` Add metadata for the ``sdss_id_to_catalog`` table.
 * :feature:`266` Support PEP 621.
 * :feature:`268` Allows to use `psycopy3 <https://www.psycopg.org/psycopg3/docs/>`__ as a driver for the Peewee database connection.
