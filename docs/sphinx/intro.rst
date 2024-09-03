@@ -245,7 +245,7 @@ There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatab
 
 
 A note about passwords
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 ``sdssdb`` does not allow you to pass plaintext passwords when creating a connection, or to store them in the profiles. Instead, you should use `pgpass <https://www.postgresql.org/docs/9.3/libpq-pgpass.html>`__ to set your passwords. A typical ``~/.pgpass`` file looks something like ::
 
@@ -254,6 +254,22 @@ A note about passwords
     operations-test.sdss.utah.edu:5432:sdss5db:sdss:ZZZZ
 
 where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of parameters.
+
+
+Connection flags
+^^^^^^^^^^^^^^^^
+
+``sdssdb`` supports two flags that change the behaviour of the database connection.
+
+* **autoconnect**: if set to `False` the connection will not attempt to connect to the database when created. This is useful when you want to create a connection object but connect to the database later. ``autoconnect`` defaults to `True` and can be changed either by setting the environment variable ``SDSSDB_AUTOCONNECT=0`` before importing the model classes, or by doing ::
+
+        >>> import sdssdb
+        >>> sdssdb.autoconnect = False
+        ... import your model classes ...
+
+  When instantiating a `.DatabaseConnection` object manually, you can also pass the ``autoconnect=False`` keyword argument.
+
+* **use_psycopg3**: prefers to use `psycopg3 <https://www.psycopg.org/psycopg3/docs/>`__ instead of the default ``psycopg2``. If ``psycopg3`` is not installed, ``psycopg2`` will be used instead. This flag can be set via the environment variable ``SDSSDB_PSYCOPG3=1`` or by importing ``sdssdb`` and setting ``sdssdb.use_psycopg3 = True`` before importing the model classes.
 
 
 .. _profile:

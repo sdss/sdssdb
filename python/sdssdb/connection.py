@@ -13,6 +13,7 @@ import importlib
 import os
 import re
 import socket
+import warnings
 
 import pgpasslib
 import six
@@ -23,16 +24,28 @@ from sqlalchemy.exc import OperationalError as OpError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import peewee
-from peewee import OperationalError, PostgresqlDatabase
+from peewee import OperationalError
 from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import Introspector, UnknownField
 
 import sdssdb
-from sdssdb import config, log
+from sdssdb import config, log, use_psycopg3
 from sdssdb.utils.internals import get_database_columns
 
 
 __all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnection"]
+
+
+if use_psycopg3 is True:
+    try:
+        import psycopg  # noqa
+        from playhouse.psycopg3_ext import Psycopg3Database as PostgresqlDatabase
+    except ImportError:
+        warnings.warn("psycopg3 is not installed. Using psycopg2.")
+        from peewee import PostgresqlDatabase
+
+else:
+    from peewee import PostgresqlDatabase
 
 
 def _should_autoconnect():
@@ -62,7 +75,7 @@ def get_database_uri(
     else:
         auth: str = f"{user}:{password}@"
 
-    host_port: str = f"{host or ''}" if port is None else f"{host or ''}:{port}"
+    host_port: str = f"{host or ""}" if port is None else f"{host or ""}:{port}"
 
     if auth == "" and host_port == "":
         return f"postgresql://{dbname}"
@@ -132,7 +145,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     def __repr__(self):
         return "<{} (dbname={!r}, profile={!r}, connected={})>".format(
-            self.__class__.__name__, self.dbname, self.profile, self.connected
+            self.__class__.__name__,
+            self.dbname,
+            self.profile,
+            self.connected,
         )
 
     def set_profile(self, profile=None, connect=True, **params):
