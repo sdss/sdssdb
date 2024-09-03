@@ -34,7 +34,7 @@ jobs:
       - name: Install Postgresql
         uses: ikalnytskyi/action-setup-postgres@v6
         with:
-          username: sdss
+          username: postgres
         id: postgres
 
       - name: Install dependencies
