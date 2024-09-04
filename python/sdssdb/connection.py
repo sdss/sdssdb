@@ -75,7 +75,7 @@ def get_database_uri(
     else:
         auth: str = f"{user}:{password}@"
 
-    host_port: str = f"{host or ""}" if port is None else f"{host or ""}:{port}"
+    host_port: str = f"{host or ''}" if port is None else f"{host or ''}:{port}"
 
     if auth == "" and host_port == "":
         return f"postgresql://{dbname}"
