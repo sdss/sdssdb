@@ -345,6 +345,7 @@ class LN2Fill(LVMOpsBase):
     json_file = TextField()
     configuration = JSONField()
     log_data = JSONField()
+    plot_paths = JSONField()
 
     class Meta:
         table_name = 'ln2_fill'

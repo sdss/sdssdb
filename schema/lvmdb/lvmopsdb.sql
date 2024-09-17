@@ -231,7 +231,8 @@ CREATE TABLE lvmopsdb.ln2_fill (
     log_file TEXT,
     json_file TEXT,
     configuration JSONB,
-    log_data JSONB
+    log_data JSONB,
+    plot_paths JSONB
 );
 
 -- constraints
@@ -394,12 +395,11 @@ lvmopsdb.weather,
 lvmopsdb.observation_to_standard,
 lvmopsdb.observation_to_sky,
 lvmopsdb.exposure,
-lvmopsdb.completion_status to sdss_user;
+lvmopsdb.completion_status,
+lvmopsdb.ln2_fill to sdss_user;
 
 grant select on all tables in schema lvmopsdb to sdss_user;
 grant usage on all sequences in schema lvmopsdb to sdss_user;
-
-grant insert on TABLE lvmopsdb.ln2_fill to sdss_user;
 
 alter table lvmopsdb.sky add column darkest_wham_flag bool;
 alter table lvmopsdb.sky add column valid bool;
