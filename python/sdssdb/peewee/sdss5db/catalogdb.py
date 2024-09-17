@@ -241,6 +241,13 @@ class Gaia_DR2(CatalogdbModel):
         table_name = 'gaia_dr2_source'
 
 
+class Gaia_DR2_g_lt_18(CatalogdbModel):
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = "gaia_dr2_source_g_lt_18"
+
+
 class Gaia_EDR3(CatalogdbModel):
 
     source_id = BigIntegerField(primary_key=True)
@@ -255,6 +262,13 @@ class Gaia_DR3(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_dr3_source'
+
+
+class Gaia_DR3_g_lt_16(CatalogdbModel):
+    source_id = BigIntegerField(primary_key=True)
+
+    class Meta:
+        table_name = "gaia_dr3_source_g_lt_16"
 
 
 class Gaia_DR2_Neighbourhood(CatalogdbModel):
