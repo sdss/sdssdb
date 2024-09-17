@@ -214,6 +214,25 @@ CREATE TABLE lvmopsdb.guider_coadd (
     exposure_no INTEGER
 );
 
+CREATE TABLE lvmopsdb.ln2_fill (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    action TEXT,
+    start_time TIMESTAMPTZ,
+    end_time TIMESTAMPTZ,
+    purge_start TIMESTAMPTZ,
+    purge_complete TIMESTAMPTZ,
+    fill_start TIMESTAMPTZ,
+    fill_complete TIMESTAMPTZ,
+    fail_time TIMESTAMPTZ,
+    abort_time TIMESTAMPTZ,
+    failed BOOLEAN,
+    aborted BOOLEAN,
+    error TEXT,
+    log_file TEXT,
+    json_file TEXT,
+    configuration JSONB,
+    log_data JSONB
+);
 
 -- constraints
 
@@ -349,6 +368,18 @@ CREATE INDEX CONCURRENTLY standard_qc3_index
     ON lvmopsdb.standard
     (q3c_ang2ipix(ra, dec));
 
+CREATE INDEX ON lvmopsdb.ln2_fill (action);
+CREATE INDEX ON lvmopsdb.ln2_fill (start_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (end_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (purge_start);
+CREATE INDEX ON lvmopsdb.ln2_fill (purge_complete);
+CREATE INDEX ON lvmopsdb.ln2_fill (fill_start);
+CREATE INDEX ON lvmopsdb.ln2_fill (fill_complete);
+CREATE INDEX ON lvmopsdb.ln2_fill (fail_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (abort_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (failed);
+CREATE INDEX ON lvmopsdb.ln2_fill (aborted);
+
 CLUSTER standard_qc3_index ON lvmopsdb.standard;
 
 CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_coadd (exposure_no);
@@ -367,6 +398,8 @@ lvmopsdb.completion_status to sdss_user;
 
 grant select on all tables in schema lvmopsdb to sdss_user;
 grant usage on all sequences in schema lvmopsdb to sdss_user;
+
+grant insert on TABLE lvmopsdb.ln2_fill to sdss_user;
 
 alter table lvmopsdb.sky add column darkest_wham_flag bool;
 alter table lvmopsdb.sky add column valid bool;

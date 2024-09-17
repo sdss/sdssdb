@@ -17,8 +17,9 @@ from peewee import (
     FloatField,
     ForeignKeyField,
     IntegerField,
-    TextField
+    TextField,
 )
+from playhouse.postgres_ext import JSONField
 
 from .. import BaseModel
 from . import database  # noqa
@@ -324,3 +325,26 @@ class GuiderCoAdd(LVMOpsBase):
 
     class Meta:
         table_name = 'guider_coadd'
+
+
+class LN2Fill(LVMOpsBase):
+    pk = AutoField()
+    action = TextField()
+    start_time = DateTimeField()
+    end_time = DateTimeField()
+    purge_start = DateTimeField()
+    purge_complete = DateTimeField()
+    fill_start = DateTimeField()
+    fill_complete = DateTimeField()
+    fail_time = DateTimeField()
+    abort_time = DateTimeField()
+    failed = BooleanField()
+    aborted = BooleanField()
+    error = TextField()
+    log_file = TextField()
+    json_file = TextField()
+    configuration = JSONField()
+    log_data = JSONField()
+
+    class Meta:
+        table_name = 'ln2_fill'
