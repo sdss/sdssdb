@@ -346,6 +346,7 @@ class LN2Fill(LVMOpsBase):
     configuration = JSONField()
     log_data = JSONField()
     plot_paths = JSONField()
+    valve_times = JSONField()
 
     class Meta:
         table_name = 'ln2_fill'

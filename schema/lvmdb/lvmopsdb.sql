@@ -232,7 +232,8 @@ CREATE TABLE lvmopsdb.ln2_fill (
     json_file TEXT,
     configuration JSONB,
     log_data JSONB,
-    plot_paths JSONB
+    plot_paths JSONB,
+    valve_times JSONB
 );
 
 -- constraints
