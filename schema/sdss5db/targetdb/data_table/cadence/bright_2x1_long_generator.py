@@ -32,7 +32,8 @@ print(cadencelist.cadences['bright_2x1'])
 
 copy_cadence('bright_2x1', 'bright_2x1_long_v2')
 
-cadencelist.cadences['bright_2x1_long_v2'].delta_min[1] = 99.
+cadencelist.cadences['bright_2x1_long_v2'].delta_min[1] = 2.
+cadencelist.cadences['bright_2x1_long_v2'].delta_max[1] = 100000.
 cadencelist.cadences['bright_2x1_long_v2'].delta[1] = 100.
 cadencelist.cadences['bright_2x1_long_v2'].label_root = 'bright_2x1_long'
 cadencelist.cadences['bright_2x1_long_v2'].label_version = '_v2'

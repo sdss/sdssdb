@@ -7,7 +7,7 @@
 # Database: sdss5db
 # Peewee version: 3.17.1
 
-# flake8: noqa=E501,E741
+# flake8: noqa: E501,E741
 
 from peewee import (AutoField, BigIntegerField, BigBitField, BitField, BooleanField,
                     DateTimeField, DoubleField, FloatField, ForeignKeyField,
