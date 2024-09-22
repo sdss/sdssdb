@@ -361,3 +361,47 @@ class Epoch(TargetdbBase):
 
     class Meta:
         table_name = 'epoch'
+
+
+class RsRunToSdssID(TargetdbBase):
+    assignment_pk = IntegerField()
+    mjd = FloatField()
+    catalogid = ForeignKeyField(column_name='catalogid',
+                                field='catalogid',
+                                model=catalogdb.Catalog,
+                                null=False)
+    program  = TextField()
+    carton  = TextField()
+    label  = TextField()  # FIX! To instrument in net table load
+    default_lambda_eff = FloatField()
+    sdss_id = ForeignKeyField(column_name='sdss_id',
+                              field='sdss_id',
+                              model=catalogdb.SDSS_ID_flat,
+                              null=False)
+    observatory  = TextField()
+    done = IntegerField()
+    field_id = IntegerField()
+
+    class Meta:
+        table_name = 'rs_run_to_sdssid'
+
+
+class CartonToSdssID(TargetdbBase):
+    assignment_pk = IntegerField()
+    mjd = FloatField()
+    catalogid = ForeignKeyField(column_name='catalogid',
+                                field='catalogid',
+                                model=catalogdb.Catalog,
+                                null=False)
+    program  = TextField()
+    carton  = TextField()
+    label  = TextField()  # FIX! To instrument in net table load
+    default_lambda_eff = FloatField()
+    sdss_id = ForeignKeyField(column_name='sdss_id',
+                              field='sdss_id',
+                              model=catalogdb.SDSS_ID_flat,
+                              null=False)
+    nexp = IntegerField()
+
+    class Meta:
+        table_name = 'carton_to_sdssid'
