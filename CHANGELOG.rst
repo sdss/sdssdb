@@ -6,6 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * Add table and models for ``lvmopsdb.ln2_fill``.
+* Add tables and models for ``gortdb.night_log`` and ``gortdb.night_log_command``.
 
 * :release:`0.13.0 <2024-09-03>`
 * :feature:`264` Add metadata for the ``sdss_id_to_catalog`` table.

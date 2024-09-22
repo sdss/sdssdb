@@ -59,7 +59,9 @@ CREATE TABLE gortdb.night_log (
 CREATE TABLE gortdb.night_log_comment (
     pk SERIAL PRIMARY KEY NOT NULL,
     night_log_pk INTEGER,
-    comment TEXT
+    time TIMESTAMPTZ,
+    comment TEXT,
+    category TEXT
 );
 
 
@@ -86,6 +88,8 @@ CREATE INDEX ON gortdb.exposure (mjd);
 CREATE INDEX ON gortdb.night_log (mjd);
 
 CREATE INDEX ON gortdb.night_log_comment (night_log_pk);
+CREATE INDEX ON gortdb.night_log_comment (time);
+CREATE INDEX ON gortdb.night_log_comment (category);
 
 
 ALTER TABLE ONLY gortdb.night_log_comment
@@ -96,6 +100,8 @@ ALTER TABLE ONLY gortdb.night_log_comment
 
 
 GRANT USAGE ON SCHEMA gortdb TO sdss_user;
-
 GRANT SELECT ON ALL TABLES IN SCHEMA gortdb TO sdss_user;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA gortdb TO sdss_user;
+
+GRANT INSERT ON gortdb.night_log TO sdss_user;
+GRANT INSERT ON gortdb.night_log_comment TO sdss_user;
