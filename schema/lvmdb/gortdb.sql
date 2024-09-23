@@ -52,7 +52,7 @@ CREATE TABLE gortdb.exposure (
 
 CREATE TABLE gortdb.night_log (
     pk SERIAL PRIMARY KEY NOT NULL,
-    mjd INTEGER,
+    mjd INTEGER UNIQUE,
     sent BOOLEAN
 );
 
