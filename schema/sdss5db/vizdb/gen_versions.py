@@ -45,6 +45,7 @@ def create_df() -> list[dict]:
     df = fix_list(df, 'run2d')
     df = fix_list(df, 'run1d')
     df = fix_list(df, 'apred_vers')
+    df = fix_list(df, 'v_astra')
 
     # drop legacy rows
     df = df.set_index('release', drop=False)
@@ -54,8 +55,8 @@ def create_df() -> list[dict]:
     # add mjd cutoffs
     # todo - move this to the datamodel
     df.loc['DR18', 'mjd_cutoff_apo'] = 59392
-    df.loc['DR19', 'mjd_cutoff_apo'] = 60280
-    df.loc['DR19', 'mjd_cutoff_lco'] = 60280
+    df.loc['DR19', 'mjd_cutoff_apo'] = 60130
+    df.loc['DR19', 'mjd_cutoff_lco'] = 60130
     df.loc['IPL3', 'mjd_cutoff_apo'] = 60130
     df.loc['IPL1', 'mjd_cutoff_apo'] = 59765
 
