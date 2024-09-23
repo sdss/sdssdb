@@ -356,4 +356,41 @@ class Overhead(OpsdbBase):
         table_name = 'overhead'
 
 
+class PredSnr(OpsdbBase):
+    pk = AutoField()
+    robodamus_version = TextField()
+    model_id = TextField()
+    pred_time = DateTimeField()
+    camera_pk = ForeignKeyField(Camera,
+                                column_name='camera_pk',
+                                field='pk')
+    design_mode_label = ForeignKeyField(column_name='design_mode_label',
+                                        field='label',
+                                        model=targetdb.DesignMode)
+    pred_type = TextField()
+    pred_value = FloatField()
+    pred_flag = IntegerField()
+    num_gfas = IntegerField()
+    gfa_expid = IntegerField()
+    gfa_date_obs = DateTimeField()
+
+    class Meta:
+        table_name = 'pred_snr'
+
+
+class PredSnrPar(OpsdbBase):
+    pk = AutoField()
+    pred_snr_pk = ForeignKeyField(PredSnr,
+                                  column_name='pred_snr_pk',
+                                  field='pk')
+    label = TextField()
+    datatype = TextField()
+    value_f = DoubleField()
+    value_i = IntegerField()
+    value_s = TextField()
+
+    class Meta:
+        table_name = 'pred_snr_par'
+
+
 FieldToPriorityDeferred.set_model(FieldToPriority)
