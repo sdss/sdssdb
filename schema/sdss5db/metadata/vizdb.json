@@ -56,6 +56,15 @@
     },
     {
       "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "last_updated",
+      "display_name": "Last Updated",
+      "sql_type": "date",
+      "description": "The date when the row was last updated",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
       "table_name": "sdss_id_flat",
       "column_name": "sdss_id",
       "display_name": "SDSS ID",
@@ -133,6 +142,15 @@
       "display_name": "PK",
       "sql_type": "bigint",
       "description": "Primary Key of the sdss_id_flat table",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "rank",
+      "display_name": "Rank",
+      "sql_type": "integer",
+      "description": "Ranking of when catalogid paired with multiple sdss_ids.  Lowest sdss_id is the preferred match, with rank 1",
       "unit": "None"
     },
     {
@@ -247,6 +265,15 @@
     {
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
+      "column_name": "in_bsv",
+      "display_name": "In Astra-Boss",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id has been reduced by the boss componenent of the Astra pipeline",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
       "column_name": "in_astra",
       "display_name": "In APOGEE",
       "sql_type": "boolean",
@@ -260,6 +287,33 @@
       "display_name": "Has Been Observed",
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id target has been observed or not, either in sdss5 or dr17 release data.",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "release",
+      "display_name": "Release",
+      "sql_type": "text",
+      "description": "the Astra release field indicating source reduction from sdss5 or dr17",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "obs",
+      "display_name": "Observatory",
+      "sql_type": "text",
+      "description": "the observatory of the observation, either APO or LCO",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "mjd",
+      "display_name": "MJD",
+      "sql_type": "integer",
+      "description": "the MJD when the target was reduced",
       "unit": "None"
     },
     {
