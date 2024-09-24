@@ -38,10 +38,10 @@ ANALYZE vizdb.sdss_id_flat;
 CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes AS
 SELECT row_number() over(order by s.sdss_id) as pk, s.sdss_id,
        (b.sdss_id IS NOT NULL) AS in_boss,
-       (v.star_pk IS NOT NULL) AS in_apogee,
+       (v.star_pk IS NOT NULL or v.visit_pk IS NOT NULL) AS in_apogee,
 	   (o.source_pk IS NOT NULL) AS in_bvs,
        (a.sdss_id IS NOT NULL) AS in_astra,
-       (b.sdss_id IS NOT NULL OR v.star_pk IS NOT NULL OR a.sdss_id IS NOT NULL) AS has_been_observed,
+       (b.sdss_id IS NOT NULL OR v.source_pk IS NOT NULL OR o.source_pk IS NOT NULL) AS has_been_observed,
        case when b.sdss_id IS NOT NULL then 'sdss5' when v.source_pk IS NOT NULL then v.release when o.source_pk is NOT NULL then o.release end as release,
        case when b.sdss_id IS NOT NULL then lower(b.obs) when v.source_pk IS NOT NULL then substring(v.telescope,0,4) when o.source_pk IS NOT NULL then substring(o.telescope,0,4) end as obs,
        case when b.sdss_id IS NOT NULL then b.mjd when v.source_pk IS NOT NULL then v.mjd when o.source_pk IS NOT NULL then o.mjd end as mjd

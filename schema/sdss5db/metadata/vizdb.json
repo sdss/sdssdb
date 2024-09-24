@@ -275,9 +275,9 @@
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
       "column_name": "in_astra",
-      "display_name": "In APOGEE",
+      "display_name": "In Astra",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id has been reduced by the Astra pipeline, either sdss5 or dr17 release data.",
+      "description": "Flag indicating if the sdss_id has been matched to an Astra source (i.e. in the Source table)",
       "unit": "None"
     },
     {
@@ -286,7 +286,7 @@
       "column_name": "has_been_observed",
       "display_name": "Has Been Observed",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id target has been observed or not, either in sdss5 or dr17 release data.",
+      "description": "Flag indicating if the sdss_id target has been observed and reduced, or not, either in sdss5 or dr17 release data.",
       "unit": "None"
     },
     {
