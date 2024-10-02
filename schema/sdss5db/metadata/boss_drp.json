@@ -165,8 +165,8 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_spectrum",
-      "column_name": "CatalogID from V0",
-      "display_name": "CATALOGID_V0",
+      "column_name": "catalogid_v0",
+      "display_name": "CATALOGID from V0",
       "sql_type": "bigint",
       "description": "SDSS-V CatalogID from Catalog v0",
       "unit": "None"
@@ -174,8 +174,8 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_spectrum",
-      "column_name": "CatalogID from V0.5",
-      "display_name": "CATALOGID_V0P5",
+      "column_name": "catalogid_v0p5",
+      "display_name": "CatalogID from V0.5",
       "sql_type": "bigint",
       "description": "SDSS-V CatalogID from Catalog v0.5",
       "unit": "None"
@@ -399,8 +399,8 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_spectrum",
-      "column_name": "Catalog DEC",
-      "display_name": "DECCAT",
+      "column_name": "deccat",
+      "display_name": "Catalog DEC",
       "sql_type": "double precision",
       "description": "Dec in ICRS coordinates at 'coord_epoch' for the target assigned",
       "unit": "deg"
@@ -768,8 +768,8 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_spectrum",
-      "column_name": "ivar of Flux of Template in UGRIZ",
-      "display_name": "SPECTROSYNFLUX_IVAR",
+      "column_name": "spectrosynflux_ivar",
+      "display_name": "ivar of Template in UGRIZ",
       "sql_type": "real[]",
       "description": "Inverse variance of SPECTROSYNFLUX",
       "unit": "None"
@@ -777,7 +777,7 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_spectrum",
-      "column_name": "Flux of Sky in UGRIZ",
+      "column_name": "spectroskyflux",
       "display_name": "SPECTROSKYFLUX",
       "sql_type": "real[]",
       "description": "Sky spectrum projected onto SDSS-{ugriz} filter",
@@ -1659,8 +1659,8 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_field",
-      "column_name": "SP1 red Exposure Time",
-      "display_name": "EXPT_R1",
+      "column_name": "expt_r1",
+      "display_name": "SP1 red Exposure Time",
       "sql_type": "real",
       "description": "Total Exposure Time of r1",
       "unit": "None"
