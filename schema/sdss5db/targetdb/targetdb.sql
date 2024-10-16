@@ -235,6 +235,7 @@ CREATE TABLE targetdb.targeting_generation_to_carton (
 );
 
 CREATE TABLE targetdb.targeting_generation_to_version (
+    pk SERIAL PRIMARY KEY NOT NULL,
     generation_pk INTEGER,
     version_pk INTEGER
 );
