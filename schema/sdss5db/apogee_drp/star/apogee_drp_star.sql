@@ -12,11 +12,11 @@ CREATE TABLE apogee_drp.star (
     STARVER     text,  --/D Star combination version, MJD of last visit used
     MJDBEG      integer,  --/U days --/D  MJD of first visit 
     MJDEND	integer,  --/U days --/D  MJD of last visit
-    TELESCOPE	text,    --/D Telescope where data was taken
+    TELESCOPE	text,  --/D Telescope where data was taken
     APRED_VERS  text,  --/D APOGEE reduction version
     V_APRED     text,  --/D Git hash string of apogee_drp software used
-    HEALPIX	integer,    --/D HEALPix number for this star, nside=128
-    SNR	real,   --/D Median signal-to-noise ratio per pixel
+    HEALPIX	integer,  --/D HEALPix number for this star, nside=128
+    SNR	real,  --/D Median signal-to-noise ratio per pixel
     RA	double precision,  --/U deg --/D Right ascension, J2000
     DEC	double precision,  --/U deg --/D Declination, J2000
     GLON	double precision,  --/U deg --/D Galactic longitude
