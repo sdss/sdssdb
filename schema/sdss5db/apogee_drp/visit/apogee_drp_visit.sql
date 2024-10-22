@@ -9,12 +9,12 @@ CREATE TABLE apogee_drp.visit (
     APOGEE_ID	text,  --/D 2MASS-style star identification
     TARGET_ID	text,  --/D Unique ID for visit spectrum, of form apogee.[telescope].[cs].[apred_version].plate.mjd.fiberid (Primary key)
     FILE	text,  --/D File base name with visit spectrum and catalog information
-    URI         text,  --/D Resource identifier for the full path of the combined apStar spectrum file
+    URI         text,  --/D Resource identifier for the full path of the combined apVisit spectrum file
     FIBERID	smallint,  --/D Fiber ID for this visit
     PLATE	text,  --/D Plate (for plate era) or configurationID (for FPS era) of this visit
     EXPTIME	real,  --/U sec --/D Exposure time
-    NFRAMES	integer, --/D Number of exposures/frames for this visit
-    MJD		integer, --/D Modified Julian Date of the night
+    NFRAMES	integer,  --/D Number of exposures/frames for this visit
+    MJD		integer,  --/D Modified Julian Date of the night
     TELESCOPE	text,  --/D Telescope where data was taken
     APRED_VERS  text,  --/D APOGEE reduction version
     V_APRED     text,  --/D Git hash string of apogee_drp software used
@@ -78,11 +78,11 @@ CREATE TABLE apogee_drp.visit (
     PROGRAM			text,  --/D SDSS-V program name
     CATEGORY			text,  --/D SDSS-V category
     TARGFLAGS	text,  --/D Targeting flags
-    SNR	real,   --/D Median signal-to-noise ratio per pixel
+    SNR	real,  --/D Median signal-to-noise ratio per pixel
     STARFLAG	integer,  --/D Star-level quality flags as integer
     STARFLAGS	text,  --/D Star-level quality flags as comma-delimited ASCII text
     DATEOBS	text,  --/D Date of observation (YYYY-MM-DDTHH:MM:SS.SSS)
-    JD	double precision, --/D Julian date of observation
+    JD	double precision,  --/D Julian date of observation
     CREATED timestamp with time zone DEFAULT now() NOT NULL,  --/D Timestamp the visit record was created
     UNIQUE(APRED_VERS,TELESCOPE,PLATE,MJD,FIBERID)
 );
