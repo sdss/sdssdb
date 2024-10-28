@@ -91,6 +91,7 @@ CREATE INDEX ON gortdb.night_log_comment (night_log_pk);
 CREATE INDEX ON gortdb.night_log_comment (time);
 CREATE INDEX ON gortdb.night_log_comment (category);
 
+CREATE INDEX event_payload_idx ON gortdb.event (((payload ->> 'tile_id')::int));
 
 ALTER TABLE ONLY gortdb.night_log_comment
     ADD CONSTRAINT night_log_comment_night_log_pk_fk
