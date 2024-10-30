@@ -52,14 +52,16 @@ CREATE TABLE gortdb.exposure (
 
 CREATE TABLE gortdb.night_log (
     pk SERIAL PRIMARY KEY NOT NULL,
-    mjd INTEGER,
+    mjd INTEGER UNIQUE,
     sent BOOLEAN
 );
 
 CREATE TABLE gortdb.night_log_comment (
     pk SERIAL PRIMARY KEY NOT NULL,
     night_log_pk INTEGER,
-    comment TEXT
+    time TIMESTAMPTZ,
+    comment TEXT,
+    category TEXT
 );
 
 
@@ -86,7 +88,10 @@ CREATE INDEX ON gortdb.exposure (mjd);
 CREATE INDEX ON gortdb.night_log (mjd);
 
 CREATE INDEX ON gortdb.night_log_comment (night_log_pk);
+CREATE INDEX ON gortdb.night_log_comment (time);
+CREATE INDEX ON gortdb.night_log_comment (category);
 
+CREATE INDEX event_payload_idx ON gortdb.event (((payload ->> 'tile_id')::int));
 
 ALTER TABLE ONLY gortdb.night_log_comment
     ADD CONSTRAINT night_log_comment_night_log_pk_fk
@@ -96,6 +101,8 @@ ALTER TABLE ONLY gortdb.night_log_comment
 
 
 GRANT USAGE ON SCHEMA gortdb TO sdss_user;
-
 GRANT SELECT ON ALL TABLES IN SCHEMA gortdb TO sdss_user;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA gortdb TO sdss_user;
+
+GRANT INSERT ON gortdb.night_log TO sdss_user;
+GRANT INSERT ON gortdb.night_log_comment TO sdss_user;

@@ -7,7 +7,7 @@
 
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Integer,
+from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Date, Float, Integer,
                         SmallInteger, Text, text)
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
@@ -53,6 +53,8 @@ class SDSSidFlat(Base):
     pk = Column('pk', BigInteger, primary_key=True)
     ra_catalogid = Column('ra_catalogid', Float(53))
     dec_catalogid = Column('dec_catalogid', Float(53))
+    rank = Column('rank', Integer)
+
 
 
 class SDSSidStacked(Base):
@@ -65,6 +67,7 @@ class SDSSidStacked(Base):
     ra_sdss_id = Column('ra_sdss_id', Float(53))
     dec_sdss_id = Column('dec_sdss_id', Float(53))
     sdss_id = Column('sdss_id', BigInteger, primary_key=True)
+    last_updated = Column('last_updated', Date)
 
 
 class SDSSidToPipes(Base):
@@ -75,8 +78,12 @@ class SDSSidToPipes(Base):
     sdss_id = Column('sdss_id', BigInteger)
     in_boss = Column('in_boss', Boolean)
     in_apogee = Column('in_apogee', Boolean)
+    in_bvs = Column('in_bvs', Boolean)
     in_astra = Column('in_astra', Boolean)
     has_been_observed = Column('has_been_observed', Boolean)
+    mjd = Column('release', Text)
+    mjd = Column('obs', Text)
+    mjd = Column('mjd', Integer)
 
 
 class Releases(Base):

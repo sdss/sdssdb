@@ -1,11 +1,15 @@
 .. _sdssdb-changelog:
-
+*
 Changelog
 =========
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.13.1 <2024-09-30>`
+* :feature:`274` Adding code to create ``catalogdb.sdss_id_to_catalog`` table.
+* :feature:`272` Update tables and models for new ``vizdb.sdssid_to_pipes`` schema.
 * Add table and models for ``lvmopsdb.ln2_fill``.
+* Add tables and models for ``gortdb.night_log`` and ``gortdb.night_log_command``.
 
 * :release:`0.13.0 <2024-09-03>`
 * :feature:`264` Add metadata for the ``sdss_id_to_catalog`` table.

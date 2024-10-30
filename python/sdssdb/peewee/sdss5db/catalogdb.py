@@ -1198,7 +1198,8 @@ class BHM_Spiders_Generic_Superset(CatalogdbModel):
     # Chosen to match X-ray columns defined in eROSITA/SDSS-V MoU (v2.0, April 2019)
     ero_version = TextField(index=True, null=True)  # string identifying this eROSITA data
                                                     # reduction version
-    ero_souuid = TextField(index=True, null=True)   # string identifying this X-ray source
+    # ero_souuid = TextField(index=True, null=True)   # string identifying this X-ray source
+    ero_detuid = TextField(index=True, null=True)   # string identifying this X-ray source
     ero_flux = FloatField(null=True)                # X-ray flux, 0.5-8keV band, erg/cm2/s
     ero_flux_err = FloatField(null=True)            # X-ray flux uncertainty, 0.5-8keV band,
                                                     # erg/cm2/s

@@ -101,9 +101,13 @@ class NightLog(GortDBBase):
 class NightLogComment(GortDBBase):
     pk = AutoField(primary_key=True)
     night_log = ForeignKeyField(
-        model=NightLog, column_name="night_log_pk", backref="comments"
+        model=NightLog,
+        column_name="night_log_pk",
+        backref="comments",
     )
+    time = DateTimeField()
     comment = TextField()
+    category = TextField()
 
     class Meta:
         table_name = "night_log_comment"

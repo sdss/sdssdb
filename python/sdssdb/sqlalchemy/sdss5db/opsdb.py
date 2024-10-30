@@ -14,6 +14,7 @@ from sqlalchemy import (
     Column,
     DateTime,
     Float,
+    Double,
     ForeignKey,
     Integer,
     SmallInteger,
@@ -149,7 +150,7 @@ class AssignmentToFocal(Base):
     fiber_type = Column(Text)
     assigned = Column(Boolean)
     collided = Column(Boolean)
-    replaced = Column(Boolean)    
+    replaced = Column(Boolean)
 
     configuration = relationship('Configuration')
 
@@ -235,6 +236,40 @@ class Overhead(Base):
     success = Column(Boolean)
 
     configuration = relationship('Configuration')
+
+
+class PredSnr(Base):
+    __tablename__ = 'pred_snr'
+
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_pk_seq'::regclass)"))
+    robodamus_version = Column(Text, index=True)
+    model_id = Column(Text, index=True)
+    pred_time = Column(DateTime, index=True)
+    camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), index=True)
+    design_mode_label = Column(ForeignKey('targetdb.design_mode.label'), index=True)
+    pred_type = Column(Text, index=True)
+    pred_value = Column(Float)
+    pred_flag = Column(Integer)
+    num_gfas = Column(Integer)
+    gfa_expid = Column(Integer)
+    gfa_date_obs = Column(DateTime, index=True)
+
+    camera = relationship('Camera')
+    design_mode = relationship('DesignMode')
+
+
+class PredSnrPar(Base):
+    __tablename__ = 'pred_snr_par'
+
+    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_par_pk_seq'::regclass)"))
+    pred_snr_pk = Column(ForeignKey(f'{Base._schema}.pred_snr.pk'), index=True)
+    label = Column(Text, index=True)
+    datatype = Column(Text)
+    value_f = Column(Double)
+    value_i = Column(BigInteger)
+    value_s = Column(Text)
+
+    pred_snr = relationship('PredSnr')
 
 
 def define_relations():
