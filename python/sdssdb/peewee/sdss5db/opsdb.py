@@ -184,6 +184,7 @@ class CameraFrame(OpsdbBase):
                              field='pk',
                              model=Camera)
     ql_sn2 = FloatField()
+    sn2_15 = FloatField()
     sn2 = FloatField()
     comment = TextField(null=True)
     pk = AutoField()
