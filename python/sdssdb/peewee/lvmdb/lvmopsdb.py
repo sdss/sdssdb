@@ -330,7 +330,7 @@ class GuiderCoAdd(LVMOpsBase):
 class LN2Fill(LVMOpsBase):
     pk = AutoField()
     action = TextField()
-    done = BooleanField()
+    complete = BooleanField()
     start_time = DateTimeField()
     end_time = DateTimeField()
     purge_start = DateTimeField()
