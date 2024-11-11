@@ -72,6 +72,7 @@ CREATE TABLE opsdb.camera_frame (
     exposure_pk INTEGER NOT NULL,
     camera_pk SMALLINT NOT NULL,
     ql_sn2 REAL,
+    sn2_15 REAL,
     sn2 REAL,
     comment TEXT);
 
