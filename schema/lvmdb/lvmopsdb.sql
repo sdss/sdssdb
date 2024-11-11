@@ -217,6 +217,7 @@ CREATE TABLE lvmopsdb.guider_coadd (
 CREATE TABLE lvmopsdb.ln2_fill (
     pk SERIAL PRIMARY KEY NOT NULL,
     action TEXT,
+    done BOOLEAN,
     start_time TIMESTAMPTZ,
     end_time TIMESTAMPTZ,
     purge_start TIMESTAMPTZ,
