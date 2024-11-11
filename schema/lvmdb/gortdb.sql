@@ -104,5 +104,9 @@ GRANT USAGE ON SCHEMA gortdb TO sdss_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA gortdb TO sdss_user;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA gortdb TO sdss_user;
 
-GRANT INSERT ON gortdb.night_log TO sdss_user;
-GRANT INSERT ON gortdb.night_log_comment TO sdss_user;
+GRANT INSERT ON TABLE gortdb.night_log TO sdss_user;
+GRANT INSERT ON TABLE gortdb.night_log_comment TO sdss_user;
+GRANT UPDATE ON TABLE gortdb.night_log_comment TO sdss_user;
+
+GRANT INSERT ON TABLE gortdb.notification TO sdss_user;
+GRANT UPDATE ON TABLE gortdb.notification TO sdss_user;
