@@ -1,0 +1,10 @@
+bright_cluster_5x1_v2;5;{-1.,-1.,-1.,-1.,-1.};{1.,1.,1.,1.,1.};{-1.,-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.,-1.};{1,1,1,1,1};{0.5,0.5,0.5,0.5,0.5};{"bright_cluster","bright_cluster","bright_cluster","bright_cluster","bright_cluster"};bright_cluster_5x1; 
+bright_cluster_4x1_v2;4;{-1.,-1.,-1.,-1.};{1.,1.,1.,1.};{-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.};{1,1,1,1};{0.5,0.5,0.5,0.5};{"bright_cluster","bright_cluster","bright_cluster","bright_cluster"};bright_cluster_4x1; 
+bright_cluster_3x1_v2;3;{-1.,-1.,-1.};{1.,1.,1.};{-1.,-1.,-1.};{-1.,-1.,-1.};{1,1,1};{0.5,0.5,0.5};{"bright_cluster","bright_cluster","bright_cluster"};bright_cluster_3x1; 
+bright_cluster_2x1_v2;2;{-1.,-1.};{1.,1.};{-1.,-1.};{-1.,-1.};{1,1};{0.5,0.5};{"bright_cluster","bright_cluster"};bright_cluster_2x1; 
+bright_cluster_1x1_v2;1;{-1.};{1.};{-1.};{-1.};{1};{0.5};{"bright_cluster"};bright_cluster_1x1; 
+bright_mc_5x1_v2;5;{-1.,-1.,-1.,-1.,-1.};{1.,1.,1.,1.,1.};{-1.,-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.,-1.};{1,1,1,1,1};{0.5,0.5,0.5,0.5,0.5};{"bright_mc","bright_mc","bright_cluster","bright_mc","bright_mc"};bright_mc_5x1; 
+bright_mc_4x1_v2;4;{-1.,-1.,-1.,-1.};{1.,1.,1.,1.};{-1.,-1.,-1.,-1.};{-1.,-1.,-1.,-1.};{1,1,1,1};{0.5,0.5,0.5,0.5};{"bright_mc","bright_mc","bright_mc","bright_mc"};bright_mc_4x1; 
+bright_mc_3x1_v2;3;{-1.,-1.,-1.};{1.,1.,1.};{-1.,-1.,-1.};{-1.,-1.,-1.};{1,1,1};{0.5,0.5,0.5};{"bright_mc","bright_mc","bright_mc"};bright_mc_3x1; 
+bright_mc_2x1_v2;2;{-1.,-1.};{1.,1.};{-1.,-1.};{-1.,-1.};{1,1};{0.5,0.5};{"bright_mc","bright_mc"};bright_mc_2x1; 
+bright_mc_1x1_v2;1;{-1.};{1.};{-1.};{-1.};{1};{0.5};{"bright_mc"};bright_mc_1x1; 
