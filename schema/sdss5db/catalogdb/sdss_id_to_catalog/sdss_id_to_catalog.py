@@ -204,6 +204,10 @@ def create_sdss_id_to_catalog_view(
     for alias in aliases:
         database.execute_sql(f"CREATE INDEX ON {view_name} ({alias});")
 
+    log.info("Setting permissions ...")
+    database.execute_sql(f"GRANT SELECT ON {view_name} TO sdss;")
+    database.execute_sql(f"GRANT SELECT ON {view_name} TO sdss_user;")
+
     log.info("Running VACUUM ANALYZE ...")
     database.execute_sql(f"VACUUM ANALYZE {view_name};")
 
