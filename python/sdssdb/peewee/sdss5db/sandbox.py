@@ -405,3 +405,35 @@ class CartonToSdssID(TargetdbBase):
 
     class Meta:
         table_name = 'carton_to_sdssid'
+
+
+class SimRun(TargetdbBase):
+    mjd = FloatField()
+    catalogid = ForeignKeyField(column_name='catalogid',
+                                field='catalogid',
+                                model=catalogdb.Catalog,
+                                null=False)
+    default_lambda_eff = FloatField()
+    observatory  = TextField()
+    done = IntegerField()
+
+    class Meta:
+        table_name = 'sim_run'
+
+
+class SimRunToSdssID(TargetdbBase):
+    mjd = FloatField()
+    catalogid = ForeignKeyField(column_name='catalogid',
+                                field='catalogid',
+                                model=catalogdb.Catalog,
+                                null=False)
+    default_lambda_eff = FloatField()
+    observatory  = TextField()
+    done = IntegerField()
+    sdss_id = ForeignKeyField(column_name='sdss_id',
+                              field='sdss_id',
+                              model=catalogdb.SDSS_ID_flat,
+                              null=False)
+
+    class Meta:
+        table_name = 'sim_run_to_sdssid'
