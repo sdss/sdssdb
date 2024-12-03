@@ -4,6 +4,7 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_temp (
     label TEXT,
     first_release TEXT
 );
+TRUNCATE targeting_generation_temp;
 
 \copy targeting_generation_temp FROM 'targeting_generation.csv' WITH CSV HEADER;
 
@@ -17,6 +18,7 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_carton_temp (
     rs_stage TEXT,
     rs_active BOOLEAN
 );
+TRUNCATE targeting_generation_to_carton_temp;
 
 \copy targeting_generation_to_carton_temp FROM 'targeting_generation_to_carton.csv' WITH CSV HEADER;
 
@@ -28,6 +30,7 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_version_temp (
     generation_pk INTEGER,
     version_pk INTEGER
 );
+TRUNCATE targeting_generation_to_version_temp;
 
 \copy targeting_generation_to_version_temp FROM 'targeting_generation_to_version.csv' WITH CSV HEADER;
 

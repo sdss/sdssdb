@@ -22,7 +22,8 @@ sdss5db=> select * from targetdb.version where robostrategy;
  190 | eta-5                  | eta-5                                        | f                | t
  194 | eta-8                  | eta-8                                        | f                | t
  197 | eta-9                  | eta-9                                        | f                | t
-(13 rows)
+ 216 | theta-1                | theta-1                                      | f                | t
+ (14 rows)
 
 
 
@@ -40,7 +41,7 @@ to a list of confSummary metadata (which gives the robostrategy plan that was in
 
 Note that 'v0.5.3' targeting generation was associated with zeta-1 which was never loaded into targetdb (and so has no version_pk)
 
-we'll create a separeate targeting_generation v0.5.epsilon-7-core-0 to handle epsilon-7-core-0
+we'll create a separate targeting_generation v0.5.epsilon-7-core-0 to handle epsilon-7-core-0
 
 But we'll keep it in the database because we released it in DR18
 
@@ -56,12 +57,18 @@ pk,label,first_release
 6,v1.0.2,dr20
 7,v1.0.3,dr20
 8,v1.0.4,dr20
+9,v1.0.5,dr20
 
 
 
 The mapping of targeting_generation to version_pk can be extracted from rsconfig:
 
-gawk '$1~/\[Cartons\]/ {flag=1} $1=="version" && flag==1 {printf("%-30s %8s\n",FILENAME,$3); flag=0} ' ~/SDSSV/gitwork/rsconfig/etc/robostrategy-eta-?.cfg ~/SDSSV/gitwork/rsconfig/etc/robostrategy-zeta-?.cfg 
+gawk '$1~/\[Cartons\]/
+    {flag=1}
+$1=="version" && flag==1
+    {printf("%-30s %8s\n",FILENAME,$3);
+     flag=0;}
+     ' ~/SDSSV/gitwork/rsconfig/etc/robostrategy-eta-?.cfg ~/SDSSV/gitwork/rsconfig/etc/robostrategy-zeta-?.cfg 
 
 etc/robostrategy-eta-3.cfg        1.0.2
 etc/robostrategy-eta-4.cfg        1.0.2
@@ -69,6 +76,8 @@ etc/robostrategy-eta-5.cfg        1.0.2
 etc/robostrategy-eta-6.cfg        1.0.3
 etc/robostrategy-eta-7.cfg        1.0.4
 etc/robostrategy-eta-8.cfg        1.0.4
+etc/robostrategy-eta-9.cfg        1.0.4
+etc/robostrategy-theta-1.cfg      1.0.5
 etc/robostrategy-zeta-0.cfg       0.5.2
 etc/robostrategy-zeta-1.cfg       0.5.3
 etc/robostrategy-zeta-2.cfg       0.5.4
@@ -89,8 +98,8 @@ generation_pk,version_pk  | notes (not added to csv)
 7,192                      (eta-6, v1.0.3)
 8,193                      (eta-7, v1.0.4)
 8,194                      (eta-8, v1.0.4)
-8,197                      (eta-9, v1.0.4???????)
-
+8,197                      (eta-9, v1.0.4)
+9,216                    (theta-1, v1.0.5)
 
 # now - populating the 'targeting_generation_to_carton.csv' file
 
@@ -120,16 +129,19 @@ sdss5db=> select * from category;
 
 \copy (select pk,label from category) TO '/home/tdwelly/SDSSV/dr19/minidb/category.psv' with CSV header DELIMITER '|'
 
-# we can actually ignore the categorry because the carton_pk is already linked to a category_pk in targetdb!!
+# we can actually ignore the category because the carton_pk is already linked to a category_pk in targetdb!!
 
 declare -A TG_PK
 
+#TG_LIST="0.5.2 0.5.3 0.5.5 1.0.2 1.0.3 1.0.4 1.0.5"
+TG_LIST="1.0.5"
 TG_PK["0.5.2"]="3"
 TG_PK["0.5.3"]="4"
 TG_PK["0.5.5"]="5"
 TG_PK["1.0.2"]="6"
 TG_PK["1.0.3"]="7"
 TG_PK["1.0.4"]="8"
+TG_PK["1.0.5"]="9"
 TG_PK["epsilon-7-core-0"]="2"
 TG_PK["0.plates"]="1"
 
@@ -138,7 +150,7 @@ RSCONFIG=~/SDSSV/gitwork/rsconfig
 
 echo "generation_pk,carton_pk,rs_stage,rs_active" > $OUTFILE
 
-for TG in "0.5.2" "0.5.3" "0.5.5" "1.0.2" "1.0.3" "1.0.4"; do
+for TG in $TG_LIST; do
     gawk -v tg_pk="${TG_PK[${TG}]}" \
     --field-separator='|' '\
     ARGIND==1 {c_p=sprintf("%s#%s", $2, $3);pk[c_p]=$1;} \
@@ -219,7 +231,7 @@ printf("%s,%s,%s,%s\n",tg_pk,$1,stage,"true");} \
 
 cp $OUTFILE ~/SDSSV/gitwork/sdssdb/schema/sdss5db/targetdb/load_table/targeting_generation/
  
-
+# psql -h localhost -p 7502 -U sdss_user -d sdss5db
 \cd /home/dwelly/SDSSV/gitwork/sdssdb/schema/sdss5db/targetdb/load_table/targeting_generation
 
 # now do a test load into sandbox (replacing targetdb with sandbox)
@@ -229,6 +241,7 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_temp (
     label TEXT,
     first_release TEXT
 );
+TRUNCATE targeting_generation_temp;
 
 \copy targeting_generation_temp FROM 'targeting_generation.csv' WITH CSV HEADER;
 
@@ -237,6 +250,7 @@ CREATE TABLE IF NOT EXISTS sandbox.targeting_generation (
     label TEXT,
     first_release TEXT
 );
+TRUNCATE sandbox.targeting_generation;
 
 INSERT INTO sandbox.targeting_generation (pk, label, first_release)
     SELECT * FROM targeting_generation_temp ON CONFLICT DO NOTHING;
@@ -249,8 +263,10 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_carton_temp (
     rs_stage TEXT,
     rs_active BOOLEAN
 );
+TRUNCATE targeting_generation_to_carton_temp;
 
 \copy targeting_generation_to_carton_temp FROM 'targeting_generation_to_carton.csv' WITH CSV HEADER;
+
 
 CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_carton (
     generation_pk INTEGER,
@@ -259,6 +275,8 @@ CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_carton (
     rs_active BOOLEAN
 );
 
+TRUNCATE sandbox.targeting_generation_to_carton;
+ 
 INSERT INTO sandbox.targeting_generation_to_carton (generation_pk, carton_pk, rs_stage, rs_active)
     SELECT * FROM targeting_generation_to_carton_temp ON CONFLICT DO NOTHING;
 
@@ -267,6 +285,7 @@ CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_version_temp (
     generation_pk INTEGER,
     version_pk INTEGER
 );
+TRUNCATE targeting_generation_to_version_temp;
 
 \copy targeting_generation_to_version_temp FROM 'targeting_generation_to_version.csv' WITH CSV HEADER;
 
@@ -274,6 +293,7 @@ CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_version (
     generation_pk INTEGER,
     version_pk INTEGER
 );
+TRUNCATE sandbox.targeting_generation_to_version;
 
 INSERT INTO sandbox.targeting_generation_to_version (generation_pk, version_pk)
     SELECT * FROM targeting_generation_to_version_temp ON CONFLICT DO NOTHING;
@@ -282,6 +302,16 @@ INSERT INTO sandbox.targeting_generation_to_version (generation_pk, version_pk)
 
 # do some test queries:
 
-sdss5db=> select c.pk,c.carton,v.plan,count(*),array_agg(tg.label),min(tg.first_release) from sandbox.targeting_generation_to_carton as tg2c join carton as c on tg2c.carton_pk = c.pk join targetdb.version as v on c.version_pk = v.pk join sandbox.targeting_generation as tg on tg2c.generation_pk = tg.pk where tg.first_release <= 'dr19' group by c.pk,c.carton,v.plan order by c.pk;
+sdss5db=> select c.pk,c.carton,v.plan,count(*),array_agg(tg.label),min(tg.first_release)
+from sandbox.targeting_generation_to_carton as tg2c
+join carton as c
+  on tg2c.carton_pk = c.pk
+join targetdb.version as v
+  on c.version_pk = v.pk
+join sandbox.targeting_generation as tg
+  on tg2c.generation_pk = tg.pk
+where tg.first_release >= 'dr20'
+group by c.pk,c.carton,v.plan
+order by c.pk;
 
 etc etc
