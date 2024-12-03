@@ -250,7 +250,9 @@ CREATE TABLE IF NOT EXISTS sandbox.targeting_generation (
     label TEXT,
     first_release TEXT
 );
-TRUNCATE sandbox.targeting_generation;
+
+ALTER TABLE sandbox.targeting_generation DROP CONSTRAINT IF EXISTS targeting_generation_pk_key;
+ALTER TABLE sandbox.targeting_generation ADD CONSTRAINT targeting_generation_pk_key UNIQUE (pk);
 
 INSERT INTO sandbox.targeting_generation (pk, label, first_release)
     SELECT * FROM targeting_generation_temp ON CONFLICT DO NOTHING;
@@ -274,8 +276,9 @@ CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_carton (
     rs_stage TEXT,
     rs_active BOOLEAN
 );
-
-TRUNCATE sandbox.targeting_generation_to_carton;
+ALTER TABLE sandbox.targeting_generation_to_carton DROP CONSTRAINT IF EXISTS targeting_generation_to_carton_pk_key;
+ALTER TABLE sandbox.targeting_generation_to_carton ADD CONSTRAINT targeting_generation_to_carton_pk_key UNIQUE (generation_pk,carton_pk);
+# TRUNCATE sandbox.targeting_generation_to_carton;
  
 INSERT INTO sandbox.targeting_generation_to_carton (generation_pk, carton_pk, rs_stage, rs_active)
     SELECT * FROM targeting_generation_to_carton_temp ON CONFLICT DO NOTHING;
@@ -293,7 +296,10 @@ CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_version (
     generation_pk INTEGER,
     version_pk INTEGER
 );
-TRUNCATE sandbox.targeting_generation_to_version;
+
+ALTER TABLE sandbox.targeting_generation_to_version DROP CONSTRAINT IF EXISTS targeting_generation_to_version_uniq_key;
+ALTER TABLE sandbox.targeting_generation_to_version ADD CONSTRAINT targeting_generation_to_version_uniq_key UNIQUE (generation_pk,version_pk);
+# TRUNCATE sandbox.targeting_generation_to_version;
 
 INSERT INTO sandbox.targeting_generation_to_version (generation_pk, version_pk)
     SELECT * FROM targeting_generation_to_version_temp ON CONFLICT DO NOTHING;
