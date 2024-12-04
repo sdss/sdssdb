@@ -26,7 +26,9 @@ TRUNCATE targeting_generation_to_carton_temp;
 \copy targeting_generation_to_carton_temp FROM 'targeting_generation_to_carton.csv' WITH CSV HEADER;
 
 ALTER TABLE targetdb.targeting_generation_to_carton DROP CONSTRAINT IF EXISTS targeting_generation_to_carton_uniq_key;
-ALTER TABLE targetdb.targeting_generation_to_carton ADD CONSTRAINT targeting_generation_to_carton_uniq_key UNIQUE (generation_pk,carton_pk);
+ALTER TABLE targetdb.targeting_generation_to_carton ADD CONSTRAINT
+targeting_generation_to_carton_uniq_key UNIQUE
+(generation_pk,carton_pk,rs_stage,rs_active);
 
 INSERT INTO targetdb.targeting_generation_to_carton (generation_pk, carton_pk, rs_stage, rs_active)
     SELECT * FROM targeting_generation_to_carton_temp ON CONFLICT DO NOTHING;
