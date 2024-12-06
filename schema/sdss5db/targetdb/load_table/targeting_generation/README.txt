@@ -246,17 +246,20 @@ TRUNCATE targeting_generation_temp;
 \copy targeting_generation_temp FROM 'targeting_generation.csv' WITH CSV HEADER;
 
 CREATE TABLE IF NOT EXISTS sandbox.targeting_generation (
-    pk INTEGER,
+    pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT,
     first_release TEXT
 );
 
-ALTER TABLE sandbox.targeting_generation DROP CONSTRAINT IF EXISTS targeting_generation_pk_key;
-ALTER TABLE sandbox.targeting_generation ADD CONSTRAINT targeting_generation_pk_key UNIQUE (pk);
+ALTER TABLE sandbox.targeting_generation DROP CONSTRAINT IF EXISTS targeting_generation_uniq_key;
+ALTER TABLE sandbox.targeting_generation ADD CONSTRAINT targeting_generation_uniq_key UNIQUE (label);
 
 INSERT INTO sandbox.targeting_generation (pk, label, first_release)
     SELECT * FROM targeting_generation_temp ON CONFLICT DO NOTHING;
 
+# reset the sequence
+SELECT setval('sandbox.targeting_generation_pk_seq', coalesce(max(pk), 0) + 1, false) 
+FROM sandbox.targeting_generation;
 
 
 CREATE TEMPORARY TABLE IF NOT EXISTS targeting_generation_to_carton_temp (
@@ -293,6 +296,7 @@ TRUNCATE targeting_generation_to_version_temp;
 \copy targeting_generation_to_version_temp FROM 'targeting_generation_to_version.csv' WITH CSV HEADER;
 
 CREATE TABLE IF NOT EXISTS sandbox.targeting_generation_to_version (
+    pk SERIAL PRIMARY KEY NOT NULL,
     generation_pk INTEGER,
     version_pk INTEGER
 );
@@ -308,7 +312,10 @@ INSERT INTO sandbox.targeting_generation_to_version (generation_pk, version_pk)
 
 # do some test queries:
 
-sdss5db=> select c.pk,c.carton,v.plan,count(*),array_agg(tg.label),min(tg.first_release)
+sdss5db=> select c.pk,c.carton,v.plan,count(*),
+array_agg(distinct tg.label),
+array_agg(distinct tgv.plan),
+min(tg.first_release)
 from sandbox.targeting_generation_to_carton as tg2c
 join carton as c
   on tg2c.carton_pk = c.pk
@@ -316,6 +323,10 @@ join targetdb.version as v
   on c.version_pk = v.pk
 join sandbox.targeting_generation as tg
   on tg2c.generation_pk = tg.pk
+left outer join sandbox.targeting_generation_to_version as tg2v
+  on tg2c.generation_pk = tg2v.generation_pk
+left outer join targetdb.version as tgv
+  on tg2v.version_pk = tgv.pk
 where tg.first_release >= 'dr20'
 group by c.pk,c.carton,v.plan
 order by c.pk;
