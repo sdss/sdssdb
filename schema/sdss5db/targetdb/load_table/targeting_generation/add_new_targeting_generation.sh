@@ -1,11 +1,11 @@
 #!/bin/bash
 
 module load rsconfig  # this sets $RSCONFIG_DIR
-# echo $RSCONFIG_DIR;
+
 SCHEMA=sandbox
 SQLFILE="-"
 DR="dr20"
-TEMP_DIR='./'
+TEMP_DIR='.'
 
 usage ()
 {
@@ -149,9 +149,11 @@ ON c.version_pk = v.pk
 AND t.plan = v.plan 
 ON CONFLICT DO NOTHING;
 
-
 "
 
-
-printf "$Q"
-
+if [ "$SQLFILE" = "-"]; then 
+    printf "$Q"
+else
+    echo "Writing SQL commands to $SQLFILE"
+    printf "$Q" > $SQLFILE
+fi
