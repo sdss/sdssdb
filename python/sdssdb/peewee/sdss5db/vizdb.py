@@ -121,6 +121,8 @@ class Multiplex(VizBase):
     mjd = IntegerField(null=True)
     run2d = TextField(null=True)
     run1d = TextField(null=True)
+    apred_vers = TextField(null=True)
+    drpver = TextField(null=True)
     racen = DoubleField(null=True)
     deccen = DoubleField(null=True)
     racen_hms = TextField(null=True)
