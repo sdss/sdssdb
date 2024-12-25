@@ -163,6 +163,8 @@ CREATE TABLE vizdb.multiplex (
     mjd INT4,
     run2d TEXT,
     run1d TEXT,
+    apred_vers TEXT,
+    drpver TEXT,
     racen REAL NOT NULL,
     deccen REAL NOT NULL,
     racen_hms TEXT,

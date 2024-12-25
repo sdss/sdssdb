@@ -12,6 +12,7 @@ from peewee import (AutoField, BigIntegerField, BooleanField, CharField, Decimal
                     DoubleField, ForeignKeyField, FloatField, IntegerField,
                     SmallIntegerField, TextField, DateTimeField)
 from playhouse.postgres_ext import ArrayField
+from datetime import datetime
 
 from .. import BaseModel
 from . import database  # noqa
@@ -132,7 +133,7 @@ class Multiplex(VizBase):
     quality = TextField(null=True)
     programname = TextField(null=True)
     survey = TextField(null=True)
-    created = DateTimeField()
+    created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
 
 
@@ -182,7 +183,7 @@ class AllSpec(VizBase):
     specprimary = SmallIntegerField(null=True)
     specobjid_pipeline = BigIntegerField(null=True)
     specobjid = AutoField()
-    created = DateTimeField()
+    created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
 
 
