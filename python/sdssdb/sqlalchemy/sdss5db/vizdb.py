@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Double, Integer,
                         Numeric, SmallInteger, Text, text, DateTime)
 
-from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
+from sdsssqlalchemy.sdss5db import SDSS5dbBase, database
 
 
 SCHEMA = 'vizdb'
@@ -30,7 +30,7 @@ class DbMetadata(Base):
     __tablename__ = 'db_metadata'
     print_fields = ['schema', 'table_name', 'column_name', 'display_name']
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('vizdb.db_metadata_pk_seq'::regclass)"))
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('vizdb_metadata_pk_seq'::regclass)"))
     schema = Column(Text)
     table_name = Column(Text)
     column_name = Column(Text)
@@ -161,12 +161,17 @@ class Multiplex(Base):
     unique_id = Column('unique_id', Text)
     plate = Column('plate', Integer)
     field = Column('field', Integer)
+    mjd = Column('field', Integer)
     run2d = Column('run2d', Text)
     run1d = Column('run1d', Text)
+    apred_vers = Column('apred_vers', Text)
+    drpver = Column('drpver', Text)
     racen = Column('racen', Double)
-    deccem = Column('deccen', Double)
+    deccen = Column('deccen', Double)
     racen_hms = Column('racen_hms', Text)
     deccen_dms = Column('deccen_dms', Text)
+    healpix = Column('sdss_phase', Integer)
+    healpixgrp = Column('sdss_phase', SmallInteger)
     quality = Column('quality', Text)
     programname = Column('programname', Text)
     survey = Column('survey', Text)
