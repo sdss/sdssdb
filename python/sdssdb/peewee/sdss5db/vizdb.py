@@ -119,6 +119,7 @@ class Multiplex(VizBase):
     unique_id = TextField()
     plate = IntegerField(null=True)
     field = IntegerField(null=True)
+    plate_or_field = IntegerField(null=True)
     mjd = IntegerField(null=True)
     run2d = TextField(null=True)
     run1d = TextField(null=True)

@@ -161,6 +161,7 @@ class Multiplex(Base):
     unique_id = Column('unique_id', Text)
     plate = Column('plate', Integer)
     field = Column('field', Integer)
+    plate_or_field = Column('plate_or_field', Integer)
     mjd = Column('field', Integer)
     run2d = Column('run2d', Text)
     run1d = Column('run1d', Text)

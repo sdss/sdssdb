@@ -160,6 +160,7 @@ CREATE TABLE vizdb.multiplex (
     unique_id TEXT NOT NULL,
     plate INT4,
     field INT4,
+    plate_or_field INT4,
     mjd INT4,
     run2d TEXT,
     run1d TEXT,
