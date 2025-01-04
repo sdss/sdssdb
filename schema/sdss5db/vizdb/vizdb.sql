@@ -175,6 +175,7 @@ CREATE TABLE vizdb.multiplex (
     quality TEXT,
     programname TEXT,
     survey TEXT,
+    sas_url TEXT,
     created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

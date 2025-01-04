@@ -134,6 +134,7 @@ class Multiplex(VizBase):
     quality = TextField(null=True)
     programname = TextField(null=True)
     survey = TextField(null=True)
+    sas_url = TextField(null=True)
     created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
 

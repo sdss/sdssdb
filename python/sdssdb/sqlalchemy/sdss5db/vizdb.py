@@ -176,6 +176,7 @@ class Multiplex(Base):
     quality = Column('quality', Text)
     programname = Column('programname', Text)
     survey = Column('survey', Text)
+    sas_url = Column('sas_url', Text)
     created = Column('created', DateTime)
     modified = Column('modified', DateTime)
 
