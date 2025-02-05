@@ -39,7 +39,7 @@ are considering, i.e. v0.1, v0.5 and v1.0
 
 /* v0.1 targets -> where catalog.version_pk = 21 */
 INSERT INTO targetdb.revised_magnitude
-SELECT
+SELECT  
     (select max(pk) from targetdb.revised_magnitude)::INTEGER + ROW_NUMBER() over () as pk,
     c2t.pk AS carton_to_target_pk,
     g3."phot_g_mean_mag" AS gaia_g,
@@ -263,7 +263,16 @@ WHERE (c.carton ~ 'ops_std_boss' OR c.carton ~ 'ops_std_eboss')
 ;
 
 
+/* Get rid of the small number of duplicate carton_to_target_pks 
+Typically caused by stars that were binary in one version of Gaia but not another
+*/
 
+DELETE FROM sandbox.revised_magnitude2 AS rr
+USING ( SELECT carton_to_target_pk
+        FROM sandbox.revised_magnitude2
+        GROUP BY carton_to_target_pk
+        HAVING count(carton_to_target_pk) > 1 ) AS x
+WHERE rr.carton_to_target_pk = x.carton_to_target_pk;
 
 /* cluster and analyze for efficiency 
 CREATE INDEX ON targetdb.revised_magnitude(carton_to_target_pk);
