@@ -267,9 +267,9 @@ WHERE (c.carton ~ 'ops_std_boss' OR c.carton ~ 'ops_std_eboss')
 Typically caused by stars that were binary in one version of Gaia but not another
 */
 
-DELETE FROM sandbox.revised_magnitude2 AS rr
+DELETE FROM targetdb.revised_magnitude AS rr
 USING ( SELECT carton_to_target_pk
-        FROM sandbox.revised_magnitude2
+        FROM targetdb.revised_magnitude
         GROUP BY carton_to_target_pk
         HAVING count(carton_to_target_pk) > 1 ) AS x
 WHERE rr.carton_to_target_pk = x.carton_to_target_pk;
