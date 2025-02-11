@@ -374,6 +374,7 @@ class TargetingGeneration(Base):
 
     pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.targeting_generation_pk_seq'::regclass)"))
     label = Column(Text, nullable=False)
+    first_release = Column(Text, nullable=False)
 
 
 class TargetingGenerationToCarton(Base):

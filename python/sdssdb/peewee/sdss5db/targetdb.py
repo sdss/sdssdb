@@ -506,6 +506,7 @@ class AssignmentStatus(TargetdbBase):
 class TargetingGeneration(TargetdbBase):
     pk = AutoField()
     label = TextField()
+    first_release = TextField()
 
     cartons = ManyToManyField(Carton, backref='generations',
                               through_model=TargetingGenerationToCartonDeferred)
@@ -543,7 +544,7 @@ class TargetingGenerationToVersion(TargetdbBase):
                                  backref='+')
 
     class Meta:
-        table_name = 'targeting_generation_to_carton'
+        table_name = 'targeting_generation_to_version'
 
 
 # AssignmentDeferred.set_model(Assignment)
