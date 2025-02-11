@@ -506,6 +506,7 @@ class AssignmentStatus(TargetdbBase):
 class TargetingGeneration(TargetdbBase):
     pk = AutoField()
     label = TextField()
+    first_release = TextField()
 
     cartons = ManyToManyField(Carton, backref='generations',
                               through_model=TargetingGenerationToCartonDeferred)
