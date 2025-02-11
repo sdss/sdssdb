@@ -544,7 +544,7 @@ class TargetingGenerationToVersion(TargetdbBase):
                                  backref='+')
 
     class Meta:
-        table_name = 'targeting_generation_to_carton'
+        table_name = 'targeting_generation_to_version'
 
 
 # AssignmentDeferred.set_model(Assignment)
