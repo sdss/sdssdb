@@ -27,6 +27,7 @@ CREATE TABLE apogee_drp.visit (
     ASSIGNED	smallint,  --/D SDSS-V FPS robot was assigned to APOGEE
     ON_TARGET	smallint,  --/D SDSS-V FPS robot was on target
     VALID	smallint,  --/D SDSS-V target is valid to be used
+    TOO         boolean, --/D SDSS-V Target of Opportunity
     RA	double precision,  --/U deg --/D Right ascension, J2000
     DEC	double precision,  --/U deg --/D Declination, J2000
     GLON	double precision,  --/U deg --/D Galactic longitude
