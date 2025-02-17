@@ -29,6 +29,11 @@ CREATE TABLE lvmopsdb.tile (
 ALTER TABLE lvmopsdb.tile
 ADD COLUMN disabled BOOLEAN DEFAULT FALSE;
 
+CREATE TABLE lvmopsdb.disabled (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    tile_id INTEGER,
+    time_stamp TIMESTAMP);
+
 CREATE TABLE lvmopsdb.version (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT,
@@ -335,6 +340,12 @@ ALTER TABLE ONLY lvmopsdb.guider_coadd
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY lvmopsdb.disabled
+    ADD CONSTRAINT disabled_tile_id_fk
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
 INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
     (5, 'Calib'), (6, 'Dark'), (7, 'Sky');
@@ -370,6 +381,7 @@ CLUSTER sky_qc3_index ON lvmopsdb.sky;
 CREATE INDEX CONCURRENTLY standard_qc3_index
     ON lvmopsdb.standard
     (q3c_ang2ipix(ra, dec));
+
 
 CREATE INDEX ON lvmopsdb.ln2_fill (action);
 CREATE INDEX ON lvmopsdb.ln2_fill (start_time);

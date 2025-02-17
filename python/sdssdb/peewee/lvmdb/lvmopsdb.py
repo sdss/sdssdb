@@ -66,6 +66,17 @@ class Tile(LVMOpsBase):
         table_name = 'tile'
 
 
+class Disabled(LVMOpsBase):
+    pk = AutoField()
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
+                           model=Tile, backref='disabled')
+    time_stamp = DateTimeField(default=datetime.datetime.now())
+
+    class Meta:
+        table_name = 'dither'
+
+
 class Dither(LVMOpsBase):
     pk = AutoField()
     tile = ForeignKeyField(column_name='tile_id',
