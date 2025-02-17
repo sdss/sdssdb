@@ -74,7 +74,7 @@ class Disabled(LVMOpsBase):
     time_stamp = DateTimeField(default=datetime.datetime.now())
 
     class Meta:
-        table_name = 'dither'
+        table_name = 'disabled'
 
 
 class Dither(LVMOpsBase):
