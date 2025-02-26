@@ -32,7 +32,8 @@ ADD COLUMN disabled BOOLEAN DEFAULT FALSE;
 CREATE TABLE lvmopsdb.disabled (
     pk SERIAL PRIMARY KEY NOT NULL,
     tile_id INTEGER,
-    time_stamp TIMESTAMP);
+    time_stamp TIMESTAMP,
+    note TEXT);
 
 CREATE TABLE lvmopsdb.version (
     pk SERIAL PRIMARY KEY NOT NULL,

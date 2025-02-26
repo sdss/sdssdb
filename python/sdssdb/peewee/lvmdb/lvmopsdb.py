@@ -72,6 +72,7 @@ class Disabled(LVMOpsBase):
                            field='tile_id',
                            model=Tile, backref='disabled')
     time_stamp = DateTimeField(default=datetime.datetime.now())
+    note = TextField(null=True)
 
     class Meta:
         table_name = 'disabled'
