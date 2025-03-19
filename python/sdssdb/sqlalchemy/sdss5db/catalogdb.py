@@ -10165,6 +10165,7 @@ class ToO_Target(Base):
     sdss_id = Column(Integer)
     gaia_dr3_source_id = Column(Integer)
     twomass_pts_key = Column(Integer)
+    program = Column(String(20))
     ra = Column(Float)
     dec = Column(Float)
     pmra = Column(Float)
