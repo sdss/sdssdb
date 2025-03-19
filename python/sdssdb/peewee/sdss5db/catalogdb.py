@@ -12,7 +12,6 @@ from peewee import (
     BigIntegerField,
     BooleanField,
     CharField,
-    DateTimeField,
     DeferredThroughModel,
     DoubleField,
     FixedCharField,
