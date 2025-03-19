@@ -12,6 +12,7 @@ from peewee import (
     BigIntegerField,
     BooleanField,
     CharField,
+    DateTimeField,
     DeferredThroughModel,
     DoubleField,
     FixedCharField,
@@ -2320,6 +2321,7 @@ class ToO_Target(CatalogdbModel):
     sdss_id = IntegerField()
     gaia_dr3_source_id = IntegerField()
     twomass_pts_key = IntegerField()
+    program = TextField()
     ra = DoubleField()
     dec = DoubleField()
     pmra = FloatField()

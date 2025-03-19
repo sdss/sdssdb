@@ -5,6 +5,20 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.13.2 <2025-03-19>`
+* :feature:`275` Update ``boss_drp.json``.
+* :feature:`276` ``targetdb.targeting_generation_to_version``: add ``pk``.
+* :feature:`277` Add ``sn2_15`` column.
+* :feature:`278` Tg theta 1.
+* :feature:`279` ``targetdb.targeting_generation_to_carton``: edit constraint ``targeting_generation_to_carton_uniq_key``.
+* :feature:`280` Edit ``sdss_dr17_specobj*.sql`` files.
+* Add ``dark_monit_1x4`` cadence.
+* Update ``update_specprimary.sql``.
+* Update bright BOSS cadences.
+* Add several grant permissions to ``sdss_user`` in ``lvmdb``.
+* Rename ``ln2_fill.done`` to ``ln2_fill.complete``.
+* Added column ``program`` to ``too_target``.
+
 * :release:`0.13.1 <2024-09-30>`
 * :feature:`274` Adding code to create ``catalogdb.sdss_id_to_catalog`` table.
 * :feature:`272` Update tables and models for new ``vizdb.sdssid_to_pipes`` schema.
