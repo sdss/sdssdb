@@ -29,12 +29,14 @@ WITH DATA;
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(sdss_id);
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(catalogid);
+CREATE INDEX CONCURRENTLY on vizdb.sdss_id_flat USING btree (sdss_id, catalogid);
 CREATE INDEX CONCURRENTLY on vizdb.sdss_id_flat (q3c_ang2ipix(ra_sdss_id, dec_sdss_id));
 CREATE INDEX sdss_id_flat_radeccat_q3c_ang2ipix_idx on vizdb.sdss_id_flat (q3c_ang2ipix(ra_catalogid, dec_catalogid));
 CLUSTER sdss_id_flat_q3c_ang2ipix_idx ON vizdb.sdss_id_flat;
 ANALYZE vizdb.sdss_id_flat;
 
-
+-- this view creates duplicate rows for sdss_ids based on the number of apogee and boss visit spectra
+-- the mjd column is the date of observation
 CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes AS
 SELECT row_number() over(order by s.sdss_id) as pk, s.sdss_id,
        (b.sdss_id IS NOT NULL) AS in_boss,
