@@ -161,7 +161,18 @@ CREATE TABLE opsdb.pred_snr_par (
     value_i BIGINT,
     value_s TEXT);
 
+CREATE TABLE opsdb.lst_hist(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    field_pk INTEGER,
+    lst_counts INTEGER[][]);
+
 -- Foreign keys
+
+ALTER TABLE ONLY opsdb.lst_hist
+    ADD CONSTRAINT lst_field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.base_priority
     ADD CONSTRAINT field_fk

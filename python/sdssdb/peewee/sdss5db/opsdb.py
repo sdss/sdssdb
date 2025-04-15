@@ -184,7 +184,6 @@ class CameraFrame(OpsdbBase):
                              field='pk',
                              model=Camera)
     ql_sn2 = FloatField()
-    sn2_15 = FloatField()
     sn2 = FloatField()
     comment = TextField(null=True)
     pk = AutoField()
@@ -392,6 +391,17 @@ class PredSnrPar(OpsdbBase):
 
     class Meta:
         table_name = 'pred_snr_par'
+
+
+class LstHist(OpsdbBase):
+    pk = AutoField()
+    field = ForeignKeyField(targetdb.Field,
+                            column_name='field_pk',
+                            field='pk')
+    lst_counts = ArrayField(field_class=IntegerField, null=True)
+
+    class Meta:
+        table_name = 'lst_hist'
 
 
 FieldToPriorityDeferred.set_model(FieldToPriority)
