@@ -116,7 +116,6 @@ CREATE TABLE vizdb.allspec (
     fiberid INT2,
     plate INT4,
     fps_field INT4,
-    fps_field INT4,
     plate_or_fps_field INT4,
     run2d TEXT,
     run1d TEXT,
