@@ -463,10 +463,19 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "field",
-      "display_name": "Field",
+      "column_name": "plate_or_fps_field",
+      "display_name": "Plate/FPS Field",
       "sql_type": "integer",
-      "description": "BHM Field (post Plate era)",
+      "description": "Plate or FPS Field (merges pre and post Plate era)",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "fps_field",
+      "display_name": "FPS Field",
+      "sql_type": "integer",
+      "description": "FPS Field (post Plate era)",
       "unit": "None"
     },
     {
@@ -508,10 +517,28 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "programname",
-      "display_name": "programname",
+      "column_name": "apred_vers",
+      "display_name": "apred_vers",
       "sql_type": "text",
-      "description": "Program Name",
+      "description": "APOGEE DRP Version",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "drpver",
+      "display_name": "DRP version",
+      "sql_type": "text",
+      "description": "MaNGA (for e.g.) DRP Version",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "version",
+      "display_name": "Version",
+      "sql_type": "text",
+      "description": "All Pipeline Version",
       "unit": "None"
     },
     {
@@ -521,6 +548,24 @@
       "display_name": "survey",
       "sql_type": "text",
       "description": "Program Name",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "cas_url",
+      "display_name": "CAS URL",
+      "sql_type": "text",
+      "description": "CAS URL",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "sas_url",
+      "display_name": "SAS URL",
+      "sql_type": "text",
+      "description": "SAS URL",
       "unit": "None"
     },
     {
