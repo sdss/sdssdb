@@ -117,6 +117,7 @@ CREATE TABLE vizdb.allspec (
     plate INT4,
     fps_field INT4,
     plate_or_fps_field INT4,
+    mjd INT4,
     run2d TEXT,
     run1d TEXT,
     coadd TEXT,
