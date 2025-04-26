@@ -369,6 +369,7 @@ class SpecObj(VizBase):
     mjd = IntegerField()
     plate = SmallIntegerField()
     fiberid = SmallIntegerField()
+    ifudsgn = SmallIntegerField()
     run1d = CharField(max_length=32)
     run2d = CharField(max_length=32)
     tile = IntegerField()

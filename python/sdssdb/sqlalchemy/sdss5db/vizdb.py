@@ -112,6 +112,7 @@ class AllSpec(Base):
     sdss_id = Column('sdss_id', BigInteger)
     catalogid = Column('catalogid', BigInteger)
     fiberid = Column('fiberid', Integer)
+    ifudsgn = Column('ifudsgn', Integer)
     plate = Column('plate', Integer)
     fps_field = Column('fps_field', Integer)
     plate_or_fps_field = Column('plate_or_fps_field', Integer)

@@ -454,6 +454,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "ifudsgn",
+      "display_name": "ifudsgn",
+      "sql_type": "smallint",
+      "description": "MaNGA IFU DESIGN ID",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "plate",
       "display_name": "plate",
       "sql_type": "integer",
