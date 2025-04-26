@@ -145,7 +145,7 @@ class AllSpec(Base):
     zwarning_noqso = Column('zwarning_noqso', Integer)
     znum_noqso = Column('znum_noqso', Integer)
     specprimary = Column('specprimary', SmallInteger)
-    specobjid_pipeline = Column('specobjid_pipeline', BigInteger)
+    mangaid = Column('mangaid', Text)
     specobjid = Column('specobjid', Numeric(29))
     created = Column('created', DateTime)
     modified = Column('modified', DateTime)

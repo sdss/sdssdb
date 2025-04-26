@@ -147,7 +147,7 @@ CREATE TABLE vizdb.allspec (
     zwarning_noqso INT4,
     znum_noqso INT4,
     specprimary INT2,
-    specobjid_pipeline INT8,
+    mangaid TEXT,
     specobjid NUMERIC(29),
     created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()

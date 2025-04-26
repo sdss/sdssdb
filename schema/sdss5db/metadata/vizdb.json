@@ -724,6 +724,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "mangaid",
+      "display_name": "mangaid",
+      "sql_type": "text",
+      "description": "MaNGA ID",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "specobjid",
       "display_name": "specObj ID",
       "sql_type": "numeric[29]",
