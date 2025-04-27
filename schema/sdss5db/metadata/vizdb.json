@@ -394,7 +394,7 @@
       "column_name": "pk",
       "display_name": "PK",
       "sql_type": "integer",
-      "description": "primary key",
+      "description": "(Internal) database table primary key",
       "unit": ""
     },
     {
