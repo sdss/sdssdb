@@ -733,6 +733,33 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "apogee_id",
+      "display_name": "apogee_id",
+      "sql_type": "text",
+      "description": "APOGEE ID",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "visit_id",
+      "display_name": "visit_id",
+      "sql_type": "text",
+      "description": "APOGEE VISIT ID",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "apstar_id",
+      "display_name": "apstar_id",
+      "sql_type": "text",
+      "description": "APOGEE Combined Star ID",
+      "unit": "None"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "specobjid",
       "display_name": "specObj ID",
       "sql_type": "numeric[29]",
