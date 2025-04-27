@@ -400,6 +400,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "sdss_phase",
+      "display_name": "sdss_phase",
+      "sql_type": "text",
+      "description": "SDSS Phase from 1 to 5",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "observatory",
       "display_name": "observatory",
       "sql_type": "text",
@@ -553,10 +562,19 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "programname",
+      "display_name": "programname",
+      "sql_type": "text",
+      "description": "Spectroscopic program Name",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "survey",
       "display_name": "survey",
       "sql_type": "text",
-      "description": "Program Name",
+      "description": "Spectroscopic survey or sub-survey",
       "unit": ""
     },
     {
@@ -697,6 +715,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "z_noqso",
+      "display_name": "z_noqso",
+      "sql_type": "real",
+      "description": "redshift (NOQSO)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "z_err_noqso",
       "display_name": "z_err_noqso",
       "sql_type": "real",
@@ -719,6 +746,15 @@
       "display_name": "znum_noqso",
       "sql_type": "integer",
       "description": "ZNUM (NOQSO)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "specprimary",
+      "display_name": "specprimary",
+      "sql_type": "text",
+      "description": "Primary Spectrum Flag",
       "unit": ""
     },
     {
