@@ -7,7 +7,7 @@
       "display_name": "CatalogID 21",
       "sql_type": "bigint",
       "description": "Catalog id for v0.1 cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -16,7 +16,7 @@
       "display_name": "CatalogID 25",
       "sql_type": "bigint",
       "description": "Catalog id for v0.5 cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -25,7 +25,7 @@
       "display_name": "CatalogID 31",
       "sql_type": "bigint",
       "description": "Catalog id for v1 cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -52,7 +52,7 @@
       "display_name": "SDSS ID",
       "sql_type": "bigint",
       "description": "The common, unifiying, SDSS ID of an on-sky object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -61,7 +61,7 @@
       "display_name": "SDSS ID",
       "sql_type": "bigint",
       "description": "The common, unifiying, SDSS ID of an on-sky object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -70,7 +70,7 @@
       "display_name": "Catalog ID",
       "sql_type": "bigint",
       "description": "catalog ID of an object in a given cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -79,7 +79,7 @@
       "display_name": "Version ID",
       "sql_type": "smallint",
       "description": "The version number of the cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -106,7 +106,7 @@
       "display_name": "N_Associated",
       "sql_type": "smallint",
       "description": "Total number of sdss_ids associated with that catalogid.  Proxy for the trustworthiness/uniqueness of the sdss_id process for that source.",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -133,7 +133,7 @@
       "display_name": "PK",
       "sql_type": "bigint",
       "description": "Primary Key of the sdss_id_flat table",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -142,7 +142,7 @@
       "display_name": "PK",
       "sql_type": "integer",
       "description": "Primary key of the db_metadata table",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -151,7 +151,7 @@
       "display_name": "Schema",
       "sql_type": "text",
       "description": "The database schema name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -160,7 +160,7 @@
       "display_name": "Table Name",
       "sql_type": "text",
       "description": "The database table name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -169,7 +169,7 @@
       "display_name": "Column Name",
       "sql_type": "text",
       "description": "The database column name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -178,7 +178,7 @@
       "display_name": "Display Name",
       "sql_type": "text",
       "description": "A more user-friedly, human-readable name for the database column",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -187,7 +187,7 @@
       "display_name": "Description",
       "sql_type": "text",
       "description": "A description of the database column",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -196,7 +196,7 @@
       "display_name": "Unit",
       "sql_type": "text",
       "description": "The physical unit if any of the database column",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -205,7 +205,7 @@
       "display_name": "SQL Type",
       "sql_type": "text",
       "description": "The data type of the database column",
-      "unit": "None"
+      "unit": ""
     },
 
     {
@@ -215,7 +215,7 @@
       "display_name": "PK",
       "sql_type": "integer",
       "description": "Primary key of the sdssid_to_pipes table",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -224,7 +224,7 @@
       "display_name": "SDSS ID",
       "sql_type": "bigint",
       "description": "The common, unifiying, SDSS ID of an on-sky object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -233,7 +233,7 @@
       "display_name": "In BOSS",
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id is in the boss reduction tables",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -242,7 +242,7 @@
       "display_name": "In APOGEE",
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id is in the apogee reduction tables",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -251,7 +251,7 @@
       "display_name": "In APOGEE",
       "sql_type": "boolean",
       "description": "Flag indicating if the sdss_id is in the astra reduction tables",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -260,7 +260,7 @@
       "display_name": "Data Release",
       "sql_type": "text",
       "description": "The SDSS Data Release",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -269,7 +269,7 @@
       "display_name": "Run2D",
       "sql_type": "text",
       "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -278,7 +278,7 @@
       "display_name": "Run1D",
       "sql_type": "text",
       "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -287,7 +287,7 @@
       "display_name": "Apred Version",
       "sql_type": "text",
       "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -296,7 +296,7 @@
       "display_name": "Astra Version",
       "sql_type": "text",
       "description": "Software tag for the MWM Astra pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -305,7 +305,7 @@
       "display_name": "Speccomp Version",
       "sql_type": "text",
       "description": "Software tag for the EFEDS VAC",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -314,7 +314,7 @@
       "display_name": "MOS Target Version",
       "sql_type": "text",
       "description": "Software tag for the MOS targeting catalogs",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -323,7 +323,7 @@
       "display_name": "DRP Version",
       "sql_type": "text",
       "description": "Software tag for the MaNGA data reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -332,7 +332,7 @@
       "display_name": "DAP Version",
       "sql_type": "text",
       "description": "Software tag for the MaNGA data analysis pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -341,7 +341,7 @@
       "display_name": "Apstar Version",
       "sql_type": "text",
       "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -350,7 +350,7 @@
       "display_name": "ASPCAP Version",
       "sql_type": "text",
       "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -359,7 +359,7 @@
       "display_name": "Results Version",
       "sql_type": "text",
       "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -368,7 +368,7 @@
       "display_name": "Public",
       "sql_type": "text",
       "description": "Flag if the data release is public or not",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -377,7 +377,7 @@
       "display_name": "Releases Table PK",
       "sql_type": "integer",
       "description": "join to the pk of the vizdb.releases table",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -386,7 +386,7 @@
       "display_name": "BOSS Spectrum ID",
       "sql_type": "integer",
       "description": "join to boss_drp.boss_spectrum table for summary info from idlspec2d spAll",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -395,7 +395,7 @@
       "display_name": "PK",
       "sql_type": "integer",
       "description": "primary key",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -404,7 +404,7 @@
       "display_name": "observatory",
       "sql_type": "text",
       "description": "observatory",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -413,7 +413,7 @@
       "display_name": "instrument",
       "sql_type": "text",
       "description": "instrument",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -422,7 +422,7 @@
       "display_name": "Unique ID",
       "sql_type": "text",
       "description": "temporary ID to check for uniqueness",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -431,7 +431,7 @@
       "display_name": "sdss_id",
       "sql_type": "bigint",
       "description": "sdss_id",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -440,7 +440,7 @@
       "display_name": "catalogid",
       "sql_type": "integer",
       "description": "BHM catalogid",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -449,7 +449,7 @@
       "display_name": "fiberid",
       "sql_type": "smallint",
       "description": "SDSS/BOSS/eBOSS fiberid",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -458,7 +458,7 @@
       "display_name": "ifudsgn",
       "sql_type": "smallint",
       "description": "MaNGA IFU DESIGN ID",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -467,7 +467,7 @@
       "display_name": "plate",
       "sql_type": "integer",
       "description": "SDSS/BOSS/eBOSS/BHM plate (before FPS era)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -476,7 +476,7 @@
       "display_name": "Plate/FPS Field",
       "sql_type": "integer",
       "description": "Plate or FPS Field (merges pre and post Plate era)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -485,7 +485,7 @@
       "display_name": "FPS Field",
       "sql_type": "integer",
       "description": "FPS Field (post Plate era)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -494,7 +494,7 @@
       "display_name": "MJD",
       "sql_type": "integer",
       "description": "MJD",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -503,7 +503,7 @@
       "display_name": "run2d",
       "sql_type": "text",
       "description": "idlspec2d version",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -512,7 +512,7 @@
       "display_name": "run1d",
       "sql_type": "text",
       "description": "idlspec1d version",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -521,7 +521,7 @@
       "display_name": "coadd",
       "sql_type": "text",
       "description": "either epoch, daily, or custom (allepoch for IPL-3)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -530,7 +530,7 @@
       "display_name": "apred_vers",
       "sql_type": "text",
       "description": "APOGEE DRP Version",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -539,7 +539,7 @@
       "display_name": "DRP version",
       "sql_type": "text",
       "description": "MaNGA (for e.g.) DRP Version",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -548,7 +548,7 @@
       "display_name": "Version",
       "sql_type": "text",
       "description": "All Pipeline Version",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -557,7 +557,7 @@
       "display_name": "survey",
       "sql_type": "text",
       "description": "Program Name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -566,7 +566,7 @@
       "display_name": "CAS URL",
       "sql_type": "text",
       "description": "CAS URL",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -575,7 +575,7 @@
       "display_name": "SAS URL",
       "sql_type": "text",
       "description": "SAS URL",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -584,7 +584,7 @@
       "display_name": "ra",
       "sql_type": "double precision",
       "description": "Right ascension",
-      "unit": "degrees"
+      "unit": "deg"
     },
     {
       "schema": "vizdb",
@@ -593,7 +593,7 @@
       "display_name": "dec",
       "sql_type": "double precision",
       "description": "Declination",
-      "unit": "degrees"
+      "unit": "deg"
     },
     {
       "schema": "vizdb",
@@ -638,7 +638,7 @@
       "display_name": "objclass",
       "sql_type": "text",
       "description": "Class of object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -647,7 +647,7 @@
       "display_name": "subclass",
       "sql_type": "text",
       "description": "Subclass of object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -656,7 +656,7 @@
       "display_name": "z",
       "sql_type": "real",
       "description": "redshift",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -665,7 +665,7 @@
       "display_name": "zwarning",
       "sql_type": "integer",
       "description": "ZWARNING FLAG",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -674,7 +674,7 @@
       "display_name": "z_err",
       "sql_type": "real",
       "description": "redshift error",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -683,7 +683,7 @@
       "display_name": "class_noqso",
       "sql_type": "text",
       "description": "Class of object (NOQSO)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -692,7 +692,7 @@
       "display_name": "subclass_noqso",
       "sql_type": "text",
       "description": "Subclass of object (NOQSO)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -701,7 +701,7 @@
       "display_name": "z_err_noqso",
       "sql_type": "real",
       "description": "redshift error (NOQSO)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -710,7 +710,7 @@
       "display_name": "zwarning_noqso",
       "sql_type": "integer",
       "description": "ZWARNING FLAG (NOQSO)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -719,7 +719,7 @@
       "display_name": "znum_noqso",
       "sql_type": "integer",
       "description": "ZNUM (NOQSO)",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -728,7 +728,7 @@
       "display_name": "mangaid",
       "sql_type": "text",
       "description": "MaNGA ID",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -737,7 +737,7 @@
       "display_name": "apogee_id",
       "sql_type": "text",
       "description": "APOGEE ID",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -746,7 +746,7 @@
       "display_name": "visit_id",
       "sql_type": "text",
       "description": "APOGEE VISIT ID",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -755,7 +755,7 @@
       "display_name": "apstar_id",
       "sql_type": "text",
       "description": "APOGEE Combined Star ID",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -764,7 +764,7 @@
       "display_name": "specObj ID",
       "sql_type": "numeric[29]",
       "description": "sdss/boss spectrograph reduction id from idlspec2d",
-      "unit": "None"
+      "unit": ""
     }
   ]
 }
