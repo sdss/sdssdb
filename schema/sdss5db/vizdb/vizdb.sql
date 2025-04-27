@@ -148,6 +148,9 @@ CREATE TABLE vizdb.allspec (
     znum_noqso INT4,
     specprimary INT2,
     mangaid TEXT,
+    apogee_id TEXT,
+    visit_id TEXT,
+    apstar_id TEXT,
     specobjid NUMERIC(29),
     created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
