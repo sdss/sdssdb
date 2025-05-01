@@ -799,7 +799,7 @@
       "column_name": "specobjid",
       "display_name": "specObj ID",
       "sql_type": "numeric[29]",
-      "description": "sdss/boss spectrograph reduction id from idlspec2d",
+      "description": "spectroscopic visit id",
       "unit": ""
     }
   ]
