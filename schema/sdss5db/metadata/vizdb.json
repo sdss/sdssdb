@@ -484,7 +484,7 @@
       "column_name": "plate_or_fps_field",
       "display_name": "Plate/FPS Field",
       "sql_type": "integer",
-      "description": "Plate or FPS Field (merges pre and post Plate era)",
+      "description": "Plate or FPS Field (merges pre/post Plate era)",
       "unit": ""
     },
     {
@@ -529,7 +529,7 @@
       "column_name": "coadd",
       "display_name": "coadd",
       "sql_type": "text",
-      "description": "either epoch, daily, or custom (allepoch for IPL-3)",
+      "description": "either epoch, daily, or custom=allepoch",
       "unit": ""
     },
     {
