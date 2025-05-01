@@ -906,7 +906,7 @@
       "column_name": "drpver",
       "display_name": "drpver",
       "sql_type": "TEXT",
-      "description": "Software tag for the MaNGA data reduction pipeline",
+      "description": "MaNGA (for e.g.) DRP Version",
       "unit": ""
     },
     {
