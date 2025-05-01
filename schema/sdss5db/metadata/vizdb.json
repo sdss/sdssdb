@@ -207,7 +207,6 @@
       "description": "The data type of the database column",
       "unit": ""
     },
-
     {
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
@@ -800,6 +799,213 @@
       "display_name": "specObj ID",
       "sql_type": "numeric[29]",
       "description": "spectroscopic visit id",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "design_id",
+      "display_name": "design_id",
+      "sql_type": "INT",
+      "description": "design_id",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "sdss_phase",
+      "display_name": "sdss_phase",
+      "sql_type": "SMALLINT",
+      "description": "SDSS Phase from 1 to 5",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "observatory",
+      "display_name": "observatory",
+      "sql_type": "TEXT",
+      "description": "observatory",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "instrument",
+      "display_name": "instrument",
+      "sql_type": "TEXT",
+      "description": "instrument",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "unique_id",
+      "display_name": "unique_id",
+      "sql_type": "TEXT",
+      "description": "temporary ID to check for uniqueness",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "plate",
+      "display_name": "plate",
+      "sql_type": "INT",
+      "description": "SDSS/BOSS/eBOSS/BHM plate (before FPS era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "fps_field",
+      "display_name": "Plate/FPS Field",
+      "sql_type": "INT",
+      "description": "Plate or FPS Field (merges pre/post Plate era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "plate_or_fps_field",
+      "display_name": "Plate/FPS Field",
+      "sql_type": "INT",
+      "description": "Plate or FPS Field (merges pre/post Plate era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "mjd",
+      "display_name": "mjd",
+      "sql_type": "INT",
+      "description": "MJD",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "run2d",
+      "display_name": "run2d",
+      "sql_type": "TEXT",
+      "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "apred_vers",
+      "display_name": "apred_vers",
+      "sql_type": "TEXT",
+      "description": "APOGEE DRP Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "drpver",
+      "display_name": "drpver",
+      "sql_type": "TEXT",
+      "description": "Software tag for the MaNGA data reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "version",
+      "display_name": "Version",
+      "sql_type": "TEXT",
+      "description": "All Pipeline Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "racen",
+      "display_name": "racen",
+      "sql_type": "DOUBLE",
+      "description": "Multiplex center's right ascension",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "deccen",
+      "display_name": "deccen",
+      "sql_type": "DOUBLE",
+      "description": "Multiplex center's declination",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "position_angle",
+      "display_name": "position_angle",
+      "sql_type": "DOUBLE",
+      "description": "Multiplex position angle",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "healpix",
+      "display_name": "healpix",
+      "sql_type": "INT",
+      "description": "healpix",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "healpixgrp",
+      "display_name": "healpixgrp",
+      "sql_type": "SMALLINT",
+      "description": "healpixgrp",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "quality",
+      "display_name": "quality",
+      "sql_type": "TEXT",
+      "description": "Quality flag for spectroscopic reduction",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "programname",
+      "display_name": "programname",
+      "sql_type": "TEXT",
+      "description": "Spectroscopic program Name",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "survey",
+      "display_name": "survey",
+      "sql_type": "TEXT",
+      "description": "Spectroscopic survey or sub-survey",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "cas_url",
+      "display_name": "cas_url",
+      "sql_type": "TEXT",
+      "description": "CAS URL",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "sas_url",
+      "display_name": "sas_url",
+      "sql_type": "TEXT",
+      "description": "SAS URL",
       "unit": ""
     }
   ]
