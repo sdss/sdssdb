@@ -888,7 +888,7 @@
       "column_name": "run2d",
       "display_name": "run2d",
       "sql_type": "TEXT",
-      "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
+      "description": "idlspec2d version",
       "unit": ""
     },
     {
