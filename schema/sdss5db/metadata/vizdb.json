@@ -777,19 +777,19 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "visit_id",
-      "display_name": "visit_id",
+      "column_name": "telescope",
+      "display_name": "telescope",
       "sql_type": "text",
-      "description": "APOGEE VISIT ID",
+      "description": "2.5m Telescope",
       "unit": ""
     },
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "apstar_id",
-      "display_name": "apstar_id",
+      "column_name": "file_spec",
+      "display_name": "file_spec",
       "sql_type": "text",
-      "description": "APOGEE Combined Star ID",
+      "description": "sdss_access file species name",
       "unit": ""
     },
     {
@@ -798,7 +798,7 @@
       "column_name": "specobjid",
       "display_name": "specObj ID",
       "sql_type": "numeric[29]",
-      "description": "spectroscopic visit id",
+      "description": "spectroscopic object id",
       "unit": ""
     },
     {
