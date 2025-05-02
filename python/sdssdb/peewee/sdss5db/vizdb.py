@@ -192,6 +192,7 @@ class AllSpec(VizBase):
     znum_noqso = IntegerField(null=True)
     specprimary = SmallIntegerField(null=True)
     apogee_id = TextField(null=True)
+    apogee_field = TextField(null=True)
     telescope = TextField(null=True)
     file_spec = TextField(null=True)
     mangaid = TextField(null=True)

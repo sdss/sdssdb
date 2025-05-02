@@ -114,7 +114,7 @@ CREATE TABLE vizdb.allspec (
     sdss_id INT8,
     catalogid INT8,
     fiberid INT2,
-    ifudsgn IN2
+    ifudsgn INT2
     plate INT4,
     fps_field INT4,
     plate_or_fps_field INT4,
@@ -147,10 +147,11 @@ CREATE TABLE vizdb.allspec (
     zwarning_noqso INT4,
     znum_noqso INT4,
     specprimary INT2,
-    mangaid TEXT,
     apogee_id TEXT,
-    visit_id TEXT,
-    apstar_id TEXT,
+    apogee_field TEXT,
+    telescope TEXT,
+    mangaid TEXT,
+    file_spec TEXT,
     specobjid NUMERIC(29),
     created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()

@@ -146,6 +146,7 @@ class AllSpec(Base):
     znum_noqso = Column('znum_noqso', Integer)
     specprimary = Column('specprimary', SmallInteger)
     apogee_id = Column('apogee_id', Text)
+    apogee_field = Column('apogee_field', Text)
     telescope = Column('telescope', Text)
     file_spec = Column('file_spec', Text)
     mangaid = Column('mangaid', Text)
