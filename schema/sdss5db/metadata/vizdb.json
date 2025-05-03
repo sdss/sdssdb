@@ -381,15 +381,6 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "boss_spectrum_id",
-      "display_name": "BOSS Spectrum ID",
-      "sql_type": "integer",
-      "description": "join to boss_drp.boss_spectrum table for summary info from idlspec2d spAll",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
       "column_name": "pk",
       "display_name": "PK",
       "sql_type": "integer",
@@ -646,114 +637,6 @@
       "display_name": "healpixgrp",
       "sql_type": "smallint",
       "description": "healpixgrp",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "objclass",
-      "display_name": "objclass",
-      "sql_type": "text",
-      "description": "Class of object",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "subclass",
-      "display_name": "subclass",
-      "sql_type": "text",
-      "description": "Subclass of object",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "z",
-      "display_name": "z",
-      "sql_type": "real",
-      "description": "redshift",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "zwarning",
-      "display_name": "zwarning",
-      "sql_type": "integer",
-      "description": "ZWARNING FLAG",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "z_err",
-      "display_name": "z_err",
-      "sql_type": "real",
-      "description": "redshift error",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "class_noqso",
-      "display_name": "class_noqso",
-      "sql_type": "text",
-      "description": "Class of object (NOQSO)",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "subclass_noqso",
-      "display_name": "subclass_noqso",
-      "sql_type": "text",
-      "description": "Subclass of object (NOQSO)",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "z_noqso",
-      "display_name": "z_noqso",
-      "sql_type": "real",
-      "description": "redshift (NOQSO)",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "z_err_noqso",
-      "display_name": "z_err_noqso",
-      "sql_type": "real",
-      "description": "redshift error (NOQSO)",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "zwarning_noqso",
-      "display_name": "zwarning_noqso",
-      "sql_type": "integer",
-      "description": "ZWARNING FLAG (NOQSO)",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "znum_noqso",
-      "display_name": "znum_noqso",
-      "sql_type": "integer",
-      "description": "ZNUM (NOQSO)",
-      "unit": ""
-    },
-    {
-      "schema": "vizdb",
-      "table_name": "allspec",
-      "column_name": "specprimary",
-      "display_name": "specprimary",
-      "sql_type": "text",
-      "description": "Primary Spectrum Flag",
       "unit": ""
     },
     {
