@@ -195,6 +195,8 @@ class AllSpec(VizBase):
     apogee_field = TextField(null=True)
     telescope = TextField(null=True)
     file_spec = TextField(null=True)
+    apstar_id = TextField(null=True)
+    visit_id = TextField(null=True)
     mangaid = TextField(null=True)
     specobjid = AutoField()
     created = DateTimeField(default=datetime.now)

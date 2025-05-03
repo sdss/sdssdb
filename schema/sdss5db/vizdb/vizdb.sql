@@ -150,6 +150,8 @@ CREATE TABLE vizdb.allspec (
     apogee_id TEXT,
     apogee_field TEXT,
     telescope TEXT,
+    apstar_id TEXT,
+    visit_id TEXT,
     mangaid TEXT,
     file_spec TEXT,
     specobjid NUMERIC(29),

@@ -759,6 +759,24 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "apstar_id",
+      "display_name": "apstar_id",
+      "sql_type": "text",
+      "description": "APOGEE (combined) star ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "visit_id",
+      "display_name": "visit_id",
+      "sql_type": "text",
+      "description": "APOGEE visit ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "mangaid",
       "display_name": "mangaid",
       "sql_type": "text",

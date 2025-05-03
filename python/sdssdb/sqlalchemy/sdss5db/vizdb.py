@@ -149,6 +149,8 @@ class AllSpec(Base):
     apogee_field = Column('apogee_field', Text)
     telescope = Column('telescope', Text)
     file_spec = Column('file_spec', Text)
+    apstar_id = Column('apstar_id', Text)
+    visit_id = Column('visit_id', Text)
     mangaid = Column('mangaid', Text)
     specobjid = Column('specobjid', Numeric(29))
     created = Column('created', DateTime)
