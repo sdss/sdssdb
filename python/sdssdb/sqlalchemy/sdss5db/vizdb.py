@@ -101,14 +101,14 @@ class Releases(Base):
     
 class AllSpec(Base):
     __tablename__ = 'allspec'
-    print_fields = ['unique_id', 'sdss_id', 'field', 'mjd', 'coadd', 'specobjid']
+    print_fields = ['allspec_id']
     pk = Column('pk', Integer, primary_key=True)
+    allspec_id = Column('allspec_id', Text)
     releases_pk = Column('releases_pk', Integer)
     boss_spectrum_id = Column('boss_spectrum_id', Integer)
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
     instrument = Column('instrument', Text)
-    unique_id = Column('unique_id', Text)
     sdss_id = Column('sdss_id', BigInteger)
     catalogid = Column('catalogid', BigInteger)
     fiberid = Column('fiberid', Integer)
@@ -163,14 +163,14 @@ def define_relations():
 
 class Multiplex(Base):
     __tablename__ = 'multiplex'
-    print_fields = ['plate', 'field']
+    print_fields = ['mutliplex_id']
     pk = Column('pk', Integer, primary_key=True)
+    multiplex_id = Column('multiplex_id', Text)
     releases_pk = Column('releases_pk', Integer)
     design_id = Column('design_id', Integer)
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
     instrument = Column('instrument', Text)
-    unique_id = Column('unique_id', Text)
     plate = Column('plate', Integer)
     fps_field = Column('fps_field', Integer)
     plate_or_fps_field = Column('plate_or_fps_field', Integer)

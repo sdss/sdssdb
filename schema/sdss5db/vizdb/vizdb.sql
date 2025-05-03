@@ -105,12 +105,12 @@ CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
 
 CREATE TABLE vizdb.allspec (
     pk SERIAL PRIMARY KEY NOT NULL,
+    allspec_id TEXT NOT NULL,
     releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
     boss_spectrum_id INTEGER REFERENCES boss_drp.boss_spectrum(id),
     sdss_phase INT2 NOT NULL,
     observatory TEXT,
     instrument TEXT,
-    unique_id TEXT NOT NULL,
     sdss_id INT8,
     catalogid INT8,
     fiberid INT2,
@@ -159,17 +159,17 @@ CREATE TABLE vizdb.allspec (
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     
 );
-CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(unique_id);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(allspec_id);
 ALTER TABLE vizdb.allspec OWNER TO sdss;
 
 CREATE TABLE vizdb.multiplex (
     pk SERIAL PRIMARY KEY NOT NULL,
+    multiplex_id TEXT NOT NULL,
     releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
     design_id INTEGER,
     sdss_phase INT2 NOT NULL,
     observatory TEXT,
     instrument TEXT,
-    unique_id TEXT NOT NULL,
     plate INT4,
     fps_field INT4,
     plate_or_fps_field INT4,
@@ -193,4 +193,5 @@ CREATE TABLE vizdb.multiplex (
     created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.multiplex USING BTREE(multiplex_id);
 ALTER TABLE vizdb.multiplex OWNER TO sdss;

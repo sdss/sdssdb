@@ -110,12 +110,12 @@ class Releases(VizBase):
 class Multiplex(VizBase):
 
     pk = IntegerField()
+    multiplex_id = TextField()
     releases_pk = IntegerField(null=True)
     design_id = IntegerField()
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)
     instrument = TextField(null=True)
-    unique_id = TextField()
     plate = IntegerField(null=True)
     fps_field = IntegerField(null=True)
     plate_or_fps_field = IntegerField(null=True)
@@ -142,19 +142,19 @@ class Multiplex(VizBase):
 
     class Meta:
         table_name = 'multiplex'
-        print_fields = ['instrument', 'observatory', 'plate', 'field', 'mjd']
+        print_fields = ['multiplex_id']
 
 
 
 class AllSpec(VizBase):
 
     pk = IntegerField()
+    allpec_id = TextField()
     releases_pk = IntegerField()
     boss_spectrum_id = IntegerField(null=True)
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)
     instrument = TextField(null=True)
-    unique_id = TextField()
     sdss_id = BigIntegerField()
     catalogid = BigIntegerField()
     fiberid = IntegerField(null=True)
@@ -205,7 +205,7 @@ class AllSpec(VizBase):
 
     class Meta:
         table_name = 'allspec'
-        print_fields = ['unique_id', 'sdss_id', 'field', 'mjd', 'coadd', 'specobjid']
+        print_fields = ['allspec_id']
 
 
 
