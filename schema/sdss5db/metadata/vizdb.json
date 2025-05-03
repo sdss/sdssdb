@@ -426,10 +426,10 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
-      "column_name": "unique_id",
-      "display_name": "Unique ID",
+      "column_name": "allspec_id",
+      "display_name": "Allspec ID",
       "sql_type": "text",
-      "description": "temporary ID to check for uniqueness",
+      "description": "Unique allspec ID",
       "unit": ""
     },
     {
@@ -858,10 +858,10 @@
     {
       "schema": "vizdb",
       "table_name": "multiplex",
-      "column_name": "unique_id",
-      "display_name": "unique_id",
+      "column_name": "multiplex_id",
+      "display_name": "multiplex ID",
       "sql_type": "TEXT",
-      "description": "temporary ID to check for uniqueness",
+      "description": "Unique multiplex ID",
       "unit": ""
     },
     {
