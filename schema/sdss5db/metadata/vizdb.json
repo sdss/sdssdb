@@ -678,6 +678,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "apogee_field",
+      "display_name": "apogee_field",
+      "sql_type": "text",
+      "description": "APOGEE Field (prior to SDSS-V)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "telescope",
       "display_name": "telescope",
       "sql_type": "text",
