@@ -182,3 +182,12 @@ CREATE TABLE vizdb.multiplex (
 );
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.multiplex USING BTREE(multiplex_id);
 ALTER TABLE vizdb.multiplex OWNER TO sdss;
+
+CREATE TABLE vizdb.multiplex_allspec (
+    multiplex_pk INTEGER REFERENCES vizdb.mulitplex(pk) NOT NULL,
+    allspec_pk INTEGER REFERENCES vizdb.allspec(pk) NOT NULL,
+    multiplex_id INTEGER REFERENCES vizdb.mulitplex(multiplex_id) NOT NULL,
+    allspec_id INTEGER REFERENCES vizdb.allspec(allspec_id) NOT NULL
+);
+ALTER TABLE vizdb.multiplex_allspec OWNER TO sdss;
+    
