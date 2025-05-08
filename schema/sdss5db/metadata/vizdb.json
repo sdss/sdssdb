@@ -570,6 +570,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "sas_file",
+      "display_name": "SAS File",
+      "sql_type": "text",
+      "description": "SAS File",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "cas_url",
       "display_name": "CAS URL",
       "sql_type": "text",

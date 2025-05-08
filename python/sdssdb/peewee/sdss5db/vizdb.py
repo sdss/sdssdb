@@ -170,6 +170,7 @@ class AllSpec(VizBase):
     version = TextField(null=True)
     programname = TextField(null=True)
     survey = TextField(null=True)
+    sas_file = TextField(null=True)
     cas_url = TextField(null=True)
     sas_url = TextField(null=True)
     ra = DoubleField(null=True)

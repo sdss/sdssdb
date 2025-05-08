@@ -124,6 +124,7 @@ class AllSpec(Base):
     version = Column('coadd', Text)
     programname = Column('programname', Text)
     survey = Column('survey', Text)
+    sas_file = Column('sas_file', Text)
     cas_url = Column('cas_url', Text)
     sas_url = Column('sas_url', Text)
     ra = Column('ra', Double)

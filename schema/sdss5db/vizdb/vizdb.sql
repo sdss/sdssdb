@@ -126,6 +126,7 @@ CREATE TABLE vizdb.allspec (
     version TEXT,
     programname TEXT,
     survey TEXT,
+    sas_file TEXT,
     cas_url TEXT,
     sas_url TEXT,
     ra FLOAT NOT NULL,
