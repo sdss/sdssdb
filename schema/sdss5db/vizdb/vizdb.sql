@@ -113,7 +113,7 @@ CREATE TABLE vizdb.allspec (
     sdss_id INT8,
     catalogid INT8,
     fiberid INT2,
-    ifudsgn INT2
+    ifudsgn INT2,
     plate INT4,
     fps_field INT4,
     plate_or_fps_field INT4,
