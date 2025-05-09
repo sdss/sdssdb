@@ -150,6 +150,7 @@ class AllSpec(VizBase):
 
     pk = IntegerField()
     allspec_id = TextField()
+    multiplex_id = TextField()
     releases_pk = IntegerField()
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)

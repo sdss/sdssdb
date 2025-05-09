@@ -426,6 +426,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "multiplex_id",
+      "display_name": "multiplex ID",
+      "sql_type": "TEXT",
+      "description": "multiplex ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "sdss_id",
       "display_name": "sdss_id",
       "sql_type": "bigint",

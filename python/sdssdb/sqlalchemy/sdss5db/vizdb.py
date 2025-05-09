@@ -104,6 +104,7 @@ class AllSpec(Base):
     print_fields = ['allspec_id']
     pk = Column('pk', Integer, primary_key=True)
     allspec_id = Column('allspec_id', Text)
+    multiplex_id = Column('multiplex_id', Text)
     releases_pk = Column('releases_pk', Integer)
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
