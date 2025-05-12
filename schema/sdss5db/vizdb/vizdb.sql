@@ -3,7 +3,7 @@
 vizdb schema version v0.1.0
 
 Created Oct 2023 - B. Cherinka
-Modified May 2024 - Joel Brownstein
+Modified May 2025 - Joel Brownstein
 
 */
 
@@ -31,32 +31,34 @@ WITH DATA;
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(sdss_id);
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_flat USING BTREE(catalogid);
+CREATE INDEX CONCURRENTLY on vizdb.sdss_id_flat USING btree (sdss_id, catalogid);
 CREATE INDEX CONCURRENTLY on vizdb.sdss_id_flat (q3c_ang2ipix(ra_sdss_id, dec_sdss_id));
 CREATE INDEX sdss_id_flat_radeccat_q3c_ang2ipix_idx on vizdb.sdss_id_flat (q3c_ang2ipix(ra_catalogid, dec_catalogid));
 CLUSTER sdss_id_flat_q3c_ang2ipix_idx ON vizdb.sdss_id_flat;
 ANALYZE vizdb.sdss_id_flat;
 
-
+-- this view creates duplicate rows for sdss_ids based on the number of apogee and boss visit spectra
+-- the mjd column is the date of observation
 CREATE MATERIALIZED VIEW vizdb.sdssid_to_pipes AS
 SELECT row_number() over(order by s.sdss_id) as pk, s.sdss_id,
        (b.sdss_id IS NOT NULL) AS in_boss,
-       (v.star_pk IS NOT NULL) AS in_apogee,
-       (a.sdss_id IS NOT NULL) AS in_astra
-    --    b.id as boss_spectrum_pk,
-    --    v.star_pk as apogee_star_pk,
-    --    v.visit_pk as apogee_visit_pk,
-    --    a.pk as astra_source_pk,
-    --    v.pk as astra_apovisit_spec_pk,
-    --    o.pk as astra_bossvisit_spec_pk
+       (v.star_pk IS NOT NULL or v.visit_pk IS NOT NULL) AS in_apogee,
+	   (o.source_pk IS NOT NULL) AS in_bvs,
+       (a.sdss_id IS NOT NULL) AS in_astra,
+       (b.sdss_id IS NOT NULL OR v.source_pk IS NOT NULL OR o.source_pk IS NOT NULL) AS has_been_observed,
+       case when b.sdss_id IS NOT NULL then 'sdss5' when v.source_pk IS NOT NULL then v.release when o.source_pk is NOT NULL then o.release end as release,
+       case when b.sdss_id IS NOT NULL then lower(b.obs) when v.source_pk IS NOT NULL then substring(v.telescope,0,4) when o.source_pk IS NOT NULL then substring(o.telescope,0,4) end as obs,
+       case when b.sdss_id IS NOT NULL then b.mjd when v.source_pk IS NOT NULL then v.mjd when o.source_pk IS NOT NULL then o.mjd end as mjd
 FROM vizdb.sdss_id_stacked AS s
 LEFT JOIN boss_drp.boss_spectrum AS b ON s.sdss_id = b.sdss_id
 LEFT JOIN astra_050.source AS a ON s.sdss_id = a.sdss_id
 LEFT JOIN astra_050.apogee_visit_spectrum as v on v.source_pk=a.pk
---LEFT JOIN astra_050.boss_visit_spectrum as o on o.source_pk=a.pk
+LEFT JOIN astra_050.boss_visit_spectrum as o on o.source_pk=a.pk
 WITH DATA;
 
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(sdss_id);
+CREATE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(mjd);
 
 
 -- Refresh the views with the following commands:
@@ -193,3 +195,9 @@ CREATE TABLE vizdb.multiplex_allspec (
 );
 ALTER TABLE vizdb.multiplex_allspec OWNER TO sdss;
     
+
+-- GRANT permissions
+GRANT USAGE ON SCHEMA vizdb TO sdss;
+GRANT SELECT ON vizdb.sdss_id_stacked TO sdss;
+GRANT SELECT ON vizdb.sdss_id_flat TO sdss;
+GRANT SELECT ON vizdb.sdssid_to_pipes TO sdss;
