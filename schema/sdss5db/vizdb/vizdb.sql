@@ -3,11 +3,13 @@
 vizdb schema version v0.1.0
 
 Created Oct 2023 - B. Cherinka
+Modified May 2025 - Joel Brownstein
 
 */
 
 
 CREATE SCHEMA vizdb;
+ALTER SCHEMA vizdb OWNER TO sdss;
 
 SET search_path TO vizdb;
 
@@ -74,6 +76,7 @@ CREATE TABLE vizdb.db_metadata (
     description TEXT,
     unit TEXT,
     sql_type TEXT);
+ALTER TABLE vizdb.db_metadata OWNER TO sdss;
 
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.db_metadata USING BTREE(schema);
@@ -99,8 +102,99 @@ CREATE TABLE vizdb.releases (
     mjd_cutoff_apo INTEGER,
     mjd_cutoff_lco INTEGER
 );
+ALTER TABLE vizdb.releases OWNER TO sdss;
 CREATE INDEX CONCURRENTLY ON vizdb.releases USING BTREE(release);
 
+CREATE TABLE vizdb.allspec (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    allspec_id TEXT NOT NULL,
+    multiplex_id TEXT,
+    releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
+    sdss_phase INT2 NOT NULL,
+    observatory TEXT,
+    instrument TEXT,
+    sdss_id INT8,
+    catalogid INT8,
+    fiberid INT2,
+    ifudsgn INT2,
+    plate INT4,
+    fps_field INT4,
+    plate_or_fps_field INT4,
+    mjd INT4,
+    run2d TEXT,
+    run1d TEXT,
+    coadd TEXT,
+    apred_vers TEXT,
+    drpver TEXT,
+    version TEXT,
+    programname TEXT,
+    survey TEXT,
+    sas_file TEXT,
+    cas_url TEXT,
+    sas_url TEXT,
+    ra FLOAT NOT NULL,
+    dec FLOAT NOT NULL,
+    ra_hms TEXT,
+    dec_dms TEXT,
+    healpix INT4,
+    healpixgrp INT2,
+    apogee_id TEXT,
+    apogee_field TEXT,
+    telescope TEXT,
+    apstar_id TEXT,
+    visit_id TEXT,
+    mangaid TEXT,
+    file_spec TEXT,
+    specobjid NUMERIC(29),
+    created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
+    modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    
+);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(allspec_id);
+ALTER TABLE vizdb.allspec OWNER TO sdss;
+
+CREATE TABLE vizdb.multiplex (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    multiplex_id TEXT NOT NULL,
+    releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
+    design_id INTEGER,
+    sdss_phase INT2 NOT NULL,
+    observatory TEXT,
+    instrument TEXT,
+    plate INT4,
+    fps_field INT4,
+    plate_or_fps_field INT4,
+    mjd INT4,
+    run2d TEXT,
+    apred_vers TEXT,
+    drpver TEXT,
+    version TEXT,
+    racen FLOAT NOT NULL,
+    deccen FLOAT NOT NULL,
+    position_angle REAL,
+    racen_hms TEXT,
+    deccen_dms TEXT,
+    healpix INT4,
+    healpixgrp INT2,
+    quality TEXT,
+    programname TEXT,
+    survey TEXT,
+    cas_url TEXT,
+    sas_url TEXT,
+    created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
+    modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.multiplex USING BTREE(multiplex_id);
+ALTER TABLE vizdb.multiplex OWNER TO sdss;
+
+CREATE TABLE vizdb.multiplex_allspec (
+    multiplex_pk INTEGER REFERENCES vizdb.mulitplex(pk) NOT NULL,
+    allspec_pk INTEGER REFERENCES vizdb.allspec(pk) NOT NULL,
+    multiplex_id INTEGER REFERENCES vizdb.mulitplex(multiplex_id) NOT NULL,
+    allspec_id INTEGER REFERENCES vizdb.allspec(allspec_id) NOT NULL
+);
+ALTER TABLE vizdb.multiplex_allspec OWNER TO sdss;
+    
 
 -- GRANT permissions
 GRANT USAGE ON SCHEMA vizdb TO sdss;

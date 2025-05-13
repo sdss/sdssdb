@@ -7,8 +7,8 @@
 
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Date, Float, Integer,
-                        SmallInteger, Text, text)
+from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Date, Double, Integer,
+                        Numeric, SmallInteger, Text, text, DateTime)
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -81,8 +81,8 @@ class SDSSidToPipes(Base):
     in_bvs = Column('in_bvs', Boolean)
     in_astra = Column('in_astra', Boolean)
     has_been_observed = Column('has_been_observed', Boolean)
-    mjd = Column('release', Text)
-    mjd = Column('obs', Text)
+    release = Column('release', Text)
+    obs = Column('obs', Text)
     mjd = Column('mjd', Integer)
 
 
@@ -106,6 +106,87 @@ class Releases(Base):
     public = Column(Boolean)
     mjd_cutoff_apo = Column(Integer)
     mjd_cutoff_lco = Column(Integer)
+
+class AllSpec(Base):
+    __tablename__ = 'allspec'
+    print_fields = ['allspec_id']
+    pk = Column('pk', Integer, primary_key=True)
+    allspec_id = Column('allspec_id', Text)
+    multiplex_id = Column('multiplex_id', Text)
+    releases_pk = Column('releases_pk', Integer)
+    sdss_phase = Column('sdss_phase', SmallInteger)
+    observatory = Column('observatory', Text)
+    instrument = Column('instrument', Text)
+    sdss_id = Column('sdss_id', BigInteger)
+    catalogid = Column('catalogid', BigInteger)
+    fiberid = Column('fiberid', Integer)
+    ifudsgn = Column('ifudsgn', Integer)
+    plate = Column('plate', Integer)
+    fps_field = Column('fps_field', Integer)
+    plate_or_fps_field = Column('plate_or_fps_field', Integer)
+    mjd = Column('mjd', Integer)
+    run2d = Column('run2d', Text)
+    run1d = Column('run1d', Text)
+    coadd = Column('coadd', Text)
+    apred_vers = Column('apred_vers', Text)
+    drpver = Column('drpver', Text)
+    version = Column('coadd', Text)
+    programname = Column('programname', Text)
+    survey = Column('survey', Text)
+    sas_file = Column('sas_file', Text)
+    cas_url = Column('cas_url', Text)
+    sas_url = Column('sas_url', Text)
+    ra = Column('ra', Double)
+    dec = Column('dec', Double)
+    ra_hms = Column('ra_hms', Text)
+    dec_dms = Column('dec_dms', Text)
+    healpix = Column('healpix', Integer)
+    healpixgrp = Column('healpixgrp', SmallInteger)
+    apogee_id = Column('apogee_id', Text)
+    apogee_field = Column('apogee_field', Text)
+    telescope = Column('telescope', Text)
+    file_spec = Column('file_spec', Text)
+    apstar_id = Column('apstar_id', Text)
+    visit_id = Column('visit_id', Text)
+    mangaid = Column('mangaid', Text)
+    specobjid = Column('specobjid', Numeric(29))
+    created = Column('created', DateTime)
+    modified = Column('modified', DateTime)
+
+
+class Multiplex(Base):
+    __tablename__ = 'multiplex'
+    print_fields = ['mutliplex_id']
+    pk = Column('pk', Integer, primary_key=True)
+    multiplex_id = Column('multiplex_id', Text)
+    releases_pk = Column('releases_pk', Integer)
+    design_id = Column('design_id', Integer)
+    sdss_phase = Column('sdss_phase', SmallInteger)
+    observatory = Column('observatory', Text)
+    instrument = Column('instrument', Text)
+    plate = Column('plate', Integer)
+    fps_field = Column('fps_field', Integer)
+    plate_or_fps_field = Column('plate_or_fps_field', Integer)
+    mjd = Column('field', Integer)
+    run2d = Column('run2d', Text)
+    run1d = Column('run1d', Text)
+    apred_vers = Column('apred_vers', Text)
+    drpver = Column('drpver', Text)
+    racen = Column('racen', Double)
+    deccen = Column('deccen', Double)
+    position_angle = Column('position_angle', Double)
+    racen_hms = Column('racen_hms', Text)
+    deccen_dms = Column('deccen_dms', Text)
+    healpix = Column('sdss_phase', Integer)
+    healpixgrp = Column('sdss_phase', SmallInteger)
+    quality = Column('quality', Text)
+    programname = Column('programname', Text)
+    survey = Column('survey', Text)
+    cas_url = Column('cas_url', Text)
+    sas_url = Column('sas_url', Text)
+    created = Column('created', DateTime)
+    modified = Column('modified', DateTime)
+
 
 
 def define_relations():
