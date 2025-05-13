@@ -8,8 +8,8 @@
 # Database: sdss5db
 # Peewee version: 3.13.2
 
-from peewee import (AutoField, BigIntegerField, BooleanField, CharField, DecimalField,
-                    DoubleField, ForeignKeyField, FloatField, IntegerField,
+from peewee import (AutoField, BigIntegerField, BooleanField, CharField, DateField, DecimalField,
+                    DoubleField, FloatField, IntegerField,
                     SmallIntegerField, TextField, DateTimeField)
 from playhouse.postgres_ext import ArrayField
 from datetime import datetime
@@ -555,4 +555,3 @@ class SpecObj(VizBase):
         table_name = 'specobj'
         print_fields = ['specobj_id', 'tree_id']
         #print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
-
