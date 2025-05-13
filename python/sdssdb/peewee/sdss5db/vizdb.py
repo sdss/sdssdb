@@ -36,6 +36,7 @@ class SDSSidFlat(VizBase):
     pk = AutoField()
     ra_catalogid = DoubleField(null=True)
     dec_catalogid = DoubleField(null=True)
+    rank = IntegerField(null=True)
 
     class Meta:
         table_name = 'sdss_id_flat'
@@ -50,6 +51,7 @@ class SDSSidStacked(VizBase):
     ra_sdss_id = DoubleField(null=True)
     dec_sdss_id = DoubleField(null=True)
     sdss_id = BigIntegerField(null=False, primary_key=True)
+    last_updated = DateField(null=True)
 
     class Meta:
         table_name = 'sdss_id_stacked'
@@ -62,11 +64,16 @@ class SDSSidToPipes(VizBase):
     sdss_id = BigIntegerField(null=False)
     in_boss = BooleanField(null=False)
     in_apogee = BooleanField(null=False)
+    in_bvs = BooleanField(null=False)
     in_astra = BooleanField(null=False)
+    has_been_observed = BooleanField(null=False)
+    release = TextField(null=True)
+    obs = TextField(null=True)
+    mjd = IntegerField(null=True)
 
     class Meta:
         table_name = 'sdssid_to_pipes'
-        print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra']
+        print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra', 'has_been_observed']
 
 
 class DbMetadata(VizBase):
