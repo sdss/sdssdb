@@ -1,0 +1,292 @@
+{
+  "metadata": [
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "bigint",
+      "description": "Primary key",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "sdss_id",
+      "display_name": "SDSS ID",
+      "sql_type": "bigint",
+      "description": "The common, unifying, SDSS ID of an on-sky object",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "catalogid",
+      "display_name": "Catalog ID",
+      "sql_type": "bigint",
+      "description": "catalog ID of an object in a given cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "version_id",
+      "display_name": "Version ID",
+      "sql_type": "smallint",
+      "description": "The version ID of the cross-match for the given catalogid",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "lead",
+      "display_name": "Lead Catalog",
+      "sql_type": "text",
+      "description": "The lead catalog used for the cross-match",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "allstar_dr17_synspec_rev1__apstar_id",
+      "display_name": "AllStar DR17 SynSpec Rev1 Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the AllStar DR17 SynSpec Rev1 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "allwise__cntr",
+      "display_name": "AllWISE Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the AllWISE catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "bhm_rm_v0__pk",
+      "display_name": "BHM RM v0 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the BHM RM v0 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "bhm_rm_v0_2__pk",
+      "display_name": "BHM RM v0.2 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the BHM RM v0.2 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "catwise__source_id",
+      "display_name": "CatWISE Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the CatWISE catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "catwise2020__source_id",
+      "display_name": "CatWISE 2020 Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the CatWISE 2020 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "gaia_dr2_source__source_id",
+      "display_name": "Gaia DR2 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the Gaia DR2 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "gaia_dr3_source__source_id",
+      "display_name": "Gaia DR3 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the Gaia DR3 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "glimpse__pk",
+      "display_name": "GLIMPSE Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the GLIMPSE catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "guvcat__objid",
+      "display_name": "GUVCat Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the GUVCat catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "legacy_survey_dr10__ls_id",
+      "display_name": "Legacy Survey DR10 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the Legacy Survey DR10 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "legacy_survey_dr8__ls_id",
+      "display_name": "Legacy Survey DR8 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the Legacy Survey DR8 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "mangatarget__mangaid",
+      "display_name": "MaNGA Target Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the MaNGA Target catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "marvels_dr11_star__starname",
+      "display_name": "Marvekls DR11 Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the Marvels DR11 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "marvels_dr12_star__pk",
+      "display_name": "Marvels DR12 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the Marvels DR12 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "mastar_goodstars__mangaid",
+      "display_name": "MaStar Good Stars Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the MaStar Good Stars catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "panstarrs1__catid_objid",
+      "display_name": "PanSTARRS DR1 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the PanSTARRS DR1 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "ps1_g18__objid",
+      "display_name": "PanSTARRS DR1 G<18 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the PanSTARRS DR1 G<18 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "sdss_dr13_photoobj__objid",
+      "display_name": "SDSS DR13 PhotoObj Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the SDSS DR13 PhotoObj catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "sdss_dr17_specobj__specobjid",
+      "display_name": "SDSS DR17 SpecObj Entry",
+      "sql_type": "text",
+      "description": "The primary key of the associated record in the SDSS DR17 SpecObj catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "skymapper_dr1_1__object_id",
+      "display_name": "SkyMapper DR1.1 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the SkyMapper DR1.1 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "skymapper_dr2__object_id",
+      "display_name": "SkyMapper DR2 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the SkyMapper DR2 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "supercosmos__objid",
+      "display_name": "SuperCOSMOS Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the SuperCOSMOS catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "tic_v8__id",
+      "display_name": "TIC v8 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the TIC v8 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "twomass_psc__pts_key",
+      "display_name": "2MASS Point Source Catalog Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the 2MASS Point Source Catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "tycho2__designation",
+      "display_name": "Tycho-2 Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the Tycho-2 catalog",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_to_catalog",
+      "column_name": "unwise__unwise_objid",
+      "display_name": "unWISE Entry",
+      "sql_type": "bigint",
+      "description": "The primary key of the associated record in the unWISE catalog",
+      "unit": "None"
+    }
+  ]
+}

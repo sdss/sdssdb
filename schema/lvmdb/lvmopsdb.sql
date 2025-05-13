@@ -29,6 +29,12 @@ CREATE TABLE lvmopsdb.tile (
 ALTER TABLE lvmopsdb.tile
 ADD COLUMN disabled BOOLEAN DEFAULT FALSE;
 
+CREATE TABLE lvmopsdb.disabled (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    tile_id INTEGER,
+    time_stamp TIMESTAMP,
+    note TEXT);
+
 CREATE TABLE lvmopsdb.version (
     pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT,
@@ -214,16 +220,28 @@ CREATE TABLE lvmopsdb.guider_coadd (
     exposure_no INTEGER
 );
 
-CREATE TABLE lvmopsdb.overhead (
+CREATE TABLE lvmopsdb.ln2_fill (
     pk SERIAL PRIMARY KEY NOT NULL,
-    observer_id BIGINT,
-    tile_id INTEGER,
-    stage TEXT,
-    start_time DOUBLE PRECISION,
-    end_time DOUBLE PRECISION,
-    duration REAL
+    action TEXT,
+    complete BOOLEAN,
+    start_time TIMESTAMPTZ,
+    end_time TIMESTAMPTZ,
+    purge_start TIMESTAMPTZ,
+    purge_complete TIMESTAMPTZ,
+    fill_start TIMESTAMPTZ,
+    fill_complete TIMESTAMPTZ,
+    fail_time TIMESTAMPTZ,
+    abort_time TIMESTAMPTZ,
+    failed BOOLEAN,
+    aborted BOOLEAN,
+    error TEXT,
+    log_file TEXT,
+    json_file TEXT,
+    configuration JSONB,
+    log_data JSONB,
+    plot_paths JSONB,
+    valve_times JSONB
 );
-
 
 -- constraints
 
@@ -323,6 +341,12 @@ ALTER TABLE ONLY lvmopsdb.guider_coadd
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY lvmopsdb.disabled
+    ADD CONSTRAINT disabled_tile_id_fk
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
 INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
     (5, 'Calib'), (6, 'Dark'), (7, 'Sky');
@@ -359,15 +383,24 @@ CREATE INDEX CONCURRENTLY standard_qc3_index
     ON lvmopsdb.standard
     (q3c_ang2ipix(ra, dec));
 
+
+CREATE INDEX ON lvmopsdb.ln2_fill (action);
+CREATE INDEX ON lvmopsdb.ln2_fill (start_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (end_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (purge_start);
+CREATE INDEX ON lvmopsdb.ln2_fill (purge_complete);
+CREATE INDEX ON lvmopsdb.ln2_fill (fill_start);
+CREATE INDEX ON lvmopsdb.ln2_fill (fill_complete);
+CREATE INDEX ON lvmopsdb.ln2_fill (fail_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (abort_time);
+CREATE INDEX ON lvmopsdb.ln2_fill (failed);
+CREATE INDEX ON lvmopsdb.ln2_fill (aborted);
+
 CLUSTER standard_qc3_index ON lvmopsdb.standard;
 
 CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_coadd (exposure_no);
 CREATE INDEX CONCURRENTLY ON lvmopsdb.guider_frame (exposure_no);
 CREATE INDEX CONCURRENTLY ON lvmopsdb.agcam_frame (exposure_no);
-
-CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (observer_id);
-CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (tile_id);
-CREATE INDEX CONCURRENTLY ON lvmopsdb.overhead (stage);
 
 grant usage on schema lvmopsdb to sdss_user;
 
@@ -377,10 +410,14 @@ lvmopsdb.weather,
 lvmopsdb.observation_to_standard,
 lvmopsdb.observation_to_sky,
 lvmopsdb.exposure,
-lvmopsdb.completion_status to sdss_user;
+lvmopsdb.completion_status,
+lvmopsdb.ln2_fill to sdss_user;
 
 grant select on all tables in schema lvmopsdb to sdss_user;
 grant usage on all sequences in schema lvmopsdb to sdss_user;
 
 alter table lvmopsdb.sky add column darkest_wham_flag bool;
 alter table lvmopsdb.sky add column valid bool;
+
+GRANT INSERT ON TABLE lvmopsdb.ln2_fill TO sdss_user;
+GRANT UPDATE ON TABLE lvmopsdb.ln2_fill TO sdss_user;

@@ -17,8 +17,9 @@ from peewee import (
     FloatField,
     ForeignKeyField,
     IntegerField,
-    TextField
+    TextField,
 )
+from playhouse.postgres_ext import JSONField
 
 from .. import BaseModel
 from . import database  # noqa
@@ -63,6 +64,18 @@ class Tile(LVMOpsBase):
 
     class Meta:
         table_name = 'tile'
+
+
+class Disabled(LVMOpsBase):
+    pk = AutoField()
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
+                           model=Tile, backref='disabled')
+    time_stamp = DateTimeField(default=datetime.datetime.now())
+    note = TextField(null=True)
+
+    class Meta:
+        table_name = 'disabled'
 
 
 class Dither(LVMOpsBase):
@@ -326,14 +339,27 @@ class GuiderCoAdd(LVMOpsBase):
         table_name = 'guider_coadd'
 
 
-class Overhead(LVMOpsBase):
-    pk = AutoField(primary_key=True)
-    observer_id = BigIntegerField()
-    tile_id = IntegerField()
-    stage = TextField()
-    start_time = DoubleField()
-    end_time = DoubleField()
-    duration = FloatField()
+class LN2Fill(LVMOpsBase):
+    pk = AutoField()
+    action = TextField()
+    complete = BooleanField()
+    start_time = DateTimeField()
+    end_time = DateTimeField()
+    purge_start = DateTimeField()
+    purge_complete = DateTimeField()
+    fill_start = DateTimeField()
+    fill_complete = DateTimeField()
+    fail_time = DateTimeField()
+    abort_time = DateTimeField()
+    failed = BooleanField()
+    aborted = BooleanField()
+    error = TextField()
+    log_file = TextField()
+    json_file = TextField()
+    configuration = JSONField()
+    log_data = JSONField()
+    plot_paths = JSONField()
+    valve_times = JSONField()
 
     class Meta:
-        table_name = 'overhead'
+        table_name = 'ln2_fill'

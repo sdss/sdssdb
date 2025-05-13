@@ -34,7 +34,7 @@ def scrapeRecent(obs="APO", mjd_today=00000, base="",
 
     doneDesigns = [d.design_id for d in doneDesigns]
 
-    base_dir = os.getenv('SDSSCORE_TEST_DIR')
+    base_dir = os.getenv('SDSSCORE_DIR')
 
     obs_dir = os.path.join(base_dir, f"{obs.lower()}/summary_files")
 
@@ -65,6 +65,8 @@ def scrapeRecent(obs="APO", mjd_today=00000, base="",
             continue
         sum_files = os.listdir(sub)
         for s in sum_files:
+            if "parquet" in s:
+                continue
             sum_name = os.path.join(sub, s)
             with open(sum_name, "rt") as fhandle:
                 text= fhandle.read()
@@ -131,9 +133,9 @@ def updateDB(obs="APO", badTargsFile=""):
     d2s = opsdb.DesignToStatus
 
     if obs == "APO":
-        dbVersion = targetdb.Version.get(plan="eta-6")
+        dbVersion = targetdb.Version.get(plan="theta-1")
     else:
-        dbVersion = targetdb.Version.get(plan="eta-7")
+        dbVersion = targetdb.Version.get(plan="theta-1")
 
     boss = targetdb.Instrument.get(label="BOSS")
 

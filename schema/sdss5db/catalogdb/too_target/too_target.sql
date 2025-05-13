@@ -5,6 +5,7 @@ CREATE TABLE catalogdb.too_target (
     sdss_id BIGINT,
     gaia_dr3_source_id BIGINT,
     twomass_pts_key INTEGER,
+    program TEXT,
     ra DOUBLE PRECISION,
     dec DOUBLE PRECISION,
     pmra REAL,

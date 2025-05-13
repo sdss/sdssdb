@@ -1,9 +1,61 @@
 .. _sdssdb-changelog:
-
+*
 Changelog
 =========
 
 This document records the main changes to the ``sdssdb`` code.
+
+* :release:`0.13.2 <2025-03-19>`
+* :feature:`275` Update ``boss_drp.json``.
+* :feature:`276` ``targetdb.targeting_generation_to_version``: add ``pk``.
+* :feature:`277` Add ``sn2_15`` column.
+* :feature:`278` Tg theta 1.
+* :feature:`279` ``targetdb.targeting_generation_to_carton``: edit constraint ``targeting_generation_to_carton_uniq_key``.
+* :feature:`280` Edit ``sdss_dr17_specobj*.sql`` files.
+* Add ``dark_monit_1x4`` cadence.
+* Update ``update_specprimary.sql``.
+* Update bright BOSS cadences.
+* Add several grant permissions to ``sdss_user`` in ``lvmdb``.
+* Rename ``ln2_fill.done`` to ``ln2_fill.complete``.
+* Added column ``program`` to ``too_target``.
+
+* :release:`0.13.1 <2024-09-30>`
+* :feature:`274` Adding code to create ``catalogdb.sdss_id_to_catalog`` table.
+* :feature:`272` Update tables and models for new ``vizdb.sdssid_to_pipes`` schema.
+* Add table and models for ``lvmopsdb.ln2_fill``.
+* Add tables and models for ``gortdb.night_log`` and ``gortdb.night_log_command``.
+
+* :release:`0.13.0 <2024-09-03>`
+* :feature:`264` Add metadata for the ``sdss_id_to_catalog`` table.
+* :feature:`266` Support PEP 621.
+* :feature:`268` Allows to use `psycopy3 <https://www.psycopg.org/psycopg3/docs/>`__ as a driver for the Peewee database connection.
+* Add missing columns to the ``SDSS_ID_To_Catalog`` models (the columns were being completed via reflection).
+* Change ``reflection=False`` to ``use_reflection=False`` in many ``catalogdb`` models. The previous setting was incorrect and was causing the models to be reflected.
+* Add ``gortdb`` schema and models to ``lvmdb``. Moved ``lvmopsdb.overhead`` to ``gortdb``.
+
+* :release:`0.12.4 <2024-08-07>`
+* Fix ``catalogid`` and ``version_id`` fields in ``SDSS_ID_To_Catalog`` model.
+
+* :release:`0.12.3 <2024-08-02>`
+* One more attempt at fixing the various issues with reflection. Reloading the fields each time a table was not found worked well for ``operations`` but not so much for ``pipelines`` because so many tables are missing. This time, we will only refresh the fields if the table is not found in the schema metadata *and* it exists in the database.
+* Fixed column names in ``SDSS_ID_To_Catalog`` models (#260).
+* Adds new column to ``vizdb.sdssid_to_pipes`` view (#259).
+
+* :release:`0.12.2 <2024-07-29>`
+* Use Markdown for the README file. The old README.rst was giving trouble when packaging the app.
+* Fix issues with the caching of the schema during reflection. Added a ``force`` option to ``reflection_options`` to force the schema information to be refreshed. Additionally, if the table does not exist in the schema metadata, the metadata will be refreshed.
+
+* :release:`0.12.1 <2024-07-19>`
+* add cadence dark_flexible_3x1.csv
+* fixing removed column from astra source table
+* Fix table name in peewee model for catalog_from_sdss_speclite_dr19p
+* Add method ``get_database_uri()`` to ``DatabaseConnection``.
+
+* :release:`0.12.0 <2024-06-28>`
+* Updated ``sdss_id_to_catalog`` view models to use double underscore separating table name from primary key.
+* Very significantly speed up the reflection of the database by caching the schema metadata.
+* Add ``targetdb`` ``targeting_generation`` and ``targeting_generation_to_target`` tables and models.
+* Allow passing additional connection parameters to ``set_profile()`` which will override the profile defaults.
 
 * :release:`0.11.4 <2024-04-30>`
 * Add columns ``too_metadata.last_modified_date``, ``too_target.observe_from_mjd``, and ``too_target.added_date``.
