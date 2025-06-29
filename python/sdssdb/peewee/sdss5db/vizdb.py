@@ -116,7 +116,7 @@ class Releases(VizBase):
 
 class Multiplex(VizBase):
 
-    pk = IntegerField()
+    pk = AutoField()
     multiplex_id = TextField()
     releases_pk = IntegerField(null=True)
     design_id = IntegerField()
@@ -155,7 +155,7 @@ class Multiplex(VizBase):
 
 class AllSpec(VizBase):
 
-    pk = IntegerField()
+    pk = AutoField()
     allspec_id = TextField()
     multiplex_id = TextField()
     releases_pk = IntegerField()
@@ -194,7 +194,7 @@ class AllSpec(VizBase):
     apstar_id = TextField(null=True)
     visit_id = TextField(null=True)
     mangaid = TextField(null=True)
-    specobjid = AutoField()
+    specobjid = DecimalField(29)
     created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
 
