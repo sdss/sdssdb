@@ -2417,6 +2417,8 @@ class CatalogToAllStar_DR17_synspec_rev1(CatalogdbModel):
                               backref='+')
     best = BooleanField()
     distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
 
     class Meta:
         table_name = "catalog_to_allstar_dr17_synspec_rev1"
@@ -3206,19 +3208,29 @@ class CatalogTounWISE(CatalogdbModel):
         primary_key = False
         use_reflection = False
 
-
-class CatalogToMarvels_dr11_star(CatalogdbModel):
-    catalog = ForeignKeyField(Catalog,
-                              column_name='catalogid',
-                              backref='+')
-    target = ForeignKeyField(Marvels_dr11_star,
-                             column_name='target_id',
-                             backref='+')
-    version = ForeignKeyField(Version,
-                              column_name='version_id',
-                              backref='+')
+class CatalogToMangatarget(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog, column_name="catalogid", backref="+")
+    target = ForeignKeyField(Mangatarget, column_name="target_id", backref="+")
+    version = ForeignKeyField(Version, column_name="version_id", backref="+")
     best = BooleanField()
     distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
+
+    class Meta:
+        table_name = "catalog_to_mangatarget"
+        primary_key = False
+        use_reflection = False
+
+
+class CatalogToMarvels_dr11_star(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog, column_name="catalogid", backref="+")
+    target = ForeignKeyField(Marvels_dr11_star, column_name="target_id", backref="+")
+    version = ForeignKeyField(Version, column_name="version_id", backref="+")
+    best = BooleanField()
+    distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
 
     class Meta:
         table_name = "catalog_to_marvels_dr11_star"
@@ -3227,20 +3239,31 @@ class CatalogToMarvels_dr11_star(CatalogdbModel):
 
 
 class CatalogToMarvels_dr12_star(CatalogdbModel):
-    catalog = ForeignKeyField(Catalog,
-                              column_name='catalogid',
-                              backref='+')
-    target = ForeignKeyField(Marvels_dr12_star,
-                             column_name='target_id',
-                             backref='+')
-    version = ForeignKeyField(Version,
-                              column_name='version_id',
-                              backref='+')
+    catalog = ForeignKeyField(Catalog, column_name="catalogid", backref="+")
+    target = ForeignKeyField(Marvels_dr12_star, column_name="target_id", backref="+")
+    version = ForeignKeyField(Version, column_name="version_id", backref="+")
     best = BooleanField()
     distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
 
     class Meta:
         table_name = "catalog_to_marvels_dr12_star"
+        primary_key = False
+        use_reflection = False
+
+
+class CatalogToMastar_goodstars(CatalogdbModel):
+    catalog = ForeignKeyField(Catalog, column_name="catalogid", backref="+")
+    target = ForeignKeyField(Mastar_goodstars, column_name="target_id", backref="+")
+    version = ForeignKeyField(Version, column_name="version_id", backref="+")
+    best = BooleanField()
+    distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
+
+    class Meta:
+        table_name = "catalog_to_mastar_goodstars"
         primary_key = False
         use_reflection = False
 
@@ -3257,6 +3280,8 @@ class CatalogToSDSS_DR17_SpecObj(CatalogdbModel):
                               backref='+')
     best = BooleanField()
     distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
 
     class Meta:
         table_name = "catalog_to_sdss_dr17_specobj"
@@ -3276,6 +3301,8 @@ class CatalogToToO_Target(CatalogdbModel):
                               backref='+')
     best = BooleanField()
     distance = FloatField()
+    plan_id = TextField(null=True)
+    added_by_phase = IntegerField(null=True)
 
     class Meta:
         table_name = "catalog_to_too_target"

@@ -29,6 +29,7 @@ from sqlalchemy.orm import relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
+
 SCHEMA = 'catalogdb'
 
 
@@ -684,6 +685,100 @@ class CatalogToToO_Target(Base):
     version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
     distance = Column(Float(53))
     best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+    added_by_phase = Column(SmallInteger, nullable=True)
+
+
+class CatalogToAllStar_DR17_synspec_rev1(Base):
+    __tablename__ = 'catalog_to_allstar_dr17_synspec_rev1'
+    __table_args__ = ({'schema': 'catalogdb'},)
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(Text, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+
+
+class CatalogToMangatarget(Base):
+    __tablename__ = 'catalog_to_mangatarget'
+    __table_args__ = (
+        Index('catalog_to_mangatarget_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
+        {'schema': 'catalogdb'}
+    )
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(Text, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+    added_by_phase = Column(SmallInteger, nullable=True)
+
+
+class CatalogToMastar_goodstars(Base):
+    __tablename__ = 'catalog_to_mastar_goodstars'
+    __table_args__ = (
+        Index('catalog_to_mastar_goodstars_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
+        {'schema': 'catalogdb'}
+    )
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(Text, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+    added_by_phase = Column(SmallInteger, nullable=True)
+
+
+class CatalogToMarvels_dr11_star(Base):
+    __tablename__ = 'catalog_to_marvels_dr11_star'
+    __table_args__ = (
+        Index('catalog_to_marvels_dr11_star_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
+        {'schema': 'catalogdb'}
+    )
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(Text, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+    added_by_phase = Column(SmallInteger, nullable=True)
+
+
+class CatalogToMarvels_dr12_star(Base):
+    __tablename__ = 'catalog_to_marvels_dr12_star'
+    __table_args__ = (
+        Index('catalog_to_marvels_dr12_star_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
+        {'schema': 'catalogdb'}
+    )
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(Text, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+    added_by_phase = Column(SmallInteger, nullable=True)
+
+
+class CatalogToSDSS_DR17_SpecObj(Base):
+    __tablename__ = 'catalog_to_sdss_dr17_specobj'
+    __table_args__ = (
+        Index('catalog_to_sdss_dr17_specobj_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
+        {'schema': 'catalogdb'}
+    )
+
+    catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
+    target_id = Column(Text, primary_key=True, nullable=False, index=True)
+    version_id = Column(SmallInteger, primary_key=True, nullable=False, index=True)
+    distance = Column(Float(53))
+    best = Column(Boolean, nullable=False, index=True)
+    plan_id = Column(Text, nullable=True)
+    added_by_phase = Column(SmallInteger, nullable=True)
 
 
 class CatalogToTwoMassPSC(Base):
