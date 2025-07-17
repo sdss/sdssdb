@@ -1,6 +1,6 @@
 [project]
 name = "sdssdb"
-version = "0.13.3a0"
+version = "0.13.4a0"
 authors = [
     {name = "José Sánchez-Gallego", email = "gallegoj@uw.edu"},
     {name = "Brian Cherinka", email = "bcherinka@stsci.edu"}

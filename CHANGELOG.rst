@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.13.3 <2025-07-15>`
+* Added missing fields to several ``catalog_to_X`` models in Peewee.
+* Added several missing ``catalog_to_X`` models in SQLAlchemy.
+
 * :release:`0.13.2 <2025-03-19>`
 * :feature:`275` Update ``boss_drp.json``.
 * :feature:`276` ``targetdb.targeting_generation_to_version``: add ``pk``.
