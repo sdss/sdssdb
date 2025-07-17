@@ -84,6 +84,15 @@ class Observatory(TargetdbBase):
         table_name = 'observatory'
 
 
+class Overplan(TargetdbBase):
+    pk = AutoField()
+    input_file = TextField()
+    plan = TextField()
+
+    class Meta:
+        table_name = 'overplan'
+
+
 class Field(TargetdbBase):
 
     pk = AutoField()
@@ -103,6 +112,9 @@ class Field(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
+    overplan = ForeignKeyField(column_name='overplan_pk',
+                              field='pk',
+                              model=Overplan)
 
     class Meta:
         table_name = 'field'

@@ -144,7 +144,8 @@ CREATE TABLE targetdb.field (
     slots_exposures INTEGER[][],
     version_pk INTEGER,
     cadence_pk INTEGER,
-    observatory_pk INTEGER);
+    observatory_pk INTEGER,
+    overplan_pk INTEGER);
 
 CREATE TABLE targetdb.design_to_field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -238,6 +239,12 @@ CREATE TABLE targetdb.targeting_generation_to_version (
     pk SERIAL PRIMARY KEY NOT NULL,
     generation_pk INTEGER,
     version_pk INTEGER
+);
+
+CREATE TABLE targetdb.overplan (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    input_file TEXT,
+    plan TEXT
 );
 
 
@@ -374,6 +381,9 @@ ALTER TABLE ONLY targetdb.targeting_generation_to_version
     ADD CONSTRAINT version_fk
     FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk);
 
+ALTER TABLE ONLY targetdb.field
+    ADD CONSTRAINT overplan_fk
+    FOREIGN KEY (overplan_pk) REFERENCES targetdb.overplan(pk);
 
 -- Indices
 

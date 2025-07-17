@@ -220,6 +220,14 @@ class Design(Base):
     design_mode = relationship('DesignMode')
 
 
+class Overplan(Base):
+    __tablename__ = 'overplan'
+
+    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.overplan_pk_seq'::regclass)"))
+    input_file = Column(Text)
+    plan = Column(Text)
+
+
 class Field(Base):
     __tablename__ = 'field'
 
@@ -232,10 +240,12 @@ class Field(Base):
     position_angle = Column(Float)
     slots_exposures = Column(ARRAY(Integer()))
     field_id = Column(Integer, index=True)
+    overplan_pk = Column(ForeignKey('targetdb.overplan.pk'), index=True)
 
     cadence = relationship('Cadence')
     observatory = relationship('Observatory')
     version = relationship('Version')
+    overplan = relationship('Overplan')
 
 
 class Hole(Base):
