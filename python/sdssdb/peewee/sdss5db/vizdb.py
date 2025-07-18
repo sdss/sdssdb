@@ -224,7 +224,7 @@ class Multiplex_Url(VizBase):
         table_name = 'multiplex_url'
         print_fields = ['multiplex_url_id']
 
-class Allspec_Url(VizBase):
+class AllSpec_Url(VizBase):
 
     pk = AutoField()
     allspec_pk = IntegerField()
