@@ -190,7 +190,7 @@ ALTER TABLE vizdb.multiplex OWNER TO sdss;
 CREATE TABLE vizdb.allspec_url (
     pk SERIAL PRIMARY KEY NOT NULL,
     allspec_pk INTEGER REFERENCES vizdb.allspec(pk) NOT NULL,
-    allspec_id INTEGER REFERENCES vizdb.allspec(allspec_id) NOT NULL
+    allspec_id TEXT REFERENCES vizdb.allspec(allspec_id) NOT NULL,
     releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
     allspec_url_id TEXT NOT NULL,
     sdss_phase INT2 NOT NULL,
@@ -210,8 +210,8 @@ ALTER TABLE vizdb.allspec_url OWNER TO sdss;
 
 CREATE TABLE vizdb.multiplex_url (
     pk SERIAL PRIMARY KEY NOT NULL,
-    multiplex_pk INTEGER REFERENCES vizdb.mulitplex(pk) NOT NULL,
-    multiplex_id INTEGER REFERENCES vizdb.mulitplex(multiplex_id) NOT NULL,
+    multiplex_pk INTEGER REFERENCES vizdb.multiplex(pk) NOT NULL,
+    multiplex_id TEXT REFERENCES vizdb.multiplex(multiplex_id) NOT NULL,
     releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
     multiplex_url_id TEXT NOT NULL,
     sdss_phase INT2 NOT NULL,
