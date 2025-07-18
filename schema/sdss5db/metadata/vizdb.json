@@ -998,6 +998,267 @@
       "sql_type": "TEXT",
       "description": "SAS URL",
       "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "(Internal) database table primary key",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "allspec_id",
+      "display_name": "Allspec ID",
+      "sql_type": "text",
+      "description": "Unique allspec ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "releases_pk",
+      "display_name": "Releases Table PK",
+      "sql_type": "integer",
+      "description": "join to the pk of the vizdb.releases table",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "allspec_url_id",
+      "display_name": "Allspec URL ID",
+      "sql_type": "text",
+      "description": "Unique allspec URL ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "sdss_phase",
+      "display_name": "sdss_phase",
+      "sql_type": "SMALLINT",
+      "description": "SDSS Phase from 1 to 5",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "observatory",
+      "display_name": "observatory",
+      "sql_type": "TEXT",
+      "description": "observatory",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "instrument",
+      "display_name": "instrument",
+      "sql_type": "TEXT",
+      "description": "instrument",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "sdss_id",
+      "display_name": "sdss_id",
+      "sql_type": "bigint",
+      "description": "sdss_id",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "version",
+      "display_name": "Version",
+      "sql_type": "TEXT",
+      "description": "All Pipeline Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "coadd",
+      "display_name": "coadd",
+      "sql_type": "text",
+      "description": "either epoch, daily, or custom=allepoch",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "cas",
+      "display_name": "CAS",
+      "sql_type": "BOOLEAN",
+      "description": "URL references CAS",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "sas",
+      "display_name": "SAS",
+      "sql_type": "BOOLEAN",
+      "description": "URL references SAS",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "saw",
+      "display_name": "SAW",
+      "sql_type": "BOOLEAN",
+      "description": "URL references SAW",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "marvin",
+      "display_name": "Marvin",
+      "sql_type": "BOOLEAN",
+      "description": "URL references Marvin",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "zora",
+      "display_name": "Zora",
+      "sql_type": "BOOLEAN",
+      "description": "URL references Zora",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "url",
+      "display_name": "Allspec URL",
+      "sql_type": "text",
+      "description": "Allspec URL",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "(Internal) database table primary key",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "multiplex_id",
+      "display_name": "Multiplex ID",
+      "sql_type": "text",
+      "description": "Unique multiplex ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec_url",
+      "column_name": "releases_pk",
+      "display_name": "Releases Table PK",
+      "sql_type": "integer",
+      "description": "join to the pk of the vizdb.releases table",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "multiplex_url_id",
+      "display_name": "Multiplex URL ID",
+      "sql_type": "text",
+      "description": "Unique multiplex URL ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "sdss_phase",
+      "display_name": "sdss_phase",
+      "sql_type": "SMALLINT",
+      "description": "SDSS Phase from 1 to 5",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "observatory",
+      "display_name": "observatory",
+      "sql_type": "TEXT",
+      "description": "observatory",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "instrument",
+      "display_name": "instrument",
+      "sql_type": "TEXT",
+      "description": "instrument",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "version",
+      "display_name": "Version",
+      "sql_type": "TEXT",
+      "description": "All Pipeline Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "coadd",
+      "display_name": "coadd",
+      "sql_type": "text",
+      "description": "either epoch, daily, or custom=allepoch",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "cas",
+      "display_name": "CAS",
+      "sql_type": "BOOLEAN",
+      "description": "URL references CAS",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "sas",
+      "display_name": "SAS",
+      "sql_type": "BOOLEAN",
+      "description": "URL references SAS",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "saw",
+      "display_name": "SAW",
+      "sql_type": "BOOLEAN",
+      "description": "URL references SAW",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex_url",
+      "column_name": "url",
+      "display_name": "Multiplex URL",
+      "sql_type": "text",
+      "description": "Multiplex URL",
+      "unit": ""
     }
   ]
 }

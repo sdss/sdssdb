@@ -187,14 +187,45 @@ CREATE TABLE vizdb.multiplex (
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.multiplex USING BTREE(multiplex_id);
 ALTER TABLE vizdb.multiplex OWNER TO sdss;
 
-CREATE TABLE vizdb.multiplex_allspec (
-    multiplex_pk INTEGER REFERENCES vizdb.mulitplex(pk) NOT NULL,
+CREATE TABLE vizdb.allspec_url (
+    pk SERIAL PRIMARY KEY NOT NULL,
     allspec_pk INTEGER REFERENCES vizdb.allspec(pk) NOT NULL,
-    multiplex_id INTEGER REFERENCES vizdb.mulitplex(multiplex_id) NOT NULL,
     allspec_id INTEGER REFERENCES vizdb.allspec(allspec_id) NOT NULL
+    releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
+    allspec_url_id TEXT NOT NULL,
+    sdss_phase INT2 NOT NULL,
+    observatory TEXT,
+    instrument TEXT,
+    sdss_id INT8,
+    version TEXT,
+    coadd TEXT,
+    cas BOOLEAN,
+    sas BOOLEAN,
+    saw BOOLEAN,
+    marvin BOOLEAN,
+    zora BOOLEAN,
+    url TEXT
 );
-ALTER TABLE vizdb.multiplex_allspec OWNER TO sdss;
-    
+ALTER TABLE vizdb.allspec_url OWNER TO sdss;
+
+CREATE TABLE vizdb.multiplex_url (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    multiplex_pk INTEGER REFERENCES vizdb.mulitplex(pk) NOT NULL,
+    multiplex_id INTEGER REFERENCES vizdb.mulitplex(multiplex_id) NOT NULL,
+    releases_pk INTEGER REFERENCES vizdb.releases(pk) NOT NULL,
+    multiplex_url_id TEXT NOT NULL,
+    sdss_phase INT2 NOT NULL,
+    observatory TEXT,
+    instrument TEXT,
+    version TEXT,
+    coadd TEXT,
+    cas BOOLEAN,
+    sas BOOLEAN,
+    saw BOOLEAN,
+    url TEXT
+);
+ALTER TABLE vizdb.multiplex_url OWNER TO sdss;
+
 
 -- GRANT permissions
 GRANT USAGE ON SCHEMA vizdb TO sdss;

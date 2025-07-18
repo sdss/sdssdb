@@ -203,7 +203,49 @@ class AllSpec(VizBase):
         table_name = 'allspec'
         print_fields = ['allspec_id']
 
+class Multiplex_Url(VizBase):
 
+    pk = AutoField()
+    multiplex_pk = IntegerField()
+    multiplex_id = TextField()
+    releases_pk = IntegerField(null=True)
+    multiplex_url_id = TextField()
+    sdss_phase = SmallIntegerField(null=True)
+    observatory = TextField(null=True)
+    instrument = TextField(null=True)
+    version = TextField(null=True)
+    coadd = TextField(null=True)
+    cas = BooleanField(null=False)
+    sas = BooleanField(null=False)
+    saw = BooleanField(null=False)
+    url = TextField()
+
+    class Meta:
+        table_name = 'multiplex_url'
+        print_fields = ['multiplex_url_id']
+
+class Allspec_Url(VizBase):
+
+    pk = AutoField()
+    allspec_pk = IntegerField()
+    allspec_id = TextField()
+    releases_pk = IntegerField(null=True)
+    allspec_url_id = TextField()
+    sdss_phase = SmallIntegerField(null=True)
+    observatory = TextField(null=True)
+    instrument = TextField(null=True)
+    version = TextField(null=True)
+    coadd = TextField(null=True)
+    cas = BooleanField(null=False)
+    sas = BooleanField(null=False)
+    saw = BooleanField(null=False)
+    marvin = BooleanField(null=False)
+    zora = BooleanField(null=False)
+    url = TextField()
+
+    class Meta:
+        table_name = 'allspec_url'
+        print_fields = ['allspec_url_id']
 
 class Plate(VizBase):
     plate_id = AutoField()
