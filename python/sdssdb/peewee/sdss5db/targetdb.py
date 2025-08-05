@@ -114,7 +114,8 @@ class Field(TargetdbBase):
                               model=Version)
     overplan = ForeignKeyField(column_name='overplan_pk',
                               field='pk',
-                              model=Overplan)
+                              model=Overplan,
+                              null=True)
 
     class Meta:
         table_name = 'field'
