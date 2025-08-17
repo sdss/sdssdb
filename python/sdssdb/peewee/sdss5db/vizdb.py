@@ -194,6 +194,7 @@ class AllSpec(VizBase):
     apstar_id = TextField(null=True)
     visit_id = TextField(null=True)
     mangaid = TextField(null=True)
+    has_mwmStar = BooleanField(null=False)
     specobjid = DecimalField(29)
     created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
