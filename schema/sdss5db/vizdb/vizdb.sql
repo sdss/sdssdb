@@ -160,6 +160,7 @@ CREATE TABLE vizdb.multiplex (
     design_id INTEGER,
     sdss_phase INT2 NOT NULL,
     observatory TEXT,
+    telescope TEXT,
     instrument TEXT,
     plate INT4,
     fps_field INT4,
