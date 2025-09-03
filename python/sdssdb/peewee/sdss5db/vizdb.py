@@ -556,3 +556,22 @@ class SpecObj(VizBase):
         table_name = 'specobj'
         print_fields = ['specobj_id', 'tree_id']
         #print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
+
+
+class TargetFlags(VizBase):
+    id = AutoField()
+    label = TextField(null=True)
+    bit = IntegerField(null=True)
+    carton_pk = IntegerField(null=True)
+    sdssc2bv = IntegerField(null=True)
+    program = TextField(null=True)
+    version = TextField(null=True)
+    v1 = FloatField(null=True)
+    name = TextField(null=True)
+    mapper = TextField(null=True)
+    alt_program = TextField(null=True)
+    alt_name = TextField(null=True)
+
+    class Meta:
+        table_name = 'semaphore_sdssc2b'
+        print_fields = ['label', 'bit', 'program', 'name', 'mapper', 'sdssc2bv']

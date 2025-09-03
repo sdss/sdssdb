@@ -148,9 +148,14 @@ CREATE TABLE vizdb.allspec (
     specobjid NUMERIC(29),
     created TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     modified TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    
+
 );
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(allspec_id);
+CREATE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(sdss_id);
+CREATE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(survey);
+CREATE INDEX CONCURRENTLY on vizdb.allspec (q3c_ang2ipix(ra, dec));
+CLUSTER allspec_q3c_ang2ipix_idx ON vizdb.allspec;
+ANALYZE vizdb.allspec;
 ALTER TABLE vizdb.allspec OWNER TO sdss;
 
 CREATE TABLE vizdb.multiplex (
@@ -194,7 +199,7 @@ CREATE TABLE vizdb.multiplex_allspec (
     allspec_id INTEGER REFERENCES vizdb.allspec(allspec_id) NOT NULL
 );
 ALTER TABLE vizdb.multiplex_allspec OWNER TO sdss;
-    
+
 
 -- GRANT permissions
 GRANT USAGE ON SCHEMA vizdb TO sdss;
