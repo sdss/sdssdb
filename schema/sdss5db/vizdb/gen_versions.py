@@ -59,6 +59,10 @@ def create_df() -> list[dict]:
     df.loc['DR19', 'mjd_cutoff_lco'] = 60130
     df.loc['IPL3', 'mjd_cutoff_apo'] = 60130
     df.loc['IPL1', 'mjd_cutoff_apo'] = 59765
+    df.loc['DR20', 'mjd_cutoff_apo'] = 60708
+    df.loc['DR20', 'mjd_cutoff_lco'] = 60708
+    df.loc['IPL4', 'mjd_cutoff_apo'] = 60708
+    df.loc['IPL4', 'mjd_cutoff_lco'] = 60708
 
     # reset index
     df = df.reset_index(drop=True)
