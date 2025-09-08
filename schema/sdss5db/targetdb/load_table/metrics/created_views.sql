@@ -16,7 +16,7 @@ join catalogdb.sdss_id_flat as sdssid on sdssid.catalogid = t.catalogid
 join targetdb.design_to_field as d2f on d2f.design_id = assn.design_id
 join targetdb.field as f on f.pk = d2f.field_pk
 join targetdb.version as v on v.pk = f.version_pk
-where v.plan = 'theta-1';
+where v.plan = 'iota-1';
 
 CREATE MATERIALIZED VIEW sandbox.carton_to_sdssid
 AS
@@ -60,7 +60,8 @@ where c.pk in
 1714, 1709, 1712, 1711, 1701, 1702, 1097, 1098, 1095, 
 1108, 1096, 1371, 1374, 1370, 1263, 1475, 1375, 1376, 1372,
 1821, 1822, 1823, 1824, 1825, 1826, 1827, 1828, 1829, 1830,
-1831, 1832, 1833, 1834, 1839, 
+1831, 1832, 1833, 1834, 1839, 1848, 1849, 1850, 1851, 1852,
+1853, 1854, 1856, 1860, 1861, 1862, 1863,
 1116, 1642, 1639, 1640, 1641, 1643, 696, 693, 694, 704, 705, 
 706, 709, 707, 708, 1343, 1043, 1044, 1132, 1133, 537, 538, 
 632, 633, 547, 548, 715, 1424, 803, 772, 1514, 1409, 1628, 
