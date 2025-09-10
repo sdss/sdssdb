@@ -151,6 +151,8 @@ CREATE TABLE vizdb.allspec (
     
 );
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(allspec_id);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(plate,ifudsgn);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(apred_vers, apstar_id, plate, mjd);
 ALTER TABLE vizdb.allspec OWNER TO sdss;
 
 CREATE TABLE vizdb.multiplex (
