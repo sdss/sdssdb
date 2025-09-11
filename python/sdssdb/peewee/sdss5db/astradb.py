@@ -8,11 +8,13 @@
 # Peewee version: 3.17.1
 
 # flake8: noqa: E501,E741
-
+import operator
+from functools import reduce
 from peewee import (AutoField, BigIntegerField, BigBitField, BitField, BooleanField,
                     DateTimeField, DoubleField, FloatField, ForeignKeyField,
-                    IntegerField, SQL, TextField)
+                    IntegerField, SQL, TextField, fn)
 from playhouse.postgres_ext import ArrayField
+from playhouse.hybrid import hybrid_method
 
 from .. import BaseModel
 from . import database  # noqa
@@ -21,11 +23,13 @@ from . import database  # noqa
 class AstraBase(BaseModel):
 
     class Meta:
+        # default to DR19 version
         schema = 'astra_050'
         database = database
 
 
 class Source(AstraBase):
+    """ An astronomical source. """
     pk = AutoField()
     sdss_id = BigIntegerField(null=True, unique=True)
     sdss4_apogee_id = TextField(null=True, unique=True)
@@ -164,8 +168,36 @@ class Source(AstraBase):
     class Meta:
         table_name = 'source'
 
+    @hybrid_method
+    def is_sdss5_target_bit_set(self, bit):
+        """
+        An expression to evaluate whether this source is assigned to the carton with the given bit position.
+
+        :param bit:
+            The carton bit position.
+        """
+        return (
+            (fn.length(self.sdss5_target_flags) > int(bit / 8))
+        &   (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+        )
+
+    @hybrid_method
+    def is_sdss5_target_any_bit_set(self, bits):
+        """
+        An expression to evaluate whether this source is assigned to any of the cartons with the given bit positions.
+
+        :param bits:
+            A list of carton bit positions.
+        """
+        conditions = [
+            (fn.length(self.sdss5_target_flags) > int(bit / 8)) &
+            (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+            for bit in bits
+        ]
+        return reduce(operator.or_, conditions)
 
 class Spectrum(AstraBase):
+    """ A one dimensional spectrum. """
     pk = AutoField()
     spectrum_type_flags = BigIntegerField()
 
@@ -413,6 +445,7 @@ class ApogeeRestFrameVisitSpectrum(AstraBase):
 
 
 class ApogeeVisitSpectrum(AstraBase):
+    """An APOGEE visit spectrum, stored in an apVisit data product."""
     pk = AutoField()
     source = ForeignKeyField(column_name='source_pk', field='pk', model=Source, null=True, index=True, backref="apogee_visit_spectrum")
     spectrum = ForeignKeyField(column_name='spectrum_pk_id', field='pk', model=Spectrum, null=True, index=True, unique=True)
@@ -472,6 +505,7 @@ class ApogeeVisitSpectrum(AstraBase):
 
 
 class ApogeeVisitSpectrumInApStar(AstraBase):
+    """An APOGEE stacked spectrum, stored in an apStar data product."""
     pk = AutoField()
     source = ForeignKeyField(column_name='source_pk', field='pk', model=Source, null=True, index=True, backref="apogee_visit_spectrum_in_apstar")
     spectrum = ForeignKeyField(column_name='spectrum_pk_id', field='pk', model=Spectrum, null=True, index=True, unique=True)
@@ -941,6 +975,7 @@ class BossRestFrameVisitSpectrum(AstraBase):
 
 
 class BossVisitSpectrum(AstraBase):
+    """A BOSS visit spectrum, where a visit is defined by spectra taken on a single MJD."""
     pk = AutoField()
     source = ForeignKeyField(column_name='source_pk', field='pk', model=Source, null=True, index=True, backref="boss_visit_spectrum")
     spectrum = ForeignKeyField(column_name='spectrum_pk_id', field='pk', model=Spectrum, null=True, index=True, unique=True)
