@@ -70,3 +70,8 @@ where c.pk in
 1021, 1023, 1027, 1028, 1029);
 
 -- TO DO: use Tom's targeting generation table once it's on pipelines
+CREATE TABLE sandbox.rs_finished_targets (
+    pk SERIAL PRIMARY KEY,
+    catalogid BIGINT,
+    carton TEXT
+);
