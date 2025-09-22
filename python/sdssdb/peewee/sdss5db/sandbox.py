@@ -437,3 +437,14 @@ class SimRunToSdssID(TargetdbBase):
 
     class Meta:
         table_name = 'sim_run_to_sdssid'
+
+
+class RsFinishedTargets(TargetdbBase):
+    pk = AutoField()
+    catalogid = IntegerField()
+    carton  = TextField()
+    nexp = IntegerField()
+    default_lambda_eff = FloatField()
+
+    class Meta:
+        table_name = 'rs_finished_targets'
