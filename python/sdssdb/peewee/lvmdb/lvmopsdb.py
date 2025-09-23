@@ -105,6 +105,27 @@ class Observation(LVMOpsBase):
         table_name = 'observation'
 
 
+class Redo(LVMOpsBase):
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
+                           model=Tile)
+    nexp = IntegerField(default=1)
+
+    class Meta:
+        table_name = 'redo'
+
+
+class RedoObs(LVMOpsBase):
+    obs_id = AutoField()
+    tile = ForeignKeyField(column_name='tile_id',
+                           field='tile_id',
+                           model=Redo)
+    time_stamp = DateTimeField(default=datetime.datetime.now())
+
+    class Meta:
+        table_name = 'redo_obs'
+
+
 class Weather(LVMOpsBase):
     pk = AutoField()
     observation = ForeignKeyField(column_name='obs_id',

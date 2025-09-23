@@ -243,6 +243,17 @@ CREATE TABLE lvmopsdb.ln2_fill (
     valve_times JSONB
 );
 
+CREATE TABLE lvmopsdb.redo (
+    tile_id INTEGER PRIMARY KEY NOT NULL,
+    nexp INTEGER DEFAULT 1
+);
+
+CREATE TABLE lvmopsdb.redo_obs (
+    obs_id SERIAL PRIMARY KEY NOT NULL,
+    tile_id INTEGER,
+    time_stamp TIMESTAMP
+);
+
 -- constraints
 
 ALTER TABLE ONLY lvmopsdb.exposure
@@ -344,6 +355,18 @@ ALTER TABLE ONLY lvmopsdb.guider_coadd
 ALTER TABLE ONLY lvmopsdb.disabled
     ADD CONSTRAINT disabled_tile_id_fk
     FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.redo
+    ADD CONSTRAINT redo_tile_id_fk
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.redo_obs
+    ADD CONSTRAINT redo_obs_tile_id_fk
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.redo(tile_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
