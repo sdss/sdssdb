@@ -116,10 +116,9 @@ class Redo(LVMOpsBase):
 
 
 class RedoObs(LVMOpsBase):
-    obs_id = AutoField()
-    tile = ForeignKeyField(column_name='tile_id',
-                           field='tile_id',
-                           model=Redo)
+    obs_id = ForeignKeyField(column_name='obs_id',
+                             field='obs_id',
+                             model=Observation)
     time_stamp = DateTimeField(default=datetime.datetime.now())
 
     class Meta:

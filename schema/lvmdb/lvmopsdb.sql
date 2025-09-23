@@ -249,8 +249,7 @@ CREATE TABLE lvmopsdb.redo (
 );
 
 CREATE TABLE lvmopsdb.redo_obs (
-    obs_id SERIAL PRIMARY KEY NOT NULL,
-    tile_id INTEGER,
+    obs_id INTEGER PRIMARY KEY NOT NULL,
     time_stamp TIMESTAMP
 );
 
@@ -365,8 +364,8 @@ ALTER TABLE ONLY lvmopsdb.redo
     DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY lvmopsdb.redo_obs
-    ADD CONSTRAINT redo_obs_tile_id_fk
-    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.redo(tile_id)
+    ADD CONSTRAINT redo_obs_obs_id_fk
+    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
