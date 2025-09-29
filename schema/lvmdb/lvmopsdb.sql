@@ -248,11 +248,6 @@ CREATE TABLE lvmopsdb.redo (
     nexp INTEGER DEFAULT 1
 );
 
-CREATE TABLE lvmopsdb.redo_obs (
-    obs_id INTEGER PRIMARY KEY NOT NULL,
-    time_stamp TIMESTAMP
-);
-
 -- constraints
 
 ALTER TABLE ONLY lvmopsdb.exposure
@@ -363,11 +358,6 @@ ALTER TABLE ONLY lvmopsdb.redo
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY lvmopsdb.redo_obs
-    ADD CONSTRAINT redo_obs_obs_id_fk
-    FOREIGN KEY (obs_id) REFERENCES lvmopsdb.observation(obs_id)
-    ON UPDATE CASCADE ON DELETE CASCADE
-    DEFERRABLE INITIALLY DEFERRED;
 
 INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),
