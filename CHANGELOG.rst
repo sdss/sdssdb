@@ -5,6 +5,11 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.13.4 <2025-10-02>`
+* :feature:`289` Symlinking lvmopsdb to sdss5db
+* :feature:`288` Updated vizdb schema and models for IPL-4
+* :feature:`286` Updating catalogdb models and sql files
+
 * :release:`0.13.3 <2025-07-15>`
 * Added missing fields to several ``catalog_to_X`` models in Peewee.
 * Added several missing ``catalog_to_X`` models in SQLAlchemy.
