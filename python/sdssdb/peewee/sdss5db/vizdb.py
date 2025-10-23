@@ -122,6 +122,7 @@ class Multiplex(VizBase):
     design_id = IntegerField()
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)
+    telescope = TextField(null=True)
     instrument = TextField(null=True)
     plate = IntegerField(null=True)
     fps_field = IntegerField(null=True)

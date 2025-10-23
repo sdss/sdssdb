@@ -244,6 +244,8 @@ CREATE TABLE vizdb.allspec (
 
 );
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(allspec_id);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(plate,ifudsgn);
+CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(apred_vers, apstar_id, plate, mjd);
 CREATE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(sdss_id);
 CREATE INDEX CONCURRENTLY ON vizdb.allspec USING BTREE(survey);
 CREATE INDEX CONCURRENTLY on vizdb.allspec (q3c_ang2ipix(ra, dec));
@@ -258,6 +260,7 @@ CREATE TABLE vizdb.multiplex (
     design_id INTEGER,
     sdss_phase INT2 NOT NULL,
     observatory TEXT,
+    telescope TEXT,
     instrument TEXT,
     plate INT4,
     fps_field INT4,

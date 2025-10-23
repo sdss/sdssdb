@@ -164,6 +164,7 @@ class Multiplex(Base):
     design_id = Column('design_id', Integer)
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
+    telescope = Column('telescope', Text)
     instrument = Column('instrument', Text)
     plate = Column('plate', Integer)
     fps_field = Column('fps_field', Integer)

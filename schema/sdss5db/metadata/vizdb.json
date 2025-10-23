@@ -831,6 +831,15 @@
     {
       "schema": "vizdb",
       "table_name": "multiplex",
+      "column_name": "telescope",
+      "display_name": "telescope",
+      "sql_type": "TEXT",
+      "description": "telescope",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
       "column_name": "instrument",
       "display_name": "instrument",
       "sql_type": "TEXT",
