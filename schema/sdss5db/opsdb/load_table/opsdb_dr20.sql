@@ -3,7 +3,7 @@ create schema if not exists opsdb_lco_dr20;
 select *
 into opsdb_lco_dr20.configuration
 from opsdb_lco.configuration cfg
-where cfg.epoch < 2460709.5;
+where cfg.epoch < 2460709.1;
 
 select *
 into opsdb_lco_dr20.exposure
@@ -44,7 +44,7 @@ create schema if not exists opsdb_apo_dr20;
 select *
 into opsdb_apo_dr20.configuration
 from opsdb_apo.configuration cfg
-where cfg.epoch < 2460709.5;
+where cfg.epoch < 2460709.1;
 
 select *
 into opsdb_apo_dr20.exposure
