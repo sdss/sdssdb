@@ -5,6 +5,10 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* :release:`0.13.5 <2025-10-23>`
+* :feature:`291` smal ipl-4 tweaks
+* :feature:`290` fix to spectrum_pk change in astra schema 0.5 v 0.8
+
 * :release:`0.13.4 <2025-10-02>`
 * :feature:`289` Symlinking lvmopsdb to sdss5db
 * :feature:`288` Updated vizdb schema and models for IPL-4
