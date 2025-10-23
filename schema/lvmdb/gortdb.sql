@@ -47,7 +47,9 @@ CREATE TABLE gortdb.exposure (
     start_time TIMESTAMPTZ,
     mjd INTEGER,
     exposure_time REAL,
-    header JSONB
+    header JSONB,
+    reobserved BOOLEAN,
+    ancillary BOOLEAN
 );
 
 CREATE TABLE gortdb.night_log (
