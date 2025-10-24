@@ -2155,6 +2155,9 @@ class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
                            object_id_name='source_id',
                            backref='assas')
 
+    class Meta:
+        table_name = 'gaia_assas_sn_cepheids'
+        
 
 class Skies_v1(CatalogdbModel):
 

@@ -5,6 +5,8 @@ Changelog
 
 This document records the main changes to the ``sdssdb`` code.
 
+* Explicitly add table name for ``gaia_assas_sn_cepheids``.
+
 * :release:`0.13.5 <2025-10-23>`
 * :feature:`291` smal ipl-4 tweaks
 * :feature:`290` fix to spectrum_pk change in astra schema 0.5 v 0.8
