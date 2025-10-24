@@ -27,6 +27,7 @@ from playhouse.postgres_ext import ArrayField
 from .. import BaseModel
 from . import database
 
+
 # When adding a foreign key like below to a peewee model class
 #
 # gaia_xmatch = ForeignKeyField(Gaia_edr3_sdssdr13_best_neighbour,
@@ -2003,15 +2004,18 @@ class BHM_RM_v1(CatalogdbModel):
 
 
 class BHM_RM_v1_1(BHM_RM_v1):
-    pass
+    class Meta:
+        table_name = 'bhm_rm_v1_1'
 
 
 class BHM_RM_v1_3(BHM_RM_v1):
-    pass
+    class Meta:
+        table_name = 'bhm_rm_v1_3'
 
 
 class BHM_RM_v0_2(BHM_RM_v0):
-    pass
+    class Meta:
+        table_name = 'bhm_rm_v0_2'
 
 
 class BHM_RM_Tweaks(CatalogdbModel):
@@ -2157,7 +2161,7 @@ class GAIA_ASSAS_SN_Cepheids(CatalogdbModel):
 
     class Meta:
         table_name = 'gaia_assas_sn_cepheids'
-        
+
 
 class Skies_v1(CatalogdbModel):
 
