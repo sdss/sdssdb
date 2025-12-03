@@ -6,6 +6,7 @@ Changelog
 This document records the main changes to the ``sdssdb`` code.
 
 * Explicitly add table name for ``gaia_assas_sn_cepheids``.
+* Support SQLAlchemy 2.0.
 
 * :release:`0.13.5 <2025-10-23>`
 * :feature:`291` smal ipl-4 tweaks
