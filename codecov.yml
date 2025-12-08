@@ -5,3 +5,8 @@ coverage:
 
 github_checks:
   annotations: false
+
+ignore:
+  - schema
+  - host
+  - tests
