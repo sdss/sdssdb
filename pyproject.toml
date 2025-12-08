@@ -28,6 +28,16 @@ Documentation = "https://sdssdb.readthedocs.org"
 file = "README.md"
 content-type = "text/markdown"
 
+[project.optional-dependencies]
+extras = [
+    "progressbar2>=3.46.1",
+    "pydot>=1.4.1",
+    "astropy>=5.0.0",
+    "pandas>=2.0.0",
+    "inflect>=4.1.0",
+    "h5py>=3.8.0",
+]
+
 [dependency-groups]
 extras = [
     "progressbar2>=3.46.1",
