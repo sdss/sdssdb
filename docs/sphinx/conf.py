@@ -163,7 +163,7 @@ releases_unstable_prehistory = True
 # a list of builtin themes.
 #
 html_theme = "furo"
-html_title = "GORT's documentation"
+html_title = "sdssdb's documentation"
 html_logo = "_static/sdssv_logo.png"
 html_favicon = "./_static/favicon_sdssv.ico"
 html_theme_options = {
