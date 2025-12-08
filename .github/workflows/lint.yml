@@ -2,7 +2,6 @@ name: Lint
 
 on:
   push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -12,14 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
       - name: Lint with ruff
         run: |
-          pip install ruff
-          ruff check python/
+          uv run ruff check python/
