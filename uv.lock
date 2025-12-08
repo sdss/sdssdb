@@ -2575,21 +2575,6 @@ wheels = [
 ]
 
 [[package]]
-name = "releases"
-version = "2.1.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "semantic-version" },
-    { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/71/a7/37cbf3e9f7c2591b4ba0453ef916cb2df9c4fd3cd06d5ddab2175a4c023b/releases-2.1.1.tar.gz", hash = "sha256:ae0683c3f309931a3717c6976e0f079929d05d34214b432a95764e61367f58d1", size = 43034, upload-time = "2023-04-28T19:12:12.259Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/05/9e0553803381b24d6e807bcbc1d1c5c11610dfefa70772eee36773d40dbc/releases-2.1.1-py3-none-any.whl", hash = "sha256:cd06449c915ce9729aaebe19a836744998f83f9ebb0cf92e54949c88ab3402f1", size = 20969, upload-time = "2023-04-28T19:12:10.907Z" },
-]
-
-[[package]]
 name = "requests"
 version = "2.32.5"
 source = { registry = "https://pypi.org/simple" }
@@ -2729,7 +2714,6 @@ docs = [
     { name = "myst-parser", version = "3.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "myst-parser", version = "4.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "nox" },
-    { name = "releases" },
     { name = "rstcheck" },
     { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
@@ -2785,7 +2769,6 @@ docs = [
     { name = "furo", specifier = ">=2021.9.22" },
     { name = "myst-parser", specifier = ">=2.0.0" },
     { name = "nox", specifier = ">=2021.6.12" },
-    { name = "releases", specifier = ">=2.0.0" },
     { name = "rstcheck", specifier = ">=3.3.1" },
     { name = "sphinx", specifier = ">=7.0.0" },
     { name = "sphinx-autobuild", specifier = ">=2021.3.14" },
@@ -2823,15 +2806,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/54/f9/bbf22343115daad5bd54808b3b45ef44b9960dfa43ab9430e43d8f1cf0d8/sdsstools-1.9.6.tar.gz", hash = "sha256:c95a53de9366cb7a3204ad22693e0ef44596ca1f87608ee14afcfaecbaee58cf", size = 51590, upload-time = "2025-11-14T15:47:47.078Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9c/9b/87bebf345d4cec8c6903da2824975baa562bc4f85f5d4933ec2e9355ee29/sdsstools-1.9.6-py3-none-any.whl", hash = "sha256:eca4b64ba3df6578a9e6a82aca2e26a8befa5f258c020ac8ad35c2ca2c7d49e4", size = 58854, upload-time = "2025-11-14T15:47:45.72Z" },
-]
-
-[[package]]
-name = "semantic-version"
-version = "2.6.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/72/83/f76958017f3094b072d8e3a72d25c3ed65f754cc607fdb6a7b33d84ab1d5/semantic_version-2.6.0.tar.gz", hash = "sha256:2a4328680073e9b243667b201119772aefc5fc63ae32398d6afafff07c4f54c0", size = 13919, upload-time = "2016-09-25T14:22:57.563Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/28/be/3a7241d731ba89063780279a5433f5971c1cf41735b64a9f874b7c3ff995/semantic_version-2.6.0-py3-none-any.whl", hash = "sha256:2d06ab7372034bcb8b54f2205370f4aa0643c133b7e6dbd129c5200b83ab394b", size = 14175, upload-time = "2016-09-25T14:23:00.423Z" },
 ]
 
 [[package]]

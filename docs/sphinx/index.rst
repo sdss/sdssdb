@@ -29,7 +29,7 @@ Reference
    :maxdepth: 2
 
    api
-   CHANGELOG
+   changelog
 
 
 Indices and tables
