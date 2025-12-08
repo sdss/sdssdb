@@ -7,10 +7,10 @@ from sdssdb.peewee import BaseModel
 database = PeeweeDatabaseConnection(autoconnect=False)
 
 # Tries to connect to the correct database.
-if database.profile == 'apo':
-    database_name = 'apodb'
-elif database.profile == 'lco':
-    database_name = 'lcodb'
+if database.profile == "apo":
+    database_name = "apodb"
+elif database.profile == "lco":
+    database_name = "lcodb"
 else:
     database_name = None
 

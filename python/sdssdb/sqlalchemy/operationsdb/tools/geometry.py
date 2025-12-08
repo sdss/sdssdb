@@ -11,8 +11,8 @@
 todo:
 """
 
-__author__ = 'Adrian Price-Whelan <adrn@nyu.edu>'
-__all__ = ['Angle', 'subtends']
+__author__ = "Adrian Price-Whelan <adrn@nyu.edu>"
+__all__ = ["Angle", "subtends"]
 
 import copy
 import math
@@ -21,39 +21,43 @@ from math import acos, cos, degrees, radians, sin
 from . import astrodatetime, convert
 
 
-VALIDUNITS = ['radians', 'degrees', 'hours']
+VALIDUNITS = ["radians", "degrees", "hours"]
 
 
 class Angle(object):
-    """ This class represents an Angle. Set the bounds by specifying angleObject.bounds = (lower, upper) """
+    """This class represents an Angle. Set the bounds by specifying angleObject.bounds = (lower, upper)"""
 
     _customBounds = False
 
     @staticmethod
-    def fromDegrees(val): return Angle(degrees=val)
+    def fromDegrees(val):
+        return Angle(degrees=val)
 
     @staticmethod
-    def fromHours(val): return Angle(hours=val)
+    def fromHours(val):
+        return Angle(hours=val)
 
     @staticmethod
-    def fromRadians(val): return Angle(radians=val)
+    def fromRadians(val):
+        return Angle(radians=val)
 
     @staticmethod
-    def fromDatetime(dt): return Angle(hours=convert.datetime2decimalTime(dt))
+    def fromDatetime(dt):
+        return Angle(hours=convert.datetime2decimalTime(dt))
 
     @staticmethod
     def fromUnits(val, units):
-        if units.lower() == 'degrees':
+        if units.lower() == "degrees":
             return Angle(degrees=val)
-        elif units.lower() == 'hours':
+        elif units.lower() == "hours":
             return Angle(hours=val)
-        elif units.lower() == 'radians':
+        elif units.lower() == "radians":
             return Angle(radians=val)
         else:
-            raise ValueError('Invalid units!')
+            raise ValueError("Invalid units!")
 
     def __init__(self, degrees=None, hours=None, radians=None):
-        """ Accepts an angle value in degrees. The input parameters degrees
+        """Accepts an angle value in degrees. The input parameters degrees
             and hours both accept either a string like '15:23:14.231,' or a
             decimal representation of the value, e.g. 15.387.
 
@@ -67,16 +71,17 @@ class Angle(object):
 
         if degrees is not None:
             self._degrees(degrees)
-            self.units = 'degrees'
+            self.units = "degrees"
         elif hours is not None:
             self._hours(hours)
-            self.units = 'hours'
+            self.units = "hours"
         elif radians is not None:
             self._radians(radians)
-            self.units = 'radians'
+            self.units = "radians"
         else:
             raise TypeError(
-                "When creating an Angle object, you must specify 'degrees', 'hours', or 'radians' as an input parameter.")
+                "When creating an Angle object, you must specify 'degrees', 'hours', or 'radians' as an input parameter."
+            )
 
     # These are hacks so I can set the __repr__ and __str__ of the object depending
     #   on the primary units of the Angle
@@ -87,99 +92,107 @@ class Angle(object):
         return self._repr()
 
     def _str(self):
-        if self.units == 'degrees':
+        if self.units == "degrees":
             return self.degrees__str__()
-        elif self.units == 'radians':
+        elif self.units == "radians":
             return self.radians__str__()
         else:
             return self.hours__str__()
 
     def _repr(self):
-        if self.units == 'degrees':
+        if self.units == "degrees":
             return self.degrees__repr__()
-        elif self.units == 'radians':
+        elif self.units == "radians":
             return self.radians__repr__()
         else:
             return self.hours__repr__()
 
     def _degrees(self, deg):
-        """
-        """
-        if isinstance(deg, ''.__class__):
+        """ """
+        if isinstance(deg, "".__class__):
             self.degrees = convert.sex2dec(*convert.parseDec(deg))
         else:
             self.degrees = deg
 
-        self.hours = self.degrees / 15.
+        self.hours = self.degrees / 15.0
         self.radians = math.radians(self.degrees)
 
     def _hours(self, hr):
-        """
-        """
-        if isinstance(hr, ''.__class__):
+        """ """
+        if isinstance(hr, "".__class__):
             self.hours = convert.sex2dec(*convert.parseRA(hr))
         else:
             self.hours = hr
 
-        self.degrees = self.hours * 15.
+        self.degrees = self.hours * 15.0
         self.radians = math.radians(self.degrees)
 
     def _radians(self, rad):
         self.radians = rad
         self.degrees = math.degrees(self.radians)
-        self.hours = self.degrees / 15.
+        self.hours = self.degrees / 15.0
 
     def degrees__str__(self):
-        return convert.dec2stringTime(self.degrees) + ' degrees'
+        return convert.dec2stringTime(self.degrees) + " degrees"
 
     def hours__str__(self):
-        return convert.dec2stringTime(self.hours) + ' hours'
+        return convert.dec2stringTime(self.hours) + " hours"
 
     def radians__str__(self):
-        return str(self.radians) + ' radians'
+        return str(self.radians) + " radians"
 
-    def degrees__repr__(self): return '< Angle: %f degrees -- %s >' % (self.degrees, str(self))
+    def degrees__repr__(self):
+        return "< Angle: %f degrees -- %s >" % (self.degrees, str(self))
 
-    def hours__repr__(self): return '< Angle: %f hours -- %s >' % (self.hours, str(self))
+    def hours__repr__(self):
+        return "< Angle: %f hours -- %s >" % (self.hours, str(self))
 
-    def radians__repr__(self): return '< Angle: %f radians >' % self.radians
+    def radians__repr__(self):
+        return "< Angle: %f radians >" % self.radians
 
     def _setUnits(self, units):
-        if units == 'degrees':
+        if units == "degrees":
             if not self._customBounds:
-                self._bounds = (-180., 180.)
+                self._bounds = (-180.0, 180.0)
             else:
-                print('You specified custom bounds for this object. If you are changing units, you may need to respecify those bounds in the new units.')
+                print(
+                    "You specified custom bounds for this object. If you are changing units, you may need to respecify those bounds in the new units."
+                )
             self._str = self.degrees__str__
             self._repr = self.degrees__repr__
             self._value = self.degrees
-        elif units == 'hours':
+        elif units == "hours":
             if not self._customBounds:
-                self._bounds = (0., 24.)
+                self._bounds = (0.0, 24.0)
             else:
-                print('You specified custom bounds for this object. If you are changing units, you may need to respecify those bounds in the new units.')
+                print(
+                    "You specified custom bounds for this object. If you are changing units, you may need to respecify those bounds in the new units."
+                )
             self._str = self.hours__str__
             self._repr = self.hours__repr__
             self._value = self.hours
-        elif units == 'radians':
+        elif units == "radians":
             if not self._customBounds:
-                self._bounds = (0., 2 * math.pi)
+                self._bounds = (0.0, 2 * math.pi)
             else:
-                print('You specified custom bounds for this object. If you are changing units, you may need to respecify those bounds in the new units.')
+                print(
+                    "You specified custom bounds for this object. If you are changing units, you may need to respecify those bounds in the new units."
+                )
             self._str = self.radians__str__
             self._repr = self.radians__repr__
             self._value = self.radians
         else:
-            raise ValueError('Invalid units!')
+            raise ValueError("Invalid units!")
 
     @property
-    def units(self): return self._units
+    def units(self):
+        return self._units
 
     @units.setter
     def units(self, val):
         lowVal = val.lower()
         if lowVal not in VALIDUNITS:
-            raise ValueError('Specified units (%s) are not supported by this class!' % val)
+            raise ValueError("Specified units (%s) are not supported by this class!" % val)
 
         self._units = lowVal
         self._setUnits(self._units)
@@ -193,20 +206,21 @@ class Angle(object):
         try:
             tupVal = tuple(val)
         except ValueError:
-            print('Invalid bounds.')
+            print("Invalid bounds.")
             raise
 
         if len(tupVal) != 2:
             raise ValueError(
-                'Invalid tuple. You have to the lower and upper bounds -- you specified %d numbers!' %
-                len(tupVal))
+                "Invalid tuple. You have to the lower and upper bounds -- you specified %d numbers!"
+                % len(tupVal)
+            )
         self._customBounds = True
         self._bounds = tupVal
 
     @property
     def normalized(self):
-        """ Normalize the angle to be within the set bounds (self.bounds), and
-            return a new object with the normalized angle.
+        """Normalize the angle to be within the set bounds (self.bounds), and
+        return a new object with the normalized angle.
         """
         if self._value < self.bounds[0]:
             return Angle.fromUnits(self._value % self.bounds[1], self.units)
@@ -219,16 +233,16 @@ class Angle(object):
             return copy.copy(self)
 
     def normalize(self):
-        """ Normalize the angle to be within the set bounds (self.bounds), and
-            replace the internal values.
+        """Normalize the angle to be within the set bounds (self.bounds), and
+        replace the internal values.
         """
         if self._value < self.bounds[0]:
             self._value = self._value % self.bounds[1]
-            if self.units == 'degrees':
+            if self.units == "degrees":
                 self._degrees(self._value)
-            elif self.units == 'radians':
+            elif self.units == "radians":
                 self._radians(self._value)
-            elif self.units == 'hours':
+            elif self.units == "hours":
                 self._hours(self._value)
 
         elif self._value >= self.bounds[1]:
@@ -237,133 +251,144 @@ class Angle(object):
             else:
                 self._value = self._value % self.bounds[0]
 
-            if self.units == 'degrees':
+            if self.units == "degrees":
                 self._degrees(self._value)
-            elif self.units == 'radians':
+            elif self.units == "radians":
                 self._radians(self._value)
-            elif self.units == 'hours':
+            elif self.units == "hours":
                 self._hours(self._value)
         else:
             pass
 
     # self._value is defined by setting the 'units' attribute. By default, it is
     #   set to whatever units you specified when you created the object.
-    def __float__(self): return self._value
+    def __float__(self):
+        return self._value
 
-    def __int__(self): return int(self._value)
+    def __int__(self):
+        return int(self._value)
 
-    def __radians__(self): return self.radians
+    def __radians__(self):
+        return self.radians
 
-    def __degrees__(self): return self.degrees
+    def __degrees__(self):
+        return self.degrees
 
     # Addition
-    def __add__(self, other, option='left'):
+    def __add__(self, other, option="left"):
         selfCopy = copy.copy(self)
         otherCopy = copy.copy(other)
 
         if not isinstance(otherCopy, Angle):
             raise TypeError("Can't add an Angle object and a %s!" % otherCopy.__class__)
-        if option == 'left':
+        if option == "left":
             selfCopy.units = otherCopy.units
             return Angle.fromUnits(selfCopy._value + otherCopy._value, selfCopy.units)
-        elif option == 'right':
+        elif option == "right":
             otherCopy.units = selfCopy.units
             return Angle.fromUnits(otherCopy._value + selfCopy._value, otherCopy.units)
 
-    def __radd__(self, other): return self.__add__(other, 'right')
+    def __radd__(self, other):
+        return self.__add__(other, "right")
 
     # Subtraction
-    def __sub__(self, other, option='left'):
+    def __sub__(self, other, option="left"):
         if not isinstance(other, Angle):
             raise TypeError("Can't subtract an Angle object and a %s!" % other.__class__)
 
         selfCopy = copy.copy(self)
         otherCopy = copy.copy(other)
 
-        if option == 'left':
+        if option == "left":
             selfCopy.units = otherCopy.units
             return Angle.fromUnits(selfCopy._value - otherCopy._value, selfCopy.units)
-        elif option == 'right':
+        elif option == "right":
             otherCopy.units = selfCopy.units
             return Angle.fromUnits(otherCopy._value - selfCopy._value, otherCopy.units)
 
-    def __rsub__(self, other): return self.__sub__(other, 'right')
+    def __rsub__(self, other):
+        return self.__sub__(other, "right")
 
     # Multiplication
-    def __mul__(self, other, option='left'):
+    def __mul__(self, other, option="left"):
         if isinstance(other, Angle):
-            raise TypeError('Multiplication is not supported between two Angle objects!')
+            raise TypeError("Multiplication is not supported between two Angle objects!")
         else:
-            return Angle.fromUnits(self.degrees * other, 'degrees')
+            return Angle.fromUnits(self.degrees * other, "degrees")
 
-    def __rmul__(self, other): return self.__mul__(other, option='right')
+    def __rmul__(self, other):
+        return self.__mul__(other, option="right")
 
     # Division
     def __div__(self, other):
         if isinstance(other, Angle):
-            raise TypeError('Division is not supported between two Angle objects!')
+            raise TypeError("Division is not supported between two Angle objects!")
         else:
-            return Angle.fromUnits(self.degrees / other, 'degrees')
+            return Angle.fromUnits(self.degrees / other, "degrees")
 
     def __rdiv__(self, other):
         if isinstance(other, Angle):
-            raise TypeError('Division is not supported between two Angle objects!')
+            raise TypeError("Division is not supported between two Angle objects!")
         else:
-            return Angle.fromUnits(other / self.degrees, 'degrees')
+            return Angle.fromUnits(other / self.degrees, "degrees")
 
     def __truediv__(self, other):
         if isinstance(other, Angle):
-            raise TypeError('Division is not supported between two Angle objects!')
+            raise TypeError("Division is not supported between two Angle objects!")
         else:
-            return Angle.fromUnits(self.degrees / other, 'degrees')
+            return Angle.fromUnits(self.degrees / other, "degrees")
 
     def __rtruediv__(self, other):
         if isinstance(other, Angle):
-            raise TypeError('Division is not supported between two Angle objects!')
+            raise TypeError("Division is not supported between two Angle objects!")
         else:
-            return Angle.fromUnits(other / self.degrees, 'degrees')
+            return Angle.fromUnits(other / self.degrees, "degrees")
 
     def __neg__(self):
-        return Angle.fromUnits(-self.degrees, 'degrees')
+        return Angle.fromUnits(-self.degrees, "degrees")
 
 
 class RA(Angle):
-    """ Represents a J2000 Right Ascension """
+    """Represents a J2000 Right Ascension"""
 
     @staticmethod
-    def fromDegrees(val): return RA(degrees=val)
+    def fromDegrees(val):
+        return RA(degrees=val)
 
     @staticmethod
-    def fromHours(val): return RA(hours=val)
+    def fromHours(val):
+        return RA(hours=val)
 
     @staticmethod
-    def fromRadians(val): return RA(radians=val)
+    def fromRadians(val):
+        return RA(radians=val)
 
     @staticmethod
-    def fromDatetime(dt): return RA(hours=convert.datetime2decimalTime(dt))
+    def fromDatetime(dt):
+        return RA(hours=convert.datetime2decimalTime(dt))
 
     @staticmethod
     def fromUnits(val, units):
-        if units.lower() == 'degrees':
+        if units.lower() == "degrees":
             return RA(degrees=val)
-        elif units.lower() == 'hours':
+        elif units.lower() == "hours":
             return RA(hours=val)
-        elif units.lower() == 'radians':
+        elif units.lower() == "radians":
             return RA(radians=val)
         else:
-            raise ValueError('Invalid units!')
+            raise ValueError("Invalid units!")
 
     def __init__(self, **kwargs):
         Angle.__init__(self, **kwargs)
-        if 'degrees' in kwargs:
-            self.bounds = (0, 360.)
-        elif 'radians' in kwargs:
-            self.bounds = (0, 2. * math.pi)
-        elif 'hours' in kwargs:
-            self.bounds = (0, 24.)
+        if "degrees" in kwargs:
+            self.bounds = (0, 360.0)
+        elif "radians" in kwargs:
+            self.bounds = (0, 2.0 * math.pi)
+        elif "hours" in kwargs:
+            self.bounds = (0, 24.0)
 
-    def ha(self, lst, units='hours'):
-        """ Given a Local Sidereal Time (LST), calculate the hour angle for this RA
+    def ha(self, lst, units="hours"):
+        """Given a Local Sidereal Time (LST), calculate the hour angle for this RA
 
         Parameters
         ----------
@@ -387,8 +412,8 @@ class RA(Angle):
 
         return lst - self
 
-    def lst(self, ha, units='degrees'):
-        """ Given an Hour Angle, calculate the Local Sidereal Time (LST) for this RA
+    def lst(self, ha, units="degrees"):
+        """Given an Hour Angle, calculate the Local Sidereal Time (LST) for this RA
 
         Parameters
         ----------
@@ -413,80 +438,85 @@ class RA(Angle):
 
 
 class Dec(Angle):
-    """ Represents a J2000 Declination """
+    """Represents a J2000 Declination"""
 
     @staticmethod
-    def fromDegrees(val): return Dec(degrees=val)
+    def fromDegrees(val):
+        return Dec(degrees=val)
 
     @staticmethod
-    def fromHours(val): return Dec(hours=val)
+    def fromHours(val):
+        return Dec(hours=val)
 
     @staticmethod
-    def fromRadians(val): return Dec(radians=val)
+    def fromRadians(val):
+        return Dec(radians=val)
 
     @staticmethod
-    def fromDatetime(dt): return Dec(hours=convert.datetime2decimalTime(dt))
+    def fromDatetime(dt):
+        return Dec(hours=convert.datetime2decimalTime(dt))
 
     @staticmethod
     def fromUnits(val, units):
-        if units.lower() == 'degrees':
+        if units.lower() == "degrees":
             return Dec(degrees=val)
-        elif units.lower() == 'hours':
+        elif units.lower() == "hours":
             return Dec(hours=val)
-        elif units.lower() == 'radians':
+        elif units.lower() == "radians":
             return Dec(radians=val)
         else:
-            raise ValueError('Invalid units!')
+            raise ValueError("Invalid units!")
 
     def __init__(self, **kwargs):
         Angle.__init__(self, **kwargs)
-        if 'degrees' in kwargs:
-            self.bounds = (-90, 90.)
-        elif 'radians' in kwargs:
-            self.bounds = (-math.pi / 2., math.pi / 2.)
-        elif 'hours' in kwargs:
+        if "degrees" in kwargs:
+            self.bounds = (-90, 90.0)
+        elif "radians" in kwargs:
+            self.bounds = (-math.pi / 2.0, math.pi / 2.0)
+        elif "hours" in kwargs:
             self.bounds = (-6, 6)
 
 
 class CoordinateSystem(object):
-    """ A generic coordinate system class. Support n > 0 dimensions. This class is an 'abtract' class,
-        and should really only be used in the below subclasses.
+    """A generic coordinate system class. Support n > 0 dimensions. This class is an 'abtract' class,
+    and should really only be used in the below subclasses.
     """
 
     def __init__(self, *args):
         if len(args) == 0:
-            raise ValueError('You must specify at least one coordinate!')
+            raise ValueError("You must specify at least one coordinate!")
 
         self.coordinates = []
         for angle in args:
             if not isinstance(angle, Angle):
-                raise ValueError('Input not a geometry.Angle() object!')
+                raise ValueError("Input not a geometry.Angle() object!")
             self.coordinates.append(angle)
 
 
 class EquatorialCoordinates(CoordinateSystem):
-    """ Represents an RA, Dec[, z | physical distance] coordinate system. """
+    """Represents an RA, Dec[, z | physical distance] coordinate system."""
 
     def __init__(self, ra, dec, **kwargs):
-        """ A few notes:
-            - if the ra/dec specified are not geometry.Angle() objects, they are
-                assumed to be in units degrees, and converted to Angle() objects.
-            - if you specify distance=blah, corresponding to a physical distance
-                to the object, you must also specify 'distanceUnits' to be pc, kpc,
-                mpc, ly, m, or km.
+        """A few notes:
+        - if the ra/dec specified are not geometry.Angle() objects, they are
+            assumed to be in units degrees, and converted to Angle() objects.
+        - if you specify distance=blah, corresponding to a physical distance
+            to the object, you must also specify 'distanceUnits' to be pc, kpc,
+            mpc, ly, m, or km.
 
         """
 
-        if 'z' in kwargs:
-            self.z = float(kwargs['z'])
+        if "z" in kwargs:
+            self.z = float(kwargs["z"])
             self.distance = None
-        elif 'redshift' in kwargs:
-            self.z = float(kwargs['redshift'])
+        elif "redshift" in kwargs:
+            self.z = float(kwargs["redshift"])
             self.distance = None
-        elif 'distance' in kwargs:
-            if 'distanceUnits' not in kwargs:
+        elif "distance" in kwargs:
+            if "distanceUnits" not in kwargs:
                 raise ValueError(
-                    "If you specify 'distance', you must also specify 'distanceUnits' to be one of:\npc, kpc, mpc, ly, m, or km.")
+                    "If you specify 'distance', you must also specify 'distanceUnits' to be one of:\npc, kpc, mpc, ly, m, or km."
+                )
 
         if not isinstance(ra, RA):
             self.ra = Angle.fromDegrees(ra)
@@ -516,7 +546,7 @@ class EquatorialCoordinates(CoordinateSystem):
             self.dec = dec
 
     def subtends(self, other):
-        """ Calculate the angle subtended by 2 coordinates on a sphere
+        """Calculate the angle subtended by 2 coordinates on a sphere
 
         Parameters
         ----------
@@ -529,7 +559,8 @@ class EquatorialCoordinates(CoordinateSystem):
         """
         if not isinstance(other, EquatorialCoordinates):
             raise ValueError(
-                "You must pass another 'EquatorialCoordinates' into this function to calculate the angle subtended.")
+                "You must pass another 'EquatorialCoordinates' into this function to calculate the angle subtended."
+            )
 
         x1 = cos(self.ra.radians) * cos(self.dec.radians)
         y1 = sin(self.ra.radians) * cos(self.dec.radians)
@@ -540,14 +571,14 @@ class EquatorialCoordinates(CoordinateSystem):
         z2 = sin(other.dec.radians)
 
         angle = Angle.fromRadians(acos(x1 * x2 + y1 * y2 + z1 * z2))
-        angle.units = 'degrees'
+        angle.units = "degrees"
         return angle
 
 
-def subtends(a1, b1, a2, b2, units='radians'):
-    """ Calculate the angle subtended by 2 positions on a sphere """
+def subtends(a1, b1, a2, b2, units="radians"):
+    """Calculate the angle subtended by 2 positions on a sphere"""
 
-    if units.lower() == 'degrees':
+    if units.lower() == "degrees":
         a1 = radians(a1)
         b1 = radians(b1)
         a2 = radians(a2)
@@ -565,7 +596,7 @@ def subtends(a1, b1, a2, b2, units='radians'):
     return theta  # Returns an angle object
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # do tests..
 
     # Angle
@@ -575,7 +606,7 @@ if __name__ == '__main__':
 
     # RA
     ra = RA.fromHours(14.54321)
-    lst = Angle.fromHours('11:41:23.1341')
+    lst = Angle.fromHours("11:41:23.1341")
     ha = ra.ha(lst)
     lst2 = ra.lst(ha)
 

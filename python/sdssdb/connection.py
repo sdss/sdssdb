@@ -361,9 +361,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         dsn_params.pop("password", None)  # Do not keep the password since it may change.
 
         if dsn_params is None:
-            raise RuntimeError(
-                "cannot determine the DSN parameters. " "The DB may be disconnected."
-            )
+            raise RuntimeError("cannot determine the DSN parameters. The DB may be disconnected.")
 
         dsn_params["user"] = user
         if "dbname" not in dsn_params:
@@ -378,9 +376,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        assert (
-            self.profile is not None
-        ), "this connection was not initialised from a profile. Try using become()."
+        assert self.profile is not None, (
+            "this connection was not initialised from a profile. Try using become()."
+        )
 
         assert "admin" in self._config, "admin user not defined in profile"
 
@@ -393,9 +391,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        assert (
-            self.profile is not None
-        ), "this connection was not initialised from a profile. Try using become()."
+        assert self.profile is not None, (
+            "this connection was not initialised from a profile. Try using become()."
+        )
 
         if user is None:
             user = self._config["user"] if "user" in self._config else None

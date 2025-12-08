@@ -43,23 +43,25 @@ class UserFactory(PeeweeModelFactory):
         database = testdb
 
     id = factory.Sequence(lambda n: n)
-    name = factory.Faker('first_name')
-    essence = 'human'
+    name = factory.Faker("first_name")
+    essence = "human"
 
 
 class CategoryFactory(PeeweeModelFactory):
-    ''' factory for sdss5db targetdb category table '''
+    """factory for sdss5db targetdb category table"""
+
     class Meta:
         model = targetdb.Category
         database = sdss5db
 
     # columns for which to generate fake data can be specified here
     pk = factory.Sequence(lambda n: n)
-    label = factory.Faker('word')
+    label = factory.Faker("word")
 
 
 # auto generate a factory class with fake data generators for all columns
 awprops = create_fake_columns(catalogdb.AllWise)
-awprops['designation'] = factory.Faker('word')
-AWFactory = create_factory('AWFactory', sdss5db, catalogdb.AllWise,
-                           columns=awprops, base=PeeweeModelFactory)
+awprops["designation"] = factory.Faker("word")
+AWFactory = create_factory(
+    "AWFactory", sdss5db, catalogdb.AllWise, columns=awprops, base=PeeweeModelFactory
+)

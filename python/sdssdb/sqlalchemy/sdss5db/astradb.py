@@ -4,29 +4,46 @@
 # flake8: noqa: E501,E741
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import ARRAY, BigInteger, Boolean, Column, DateTime, Float, ForeignKey, Index, Integer, LargeBinary, Text, text
+from sqlalchemy import (
+    ARRAY,
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Index,
+    Integer,
+    LargeBinary,
+    Text,
+    text,
+)
 from sqlalchemy.orm import relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 
-SCHEMA = 'astra_050'
+SCHEMA = "astra_050"
 
 
 class Base(AbstractConcreteBase, SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
-    _relations = 'define_relations'
+    _relations = "define_relations"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class Source(Base):
-    __tablename__ = 'source'
+    __tablename__ = "source"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.source_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.source_pk_seq'::regclass)"),
+    )
     sdss_id = Column(BigInteger, unique=True)
     sdss4_apogee_id = Column(Text, unique=True)
     gaia_dr2_source_id = Column(BigInteger)
@@ -163,22 +180,43 @@ class Source(Base):
 
 
 class Spectrum(Base):
-    __tablename__ = 'spectrum'
+    __tablename__ = "spectrum"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.spectrum_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.spectrum_pk_seq'::regclass)"),
+    )
     spectrum_type_flags = Column(BigInteger, nullable=False)
 
 
 class ApogeeCoaddedSpectrumInApStar(Base):
-    __tablename__ = 'apogee_coadded_spectrum_in_ap_star'
+    __tablename__ = "apogee_coadded_spectrum_in_ap_star"
     __table_args__ = (
-        Index('apogee_coadded_spectrum_in_ap_star_release_apred_apstar__12f0b2', 'release', 'apred', 'apstar', 'obj', 'telescope', 'healpix', 'field', 'prefix', unique=True),
+        Index(
+            "apogee_coadded_spectrum_in_ap_star_release_apred_apstar__12f0b2",
+            "release",
+            "apred",
+            "apstar",
+            "obj",
+            "telescope",
+            "healpix",
+            "field",
+            "prefix",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_coadded_spectrum_in_ap_star_pk_seq'::regclass)"))
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            "nextval('astra_050.apogee_coadded_spectrum_in_ap_star_pk_seq'::regclass)"
+        ),
+    )
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     star_pk = Column(BigInteger, unique=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
     release = Column(Text, nullable=False)
     filetype = Column(Text, nullable=False)
     apred = Column(Text, nullable=False)
@@ -217,19 +255,32 @@ class ApogeeCoaddedSpectrumInApStar(Base):
     autofwhm = Column(Float)
     n_components = Column(Integer)
 
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeCombinedSpectrum(Base):
-    __tablename__ = 'apogee_combined_spectrum'
+    __tablename__ = "apogee_combined_spectrum"
     __table_args__ = (
-        Index('apogee_combined_spectrum_release_filetype_v_astra_healpi_17dcd9', 'release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', unique=True),
+        Index(
+            "apogee_combined_spectrum_release_filetype_v_astra_healpi_17dcd9",
+            "release",
+            "filetype",
+            "v_astra",
+            "healpix",
+            "sdss_id",
+            "telescope",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_combined_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.apogee_combined_spectrum_pk_seq'::regclass)"),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     release = Column(Text, nullable=False, index=True)
     filetype = Column(Text, nullable=False)
     v_astra = Column(Text, nullable=False)
@@ -270,16 +321,20 @@ class ApogeeCombinedSpectrum(Base):
     nmf_rchi2 = Column(Float)
     nmf_flags = Column(BigInteger, nullable=False)
 
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeNet(Base):
-    __tablename__ = 'apogee_net'
+    __tablename__ = "apogee_net"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.a_net_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.a_net_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -296,16 +351,20 @@ class ApogeeNet(Base):
     raw_e_logg = Column(Float(53))
     raw_e_fe_h = Column(Float(53))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeNetV2(Base):
-    __tablename__ = 'apogee_net_v2'
+    __tablename__ = "apogee_net_v2"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_net_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.apogee_net_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -325,19 +384,39 @@ class ApogeeNetV2(Base):
     raw_e_logg = Column(Float(53))
     raw_e_fe_h = Column(Float(53))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeRestFrameVisitSpectrum(Base):
-    __tablename__ = 'apogee_rest_frame_visit_spectrum'
+    __tablename__ = "apogee_rest_frame_visit_spectrum"
     __table_args__ = (
-        Index('apogee_rest_frame_visit_spectrum_release_v_astra_sdss_id_ffd17f', 'release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction', unique=True),
+        Index(
+            "apogee_rest_frame_visit_spectrum_release_v_astra_sdss_id_ffd17f",
+            "release",
+            "v_astra",
+            "sdss_id",
+            "apred",
+            "mjd",
+            "plate",
+            "telescope",
+            "field",
+            "fiber",
+            "prefix",
+            "reduction",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_rest_frame_visit_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            "nextval('astra_050.apogee_rest_frame_visit_spectrum_pk_seq'::regclass)"
+        ),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     catalogid = Column(BigInteger, index=True)
     star_pk = Column(BigInteger)
     visit_pk = Column(BigInteger)
@@ -391,19 +470,35 @@ class ApogeeRestFrameVisitSpectrum(Base):
     nmf_rchi2 = Column(Float)
     nmf_flags = Column(BigInteger, nullable=False)
 
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeVisitSpectrum(Base):
-    __tablename__ = 'apogee_visit_spectrum'
+    __tablename__ = "apogee_visit_spectrum"
     __table_args__ = (
-        Index('apogee_visit_spectrum_release_apred_mjd_plate_telescope__65635d', 'release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction', unique=True),
+        Index(
+            "apogee_visit_spectrum_release_apred_mjd_plate_telescope__65635d",
+            "release",
+            "apred",
+            "mjd",
+            "plate",
+            "telescope",
+            "field",
+            "fiber",
+            "prefix",
+            "reduction",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_visit_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.apogee_visit_spectrum_pk_seq'::regclass)"),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     catalogid = Column(BigInteger, index=True)
     star_pk = Column(BigInteger)
     visit_pk = Column(BigInteger, unique=True)
@@ -452,16 +547,20 @@ class ApogeeVisitSpectrum(Base):
     autofwhm = Column(Float)
     n_components = Column(Integer)
 
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class AstroNNdist(Base):
-    __tablename__ = 'astro_n_ndist'
+    __tablename__ = "astro_n_ndist"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.astro_n_ndist_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.astro_n_ndist_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -476,16 +575,20 @@ class AstroNNdist(Base):
     dist_err = Column(Float)
     result_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class AstroNn(Base):
-    __tablename__ = 'astro_nn'
+    __tablename__ = "astro_nn"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.astro_nn_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.astro_nn_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -537,19 +640,32 @@ class AstroNn(Base):
     e_ni_h = Column(Float)
     result_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class BossCombinedSpectrum(Base):
-    __tablename__ = 'boss_combined_spectrum'
+    __tablename__ = "boss_combined_spectrum"
     __table_args__ = (
-        Index('boss_combined_spectrum_release_filetype_v_astra_healpix__c290b2', 'release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', unique=True),
+        Index(
+            "boss_combined_spectrum_release_filetype_v_astra_healpix__c290b2",
+            "release",
+            "filetype",
+            "v_astra",
+            "healpix",
+            "sdss_id",
+            "telescope",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.boss_combined_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.boss_combined_spectrum_pk_seq'::regclass)"),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     release = Column(Text, nullable=False, index=True)
     filetype = Column(Text, nullable=False)
     v_astra = Column(Text, nullable=False)
@@ -579,16 +695,20 @@ class BossCombinedSpectrum(Base):
     nmf_rchi2 = Column(Float)
     nmf_flags = Column(BigInteger, nullable=False)
 
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class BossNet(Base):
-    __tablename__ = 'boss_net'
+    __tablename__ = "boss_net"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.b_net_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.b_net_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -604,19 +724,31 @@ class BossNet(Base):
     v_rad = Column(Float)
     e_v_rad = Column(Float)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class BossVisitSpectrum(Base):
-    __tablename__ = 'boss_visit_spectrum'
+    __tablename__ = "boss_visit_spectrum"
     __table_args__ = (
-        Index('boss_visit_spectrum_release_run2d_fieldid_mjd_catalogid', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid', unique=True),
+        Index(
+            "boss_visit_spectrum_release_run2d_fieldid_mjd_catalogid",
+            "release",
+            "run2d",
+            "fieldid",
+            "mjd",
+            "catalogid",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.boss_visit_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.boss_visit_spectrum_pk_seq'::regclass)"),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     release = Column(Text, nullable=False)
     filetype = Column(Text, nullable=False)
     run2d = Column(Text, nullable=False)
@@ -679,16 +811,20 @@ class BossVisitSpectrum(Base):
     xcsao_e_fe_h = Column(Float)
     xcsao_rxc = Column(Float)
 
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class Corv(Base):
-    __tablename__ = 'corv'
+    __tablename__ = "corv"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.corv_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.corv_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -706,16 +842,20 @@ class Corv(Base):
     rchi2 = Column(Float)
     result_flags = Column(Integer, server_default=text("0"))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class FerreCoarse(Base):
-    __tablename__ = 'ferre_coarse'
+    __tablename__ = "ferre_coarse"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.ferre_coarse_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), nullable=False, index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.ferre_coarse_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), nullable=False, index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -771,16 +911,20 @@ class FerreCoarse(Base):
     ferre_time_elapsed = Column(Float)
     ferre_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class Grok(Base):
-    __tablename__ = 'grok'
+    __tablename__ = "grok"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.grok_task_pk_seq3'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.grok_task_pk_seq3'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"))
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -825,16 +969,20 @@ class Grok(Base):
     chi2 = Column(Float)
     result_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class GrokRotation(Base):
-    __tablename__ = 'grok_rotation'
+    __tablename__ = "grok_rotation"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.grok_rotation_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.grok_rotation_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -844,16 +992,20 @@ class GrokRotation(Base):
     chi2 = Column(Float)
     W = Column(ARRAY(Float()), index=True)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class HotPayne(Base):
-    __tablename__ = 'hot_payne'
+    __tablename__ = "hot_payne"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.hot_payne_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.hot_payne_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -966,16 +1118,20 @@ class HotPayne(Base):
     raw_e_si_h_hmasked = Column(Float(53))
     raw_e_s_h_hmasked = Column(Float(53))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class LineForest(Base):
-    __tablename__ = 'line_forest'
+    __tablename__ = "line_forest"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.line_forest_task_pk_seq1'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.line_forest_task_pk_seq1'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"))
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1294,16 +1450,20 @@ class LineForest(Base):
     eqw_percentiles_li_i = Column(ARRAY(Float()))
     abs_percentiles_li_i = Column(ARRAY(Float()))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class MDwarfType(Base):
-    __tablename__ = 'm_dwarf_type'
+    __tablename__ = "m_dwarf_type"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.m_dwarf_type_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.m_dwarf_type_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1315,16 +1475,20 @@ class MDwarfType(Base):
     continuum = Column(Float)
     result_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class NmfRectify(Base):
-    __tablename__ = 'nmf_rectify'
+    __tablename__ = "nmf_rectify"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.nmf_rectify_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.nmf_rectify_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1338,16 +1502,20 @@ class NmfRectify(Base):
     joint_rchi2 = Column(Float)
     nmf_flags = Column(BigInteger)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class Slam(Base):
-    __tablename__ = 'slam'
+    __tablename__ = "slam"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.slam_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.slam_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1374,16 +1542,20 @@ class Slam(Base):
     bad_flag = Column(Boolean, server_default=text("false"))
     warn_flag = Column(Boolean, server_default=text("false"))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class SnowWhite(Base):
-    __tablename__ = 'snow_white'
+    __tablename__ = "snow_white"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.snow_white_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.snow_white_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1426,16 +1598,20 @@ class SnowWhite(Base):
     raw_e_teff = Column(Float(53))
     raw_e_logg = Column(Float(53))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class SpectrumClassification(Base):
-    __tablename__ = 'spectrum_classification'
+    __tablename__ = "spectrum_classification"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.spectrum_classification_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.spectrum_classification_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1455,16 +1631,20 @@ class SpectrumClassification(Base):
     lp_yso = Column(Float, nullable=False)
     classification_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class TheCannon(Base):
-    __tablename__ = 'the_cannon'
+    __tablename__ = "the_cannon"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.the_cannon_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.the_cannon_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1537,16 +1717,20 @@ class TheCannon(Base):
     raw_e_mn_fe = Column(Float(53))
     raw_e_ni_fe = Column(Float(53))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ThePayne(Base):
-    __tablename__ = 'the_payne'
+    __tablename__ = "the_payne"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.the_payne_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.the_payne_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -1932,20 +2116,35 @@ class ThePayne(Base):
     raw_e_c12_c13 = Column(Float(53))
     raw_e_v_macro = Column(Float(53))
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeMadgicsVisitSpectrum(Base):
-    __tablename__ = 'apogee_madgics_visit_spectrum'
+    __tablename__ = "apogee_madgics_visit_spectrum"
     __table_args__ = (
-        Index('apogee_madgics_visit_spectrum_release_telescope_field_pl_3976b0', 'release', 'telescope', 'field', 'plate', 'mjd', 'fiber', unique=True),
+        Index(
+            "apogee_madgics_visit_spectrum_release_telescope_field_pl_3976b0",
+            "release",
+            "telescope",
+            "field",
+            "plate",
+            "mjd",
+            "fiber",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_madgics_visit_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    drp_spectrum_pk_id = Column(ForeignKey('astra_050.apogee_visit_spectrum.spectrum_pk_id'), nullable=False, unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.apogee_madgics_visit_spectrum_pk_seq'::regclass)"),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    drp_spectrum_pk_id = Column(
+        ForeignKey("astra_050.apogee_visit_spectrum.spectrum_pk_id"), nullable=False, unique=True
+    )
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
     release = Column(Text, nullable=False)
     telescope = Column(Text, nullable=False)
     field = Column(Text, nullable=False)
@@ -1953,21 +2152,43 @@ class ApogeeMadgicsVisitSpectrum(Base):
     mjd = Column(Integer, nullable=False)
     fiber = Column(Integer, nullable=False)
 
-    drp_spectrum_pk = relationship('ApogeeVisitSpectrum')
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    drp_spectrum_pk = relationship("ApogeeVisitSpectrum")
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class ApogeeVisitSpectrumInApStar(Base):
-    __tablename__ = 'apogee_visit_spectrum_in_ap_star'
+    __tablename__ = "apogee_visit_spectrum_in_ap_star"
     __table_args__ = (
-        Index('apogee_visit_spectrum_in_ap_star_release_apred_apstar_ob_3b116a', 'release', 'apred', 'apstar', 'obj', 'telescope', 'healpix', 'field', 'prefix', 'plate', 'mjd', 'fiber', unique=True),
+        Index(
+            "apogee_visit_spectrum_in_ap_star_release_apred_apstar_ob_3b116a",
+            "release",
+            "apred",
+            "apstar",
+            "obj",
+            "telescope",
+            "healpix",
+            "field",
+            "prefix",
+            "plate",
+            "mjd",
+            "fiber",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.apogee_visit_spectrum_in_ap_star_pk_seq'::regclass)"))
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, unique=True)
-    drp_spectrum_pk_id = Column(ForeignKey('astra_050.apogee_visit_spectrum.spectrum_pk_id'), nullable=False, unique=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            "nextval('astra_050.apogee_visit_spectrum_in_ap_star_pk_seq'::regclass)"
+        ),
+    )
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, unique=True)
+    drp_spectrum_pk_id = Column(
+        ForeignKey("astra_050.apogee_visit_spectrum.spectrum_pk_id"), nullable=False, unique=True
+    )
     release = Column(Text, nullable=False)
     filetype = Column(Text, nullable=False)
     apred = Column(Text, nullable=False)
@@ -1982,21 +2203,39 @@ class ApogeeVisitSpectrumInApStar(Base):
     fiber = Column(Integer, nullable=False)
     reduction = Column(Text)
 
-    drp_spectrum_pk = relationship('ApogeeVisitSpectrum')
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    drp_spectrum_pk = relationship("ApogeeVisitSpectrum")
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class BossRestFrameVisitSpectrum(Base):
-    __tablename__ = 'boss_rest_frame_visit_spectrum'
+    __tablename__ = "boss_rest_frame_visit_spectrum"
     __table_args__ = (
-        Index('boss_rest_frame_visit_spectrum_v_astra_filetype_release__3bdd22', 'v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid', unique=True),
+        Index(
+            "boss_rest_frame_visit_spectrum_v_astra_filetype_release__3bdd22",
+            "v_astra",
+            "filetype",
+            "release",
+            "run2d",
+            "fieldid",
+            "mjd",
+            "catalogid",
+            unique=True,
+        ),
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.boss_rest_frame_visit_spectrum_pk_seq'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), unique=True)
-    source_pk = Column(ForeignKey('astra_050.source.pk'), index=True)
-    drp_spectrum_pk_id = Column(ForeignKey('astra_050.boss_visit_spectrum.spectrum_pk_id'), nullable=False, unique=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            "nextval('astra_050.boss_rest_frame_visit_spectrum_pk_seq'::regclass)"
+        ),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), unique=True)
+    source_pk = Column(ForeignKey("astra_050.source.pk"), index=True)
+    drp_spectrum_pk_id = Column(
+        ForeignKey("astra_050.boss_visit_spectrum.spectrum_pk_id"), nullable=False, unique=True
+    )
     release = Column(Text, nullable=False, index=True)
     filetype = Column(Text, nullable=False)
     v_astra = Column(Text, nullable=False)
@@ -2064,18 +2303,22 @@ class BossRestFrameVisitSpectrum(Base):
     nmf_rchi2 = Column(Float)
     nmf_flags = Column(BigInteger, nullable=False)
 
-    drp_spectrum_pk = relationship('BossVisitSpectrum')
-    source = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
+    drp_spectrum_pk = relationship("BossVisitSpectrum")
+    source = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
 
 
 class FerreStellarParameters(Base):
-    __tablename__ = 'ferre_stellar_parameters'
+    __tablename__ = "ferre_stellar_parameters"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.ferre_stellar_parameters_task_pk_seq'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), nullable=False, index=True)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False, index=True)
-    upstream_pk = Column(ForeignKey('astra_050.ferre_coarse.task_pk'), nullable=False, index=True)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.ferre_stellar_parameters_task_pk_seq'::regclass)"),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), nullable=False, index=True)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False, index=True)
+    upstream_pk = Column(ForeignKey("astra_050.ferre_coarse.task_pk"), nullable=False, index=True)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -2131,18 +2374,24 @@ class FerreStellarParameters(Base):
     ferre_time_elapsed = Column(Float)
     ferre_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
-    ferre_coarse = relationship('FerreCoarse')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
+    ferre_coarse = relationship("FerreCoarse")
 
 
 class FerreChemicalAbundances(Base):
-    __tablename__ = 'ferre_chemical_abundances'
+    __tablename__ = "ferre_chemical_abundances"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.ferre_chemical_abundances_task_pk_seq1'::regclass)"))
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), nullable=False)
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False)
-    upstream_pk = Column(ForeignKey('astra_050.ferre_stellar_parameters.task_pk'), nullable=False)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            "nextval('astra_050.ferre_chemical_abundances_task_pk_seq1'::regclass)"
+        ),
+    )
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), nullable=False)
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False)
+    upstream_pk = Column(ForeignKey("astra_050.ferre_stellar_parameters.task_pk"), nullable=False)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -2198,17 +2447,21 @@ class FerreChemicalAbundances(Base):
     ferre_time_elapsed = Column(Float)
     ferre_flags = Column(BigInteger, nullable=False)
 
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
-    ferre_stellar_parameter = relationship('FerreStellarParameter')
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
+    ferre_stellar_parameter = relationship("FerreStellarParameter")
 
 
 class Aspcap(Base):
-    __tablename__ = 'aspcap'
+    __tablename__ = "aspcap"
 
-    task_pk = Column(Integer, primary_key=True, server_default=text("nextval('astra_050.aspcap_task_pk_seq2'::regclass)"))
-    spectrum_pk_id = Column(ForeignKey('astra_050.spectrum.pk'), nullable=False)
-    source_pk_id = Column(ForeignKey('astra_050.source.pk'), nullable=False)
+    task_pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('astra_050.aspcap_task_pk_seq2'::regclass)"),
+    )
+    spectrum_pk_id = Column(ForeignKey("astra_050.spectrum.pk"), nullable=False)
+    source_pk_id = Column(ForeignKey("astra_050.source.pk"), nullable=False)
     v_astra = Column(Text, nullable=False)
     created = Column(DateTime, nullable=False)
     t_elapsed = Column(Float)
@@ -2338,31 +2591,33 @@ class Aspcap(Base):
     ferre_log_snr_sq = Column(Float)
     ferre_time_elapsed = Column(Float)
     result_flags = Column(BigInteger, nullable=False)
-    stellar_parameters_task_pk_id = Column(ForeignKey('astra_050.ferre_stellar_parameters.task_pk'))
-    al_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    c_12_13_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    ca_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    ce_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    c_1_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    c_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    co_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    cr_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    cu_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    fe_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    k_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    mg_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    mn_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    na_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    nd_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    ni_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    n_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    o_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    p_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    si_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    s_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    ti_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    ti_2_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
-    v_h_task_pk_id = Column(ForeignKey('astra_050.ferre_chemical_abundances.task_pk'))
+    stellar_parameters_task_pk_id = Column(
+        ForeignKey("astra_050.ferre_stellar_parameters.task_pk")
+    )
+    al_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    c_12_13_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    ca_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    ce_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    c_1_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    c_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    co_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    cr_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    cu_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    fe_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    k_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    mg_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    mn_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    na_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    nd_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    ni_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    n_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    o_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    p_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    si_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    s_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    ti_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    ti_2_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
+    v_h_task_pk_id = Column(ForeignKey("astra_050.ferre_chemical_abundances.task_pk"))
     calibrated_flags = Column(BigInteger)
     mass = Column(Float)
     radius = Column(Float)
@@ -2431,33 +2686,105 @@ class Aspcap(Base):
     raw_v_h = Column(Float)
     raw_e_v_h = Column(Float)
 
-    al_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.al_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    c_12_13_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.c_12_13_task_pk_id == FerreChemicalAbundance.task_pk')
-    c_1_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.c_1_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    c_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.c_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    ca_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.ca_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    ce_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.ce_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    co_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.co_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    cr_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.cr_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    cu_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.cu_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    fe_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.fe_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    k_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.k_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    mg_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.mg_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    mn_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.mn_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    n_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.n_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    na_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.na_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    nd_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.nd_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    ni_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.ni_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    o_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.o_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    p_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.p_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    s_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.s_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    si_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.si_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    source_pk = relationship('Source')
-    spectrum_pk = relationship('Spectrum')
-    stellar_parameters_task_pk = relationship('FerreStellarParameter')
-    ti_2_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.ti_2_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    ti_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.ti_h_task_pk_id == FerreChemicalAbundance.task_pk')
-    v_h_task_pk = relationship('FerreChemicalAbundance', primaryjoin='Aspcap.v_h_task_pk_id == FerreChemicalAbundance.task_pk')
+    al_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.al_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    c_12_13_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.c_12_13_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    c_1_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.c_1_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    c_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.c_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    ca_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.ca_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    ce_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.ce_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    co_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.co_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    cr_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.cr_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    cu_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.cu_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    fe_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.fe_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    k_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.k_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    mg_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.mg_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    mn_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.mn_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    n_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.n_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    na_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.na_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    nd_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.nd_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    ni_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.ni_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    o_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.o_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    p_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.p_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    s_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.s_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    si_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.si_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    source_pk = relationship("Source")
+    spectrum_pk = relationship("Spectrum")
+    stellar_parameters_task_pk = relationship("FerreStellarParameter")
+    ti_2_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.ti_2_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    ti_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.ti_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
+    v_h_task_pk = relationship(
+        "FerreChemicalAbundance",
+        primaryjoin="Aspcap.v_h_task_pk_id == FerreChemicalAbundance.task_pk",
+    )
 
 
 # prepare the base

@@ -6,15 +6,22 @@
 # @Filename: apogeeqldb.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from peewee import (SQL, AutoField, DecimalField, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField, TextField)
+from peewee import (
+    SQL,
+    AutoField,
+    DecimalField,
+    DoubleField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    TextField,
+)
 from playhouse.postgres_ext import ArrayField
 
 from . import OperationsDBModel, database, platedb  # noqa
 
 
 class UnknownField(object):
-
     def __init__(self, *_, **__):
         pass
 
@@ -22,14 +29,16 @@ class UnknownField(object):
 class ApogeeSnrGoals(OperationsDBModel):
     hmag_standard = FloatField(null=True)
     pk = IntegerField(
-        constraints=[SQL('DEFAULT nextval(\'apogee_snr_goals_pk_seq\'::regclass)')],
-        unique=True, primary_key=True)
+        constraints=[SQL("DEFAULT nextval('apogee_snr_goals_pk_seq'::regclass)")],
+        unique=True,
+        primary_key=True,
+    )
     snr_standard_goal = FloatField(null=True)
     version = TextField(null=True, unique=True)
 
     class Meta:
-        table_name = 'apogee_snr_goals'
-        schema = 'apogeeqldb'
+        table_name = "apogee_snr_goals"
+        schema = "apogeeqldb"
         primary_key = False
 
 
@@ -39,8 +48,8 @@ class FitskeywordsErrortype(OperationsDBModel):
     pk = AutoField(primary_key=True)
 
     class Meta:
-        table_name = 'fitskeywords_errortype'
-        schema = 'apogeeqldb'
+        table_name = "fitskeywords_errortype"
+        schema = "apogeeqldb"
 
 
 class Quicklook(OperationsDBModel):
@@ -84,14 +93,16 @@ class Quicklook(OperationsDBModel):
     waverange_exp = UnknownField(null=True)  # ARRAY
     waverange_meas = UnknownField(null=True)  # ARRAY
 
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               model=platedb.Exposure,
-                               backref='apogeeqldb_quicklooks',
-                               field='pk')
+    exposure = ForeignKeyField(
+        column_name="exposure_pk",
+        model=platedb.Exposure,
+        backref="apogeeqldb_quicklooks",
+        field="pk",
+    )
 
     class Meta:
-        table_name = 'quicklook'
-        schema = 'apogeeqldb'
+        table_name = "quicklook"
+        schema = "apogeeqldb"
 
 
 class Quicklook60(OperationsDBModel):
@@ -101,20 +112,21 @@ class Quicklook60(OperationsDBModel):
     exptype = TextField(null=True)
     medsky = UnknownField(null=True)  # ARRAY
     pk = IntegerField(
-        constraints=[SQL('DEFAULT nextval(\'quicklook60_pk_seq\'::regclass)')],
-        unique=True, primary_key=True)
+        constraints=[SQL("DEFAULT nextval('quicklook60_pk_seq'::regclass)")],
+        unique=True,
+        primary_key=True,
+    )
     quicklook_pk = IntegerField(index=True)
     zscale1 = FloatField(null=True)
     zscale2 = FloatField(null=True)
 
-    quicklook = ForeignKeyField(column_name='quicklook_pk',
-                                model=Quicklook,
-                                backref='quicklook60s',
-                                field='pk')
+    quicklook = ForeignKeyField(
+        column_name="quicklook_pk", model=Quicklook, backref="quicklook60s", field="pk"
+    )
 
     class Meta:
-        table_name = 'quicklook60'
-        schema = 'apogeeqldb'
+        table_name = "quicklook60"
+        schema = "apogeeqldb"
         primary_key = False
 
 
@@ -129,14 +141,16 @@ class Quicklook60Imbinzoom(OperationsDBModel):
     zscale1 = FloatField(null=True)
     zscale2 = FloatField(null=True)
 
-    quicklook60 = ForeignKeyField(column_name='quicklook60_pk',
-                                  model=Quicklook60,
-                                  backref='quicklook60_imbinzooms',
-                                  field='pk')
+    quicklook60 = ForeignKeyField(
+        column_name="quicklook60_pk",
+        model=Quicklook60,
+        backref="quicklook60_imbinzooms",
+        field="pk",
+    )
 
     class Meta:
-        table_name = 'quicklook60_imbinzoom'
-        schema = 'apogeeqldb'
+        table_name = "quicklook60_imbinzoom"
+        schema = "apogeeqldb"
 
 
 class Quicklook60Repspec(OperationsDBModel):
@@ -148,14 +162,13 @@ class Quicklook60Repspec(OperationsDBModel):
     quicklook60_pk = IntegerField(index=True, null=True)
     spectrum = ArrayField(field_class=IntegerField, null=True)
 
-    quicklook60 = ForeignKeyField(column_name='quicklook60_pk',
-                                  model=Quicklook60,
-                                  backref='quicklook60_repspecs',
-                                  field='pk')
+    quicklook60 = ForeignKeyField(
+        column_name="quicklook60_pk", model=Quicklook60, backref="quicklook60_repspecs", field="pk"
+    )
 
     class Meta:
-        table_name = 'quicklook60_repspec'
-        schema = 'apogeeqldb'
+        table_name = "quicklook60_repspec"
+        schema = "apogeeqldb"
 
 
 class QuicklookPrediction(OperationsDBModel):
@@ -169,14 +182,13 @@ class QuicklookPrediction(OperationsDBModel):
     snr_standard = FloatField(null=True)
     visit_stopcode = IntegerField(null=True)
 
-    quicklook = ForeignKeyField(column_name='quicklook_pk',
-                                model=Quicklook,
-                                backref='quicklook_predictions',
-                                field='pk')
+    quicklook = ForeignKeyField(
+        column_name="quicklook_pk", model=Quicklook, backref="quicklook_predictions", field="pk"
+    )
 
     class Meta:
-        table_name = 'quicklook_prediction'
-        schema = 'apogeeqldb'
+        table_name = "quicklook_prediction"
+        schema = "apogeeqldb"
 
 
 class Quickred(OperationsDBModel):
@@ -188,26 +200,28 @@ class Quickred(OperationsDBModel):
     last_quicklook_pk = IntegerField(index=True)
     logsnr_hmag_coef = UnknownField(null=True)  # ARRAY
     pk = IntegerField(
-        constraints=[SQL('DEFAULT nextval(\'quickred_pk_seq\'::regclass)')],
+        constraints=[SQL("DEFAULT nextval('quickred_pk_seq'::regclass)")],
         primary_key=True,
-        unique=True)
+        unique=True,
+    )
     snr_goals_version = IntegerField(null=True)
     snr_standard = DecimalField(null=True)
     zscale1 = DecimalField(null=True)
     zscale2 = DecimalField(null=True)
 
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               model=platedb.Exposure,
-                               backref='apogeeqldb_quickreds',
-                               field='pk')
-    last_quicklook = ForeignKeyField(column_name='last_quicklook_pk',
-                                     model=Quicklook,
-                                     backref='quickreds',
-                                     field='pk')
+    exposure = ForeignKeyField(
+        column_name="exposure_pk",
+        model=platedb.Exposure,
+        backref="apogeeqldb_quickreds",
+        field="pk",
+    )
+    last_quicklook = ForeignKeyField(
+        column_name="last_quicklook_pk", model=Quicklook, backref="quickreds", field="pk"
+    )
 
     class Meta:
-        table_name = 'quickred'
-        schema = 'apogeeqldb'
+        table_name = "quickred"
+        schema = "apogeeqldb"
         primary_key = False
 
 
@@ -222,14 +236,13 @@ class QuickredImbinzoom(OperationsDBModel):
     zscale1 = DecimalField(null=True)
     zscale2 = DecimalField(null=True)
 
-    quickred = ForeignKeyField(column_name='quickred_pk',
-                               model=Quickred,
-                               backref='quickred_imbinzooms',
-                               field='pk')
+    quickred = ForeignKeyField(
+        column_name="quickred_pk", model=Quickred, backref="quickred_imbinzooms", field="pk"
+    )
 
     class Meta:
-        table_name = 'quickred_imbinzoom'
-        schema = 'apogeeqldb'
+        table_name = "quickred_imbinzoom"
+        schema = "apogeeqldb"
 
 
 class QuickredSpectrum(OperationsDBModel):
@@ -241,14 +254,13 @@ class QuickredSpectrum(OperationsDBModel):
     quickred_pk = IntegerField(index=True, null=True)
     spectrum = ArrayField(field_class=IntegerField, null=True)
 
-    quickred = ForeignKeyField(column_name='quickred_pk',
-                               model=Quickred,
-                               backref='quickred_spectra',
-                               field='pk')
+    quickred = ForeignKeyField(
+        column_name="quickred_pk", model=Quickred, backref="quickred_spectra", field="pk"
+    )
 
     class Meta:
-        table_name = 'quickred_spectrum'
-        schema = 'apogeeqldb'
+        table_name = "quickred_spectrum"
+        schema = "apogeeqldb"
 
 
 class Reduction(OperationsDBModel):
@@ -257,14 +269,16 @@ class Reduction(OperationsDBModel):
     snr = DecimalField(null=True)
     snr_source = TextField(null=True)
 
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               model=platedb.Exposure,
-                               backref='apogeeqldb_reductions',
-                               field='pk')
+    exposure = ForeignKeyField(
+        column_name="exposure_pk",
+        model=platedb.Exposure,
+        backref="apogeeqldb_reductions",
+        field="pk",
+    )
 
     class Meta:
-        table_name = 'reduction'
-        schema = 'apogeeqldb'
+        table_name = "reduction"
+        schema = "apogeeqldb"
 
 
 class RequiredFitskeywords(OperationsDBModel):
@@ -276,8 +290,8 @@ class RequiredFitskeywords(OperationsDBModel):
     version = IntegerField(null=True)
 
     class Meta:
-        table_name = 'required_fitskeywords'
-        schema = 'apogeeqldb'
+        table_name = "required_fitskeywords"
+        schema = "apogeeqldb"
 
 
 class RequiredFitskeywordsError(OperationsDBModel):
@@ -286,10 +300,8 @@ class RequiredFitskeywordsError(OperationsDBModel):
     pk = AutoField(primary_key=True)
     quicklook_pk = IntegerField(null=True)
 
-    quicklook = ForeignKeyField(column_name='quicklook_pk',
-                                model=Quicklook,
-                                field='pk')
+    quicklook = ForeignKeyField(column_name="quicklook_pk", model=Quicklook, field="pk")
 
     class Meta:
-        table_name = 'required_fitskeywords_error'
-        schema = 'apogeeqldb'
+        table_name = "required_fitskeywords_error"
+        schema = "apogeeqldb"

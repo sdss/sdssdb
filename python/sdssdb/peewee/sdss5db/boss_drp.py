@@ -10,9 +10,20 @@
 
 import operator
 from functools import reduce
-from peewee import (AutoField, BigIntegerField, BigBitField, BooleanField,
-                    CharField, DateTimeField, FloatField, ForeignKeyField,
-                    IntegerField, DoubleField, SmallIntegerField, fn)
+from peewee import (
+    AutoField,
+    BigIntegerField,
+    BigBitField,
+    BooleanField,
+    CharField,
+    DateTimeField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    DoubleField,
+    SmallIntegerField,
+    fn,
+)
 from peewee import SQL
 from playhouse.postgres_ext import ArrayField
 from playhouse.hybrid import hybrid_method
@@ -20,10 +31,10 @@ from playhouse.hybrid import hybrid_method
 from .. import BaseModel
 from . import database  # noqa
 
-class BossBase(BaseModel):
 
+class BossBase(BaseModel):
     class Meta:
-        schema = 'boss_drp'
+        schema = "boss_drp"
         database = database
 
 
@@ -40,12 +51,12 @@ class BossVersion(BossBase):
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
     class Meta:
-        table_name = 'boss_version'
+        table_name = "boss_version"
 
 
 class BossField(BossBase):
     id = AutoField()
-    boss_version = ForeignKeyField(column_name='boss_version_id', field='id', model=BossVersion)
+    boss_version = ForeignKeyField(column_name="boss_version_id", field="id", model=BossVersion)
     field = IntegerField(null=True)
     designs = CharField(null=True)
     configs = CharField(null=True)
@@ -159,12 +170,12 @@ class BossField(BossBase):
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
     class Meta:
-        table_name = 'boss_field'
+        table_name = "boss_field"
 
 
 class BossSpectrum(BossBase):
     id = AutoField()
-    boss_version = ForeignKeyField(column_name='boss_version_id', field='id', model=BossVersion)
+    boss_version = ForeignKeyField(column_name="boss_version_id", field="id", model=BossVersion)
     field = IntegerField(null=True)
     mjd = IntegerField(null=True)
     mjd_final = FloatField(null=True)
@@ -290,7 +301,7 @@ class BossSpectrum(BossBase):
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
     class Meta:
-        table_name = 'boss_spectrum'
+        table_name = "boss_spectrum"
 
     @hybrid_method
     def is_sdss5_target_bit_set(self, bit):
@@ -300,9 +311,8 @@ class BossSpectrum(BossBase):
         :param bit:
             The carton bit position.
         """
-        return (
-            (fn.length(self.sdss5_target_flags) > int(bit / 8))
-        &   (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+        return (fn.length(self.sdss5_target_flags) > int(bit / 8)) & (
+            fn.get_bit(self.sdss5_target_flags, int(bit)) > 0
         )
 
     @hybrid_method
@@ -314,8 +324,8 @@ class BossSpectrum(BossBase):
             A list of carton bit positions.
         """
         conditions = [
-            (fn.length(self.sdss5_target_flags) > int(bit / 8)) &
-            (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+            (fn.length(self.sdss5_target_flags) > int(bit / 8))
+            & (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
             for bit in bits
         ]
         return reduce(operator.or_, conditions)
@@ -323,7 +333,7 @@ class BossSpectrum(BossBase):
 
 class BossSpectrumLine(BossBase):
     id = AutoField()
-    boss_version = ForeignKeyField(column_name='boss_version_id', field='id', model=BossVersion)
+    boss_version = ForeignKeyField(column_name="boss_version_id", field="id", model=BossVersion)
     field = IntegerField(null=True)
     mjd = IntegerField(null=True)
     target_index = IntegerField(null=True)
@@ -349,4 +359,4 @@ class BossSpectrumLine(BossBase):
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
     class Meta:
-        table_name = 'boss_spectrum_line'
+        table_name = "boss_spectrum_line"

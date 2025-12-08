@@ -34,7 +34,7 @@ for item in dir(factories):
 
 @pytest.fixture(scope=determine_scope, autouse=True)
 def session(database):
-    ''' SQLA session fixture. set autouse=True to ensure persistence '''
+    """SQLA session fixture. set autouse=True to ensure persistence"""
     session = database.Session()
     session.begin()
     yield session

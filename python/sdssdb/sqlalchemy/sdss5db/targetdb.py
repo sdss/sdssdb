@@ -18,7 +18,7 @@ from sqlalchemy import (
     SmallInteger,
     Text,
     UniqueConstraint,
-    text
+    text,
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
@@ -27,24 +27,24 @@ from sqlalchemy.orm import relationship
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 
-SCHEMA = 'targetdb'
+SCHEMA = "targetdb"
 
 
 class Base(AbstractConcreteBase, SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
-    _relations = 'define_relations'
+    _relations = "define_relations"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class Cadence(Base):
-    __tablename__ = 'cadence'
+    __tablename__ = "cadence"
     __table_args__ = (
-        CheckConstraint('label = (label_root || label_version)'),
-        {'schema': 'targetdb'}
+        CheckConstraint("label = (label_root || label_version)"),
+        {"schema": "targetdb"},
     )
 
     label = Column(Text, nullable=False, unique=True)
@@ -55,21 +55,29 @@ class Cadence(Base):
     delta_min = Column(ARRAY(Float()))
     nexp = Column(ARRAY(Integer()))
     max_length = Column(ARRAY(Float()))
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.cadence_pk_seq1'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('targetdb.cadence_pk_seq1'::regclass)"),
+    )
     obsmode_pk = Column(ARRAY(Text()))
     label_root = Column(Text)
     label_version = Column(Text, server_default=text("''::text"))
 
 
 class Category(Base):
-    __tablename__ = 'category'
+    __tablename__ = "category"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.category_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.category_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class DesignMode(Base):
-    __tablename__ = 'design_mode'
+    __tablename__ = "design_mode"
 
     label = Column(Text, primary_key=True)
     boss_skies_min = Column(Integer)
@@ -95,35 +103,47 @@ class DesignMode(Base):
 
 
 class FieldReservation(Base):
-    __tablename__ = 'field_reservation'
+    __tablename__ = "field_reservation"
 
     field_id = Column(Integer, primary_key=True)
 
 
 class Instrument(Base):
-    __tablename__ = 'instrument'
+    __tablename__ = "instrument"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.instrument_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.instrument_pk_seq'::regclass)"),
+    )
     label = Column(Text)
     default_lambda_eff = Column(Float)
 
 
 class Mapper(Base):
-    __tablename__ = 'mapper'
+    __tablename__ = "mapper"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.survey_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.survey_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class Observatory(Base):
-    __tablename__ = 'observatory'
+    __tablename__ = "observatory"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.observatory_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.observatory_pk_seq'::regclass)"),
+    )
     label = Column(Text, nullable=False)
 
 
 class Obsmode(Base):
-    __tablename__ = 'obsmode'
+    __tablename__ = "obsmode"
 
     label = Column(Text, primary_key=True)
     min_moon_sep = Column(Float)
@@ -134,9 +154,13 @@ class Obsmode(Base):
 
 
 class PositionerStatus(Base):
-    __tablename__ = 'positioner_status'
+    __tablename__ = "positioner_status"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.positioner_status_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.positioner_status_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
@@ -149,29 +173,47 @@ class RevisedMagnitude(Base):
     magnitudes.
 
     """
-    __tablename__ = 'revised_magnitude'
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"))
+    __tablename__ = "revised_magnitude"
+
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"),
+    )
     g = Column(Float)
     r = Column(Float)
     i = Column(Float)
     h = Column(Float, index=True)
     bp = Column(Float)
     rp = Column(Float)
-    carton_to_target_pk = Column(ForeignKey('targetdb.carton_to_target.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    carton_to_target_pk = Column(
+        ForeignKey(
+            "targetdb.carton_to_target.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        index=True,
+    )
     z = Column(Float)
     j = Column(Float)
     k = Column(Float)
     gaia_g = Column(Float)
     optical_prov = Column(Text)
 
-    carton_to_target = relationship('CartonToTarget')
+    carton_to_target = relationship("CartonToTarget")
 
 
 class Target(Base):
-    __tablename__ = 'target'
+    __tablename__ = "target"
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.target_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('targetdb.target_pk_seq'::regclass)"),
+    )
     ra = Column(Float(53))
     dec = Column(Float(53))
     pmra = Column(Float)
@@ -182,9 +224,11 @@ class Target(Base):
 
 
 class Version(Base):
-    __tablename__ = 'version'
+    __tablename__ = "version"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.plan_pk_seq'::regclass)"))
+    pk = Column(
+        Integer, primary_key=True, server_default=text("nextval('targetdb.plan_pk_seq'::regclass)")
+    )
     plan = Column(Text, unique=True)
     tag = Column(Text)
     target_selection = Column(Boolean)
@@ -192,105 +236,141 @@ class Version(Base):
 
 
 class Carton(Base):
-    __tablename__ = 'carton'
+    __tablename__ = "carton"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.program_pk_seq'::regclass)"))
-    mapper_pk = Column(ForeignKey('targetdb.mapper.pk', ondelete='CASCADE', onupdate='CASCADE'))
-    category_pk = Column(ForeignKey('targetdb.category.pk', ondelete='CASCADE', onupdate='CASCADE'))
-    version_pk = Column(ForeignKey('targetdb.version.pk', ondelete='CASCADE', onupdate='CASCADE'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.program_pk_seq'::regclass)"),
+    )
+    mapper_pk = Column(ForeignKey("targetdb.mapper.pk", ondelete="CASCADE", onupdate="CASCADE"))
+    category_pk = Column(
+        ForeignKey("targetdb.category.pk", ondelete="CASCADE", onupdate="CASCADE")
+    )
+    version_pk = Column(ForeignKey("targetdb.version.pk", ondelete="CASCADE", onupdate="CASCADE"))
     carton = Column(Text)
     program = Column(Text)
     run_on = Column(Date)
 
-    category = relationship('Category')
-    mapper = relationship('Mapper')
-    version = relationship('Version')
+    category = relationship("Category")
+    mapper = relationship("Mapper")
+    version = relationship("Version")
 
 
 class Design(Base):
-    __tablename__ = 'design'
+    __tablename__ = "design"
 
-    design_id = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_id_seq'::regclass)"))
-    design_mode_label = Column(ForeignKey('targetdb.design_mode.label'))
+    design_id = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.design_id_seq'::regclass)"),
+    )
+    design_mode_label = Column(ForeignKey("targetdb.design_mode.label"))
     mugatu_version = Column(Text)
     run_on = Column(Date)
     assignment_hash = Column(UUID, index=True)
     design_version_pk = Column(SmallInteger)
 
-    design_mode = relationship('DesignMode')
+    design_mode = relationship("DesignMode")
 
 
 class Overplan(Base):
-    __tablename__ = 'overplan'
+    __tablename__ = "overplan"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.overplan_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.overplan_pk_seq'::regclass)"),
+    )
     input_file = Column(Text)
     plan = Column(Text)
 
 
 class Field(Base):
-    __tablename__ = 'field'
+    __tablename__ = "field"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.field_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.field_pk_seq'::regclass)"),
+    )
     racen = Column(Float(53), nullable=False)
     deccen = Column(Float(53), nullable=False)
-    version_pk = Column(ForeignKey('targetdb.version.pk', ondelete='CASCADE', onupdate='CASCADE'))
-    cadence_pk = Column(ForeignKey('targetdb.cadence.pk'), index=True)
-    observatory_pk = Column(ForeignKey('targetdb.observatory.pk'), index=True)
+    version_pk = Column(ForeignKey("targetdb.version.pk", ondelete="CASCADE", onupdate="CASCADE"))
+    cadence_pk = Column(ForeignKey("targetdb.cadence.pk"), index=True)
+    observatory_pk = Column(ForeignKey("targetdb.observatory.pk"), index=True)
     position_angle = Column(Float)
     slots_exposures = Column(ARRAY(Integer()))
     field_id = Column(Integer, index=True)
-    overplan_pk = Column(ForeignKey('targetdb.overplan.pk'), index=True)
+    overplan_pk = Column(ForeignKey("targetdb.overplan.pk"), index=True)
 
-    cadence = relationship('Cadence')
-    observatory = relationship('Observatory')
-    version = relationship('Version')
-    overplan = relationship('Overplan')
+    cadence = relationship("Cadence")
+    observatory = relationship("Observatory")
+    version = relationship("Version")
+    overplan = relationship("Overplan")
 
 
 class Hole(Base):
-    __tablename__ = 'hole'
-    __table_args__ = (
-        UniqueConstraint('holeid', 'observatory_pk'),
-        {'schema': 'targetdb'}
-    )
+    __tablename__ = "hole"
+    __table_args__ = (UniqueConstraint("holeid", "observatory_pk"), {"schema": "targetdb"})
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.hole_pk_seq'::regclass)"))
+    pk = Column(
+        Integer, primary_key=True, server_default=text("nextval('targetdb.hole_pk_seq'::regclass)")
+    )
     row = Column(Integer)
     column = Column(Integer)
     holeid = Column(Text, index=True)
-    observatory_pk = Column(ForeignKey('targetdb.observatory.pk'), nullable=False, index=True)
+    observatory_pk = Column(ForeignKey("targetdb.observatory.pk"), nullable=False, index=True)
 
-    observatory = relationship('Observatory')
+    observatory = relationship("Observatory")
 
 
 class CartonToTarget(Base):
-    __tablename__ = 'carton_to_target'
+    __tablename__ = "carton_to_target"
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.program_to_target_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('targetdb.program_to_target_pk_seq'::regclass)"),
+    )
     lambda_eff = Column(Float)
-    carton_pk = Column(ForeignKey('targetdb.carton.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
-    target_pk = Column(ForeignKey('targetdb.target.pk', deferrable=True, initially='DEFERRED'), index=True)
-    cadence_pk = Column(ForeignKey('targetdb.cadence.pk'), index=True)
+    carton_pk = Column(
+        ForeignKey(
+            "targetdb.carton.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        index=True,
+    )
+    target_pk = Column(
+        ForeignKey("targetdb.target.pk", deferrable=True, initially="DEFERRED"), index=True
+    )
+    cadence_pk = Column(ForeignKey("targetdb.cadence.pk"), index=True)
     priority = Column(Integer, index=True)
     value = Column(Float)
-    instrument_pk = Column(ForeignKey('targetdb.instrument.pk'), index=True)
+    instrument_pk = Column(ForeignKey("targetdb.instrument.pk"), index=True)
     delta_ra = Column(Float(53))
     delta_dec = Column(Float(53))
     inertial = Column(Boolean)
     can_offset = Column(Boolean, server_default=text("false"))
 
-    cadence = relationship('Cadence')
-    carton = relationship('Carton')
-    instrument = relationship('Instrument')
-    target = relationship('Target')
+    cadence = relationship("Cadence")
+    carton = relationship("Carton")
+    instrument = relationship("Instrument")
+    target = relationship("Target")
 
 
 class DesignModeCheckResult(Base):
-    __tablename__ = 'design_mode_check_results'
+    __tablename__ = "design_mode_check_results"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_mode_check_results_pk_seq'::regclass)"))
-    design_id = Column(ForeignKey('targetdb.design.design_id'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.design_mode_check_results_pk_seq'::regclass)"),
+    )
+    design_id = Column(ForeignKey("targetdb.design.design_id"))
     design_pass = Column(Boolean, nullable=False)
     design_status = Column(Integer)
     boss_skies_min_pass = Column(Boolean)
@@ -317,102 +397,154 @@ class DesignModeCheckResult(Base):
     apogee_sky_neighbors_targets_pass = Column(Boolean)
     apogee_trace_diff_targets_pass = Column(Boolean)
 
-    design = relationship('Design')
+    design = relationship("Design")
 
 
 class DesignToField(Base):
-    __tablename__ = 'design_to_field'
+    __tablename__ = "design_to_field"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.design_to_field_pk_seq'::regclass)"))
-    design_id = Column(ForeignKey('targetdb.design.design_id'), index=True)
-    field_pk = Column(ForeignKey('targetdb.field.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.design_to_field_pk_seq'::regclass)"),
+    )
+    design_id = Column(ForeignKey("targetdb.design.design_id"), index=True)
+    field_pk = Column(ForeignKey("targetdb.field.pk"), index=True)
     exposure = Column(BigInteger)
     field_exposure = Column(BigInteger)
 
-    design = relationship('Design')
-    field = relationship('Field')
+    design = relationship("Design")
+    field = relationship("Field")
 
 
 class Assignment(Base):
-    __tablename__ = 'assignment'
+    __tablename__ = "assignment"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.assignment_pk_seq'::regclass)"))
-    carton_to_target_pk = Column(ForeignKey('targetdb.carton_to_target.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
-    hole_pk = Column(ForeignKey('targetdb.hole.pk'), index=True)
-    instrument_pk = Column(ForeignKey('targetdb.instrument.pk'), index=True)
-    design_id = Column(ForeignKey('targetdb.design.design_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.assignment_pk_seq'::regclass)"),
+    )
+    carton_to_target_pk = Column(
+        ForeignKey("targetdb.carton_to_target.pk", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
+    hole_pk = Column(ForeignKey("targetdb.hole.pk"), index=True)
+    instrument_pk = Column(ForeignKey("targetdb.instrument.pk"), index=True)
+    design_id = Column(
+        ForeignKey("targetdb.design.design_id", ondelete="CASCADE", onupdate="CASCADE"), index=True
+    )
 
-    carton_to_target = relationship('CartonToTarget')
-    design = relationship('Design')
-    hole = relationship('Hole')
-    instrument = relationship('Instrument')
+    carton_to_target = relationship("CartonToTarget")
+    design = relationship("Design")
+    hole = relationship("Hole")
+    instrument = relationship("Instrument")
 
 
 class Magnitude(Base):
-    __tablename__ = 'magnitude'
+    __tablename__ = "magnitude"
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('targetdb.magnitude_c2t_seq'::regclass)"),
+    )
     g = Column(Float)
     r = Column(Float)
     i = Column(Float)
     h = Column(Float, index=True)
     bp = Column(Float)
     rp = Column(Float)
-    carton_to_target_pk = Column(ForeignKey('targetdb.carton_to_target.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    carton_to_target_pk = Column(
+        ForeignKey(
+            "targetdb.carton_to_target.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        index=True,
+    )
     z = Column(Float)
     j = Column(Float)
     k = Column(Float)
     gaia_g = Column(Float)
     optical_prov = Column(Text)
 
-    carton_to_target = relationship('CartonToTarget')
+    carton_to_target = relationship("CartonToTarget")
 
 
 class AssignmentStatus(Base):
-    __tablename__ = 'assignment_status'
+    __tablename__ = "assignment_status"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.assignment_status_pk_seq'::regclass)"))
-    assignment_pk = Column(ForeignKey('targetdb.assignment.pk'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.assignment_status_pk_seq'::regclass)"),
+    )
+    assignment_pk = Column(ForeignKey("targetdb.assignment.pk"))
     status = Column(Integer)
     mjd = Column(Float)
 
-    assignment = relationship('Assignment')
+    assignment = relationship("Assignment")
 
 
 class TargetingGeneration(Base):
-    __tablename__ = 'targeting_generation'
+    __tablename__ = "targeting_generation"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.targeting_generation_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.targeting_generation_pk_seq'::regclass)"),
+    )
     label = Column(Text, nullable=False)
     first_release = Column(Text, nullable=False)
 
 
 class TargetingGenerationToCarton(Base):
-    __tablename__ = 'targeting_generation_to_carton'
+    __tablename__ = "targeting_generation_to_carton"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.targeting_generation_to_carton_pk_seq'::regclass)"))
-    generation_pk = Column(ForeignKey('targetdb.generation.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
-    carton_pk = Column(ForeignKey('targetdb.carton.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('targetdb.targeting_generation_to_carton_pk_seq'::regclass)"),
+    )
+    generation_pk = Column(
+        ForeignKey("targetdb.generation.pk", ondelete="CASCADE", onupdate="CASCADE"), index=True
+    )
+    carton_pk = Column(
+        ForeignKey("targetdb.carton.pk", ondelete="CASCADE", onupdate="CASCADE"), index=True
+    )
     rs_stage = Column(Text, nullable=True)
     rs_active = Column(Boolean, nullable=False)
 
-    carton = relationship('Carton')
-    targeting_generation = relationship('TargetingGeneration')
+    carton = relationship("Carton")
+    targeting_generation = relationship("TargetingGeneration")
 
 
 class TargetingGenerationToVersion(Base):
-    __tablename__ = 'targeting_generation_to_version'
+    __tablename__ = "targeting_generation_to_version"
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('targetdb.targeting_generation_to_version_pk_seq'::regclass)"))
-    generation_pk = Column(ForeignKey('targetdb.generation.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
-    version_pk = Column(ForeignKey('targetdb.version.pk', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            "nextval('targetdb.targeting_generation_to_version_pk_seq'::regclass)"
+        ),
+    )
+    generation_pk = Column(
+        ForeignKey("targetdb.generation.pk", ondelete="CASCADE", onupdate="CASCADE"), index=True
+    )
+    version_pk = Column(
+        ForeignKey("targetdb.version.pk", ondelete="CASCADE", onupdate="CASCADE"), index=True
+    )
 
-    version = relationship('Version')
-    targeting_generation = relationship('TargetingGeneration')
+    version = relationship("Version")
+    targeting_generation = relationship("TargetingGeneration")
 
 
 def define_relations():
-    """ leaving this empty as relations were autogenerated """
+    """leaving this empty as relations were autogenerated"""
     pass
 
 

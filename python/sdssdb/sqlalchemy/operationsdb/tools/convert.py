@@ -15,7 +15,7 @@ todo: any function that takes RA and Dec  should accept a string of the form HH:
 todo: define __all__ so importing all from this script doesn't carry all of 'math'
 """
 
-__author__ = 'Adrian Price-Whelan <adrn@nyu.edu>'
+__author__ = "Adrian Price-Whelan <adrn@nyu.edu>"
 
 # Standard library dependencies
 import datetime
@@ -29,24 +29,31 @@ from .geometry import *
 
 # Assumed Constants:
 epochOffsetT = 0.0
-ee = 23.0 + 26.0 / 60.0 + 21.45 / 3600.0 - 46.815 / 3600.0 * epochOffsetT - 0.0006 / 3600.0 * epochOffsetT**2 + 0.00181 / 3600.0 * epochOffsetT**3
+ee = (
+    23.0
+    + 26.0 / 60.0
+    + 21.45 / 3600.0
+    - 46.815 / 3600.0 * epochOffsetT
+    - 0.0006 / 3600.0 * epochOffsetT**2
+    + 0.00181 / 3600.0 * epochOffsetT**3
+)
 toRad = np.pi / 180.0
 
 #
 # Formatting:
 dayNames = {
-    0: 'Sunday',
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday'
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
 }
 
 
 def parseRA(raString):
-    """ Parse an RA string and return hours, minutes, seconds.
+    """Parse an RA string and return hours, minutes, seconds.
 
     Parameters
     ----------
@@ -61,12 +68,12 @@ def parseRA(raString):
     -------
 
     """
-    div = '(|:|\s|/)'
-    pattr = '([+-]*\d?\d)' + div + '(\d?\d)' + div + '(\d?\d[\.0-9]*)'
+    div = "(|:|\s|/)"
+    pattr = "([+-]*\d?\d)" + div + "(\d?\d)" + div + "(\d?\d[\.0-9]*)"
     try:
         elems = re.search(pattr, raString).groups()
     except:
-        print('Invalid input string!')
+        print("Invalid input string!")
         raise
 
     hours = int(elems[0])
@@ -75,17 +82,17 @@ def parseRA(raString):
 
     # Check for nonsense values
     if hours > 24.0:
-        raise ValueError('Hour value must be < 24.')
+        raise ValueError("Hour value must be < 24.")
     if minutes >= 60.0:
-        raise ValueError('Minute value must be < 60.')
+        raise ValueError("Minute value must be < 60.")
     if seconds >= 60.0:
-        raise ValueError('Second value must be < 60.')
+        raise ValueError("Second value must be < 60.")
 
     return (int(hours), int(minutes), seconds)
 
 
 def parseDec(decString):
-    """ Parse a Dec string and return degrees, minutes, seconds.
+    """Parse a Dec string and return degrees, minutes, seconds.
 
     Parameters
     ----------
@@ -101,12 +108,12 @@ def parseDec(decString):
 
     """
 
-    div = '(|:|\s|/)'
-    pattr = '([+-]*\d?\d)' + div + '(\d?\d)' + div + '(\d?\d[\.0-9]*)'
+    div = "(|:|\s|/)"
+    pattr = "([+-]*\d?\d)" + div + "(\d?\d)" + div + "(\d?\d[\.0-9]*)"
     try:
         elems = re.search(pattr, decString).groups()
     except:
-        print('Invalid input string!')
+        print("Invalid input string!")
         raise
 
     degrees = int(elems[0])
@@ -115,22 +122,22 @@ def parseDec(decString):
 
     # Check for nonsense values
     if degrees > 90.0:
-        raise ValueError('Degree value must be <= 90.')
+        raise ValueError("Degree value must be <= 90.")
     if arcminutes >= 60.0:
-        raise ValueError('Arcminute value must be < 60.')
+        raise ValueError("Arcminute value must be < 60.")
     if arcseconds >= 60.0:
-        raise ValueError('Arcsecond value must be < 60.')
+        raise ValueError("Arcsecond value must be < 60.")
 
     return (int(degrees), int(arcminutes), arcseconds)
 
 
 def string2hours(string):
-    print('string2hours is deprecated! Use parseRA instead')
+    print("string2hours is deprecated! Use parseRA instead")
     return parseRA(string)
 
 
 def string2deg(string):
-    print('string2deg is deprecated! Use parseDec instead')
+    print("string2deg is deprecated! Use parseDec instead")
     return parseDec(string)
 
 
@@ -143,7 +150,7 @@ def hours2string(*args):
         decHours = args[0]
         h, m, s = dec2sex(decHours)
 
-    return '%02d:%02d:%08.5f' % (h, m, s)
+    return "%02d:%02d:%08.5f" % (h, m, s)
 
 
 def degrees2string(*args):
@@ -157,9 +164,9 @@ def degrees2string(*args):
 
     if m < 0 or s < 0:
         d, m, s = d, -m, -s
-        decString = '%03d:%02d:%08.5f' % (d, m, s)
+        decString = "%03d:%02d:%08.5f" % (d, m, s)
     else:
-        decString = '%02d:%02d:%08.5f' % decTuple
+        decString = "%02d:%02d:%08.5f" % decTuple
 
     return decString
 
@@ -169,12 +176,12 @@ def degrees2string(*args):
 
 
 def datetime2decHour(datetimeObj):
-    """ Converts a Python datetime.datetime object into a decimal hour """
-    return sex2dec(*map(float, datetimeObj.strftime('%H:%M:%S').split(':')))
+    """Converts a Python datetime.datetime object into a decimal hour"""
+    return sex2dec(*map(float, datetimeObj.strftime("%H:%M:%S").split(":")))
 
 
 def dec2sex(dec_hours, microsecond=False):
-    """ Convert a time in decimal hours to sexagesimal.
+    """Convert a time in decimal hours to sexagesimal.
 
     Parameters
     ----------
@@ -198,7 +205,7 @@ def dec2sex(dec_hours, microsecond=False):
     (hrRemainder, hours) = math.modf(dec_hours)
     (minRemainder, minutes) = math.modf(hrRemainder * 60.0)
     (secRemainder, seconds) = math.modf(minRemainder * 60.0)
-    microseconds = int(secRemainder * 1E6)
+    microseconds = int(secRemainder * 1e6)
 
     if microsecond:
         return (int(hours), int(minutes), int(seconds), microseconds)
@@ -207,7 +214,7 @@ def dec2sex(dec_hours, microsecond=False):
 
 
 def sex2dec(hour, minute, second, microsecond=0.0):
-    """ Convert a sexagesimal time to decimal hours.
+    """Convert a sexagesimal time to decimal hours.
 
     Parameters
     ----------
@@ -218,11 +225,11 @@ def sex2dec(hour, minute, second, microsecond=0.0):
         Time in decimal hours
 
     """
-    return float(hour) + minute / 60.0 + (second + microsecond / 1E6) / 3600.0
+    return float(hour) + minute / 60.0 + (second + microsecond / 1e6) / 3600.0
 
 
 def hms2stringTime(h, m, s, precision=5):
-    """ Convert a sexagesimal time to a formatted string.
+    """Convert a sexagesimal time to a formatted string.
 
     Parameters
     ----------
@@ -235,16 +242,16 @@ def hms2stringTime(h, m, s, precision=5):
 
     """
     if h < 0 or m < 0 or s < 0:
-        pm = '-'
+        pm = "-"
     else:
-        pm = '+'
+        pm = "+"
 
-    formString = '%s%02d:%02d:%0' + str(precision + 3) + '.' + str(precision) + 'f'
+    formString = "%s%02d:%02d:%0" + str(precision + 3) + "." + str(precision) + "f"
     return formString % (pm, abs(h), abs(m), abs(s))
 
 
 def dec2stringTime(decim, precision=5):
-    """ Convert a decimale time or coordinate to a formatted string.
+    """Convert a decimale time or coordinate to a formatted string.
 
     Parameters
     ----------
@@ -260,17 +267,18 @@ def dec2stringTime(decim, precision=5):
 
 
 def datetime2decimalTime(datetimeObj=None):
-    """ Converts a Python datetime.datetime object into a decimal hour """
+    """Converts a Python datetime.datetime object into a decimal hour"""
     if datetimeObj == None:
         datetimeObj = datetime.datetime.now()
-    return sex2dec(datetimeObj.hour, datetimeObj.minute, datetimeObj.second,
-                   datetimeObj.microsecond)
+    return sex2dec(
+        datetimeObj.hour, datetimeObj.minute, datetimeObj.second, datetimeObj.microsecond
+    )
 
 
 def time2decHours(time):
     # DEPRECATED!
     # Use datetime2decimalTime
-    print('time2decHours is deprecated! Use datetime2decimalTime instead.')
+    print("time2decHours is deprecated! Use datetime2decimalTime instead.")
     return datetime2decimalTime(time)
 
 
@@ -317,7 +325,7 @@ def ymd2jd(year, month, day):
 
     return B + C + D + day + 1720994.5
 
-    #def ymd2weekday(year, month, day):
+    # def ymd2weekday(year, month, day):
     """ Returns the day of the week for the specified year, month, and day """
     jd = ymd2jd(year, month, day)
     A = (jd + 1.5) / 7.0
@@ -362,7 +370,8 @@ def utcDatetime2gmst(datetimeObj):
         hour=h,
         minute=m,
         second=int(s),
-        microsecond=int((s - int(s)) * 10**6))
+        microsecond=int((s - int(s)) * 10**6),
+    )
 
 
 def gmst2utcDatetime(datetimeObj):
@@ -401,7 +410,8 @@ def gmst2utcDatetime(datetimeObj):
         hour=h,
         minute=m,
         second=int(s),
-        microsecond=int((s - int(s)) * 10**6))
+        microsecond=int((s - int(s)) * 10**6),
+    )
 
 
 def mjd2jd(mjd):
@@ -619,9 +629,10 @@ def jd2datetime(fracJD, timezone=0):
     year = int(y)
     month = int(m)
     day = int(d)
-    hour, min, sec, ms = dec2sex((d - int(d)) * 24., True)
+    hour, min, sec, ms = dec2sex((d - int(d)) * 24.0, True)
     return datetime.datetime(year, month, day, hour, min, sec, ms) + datetime.timedelta(
-        0.0, seconds=timezone * 60 * 60)
+        0.0, seconds=timezone * 60 * 60
+    )
 
 
 def mjd2datetime(mjd):
@@ -700,12 +711,9 @@ def datetime2mjd(datetimeObj):
     return jd2mjd(jd)
 
 
-def gmst2lst(longitude,
-             hour,
-             minute=None,
-             second=None,
-             longitudeDirection='W',
-             longitudeUnits='DEGREES'):
+def gmst2lst(
+    longitude, hour, minute=None, second=None, longitudeDirection="W", longitudeUnits="DEGREES"
+):
     """
     Converts Greenwich Mean Sidereal Time to Local Sidereal Time.
 
@@ -750,26 +758,26 @@ def gmst2lst(longitude,
     elif minute == None and second == None:
         hours = hour
     else:
-        raise AssertionError('minute and second must either be both set, or both unset.')
+        raise AssertionError("minute and second must either be both set, or both unset.")
 
-    if longitudeUnits.upper() == 'DEGREES':
+    if longitudeUnits.upper() == "DEGREES":
         longitudeTime = longitude / 15.0
-    elif longitudeUnits.upper() == 'RADIANS':
+    elif longitudeUnits.upper() == "RADIANS":
         longitudeTime = longitude * 180.0 / math.pi / 15.0
 
-    if longitudeDirection.upper() == 'W':
+    if longitudeDirection.upper() == "W":
         lst = hours - longitudeTime
-    elif longitudeDirection.upper() == 'E':
+    elif longitudeDirection.upper() == "E":
         lst = hours + longitudeTime
     else:
-        raise AssertionError('longitudeDirection must be W or E')
+        raise AssertionError("longitudeDirection must be W or E")
 
     lst = lst % 24.0
 
     return dec2sex(lst)
 
 
-def gmstDatetime2lstDatetime(longitude, gmst, longitudeDirection='W', longitudeUnits='DEGREES'):
+def gmstDatetime2lstDatetime(longitude, gmst, longitudeDirection="W", longitudeUnits="DEGREES"):
     """
     Converts Greenwich Mean Sidereal Time to Local Sidereal Time.
 
@@ -794,17 +802,17 @@ def gmstDatetime2lstDatetime(longitude, gmst, longitudeDirection='W', longitudeU
     """
     hours = datetime2decimalTime(gmst)
 
-    if longitudeUnits.upper() == 'DEGREES':
+    if longitudeUnits.upper() == "DEGREES":
         longitudeTime = longitude / 15.0
-    elif longitudeUnits.upper() == 'RADIANS':
+    elif longitudeUnits.upper() == "RADIANS":
         longitudeTime = longitude * 180.0 / math.pi / 15.0
 
-    if longitudeDirection.upper() == 'W':
+    if longitudeDirection.upper() == "W":
         lst = hours - longitudeTime
-    elif longitudeDirection.upper() == 'E':
+    elif longitudeDirection.upper() == "E":
         lst = hours + longitudeTime
     else:
-        raise AssertionError('longitudeDirection must be W or E')
+        raise AssertionError("longitudeDirection must be W or E")
 
     lst = lst % 24.0
     h, m, s = dec2sex(lst)
@@ -812,12 +820,9 @@ def gmstDatetime2lstDatetime(longitude, gmst, longitudeDirection='W', longitudeU
     return datetime.datetime.combine(gmst.date(), datetime.time(h, m, int(s)))
 
 
-def lst2gmst(longitude,
-             hour,
-             minute=None,
-             second=None,
-             longitudeDirection='W',
-             longitudeUnits='DEGREES'):
+def lst2gmst(
+    longitude, hour, minute=None, second=None, longitudeDirection="W", longitudeUnits="DEGREES"
+):
     """
     Converts Local Sidereal Time to Greenwich Mean Sidereal Time.
 
@@ -862,19 +867,19 @@ def lst2gmst(longitude,
     elif minute == None and second == None:
         hours = hour
     else:
-        raise AssertionError('minute and second must either be both set, or both unset.')
+        raise AssertionError("minute and second must either be both set, or both unset.")
 
-    if longitudeUnits.upper() == 'DEGREES':
+    if longitudeUnits.upper() == "DEGREES":
         longitudeTime = longitude / 15.0
-    elif longitudeUnits.upper() == 'RADIANS':
+    elif longitudeUnits.upper() == "RADIANS":
         longitudeTime = longitude * 180.0 / math.pi / 15.0
 
-    if longitudeDirection.upper() == 'W':
+    if longitudeDirection.upper() == "W":
         gmst = hours + longitudeTime
-    elif longitudeDirection.upper() == 'E':
+    elif longitudeDirection.upper() == "E":
         gmst = hours - longitudeTime
     else:
-        raise AssertionError('longitudeDirection must be W or E')
+        raise AssertionError("longitudeDirection must be W or E")
 
     gmst = gmst % 24.0
 
@@ -883,7 +888,7 @@ def lst2gmst(longitude,
 
 #
 # Coordinate Transformations:
-def raLST2ha(ra, hour, minute=None, second=None, raUnits='HOURS'):
+def raLST2ha(ra, hour, minute=None, second=None, raUnits="HOURS"):
     """
     Converts a Right Ascension to an Hour Angle, given the Local Sidereal Time.
 
@@ -923,14 +928,14 @@ def raLST2ha(ra, hour, minute=None, second=None, raUnits='HOURS'):
     elif minute == None and second == None:
         hours = hour
     else:
-        raise AssertionError('minute and second must either be both set, or both unset.')
+        raise AssertionError("minute and second must either be both set, or both unset.")
 
-    if raUnits.upper() == 'HOURS':
+    if raUnits.upper() == "HOURS":
         HA = hours - ra
-    elif raUnits.upper() == 'DEGREES':
+    elif raUnits.upper() == "DEGREES":
         HA = hours - ra / 15.0
     else:
-        raise AssertionError('raUnits must be either HOURS or DEGREES')
+        raise AssertionError("raUnits must be either HOURS or DEGREES")
 
     return HA
 
@@ -951,7 +956,7 @@ def ra2transitTime():
     pass
 
 
-def raDec2AltAz(ra, dec, latitude, longitude, datetimeObj, longitudeDirection='W'):
+def raDec2AltAz(ra, dec, latitude, longitude, datetimeObj, longitudeDirection="W"):
     """
     Converts an RA and Dec to Alt Az for a given datetime object.
 
@@ -983,13 +988,16 @@ def raDec2AltAz(ra, dec, latitude, longitude, datetimeObj, longitudeDirection='W
     lst = (h + m / 60.0 + s / 3600.0) * 15.0
     ha = lst - ra
 
-    alt_rads = asin(sin(radians(dec))*sin(radians(latitude)) + \
-        cos(radians(dec))*cos(radians(latitude))*cos(radians(ha)))
+    alt_rads = asin(
+        sin(radians(dec)) * sin(radians(latitude))
+        + cos(radians(dec)) * cos(radians(latitude)) * cos(radians(ha))
+    )
 
-    cos_az = (sin(radians(dec)) - sin(alt_rads)*sin(radians(latitude))) / \
-        (cos(alt_rads) * cos(radians(latitude)))
+    cos_az = (sin(radians(dec)) - sin(alt_rads) * sin(radians(latitude))) / (
+        cos(alt_rads) * cos(radians(latitude))
+    )
 
-    #- Add bounds check on rounding
+    # - Add bounds check on rounding
     if cos_az < -1.0:
         cos_az = -1.0
     if cos_az > 1.0:
@@ -1004,7 +1012,7 @@ def raDec2AltAz(ra, dec, latitude, longitude, datetimeObj, longitudeDirection='W
         return alt, (360.0 - az)
 
 
-def eclipticLatLon2RADec(lat, lon, latLonUnits='DEGREES', raDecUnits='DEGREES'):
+def eclipticLatLon2RADec(lat, lon, latLonUnits="DEGREES", raDecUnits="DEGREES"):
     """
     Converts an Ecliptic Latitude and Ecliptic Longitude to a Right Ascension and
     Declination.
@@ -1033,14 +1041,14 @@ def eclipticLatLon2RADec(lat, lon, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     (143.72252629028003, 19.535734683739964)
 
     """
-    if latLonUnits.upper() == 'HOURS':
+    if latLonUnits.upper() == "HOURS":
         lambdaa = lat * 15.0
         beta = lon * 15.0
-    elif latLonUnits.upper() == 'DEGREES':
+    elif latLonUnits.upper() == "DEGREES":
         lambdaa = lat
         beta = lon
     else:
-        raise AssertionError('latLonUnits must be either HOURS or DEGREES')
+        raise AssertionError("latLonUnits must be either HOURS or DEGREES")
 
     # Python works in Radians...
     lambdaaRad = lambdaa * math.pi / 180.0
@@ -1048,8 +1056,9 @@ def eclipticLatLon2RADec(lat, lon, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     eeRad = ee * math.pi / 180.0
 
     deltaRad = math.asin(
-        math.sin(betaRad) * math.cos(eeRad) +
-        math.cos(betaRad) * math.sin(eeRad) * math.sin(lambdaaRad))
+        math.sin(betaRad) * math.cos(eeRad)
+        + math.cos(betaRad) * math.sin(eeRad) * math.sin(lambdaaRad)
+    )
 
     y = math.sin(lambdaaRad) * math.cos(eeRad) - math.tan(betaRad) * math.sin(eeRad)
     x = math.cos(lambdaaRad)
@@ -1067,19 +1076,19 @@ def eclipticLatLon2RADec(lat, lon, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     else:
         alpha = alphaPrime
 
-    if raDecUnits.upper() == 'HOURS':
+    if raDecUnits.upper() == "HOURS":
         ra = alpha / 15.0
         dec = deltaRad * 180.0 / math.pi / 15.0
-    elif raDecUnits.upper() == 'DEGREES':
+    elif raDecUnits.upper() == "DEGREES":
         ra = alpha
         dec = deltaRad * 180.0 / math.pi
     else:
-        raise AssertionError('raDecUnits must be either HOURS or DEGREES')
+        raise AssertionError("raDecUnits must be either HOURS or DEGREES")
 
     return ra, dec
 
 
-def raDec2Galactic(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
+def raDec2Galactic(ra, dec, latLonUnits="DEGREES", raDecUnits="DEGREES"):
     """
     Converts a Right Ascension and Declination to an Galactic Latitude
     and Longitude
@@ -1113,7 +1122,7 @@ def raDec2Galactic(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
         ra = np.array([float(ra)])
         dec = np.array([float(dec)])
 
-    if raDecUnits.lower() == 'degrees':
+    if raDecUnits.lower() == "degrees":
         ra *= toRad
         dec *= toRad
 
@@ -1122,14 +1131,20 @@ def raDec2Galactic(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     lASCEND = 32.93192 * toRad
 
     gb = np.arcsin(
-        np.cos(dec) * np.cos(decNGP) * np.cos(ra - raNGP) + np.sin(dec) * np.sin(decNGP))
-    gl = np.arctan2( np.sin(dec)*np.cos(decNGP) - np.cos(dec)*np.cos(ra - raNGP)*np.sin(decNGP),\
-                     np.cos(dec)*np.sin(ra - raNGP) ) + lASCEND
+        np.cos(dec) * np.cos(decNGP) * np.cos(ra - raNGP) + np.sin(dec) * np.sin(decNGP)
+    )
+    gl = (
+        np.arctan2(
+            np.sin(dec) * np.cos(decNGP) - np.cos(dec) * np.cos(ra - raNGP) * np.sin(decNGP),
+            np.cos(dec) * np.sin(ra - raNGP),
+        )
+        + lASCEND
+    )
 
     gl /= toRad
     gb /= toRad
 
-    gl[gl < 0.] += 360.
+    gl[gl < 0.0] += 360.0
 
     if len(gl) == 1:
         return gl[0], gb[0]
@@ -1137,7 +1152,7 @@ def raDec2Galactic(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     return gl, gb
 
 
-def galactic2RaDec(gl, gb, latLonUnits='DEGREES', raDecUnits='DEGREES'):
+def galactic2RaDec(gl, gb, latLonUnits="DEGREES", raDecUnits="DEGREES"):
     """
     Converts a Galactic Latitude and Longitude to Right Ascension and Declination
 
@@ -1171,7 +1186,7 @@ def galactic2RaDec(gl, gb, latLonUnits='DEGREES', raDecUnits='DEGREES'):
         gl = np.array([float(gl)])
         gb = np.array([float(gb)])
 
-    if latLonUnits.lower() == 'degrees':
+    if latLonUnits.lower() == "degrees":
         gl *= toRad
         gb *= toRad
 
@@ -1180,14 +1195,20 @@ def galactic2RaDec(gl, gb, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     lASCEND = 32.93192 * toRad
 
     dec = np.arcsin(
-        np.cos(gb) * np.cos(decNGP) * np.sin(gl - lASCEND) + np.sin(gb) * np.sin(decNGP))
-    ra = np.arctan2( np.cos(gb)*np.cos(gl - lASCEND), \
-                     np.sin(gb)*np.cos(decNGP) - np.cos(gb)*np.sin(gl - lASCEND)*np.sin(decNGP) ) + raNGP
+        np.cos(gb) * np.cos(decNGP) * np.sin(gl - lASCEND) + np.sin(gb) * np.sin(decNGP)
+    )
+    ra = (
+        np.arctan2(
+            np.cos(gb) * np.cos(gl - lASCEND),
+            np.sin(gb) * np.cos(decNGP) - np.cos(gb) * np.sin(gl - lASCEND) * np.sin(decNGP),
+        )
+        + raNGP
+    )
 
     ra /= toRad
     dec /= toRad
 
-    ra[ra > 360.] -= 360.
+    ra[ra > 360.0] -= 360.0
 
     if len(ra) == 1:
         return ra[0], dec[0]
@@ -1195,7 +1216,7 @@ def galactic2RaDec(gl, gb, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     return ra, dec
 
 
-def raDec2EclipticLatLon(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
+def raDec2EclipticLatLon(ra, dec, latLonUnits="DEGREES", raDecUnits="DEGREES"):
     """
     Converts a Right Ascension and Declination to an Ecliptic Latitude and
     Ecliptic Longitude.
@@ -1220,14 +1241,14 @@ def raDec2EclipticLatLon(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
 
 
     """
-    if raDecUnits.upper() == 'HOURS':
+    if raDecUnits.upper() == "HOURS":
         ra = ra * 15.0
         dec = dec * 15.0
-    elif raDecUnits.upper() == 'DEGREES':
+    elif raDecUnits.upper() == "DEGREES":
         ra = ra
         dec = dec
     else:
-        raise AssertionError('raDecUnits must be either HOURS or DEGREES')
+        raise AssertionError("raDecUnits must be either HOURS or DEGREES")
 
     # Python works in Radians...
     raRad = ra * math.pi / 180.0
@@ -1235,7 +1256,8 @@ def raDec2EclipticLatLon(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     eeRad = ee * math.pi / 180.0
 
     betaRad = math.asin(
-        math.sin(decRad) * math.cos(eeRad) - math.cos(decRad) * math.sin(eeRad) * math.sin(raRad))
+        math.sin(decRad) * math.cos(eeRad) - math.cos(decRad) * math.sin(eeRad) * math.sin(raRad)
+    )
 
     y = math.sin(raRad) * math.cos(eeRad) + math.tan(decRad) * math.sin(eeRad)
     x = math.cos(raRad)
@@ -1253,31 +1275,31 @@ def raDec2EclipticLatLon(ra, dec, latLonUnits='DEGREES', raDecUnits='DEGREES'):
     else:
         lambdaa = lambdaPrime
 
-    if latLonUnits.upper() == 'HOURS':
+    if latLonUnits.upper() == "HOURS":
         lat = lambdaa / 15.0
         lon = betaRad * 180.0 / math.pi * 15.0
-    elif latLonUnits.upper() == 'DEGREES':
+    elif latLonUnits.upper() == "DEGREES":
         lat = lambdaa
         lon = betaRad * 180.0 / math.pi
     else:
-        raise AssertionError('latLonUnits must be either HOURS or DEGREES')
+        raise AssertionError("latLonUnits must be either HOURS or DEGREES")
 
     return lat, lon
 
 
 def decHours2hms(dec_hours):
-    ''' Convert decimal hours into hour, min, sec
-          returned as a tuple, e.g.
-          (12, 45, 6.6)
-    '''
+    """Convert decimal hours into hour, min, sec
+    returned as a tuple, e.g.
+    (12, 45, 6.6)
+    """
     (hours_frac, h) = math.modf(dec_hours)
     (min_frac, m) = math.modf(hours_frac * 60)
-    s = min_frac * 60.
+    s = min_frac * 60.0
     return (int(h), int(m), s)
 
 
 def mjd2ut(mjd):
-    '''Convert a modified julian day to universal time.
-            Julian day = mjd + 2400000.5
-    '''
+    """Convert a modified julian day to universal time.
+    Julian day = mjd + 2400000.5
+    """
     return jd2datetime(float(mjd) + 2400000.5)

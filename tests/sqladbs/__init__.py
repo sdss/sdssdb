@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: __init__.py
 # Project: sqla
 # Author: Brian Cherinka
@@ -21,19 +21,24 @@ from sdssdb.connection import SQLADatabaseConnection
 from sdssdb.sqlalchemy import BaseModel
 
 
-TmpBase = declarative_base(cls=(DeferredReflection, BaseModel,))
+TmpBase = declarative_base(
+    cls=(
+        DeferredReflection,
+        BaseModel,
+    )
+)
 
 
 class TmpDatabaseConnection(SQLADatabaseConnection):
-    dbname = 'test'
+    dbname = "test"
     base = TmpBase
 
 
-database = TmpDatabaseConnection(autoconnect=False, profile='local')
+database = TmpDatabaseConnection(autoconnect=False, profile="local")
 
 
 def prepare_testdb():
-    ''' connect and set up test models after db initialization '''
+    """connect and set up test models after db initialization"""
     database.reset_engine()
     database.connect()
     database.base.metadata.create_all(database.engine)
@@ -43,12 +48,12 @@ def prepare_testdb():
 
 
 def get_model_from_database(database, modelname):
-    ''' get a model from a database module
-    
+    """get a model from a database module
+
     Loads a module of Model Classes for a given database. If modelname specifies
     a specific model class, will return the individual model class instead of entire
     module.
-    
+
     Parameters:
         database (DatabaseConnection):
             An sdssdb DatabaseConnection
@@ -64,7 +69,7 @@ def get_model_from_database(database, modelname):
         >>>
         >>> # load only the datadb.Wavelength Model class
         >>> get_model_from_database(mangadb, 'datadb.Wavelength')
-    '''
+    """
     # if no database, return nothing
     if database.connected is False:
         return None
@@ -74,11 +79,11 @@ def get_model_from_database(database, modelname):
 
     # load the model module or an indvidual model class
     assert isinstance(modelname, six.string_types)
-    if '.' in modelname:
-        model_mod, model_class = modelname.split('.')
-        model = importlib.import_module(dbmod.__name__ + '.' + model_mod)
+    if "." in modelname:
+        model_mod, model_class = modelname.split(".")
+        model = importlib.import_module(dbmod.__name__ + "." + model_mod)
         return getattr(model, model_class, None)
-        
-    model = importlib.import_module(dbmod.__name__ + '.' + modelname)
+
+    model = importlib.import_module(dbmod.__name__ + "." + modelname)
 
     return model

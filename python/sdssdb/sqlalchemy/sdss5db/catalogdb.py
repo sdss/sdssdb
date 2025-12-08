@@ -30,21 +30,21 @@ from sqlalchemy.orm import relationship
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 
-SCHEMA = 'catalogdb'
+SCHEMA = "catalogdb"
 
 
 class Base(AbstractConcreteBase, SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
-    _relations = 'define_relations'
+    _relations = "define_relations"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class BailerJonesEDR3(Base):
-    __tablename__ = 'bailer_jones_edr3'
+    __tablename__ = "bailer_jones_edr3"
 
     source_id = Column(BigInteger, primary_key=True)
     r_med_geo = Column(Float(53), index=True)
@@ -57,9 +57,13 @@ class BailerJonesEDR3(Base):
 
 
 class BHM_CSC(Base):
-    __tablename__ = 'bhm_csc'
+    __tablename__ = "bhm_csc"
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".csc_id_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".csc_id_seq'::regclass)"),
+    )
     csc_version = Column(Text)
     cxo_name = Column(Text)
     oir_ra = Column(Float(53))
@@ -73,7 +77,7 @@ class BHM_CSC(Base):
 
 
 class BHM_CSC_v2(Base):
-    __tablename__ = 'bhm_csc_v2'
+    __tablename__ = "bhm_csc_v2"
 
     cxoid = Column(Text, index=True)
     xra = Column(Float(53))
@@ -99,11 +103,15 @@ class BHM_CSC_v2(Base):
     designation2m = Column(Text, index=True)
     idg2 = Column(BigInteger, index=True)
     idps = Column(BigInteger, index=True)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_csc_v2_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_csc_v2_pk_seq'::regclass)"),
+    )
 
 
 class BHM_eFEDS_Veto(Base):
-    __tablename__ = 'bhm_efeds_veto'
+    __tablename__ = "bhm_efeds_veto"
 
     programname = Column(String(5))
     chunk = Column(String(7))
@@ -130,11 +138,15 @@ class BHM_eFEDS_Veto(Base):
     spectroflux_ivar = Column(ARRAY(Float()))
     anyandmask = Column(Integer)
     anyormask = Column(Integer)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_efeds_veto_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_efeds_veto_pk_seq'::regclass)"),
+    )
 
 
 class BHM_RM_Tweaks(Base):
-    __tablename__ = 'bhm_rm_tweaks'
+    __tablename__ = "bhm_rm_tweaks"
 
     rm_field_name = Column(CHAR(12), nullable=False, index=True)
     plate = Column(Integer, index=True)
@@ -149,11 +161,15 @@ class BHM_RM_Tweaks(Base):
     mag = Column(ARRAY(Float()), index=True)
     gaia_g = Column(Float, index=True)
     date_set = Column(CHAR(11), index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_rm_tweaks_pkey_seq1'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_rm_tweaks_pkey_seq1'::regclass)"),
+    )
 
 
 class BlackCAT(Base):
-    __tablename__ = 'blackcat'
+    __tablename__ = "blackcat"
 
     name = Column(Text)
     rastr = Column(Text)
@@ -170,7 +186,7 @@ class BlackCAT(Base):
 
 
 class CantatGaudinTable1(Base):
-    __tablename__ = 'cantat_gaudin_table1'
+    __tablename__ = "cantat_gaudin_table1"
 
     cluster = Column(CHAR(17), unique=True)
     radeg = Column(Float(53))
@@ -194,11 +210,15 @@ class CantatGaudinTable1(Base):
     y = Column(Float(53))
     z = Column(Float(53))
     rgc = Column(Float(53), index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".cantat_gaudin_table1_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".cantat_gaudin_table1_pkey_seq'::regclass)"),
+    )
 
 
 class Catalog(Base):
-    __tablename__ = 'catalog'
+    __tablename__ = "catalog"
 
     catalogid = Column(BigInteger, primary_key=True)
     iauname = Column(Text)
@@ -212,20 +232,25 @@ class Catalog(Base):
 
 
 class CatalogFromSDSS_DR19p_Speclite(Base):
-    __tablename__ = 'catalog_from_sdss_dr19p_speclite'
+    __tablename__ = "catalog_from_sdss_dr19p_speclite"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToAllWise(Base):
-    __tablename__ = 'catalog_to_allwise'
+    __tablename__ = "catalog_to_allwise"
     __table_args__ = (
-        Index('catalog_to_allwise_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_allwise_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -236,10 +261,15 @@ class CatalogToAllWise(Base):
 
 
 class CatalogToBHM_CSC(Base):
-    __tablename__ = 'catalog_to_bhm_csc'
+    __tablename__ = "catalog_to_bhm_csc"
     __table_args__ = (
-        Index('catalog_to_bhm_csc_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_bhm_csc_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -250,10 +280,15 @@ class CatalogToBHM_CSC(Base):
 
 
 class CatalogToBHM_eFEDS_Veto(Base):
-    __tablename__ = 'catalog_to_bhm_efeds_veto'
+    __tablename__ = "catalog_to_bhm_efeds_veto"
     __table_args__ = (
-        Index('catalog_to_bhm_efeds_veto_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_bhm_efeds_veto_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -264,10 +299,15 @@ class CatalogToBHM_eFEDS_Veto(Base):
 
 
 class CatalogToBHM_RM_v0(Base):
-    __tablename__ = 'catalog_to_bhm_rm_v0'
+    __tablename__ = "catalog_to_bhm_rm_v0"
     __table_args__ = (
-        Index('catalog_to_bhm_rm_v0_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_bhm_rm_v0_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -278,10 +318,15 @@ class CatalogToBHM_RM_v0(Base):
 
 
 class CatalogToBHM_RM_v0_2(Base):
-    __tablename__ = 'catalog_to_bhm_rm_v0_2'
+    __tablename__ = "catalog_to_bhm_rm_v0_2"
     __table_args__ = (
-        Index('catalog_to_bhm_rm_v0_2_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_bhm_rm_v0_2_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -292,10 +337,15 @@ class CatalogToBHM_RM_v0_2(Base):
 
 
 class CatalogToCatWISE(Base):
-    __tablename__ = 'catalog_to_catwise'
+    __tablename__ = "catalog_to_catwise"
     __table_args__ = (
-        Index('catalog_to_catwise_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_catwise_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -306,10 +356,15 @@ class CatalogToCatWISE(Base):
 
 
 class CatalogToCatWISE2020(Base):
-    __tablename__ = 'catalog_to_catwise2020'
+    __tablename__ = "catalog_to_catwise2020"
     __table_args__ = (
-        Index('catalog_to_catwise2020_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_catwise2020_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -320,20 +375,25 @@ class CatalogToCatWISE2020(Base):
 
 
 class CatalogToGaia_DR2(Base):
-    __tablename__ = 'catalog_to_gaia_dr2_source'
+    __tablename__ = "catalog_to_gaia_dr2_source"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToGaia_DR2_WD_SDSS(Base):
-    __tablename__ = 'catalog_to_gaia_dr2_wd_sdss'
+    __tablename__ = "catalog_to_gaia_dr2_wd_sdss"
     __table_args__ = (
-        Index('catalog_to_gaia_dr2_wd_sdss_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_gaia_dr2_wd_sdss_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -344,20 +404,25 @@ class CatalogToGaia_DR2_WD_SDSS(Base):
 
 
 class CatalogToGaia_DR3(Base):
-    __tablename__ = 'catalog_to_gaia_dr3_source'
+    __tablename__ = "catalog_to_gaia_dr3_source"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToGaiaQSO(Base):
-    __tablename__ = 'catalog_to_gaia_qso'
+    __tablename__ = "catalog_to_gaia_qso"
     __table_args__ = (
-        Index('catalog_to_gaia_qso_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_gaia_qso_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -368,10 +433,15 @@ class CatalogToGaiaQSO(Base):
 
 
 class CatalogToGaia_unWISE_AGN(Base):
-    __tablename__ = 'catalog_to_gaia_unwise_agn'
+    __tablename__ = "catalog_to_gaia_unwise_agn"
     __table_args__ = (
-        Index('catalog_to_gaia_unwise_agn_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_gaia_unwise_agn_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -382,10 +452,15 @@ class CatalogToGaia_unWISE_AGN(Base):
 
 
 class CatalogToGLIMPSE(Base):
-    __tablename__ = 'catalog_to_glimpse'
+    __tablename__ = "catalog_to_glimpse"
     __table_args__ = (
-        Index('catalog_to_glimpse_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_glimpse_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -396,10 +471,15 @@ class CatalogToGLIMPSE(Base):
 
 
 class CatalogToGLIMPSE360(Base):
-    __tablename__ = 'catalog_to_glimpse360'
+    __tablename__ = "catalog_to_glimpse360"
     __table_args__ = (
-        Index('catalog_to_glimpse360_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_glimpse360_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -410,10 +490,15 @@ class CatalogToGLIMPSE360(Base):
 
 
 class CatalogToGUVCat(Base):
-    __tablename__ = 'catalog_to_guvcat'
+    __tablename__ = "catalog_to_guvcat"
     __table_args__ = (
-        Index('catalog_to_guvcat_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_guvcat_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -424,10 +509,15 @@ class CatalogToGUVCat(Base):
 
 
 class CatalogToKeplerInput_DR10(Base):
-    __tablename__ = 'catalog_to_kepler_input_10'
+    __tablename__ = "catalog_to_kepler_input_10"
     __table_args__ = (
-        Index('catalog_to_kepler_input_10_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_kepler_input_10_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -438,30 +528,35 @@ class CatalogToKeplerInput_DR10(Base):
 
 
 class CatalogToLegacy_Survey_DR10(Base):
-    __tablename__ = 'catalog_to_legacy_survey_dr10'
+    __tablename__ = "catalog_to_legacy_survey_dr10"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToLegacy_Survey_DR10a(Base):
-    __tablename__ = 'catalog_to_legacy_survey_dr10a'
+    __tablename__ = "catalog_to_legacy_survey_dr10a"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToLegacy_Survey_DR8(Base):
-    __tablename__ = 'catalog_to_legacy_survey_dr8'
+    __tablename__ = "catalog_to_legacy_survey_dr8"
     __table_args__ = (
-        Index('catalog_to_legacy_survey_dr8_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_legacy_survey_dr8_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -472,20 +567,25 @@ class CatalogToLegacy_Survey_DR8(Base):
 
 
 class CatalogToMILLIQUAS_7_7(Base):
-    __tablename__ = 'catalog_to_milliquas_7_7'
+    __tablename__ = "catalog_to_milliquas_7_7"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToPanstarrs1(Base):
-    __tablename__ = 'catalog_to_panstarrs1'
+    __tablename__ = "catalog_to_panstarrs1"
     __table_args__ = (
-        Index('catalog_to_panstarrs1_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_panstarrs1_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -496,10 +596,15 @@ class CatalogToPanstarrs1(Base):
 
 
 class CatalogToPS1_g18(Base):
-    __tablename__ = 'catalog_to_ps1_g18'
+    __tablename__ = "catalog_to_ps1_g18"
     __table_args__ = (
-        Index('catalog_to_ps1_g18_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_ps1_g18_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -510,10 +615,15 @@ class CatalogToPS1_g18(Base):
 
 
 class CatalogToSDSS_DR13_PhotoObj(Base):
-    __tablename__ = 'catalog_to_sdss_dr13_photoobj'
+    __tablename__ = "catalog_to_sdss_dr13_photoobj"
     __table_args__ = (
-        Index('catalog_to_sdss_dr13_photoobj_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_sdss_dr13_photoobj_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -524,10 +634,15 @@ class CatalogToSDSS_DR13_PhotoObj(Base):
 
 
 class CatalogToSDSS_DR13_PhotoObj_Primary(Base):
-    __tablename__ = 'catalog_to_sdss_dr13_photoobj_primary'
+    __tablename__ = "catalog_to_sdss_dr13_photoobj_primary"
     __table_args__ = (
-        Index('catalog_to_sdss_dr13_photoobj_pr_version_id_target_id_best_idx1', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_sdss_dr13_photoobj_pr_version_id_target_id_best_idx1",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -538,10 +653,15 @@ class CatalogToSDSS_DR13_PhotoObj_Primary(Base):
 
 
 class CatalogToSDSS_DR16_APOGEE_Star(Base):
-    __tablename__ = 'catalog_to_sdss_dr16_apogeestar'
+    __tablename__ = "catalog_to_sdss_dr16_apogeestar"
     __table_args__ = (
-        Index('catalog_to_sdss_dr16_apogeestar_n_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_sdss_dr16_apogeestar_n_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -552,10 +672,15 @@ class CatalogToSDSS_DR16_APOGEE_Star(Base):
 
 
 class CatalogToSDSS_DR16_SpecObj(Base):
-    __tablename__ = 'catalog_to_sdss_dr16_specobj'
+    __tablename__ = "catalog_to_sdss_dr16_specobj"
     __table_args__ = (
-        Index('catalog_to_sdss_dr16_specobj_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_sdss_dr16_specobj_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -566,20 +691,25 @@ class CatalogToSDSS_DR16_SpecObj(Base):
 
 
 class CatalogToSDSS_DR19p_Speclite(Base):
-    __tablename__ = 'catalog_to_sdss_dr19p_speclite'
+    __tablename__ = "catalog_to_sdss_dr19p_speclite"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToSkies_v1(Base):
-    __tablename__ = 'catalog_to_skies_v1'
+    __tablename__ = "catalog_to_skies_v1"
     __table_args__ = (
-        Index('catalog_to_skies_v1_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_skies_v1_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -590,10 +720,12 @@ class CatalogToSkies_v1(Base):
 
 
 class CatalogToSkies_v2(Base):
-    __tablename__ = 'catalog_to_skies_v2'
+    __tablename__ = "catalog_to_skies_v2"
     __table_args__ = (
-        Index('catalog_to_skies_v2_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_skies_v2_version_id_target_id_best_idx", "version_id", "target_id", "best"
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -604,10 +736,15 @@ class CatalogToSkies_v2(Base):
 
 
 class CatalogToSkyMapper_DR1_1(Base):
-    __tablename__ = 'catalog_to_skymapper_dr1_1'
+    __tablename__ = "catalog_to_skymapper_dr1_1"
     __table_args__ = (
-        Index('catalog_to_skymapper_dr1_1_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_skymapper_dr1_1_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -618,10 +755,15 @@ class CatalogToSkyMapper_DR1_1(Base):
 
 
 class CatalogToSkyMapper_DR2(Base):
-    __tablename__ = 'catalog_to_skymapper_dr2'
+    __tablename__ = "catalog_to_skymapper_dr2"
     __table_args__ = (
-        Index('catalog_to_skymapper_dr2_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_skymapper_dr2_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -632,10 +774,15 @@ class CatalogToSkyMapper_DR2(Base):
 
 
 class CatalogToSuperCosmos(Base):
-    __tablename__ = 'catalog_to_supercosmos'
+    __tablename__ = "catalog_to_supercosmos"
     __table_args__ = (
-        Index('catalog_to_supercosmos_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_supercosmos_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -646,10 +793,15 @@ class CatalogToSuperCosmos(Base):
 
 
 class CatalogToTIC_v8(Base):
-    __tablename__ = 'catalog_to_tic_v8'
+    __tablename__ = "catalog_to_tic_v8"
     __table_args__ = (
-        Index('catalog_to_tic_v8_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_tic_v8_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -660,10 +812,15 @@ class CatalogToTIC_v8(Base):
 
 
 class CatalogToTIC_v8_Extended(Base):
-    __tablename__ = 'catalog_to_tic_v8_extended'
+    __tablename__ = "catalog_to_tic_v8_extended"
     __table_args__ = (
-        Index('catalog_to_tic_v8_extended_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_tic_v8_extended_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -674,10 +831,15 @@ class CatalogToTIC_v8_Extended(Base):
 
 
 class CatalogToToO_Target(Base):
-    __tablename__ = 'catalog_to_too_target'
+    __tablename__ = "catalog_to_too_target"
     __table_args__ = (
-        Index('catalog_to_too_target_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_too_target_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -690,8 +852,8 @@ class CatalogToToO_Target(Base):
 
 
 class CatalogToAllStar_DR17_synspec_rev1(Base):
-    __tablename__ = 'catalog_to_allstar_dr17_synspec_rev1'
-    __table_args__ = ({'schema': 'catalogdb'},)
+    __tablename__ = "catalog_to_allstar_dr17_synspec_rev1"
+    __table_args__ = ({"schema": "catalogdb"},)
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
     target_id = Column(Text, primary_key=True, nullable=False, index=True)
@@ -702,10 +864,15 @@ class CatalogToAllStar_DR17_synspec_rev1(Base):
 
 
 class CatalogToMangatarget(Base):
-    __tablename__ = 'catalog_to_mangatarget'
+    __tablename__ = "catalog_to_mangatarget"
     __table_args__ = (
-        Index('catalog_to_mangatarget_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_mangatarget_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -718,10 +885,15 @@ class CatalogToMangatarget(Base):
 
 
 class CatalogToMastar_goodstars(Base):
-    __tablename__ = 'catalog_to_mastar_goodstars'
+    __tablename__ = "catalog_to_mastar_goodstars"
     __table_args__ = (
-        Index('catalog_to_mastar_goodstars_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_mastar_goodstars_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -734,10 +906,15 @@ class CatalogToMastar_goodstars(Base):
 
 
 class CatalogToMarvels_dr11_star(Base):
-    __tablename__ = 'catalog_to_marvels_dr11_star'
+    __tablename__ = "catalog_to_marvels_dr11_star"
     __table_args__ = (
-        Index('catalog_to_marvels_dr11_star_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_marvels_dr11_star_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -750,10 +927,15 @@ class CatalogToMarvels_dr11_star(Base):
 
 
 class CatalogToMarvels_dr12_star(Base):
-    __tablename__ = 'catalog_to_marvels_dr12_star'
+    __tablename__ = "catalog_to_marvels_dr12_star"
     __table_args__ = (
-        Index('catalog_to_marvels_dr12_star_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_marvels_dr12_star_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -766,10 +948,15 @@ class CatalogToMarvels_dr12_star(Base):
 
 
 class CatalogToSDSS_DR17_SpecObj(Base):
-    __tablename__ = 'catalog_to_sdss_dr17_specobj'
+    __tablename__ = "catalog_to_sdss_dr17_specobj"
     __table_args__ = (
-        Index('catalog_to_sdss_dr17_specobj_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_sdss_dr17_specobj_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -782,20 +969,25 @@ class CatalogToSDSS_DR17_SpecObj(Base):
 
 
 class CatalogToTwoMassPSC(Base):
-    __tablename__ = 'catalog_to_twomass_psc'
+    __tablename__ = "catalog_to_twomass_psc"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class CatalogToTwoqz_sixqz(Base):
-    __tablename__ = 'catalog_to_twoqz_sixqz'
+    __tablename__ = "catalog_to_twoqz_sixqz"
     __table_args__ = (
-        Index('catalog_to_twoqz_sixqz_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_twoqz_sixqz_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -806,10 +998,15 @@ class CatalogToTwoqz_sixqz(Base):
 
 
 class CatalogToTycho2(Base):
-    __tablename__ = 'catalog_to_tycho2'
+    __tablename__ = "catalog_to_tycho2"
     __table_args__ = (
-        Index('catalog_to_tycho2_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_tycho2_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -820,10 +1017,15 @@ class CatalogToTycho2(Base):
 
 
 class CatalogTounWISE(Base):
-    __tablename__ = 'catalog_to_unwise'
+    __tablename__ = "catalog_to_unwise"
     __table_args__ = (
-        Index('catalog_to_unwise_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_unwise_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -834,10 +1036,15 @@ class CatalogTounWISE(Base):
 
 
 class CatalogToUVOT_SSC_1(Base):
-    __tablename__ = 'catalog_to_uvotssc1'
+    __tablename__ = "catalog_to_uvotssc1"
     __table_args__ = (
-        Index('catalog_to_uvotssc1_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_uvotssc1_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -848,10 +1055,15 @@ class CatalogToUVOT_SSC_1(Base):
 
 
 class CatalogToXMM_OM_SUSS_4_1(Base):
-    __tablename__ = 'catalog_to_xmm_om_suss_4_1'
+    __tablename__ = "catalog_to_xmm_om_suss_4_1"
     __table_args__ = (
-        Index('catalog_to_xmm_om_suss_4_1_new_version_id_target_id_best_idx', 'version_id', 'target_id', 'best'),
-        {'schema': 'catalogdb'}
+        Index(
+            "catalog_to_xmm_om_suss_4_1_new_version_id_target_id_best_idx",
+            "version_id",
+            "target_id",
+            "best",
+        ),
+        {"schema": "catalogdb"},
     )
 
     catalogid = Column(BigInteger, primary_key=True, nullable=False, index=True)
@@ -862,17 +1074,17 @@ class CatalogToXMM_OM_SUSS_4_1(Base):
 
 
 class CatalogToXMM_OM_SUSS_5_0(Base):
-    __tablename__ = 'catalog_to_xmm_om_suss_5_0'
+    __tablename__ = "catalog_to_xmm_om_suss_5_0"
 
-    catalogid = Column('catalogid', BigInteger, index=True, primary_key=True, nullable=False)
-    target_id = Column('target_id', BigInteger, index=True, primary_key=True, nullable=False)
-    version_id = Column('version_id', Integer, index=True, primary_key=True, nullable=False)
-    distance = Column('distance', Float(53))
-    best = Column('best', Boolean, index=True)
+    catalogid = Column("catalogid", BigInteger, index=True, primary_key=True, nullable=False)
+    target_id = Column("target_id", BigInteger, index=True, primary_key=True, nullable=False)
+    version_id = Column("version_id", Integer, index=True, primary_key=True, nullable=False)
+    distance = Column("distance", Float(53))
+    best = Column("best", Boolean, index=True)
 
 
 class Catalog_ver25_to_ver31_full_all(Base):
-    __tablename__ = 'catalog_ver25_to_ver31_full_all'
+    __tablename__ = "catalog_ver25_to_ver31_full_all"
 
     id = Column(BigInteger, primary_key=True)
     match_table = Column(Text, index=True)
@@ -883,7 +1095,7 @@ class Catalog_ver25_to_ver31_full_all(Base):
 
 
 class Catalog_ver25_to_ver31_full_unique(Base):
-    __tablename__ = 'catalog_ver25_to_ver31_full_unique'
+    __tablename__ = "catalog_ver25_to_ver31_full_unique"
 
     id = Column(BigInteger, primary_key=True)
     catalogid1 = Column(BigInteger, index=True)
@@ -895,8 +1107,8 @@ class Catalog_ver25_to_ver31_full_unique(Base):
 
 
 class CatWISE(Base):
-    __tablename__ = 'catwise'
-    __table_args__ = {'schema': 'catalogdb', 'comment': 'prelim'}
+    __tablename__ = "catwise"
+    __table_args__ = {"schema": "catalogdb", "comment": "prelim"}
 
     source_name = Column(String(21))
     source_id = Column(String(25), primary_key=True)
@@ -1087,7 +1299,7 @@ class CatWISE(Base):
 
 
 class CatWISE2020(Base):
-    __tablename__ = 'catwise2020'
+    __tablename__ = "catwise2020"
 
     source_name = Column(CHAR(21), index=True)
     source_id = Column(CHAR(25), primary_key=True)
@@ -1279,8 +1491,8 @@ class CatWISE2020(Base):
 
 
 class CatWISEReject(Base):
-    __tablename__ = 'catwise_reject'
-    __table_args__ = {'schema': 'catalogdb', 'comment': 'prelim'}
+    __tablename__ = "catwise_reject"
+    __table_args__ = {"schema": "catalogdb", "comment": "prelim"}
 
     source_name = Column(String(21))
     source_id = Column(String(25), primary_key=True)
@@ -1472,10 +1684,14 @@ class CatWISEReject(Base):
 
 
 class EROSITASupersetAGN(Base):
-    __tablename__ = 'erosita_superset_agn'
+    __tablename__ = "erosita_superset_agn"
     __table_args__ = (
-        Index('erosita_superset_agn_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_agn_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(CHAR(24), index=True)
@@ -1508,14 +1724,22 @@ class EROSITASupersetAGN(Base):
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_agn_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".erosita_superset_agn_pkey_seq'::regclass)"),
+    )
 
 
 class EROSITASupersetClusters(Base):
-    __tablename__ = 'erosita_superset_clusters'
+    __tablename__ = "erosita_superset_clusters"
     __table_args__ = (
-        Index('erosita_superset_clusters_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_clusters_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(CHAR(24), index=True)
@@ -1548,14 +1772,24 @@ class EROSITASupersetClusters(Base):
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_clusters_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".erosita_superset_clusters_pkey_seq'::regclass)"
+        ),
+    )
 
 
 class EROSITASupersetCompactobjects(Base):
-    __tablename__ = 'erosita_superset_compactobjects'
+    __tablename__ = "erosita_superset_compactobjects"
     __table_args__ = (
-        Index('erosita_superset_compactobject_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_compactobject_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(CHAR(24), index=True)
@@ -1588,14 +1822,24 @@ class EROSITASupersetCompactobjects(Base):
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_compactobjects_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".erosita_superset_compactobjects_pkey_seq'::regclass)"
+        ),
+    )
 
 
 class EROSITASupersetStars(Base):
-    __tablename__ = 'erosita_superset_stars'
+    __tablename__ = "erosita_superset_stars"
     __table_args__ = (
-        Index('erosita_superset_stars_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_stars_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(CHAR(24), index=True)
@@ -1628,18 +1872,22 @@ class EROSITASupersetStars(Base):
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_stars_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".erosita_superset_stars_pkey_seq'::regclass)"),
+    )
 
 
 class Gaia_DR2_RUWE(Base):
-    __tablename__ = 'gaia_dr2_ruwe'
+    __tablename__ = "gaia_dr2_ruwe"
 
     source_id = Column(BigInteger, primary_key=True)
     ruwe = Column(Float, index=True)
 
 
 class Gaia_DR2(Base):
-    __tablename__ = 'gaia_dr2_source'
+    __tablename__ = "gaia_dr2_source"
 
     solution_id = Column(BigInteger)
     designation = Column(Text)
@@ -1738,7 +1986,7 @@ class Gaia_DR2(Base):
 
 
 class GAIA_ASSAS_SN_Cepheids(Base):
-    __tablename__ = 'gaia_assas_sn_cepheids'
+    __tablename__ = "gaia_assas_sn_cepheids"
 
     source = Column(Text)
     ref = Column(Text)
@@ -1747,7 +1995,7 @@ class GAIA_ASSAS_SN_Cepheids(Base):
     amp_v = Column(Float(53))
     mean_v = Column(Float(53))
     a1_v = Column(Float(53))
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
     random_index = Column(Integer)
     ref_epoch = Column(Float)
     ra = Column(Float(53))
@@ -1821,17 +2069,17 @@ class GAIA_ASSAS_SN_Cepheids(Base):
 
 
 class Gaia_DR2_Clean(Base):
-    __tablename__ = 'gaia_dr2_clean'
+    __tablename__ = "gaia_dr2_clean"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
 
 
 class Gaia_DR2_WD(Base):
-    __tablename__ = 'gaia_dr2_wd'
+    __tablename__ = "gaia_dr2_wd"
 
     wd = Column(Text, unique=True)
     dr2name = Column(Text)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
     source = Column(Integer)
     ra = Column(Float(53))
     e_ra = Column(Float(53))
@@ -1889,12 +2137,18 @@ class Gaia_DR2_WD(Base):
 
 
 class Gaia_unWISE_AGN(Base):
-    __tablename__ = 'gaia_unwise_agn'
+    __tablename__ = "gaia_unwise_agn"
 
     ra = Column(Float(53))
     dec = Column(Float(53))
-    gaia_sourceid = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', deferrable=True, initially='DEFERRED'), primary_key=True)
-    unwise_objid = Column(ForeignKey('catalogdb.unwise.unwise_objid', deferrable=True, initially='DEFERRED'), index=True)
+    gaia_sourceid = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", deferrable=True, initially="DEFERRED"),
+        primary_key=True,
+    )
+    unwise_objid = Column(
+        ForeignKey("catalogdb.unwise.unwise_objid", deferrable=True, initially="DEFERRED"),
+        index=True,
+    )
     plx = Column(Float(53))
     plx_err = Column(Float(53))
     pmra = Column(Float(53))
@@ -1929,29 +2183,36 @@ class Gaia_unWISE_AGN(Base):
     phot_z = Column(Float(53))
     prob_rf = Column(Float(53), index=True)
 
-    unwise = relationship('Unwise')
+    unwise = relationship("Unwise")
 
 
 class Gaia_DR2_TwoMass_Best_Neighbour(Base):
-    __tablename__ = 'gaiadr2_tmass_best_neighbour'
+    __tablename__ = "gaiadr2_tmass_best_neighbour"
 
     tmass_oid = Column(BigInteger, index=True)
     number_of_neighbours = Column(Integer)
     number_of_mates = Column(Integer)
     best_neighbour_multiplicity = Column(Integer)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, index=True)
+    source_id = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
+        primary_key=True,
+        index=True,
+    )
     original_ext_source_id = Column(CHAR(17), index=True)
     angular_distance = Column(Float(53), index=True)
     gaia_astrometric_params = Column(Integer)
-    tmass_pts_key = Column(ForeignKey('catalogdb.twomass_psc.pts_key', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    tmass_pts_key = Column(
+        ForeignKey("catalogdb.twomass_psc.pts_key", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
 
-    twomass_psc = relationship('TwomassPsc')
+    twomass_psc = relationship("TwomassPsc")
 
 
 class GeometricDistances_Gaia_DR2(Base):
-    __tablename__ = 'geometric_distances_gaia_dr2'
+    __tablename__ = "geometric_distances_gaia_dr2"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
     r_est = Column(Float, index=True)
     r_lo = Column(Float, index=True)
     r_hi = Column(Float, index=True)
@@ -1961,9 +2222,9 @@ class GeometricDistances_Gaia_DR2(Base):
 
 
 class MWM_TESS_OB(Base):
-    __tablename__ = 'mwm_tess_ob'
+    __tablename__ = "mwm_tess_ob"
 
-    gaia_dr2_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    gaia_dr2_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
     ra = Column(Float(53))
     dec = Column(Float(53))
     h_mag = Column(Float(53), index=True)
@@ -1972,9 +2233,9 @@ class MWM_TESS_OB(Base):
 
 
 class Sagitta(Base):
-    __tablename__ = 'sagitta'
+    __tablename__ = "sagitta"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
     ra = Column(Float(53))
     dec = Column(Float(53))
     av = Column(Float, index=True)
@@ -1985,7 +2246,7 @@ class Sagitta(Base):
 
 
 class TransitionalMillisecondPulsars(Base):
-    __tablename__ = 'transitional_msps'
+    __tablename__ = "transitional_msps"
 
     name = Column(Text)
     rastr = Column(Text)
@@ -1998,13 +2259,16 @@ class TransitionalMillisecondPulsars(Base):
     gaia_dec = Column(Float(53))
     gaia_gmag = Column(Float)
     gaia_dist = Column(Float)
-    gaia_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True)
+    gaia_source_id = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
+        primary_key=True,
+    )
 
 
 class YSO_Clustering(Base):
-    __tablename__ = 'yso_clustering'
+    __tablename__ = "yso_clustering"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True)
     twomass = Column(Text)
     ra = Column(Float(53))
     dec = Column(Float(53))
@@ -2025,7 +2289,7 @@ class YSO_Clustering(Base):
 
 
 class Gaia_DR3(Base):
-    __tablename__ = 'gaia_dr3_source'
+    __tablename__ = "gaia_dr3_source"
 
     solution_id = Column(BigInteger, index=True)
     designation = Column(Text)
@@ -2182,10 +2446,10 @@ class Gaia_DR3(Base):
 
 
 class Gaia_dr3_astrophysical_parameters(Base):
-    __tablename__ = 'gaia_dr3_astrophysical_parameters'
+    __tablename__ = "gaia_dr3_astrophysical_parameters"
 
     solution_id = Column(BigInteger)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     classprob_dsc_combmod_quasar = Column(Float, index=True)
     classprob_dsc_combmod_galaxy = Column(Float, index=True)
     classprob_dsc_combmod_star = Column(Float, index=True)
@@ -2413,10 +2677,10 @@ class Gaia_dr3_astrophysical_parameters(Base):
 
 
 class Gaia_dr3_galaxy_candidates(Base):
-    __tablename__ = 'gaia_dr3_galaxy_candidates'
+    __tablename__ = "gaia_dr3_galaxy_candidates"
 
     solution_id = Column(BigInteger)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     vari_best_class_name = Column(Text)
     vari_best_class_score = Column(Float)
     classprob_dsc_combmod_galaxy = Column(Float, index=True)
@@ -2456,10 +2720,10 @@ class Gaia_dr3_galaxy_candidates(Base):
 
 
 class Gaia_dr3_nss_acceleration_astro(Base):
-    __tablename__ = 'gaia_dr3_nss_acceleration_astro'
+    __tablename__ = "gaia_dr3_nss_acceleration_astro"
 
     solution_id = Column(BigInteger)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     nss_solution_type = Column(Text)
     ra = Column(Float(53))
     ra_error = Column(Float)
@@ -2490,10 +2754,10 @@ class Gaia_dr3_nss_acceleration_astro(Base):
 
 
 class Gaia_dr3_nss_non_linear_spectro(Base):
-    __tablename__ = 'gaia_dr3_nss_non_linear_spectro'
+    __tablename__ = "gaia_dr3_nss_non_linear_spectro"
 
     solution_id = Column(BigInteger)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     nss_solution_type = Column(Text)
     mean_velocity = Column(Float(53), index=True)
     mean_velocity_error = Column(Float)
@@ -2511,10 +2775,10 @@ class Gaia_dr3_nss_non_linear_spectro(Base):
 
 
 class Gaia_dr3_qso_candidates(Base):
-    __tablename__ = 'gaia_dr3_qso_candidates'
+    __tablename__ = "gaia_dr3_qso_candidates"
 
     solution_id = Column(BigInteger)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     astrometric_selection_flag = Column(Boolean)
     gaia_crf_source = Column(Boolean)
     vari_best_class_name = Column(Text)
@@ -2557,9 +2821,9 @@ class Gaia_dr3_qso_candidates(Base):
 
 
 class Gaia_dr3_ravedr6_best_neighbour(Base):
-    __tablename__ = 'gaia_dr3_ravedr6_best_neighbour'
+    __tablename__ = "gaia_dr3_ravedr6_best_neighbour"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     original_ext_source_id = Column(Text, index=True)
     angular_distance = Column(Float, index=True)
     xm_flag = Column(SmallInteger, index=True)
@@ -2568,9 +2832,9 @@ class Gaia_dr3_ravedr6_best_neighbour(Base):
 
 
 class Gaia_dr3_ravedr6_neighbourhood(Base):
-    __tablename__ = 'gaia_dr3_ravedr6_neighbourhood'
+    __tablename__ = "gaia_dr3_ravedr6_neighbourhood"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     original_ext_source_id = Column(Text, index=True)
     angular_distance = Column(Float, index=True)
     score = Column(Float(53), index=True)
@@ -2579,9 +2843,9 @@ class Gaia_dr3_ravedr6_neighbourhood(Base):
 
 
 class Gaia_dr3_synthetic_photometry_gspc(Base):
-    __tablename__ = 'gaia_dr3_synthetic_photometry_gspc'
+    __tablename__ = "gaia_dr3_synthetic_photometry_gspc"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     c_star = Column(Float)
     u_jkc_flux = Column(Float)
     u_jkc_flux_error = Column(Float)
@@ -2638,10 +2902,10 @@ class Gaia_dr3_synthetic_photometry_gspc(Base):
 
 
 class Gaia_dr3_vari_agn(Base):
-    __tablename__ = 'gaia_dr3_vari_agn'
+    __tablename__ = "gaia_dr3_vari_agn"
 
     solution_id = Column(BigInteger)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     fractional_variability_g = Column(Float, index=True)
     structure_function_index = Column(Float)
     structure_function_index_scatter = Column(Float)
@@ -2650,10 +2914,10 @@ class Gaia_dr3_vari_agn(Base):
 
 
 class Gaia_dr3_vari_rrlyrae(Base):
-    __tablename__ = 'gaia_dr3_vari_rrlyrae'
+    __tablename__ = "gaia_dr3_vari_rrlyrae"
 
     solution_id = Column(BigInteger, index=True)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     pf = Column(Float(53))
     pf_error = Column(Float)
     p1_o = Column(Float(53))
@@ -2733,9 +2997,9 @@ class Gaia_dr3_vari_rrlyrae(Base):
 
 
 class Gaia_dr3_xp_sampled_mean_spectrum(Base):
-    __tablename__ = 'gaia_dr3_xp_sampled_mean_spectrum'
+    __tablename__ = "gaia_dr3_xp_sampled_mean_spectrum"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     solution_id = Column(BigInteger)
     ra = Column(Float(53))
     dec = Column(Float(53))
@@ -2744,9 +3008,9 @@ class Gaia_dr3_xp_sampled_mean_spectrum(Base):
 
 
 class Gaia_dr3_xp_summary(Base):
-    __tablename__ = 'gaia_dr3_xp_summary'
+    __tablename__ = "gaia_dr3_xp_summary"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     solution_id = Column(BigInteger)
     bp_n_relevant_bases = Column(SmallInteger)
     bp_relative_shrinking = Column(Float)
@@ -2769,9 +3033,9 @@ class Gaia_dr3_xp_summary(Base):
 
 
 class Gaia_edr3_panstarrs1_best_neighbour(Base):
-    __tablename__ = 'gaia_edr3_panstarrs1_best_neighbour'
+    __tablename__ = "gaia_edr3_panstarrs1_best_neighbour"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     clean_panstarrs1_oid = Column(BigInteger, index=True)
     original_ext_source_id = Column(BigInteger, index=True)
     angular_distance = Column(Float, index=True)
@@ -2781,23 +3045,23 @@ class Gaia_edr3_panstarrs1_best_neighbour(Base):
 
 
 class Gaia_edr3_sdssdr13_best_neighbour(Base):
-    __tablename__ = 'gaia_edr3_sdssdr13_best_neighbour'
+    __tablename__ = "gaia_edr3_sdssdr13_best_neighbour"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     clean_sdssdr13_oid = Column(BigInteger, index=True)
-    original_ext_source_id = Column(ForeignKey('catalogdb.sdss_dr13_photoobj.objid'), index=True)
+    original_ext_source_id = Column(ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True)
     angular_distance = Column(Float, index=True)
     number_of_neighbours = Column(SmallInteger, index=True)
     number_of_mates = Column(SmallInteger, index=True)
     xm_flag = Column(SmallInteger, index=True)
 
-    original_ext_source = relationship('SdssDr13Photoobj')
+    original_ext_source = relationship("SdssDr13Photoobj")
 
 
 class Gaia_edr3_tmass_psc_xsc_best_neighbour(Base):
-    __tablename__ = 'gaia_edr3_tmass_psc_xsc_best_neighbour'
+    __tablename__ = "gaia_edr3_tmass_psc_xsc_best_neighbour"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     original_ext_source_id = Column(Text, index=True)
     angular_distance = Column(Float, index=True)
     xm_flag = Column(SmallInteger, index=True)
@@ -2807,23 +3071,23 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour(Base):
 
 
 class Gaia_edr3_tmass_psc_xsc_best_neighbour2(Base):
-    __tablename__ = 'gaia_edr3_tmass_psc_xsc_best_neighbour2'
+    __tablename__ = "gaia_edr3_tmass_psc_xsc_best_neighbour2"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
-    original_ext_source_id = Column(ForeignKey('catalogdb.twomass_psc.designation'), index=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
+    original_ext_source_id = Column(ForeignKey("catalogdb.twomass_psc.designation"), index=True)
     angular_distance = Column(Float, index=True)
     xm_flag = Column(SmallInteger, index=True)
     clean_tmass_psc_xsc_oid = Column(BigInteger, index=True)
     number_of_neighbours = Column(SmallInteger, index=True)
     number_of_mates = Column(SmallInteger, index=True)
 
-    original_ext_source = relationship('TwomassPsc')
+    original_ext_source = relationship("TwomassPsc")
 
 
 class LvmMagnitude(Base):
-    __tablename__ = 'lvm_magnitude'
+    __tablename__ = "lvm_magnitude"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     ra = Column(Float(53))
     dec = Column(Float(53))
     lflux = Column(Float)
@@ -2832,12 +3096,12 @@ class LvmMagnitude(Base):
 
 
 class Visual_binary_gaia_dr3(Base):
-    __tablename__ = 'visual_binary_gaia_dr3'
+    __tablename__ = "visual_binary_gaia_dr3"
 
     solution_id1 = Column(BigInteger)
     solution_id2 = Column(BigInteger)
-    source_id1 = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
-    source_id2 = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'))
+    source_id1 = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
+    source_id2 = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
     random_index1 = Column(BigInteger)
     random_index2 = Column(BigInteger)
     ref_epoch1 = Column(Float(53))
@@ -3035,8 +3299,8 @@ class Visual_binary_gaia_dr3(Base):
     binary_type = Column(Text)
     sigma18 = Column(Float(53))
     r_chance_align = Column(Float(53))
-    dr2_source_id1 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'))
-    dr2_source_id2 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'))
+    dr2_source_id1 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
+    dr2_source_id2 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
     dr2_parallax1 = Column(Float(53))
     dr2_parallax2 = Column(Float(53))
     dr2_parallax_error1 = Column(Float(53))
@@ -3052,17 +3316,33 @@ class Visual_binary_gaia_dr3(Base):
     dr2_ruwe1 = Column(Float(53))
     dr2_ruwe2 = Column(Float(53))
 
-    gaia_dr2_source = relationship('GaiaDr2Source', primaryjoin='VisualBinaryGaiaDr3.dr2_source_id1 == GaiaDr2Source.source_id', foreign_keys=[dr2_source_id1])
-    gaia_dr2_source2 = relationship('GaiaDr2Source', primaryjoin='VisualBinaryGaiaDr3.dr2_source_id2 == GaiaDr2Source.source_id', foreign_keys=[dr2_source_id2])
-    gaia_dr3_source = relationship('GaiaDr3Source', primaryjoin='VisualBinaryGaiaDr3.source_id1 == GaiaDr3Source.source_id', foreign_keys=[source_id1])
-    gaia_dr3_source2 = relationship('GaiaDr3Source', primaryjoin='VisualBinaryGaiaDr3.source_id2 == GaiaDr3Source.source_id', foreign_keys=[source_id2])
+    gaia_dr2_source = relationship(
+        "GaiaDr2Source",
+        primaryjoin="VisualBinaryGaiaDr3.dr2_source_id1 == GaiaDr2Source.source_id",
+        foreign_keys=[dr2_source_id1],
+    )
+    gaia_dr2_source2 = relationship(
+        "GaiaDr2Source",
+        primaryjoin="VisualBinaryGaiaDr3.dr2_source_id2 == GaiaDr2Source.source_id",
+        foreign_keys=[dr2_source_id2],
+    )
+    gaia_dr3_source = relationship(
+        "GaiaDr3Source",
+        primaryjoin="VisualBinaryGaiaDr3.source_id1 == GaiaDr3Source.source_id",
+        foreign_keys=[source_id1],
+    )
+    gaia_dr3_source2 = relationship(
+        "GaiaDr3Source",
+        primaryjoin="VisualBinaryGaiaDr3.source_id2 == GaiaDr3Source.source_id",
+        foreign_keys=[source_id2],
+    )
 
 
 class WD_gaia_dr3(Base):
-    __tablename__ = 'wd_gaia_dr3'
+    __tablename__ = "wd_gaia_dr3"
 
     wdjname = Column(Text)
-    gaiaedr3 = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    gaiaedr3 = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     gaiadr2 = Column(BigInteger, index=True)
     edr3name = Column(Text)
     radeg = Column(Float(53))
@@ -3225,9 +3505,9 @@ class WD_gaia_dr3(Base):
 
 
 class Xpfeh_gaia_dr3(Base):
-    __tablename__ = 'xpfeh_gaia_dr3'
+    __tablename__ = "xpfeh_gaia_dr3"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
     in_training_sample = Column(Text, index=True)
     mh_xgboost = Column(Float(53), index=True)
     teff_xgboost = Column(Float(53), index=True)
@@ -3235,54 +3515,54 @@ class Xpfeh_gaia_dr3(Base):
 
 
 class Gaia_edr3_allwise_best_neighbour(Base):
-    __tablename__ = 'gaia_edr3_allwise_best_neighbour'
+    __tablename__ = "gaia_edr3_allwise_best_neighbour"
 
-    source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), primary_key=True)
-    original_ext_source_id = Column(ForeignKey('catalogdb.allwise.designation'), index=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True)
+    original_ext_source_id = Column(ForeignKey("catalogdb.allwise.designation"), index=True)
     angular_distance = Column(Float, index=True)
     xm_flag = Column(SmallInteger, index=True)
     allwise_oid = Column(BigInteger, index=True)
     number_of_neighbours = Column(SmallInteger, index=True)
     number_of_mates = Column(SmallInteger, index=True)
 
-    original_ext_source = relationship('Allwise')
+    original_ext_source = relationship("Allwise")
 
 
 class Gaia_edr3_allwise_neighbourhood(Base):
-    __tablename__ = 'gaia_edr3_allwise_neighbourhood'
+    __tablename__ = "gaia_edr3_allwise_neighbourhood"
 
-    source_id = Column('source_id', BigInteger, index=True, primary_key=True)
-    original_ext_source_id = Column('original_ext_source_id', Text, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    score = Column('score', Float(53), index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
-    allwise_oid = Column('allwise_oid', BigInteger, index=True)
+    source_id = Column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id = Column("original_ext_source_id", Text, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    score = Column("score", Float(53), index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
+    allwise_oid = Column("allwise_oid", BigInteger, index=True)
 
 
 class Gaia_edr3_panstarrs1_neighbourhood(Base):
-    __tablename__ = 'gaia_edr3_panstarrs1_neighbourhood'
+    __tablename__ = "gaia_edr3_panstarrs1_neighbourhood"
 
-    source_id = Column('source_id', BigInteger, index=True, primary_key=True)
-    clean_panstarrs1_oid = Column('clean_panstarrs1_oid', BigInteger, index=True)
-    original_ext_source_id = Column('original_ext_source_id', BigInteger, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    score = Column('score', Float(53), index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
+    source_id = Column("source_id", BigInteger, index=True, primary_key=True)
+    clean_panstarrs1_oid = Column("clean_panstarrs1_oid", BigInteger, index=True)
+    original_ext_source_id = Column("original_ext_source_id", BigInteger, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    score = Column("score", Float(53), index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
 
 
 class Gaia_edr3_sdssdr13_neighbourhood(Base):
-    __tablename__ = 'gaia_edr3_sdssdr13_neighbourhood'
+    __tablename__ = "gaia_edr3_sdssdr13_neighbourhood"
 
-    source_id = Column('source_id', BigInteger, index=True, primary_key=True)
-    clean_sdssdr13_oid = Column('clean_sdssdr13_oid', BigInteger, index=True)
-    original_ext_source_id = Column('original_ext_source_id', BigInteger, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    score = Column('score', Float(53), index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
+    source_id = Column("source_id", BigInteger, index=True, primary_key=True)
+    clean_sdssdr13_oid = Column("clean_sdssdr13_oid", BigInteger, index=True)
+    original_ext_source_id = Column("original_ext_source_id", BigInteger, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    score = Column("score", Float(53), index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
 
 
 class Gaia_edr3_skymapperdr2_best_neighbour(Base):
-    __tablename__ = 'gaia_edr3_skymapperdr2_best_neighbour'
+    __tablename__ = "gaia_edr3_skymapperdr2_best_neighbour"
 
     source_id = Column(BigInteger, primary_key=True)
     original_ext_source_id = Column(BigInteger, index=True)
@@ -3293,17 +3573,17 @@ class Gaia_edr3_skymapperdr2_best_neighbour(Base):
 
 
 class Gaia_edr3_skymapperdr2_neighbourhood(Base):
-    __tablename__ = 'gaia_edr3_skymapperdr2_neighbourhood'
+    __tablename__ = "gaia_edr3_skymapperdr2_neighbourhood"
 
-    source_id = Column('source_id', BigInteger, index=True, primary_key=True)
-    original_ext_source_id = Column('original_ext_source_id', BigInteger, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    score = Column('score', Float(53), index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
+    source_id = Column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id = Column("original_ext_source_id", BigInteger, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    score = Column("score", Float(53), index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
 
 
 class Gaia_EDR3(Base):
-    __tablename__ = 'gaia_edr3_source'
+    __tablename__ = "gaia_edr3_source"
 
     solution_id = Column(BigInteger, index=True)
     designation = Column(Text)
@@ -3407,29 +3687,29 @@ class Gaia_EDR3(Base):
 
 
 class Gaia_edr3_tmass_psc_xsc_neighbourhood(Base):
-    __tablename__ = 'gaia_edr3_tmass_psc_xsc_neighbourhood'
+    __tablename__ = "gaia_edr3_tmass_psc_xsc_neighbourhood"
 
-    source_id = Column('source_id', BigInteger, index=True, primary_key=True)
-    original_ext_source_id = Column('original_ext_source_id', Text, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    score = Column('score', Float(53), index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
-    clean_tmass_psc_xsc_oid = Column('clean_tmass_psc_xsc_oid', BigInteger, index=True)
+    source_id = Column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id = Column("original_ext_source_id", Text, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    score = Column("score", Float(53), index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
+    clean_tmass_psc_xsc_oid = Column("clean_tmass_psc_xsc_oid", BigInteger, index=True)
 
 
 class Gaia_edr3_tycho2tdsc_merge_neighbourhood(Base):
-    __tablename__ = 'gaia_edr3_tycho2tdsc_merge_neighbourhood'
+    __tablename__ = "gaia_edr3_tycho2tdsc_merge_neighbourhood"
 
-    source_id = Column('source_id', BigInteger, index=True, primary_key=True)
-    original_ext_source_id = Column('original_ext_source_id', Text, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    score = Column('score', Float(53), index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
-    tycho2tdsc_merge_oid = Column('tycho2tdsc_merge_oid', BigInteger, index=True)
+    source_id = Column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id = Column("original_ext_source_id", Text, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    score = Column("score", Float(53), index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
+    tycho2tdsc_merge_oid = Column("tycho2tdsc_merge_oid", BigInteger, index=True)
 
 
 class GaiaQSO(Base):
-    __tablename__ = 'gaia_qso'
+    __tablename__ = "gaia_qso"
 
     name = Column(Text)
     raj2000 = Column(Float(53))
@@ -3446,11 +3726,15 @@ class GaiaQSO(Base):
     w1_w2 = Column(Float, index=True)
     w2_w3 = Column(Float, index=True)
     w1mag = Column(Float, index=True)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".gaia_qso_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".gaia_qso_pk_seq'::regclass)"),
+    )
 
 
 class Gaia_Stellar_Parameters(Base):
-    __tablename__ = 'gaia_stellar_parameters'
+    __tablename__ = "gaia_stellar_parameters"
 
     chi2_opt = Column(Float)
     dec = Column(Float(53))
@@ -3474,7 +3758,7 @@ class Gaia_Stellar_Parameters(Base):
 
 
 class Gaia_DR2_SDSS_DR9_Best_Neighbour(Base):
-    __tablename__ = 'gaiadr2_sdssdr9_best_neighbour'
+    __tablename__ = "gaiadr2_sdssdr9_best_neighbour"
 
     sdssdr9_oid = Column(BigInteger, index=True)
     number_of_neighbours = Column(Integer)
@@ -3487,7 +3771,7 @@ class Gaia_DR2_SDSS_DR9_Best_Neighbour(Base):
 
 
 class GalacticMillisecondPulsars(Base):
-    __tablename__ = 'galactic_millisecond_pulsars'
+    __tablename__ = "galactic_millisecond_pulsars"
 
     name = Column(Text)
     rastr = Column(Text)
@@ -3504,7 +3788,7 @@ class GalacticMillisecondPulsars(Base):
 
 
 class Galex_GR7_Gaia_DR3(Base):
-    __tablename__ = 'galex_gr7_gaia_dr3'
+    __tablename__ = "galex_gr7_gaia_dr3"
 
     gaia_edr3_source_id = Column(BigInteger, index=True)
     galex_objid = Column(BigInteger, index=True)
@@ -3513,11 +3797,15 @@ class Galex_GR7_Gaia_DR3(Base):
     nuv_mag = Column(Float(53), index=True)
     nuv_magerr = Column(Float(53), index=True)
     galex_separation = Column(Float(53), index=True)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".galex_gr7_gaia_dr3_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".galex_gr7_gaia_dr3_pk_seq'::regclass)"),
+    )
 
 
 class Gedr3spur_main(Base):
-    __tablename__ = 'gedr3spur_main'
+    __tablename__ = "gedr3spur_main"
 
     source_id = Column(BigInteger, primary_key=True)
     fidelity_v2 = Column(Float, index=True)
@@ -3533,7 +3821,7 @@ class Gedr3spur_main(Base):
 
 
 class GUVCat(Base):
-    __tablename__ = 'guvcat'
+    __tablename__ = "guvcat"
 
     objid = Column(BigInteger, primary_key=True)
     photoextractid = Column(BigInteger)
@@ -3633,7 +3921,7 @@ class GUVCat(Base):
 
 
 class HECATE_1_1(Base):
-    __tablename__ = 'hecate_1_1'
+    __tablename__ = "hecate_1_1"
 
     pgc = Column(Integer, primary_key=True, index=True)
     objname = Column(Text, index=True)
@@ -3738,7 +4026,7 @@ class HECATE_1_1(Base):
 
 
 class KeplerInput_DR10(Base):
-    __tablename__ = 'kepler_input_10'
+    __tablename__ = "kepler_input_10"
 
     kic_ra = Column(Float(53))
     kic_dec = Column(Float(53))
@@ -3788,7 +4076,7 @@ class KeplerInput_DR10(Base):
 
 
 class LowMassXRayBinaries(Base):
-    __tablename__ = 'lmxb'
+    __tablename__ = "lmxb"
 
     name = Column(Text)
     rastr = Column(Text)
@@ -3805,7 +4093,7 @@ class LowMassXRayBinaries(Base):
 
 
 class MILLIQUAS_7_7(Base):
-    __tablename__ = 'milliquas_7_7'
+    __tablename__ = "milliquas_7_7"
 
     ra = Column(Float(53))
     dec = Column(Float(53))
@@ -3825,11 +4113,15 @@ class MILLIQUAS_7_7(Base):
     rname = Column(Text, index=True)
     lobe1 = Column(Text)
     lobe2 = Column(Text)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".milliquas_7_7_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".milliquas_7_7_pk_seq'::regclass)"),
+    )
 
 
 class MIPSGAL_Extra(Base):
-    __tablename__ = 'mipsgal_extra'
+    __tablename__ = "mipsgal_extra"
 
     mipsgal = Column(Text, primary_key=True)
     raj2000 = Column(Float(53))
@@ -3854,8 +4146,8 @@ class MIPSGAL_Extra(Base):
 
 
 class Panstarrs1(Base):
-    __tablename__ = 'panstarrs1'
-    __table_args__ = {'schema': 'catalogdb', 'comment': 'panstarrs1_dr2'}
+    __tablename__ = "panstarrs1"
+    __table_args__ = {"schema": "catalogdb", "comment": "panstarrs1_dr2"}
 
     ra = Column(Float(53))
     dec = Column(Float(53))
@@ -4052,8 +4344,8 @@ class Panstarrs1(Base):
 
 
 class PS1_g18(Base):
-    __tablename__ = 'ps1_g18'
-    __table_args__ = {'schema': 'catalogdb', 'comment': 'ps1_dr1_g18'}
+    __tablename__ = "ps1_g18"
+    __table_args__ = {"schema": "catalogdb", "comment": "ps1_dr1_g18"}
 
     objid = Column(BigInteger, primary_key=True)
     ndetections = Column(Integer)
@@ -4072,7 +4364,7 @@ class PS1_g18(Base):
 
 
 class RAVE_DR6_Gauguin_Madera(Base):
-    __tablename__ = 'rave_dr6_gauguin_madera'
+    __tablename__ = "rave_dr6_gauguin_madera"
 
     rave_obs_id = Column(Text, primary_key=True, index=True)
     fe_h_gauguin = Column(Float, index=True)
@@ -4094,7 +4386,7 @@ class RAVE_DR6_Gauguin_Madera(Base):
 
 
 class Sagitta_EDR3(Base):
-    __tablename__ = 'sagitta_edr3'
+    __tablename__ = "sagitta_edr3"
 
     source_id = Column(BigInteger, primary_key=True)
     l = Column(Float(53))
@@ -4108,7 +4400,7 @@ class Sagitta_EDR3(Base):
 
 
 class SDSS_APOGEE_AllStarMerge_r13(Base):
-    __tablename__ = 'sdss_apogeeallstarmerge_r13'
+    __tablename__ = "sdss_apogeeallstarmerge_r13"
 
     apogee_id = Column(Text, primary_key=True)
     nvisits = Column(SmallInteger)
@@ -4184,7 +4476,7 @@ class SDSS_APOGEE_AllStarMerge_r13(Base):
 
 
 class SDSS_DR13_PhotoObj(Base):
-    __tablename__ = 'sdss_dr13_photoobj'
+    __tablename__ = "sdss_dr13_photoobj"
 
     objid = Column(BigInteger, primary_key=True)
     run = Column(SmallInteger)
@@ -4402,18 +4694,18 @@ class SDSS_DR13_PhotoObj(Base):
 
 
 class SDSS_DR13_PhotoObj_Primary(Base):
-    __tablename__ = 'sdss_dr13_photoobj_primary'
+    __tablename__ = "sdss_dr13_photoobj_primary"
 
-    objid = Column('objid', BigInteger, unique=True, primary_key=True)
-    ra = Column('ra', Float(53))
-    dec = Column('dec', Float(53))
+    objid = Column("objid", BigInteger, unique=True, primary_key=True)
+    ra = Column("ra", Float(53))
+    dec = Column("dec", Float(53))
 
 
 class SDSS_DR14_QSO(Base):
-    __tablename__ = 'sdss_dr14_qso'
+    __tablename__ = "sdss_dr14_qso"
     __table_args__ = (
-        Index('sdss_dr14_qso_mjd_plate_fiberid_idx', 'mjd', 'plate', 'fiberid'),
-        {'schema': 'catalogdb'}
+        Index("sdss_dr14_qso_mjd_plate_fiberid_idx", "mjd", "plate", "fiberid"),
+        {"schema": "catalogdb"},
     )
 
     sdss_name = Column(String(18))
@@ -4463,13 +4755,13 @@ class SDSS_DR14_QSO(Base):
     rass_counts = Column(Float(53))
     rass_counts_snr = Column(Float(53))
     sdss2rosat_sep = Column(Float(53))
-    flux_0_2_2_0kev = Column('flux_0.2_2.0kev', Float(53))
-    flux_0_2_2_0kev_err = Column('flux_0.2_2.0kev_err', Float(53))
-    flux_2_0_12_0kev = Column('flux_2.0_12.0kev', Float(53))
-    flux_2_0_12_0kev_err = Column('flux_2.0_12.0kev_err', Float(53))
-    flux_0_2_12_0kev = Column('flux_0.2_12.0kev', Float(53))
-    flux_0_2_12_0kev_err = Column('flux_0.2_12.0kev_err', Float(53))
-    lum_0_2_12_0kev = Column('lum_0.2_12.0kev', Float(53))
+    flux_0_2_2_0kev = Column("flux_0.2_2.0kev", Float(53))
+    flux_0_2_2_0kev_err = Column("flux_0.2_2.0kev_err", Float(53))
+    flux_2_0_12_0kev = Column("flux_2.0_12.0kev", Float(53))
+    flux_2_0_12_0kev_err = Column("flux_2.0_12.0kev_err", Float(53))
+    flux_0_2_12_0kev = Column("flux_0.2_12.0kev", Float(53))
+    flux_0_2_12_0kev_err = Column("flux_0.2_12.0kev_err", Float(53))
+    lum_0_2_12_0kev = Column("lum_0.2_12.0kev", Float(53))
     sdss2xmm_sep = Column(Float(53))
     galex_matched = Column(Float)
     fuv = Column(Float(53))
@@ -4521,15 +4813,19 @@ class SDSS_DR14_QSO(Base):
     first_flux = Column(Float(53))
     first_snr = Column(Float(53))
     sdss2first_sep = Column(Float(53))
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('\"catalogdb\".sdss_dr14_qso_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdss_dr14_qso_pk_seq'::regclass)"),
+    )
 
 
 class SDSS_DR14_SpecObj(Base):
-    __tablename__ = 'sdss_dr14_specobj'
+    __tablename__ = "sdss_dr14_specobj"
     __table_args__ = (
-        Index('sdss_dr14_specobj_mjd_plate_fiberid_run2d_idx', 'mjd', 'plate', 'fiberid', 'run2d'),
-        Index('sdss_dr14_specobj_mjd_plate_fiberid_idx', 'mjd', 'plate', 'fiberid'),
-        {'schema': 'catalogdb'}
+        Index("sdss_dr14_specobj_mjd_plate_fiberid_run2d_idx", "mjd", "plate", "fiberid", "run2d"),
+        Index("sdss_dr14_specobj_mjd_plate_fiberid_idx", "mjd", "plate", "fiberid"),
+        {"schema": "catalogdb"},
     )
 
     specobjid = Column(Numeric(20, 0), primary_key=True)
@@ -4593,7 +4889,7 @@ class SDSS_DR14_SpecObj(Base):
     z = Column(Float)
     zerr = Column(Float)
     zwarning = Column(Integer)
-    _class = Column('class', String(32))
+    _class = Column("class", String(32))
     subclass = Column(String(32))
     rchi2 = Column(Float)
     dof = Column(Float)
@@ -4729,15 +5025,21 @@ class SDSS_DR14_SpecObj(Base):
 
 
 class SDSS_DR16_APOGEE_Star_AllVisit(Base):
-    __tablename__ = 'sdss_dr16_apogeestarallvisit'
+    __tablename__ = "sdss_dr16_apogeestarallvisit"
 
     visit_id = Column(String(64), index=True)
     apstar_id = Column(String(64), index=True)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdss_dr16_apogeestarallvisit_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".sdss_dr16_apogeestarallvisit_pk_seq'::regclass)"
+        ),
+    )
 
 
 class SDSS_DR16_APOGEE_Visit(Base):
-    __tablename__ = 'sdss_dr16_apogeevisit'
+    __tablename__ = "sdss_dr16_apogeevisit"
 
     visit_id = Column(Text, primary_key=True)
     apred_version = Column(Text)
@@ -4792,10 +5094,10 @@ class SDSS_DR16_APOGEE_Visit(Base):
 
 
 class SDSS_DR16_QSO(Base):
-    __tablename__ = 'sdss_dr16_qso'
+    __tablename__ = "sdss_dr16_qso"
     __table_args__ = (
-        Index('sdss_dr16_qso_mjd_plate_fiberid_idx', 'mjd', 'plate', 'fiberid'),
-        {'schema': 'catalogdb'}
+        Index("sdss_dr16_qso_mjd_plate_fiberid_idx", "mjd", "plate", "fiberid"),
+        {"schema": "catalogdb"},
     )
 
     sdss_name = Column(Text)
@@ -4981,15 +5283,19 @@ class SDSS_DR16_QSO(Base):
     gaia_rp_mag = Column(Float(53))
     gaia_rp_flux_snr = Column(Float(53))
     sdss2gaia_sep = Column(Float(53))
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdss_dr16_qso_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdss_dr16_qso_pk_seq'::regclass)"),
+    )
 
 
 class SDSS_DR16_SpecObj(Base):
-    __tablename__ = 'sdss_dr16_specobj'
+    __tablename__ = "sdss_dr16_specobj"
     __table_args__ = (
-        Index('sdss_dr16_specobj_mjd_plate_fiberid_run2d_idx', 'mjd', 'plate', 'fiberid', 'run2d'),
-        Index('sdss_dr16_specobj_mjd_plate_fiberid_idx', 'mjd', 'plate', 'fiberid'),
-        {'schema': 'catalogdb'}
+        Index("sdss_dr16_specobj_mjd_plate_fiberid_run2d_idx", "mjd", "plate", "fiberid", "run2d"),
+        Index("sdss_dr16_specobj_mjd_plate_fiberid_idx", "mjd", "plate", "fiberid"),
+        {"schema": "catalogdb"},
     )
 
     specobjid = Column(Numeric(20, 0), primary_key=True)
@@ -5053,7 +5359,7 @@ class SDSS_DR16_SpecObj(Base):
     z = Column(Float, index=True)
     zerr = Column(Float, index=True)
     zwarning = Column(Integer, index=True)
-    _class = Column('class', String(32))
+    _class = Column("class", String(32))
     subclass = Column(String(32))
     rchi2 = Column(Float)
     dof = Column(Float)
@@ -5189,7 +5495,7 @@ class SDSS_DR16_SpecObj(Base):
 
 
 class SDSS_DR17_APOGEE_Allplates(Base):
-    __tablename__ = 'sdss_dr17_apogee_allplates'
+    __tablename__ = "sdss_dr17_apogee_allplates"
 
     plate_visit_id = Column(Text, primary_key=True)
     location_id = Column(BigInteger, index=True)
@@ -5216,7 +5522,7 @@ class SDSS_DR17_APOGEE_Allplates(Base):
 
 
 class SDSS_DR17_APOGEE_Allstarmerge(Base):
-    __tablename__ = 'sdss_dr17_apogee_allstarmerge'
+    __tablename__ = "sdss_dr17_apogee_allstarmerge"
 
     apogee_id = Column(Text, primary_key=True)
     nvisits = Column(SmallInteger)
@@ -5265,7 +5571,7 @@ class SDSS_DR17_APOGEE_Allstarmerge(Base):
 
 
 class SDSS_DR17_APOGEE_Allvisits(Base):
-    __tablename__ = 'sdss_dr17_apogee_allvisits'
+    __tablename__ = "sdss_dr17_apogee_allvisits"
 
     apogee_id = Column(Text, index=True)
     target_id = Column(Text, index=True)
@@ -5364,7 +5670,7 @@ class SDSS_DR17_APOGEE_Allvisits(Base):
 
 
 class SDSS_ID_flat(Base):
-    __tablename__ = 'sdss_id_flat'
+    __tablename__ = "sdss_id_flat"
 
     sdss_id = Column(BigInteger, index=True)
     catalogid = Column(BigInteger, index=True)
@@ -5376,7 +5682,7 @@ class SDSS_ID_flat(Base):
 
 
 class SDSS_ID_stacked(Base):
-    __tablename__ = 'sdss_id_stacked'
+    __tablename__ = "sdss_id_stacked"
 
     catalogid21 = Column(BigInteger, index=True)
     catalogid25 = Column(BigInteger, index=True)
@@ -5387,10 +5693,10 @@ class SDSS_ID_stacked(Base):
 
 
 class SDSSV_BOSS_Conflist(Base):
-    __tablename__ = 'sdssv_boss_conflist'
+    __tablename__ = "sdssv_boss_conflist"
     __table_args__ = (
-        Index('sdssv_boss_conflist_plate_mjd_idx', 'plate', 'mjd'),
-        {'schema': 'catalogdb'}
+        Index("sdssv_boss_conflist_plate_mjd_idx", "plate", "mjd"),
+        {"schema": "catalogdb"},
     )
 
     plate = Column(Integer, index=True)
@@ -5486,15 +5792,19 @@ class SDSSV_BOSS_Conflist(Base):
     public = Column(Text)
     qualcomments = Column(Text)
     moon_frac = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdssv_boss_conflist_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdssv_boss_conflist_pkey_seq'::regclass)"),
+    )
 
 
 class SDSSV_BOSS_SPALL(Base):
-    __tablename__ = 'sdssv_boss_spall'
+    __tablename__ = "sdssv_boss_spall"
     __table_args__ = (
-        Index('sdssv_boss_spall_plate_mjd_idx', 'plate', 'mjd'),
-        Index('sdssv_boss_spall_plate_mjd_fiberid_idx', 'plate', 'mjd', 'fiberid'),
-        {'schema': 'catalogdb'}
+        Index("sdssv_boss_spall_plate_mjd_idx", "plate", "mjd"),
+        Index("sdssv_boss_spall_plate_mjd_fiberid_idx", "plate", "mjd", "fiberid"),
+        {"schema": "catalogdb"},
     )
 
     programname = Column(Text, index=True)
@@ -5543,7 +5853,7 @@ class SDSSV_BOSS_SPALL(Base):
     objtype = Column(Text)
     plug_ra = Column(Float(53))
     plug_dec = Column(Float(53))
-    _class = Column('class', Text)
+    _class = Column("class", Text)
     subclass = Column(Text)
     z = Column(Float)
     z_err = Column(Float, index=True)
@@ -5601,11 +5911,15 @@ class SDSSV_BOSS_SPALL(Base):
     subclass_noqso = Column(Text)
     rchi2diff_noqso = Column(Float)
     specobjid = Column(BigInteger)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdssv_boss_spall_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdssv_boss_spall_pkey_seq'::regclass)"),
+    )
 
 
 class SDSSV_Plateholes_Meta(Base):
-    __tablename__ = 'sdssv_plateholes_meta'
+    __tablename__ = "sdssv_plateholes_meta"
 
     plateid = Column(Integer, index=True)
     ha = Column(ARRAY(Float()))
@@ -5719,7 +6033,7 @@ class SDSSV_Plateholes_Meta(Base):
 
 
 class Skies_v1(Base):
-    __tablename__ = 'skies_v1'
+    __tablename__ = "skies_v1"
 
     pix_32768 = Column(BigInteger, primary_key=True)
     ra = Column(Float(53))
@@ -5744,7 +6058,7 @@ class Skies_v1(Base):
 
 
 class Skies_v2(Base):
-    __tablename__ = 'skies_v2'
+    __tablename__ = "skies_v2"
 
     pix_32768 = Column(BigInteger, primary_key=True)
     ra = Column(Float(53))
@@ -5777,7 +6091,7 @@ class Skies_v2(Base):
 
 
 class SuperCosmos(Base):
-    __tablename__ = 'supercosmos'
+    __tablename__ = "supercosmos"
 
     objid = Column(BigInteger, primary_key=True)
     objidb = Column(BigInteger)
@@ -5839,7 +6153,7 @@ class SuperCosmos(Base):
 
 
 class TESS_TOI_v05(Base):
-    __tablename__ = 'tess_toi_v05'
+    __tablename__ = "tess_toi_v05"
 
     ticid = Column(BigInteger, index=True)
     target_type = Column(CHAR(8), index=True)
@@ -5849,11 +6163,15 @@ class TESS_TOI_v05(Base):
     ctoi = Column(CHAR(32), index=True)
     user_disposition = Column(CHAR(2), index=True)
     num_sectors = Column(Float(53), index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".tess_toi_v05_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".tess_toi_v05_pkey_seq'::regclass)"),
+    )
 
 
 class TESS_TOI_v1(Base):
-    __tablename__ = 'tess_toi_v1'
+    __tablename__ = "tess_toi_v1"
 
     ticid = Column(BigInteger, index=True)
     target_type = Column(CHAR(8), index=True)
@@ -5863,146 +6181,150 @@ class TESS_TOI_v1(Base):
     ctoi = Column(CHAR(32), index=True)
     user_disposition = Column(CHAR(2), index=True)
     num_sectors = Column(Float(53), index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".tess_toi_v1_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".tess_toi_v1_pkey_seq'::regclass)"),
+    )
 
 
 class TIC_v8_Extended(Base):
-    __tablename__ = 'tic_v8_extended'
+    __tablename__ = "tic_v8_extended"
 
-    id = Column('id', BigInteger, primary_key=True)
-    version = Column('version', String(8))
-    hip = Column('hip', Integer)
-    tyc = Column('tyc', String(12))
-    ucac = Column('ucac', String(10))
-    twomass = Column('twomass', String(20))
-    sdss = Column('sdss', BigInteger)
-    allwise = Column('allwise', String(20))
-    gaia = Column('gaia', String(20))
-    apass = Column('apass', String(30))
-    kic = Column('kic', Integer)
-    objtype = Column('objtype', String(16))
-    typesrc = Column('typesrc', String(16))
-    ra = Column('ra', Float(53))
-    dec = Column('dec', Float(53))
-    posflag = Column('posflag', String(12))
-    pmra = Column('pmra', Float)
-    e_pmra = Column('e_pmra', Float)
-    pmdec = Column('pmdec', Float)
-    e_pmdec = Column('e_pmdec', Float)
-    pmflag = Column('pmflag', String(12))
-    plx = Column('plx', Float)
-    e_plx = Column('e_plx', Float)
-    parflag = Column('parflag', String(12))
-    gallong = Column('gallong', Float(53))
-    gallat = Column('gallat', Float(53))
-    eclong = Column('eclong', Float(53))
-    eclat = Column('eclat', Float(53))
-    bmag = Column('bmag', Float)
-    e_bmag = Column('e_bmag', Float)
-    vmag = Column('vmag', Float)
-    e_vmag = Column('e_vmag', Float)
-    umag = Column('umag', Float)
-    e_umag = Column('e_umag', Float)
-    gmag = Column('gmag', Float)
-    e_gmag = Column('e_gmag', Float)
-    rmag = Column('rmag', Float)
-    e_rmag = Column('e_rmag', Float)
-    imag = Column('imag', Float)
-    e_imag = Column('e_imag', Float)
-    zmag = Column('zmag', Float)
-    e_zmag = Column('e_zmag', Float)
-    jmag = Column('jmag', Float)
-    e_jmag = Column('e_jmag', Float)
-    hmag = Column('hmag', Float)
-    e_hmag = Column('e_hmag', Float)
-    kmag = Column('kmag', Float)
-    e_kmag = Column('e_kmag', Float)
-    twomflag = Column('twomflag', String(20))
-    prox = Column('prox', Float)
-    w1mag = Column('w1mag', Float)
-    e_w1mag = Column('e_w1mag', Float)
-    w2mag = Column('w2mag', Float)
-    e_w2mag = Column('e_w2mag', Float)
-    w3mag = Column('w3mag', Float)
-    e_w3mag = Column('e_w3mag', Float)
-    w4mag = Column('w4mag', Float)
-    e_w4mag = Column('e_w4mag', Float)
-    gaiamag = Column('gaiamag', Float)
-    e_gaiamag = Column('e_gaiamag', Float)
-    tmag = Column('tmag', Float)
-    e_tmag = Column('e_tmag', Float)
-    tessflag = Column('tessflag', String(20))
-    spflag = Column('spflag', String(20))
-    teff = Column('teff', Float)
-    e_teff = Column('e_teff', Float)
-    logg = Column('logg', Float)
-    e_logg = Column('e_logg', Float)
-    mh = Column('mh', Float)
-    e_mh = Column('e_mh', Float)
-    rad = Column('rad', Float)
-    e_rad = Column('e_rad', Float)
-    mass = Column('mass', Float)
-    e_mass = Column('e_mass', Float)
-    rho = Column('rho', Float)
-    e_rho = Column('e_rho', Float)
-    lumclass = Column('lumclass', String(10))
-    lum = Column('lum', Float)
-    e_lum = Column('e_lum', Float)
-    d = Column('d', Float)
-    e_d = Column('e_d', Float)
-    ebv = Column('ebv', Float)
-    e_ebv = Column('e_ebv', Float)
-    numcont = Column('numcont', Integer)
-    contratio = Column('contratio', Float)
-    disposition = Column('disposition', String(10))
-    duplicate_id = Column('duplicate_id', BigInteger)
-    priority = Column('priority', Float)
-    eneg_ebv = Column('eneg_ebv', Float)
-    epos_ebv = Column('epos_ebv', Float)
-    ebvflag = Column('ebvflag', String(20))
-    eneg_mass = Column('eneg_mass', Float)
-    epos_mass = Column('epos_mass', Float)
-    eneg_rad = Column('eneg_rad', Float)
-    epos_rad = Column('epos_rad', Float)
-    eneg_rho = Column('eneg_rho', Float)
-    epos_rho = Column('epos_rho', Float)
-    eneg_logg = Column('eneg_logg', Float)
-    epos_logg = Column('epos_logg', Float)
-    eneg_lum = Column('eneg_lum', Float)
-    epos_lum = Column('epos_lum', Float)
-    eneg_dist = Column('eneg_dist', Float)
-    epos_dist = Column('epos_dist', Float)
-    distflag = Column('distflag', String(20))
-    eneg_teff = Column('eneg_teff', Float)
-    epos_teff = Column('epos_teff', Float)
-    tefflag = Column('tefflag', String(20))
-    gaiabp = Column('gaiabp', Float)
-    e_gaiabp = Column('e_gaiabp', Float)
-    gaiarp = Column('gaiarp', Float)
-    e_gaiarp = Column('e_gaiarp', Float)
-    gaiaqflag = Column('gaiaqflag', Integer)
-    starchareflag = Column('starchareflag', String(20))
-    vmagflag = Column('vmagflag', String(20))
-    bmagflag = Column('bmagflag', String(20))
-    splits = Column('splits', String(20))
-    e_ra = Column('e_ra', Float(53))
-    e_dec = Column('e_dec', Float(53))
-    ra_orig = Column('ra_orig', Float(53))
-    dec_orig = Column('dec_orig', Float(53))
-    e_ra_orig = Column('e_ra_orig', Float(53))
-    e_dec_orig = Column('e_dec_orig', Float(53))
-    raddflag = Column('raddflag', Integer)
-    wdflag = Column('wdflag', Integer)
-    objid = Column('objid', BigInteger)
-    gaia_int = Column('gaia_int', BigInteger)
-    twomass_psc = Column('twomass_psc', Text)
-    twomass_psc_pts_key = Column('twomass_psc_pts_key', Integer)
-    tycho2_tycid = Column('tycho2_tycid', Integer)
-    allwise_cntr = Column('allwise_cntr', BigInteger)
+    id = Column("id", BigInteger, primary_key=True)
+    version = Column("version", String(8))
+    hip = Column("hip", Integer)
+    tyc = Column("tyc", String(12))
+    ucac = Column("ucac", String(10))
+    twomass = Column("twomass", String(20))
+    sdss = Column("sdss", BigInteger)
+    allwise = Column("allwise", String(20))
+    gaia = Column("gaia", String(20))
+    apass = Column("apass", String(30))
+    kic = Column("kic", Integer)
+    objtype = Column("objtype", String(16))
+    typesrc = Column("typesrc", String(16))
+    ra = Column("ra", Float(53))
+    dec = Column("dec", Float(53))
+    posflag = Column("posflag", String(12))
+    pmra = Column("pmra", Float)
+    e_pmra = Column("e_pmra", Float)
+    pmdec = Column("pmdec", Float)
+    e_pmdec = Column("e_pmdec", Float)
+    pmflag = Column("pmflag", String(12))
+    plx = Column("plx", Float)
+    e_plx = Column("e_plx", Float)
+    parflag = Column("parflag", String(12))
+    gallong = Column("gallong", Float(53))
+    gallat = Column("gallat", Float(53))
+    eclong = Column("eclong", Float(53))
+    eclat = Column("eclat", Float(53))
+    bmag = Column("bmag", Float)
+    e_bmag = Column("e_bmag", Float)
+    vmag = Column("vmag", Float)
+    e_vmag = Column("e_vmag", Float)
+    umag = Column("umag", Float)
+    e_umag = Column("e_umag", Float)
+    gmag = Column("gmag", Float)
+    e_gmag = Column("e_gmag", Float)
+    rmag = Column("rmag", Float)
+    e_rmag = Column("e_rmag", Float)
+    imag = Column("imag", Float)
+    e_imag = Column("e_imag", Float)
+    zmag = Column("zmag", Float)
+    e_zmag = Column("e_zmag", Float)
+    jmag = Column("jmag", Float)
+    e_jmag = Column("e_jmag", Float)
+    hmag = Column("hmag", Float)
+    e_hmag = Column("e_hmag", Float)
+    kmag = Column("kmag", Float)
+    e_kmag = Column("e_kmag", Float)
+    twomflag = Column("twomflag", String(20))
+    prox = Column("prox", Float)
+    w1mag = Column("w1mag", Float)
+    e_w1mag = Column("e_w1mag", Float)
+    w2mag = Column("w2mag", Float)
+    e_w2mag = Column("e_w2mag", Float)
+    w3mag = Column("w3mag", Float)
+    e_w3mag = Column("e_w3mag", Float)
+    w4mag = Column("w4mag", Float)
+    e_w4mag = Column("e_w4mag", Float)
+    gaiamag = Column("gaiamag", Float)
+    e_gaiamag = Column("e_gaiamag", Float)
+    tmag = Column("tmag", Float)
+    e_tmag = Column("e_tmag", Float)
+    tessflag = Column("tessflag", String(20))
+    spflag = Column("spflag", String(20))
+    teff = Column("teff", Float)
+    e_teff = Column("e_teff", Float)
+    logg = Column("logg", Float)
+    e_logg = Column("e_logg", Float)
+    mh = Column("mh", Float)
+    e_mh = Column("e_mh", Float)
+    rad = Column("rad", Float)
+    e_rad = Column("e_rad", Float)
+    mass = Column("mass", Float)
+    e_mass = Column("e_mass", Float)
+    rho = Column("rho", Float)
+    e_rho = Column("e_rho", Float)
+    lumclass = Column("lumclass", String(10))
+    lum = Column("lum", Float)
+    e_lum = Column("e_lum", Float)
+    d = Column("d", Float)
+    e_d = Column("e_d", Float)
+    ebv = Column("ebv", Float)
+    e_ebv = Column("e_ebv", Float)
+    numcont = Column("numcont", Integer)
+    contratio = Column("contratio", Float)
+    disposition = Column("disposition", String(10))
+    duplicate_id = Column("duplicate_id", BigInteger)
+    priority = Column("priority", Float)
+    eneg_ebv = Column("eneg_ebv", Float)
+    epos_ebv = Column("epos_ebv", Float)
+    ebvflag = Column("ebvflag", String(20))
+    eneg_mass = Column("eneg_mass", Float)
+    epos_mass = Column("epos_mass", Float)
+    eneg_rad = Column("eneg_rad", Float)
+    epos_rad = Column("epos_rad", Float)
+    eneg_rho = Column("eneg_rho", Float)
+    epos_rho = Column("epos_rho", Float)
+    eneg_logg = Column("eneg_logg", Float)
+    epos_logg = Column("epos_logg", Float)
+    eneg_lum = Column("eneg_lum", Float)
+    epos_lum = Column("epos_lum", Float)
+    eneg_dist = Column("eneg_dist", Float)
+    epos_dist = Column("epos_dist", Float)
+    distflag = Column("distflag", String(20))
+    eneg_teff = Column("eneg_teff", Float)
+    epos_teff = Column("epos_teff", Float)
+    tefflag = Column("tefflag", String(20))
+    gaiabp = Column("gaiabp", Float)
+    e_gaiabp = Column("e_gaiabp", Float)
+    gaiarp = Column("gaiarp", Float)
+    e_gaiarp = Column("e_gaiarp", Float)
+    gaiaqflag = Column("gaiaqflag", Integer)
+    starchareflag = Column("starchareflag", String(20))
+    vmagflag = Column("vmagflag", String(20))
+    bmagflag = Column("bmagflag", String(20))
+    splits = Column("splits", String(20))
+    e_ra = Column("e_ra", Float(53))
+    e_dec = Column("e_dec", Float(53))
+    ra_orig = Column("ra_orig", Float(53))
+    dec_orig = Column("dec_orig", Float(53))
+    e_ra_orig = Column("e_ra_orig", Float(53))
+    e_dec_orig = Column("e_dec_orig", Float(53))
+    raddflag = Column("raddflag", Integer)
+    wdflag = Column("wdflag", Integer)
+    objid = Column("objid", BigInteger)
+    gaia_int = Column("gaia_int", BigInteger)
+    twomass_psc = Column("twomass_psc", Text)
+    twomass_psc_pts_key = Column("twomass_psc_pts_key", Integer)
+    tycho2_tycid = Column("tycho2_tycid", Integer)
+    allwise_cntr = Column("allwise_cntr", BigInteger)
 
 
 class TwoMassPSC(Base):
-    __tablename__ = 'twomass_psc'
+    __tablename__ = "twomass_psc"
 
     ra = Column(Float(53))
     decl = Column(Float(53))
@@ -6067,7 +6389,7 @@ class TwoMassPSC(Base):
 
 
 class TwoMassXSC(Base):
-    __tablename__ = 'twomass_xsc'
+    __tablename__ = "twomass_xsc"
 
     jdate = Column(Float(53), index=True)
     designation = Column(CHAR(17), primary_key=True)
@@ -6461,7 +6783,7 @@ class TwoMassXSC(Base):
 
 
 class Twoqz_sixqz(Base):
-    __tablename__ = 'twoqz_sixqz'
+    __tablename__ = "twoqz_sixqz"
 
     name = Column(CHAR(16), index=True)
     ra_j2000 = Column(CHAR(11))
@@ -6502,11 +6824,15 @@ class Twoqz_sixqz(Base):
     comments2 = Column(CHAR(20))
     ra_degree = Column(Float(53))
     dec_degree = Column(Float(53))
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".twoqz_sixqz_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".twoqz_sixqz_pkey_seq'::regclass)"),
+    )
 
 
 class Tycho2(Base):
-    __tablename__ = 'tycho2'
+    __tablename__ = "tycho2"
 
     tyc1 = Column(Integer)
     tyc2 = Column(Integer)
@@ -6546,13 +6872,18 @@ class Tycho2(Base):
     flag = Column(String(1))
     mflag = Column(String(1))
     designation = Column(Text, primary_key=True)
-    tycid = Column(Integer, nullable=False, unique=True, server_default=text("nextval('\"catalogdb\".tycho2_tycid_seq'::regclass)"))
+    tycid = Column(
+        Integer,
+        nullable=False,
+        unique=True,
+        server_default=text("nextval('\"catalogdb\".tycho2_tycid_seq'::regclass)"),
+    )
     designation2 = Column(Text, unique=True)
 
 
 class unWISE(Base):
-    __tablename__ = 'unwise'
-    __table_args__ = {'schema': 'catalogdb', 'comment': 'unwise_release'}
+    __tablename__ = "unwise"
+    __table_args__ = {"schema": "catalogdb", "comment": "unwise_release"}
 
     x_w1 = Column(Float(53))
     x_w2 = Column(Float(53))
@@ -6606,7 +6937,7 @@ class unWISE(Base):
 
 
 class UVOT_SSC_1(Base):
-    __tablename__ = 'uvotssc1'
+    __tablename__ = "uvotssc1"
 
     name = Column(String(17))
     oseq = Column(BigInteger)
@@ -6690,19 +7021,27 @@ class UVOT_SSC_1(Base):
     fu = Column(Integer)
     fb = Column(Integer)
     fv = Column(Integer)
-    id = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".uvotssc1_id_seq'::regclass)"))
+    id = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".uvotssc1_id_seq'::regclass)"),
+    )
 
 
 class Version(Base):
-    __tablename__ = 'version'
+    __tablename__ = "version"
 
-    id = Column(Integer, primary_key=True, server_default=text("nextval('\"catalogdb\".version_id_seq'::regclass)"))
+    id = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".version_id_seq'::regclass)"),
+    )
     plan = Column(Text, nullable=False, unique=True)
     tag = Column(Text, nullable=False)
 
 
 class Watchdog(Base):
-    __tablename__ = 'watchdog'
+    __tablename__ = "watchdog"
 
     name = Column(Text)
     rastr = Column(Text)
@@ -6719,7 +7058,7 @@ class Watchdog(Base):
 
 
 class XMM_OM_SUSS_4_1(Base):
-    __tablename__ = 'xmm_om_suss_4_1'
+    __tablename__ = "xmm_om_suss_4_1"
 
     iauname = Column(String(22))
     n_summary = Column(Integer)
@@ -6835,11 +7174,15 @@ class XMM_OM_SUSS_4_1(Base):
     u_sky_image = Column(String(4))
     b_sky_image = Column(String(4))
     v_sky_image = Column(String(4))
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".xmm_om_suss_4_1_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".xmm_om_suss_4_1_pk_seq'::regclass)"),
+    )
 
 
 class XMM_OM_SUSS_5_0(Base):
-    __tablename__ = 'xmm_om_suss_5_0'
+    __tablename__ = "xmm_om_suss_5_0"
 
     iauname = Column(Text, index=True)
     n_summary = Column(BigInteger, index=True)
@@ -6955,11 +7298,15 @@ class XMM_OM_SUSS_5_0(Base):
     u_sky_image = Column(Text)
     b_sky_image = Column(Text)
     v_sky_image = Column(Text)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".xmm_om_suss_5_0_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".xmm_om_suss_5_0_pk_seq'::regclass)"),
+    )
 
 
 class XRay_Pulsars(Base):
-    __tablename__ = 'xray_pulsars'
+    __tablename__ = "xray_pulsars"
 
     name = Column(Text)
     rastr = Column(Text)
@@ -6976,7 +7323,7 @@ class XRay_Pulsars(Base):
 
 
 class Zari18pms(Base):
-    __tablename__ = 'zari18pms'
+    __tablename__ = "zari18pms"
 
     source = Column(BigInteger, primary_key=True, index=True)
     glon = Column(Float(53), index=True)
@@ -7002,7 +7349,7 @@ class Zari18pms(Base):
 
 
 class Zari18ums(Base):
-    __tablename__ = 'zari18ums'
+    __tablename__ = "zari18ums"
 
     source = Column(BigInteger, primary_key=True, index=True)
     glon = Column(Float(53), index=True)
@@ -7027,7 +7374,7 @@ class Zari18ums(Base):
 
 
 class AllstarDr17SynspecRev1(Base):
-    __tablename__ = 'allstar_dr17_synspec_rev1'
+    __tablename__ = "allstar_dr17_synspec_rev1"
 
     file = Column(Text)
     apogee_id = Column(Text, index=True)
@@ -7111,7 +7458,7 @@ class AllstarDr17SynspecRev1(Base):
     max_h = Column(Float)
     min_jk = Column(Float)
     max_jk = Column(Float)
-    gaiaedr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'))
+    gaiaedr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
     gaiaedr3_parallax = Column(Float)
     gaiaedr3_parallax_error = Column(Float)
     gaiaedr3_pmra = Column(Float)
@@ -7263,14 +7610,14 @@ class AllstarDr17SynspecRev1(Base):
     yb_fe_err = Column(Float)
     yb_fe_flag = Column(Integer)
     visit_pk = Column(ARRAY(Integer()))
-    twomass_designation = Column(ForeignKey('catalogdb.twomass_psc.designation'))
+    twomass_designation = Column(ForeignKey("catalogdb.twomass_psc.designation"))
 
-    gaiaedr3_source = relationship('GaiaDr3Source')
-    twomass_psc = relationship('TwomassPsc')
+    gaiaedr3_source = relationship("GaiaDr3Source")
+    twomass_psc = relationship("TwomassPsc")
 
 
 class AllWise(Base):
-    __tablename__ = 'allwise'
+    __tablename__ = "allwise"
 
     designation = Column(CHAR(20), unique=True)
     ra = Column(Numeric(10, 7))
@@ -7555,7 +7902,7 @@ class AllWise(Base):
     w4gmag = Column(Numeric(5, 3))
     w4gerr = Column(Numeric(4, 3))
     w4gflg = Column(Integer)
-    tmass_key = Column(ForeignKey('catalogdb.twomass_psc.pts_key'))
+    tmass_key = Column(ForeignKey("catalogdb.twomass_psc.pts_key"))
     r_2mass = Column(Numeric(5, 3))
     pa_2mass = Column(Numeric(4, 1))
     n_2mass = Column(Integer)
@@ -7571,13 +7918,13 @@ class AllWise(Base):
     spt_ind = Column(Integer)
     htm20 = Column(BigInteger)
 
-    twomass_psc = relationship('TwomassPsc')
+    twomass_psc = relationship("TwomassPsc")
 
 
 class BestBrightest(Base):
-    __tablename__ = 'best_brightest'
+    __tablename__ = "best_brightest"
 
-    designation = Column(ForeignKey('catalogdb.allwise.designation'), nullable=False)
+    designation = Column(ForeignKey("catalogdb.allwise.designation"), nullable=False)
     ra_1 = Column(Float(53))
     dec_1 = Column(Float(53))
     glon = Column(Float(53))
@@ -7612,13 +7959,15 @@ class BestBrightest(Base):
     ebv = Column(Float)
     version = Column(Integer, index=True)
     original_ext_source_id = Column(String(16))
-    cntr = Column(ForeignKey('catalogdb.allwise.cntr'), primary_key=True)
+    cntr = Column(ForeignKey("catalogdb.allwise.cntr"), primary_key=True)
 
-    allwise = relationship('Allwise', primaryjoin='BestBrightest.designation == Allwise.designation')
+    allwise = relationship(
+        "Allwise", primaryjoin="BestBrightest.designation == Allwise.designation"
+    )
 
 
 class ATNF(Base):
-    __tablename__ = 'atnf'
+    __tablename__ = "atnf"
 
     name = Column(Text, primary_key=True)
     rastr = Column(Text)
@@ -7631,13 +7980,13 @@ class ATNF(Base):
     gaia_dec = Column(Float(53))
     gaia_gmag = Column(Float)
     gaia_dist = Column(Float)
-    gaia_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaia_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
 
-    gaia_source = relationship('GaiaDr2Source')
+    gaia_source = relationship("GaiaDr2Source")
 
 
 class BHM_RM_v0(Base):
-    __tablename__ = 'bhm_rm_v0'
+    __tablename__ = "bhm_rm_v0"
 
     field_name = Column(String(8))
     ra = Column(Float(53))
@@ -7677,7 +8026,7 @@ class BHM_RM_v0(Base):
     flags_nsc = Column(Integer)
     separation_nsc = Column(Float(53))
     sdss = Column(Integer)
-    objid_sdss = Column(ForeignKey('catalogdb.sdss_dr13_photoobj.objid'), index=True)
+    objid_sdss = Column(ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True)
     ra_sdss = Column(Float(53))
     dec_sdss = Column(Float(53))
     type_sdss = Column(Integer)
@@ -7688,7 +8037,7 @@ class BHM_RM_v0(Base):
     clean_sdss = Column(Integer)
     separation_sdss = Column(Float(53))
     gaia = Column(Integer)
-    source_id_gaia = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    source_id_gaia = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     mg = Column(Float(53))
     mag_gaia = Column(ARRAY(Float(precision=53)))
     magerr_gaia = Column(ARRAY(Float(precision=53)))
@@ -7701,7 +8050,7 @@ class BHM_RM_v0(Base):
     pmdec_error = Column(Float(53))
     pmsig = Column(Float(53), index=True)
     unwise = Column(Integer)
-    objid_unwise = Column(ForeignKey('catalogdb.unwise.unwise_objid'), index=True)
+    objid_unwise = Column(ForeignKey("catalogdb.unwise.unwise_objid"), index=True)
     ra_unwise = Column(Float(53))
     dec_unwise = Column(Float(53))
     mag_unwise = Column(ARRAY(Float(precision=53)))
@@ -7770,15 +8119,19 @@ class BHM_RM_v0(Base):
     photoz = Column(Float(53))
     pqso_photo = Column(Float(53))
     photoz_ref = Column(String(16))
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_rm_v0_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_rm_v0_pk_seq'::regclass)"),
+    )
 
-    sdss_dr13_photoobj = relationship('SdssDr13Photoobj')
-    unwise1 = relationship('Unwise')
-    gaia_dr2_source = relationship('GaiaDr2Source')
+    sdss_dr13_photoobj = relationship("SdssDr13Photoobj")
+    unwise1 = relationship("Unwise")
+    gaia_dr2_source = relationship("GaiaDr2Source")
 
 
 class BHM_RM_v2(Base):
-    __tablename__ = 'bhm_rm_v0_2'
+    __tablename__ = "bhm_rm_v0_2"
 
     field_name = Column(String(8), index=True)
     ra = Column(Float(53))
@@ -7818,7 +8171,7 @@ class BHM_RM_v2(Base):
     flags_nsc = Column(Integer)
     separation_nsc = Column(Float(53))
     sdss = Column(Integer)
-    objid_sdss = Column(ForeignKey('catalogdb.sdss_dr13_photoobj.objid'), index=True)
+    objid_sdss = Column(ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True)
     ra_sdss = Column(Float(53))
     dec_sdss = Column(Float(53))
     type_sdss = Column(Integer)
@@ -7829,7 +8182,7 @@ class BHM_RM_v2(Base):
     clean_sdss = Column(Integer)
     separation_sdss = Column(Float(53))
     gaia = Column(Integer)
-    source_id_gaia = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    source_id_gaia = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     mg = Column(Float(53), index=True)
     mag_gaia = Column(ARRAY(Float(precision=53)))
     magerr_gaia = Column(ARRAY(Float(precision=53)))
@@ -7842,7 +8195,7 @@ class BHM_RM_v2(Base):
     pmdec_error = Column(Float(53))
     pmsig = Column(Float(53), index=True)
     unwise = Column(Integer)
-    objid_unwise = Column(ForeignKey('catalogdb.unwise.unwise_objid'), index=True)
+    objid_unwise = Column(ForeignKey("catalogdb.unwise.unwise_objid"), index=True)
     ra_unwise = Column(Float(53))
     dec_unwise = Column(Float(53))
     mag_unwise = Column(ARRAY(Float(precision=53)))
@@ -7913,32 +8266,36 @@ class BHM_RM_v2(Base):
     photoz_ref = Column(String(16))
     pk = Column(BigInteger, primary_key=True)
 
-    sdss_dr13_photoobj = relationship('SdssDr13Photoobj')
-    unwise1 = relationship('Unwise')
-    gaia_dr2_source = relationship('GaiaDr2Source')
+    sdss_dr13_photoobj = relationship("SdssDr13Photoobj")
+    unwise1 = relationship("Unwise")
+    gaia_dr2_source = relationship("GaiaDr2Source")
 
 
 class CantatGaudinNodup(Base):
-    __tablename__ = 'cantat_gaudin_nodup'
+    __tablename__ = "cantat_gaudin_nodup"
 
     radeg = Column(Float(53))
     dedeg = Column(Float(53))
-    gaiadr2 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaiadr2 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     proba = Column(Float, index=True)
-    cluster = Column(ForeignKey('catalogdb.cantat_gaudin_table1.cluster'), index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".cantat_gaudin_nodup_pkey_seq'::regclass)"))
+    cluster = Column(ForeignKey("catalogdb.cantat_gaudin_table1.cluster"), index=True)
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".cantat_gaudin_nodup_pkey_seq'::regclass)"),
+    )
 
-    cantat_gaudin_table1 = relationship('CantatGaudinTable1')
-    gaia_dr2_source = relationship('GaiaDr2Source')
+    cantat_gaudin_table1 = relationship("CantatGaudinTable1")
+    gaia_dr2_source = relationship("GaiaDr2Source")
 
 
 class CataclysmicVariables(Base):
-    __tablename__ = 'cataclysmic_variables'
+    __tablename__ = "cataclysmic_variables"
 
     ref_id = Column(BigInteger, primary_key=True)
     solution_id = Column(BigInteger)
     designation = Column(Text)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     random_index = Column(Integer)
     ref_epoch = Column(Float)
     ra = Column(Float(53))
@@ -8031,11 +8388,11 @@ class CataclysmicVariables(Base):
     lum_percentile_lower = Column(Float(53))
     lum_percentile_upper = Column(Float(53))
 
-    source = relationship('GaiaDr2Source')
+    source = relationship("GaiaDr2Source")
 
 
 class eBOSS_Target_v5(Base):
-    __tablename__ = 'ebosstarget_v5'
+    __tablename__ = "ebosstarget_v5"
 
     run = Column(Integer)
     camcol = Column(Integer)
@@ -8079,14 +8436,18 @@ class eBOSS_Target_v5(Base):
     w2_nanomaggies = Column(Float)
     w2_nanomaggies_ivar = Column(Float)
     has_wise_phot = Column(Boolean)
-    objid_targeting = Column(ForeignKey('catalogdb.sdss_dr13_photoobj.objid'), index=True)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".ebosstarget_v5_pk_seq'::regclass)"))
+    objid_targeting = Column(ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True)
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".ebosstarget_v5_pk_seq'::regclass)"),
+    )
 
-    sdss_dr13_photoobj = relationship('SdssDr13Photoobj')
+    sdss_dr13_photoobj = relationship("SdssDr13Photoobj")
 
 
 class ElbadryRix(Base):
-    __tablename__ = 'elbadry_rix'
+    __tablename__ = "elbadry_rix"
 
     source_id2 = Column(BigInteger, index=True)
     ra2 = Column(Float(53))
@@ -8109,7 +8470,7 @@ class ElbadryRix(Base):
     radial_velocity2 = Column(Float(53), index=True)
     radial_velocity_error2 = Column(Float(53))
     rv_nb_transits2 = Column(Integer, index=True)
-    source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     ra = Column(Float(53))
     dec = Column(Float(53))
     pmra = Column(Float(53), index=True)
@@ -8133,136 +8494,161 @@ class ElbadryRix(Base):
     pairdistance = Column(Float(53), index=True)
     binary_class = Column(CHAR(4), index=True)
     s_au = Column(Float(53), index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".elbadry_rix_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".elbadry_rix_pkey_seq'::regclass)"),
+    )
 
-    source = relationship('GaiaDr2Source')
+    source = relationship("GaiaDr2Source")
 
 
 class Gaia_DR2_Neighbourhood(Base):
-    __tablename__ = 'gaia_dr2_neighbourhood'
+    __tablename__ = "gaia_dr2_neighbourhood"
 
-    dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
-    dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    dr2_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
+    dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
     angular_distance = Column(Float, index=True)
     magnitude_difference = Column(Float, index=True)
     proper_motion_propagation = Column(Boolean, index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".gaia_dr2_neighbourhood_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".gaia_dr2_neighbourhood_pkey_seq'::regclass)"),
+    )
 
-    dr2_source = relationship('GaiaDr2Source')
-    dr3_source = relationship('GaiaDr3Source')
+    dr2_source = relationship("GaiaDr2Source")
+    dr3_source = relationship("GaiaDr3Source")
 
 
 class Gaia_dr3_nss_two_body_orbit(Base):
-    __tablename__ = 'gaia_dr3_nss_two_body_orbit'
+    __tablename__ = "gaia_dr3_nss_two_body_orbit"
 
-    solution_id = Column('solution_id', BigInteger, primary_key=True)
-    source_id = Column('source_id', ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True, primary_key=True)
-    nss_solution_type = Column('nss_solution_type', Text)
-    ra = Column('ra', Float(53))
-    ra_error = Column('ra_error', Float)
-    dec = Column('dec', Float(53))
-    dec_error = Column('dec_error', Float)
-    parallax = Column('parallax', Float(53))
-    parallax_error = Column('parallax_error', Float)
-    pmra = Column('pmra', Float(53))
-    pmra_error = Column('pmra_error', Float)
-    pmdec = Column('pmdec', Float(53))
-    pmdec_error = Column('pmdec_error', Float)
-    a_thiele_innes = Column('a_thiele_innes', Float(53))
-    a_thiele_innes_error = Column('a_thiele_innes_error', Float)
-    b_thiele_innes = Column('b_thiele_innes', Float(53))
-    b_thiele_innes_error = Column('b_thiele_innes_error', Float)
-    f_thiele_innes = Column('f_thiele_innes', Float(53))
-    f_thiele_innes_error = Column('f_thiele_innes_error', Float)
-    g_thiele_innes = Column('g_thiele_innes', Float(53))
-    g_thiele_innes_error = Column('g_thiele_innes_error', Float)
-    c_thiele_innes = Column('c_thiele_innes', Float(53))
-    c_thiele_innes_error = Column('c_thiele_innes_error', Float)
-    h_thiele_innes = Column('h_thiele_innes', Float(53))
-    h_thiele_innes_error = Column('h_thiele_innes_error', Float)
-    period = Column('period', Float(53), index=True)
-    period_error = Column('period_error', Float)
-    t_periastron = Column('t_periastron', Float(53))
-    t_periastron_error = Column('t_periastron_error', Float)
-    eccentricity = Column('eccentricity', Float(53))
-    eccentricity_error = Column('eccentricity_error', Float)
-    center_of_mass_velocity = Column('center_of_mass_velocity', Float(53))
-    center_of_mass_velocity_error = Column('center_of_mass_velocity_error', Float)
-    semi_amplitude_primary = Column('semi_amplitude_primary', Float(53))
-    semi_amplitude_primary_error = Column('semi_amplitude_primary_error', Float)
-    semi_amplitude_secondary = Column('semi_amplitude_secondary', Float(53))
-    semi_amplitude_secondary_error = Column('semi_amplitude_secondary_error', Float)
-    mass_ratio = Column('mass_ratio', Float(53))
-    mass_ratio_error = Column('mass_ratio_error', Float)
-    fill_factor_primary = Column('fill_factor_primary', Float(53))
-    fill_factor_primary_error = Column('fill_factor_primary_error', Float)
-    fill_factor_secondary = Column('fill_factor_secondary', Float(53))
-    fill_factor_secondary_error = Column('fill_factor_secondary_error', Float)
-    inclination = Column('inclination', Float(53))
-    inclination_error = Column('inclination_error', Float)
-    arg_periastron = Column('arg_periastron', Float(53))
-    arg_periastron_error = Column('arg_periastron_error', Float)
-    temperature_ratio = Column('temperature_ratio', Float(53))
-    temperature_ratio_error = Column('temperature_ratio_error', Float)
-    temperature_ratio_definition = Column('temperature_ratio_definition', SmallInteger)
-    astrometric_n_obs_al = Column('astrometric_n_obs_al', Integer)
-    astrometric_n_good_obs_al = Column('astrometric_n_good_obs_al', Integer)
-    rv_n_obs_primary = Column('rv_n_obs_primary', Integer)
-    rv_n_good_obs_primary = Column('rv_n_good_obs_primary', Integer)
-    rv_n_obs_secondary = Column('rv_n_obs_secondary', Integer)
-    rv_n_good_obs_secondary = Column('rv_n_good_obs_secondary', Integer)
-    phot_g_n_obs = Column('phot_g_n_obs', Integer)
-    phot_g_n_good_obs = Column('phot_g_n_good_obs', Integer)
-    bit_index = Column('bit_index', BigInteger)
-    corr_vec = Column('corr_vec', Text)
-    obj_func = Column('obj_func', Float)
-    goodness_of_fit = Column('goodness_of_fit', Float)
-    efficiency = Column('efficiency', Float)
-    significance = Column('significance', Float)
-    flags = Column('flags', BigInteger)
-    conf_spectro_period = Column('conf_spectro_period', Float)
-    r_pole_sum = Column('r_pole_sum', Float(53))
-    r_l1_point_sum = Column('r_l1_point_sum', Float(53))
-    r_spher_sum = Column('r_spher_sum', Float(53))
-    ecl_time_primary = Column('ecl_time_primary', Float(53))
-    ecl_time_secondary = Column('ecl_time_secondary', Float(53))
-    ecl_dur_primary = Column('ecl_dur_primary', Float(53))
-    ecl_dur_secondary = Column('ecl_dur_secondary', Float(53))
-    g_luminosity_ratio = Column('g_luminosity_ratio', Float(53))
-    input_period_error = Column('input_period_error', Float)
-    g_rank = Column('g_rank', Float(53))
-    astrometric_jitter = Column('astrometric_jitter', Float(53))
+    solution_id = Column("solution_id", BigInteger, primary_key=True)
+    source_id = Column(
+        "source_id",
+        ForeignKey("catalogdb.gaia_dr3_source.source_id"),
+        index=True,
+        primary_key=True,
+    )
+    nss_solution_type = Column("nss_solution_type", Text)
+    ra = Column("ra", Float(53))
+    ra_error = Column("ra_error", Float)
+    dec = Column("dec", Float(53))
+    dec_error = Column("dec_error", Float)
+    parallax = Column("parallax", Float(53))
+    parallax_error = Column("parallax_error", Float)
+    pmra = Column("pmra", Float(53))
+    pmra_error = Column("pmra_error", Float)
+    pmdec = Column("pmdec", Float(53))
+    pmdec_error = Column("pmdec_error", Float)
+    a_thiele_innes = Column("a_thiele_innes", Float(53))
+    a_thiele_innes_error = Column("a_thiele_innes_error", Float)
+    b_thiele_innes = Column("b_thiele_innes", Float(53))
+    b_thiele_innes_error = Column("b_thiele_innes_error", Float)
+    f_thiele_innes = Column("f_thiele_innes", Float(53))
+    f_thiele_innes_error = Column("f_thiele_innes_error", Float)
+    g_thiele_innes = Column("g_thiele_innes", Float(53))
+    g_thiele_innes_error = Column("g_thiele_innes_error", Float)
+    c_thiele_innes = Column("c_thiele_innes", Float(53))
+    c_thiele_innes_error = Column("c_thiele_innes_error", Float)
+    h_thiele_innes = Column("h_thiele_innes", Float(53))
+    h_thiele_innes_error = Column("h_thiele_innes_error", Float)
+    period = Column("period", Float(53), index=True)
+    period_error = Column("period_error", Float)
+    t_periastron = Column("t_periastron", Float(53))
+    t_periastron_error = Column("t_periastron_error", Float)
+    eccentricity = Column("eccentricity", Float(53))
+    eccentricity_error = Column("eccentricity_error", Float)
+    center_of_mass_velocity = Column("center_of_mass_velocity", Float(53))
+    center_of_mass_velocity_error = Column("center_of_mass_velocity_error", Float)
+    semi_amplitude_primary = Column("semi_amplitude_primary", Float(53))
+    semi_amplitude_primary_error = Column("semi_amplitude_primary_error", Float)
+    semi_amplitude_secondary = Column("semi_amplitude_secondary", Float(53))
+    semi_amplitude_secondary_error = Column("semi_amplitude_secondary_error", Float)
+    mass_ratio = Column("mass_ratio", Float(53))
+    mass_ratio_error = Column("mass_ratio_error", Float)
+    fill_factor_primary = Column("fill_factor_primary", Float(53))
+    fill_factor_primary_error = Column("fill_factor_primary_error", Float)
+    fill_factor_secondary = Column("fill_factor_secondary", Float(53))
+    fill_factor_secondary_error = Column("fill_factor_secondary_error", Float)
+    inclination = Column("inclination", Float(53))
+    inclination_error = Column("inclination_error", Float)
+    arg_periastron = Column("arg_periastron", Float(53))
+    arg_periastron_error = Column("arg_periastron_error", Float)
+    temperature_ratio = Column("temperature_ratio", Float(53))
+    temperature_ratio_error = Column("temperature_ratio_error", Float)
+    temperature_ratio_definition = Column("temperature_ratio_definition", SmallInteger)
+    astrometric_n_obs_al = Column("astrometric_n_obs_al", Integer)
+    astrometric_n_good_obs_al = Column("astrometric_n_good_obs_al", Integer)
+    rv_n_obs_primary = Column("rv_n_obs_primary", Integer)
+    rv_n_good_obs_primary = Column("rv_n_good_obs_primary", Integer)
+    rv_n_obs_secondary = Column("rv_n_obs_secondary", Integer)
+    rv_n_good_obs_secondary = Column("rv_n_good_obs_secondary", Integer)
+    phot_g_n_obs = Column("phot_g_n_obs", Integer)
+    phot_g_n_good_obs = Column("phot_g_n_good_obs", Integer)
+    bit_index = Column("bit_index", BigInteger)
+    corr_vec = Column("corr_vec", Text)
+    obj_func = Column("obj_func", Float)
+    goodness_of_fit = Column("goodness_of_fit", Float)
+    efficiency = Column("efficiency", Float)
+    significance = Column("significance", Float)
+    flags = Column("flags", BigInteger)
+    conf_spectro_period = Column("conf_spectro_period", Float)
+    r_pole_sum = Column("r_pole_sum", Float(53))
+    r_l1_point_sum = Column("r_l1_point_sum", Float(53))
+    r_spher_sum = Column("r_spher_sum", Float(53))
+    ecl_time_primary = Column("ecl_time_primary", Float(53))
+    ecl_time_secondary = Column("ecl_time_secondary", Float(53))
+    ecl_dur_primary = Column("ecl_dur_primary", Float(53))
+    ecl_dur_secondary = Column("ecl_dur_secondary", Float(53))
+    g_luminosity_ratio = Column("g_luminosity_ratio", Float(53))
+    input_period_error = Column("input_period_error", Float)
+    g_rank = Column("g_rank", Float(53))
+    astrometric_jitter = Column("astrometric_jitter", Float(53))
 
 
 class Gaia_edr3_tycho2tdsc_merge_best_neighbour(Base):
-    __tablename__ = 'gaia_edr3_tycho2tdsc_merge_best_neighbour'
+    __tablename__ = "gaia_edr3_tycho2tdsc_merge_best_neighbour"
 
-    source_id = Column('source_id', ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True, primary_key=True)
-    original_ext_source_id = Column('original_ext_source_id', Text, index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
-    tycho2tdsc_merge_oid = Column('tycho2tdsc_merge_oid', BigInteger, index=True)
-    number_of_neighbours = Column('number_of_neighbours', SmallInteger, index=True)
+    source_id = Column(
+        "source_id",
+        ForeignKey("catalogdb.gaia_dr3_source.source_id"),
+        index=True,
+        primary_key=True,
+    )
+    original_ext_source_id = Column("original_ext_source_id", Text, index=True)
+    angular_distance = Column("angular_distance", Float, index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
+    tycho2tdsc_merge_oid = Column("tycho2tdsc_merge_oid", BigInteger, index=True)
+    number_of_neighbours = Column("number_of_neighbours", SmallInteger, index=True)
 
 
 class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(Base):
-    __tablename__ = 'gaia_edr3_tycho2tdsc_merge_best_neighbour2'
+    __tablename__ = "gaia_edr3_tycho2tdsc_merge_best_neighbour2"
 
-    source_id = Column('source_id', ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True, primary_key=True)
-    original_ext_source_id = Column('original_ext_source_id', ForeignKey('catalogdb.tycho2.designation2'), index=True)
-    angular_distance = Column('angular_distance', Float, index=True)
-    xm_flag = Column('xm_flag', SmallInteger, index=True)
-    tycho2tdsc_merge_oid = Column('tycho2tdsc_merge_oid', BigInteger, index=True)
-    number_of_neighbours = Column('number_of_neighbours', SmallInteger, index=True)
+    source_id = Column(
+        "source_id",
+        ForeignKey("catalogdb.gaia_dr3_source.source_id"),
+        index=True,
+        primary_key=True,
+    )
+    original_ext_source_id = Column(
+        "original_ext_source_id", ForeignKey("catalogdb.tycho2.designation2"), index=True
+    )
+    angular_distance = Column("angular_distance", Float, index=True)
+    xm_flag = Column("xm_flag", SmallInteger, index=True)
+    tycho2tdsc_merge_oid = Column("tycho2tdsc_merge_oid", BigInteger, index=True)
+    number_of_neighbours = Column("number_of_neighbours", SmallInteger, index=True)
 
 
 class Galah_dr3(Base):
-    __tablename__ = 'galah_dr3'
+    __tablename__ = "galah_dr3"
 
     star_id = Column(Text, index=True)
     sobject_id = Column(BigInteger, primary_key=True)
-    dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'))
-    dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'))
+    dr2_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
+    dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
     survey_name = Column(Text)
     field_id = Column(BigInteger)
     flag_repeat = Column(BigInteger)
@@ -8457,16 +8843,19 @@ class Galah_dr3(Base):
     bc_ks = Column(Float)
     ruwe_dr2 = Column(Float(53))
 
-    dr2_source = relationship('GaiaDr2Source')
-    dr3_source = relationship('GaiaDr3Source')
+    dr2_source = relationship("GaiaDr2Source")
+    dr3_source = relationship("GaiaDr3Source")
 
 
 class GLIMPSE(Base):
-    __tablename__ = 'glimpse'
+    __tablename__ = "glimpse"
 
     designation = Column(Text)
     tmass_designation = Column(String(18))
-    tmass_cntr = Column(ForeignKey('catalogdb.twomass_psc.pts_key', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    tmass_cntr = Column(
+        ForeignKey("catalogdb.twomass_psc.pts_key", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     l = Column(Float(53))
     b = Column(Float(53))
     dl = Column(Float(53))
@@ -8542,17 +8931,21 @@ class GLIMPSE(Base):
     mf4_5 = Column(Integer)
     mf5_8 = Column(Integer)
     mf8_0 = Column(Integer)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".glimpse_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".glimpse_pk_seq'::regclass)"),
+    )
 
-    twomass_psc = relationship('TwomassPsc')
+    twomass_psc = relationship("TwomassPsc")
 
 
 class GLIMPSE360(Base):
-    __tablename__ = 'glimpse360'
+    __tablename__ = "glimpse360"
 
     designation = Column(CHAR(26))
     tmass_designation = Column(CHAR(16))
-    tmass_cntr = Column(ForeignKey('catalogdb.twomass_psc.pts_key'), index=True)
+    tmass_cntr = Column(ForeignKey("catalogdb.twomass_psc.pts_key"), index=True)
     l = Column(Float(53))
     b = Column(Float(53))
     dl = Column(Float(53))
@@ -8628,61 +9021,65 @@ class GLIMPSE360(Base):
     mf4_5 = Column(Integer)
     mf5_8 = Column(Integer)
     mf8_0 = Column(Integer)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".glimpse360_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".glimpse360_pkey_seq'::regclass)"),
+    )
 
-    twomass_psc = relationship('TwomassPsc')
+    twomass_psc = relationship("TwomassPsc")
 
 
 class Lamost_dr6(Base):
-    __tablename__ = 'lamost_dr6'
+    __tablename__ = "lamost_dr6"
 
-    obsid = Column('obsid', Integer, index=True, primary_key=True)
-    designation = Column('designation', Text)
-    obsdate = Column('obsdate', Text)
-    lmjd = Column('lmjd', Integer)
-    mjd = Column('mjd', Integer)
-    planid = Column('planid', Text)
-    spid = Column('spid', SmallInteger)
-    fiberid = Column('fiberid', SmallInteger)
-    ra_obs = Column('ra_obs', Float(53))
-    dec_obs = Column('dec_obs', Float(53))
-    snru = Column('snru', Float)
-    snrg = Column('snrg', Float)
-    snrr = Column('snrr', Float)
-    snri = Column('snri', Float)
-    snrz = Column('snrz', Float)
-    objtype = Column('objtype', Text)
-    cclass = Column('class', Text)
-    subclass = Column('subclass', Text)
-    z = Column('z', Float)
-    z_err = Column('z_err', Float)
-    magtype = Column('magtype', Text)
-    mag1 = Column('mag1', Float)
-    mag2 = Column('mag2', Float)
-    mag3 = Column('mag3', Float)
-    mag4 = Column('mag4', Float)
-    mag5 = Column('mag5', Float)
-    mag6 = Column('mag6', Float)
-    mag7 = Column('mag7', Float)
-    tsource = Column('tsource', Text)
-    fibertype = Column('fibertype', Text)
-    tfrom = Column('tfrom', Text)
-    tcomment = Column('tcomment', Text)
-    offsets = Column('offsets', SmallInteger)
-    offsets_v = Column('offsets_v', Float)
-    ra = Column('ra', Float(53))
-    dec = Column('dec', Float(53))
-    fibermask = Column('fibermask', SmallInteger)
-    ra_x = Column('ra_x', Float(53))
-    dec_x = Column('dec_x', Float(53))
-    errhalfmaj = Column('errhalfmaj', Float)
-    errhalfmin = Column('errhalfmin', Float)
-    errposang = Column('errposang', Float)
-    source_id = Column('source_id', ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    obsid = Column("obsid", Integer, index=True, primary_key=True)
+    designation = Column("designation", Text)
+    obsdate = Column("obsdate", Text)
+    lmjd = Column("lmjd", Integer)
+    mjd = Column("mjd", Integer)
+    planid = Column("planid", Text)
+    spid = Column("spid", SmallInteger)
+    fiberid = Column("fiberid", SmallInteger)
+    ra_obs = Column("ra_obs", Float(53))
+    dec_obs = Column("dec_obs", Float(53))
+    snru = Column("snru", Float)
+    snrg = Column("snrg", Float)
+    snrr = Column("snrr", Float)
+    snri = Column("snri", Float)
+    snrz = Column("snrz", Float)
+    objtype = Column("objtype", Text)
+    cclass = Column("class", Text)
+    subclass = Column("subclass", Text)
+    z = Column("z", Float)
+    z_err = Column("z_err", Float)
+    magtype = Column("magtype", Text)
+    mag1 = Column("mag1", Float)
+    mag2 = Column("mag2", Float)
+    mag3 = Column("mag3", Float)
+    mag4 = Column("mag4", Float)
+    mag5 = Column("mag5", Float)
+    mag6 = Column("mag6", Float)
+    mag7 = Column("mag7", Float)
+    tsource = Column("tsource", Text)
+    fibertype = Column("fibertype", Text)
+    tfrom = Column("tfrom", Text)
+    tcomment = Column("tcomment", Text)
+    offsets = Column("offsets", SmallInteger)
+    offsets_v = Column("offsets_v", Float)
+    ra = Column("ra", Float(53))
+    dec = Column("dec", Float(53))
+    fibermask = Column("fibermask", SmallInteger)
+    ra_x = Column("ra_x", Float(53))
+    dec_x = Column("dec_x", Float(53))
+    errhalfmaj = Column("errhalfmaj", Float)
+    errhalfmin = Column("errhalfmin", Float)
+    errposang = Column("errposang", Float)
+    source_id = Column("source_id", ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
 
 
 class Legacy_Survey_DR10(Base):
-    __tablename__ = 'legacy_survey_dr10'
+    __tablename__ = "legacy_survey_dr10"
 
     release = Column(SmallInteger)
     brickid = Column(Integer)
@@ -8815,15 +9212,15 @@ class Legacy_Survey_DR10(Base):
     sersic_ivar = Column(Float)
     survey_primary = Column(Boolean, index=True)
     ls_id = Column(BigInteger, primary_key=True)
-    gaia_dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    gaia_dr2_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    gaia_dr3_source = relationship('GaiaDr3Source')
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    gaia_dr3_source = relationship("GaiaDr3Source")
 
 
 class Legacy_Survey_DR10a(Base):
-    __tablename__ = 'legacy_survey_dr10a'
+    __tablename__ = "legacy_survey_dr10a"
 
     release = Column(SmallInteger)
     brickid = Column(Integer)
@@ -8957,14 +9354,14 @@ class Legacy_Survey_DR10a(Base):
     shape_e2 = Column(Float)
     shape_e2_ivar = Column(Float)
     ls_id = Column(BigInteger, primary_key=True)
-    gaia_sourceid = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    gaia_sourceid = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
     tycho_ref = Column(BigInteger, index=True)
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
+    gaia_dr3_source = relationship("GaiaDr3Source")
 
 
 class Legacy_Survey_DR8(Base):
-    __tablename__ = 'legacy_survey_dr8'
+    __tablename__ = "legacy_survey_dr8"
 
     release = Column(Integer)
     brickid = Column(BigInteger)
@@ -9088,13 +9485,13 @@ class Legacy_Survey_DR8(Base):
     maskbits = Column(Integer, index=True)
     ls_id = Column(BigInteger, primary_key=True)
     tycho_ref = Column(BigInteger)
-    gaia_sourceid = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaia_sourceid = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
+    gaia_dr2_source = relationship("GaiaDr2Source")
 
 
 class MIPSGAL(Base):
-    __tablename__ = 'mipsgal'
+    __tablename__ = "mipsgal"
 
     mipsgal = Column(String(18), primary_key=True)
     glon = Column(Float(53), index=True)
@@ -9105,7 +9502,7 @@ class MIPSGAL(Base):
     e_s24 = Column(Float(53))
     mag_24 = Column(Float(53))
     e_mag_24 = Column(Float(53))
-    twomass_name = Column(ForeignKey('catalogdb.twomass_psc.designation'), index=True)
+    twomass_name = Column(ForeignKey("catalogdb.twomass_psc.designation"), index=True)
     sj = Column(Float(53))
     e_sj = Column(Float(53))
     sh = Column(Float(53))
@@ -9160,14 +9557,14 @@ class MIPSGAL(Base):
     lim1 = Column(Float(53))
     lim2 = Column(Float(53))
 
-    twomass_psc = relationship('TwomassPsc')
+    twomass_psc = relationship("TwomassPsc")
 
 
 class RAVE_DR6_Gaia_DR3_XMatch(Base):
-    __tablename__ = 'rave_dr6_xgaiae3'
+    __tablename__ = "rave_dr6_xgaiae3"
 
     obsid = Column(Text, primary_key=True)
-    gaiae3 = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    gaiae3 = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
     id = Column(Text)
     epoch = Column(SmallInteger)
     radeg = Column(Float(53))
@@ -9186,11 +9583,11 @@ class RAVE_DR6_Gaia_DR3_XMatch(Base):
     e_fg = Column(Float)
     gmag = Column(Float)
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
+    gaia_dr3_source = relationship("GaiaDr3Source")
 
 
 class SDSS_DR16_APOGEE_Star(Base):
-    __tablename__ = 'sdss_dr16_apogeestar'
+    __tablename__ = "sdss_dr16_apogeestar"
 
     apstar_id = Column(Text, primary_key=True)
     target_id = Column(Text)
@@ -9240,7 +9637,10 @@ class SDSS_DR16_APOGEE_Star(Base):
     chi2_threshold = Column(Float)
     stablerv_chi2_prob = Column(Float)
     apstar_version = Column(Text)
-    gaia_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', deferrable=True, initially='DEFERRED'), index=True)
+    gaia_source_id = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", deferrable=True, initially="DEFERRED"),
+        index=True,
+    )
     gaia_parallax = Column(Float)
     gaia_parallax_error = Column(Float)
     gaia_pmra = Column(Float)
@@ -9257,15 +9657,15 @@ class SDSS_DR16_APOGEE_Star(Base):
     gaia_r_hi = Column(Float)
     htmid = Column(BigInteger)
 
-    gaia_source = relationship('GaiaDr2Source')
+    gaia_source = relationship("GaiaDr2Source")
 
 
 class SDSS_DR19p_Speclite(Base):
-    __tablename__ = 'sdss_dr19p_speclite'
+    __tablename__ = "sdss_dr19p_speclite"
     __table_args__ = (
-        Index('sdss_dr19p_speclite_plate_mjd_fiberid_idx', 'plate', 'mjd', 'fiberid'),
-        Index('sdss_dr19p_speclite_mjd_plate_fiberid_idx', 'mjd', 'plate', 'fiberid', unique=True),
-        {'schema': 'catalogdb'}
+        Index("sdss_dr19p_speclite_plate_mjd_fiberid_idx", "plate", "mjd", "fiberid"),
+        Index("sdss_dr19p_speclite_mjd_plate_fiberid_idx", "mjd", "plate", "fiberid", unique=True),
+        {"schema": "catalogdb"},
     )
 
     plate = Column(Integer)
@@ -9273,7 +9673,7 @@ class SDSS_DR19p_Speclite(Base):
     fiberid = Column(Integer)
     field = Column(Integer)
     catalogid = Column(BigInteger, index=True)
-    bestobjid = Column(ForeignKey('catalogdb.sdss_dr13_photoobj.objid'), index=True)
+    bestobjid = Column(ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True)
     targetobjid = Column(BigInteger)
     run2d = Column(Text)
     run1d = Column(Text)
@@ -9296,18 +9696,22 @@ class SDSS_DR19p_Speclite(Base):
     z_err = Column(Float, index=True)
     zwarning = Column(Integer, index=True)
     zwarning_noqso = Column(Integer)
-    _class = Column('class', Text)
+    _class = Column("class", Text)
     subclass = Column(Text)
     tfile = Column(Text)
     specprimary = Column(Integer)
     nspecobs = Column(Integer)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdss_dr19p_speclite_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdss_dr19p_speclite_pk_seq'::regclass)"),
+    )
 
-    sdss_dr13_photoobj = relationship('SdssDr13Photoobj')
+    sdss_dr13_photoobj = relationship("SdssDr13Photoobj")
 
 
 class SDSSV_Plateholes(Base):
-    __tablename__ = 'sdssv_plateholes'
+    __tablename__ = "sdssv_plateholes"
 
     holetype = Column(Text, index=True)
     targettype = Column(Text, index=True)
@@ -9409,15 +9813,19 @@ class SDSSV_Plateholes(Base):
     firstcarton = Column(Text, index=True)
     xfocal = Column(Float(53))
     yfocal = Column(Float(53))
-    yanny_uid = Column(ForeignKey('catalogdb.sdssv_plateholes_meta.yanny_uid'), index=True)
+    yanny_uid = Column(ForeignKey("catalogdb.sdssv_plateholes_meta.yanny_uid"), index=True)
     yanny_filename = Column(Text)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdssv_plateholes_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdssv_plateholes_pkey_seq'::regclass)"),
+    )
 
-    sdssv_plateholes_meta = relationship('SdssvPlateholesMeta')
+    sdssv_plateholes_meta = relationship("SdssvPlateholesMeta")
 
 
 class BHM_CSC_v3(Base):
-    __tablename__ = 'bhm_csc_v3'
+    __tablename__ = "bhm_csc_v3"
 
     csc21p_id = Column(Text, index=True)
     csc21p_ensemble = Column(Text)
@@ -9426,14 +9834,14 @@ class BHM_CSC_v3(Base):
     best_oir_cat = Column(Text, index=True)
     best_mag = Column(Float, index=True)
     mag_type = Column(Text)
-    gaia_dr3_srcid = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
-    ls_dr10_lsid = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'), index=True)
+    gaia_dr3_srcid = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
+    ls_dr10_lsid = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True)
     ls_dr10_objid = Column(Integer)
     ls_dr10_brickid = Column(Integer)
     ls_dr10_release = Column(SmallInteger)
     ps21p_objid = Column(BigInteger, index=True)
     ps21p_ippobjid = Column(BigInteger, index=True)
-    tmass_designation = Column(ForeignKey('catalogdb.twomass_psc.designation'), index=True)
+    tmass_designation = Column(ForeignKey("catalogdb.twomass_psc.designation"), index=True)
     tmass_ra = Column(Float(53))
     tmass_dec = Column(Float(53))
     tmass_h = Column(Float)
@@ -9444,15 +9852,19 @@ class BHM_CSC_v3(Base):
     extent = Column(Boolean)
     xsig = Column(Float(53))
     xpriority = Column(Integer)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_csc_v3_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_csc_v3_pk_seq'::regclass)"),
+    )
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    legacy_survey_dr10 = relationship('LegacySurveyDr10')
-    twomass_psc = relationship('TwomassPsc')
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    legacy_survey_dr10 = relationship("LegacySurveyDr10")
+    twomass_psc = relationship("TwomassPsc")
 
 
 class BHM_RM_v1(Base):
-    __tablename__ = 'bhm_rm_v1'
+    __tablename__ = "bhm_rm_v1"
 
     rm_field_name = Column(CHAR(8), nullable=False, index=True)
     ra = Column(Float(53))
@@ -9469,24 +9881,28 @@ class BHM_RM_v1(Base):
     gaia_g = Column(Float, index=True)
     gaia_bp = Column(Float)
     gaia_rp = Column(Float)
-    ls_id_dr8 = Column(ForeignKey('catalogdb.legacy_survey_dr8.ls_id'), index=True)
-    ls_id_dr10 = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'), index=True)
-    gaia_dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
-    panstarrs1_catid_objid = Column(ForeignKey('catalogdb.panstarrs1.catid_objid'), index=True)
+    ls_id_dr8 = Column(ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True)
+    ls_id_dr10 = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True)
+    gaia_dr2_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
+    panstarrs1_catid_objid = Column(ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True)
     rm_unsuitable = Column(Boolean, index=True)
     rm_xrayqso = Column(Integer, index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_rm_v1_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_rm_v1_pkey_seq'::regclass)"),
+    )
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    legacy_survey_dr10 = relationship('LegacySurveyDr10')
-    legacy_survey_dr8 = relationship('LegacySurveyDr8')
-    panstarrs1 = relationship('Panstarrs1')
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    legacy_survey_dr10 = relationship("LegacySurveyDr10")
+    legacy_survey_dr8 = relationship("LegacySurveyDr8")
+    panstarrs1 = relationship("Panstarrs1")
 
 
 class BHM_RM_v1_1(Base):
-    __tablename__ = 'bhm_rm_v1_1'
+    __tablename__ = "bhm_rm_v1_1"
 
     rm_field_name = Column(CHAR(8), nullable=False, index=True)
     ra = Column(Float(53))
@@ -9503,24 +9919,28 @@ class BHM_RM_v1_1(Base):
     gaia_g = Column(Float, index=True)
     gaia_bp = Column(Float)
     gaia_rp = Column(Float)
-    ls_id_dr8 = Column(ForeignKey('catalogdb.legacy_survey_dr8.ls_id'), index=True)
-    ls_id_dr10 = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'), index=True)
-    gaia_dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
-    panstarrs1_catid_objid = Column(ForeignKey('catalogdb.panstarrs1.catid_objid'), index=True)
+    ls_id_dr8 = Column(ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True)
+    ls_id_dr10 = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True)
+    gaia_dr2_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
+    panstarrs1_catid_objid = Column(ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True)
     rm_unsuitable = Column(Boolean, index=True)
     rm_xrayqso = Column(Integer, index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_rm_v1_1_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_rm_v1_1_pkey_seq'::regclass)"),
+    )
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    legacy_survey_dr10 = relationship('LegacySurveyDr10')
-    legacy_survey_dr8 = relationship('LegacySurveyDr8')
-    panstarrs1 = relationship('Panstarrs1')
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    legacy_survey_dr10 = relationship("LegacySurveyDr10")
+    legacy_survey_dr8 = relationship("LegacySurveyDr8")
+    panstarrs1 = relationship("Panstarrs1")
 
 
 class BHM_RM_v1_3(Base):
-    __tablename__ = 'bhm_rm_v1_3'
+    __tablename__ = "bhm_rm_v1_3"
 
     rm_field_name = Column(CHAR(8), nullable=False, index=True)
     ra = Column(Float(53))
@@ -9537,26 +9957,34 @@ class BHM_RM_v1_3(Base):
     gaia_g = Column(Float, index=True)
     gaia_bp = Column(Float)
     gaia_rp = Column(Float)
-    ls_id_dr8 = Column(ForeignKey('catalogdb.legacy_survey_dr8.ls_id'), index=True)
-    ls_id_dr10 = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'), index=True)
-    gaia_dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
-    panstarrs1_catid_objid = Column(ForeignKey('catalogdb.panstarrs1.catid_objid'), index=True)
+    ls_id_dr8 = Column(ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True)
+    ls_id_dr10 = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True)
+    gaia_dr2_source_id = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
+    panstarrs1_catid_objid = Column(ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True)
     rm_unsuitable = Column(Boolean, index=True)
     rm_xrayqso = Column(Integer, index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_rm_v1_3_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_rm_v1_3_pkey_seq'::regclass)"),
+    )
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    legacy_survey_dr10 = relationship('LegacySurveyDr10')
-    legacy_survey_dr8 = relationship('LegacySurveyDr8')
-    panstarrs1 = relationship('Panstarrs1')
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    legacy_survey_dr10 = relationship("LegacySurveyDr10")
+    legacy_survey_dr8 = relationship("LegacySurveyDr8")
+    panstarrs1 = relationship("Panstarrs1")
 
 
 class BhmSpidersAgnSuperset(Base):
-    __tablename__ = 'bhm_spiders_agn_superset'
+    __tablename__ = "bhm_spiders_agn_superset"
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_spiders_agn_superset_pk_seq1'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".bhm_spiders_agn_superset_pk_seq1'::regclass)"),
+    )
     ero_version = Column(Text)
     ero_detuid = Column(Text)
     ero_flux = Column(Float, index=True)
@@ -9577,9 +10005,15 @@ class BhmSpidersAgnSuperset(Base):
     target_priority = Column(Integer)
     target_has_spec = Column(Integer)
     best_opt = Column(Text)
-    ls_id = Column(ForeignKey('catalogdb.legacy_survey_dr8.ls_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    ls_id = Column(
+        ForeignKey("catalogdb.legacy_survey_dr8.ls_id", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     ps1_dr2_objid = Column(BigInteger)
-    gaia_dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    gaia_dr2_source_id = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     unwise_dr1_objid = Column(Text)
     des_dr1_coadd_object_id = Column(BigInteger)
     sdss_dr16_objid = Column(BigInteger)
@@ -9597,14 +10031,20 @@ class BhmSpidersAgnSuperset(Base):
     opt_modelflux_z = Column(Float)
     opt_modelflux_ivar_z = Column(Float)
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    ls = relationship('LegacySurveyDr8')
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    ls = relationship("LegacySurveyDr8")
 
 
 class BhmSpidersClustersSuperset(Base):
-    __tablename__ = 'bhm_spiders_clusters_superset'
+    __tablename__ = "bhm_spiders_clusters_superset"
 
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".bhm_spiders_clusters_superset_pk_seq1'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".bhm_spiders_clusters_superset_pk_seq1'::regclass)"
+        ),
+    )
     ero_version = Column(Text)
     ero_detuid = Column(Text)
     ero_flux = Column(Float, index=True)
@@ -9625,9 +10065,15 @@ class BhmSpidersClustersSuperset(Base):
     target_priority = Column(Integer)
     target_has_spec = Column(Integer)
     best_opt = Column(Text)
-    ls_id = Column(ForeignKey('catalogdb.legacy_survey_dr8.ls_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    ls_id = Column(
+        ForeignKey("catalogdb.legacy_survey_dr8.ls_id", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     ps1_dr2_objid = Column(BigInteger)
-    gaia_dr2_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    gaia_dr2_source_id = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     unwise_dr1_objid = Column(Text)
     des_dr1_coadd_object_id = Column(BigInteger)
     sdss_dr16_objid = Column(BigInteger)
@@ -9645,15 +10091,19 @@ class BhmSpidersClustersSuperset(Base):
     opt_modelflux_z = Column(Float)
     opt_modelflux_ivar_z = Column(Float)
 
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    ls = relationship('LegacySurveyDr8')
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    ls = relationship("LegacySurveyDr8")
 
 
 class EROSITASupersetv1AGN(Base):
-    __tablename__ = 'erosita_superset_v1_agn'
+    __tablename__ = "erosita_superset_v1_agn"
     __table_args__ = (
-        Index('erosita_superset_v1_agn_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_v1_agn_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(Text, index=True)
@@ -9676,24 +10126,32 @@ class EROSITASupersetv1AGN(Base):
     target_priority = Column(Integer)
     target_has_spec = Column(BigInteger)
     opt_cat = Column(Text, index=True)
-    ls_id = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    ls_id = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
     opt_ra = Column(Float(53))
     opt_dec = Column(Float(53))
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_v1_agn_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".erosita_superset_v1_agn_pkey_seq'::regclass)"),
+    )
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    ls = relationship('LegacySurveyDr10')
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    ls = relationship("LegacySurveyDr10")
 
 
 class EROSITASupersetv1Clusters(Base):
-    __tablename__ = 'erosita_superset_v1_clusters'
+    __tablename__ = "erosita_superset_v1_clusters"
     __table_args__ = (
-        Index('erosita_superset_v1_clusters_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_v1_clusters_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(Text, index=True)
@@ -9716,8 +10174,8 @@ class EROSITASupersetv1Clusters(Base):
     target_priority = Column(Integer, index=True)
     target_has_spec = Column(BigInteger)
     opt_cat = Column(Text, index=True)
-    ls_id = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'))
+    ls_id = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
     opt_ra = Column(Float(53))
     opt_dec = Column(Float(53))
     opt_pmra = Column(Float)
@@ -9725,17 +10183,27 @@ class EROSITASupersetv1Clusters(Base):
     opt_epoch = Column(Float)
     eromapper_lambda = Column(Float, index=True)
     eromapper_z_lambda = Column(Float, index=True)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_v1_clusters_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".erosita_superset_v1_clusters_pkey_seq'::regclass)"
+        ),
+    )
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    ls = relationship('LegacySurveyDr10')
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    ls = relationship("LegacySurveyDr10")
 
 
 class EROSITASupersetv1Compactobjects(Base):
-    __tablename__ = 'erosita_superset_v1_compactobjects'
+    __tablename__ = "erosita_superset_v1_compactobjects"
     __table_args__ = (
-        Index('erosita_superset_v1_compactobj_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_v1_compactobj_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(Text, index=True)
@@ -9758,24 +10226,34 @@ class EROSITASupersetv1Compactobjects(Base):
     target_priority = Column(Integer)
     target_has_spec = Column(BigInteger)
     opt_cat = Column(Text, index=True)
-    ls_id = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'))
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    ls_id = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"))
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
     opt_ra = Column(Float(53))
     opt_dec = Column(Float(53))
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_v1_compactobjects_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".erosita_superset_v1_compactobjects_pkey_seq'::regclass)"
+        ),
+    )
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    ls = relationship('LegacySurveyDr10')
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    ls = relationship("LegacySurveyDr10")
 
 
 class EROSITASupersetv1Stars(Base):
-    __tablename__ = 'erosita_superset_v1_stars'
+    __tablename__ = "erosita_superset_v1_stars"
     __table_args__ = (
-        Index('erosita_superset_v1_stars_xmatch_method_xmatch_version_idx', 'xmatch_method', 'xmatch_version'),
-        {'schema': 'catalogdb'}
+        Index(
+            "erosita_superset_v1_stars_xmatch_method_xmatch_version_idx",
+            "xmatch_method",
+            "xmatch_version",
+        ),
+        {"schema": "catalogdb"},
     )
 
     ero_version = Column(Text, index=True)
@@ -9798,28 +10276,45 @@ class EROSITASupersetv1Stars(Base):
     target_priority = Column(Integer)
     target_has_spec = Column(BigInteger)
     opt_cat = Column(Text, index=True)
-    ls_id = Column(ForeignKey('catalogdb.legacy_survey_dr10.ls_id'))
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3_source.source_id'), index=True)
+    ls_id = Column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"))
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True)
     opt_ra = Column(Float(53))
     opt_dec = Column(Float(53))
     opt_pmra = Column(Float)
     opt_pmdec = Column(Float)
     opt_epoch = Column(Float)
-    pkey = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".erosita_superset_v1_stars_pkey_seq'::regclass)"))
+    pkey = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text(
+            "nextval('\"catalogdb\".erosita_superset_v1_stars_pkey_seq'::regclass)"
+        ),
+    )
 
-    gaia_dr3_source = relationship('GaiaDr3Source')
-    ls = relationship('LegacySurveyDr10')
+    gaia_dr3_source = relationship("GaiaDr3Source")
+    ls = relationship("LegacySurveyDr10")
 
 
 class Gaia_DR2_WD_SDSS(Base):
-    __tablename__ = 'gaia_dr2_wd_sdss'
+    __tablename__ = "gaia_dr2_wd_sdss"
     __table_args__ = (
-        ForeignKeyConstraint(['mjd', 'plate', 'fiber'], ['catalogdb.sdss_dr19p_speclite.mjd', 'catalogdb.sdss_dr19p_speclite.plate', 'catalogdb.sdss_dr19p_speclite.fiberid']),
-        Index('gaia_dr2_wd_sdss_mjd_plate_fiber_idx', 'mjd', 'plate', 'fiber'),
-        {'schema': 'catalogdb'}
+        ForeignKeyConstraint(
+            ["mjd", "plate", "fiber"],
+            [
+                "catalogdb.sdss_dr19p_speclite.mjd",
+                "catalogdb.sdss_dr19p_speclite.plate",
+                "catalogdb.sdss_dr19p_speclite.fiberid",
+            ],
+        ),
+        Index("gaia_dr2_wd_sdss_mjd_plate_fiber_idx", "mjd", "plate", "fiber"),
+        {"schema": "catalogdb"},
     )
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('\"catalogdb\".gaia_dr2_wd_sdss_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".gaia_dr2_wd_sdss_pk_seq'::regclass)"),
+    )
     wd = Column(Text)
     n_wd = Column(Text)
     source = Column(Integer)
@@ -9842,22 +10337,36 @@ class Gaia_DR2_WD_SDSS(Base):
     snr = Column(Float)
     spclass = Column(Text)
 
-    sdss_dr19p_speclite = relationship('SdssDr19pSpeclite')
+    sdss_dr19p_speclite = relationship("SdssDr19pSpeclite")
 
 
 class SDSS_DR16_APOGEE_Star_Visit(Base):
-    __tablename__ = 'sdss_dr16_apogeestarvisit'
+    __tablename__ = "sdss_dr16_apogeestarvisit"
 
-    visit_id = Column(ForeignKey('catalogdb.sdss_dr16_apogeevisit.visit_id', deferrable=True, initially='DEFERRED'), index=True)
-    apstar_id = Column(ForeignKey('catalogdb.sdss_dr16_apogeestar.apstar_id', deferrable=True, initially='DEFERRED'), index=True)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".sdss_dr16_apogeestarvisit_pk_seq'::regclass)"))
+    visit_id = Column(
+        ForeignKey(
+            "catalogdb.sdss_dr16_apogeevisit.visit_id", deferrable=True, initially="DEFERRED"
+        ),
+        index=True,
+    )
+    apstar_id = Column(
+        ForeignKey(
+            "catalogdb.sdss_dr16_apogeestar.apstar_id", deferrable=True, initially="DEFERRED"
+        ),
+        index=True,
+    )
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".sdss_dr16_apogeestarvisit_pk_seq'::regclass)"),
+    )
 
-    apstar = relationship('SdssDr16Apogeestar')
-    visit = relationship('SdssDr16Apogeevisit')
+    apstar = relationship("SdssDr16Apogeestar")
+    visit = relationship("SdssDr16Apogeevisit")
 
 
 class SkyMapper_DR1_1(Base):
-    __tablename__ = 'skymapper_dr1_1'
+    __tablename__ = "skymapper_dr1_1"
 
     object_id = Column(BigInteger, primary_key=True)
     raj2000 = Column(Float(53))
@@ -9947,7 +10456,9 @@ class SkyMapper_DR1_1(Base):
     twomass_key2 = Column(BigInteger)
     twomass_dist2 = Column(Float)
     twomass_cat2 = Column(String(3))
-    allwise_cntr = Column(ForeignKey('catalogdb.allwise.cntr', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    allwise_cntr = Column(
+        ForeignKey("catalogdb.allwise.cntr", ondelete="CASCADE", onupdate="CASCADE"), index=True
+    )
     allwise_dist = Column(Float)
     ucac4_mpos = Column(BigInteger)
     ucac4_dist = Column(Float)
@@ -9959,32 +10470,40 @@ class SkyMapper_DR1_1(Base):
     ps1_dr1_dist = Column(Float)
     galex_bcs_id = Column(BigInteger)
     galex_bcs_dist = Column(Float)
-    gaia_dr2_id1 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaia_dr2_id1 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     gaia_dr2_dist1 = Column(Float)
-    gaia_dr2_id2 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaia_dr2_id2 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     gaia_dr2_dist2 = Column(Float)
 
-    allwise = relationship('Allwise')
-    gaia_dr2_source = relationship('GaiaDr2Source', primaryjoin='SkymapperDr11.gaia_dr2_id1 == GaiaDr2Source.source_id')
-    gaia_dr2_source1 = relationship('GaiaDr2Source', primaryjoin='SkymapperDr11.gaia_dr2_id2 == GaiaDr2Source.source_id')
+    allwise = relationship("Allwise")
+    gaia_dr2_source = relationship(
+        "GaiaDr2Source", primaryjoin="SkymapperDr11.gaia_dr2_id1 == GaiaDr2Source.source_id"
+    )
+    gaia_dr2_source1 = relationship(
+        "GaiaDr2Source", primaryjoin="SkymapperDr11.gaia_dr2_id2 == GaiaDr2Source.source_id"
+    )
 
 
 class SkyMapperGaia(Base):
-    __tablename__ = 'skymapper_gaia'
-    __table_args__ = {'schema': 'catalogdb', 'comment': 'skymapper_gaia_dr1_1'}
+    __tablename__ = "skymapper_gaia"
+    __table_args__ = {"schema": "catalogdb", "comment": "skymapper_gaia_dr1_1"}
 
-    skymapper_object_id = Column(ForeignKey('catalogdb.skymapper_dr1_1.object_id', ondelete='CASCADE'), primary_key=True)
-    gaia_source_id = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', ondelete='CASCADE'), index=True)
+    skymapper_object_id = Column(
+        ForeignKey("catalogdb.skymapper_dr1_1.object_id", ondelete="CASCADE"), primary_key=True
+    )
+    gaia_source_id = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE"), index=True
+    )
     teff = Column(Float, index=True)
     e_teff = Column(Float)
     feh = Column(Float, index=True)
     e_feh = Column(Float)
 
-    gaia_source = relationship('GaiaDr2Source')
+    gaia_source = relationship("GaiaDr2Source")
 
 
 class SkyMapper_DR2(Base):
-    __tablename__ = 'skymapper_dr2'
+    __tablename__ = "skymapper_dr2"
 
     object_id = Column(BigInteger, primary_key=True)
     raj2000 = Column(Float(53))
@@ -10072,7 +10591,7 @@ class SkyMapper_DR2(Base):
     dr1_dist = Column(Float)
     twomass_key = Column(BigInteger)
     twomass_dist = Column(Float)
-    allwise_cntr = Column(ForeignKey('catalogdb.allwise.cntr'), index=True)
+    allwise_cntr = Column(ForeignKey("catalogdb.allwise.cntr"), index=True)
     allwise_dist = Column(Float)
     ucac4_mpos = Column(BigInteger)
     ucac4_dist = Column(Float)
@@ -10082,30 +10601,47 @@ class SkyMapper_DR2(Base):
     ps1_dr1_dist = Column(Float)
     galex_guv_id = Column(BigInteger)
     galex_guv_dist = Column(Float)
-    gaia_dr2_id1 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaia_dr2_id1 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     gaia_dr2_dist1 = Column(Float)
-    gaia_dr2_id2 = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id'), index=True)
+    gaia_dr2_id2 = Column(ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True)
     gaia_dr2_dist2 = Column(Float)
 
-    allwise = relationship('Allwise')
-    gaia_dr2_source = relationship('GaiaDr2Source', primaryjoin='SkymapperDr2.gaia_dr2_id1 == GaiaDr2Source.source_id')
-    gaia_dr2_source1 = relationship('GaiaDr2Source', primaryjoin='SkymapperDr2.gaia_dr2_id2 == GaiaDr2Source.source_id')
+    allwise = relationship("Allwise")
+    gaia_dr2_source = relationship(
+        "GaiaDr2Source", primaryjoin="SkymapperDr2.gaia_dr2_id1 == GaiaDr2Source.source_id"
+    )
+    gaia_dr2_source1 = relationship(
+        "GaiaDr2Source", primaryjoin="SkymapperDr2.gaia_dr2_id2 == GaiaDr2Source.source_id"
+    )
 
 
 class TIC_v8(Base):
-    __tablename__ = 'tic_v8'
+    __tablename__ = "tic_v8"
 
     id = Column(BigInteger, primary_key=True)
     version = Column(String(8))
     hip = Column(Integer)
-    tyc = Column(ForeignKey('catalogdb.tycho2.designation', ondelete='CASCADE', onupdate='CASCADE'))
+    tyc = Column(
+        ForeignKey("catalogdb.tycho2.designation", ondelete="CASCADE", onupdate="CASCADE")
+    )
     ucac = Column(String(10))
     twomass = Column(String(20))
-    sdss = Column(ForeignKey('catalogdb.sdss_dr13_photoobj.objid', ondelete='CASCADE', onupdate='CASCADE'), index=True)
-    allwise = Column(ForeignKey('catalogdb.allwise.designation', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    sdss = Column(
+        ForeignKey("catalogdb.sdss_dr13_photoobj.objid", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
+    allwise = Column(
+        ForeignKey("catalogdb.allwise.designation", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     gaia = Column(String(20))
     apass = Column(String(30))
-    kic = Column(ForeignKey('catalogdb.kepler_input_10.kic_kepler_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    kic = Column(
+        ForeignKey(
+            "catalogdb.kepler_input_10.kic_kepler_id", ondelete="CASCADE", onupdate="CASCADE"
+        ),
+        index=True,
+    )
     objtype = Column(String(16), index=True)
     typesrc = Column(String(16))
     ra = Column(Float(53))
@@ -10220,25 +10756,31 @@ class TIC_v8(Base):
     raddflag = Column(Integer)
     wdflag = Column(Integer)
     objid = Column(BigInteger)
-    gaia_int = Column(ForeignKey('catalogdb.gaia_dr2_source.source_id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
-    twomass_psc = Column(ForeignKey('catalogdb.twomass_psc.designation', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    gaia_int = Column(
+        ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
+    twomass_psc = Column(
+        ForeignKey("catalogdb.twomass_psc.designation", ondelete="CASCADE", onupdate="CASCADE"),
+        index=True,
+    )
     twomass_psc_pts_key = Column(Integer, index=True)
-    tycho2_tycid = Column(ForeignKey('catalogdb.tycho2.tycid'), index=True)
+    tycho2_tycid = Column(ForeignKey("catalogdb.tycho2.tycid"), index=True)
     allwise_cntr = Column(BigInteger)
 
-    allwise1 = relationship('Allwise')
-    gaia_dr2_source = relationship('GaiaDr2Source')
-    kepler_input_10 = relationship('KeplerInput10')
-    sdss_dr13_photoobj = relationship('SdssDr13Photoobj')
-    twomass_psc1 = relationship('TwomassPsc')
-    tycho2 = relationship('Tycho2', primaryjoin='TicV8.tyc == Tycho2.designation')
-    tycho21 = relationship('Tycho2', primaryjoin='TicV8.tycho2_tycid == Tycho2.tycid')
+    allwise1 = relationship("Allwise")
+    gaia_dr2_source = relationship("GaiaDr2Source")
+    kepler_input_10 = relationship("KeplerInput10")
+    sdss_dr13_photoobj = relationship("SdssDr13Photoobj")
+    twomass_psc1 = relationship("TwomassPsc")
+    tycho2 = relationship("Tycho2", primaryjoin="TicV8.tyc == Tycho2.designation")
+    tycho21 = relationship("Tycho2", primaryjoin="TicV8.tycho2_tycid == Tycho2.tycid")
 
 
 class TESS_TOI(Base):
-    __tablename__ = 'tess_toi'
+    __tablename__ = "tess_toi"
 
-    ticid = Column(ForeignKey('catalogdb.tic_v8.id'), index=True)
+    ticid = Column(ForeignKey("catalogdb.tic_v8.id"), index=True)
     target_type = Column(String(8))
     toi = Column(String(32))
     tess_disposition = Column(String(2))
@@ -10246,13 +10788,17 @@ class TESS_TOI(Base):
     ctoi = Column(String(32))
     user_disposition = Column(String(2))
     num_sectors = Column(Float)
-    pk = Column(BigInteger, primary_key=True, server_default=text("nextval('\"catalogdb\".tess_toi_pk_seq'::regclass)"))
+    pk = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("nextval('\"catalogdb\".tess_toi_pk_seq'::regclass)"),
+    )
 
-    tic_v8 = relationship('TicV8')
+    tic_v8 = relationship("TicV8")
 
 
 class ToO_Target(Base):
-    __tablename__ = 'too_target'
+    __tablename__ = "too_target"
 
     too_id = Column(BigInteger, primary_key=True)
     fiber_type = Column(String(20))
@@ -10269,12 +10815,14 @@ class ToO_Target(Base):
     parallax = Column(Float)
     added_date = Column(DateTime)
 
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.gaia_dr3.source_id'), index=True)
-    gaia_dr3_source_id = Column(ForeignKey('catalogdb.twomass_pts_key.twomass_pts_key'), index=True)
+    gaia_dr3_source_id = Column(ForeignKey("catalogdb.gaia_dr3.source_id"), index=True)
+    gaia_dr3_source_id = Column(
+        ForeignKey("catalogdb.twomass_pts_key.twomass_pts_key"), index=True
+    )
 
 
 class ToO_Metadata(Base):
-    __tablename__ = 'too_metadata'
+    __tablename__ = "too_metadata"
 
     too_id = Column(BigInteger, primary_key=True)
     sky_brightness_mode = Column(String(20))
@@ -10300,8 +10848,9 @@ class ToO_Metadata(Base):
     observed = Column(Boolean)
     last_modified_date = Column(DateTime)
 
+
 class SDSS_ID_To_Catalog(Base):
-    __tablename__ = 'sdss_id_to_catalog'
+    __tablename__ = "sdss_id_to_catalog"
 
     pk = Column(Float)
     sdss_id = Column(Float)
@@ -10337,90 +10886,52 @@ class SDSS_ID_To_Catalog(Base):
     unwise__unwise_objid = Column(String(20))
 
     allstar_dr17_synspec_rev1__apstar_id = Column(
-        ForeignKey('catalogdb.allstar_dr17_synspec_rev1.apstar_id'),
-        index=True)
-    allwise__cntr = Column(
-        ForeignKey('catalogdb.allwise.cntr'),
-        index=True)
-    bhm_rm_v0__pk = Column(
-        ForeignKey('catalogdb.bhm_rm_v0.pk'),
-        index=True)
-    bhm_rm_v0_2__pk = Column(
-        ForeignKey('catalogdb.bhm_rm_v0_2.pk'),
-        index=True)
-    catwise__source_id = Column(
-        ForeignKey('catalogdb.catwise.source_id'),
-        index=True)
-    catwise2020__source_id = Column(
-        ForeignKey('catalogdb.catwise2020.source_id'),
-        index=True)
+        ForeignKey("catalogdb.allstar_dr17_synspec_rev1.apstar_id"), index=True
+    )
+    allwise__cntr = Column(ForeignKey("catalogdb.allwise.cntr"), index=True)
+    bhm_rm_v0__pk = Column(ForeignKey("catalogdb.bhm_rm_v0.pk"), index=True)
+    bhm_rm_v0_2__pk = Column(ForeignKey("catalogdb.bhm_rm_v0_2.pk"), index=True)
+    catwise__source_id = Column(ForeignKey("catalogdb.catwise.source_id"), index=True)
+    catwise2020__source_id = Column(ForeignKey("catalogdb.catwise2020.source_id"), index=True)
     gaia_dr2_source__source_id = Column(
-        ForeignKey('catalogdb.gaia_dr2_source.source_id'),
-        index=True)
+        ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
+    )
     gaia_dr3_source__source_id = Column(
-        ForeignKey('catalogdb.gaia_dr3_source.source_id'),
-        index=True)
-    glimpse__pk = Column(
-        ForeignKey('catalogdb.glimpse.pk'),
-        index=True)
-    guvcat__objid = Column(
-        ForeignKey('catalogdb.guvcat.objid'),
-        index=True)
+        ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
+    )
+    glimpse__pk = Column(ForeignKey("catalogdb.glimpse.pk"), index=True)
+    guvcat__objid = Column(ForeignKey("catalogdb.guvcat.objid"), index=True)
     legacy_survey_dr10__ls_id = Column(
-        ForeignKey('catalogdb.legacy_survey_dr10.ls_id'),
-        index=True)
-    legacy_survey_dr8__ls_id = Column(
-        ForeignKey('catalogdb.legacy_survey_dr8.ls_id'),
-        index=True)
-    mangatarget__mangaid = Column(
-        ForeignKey('catalogdb.mangatarget.mangaid'),
-        index=True)
+        ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
+    )
+    legacy_survey_dr8__ls_id = Column(ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True)
+    mangatarget__mangaid = Column(ForeignKey("catalogdb.mangatarget.mangaid"), index=True)
     marvels_dr11_star__starname = Column(
-        ForeignKey('catalogdb.marvels_dr11_star.starname'),
-        index=True)
-    marvels_dr12_star__pk = Column(
-        ForeignKey('catalogdb.marvels_dr12_star.pk'),
-        index=True)
+        ForeignKey("catalogdb.marvels_dr11_star.starname"), index=True
+    )
+    marvels_dr12_star__pk = Column(ForeignKey("catalogdb.marvels_dr12_star.pk"), index=True)
     mastar_goodstars__mangaid = Column(
-        ForeignKey('catalogdb.mastar_goodstars.mangaid'),
-        index=True)
-    panstarrs1__catid_objid = Column(
-        ForeignKey('catalogdb.panstarrs1.catid_objid'),
-        index=True)
-    ps1_g18__objid = Column(
-        ForeignKey('catalogdb.ps1_g18.objid'),
-        index=True)
+        ForeignKey("catalogdb.mastar_goodstars.mangaid"), index=True
+    )
+    panstarrs1__catid_objid = Column(ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True)
+    ps1_g18__objid = Column(ForeignKey("catalogdb.ps1_g18.objid"), index=True)
     sdss_dr13_photoobj__objid = Column(
-        ForeignKey('catalogdb.sdss_dr13_photoobj.objid'),
-        index=True)
-    sdss_dr17_specobj__specobjid = Column(
-        ForeignKey('sdss_dr17_specobj.specobjid'),
-        index=True)
+        ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True
+    )
+    sdss_dr17_specobj__specobjid = Column(ForeignKey("sdss_dr17_specobj.specobjid"), index=True)
     skymapper_dr1_1__object_id = Column(
-        ForeignKey('catalogdb.skymapper_dr1_1.object_id'),
-        index=True)
-    skymapper_dr2__object_id = Column(
-        ForeignKey('catalogdb.skymapper_dr2.object_id'),
-        index=True)
-    supercosmos__objid = Column(
-        ForeignKey('catalogdb.supercosmos.objid'),
-        index=True)
-    tic_v8__id = Column(
-        ForeignKey('catalogdb.tic_v8.id'),
-        index=True)
-    twomass_psc__pts_key = Column(
-        ForeignKey('catalogdb.twomass_psc.pts_key'),
-        index=True)
-    tycho2__designation = Column(
-        ForeignKey('catalogdb.tycho2.designation'),
-        index=True)
-    unwise__unwise_objid = Column(
-        ForeignKey('catalogdb.unwise.unwise_objid'),
-        index=True)
+        ForeignKey("catalogdb.skymapper_dr1_1.object_id"), index=True
+    )
+    skymapper_dr2__object_id = Column(ForeignKey("catalogdb.skymapper_dr2.object_id"), index=True)
+    supercosmos__objid = Column(ForeignKey("catalogdb.supercosmos.objid"), index=True)
+    tic_v8__id = Column(ForeignKey("catalogdb.tic_v8.id"), index=True)
+    twomass_psc__pts_key = Column(ForeignKey("catalogdb.twomass_psc.pts_key"), index=True)
+    tycho2__designation = Column(ForeignKey("catalogdb.tycho2.designation"), index=True)
+    unwise__unwise_objid = Column(ForeignKey("catalogdb.unwise.unwise_objid"), index=True)
 
 
 def define_relations():
-    """ leaving this empty as relations were autogenerated """
+    """leaving this empty as relations were autogenerated"""
     pass
 
 

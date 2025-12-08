@@ -8,9 +8,20 @@
 # Database: sdss5db
 # Peewee version: 3.13.2
 
-from peewee import (AutoField, BigIntegerField, BooleanField, CharField, DateField, DecimalField,
-                    DoubleField, FloatField, IntegerField,
-                    SmallIntegerField, TextField, DateTimeField)
+from peewee import (
+    AutoField,
+    BigIntegerField,
+    BooleanField,
+    CharField,
+    DateField,
+    DecimalField,
+    DoubleField,
+    FloatField,
+    IntegerField,
+    SmallIntegerField,
+    TextField,
+    DateTimeField,
+)
 from playhouse.postgres_ext import ArrayField
 from datetime import datetime
 
@@ -19,14 +30,12 @@ from . import database  # noqa
 
 
 class VizBase(BaseModel):
-
     class Meta:
-        schema = 'vizdb'
+        schema = "vizdb"
         database = database
 
 
 class SDSSidFlat(VizBase):
-
     sdss_id = BigIntegerField(null=False)
     catalogid = BigIntegerField(null=True)
     version_id = SmallIntegerField(null=True)
@@ -39,12 +48,11 @@ class SDSSidFlat(VizBase):
     rank = IntegerField(null=True)
 
     class Meta:
-        table_name = 'sdss_id_flat'
-        print_fields = ['sdss_id', 'catalogid', 'version_id', 'ra_sdss_id', 'dec_sdss_id']
+        table_name = "sdss_id_flat"
+        print_fields = ["sdss_id", "catalogid", "version_id", "ra_sdss_id", "dec_sdss_id"]
 
 
 class SDSSidStacked(VizBase):
-
     catalogid21 = BigIntegerField(null=True)
     catalogid25 = BigIntegerField(null=True)
     catalogid31 = BigIntegerField(null=True)
@@ -54,12 +62,11 @@ class SDSSidStacked(VizBase):
     last_updated = DateField(null=True)
 
     class Meta:
-        table_name = 'sdss_id_stacked'
-        print_fields = ['sdss_id', 'ra_sdss_id', 'dec_sdss_id']
+        table_name = "sdss_id_stacked"
+        print_fields = ["sdss_id", "ra_sdss_id", "dec_sdss_id"]
 
 
 class SDSSidToPipes(VizBase):
-
     pk = AutoField(primary_key=True)
     sdss_id = BigIntegerField(null=False)
     in_boss = BooleanField(null=False)
@@ -72,8 +79,8 @@ class SDSSidToPipes(VizBase):
     mjd = IntegerField(null=True)
 
     class Meta:
-        table_name = 'sdssid_to_pipes'
-        print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra', 'has_been_observed']
+        table_name = "sdssid_to_pipes"
+        print_fields = ["sdss_id", "in_boss", "in_apogee", "in_astra", "has_been_observed"]
 
 
 class DbMetadata(VizBase):
@@ -87,12 +94,11 @@ class DbMetadata(VizBase):
     sql_type = TextField(null=True)
 
     class Meta:
-        table_name = 'db_metadata'
-        print_fields = ['schema', 'table_name', 'column_name', 'display_name']
+        table_name = "db_metadata"
+        print_fields = ["schema", "table_name", "column_name", "display_name"]
 
 
 class Releases(VizBase):
-
     pk = AutoField()
     release = TextField(null=True)
     run2d = ArrayField(TextField, null=True)
@@ -111,11 +117,11 @@ class Releases(VizBase):
     mjd_cutoff_lco = IntegerField(null=False)
 
     class Meta:
-        table_name = 'releases'
-        print_fields = ['release']
+        table_name = "releases"
+        print_fields = ["release"]
+
 
 class Multiplex(VizBase):
-
     pk = AutoField()
     multiplex_id = TextField()
     releases_pk = IntegerField(null=True)
@@ -147,15 +153,12 @@ class Multiplex(VizBase):
     created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
 
-
     class Meta:
-        table_name = 'multiplex'
-        print_fields = ['multiplex_id']
-
+        table_name = "multiplex"
+        print_fields = ["multiplex_id"]
 
 
 class AllSpec(VizBase):
-
     pk = AutoField()
     allspec_id = TextField()
     multiplex_id = TextField()
@@ -200,11 +203,9 @@ class AllSpec(VizBase):
     created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
 
-
     class Meta:
-        table_name = 'allspec'
-        print_fields = ['allspec_id']
-
+        table_name = "allspec"
+        print_fields = ["allspec_id"]
 
 
 class Plate(VizBase):
@@ -345,9 +346,8 @@ class Plate(VizBase):
     load_version = IntegerField()
 
     class Meta:
-        table_name = 'plate'
-        print_fields = ['plate_id', 'tree_id', 'plate', 'mjd', 'survey', 'instrument']
-
+        table_name = "plate"
+        print_fields = ["plate_id", "tree_id", "plate", "mjd", "survey", "instrument"]
 
 
 class SpecObj(VizBase):
@@ -554,9 +554,9 @@ class SpecObj(VizBase):
     catalogid = BigIntegerField()
 
     class Meta:
-        table_name = 'specobj'
-        print_fields = ['specobj_id', 'tree_id']
-        #print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
+        table_name = "specobj"
+        print_fields = ["specobj_id", "tree_id"]
+        # print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
 
 
 class TargetFlags(VizBase):
@@ -574,5 +574,5 @@ class TargetFlags(VizBase):
     alt_name = TextField(null=True)
 
     class Meta:
-        table_name = 'semaphore_sdssc2b'
-        print_fields = ['label', 'bit', 'program', 'name', 'mapper', 'sdssc2bv']
+        table_name = "semaphore_sdssc2b"
+        print_fields = ["label", "bit", "program", "name", "mapper", "sdssc2bv"]

@@ -14,7 +14,6 @@ class ApogeeDRPDBmodel(BaseModel):
 
 
 class CalibrationStatus(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -22,7 +21,6 @@ class CalibrationStatus(ApogeeDRPDBmodel):
 
 
 class DailyStatus(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -30,7 +28,6 @@ class DailyStatus(ApogeeDRPDBmodel):
 
 
 class Exposure(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -38,7 +35,6 @@ class Exposure(ApogeeDRPDBmodel):
 
 
 class ExposureStatus(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -46,7 +42,6 @@ class ExposureStatus(ApogeeDRPDBmodel):
 
 
 class MasterCalibrationStatus(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -54,7 +49,6 @@ class MasterCalibrationStatus(ApogeeDRPDBmodel):
 
 
 class Plan(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -62,7 +56,6 @@ class Plan(ApogeeDRPDBmodel):
 
 
 class RvStatus(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -70,7 +63,6 @@ class RvStatus(ApogeeDRPDBmodel):
 
 
 class RvVisit(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -78,7 +70,6 @@ class RvVisit(ApogeeDRPDBmodel):
 
 
 class Star(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -91,7 +82,6 @@ class StarLatest(ApogeeDRPDBmodel):
 
 
 class Version(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:
@@ -99,7 +89,6 @@ class Version(ApogeeDRPDBmodel):
 
 
 class Visit(ApogeeDRPDBmodel):
-
     pk = IntegerField(primary_key=True)
 
     class Meta:

@@ -15,8 +15,15 @@ from peewee import DoubleField, FloatField
 from playhouse.reflection import PostgresqlMetadata, UnknownField
 
 
-__all__ = ('vacuum', 'vacuum_all', 'get_cluster_index', 'get_unclustered_tables',
-           'get_row_count', 'is_table_locked', 'get_database_columns')
+__all__ = (
+    "vacuum",
+    "vacuum_all",
+    "get_cluster_index",
+    "get_unclustered_tables",
+    "get_row_count",
+    "is_table_locked",
+    "get_database_columns",
+)
 
 
 def vacuum(database, table_name, analyze=True, verbose=False, schema=None):
@@ -38,7 +45,6 @@ def vacuum(database, table_name, analyze=True, verbose=False, schema=None):
     """
 
     def execute_sql(statement):
-
         tstart = time.time()
 
         # Change isolation level to allow executing commands such as VACUUM.
@@ -51,18 +57,21 @@ def vacuum(database, table_name, analyze=True, verbose=False, schema=None):
         tend = time.time()
         telapsed = tend - tstart
 
-        if 'VEBOSE' in statement:
-            print(f'Elapsed {telapsed:.1f} s')
+        if "VEBOSE" in statement:
+            print(f"Elapsed {telapsed:.1f} s")
 
         connection.set_isolation_level(original_isolation_level)
 
-    assert database.is_connection_usable(), 'connection is not usable.'
+    assert database.is_connection_usable(), "connection is not usable."
 
-    table_name = table_name if schema is None else schema + '.' + table_name
-    statement = ('VACUUM' +
-                 (' VEBOSE' if verbose else '') +
-                 (' ANALYZE' if analyze else '') +
-                 ' ' + table_name)
+    table_name = table_name if schema is None else schema + "." + table_name
+    statement = (
+        "VACUUM"
+        + (" VEBOSE" if verbose else "")
+        + (" ANALYZE" if analyze else "")
+        + " "
+        + table_name
+    )
 
     with database.atomic():
         execute_sql(statement)
@@ -85,11 +94,10 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
     """
 
     def execute_sql(statement):
-
-        if 'VEBOSE' in statement:
-            print(statement + ' ... ')
+        if "VEBOSE" in statement:
+            print(statement + " ... ")
         else:
-            sys.stdout.write(statement + ' ... ')
+            sys.stdout.write(statement + " ... ")
             sys.stdout.flush()
 
         tstart = time.time()
@@ -104,18 +112,17 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
         tend = time.time()
         telapsed = tend - tstart
 
-        if 'VEBOSE' in statement:
-            print(f'Elapsed {telapsed:.1f} s')
+        if "VEBOSE" in statement:
+            print(f"Elapsed {telapsed:.1f} s")
         else:
-            print(f'{telapsed:.1f} s')
+            print(f"{telapsed:.1f} s")
 
         connection.set_isolation_level(original_isolation_level)
 
-    assert database.is_connection_usable(), 'connection is not usable.'
+    assert database.is_connection_usable(), "connection is not usable."
 
     if schema is None:
-
-        statement = 'VACUUM' + (' VEBOSE' if verbose else '') + (' ANALYZE' if analyze else '')
+        statement = "VACUUM" + (" VEBOSE" if verbose else "") + (" ANALYZE" if analyze else "")
         with database.atomic():
             execute_sql(statement)
 
@@ -124,12 +131,14 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
     tables = database.get_tables(schema=schema)
 
     for table in sorted(tables):
-
-        table_name = table if schema is None else schema + '.' + table
-        statement = ('VACUUM' +
-                     (' VEBOSE' if verbose else '') +
-                     (' ANALYZE' if analyze else '') +
-                     ' ' + table_name)
+        table_name = table if schema is None else schema + "." + table
+        statement = (
+            "VACUUM"
+            + (" VEBOSE" if verbose else "")
+            + (" ANALYZE" if analyze else "")
+            + " "
+            + table_name
+        )
 
         with database.atomic():
             execute_sql(statement)
@@ -138,8 +147,8 @@ def vacuum_all(database, analyze=True, verbose=False, schema=None):
 def get_cluster_index(connection, table_name=None, schema=None):
     """Returns a tuple with the index on which a table has been clustered."""
 
-    table_name = table_name or '%%'
-    schema = schema or '%%'
+    table_name = table_name or "%%"
+    schema = schema or "%%"
 
     with connection.atomic():
         cursor = connection.execute_sql(f"""
@@ -163,7 +172,7 @@ def get_cluster_index(connection, table_name=None, schema=None):
 def get_unclustered_tables(connection, schema=None):
     """Lists tables not clustered."""
 
-    schema_like = schema or '%%'
+    schema_like = schema or "%%"
 
     with connection.atomic():
         table_names = connection.execute_sql(f"""
@@ -180,8 +189,7 @@ def get_unclustered_tables(connection, schema=None):
     if schema:
         clustered = [idx for idx in clustered if idx[1] == schema]
 
-    unclustered = [table for table in table_names
-                   if table not in list(zip(*clustered))[0]]
+    unclustered = [table for table in table_names if table not in list(zip(*clustered))[0]]
 
     return unclustered
 
@@ -205,25 +213,30 @@ def get_row_count(connection, table_name, schema=None, approximate=True):
 
     if approximate:
         if schema is None:
-            sql = ('SELECT reltuples AS approximate_row_count '
-                   f'FROM pg_class WHERE relname = {table_name!r};')
+            sql = (
+                "SELECT reltuples AS approximate_row_count "
+                f"FROM pg_class WHERE relname = {table_name!r};"
+            )
         else:
-            sql = ('SELECT reltuples AS approximate_row_count FROM pg_class '
-                   'JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace '
-                   f'WHERE relname = {table_name!r} AND pg_namespace.nspname = {schema!r};')
+            sql = (
+                "SELECT reltuples AS approximate_row_count FROM pg_class "
+                "JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace "
+                f"WHERE relname = {table_name!r} AND pg_namespace.nspname = {schema!r};"
+            )
     else:
         if schema is None:
-            sql = f'SELECT count(*) FROM {table_name};'
+            sql = f"SELECT count(*) FROM {table_name};"
         else:
-            sql = f'SELECT count(*) FROM {schema}.{table_name};'
+            sql = f"SELECT count(*) FROM {schema}.{table_name};"
 
     with connection.atomic():
-        count = connection.execute_sql(sql.format(table_name=table_name,
-                                                  schema=schema)).fetchall()
+        count = connection.execute_sql(sql.format(table_name=table_name, schema=schema)).fetchall()
 
     if len(count) == 0:
-        raise ValueError(f'failed retrieving the row count for table {table_name!r}'
-                         'Check the table name and schema.')
+        raise ValueError(
+            f"failed retrieving the row count for table {table_name!r}"
+            "Check the table name and schema."
+        )
 
     return count[0][0]
 
@@ -231,13 +244,15 @@ def get_row_count(connection, table_name, schema=None, approximate=True):
 def is_table_locked(connection, table_name, schema=None):
     """Returns the locks for a table or `None` if no lock is present."""
 
-    schema = schema or '%%'
+    schema = schema or "%%"
 
-    sql = ('SELECT mode FROM pg_locks JOIN pg_class '
-           'ON pg_class.oid = pg_locks.relation '
-           'JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace '
-           f'WHERE pg_class.relname = {table_name!r} '
-           f'AND pg_namespace.nspname LIKE {schema!r};')
+    sql = (
+        "SELECT mode FROM pg_locks JOIN pg_class "
+        "ON pg_class.oid = pg_locks.relation "
+        "JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace "
+        f"WHERE pg_class.relname = {table_name!r} "
+        f"AND pg_namespace.nspname LIKE {schema!r};"
+    )
 
     with connection.atomic():
         locks = connection.execute_sql(sql).fetchall()
@@ -273,11 +288,11 @@ def get_database_columns(database, schema=None):
     """
 
     metadata = {}
-    ColumnMetadata = collections.namedtuple('ColumnMetadata',
-                                            ('name', 'field_type',
-                                             'array_type', 'nullable'))
+    ColumnMetadata = collections.namedtuple(
+        "ColumnMetadata", ("name", "field_type", "array_type", "nullable")
+    )
 
-    schema = schema or 'public'
+    schema = schema or "public"
 
     # Get column type mapping.
     pg_metadata = PostgresqlMetadata(database)
@@ -288,21 +303,26 @@ def get_database_columns(database, schema=None):
     pg_metadata.array_types[1022] = DoubleField
 
     # Get the mapping of oid to relation (table)
-    relids = dict(database.execute_sql(
-        """SELECT c.oid, c.relname from pg_catalog.pg_class c
+    relids = dict(
+        database.execute_sql(
+            """SELECT c.oid, c.relname from pg_catalog.pg_class c
            JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
-           WHERE n.nspname = %s;""", (schema,)).fetchall())
+           WHERE n.nspname = %s;""",
+            (schema,),
+        ).fetchall()
+    )
 
     # Get columns and create a mapping of table_name to column
     # name and field type.
     attr_data = database.execute_sql(
-        'SELECT attname, attrelid, atttypid, attnotnull '
-        'FROM pg_catalog.pg_attribute a '
-        'JOIN pg_catalog.pg_class c ON a.attrelid = c.oid '
-        'JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid '
-        'WHERE n.nspname = %s AND attnum > %s AND attisdropped IS FALSE AND '
-        '      c.reltype > %s',
-        (schema, 0, 0)).fetchall()
+        "SELECT attname, attrelid, atttypid, attnotnull "
+        "FROM pg_catalog.pg_attribute a "
+        "JOIN pg_catalog.pg_class c ON a.attrelid = c.oid "
+        "JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid "
+        "WHERE n.nspname = %s AND attnum > %s AND attisdropped IS FALSE AND "
+        "      c.reltype > %s",
+        (schema, 0, 0),
+    ).fetchall()
 
     attrs_map = collections.defaultdict(list)
     for col_name, relid, typeid, not_null in attr_data:
@@ -310,8 +330,7 @@ def get_database_columns(database, schema=None):
         array_type = pg_metadata.array_types.get(typeid, False)
 
         null = not not_null
-        attrs_map[relids[relid]].append((col_name, field_type,
-                                         array_type, null))
+        attrs_map[relids[relid]].append((col_name, field_type, array_type, null))
 
     # Get primary keys. Do not use information_schema.table_constraints
     # because that requires the user to have write access to the table.
@@ -325,21 +344,19 @@ def get_database_columns(database, schema=None):
         ORDER BY conrelid::regclass::text, contype DESC;
     """
 
-    pks = database.execute_sql(constraint_query, ('pk', schema)).fetchall()
+    pks = database.execute_sql(constraint_query, ("pk", schema)).fetchall()
     pk_map = {}
 
-    pk_re = re.compile(r'PRIMARY KEY \((.+)\)')
+    pk_re = re.compile(r"PRIMARY KEY \((.+)\)")
 
     for table_name, cdef in pks:
-        cols = list(map(lambda x: x.strip(),
-                        pk_re.match(cdef).group(1).split(',')))
-        pk_map[table_name.replace(schema + '.', '')] = cols
+        cols = list(map(lambda x: x.strip(), pk_re.match(cdef).group(1).split(",")))
+        pk_map[table_name.replace(schema + ".", "")] = cols
 
     # Compile the information in the metadata dictionary.
     for table_name in attrs_map:
         metadata[table_name] = {}
-        metadata[table_name]['columns'] = [ColumnMetadata(*data)
-                                           for data in attrs_map[table_name]]
-        metadata[table_name]['pk'] = pk_map.get(table_name, None)
+        metadata[table_name]["columns"] = [ColumnMetadata(*data) for data in attrs_map[table_name]]
+        metadata[table_name]["pk"] = pk_map.get(table_name, None)
 
     return metadata

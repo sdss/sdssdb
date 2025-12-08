@@ -9,7 +9,7 @@
 todo: something to do
 """
 
-__author__ = 'Adrian Price-Whelan <adrn@nyu.edu>'
+__author__ = "Adrian Price-Whelan <adrn@nyu.edu>"
 
 import datetime
 import math
@@ -24,8 +24,8 @@ APOLONG = 105.8198305
 
 
 class Moon(object):
-    """
-    """
+    """ """
+
     ra = None
     dec = None
     datetimeObj = None
@@ -35,8 +35,7 @@ class Moon(object):
         self._set_position()
 
     def _set_position(self):
-        """ ~ a few arcminutes accuracy
-        """
+        """~ a few arcminutes accuracy"""
         l0 = 318.351648  # mean longitude
         P0 = 36.340410  # mean longitude of perigee
         N0 = 318.510107  # mean longitude of node
@@ -49,7 +48,8 @@ class Moon(object):
         sun = Sun(self.datetimeObj)
 
         jdJan0 = convert.datetime2jd(
-            datetime.datetime(self.datetimeObj.year, 1, 1, hour=0, minute=0, second=0))
+            datetime.datetime(self.datetimeObj.year, 1, 1, hour=0, minute=0, second=0)
+        )
         jd = convert.datetime2jd(self.datetimeObj)
 
         d = jd - jdJan0
@@ -91,7 +91,8 @@ class Moon(object):
 
         moonLongitude = arcTan + Nprime
         moonBeta = math.degrees(
-            math.asin(math.sin(math.radians(lprimeprime - Nprime)) * math.sin(math.radians(ii))))
+            math.asin(math.sin(math.radians(lprimeprime - Nprime)) * math.sin(math.radians(ii)))
+        )
 
         ra, dec = convert.eclipticLatLon2RADec(moonLongitude, moonBeta)
 
@@ -99,38 +100,35 @@ class Moon(object):
         self.dec = dec
 
     def illumination(self, datetimeObj=datetime.datetime.now()):
-        """
-        """
+        """ """
         fraction = 0.0
         return fraction
 
     def rise(self, datetimeObj=datetime.datetime.now()):
-        """
-        """
+        """ """
         return datetimeObj
 
     def set(self, datetimeObj=datetime.datetime.now()):
-        """
-        """
+        """ """
         return datetimeObj
 
 
 def lunskybright(alpha, rho, altmoon, alt):
-    """ From Skycalc: Evaluates predicted LUNAR part of sky brightness, in
-        V magnitudes per square arcsecond, following K. Krisciunas
-        and B. E. Schaeffer (1991) PASP 103, 1033.
+    """From Skycalc: Evaluates predicted LUNAR part of sky brightness, in
+    V magnitudes per square arcsecond, following K. Krisciunas
+    and B. E. Schaeffer (1991) PASP 103, 1033.
 
-        alpha = separation of sun and moon as seen from earth, in Degrees
-        rho = separation of moon and object, in Degrees
-        altmoon = altitude of moon above horizon, in Degrees
-        alt = altitude of object above horizon, in Degrees
+    alpha = separation of sun and moon as seen from earth, in Degrees
+    rho = separation of moon and object, in Degrees
+    altmoon = altitude of moon above horizon, in Degrees
+    alt = altitude of object above horizon, in Degrees
 
 
-        The original C code has the following extra parameters, taken here to be constants:
-        kzen = zenith extinction coefficient
-        moondist = distance to moon, in earth radii
+    The original C code has the following extra parameters, taken here to be constants:
+    kzen = zenith extinction coefficient
+    moondist = distance to moon, in earth radii
 
-        all are in decimal degrees. """
+    all are in decimal degrees."""
 
     if altmoon < 0.0:
         return 0.0
@@ -139,50 +137,51 @@ def lunskybright(alpha, rho, altmoon, alt):
     moondist = 60.27  # Earth radii
 
     rho_rad = radians(rho)
-    alpha = 180. - alpha
-    Zmoon = pi / 2. - radians(altmoon)
-    Z = pi / 2. - radians(alt)
+    alpha = 180.0 - alpha
+    Zmoon = pi / 2.0 - radians(altmoon)
+    Z = pi / 2.0 - radians(alt)
     moondist = moondist / (60.27)  # divide by mean distance
 
-    istar = -0.4 * (3.84 + 0.026 * fabs(alpha) + 4.0e-9 * alpha**4.)  # eqn 20
-    istar = (10.**istar) / moondist**2
+    istar = -0.4 * (3.84 + 0.026 * fabs(alpha) + 4.0e-9 * alpha**4.0)  # eqn 20
+    istar = (10.0**istar) / moondist**2
 
-    if fabs(alpha) < 7.:  # crude accounting for opposition effect
+    if fabs(alpha) < 7.0:  # crude accounting for opposition effect
         istar = istar * (1.35 - 0.05 * fabs(istar))
 
     # 35 per cent brighter at full, effect tapering linearly to
     #   zero at 7 degrees away from full. mentioned peripherally in
     #   Krisciunas and Scheafer, p. 1035.
-    fofrho = 229087. * (1.06 + cos(rho_rad)**2.)
+    fofrho = 229087.0 * (1.06 + cos(rho_rad) ** 2.0)
 
-    if fabs(rho) > 10.:
-        fofrho = fofrho + 10.**(6.15 - rho / 40.)  # eqn 21
-    elif (fabs(rho) > 0.25):
+    if fabs(rho) > 10.0:
+        fofrho = fofrho + 10.0 ** (6.15 - rho / 40.0)  # eqn 21
+    elif fabs(rho) > 0.25:
         fofrho = fofrho + 6.2e7 / rho**2  # eqn 19
     else:
         fofrho = fofrho + 9.9e8  # for 1/4 degree -- radius of moon!
 
-    Xzm = sqrt(1.0 - 0.96 * sin(Zmoon)**2)
+    Xzm = sqrt(1.0 - 0.96 * sin(Zmoon) ** 2)
 
-    if (Xzm != 0.):
-        Xzm = 1. / Xzm
+    if Xzm != 0.0:
+        Xzm = 1.0 / Xzm
     else:
-        Xzm = 10000.
+        Xzm = 10000.0
 
-    Xo = sqrt(1.0 - 0.96 * sin(Z)**2)
+    Xo = sqrt(1.0 - 0.96 * sin(Z) ** 2)
 
-    if (Xo != 0.):
-        Xo = 1. / Xo
+    if Xo != 0.0:
+        Xo = 1.0 / Xo
     else:
-        Xo = 10000.
+        Xo = 10000.0
 
-    Bmoon = fofrho * istar * (10.**(-0.4 * kzen * Xzm)) * (1. - 10.**
-                                                           (-0.4 * kzen * Xo))  # nanoLamberts
+    Bmoon = (
+        fofrho * istar * (10.0 ** (-0.4 * kzen * Xzm)) * (1.0 - 10.0 ** (-0.4 * kzen * Xo))
+    )  # nanoLamberts
 
-    if (Bmoon > 0.001):
+    if Bmoon > 0.001:
         return 22.50 - 1.08574 * log(Bmoon / 34.08)  # V mag per sq arcs-eqn 1
     else:
-        return 99.
+        return 99.0
 
 
 def mjdRADec2skyBright(mjd, ra, dec):
@@ -195,10 +194,10 @@ def mjdRADec2skyBright(mjd, ra, dec):
     sunRA, sunDec = sun.ra, sun.dec
 
     # alpha
-    moonSunAngle = geometry.subtends(sunRA, sunDec, moonRA, moonDec, units='DEGREES')
+    moonSunAngle = geometry.subtends(sunRA, sunDec, moonRA, moonDec, units="DEGREES")
 
     # rho
-    moonObjectAngle = geometry.subtends(moonRA, moonDec, ra, dec, units='DEGREES')
+    moonObjectAngle = geometry.subtends(moonRA, moonDec, ra, dec, units="DEGREES")
 
     moonAlt, moonAz = convert.raDec2AltAz(moonRA, moonDec, APOLAT, APOLONG, dtObj)
     objAlt, objAz = convert.raDec2AltAz(ra, dec, APOLAT, APOLONG, dtObj)
@@ -216,5 +215,5 @@ def main():
     print(moon.ra, moon.dec)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

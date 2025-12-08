@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: test_connection.py
 # Project: pwdbs
 # Author: Brian Cherinka
@@ -16,14 +16,14 @@ import sdssdb
 
 
 def assert_testdb(database):
-    assert database.dbname == 'test'
+    assert database.dbname == "test"
     assert database.connected is True
-    assert database.profile == 'local'
+    assert database.profile == "local"
     assert database.dbversion is None
 
 
 class TestPeeweeDatabaseConnection(object):
     def test_db_connected(self, database):
-        ''' test connection to testdb '''
+        """test connection to testdb"""
         assert_testdb(database)
         assert isinstance(database, sdssdb.connection.PeeweeDatabaseConnection)

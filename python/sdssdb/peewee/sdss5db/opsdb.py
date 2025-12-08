@@ -22,7 +22,7 @@ from peewee import (
     ManyToManyField,
     Select,
     TextField,
-    fn
+    fn,
 )
 from playhouse.postgres_ext import ArrayField, DateTimeTZField
 
@@ -36,62 +36,53 @@ FieldToPriorityDeferred = DeferredThroughModel()
 
 
 class OpsdbBase(BaseModel):
-
     class Meta:
         observatory = os.getenv("OBSERVATORY")
         if observatory == "APO":
-            schema = 'opsdb_apo'
+            schema = "opsdb_apo"
         else:
-            schema = 'opsdb_lco'
+            schema = "opsdb_lco"
         database = database
 
 
 class FieldPriority(OpsdbBase):
     pk = AutoField()
     label = TextField()
-    fields = ManyToManyField(targetdb.Field,
-                             through_model=FieldToPriorityDeferred,
-                             backref='priority')
+    fields = ManyToManyField(
+        targetdb.Field, through_model=FieldToPriorityDeferred, backref="priority"
+    )
 
     class Meta:
-        table_name = 'field_priority'
+        table_name = "field_priority"
 
 
 class FieldToPriority(OpsdbBase):
     pk = AutoField()
-    FieldPriority = ForeignKeyField(FieldPriority,
-                                    column_name='field_priority_pk',
-                                    field='pk')
-    field = ForeignKeyField(targetdb.Field,
-                            column_name='field_pk',
-                            field='pk')
+    FieldPriority = ForeignKeyField(FieldPriority, column_name="field_priority_pk", field="pk")
+    field = ForeignKeyField(targetdb.Field, column_name="field_pk", field="pk")
 
     class Meta:
-        table_name = 'field_to_priority'
+        table_name = "field_to_priority"
 
 
 class Configuration(OpsdbBase):
     configuration_id = AutoField()
-    design = ForeignKeyField(column_name='design_id',
-                             field='design_id',
-                             model=targetdb.Design)
+    design = ForeignKeyField(column_name="design_id", field="design_id", model=targetdb.Design)
     comment = TextField(null=True)
     temperature = TextField(null=True)
     epoch = DoubleField()
     calibration_version = TextField()
 
     class Meta:
-        table_name = 'configuration'
+        table_name = "configuration"
 
 
 class AssignmentToFocal(OpsdbBase):
     pk = AutoField()
-    assignment = ForeignKeyField(targetdb.Assignment,
-                                 column_name='assignment_pk',
-                                 field='pk')
-    configuration = ForeignKeyField(Configuration,
-                                    column_name='configuration_id',
-                                    field='configuration_id')
+    assignment = ForeignKeyField(targetdb.Assignment, column_name="assignment_pk", field="pk")
+    configuration = ForeignKeyField(
+        Configuration, column_name="configuration_id", field="configuration_id"
+    )
     xfocal = FloatField()
     yfocal = FloatField()
     positioner_id = IntegerField()
@@ -102,7 +93,7 @@ class AssignmentToFocal(OpsdbBase):
     replaced = BooleanField()
 
     class Meta:
-        table_name = 'assignment_to_focal'
+        table_name = "assignment_to_focal"
 
 
 class CompletionStatus(OpsdbBase):
@@ -110,22 +101,18 @@ class CompletionStatus(OpsdbBase):
     label = TextField()
 
     class Meta:
-        table_name = 'completion_status'
+        table_name = "completion_status"
 
 
 class DesignToStatus(OpsdbBase):
     pk = AutoField()
-    design = ForeignKeyField(targetdb.Design,
-                             column_name='design_id',
-                             field='design_id')
-    status = ForeignKeyField(CompletionStatus,
-                             column_name='completion_status_pk',
-                             field='pk')
+    design = ForeignKeyField(targetdb.Design, column_name="design_id", field="design_id")
+    status = ForeignKeyField(CompletionStatus, column_name="completion_status_pk", field="pk")
     mjd = FloatField()
     manual = BooleanField(default=False)
 
     class Meta:
-        table_name = 'design_to_status'
+        table_name = "design_to_status"
 
 
 class Survey(OpsdbBase):
@@ -133,7 +120,7 @@ class Survey(OpsdbBase):
     label = TextField()
 
     class Meta:
-        table_name = 'survey'
+        table_name = "survey"
 
 
 class ExposureFlavor(OpsdbBase):
@@ -141,63 +128,57 @@ class ExposureFlavor(OpsdbBase):
     pk = AutoField()
 
     class Meta:
-        table_name = 'exposure_flavor'
+        table_name = "exposure_flavor"
 
 
 class Camera(OpsdbBase):
-    instrument = ForeignKeyField(column_name='instrument_pk',
-                                 field='pk',
-                                 model=targetdb.Instrument)
+    instrument = ForeignKeyField(
+        column_name="instrument_pk", field="pk", model=targetdb.Instrument
+    )
     label = TextField()
     pk = AutoField()
 
     class Meta:
-        table_name = 'camera'
+        table_name = "camera"
 
 
 class Exposure(OpsdbBase):
     pk = AutoField()
-    configuration = ForeignKeyField(column_name='configuration_id',
-                                    field='configuration_id',
-                                    model=Configuration)
-    survey = ForeignKeyField(column_name='survey_pk',
-                             field='pk',
-                             model=Survey)
+    configuration = ForeignKeyField(
+        column_name="configuration_id", field="configuration_id", model=Configuration
+    )
+    survey = ForeignKeyField(column_name="survey_pk", field="pk", model=Survey)
     exposure_no = BigIntegerField()
     comment = TextField(null=True)
     start_time = DateTimeField(default=datetime.datetime.now())
     exposure_time = FloatField()
-    exposure_flavor = ForeignKeyField(column_name='exposure_flavor_pk',
-                                      field='pk',
-                                      model=ExposureFlavor)
+    exposure_flavor = ForeignKeyField(
+        column_name="exposure_flavor_pk", field="pk", model=ExposureFlavor
+    )
 
     class Meta:
-        table_name = 'exposure'
+        table_name = "exposure"
 
 
 class CameraFrame(OpsdbBase):
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               field='pk',
-                               model=Exposure,
-                               backref="CameraFrames")
-    camera = ForeignKeyField(column_name='camera_pk',
-                             field='pk',
-                             model=Camera)
+    exposure = ForeignKeyField(
+        column_name="exposure_pk", field="pk", model=Exposure, backref="CameraFrames"
+    )
+    camera = ForeignKeyField(column_name="camera_pk", field="pk", model=Camera)
     ql_sn2 = FloatField()
     sn2 = FloatField()
     comment = TextField(null=True)
     pk = AutoField()
 
     class Meta:
-        table_name = 'camera_frame'
+        table_name = "camera_frame"
 
 
 class Quicklook(OpsdbBase):
     pk = AutoField()
-    exposure_pk = ForeignKeyField(column_name='exposure_pk',
-                                  field='pk',
-                                  model=Exposure,
-                                  backref="Quicklook")
+    exposure_pk = ForeignKeyField(
+        column_name="exposure_pk", field="pk", model=Exposure, backref="Quicklook"
+    )
     snr_standard = FloatField()
     logsnr_hmag_coef = ArrayField(field_class=FloatField)
     readnum = IntegerField()
@@ -209,15 +190,14 @@ class Quicklook(OpsdbBase):
     zeropt = FloatField()
 
     class Meta:
-        table_name = 'quicklook'
+        table_name = "quicklook"
 
 
 class Quickred(OpsdbBase):
     pk = AutoField()
-    exposure_pk = ForeignKeyField(column_name='exposure_pk',
-                                  field='pk',
-                                  model=Exposure,
-                                  backref="Quickred")
+    exposure_pk = ForeignKeyField(
+        column_name="exposure_pk", field="pk", model=Exposure, backref="Quickred"
+    )
     snr_standard = FloatField()
     logsnr_hmag_coef = ArrayField(field_class=FloatField)
     dither_pixpos = FloatField()
@@ -230,13 +210,11 @@ class Quickred(OpsdbBase):
     dither_named = TextField()
 
     class Meta:
-        table_name = 'quickred'
+        table_name = "quickred"
 
 
 class Queue(OpsdbBase):
-    design = ForeignKeyField(column_name='design_id',
-                             field='design_id',
-                             model=targetdb.Design)
+    design = ForeignKeyField(column_name="design_id", field="design_id", model=targetdb.Design)
     position = IntegerField()
     pk = AutoField()
     mjd_plan = FloatField()
@@ -258,7 +236,7 @@ class Queue(OpsdbBase):
     @classmethod
     def insertInQueue(cls, design, position, exp_length=None, mjd=None):
         """exp_length in days
-           this is the amount added to every mjd_plan AFTER position
+        this is the amount added to every mjd_plan AFTER position
         """
         if exp_length is None:
             # set a default, ideally correct value passed as kwarg
@@ -267,10 +245,7 @@ class Queue(OpsdbBase):
             exp_length = 18 / 60 / 24
         if isinstance(design, targetdb.Design):
             design = design.design_id
-        Select(columns=[fn.insertInQueue(design,
-                                         position,
-                                         exp_length,
-                                         mjd)]).execute(database)
+        Select(columns=[fn.insertInQueue(design, position, exp_length, mjd)]).execute(database)
 
     @classmethod
     def flushQueue(cls):
@@ -280,8 +255,8 @@ class Queue(OpsdbBase):
     @classmethod
     def rm(cls, field, returnPositions=False):
         """Remove a field from the queue.
-           Only fields are removed; removing a single design would
-           violate cadence so that functionality is not offered.
+        Only fields are removed; removing a single design would
+        violate cadence so that functionality is not offered.
         """
 
         if isinstance(field, targetdb.Field):
@@ -289,25 +264,21 @@ class Queue(OpsdbBase):
         else:
             field_pk = field
 
-        rm_designs = cls.select()\
-                        .join(targetdb.Design,
-                              on=(targetdb.Design.design_id == cls.design_id))\
-                        .join(targetdb.DesignToField)\
-                        .join(targetdb.Field)\
-                        .where(targetdb.Field.pk == field_pk,
-                               cls.position > 0)
+        rm_designs = (
+            cls.select()
+            .join(targetdb.Design, on=(targetdb.Design.design_id == cls.design_id))
+            .join(targetdb.DesignToField)
+            .join(targetdb.Field)
+            .where(targetdb.Field.pk == field_pk, cls.position > 0)
+        )
 
         positions = [d.position for d in rm_designs]
         pos = max(positions)
 
         # delete returns number of records deleted
-        num_rm = cls.delete() \
-                    .where(cls.position << positions) \
-                    .execute()
+        num_rm = cls.delete().where(cls.position << positions).execute()
 
-        cls.update(position=cls.position - num_rm) \
-           .where(cls.position > pos) \
-           .execute()
+        cls.update(position=cls.position - num_rm).where(cls.position > pos).execute()
 
         if returnPositions:
             return positions
@@ -321,29 +292,27 @@ class PriorityVersion(OpsdbBase):
     label = TextField()
 
     class Meta:
-        table_name = 'priority_version'
+        table_name = "priority_version"
 
 
 class BasePriority(OpsdbBase):
     pk = AutoField()
     priority = IntegerField()
-    field = ForeignKeyField(targetdb.Field,
-                            column_name='field_pk',
-                            field='pk')
-    version = ForeignKeyField(PriorityVersion,
-                              column_name='version_pk',
-                              field='pk')
+    field = ForeignKeyField(targetdb.Field, column_name="field_pk", field="pk")
+    version = ForeignKeyField(PriorityVersion, column_name="version_pk", field="pk")
 
     class Meta:
-        table_name = 'base_priority'
+        table_name = "base_priority"
 
 
 class Overhead(OpsdbBase):
     pk = AutoField()
-    configuration = ForeignKeyField(Configuration,
-                                    column_name='configuration_id',
-                                    field='configuration_id',
-                                    backref='overheads')
+    configuration = ForeignKeyField(
+        Configuration,
+        column_name="configuration_id",
+        field="configuration_id",
+        backref="overheads",
+    )
     macro_id = IntegerField()
     macro = TextField()
     stage = TextField()
@@ -353,7 +322,7 @@ class Overhead(OpsdbBase):
     success = BooleanField()
 
     class Meta:
-        table_name = 'overhead'
+        table_name = "overhead"
 
 
 class PredSnr(OpsdbBase):
@@ -361,12 +330,10 @@ class PredSnr(OpsdbBase):
     robodamus_version = TextField()
     model_id = TextField()
     pred_time = DateTimeField()
-    camera_pk = ForeignKeyField(Camera,
-                                column_name='camera_pk',
-                                field='pk')
-    design_mode_label = ForeignKeyField(column_name='design_mode_label',
-                                        field='label',
-                                        model=targetdb.DesignMode)
+    camera_pk = ForeignKeyField(Camera, column_name="camera_pk", field="pk")
+    design_mode_label = ForeignKeyField(
+        column_name="design_mode_label", field="label", model=targetdb.DesignMode
+    )
     pred_type = TextField()
     pred_value = FloatField()
     pred_flag = IntegerField()
@@ -375,14 +342,12 @@ class PredSnr(OpsdbBase):
     gfa_date_obs = DateTimeField()
 
     class Meta:
-        table_name = 'pred_snr'
+        table_name = "pred_snr"
 
 
 class PredSnrPar(OpsdbBase):
     pk = AutoField()
-    pred_snr_pk = ForeignKeyField(PredSnr,
-                                  column_name='pred_snr_pk',
-                                  field='pk')
+    pred_snr_pk = ForeignKeyField(PredSnr, column_name="pred_snr_pk", field="pk")
     label = TextField()
     datatype = TextField()
     value_f = DoubleField()
@@ -390,18 +355,16 @@ class PredSnrPar(OpsdbBase):
     value_s = TextField()
 
     class Meta:
-        table_name = 'pred_snr_par'
+        table_name = "pred_snr_par"
 
 
 class LstHist(OpsdbBase):
     pk = AutoField()
-    field = ForeignKeyField(targetdb.Field,
-                            column_name='field_pk',
-                            field='pk')
+    field = ForeignKeyField(targetdb.Field, column_name="field_pk", field="pk")
     lst_counts = ArrayField(field_class=IntegerField, null=True)
 
     class Meta:
-        table_name = 'lst_hist'
+        table_name = "lst_hist"
 
 
 FieldToPriorityDeferred.set_model(FieldToPriority)

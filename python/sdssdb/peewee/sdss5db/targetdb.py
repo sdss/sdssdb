@@ -11,10 +11,23 @@ import os
 
 import numpy as np
 
-from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
-                    DateTimeField, DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField, ManyToManyField,
-                    SmallIntegerField, TextField, UUIDField, fn)
+from peewee import (
+    SQL,
+    AutoField,
+    BigIntegerField,
+    BooleanField,
+    DateTimeField,
+    DeferredThroughModel,
+    DoubleField,
+    FloatField,
+    ForeignKeyField,
+    IntegerField,
+    ManyToManyField,
+    SmallIntegerField,
+    TextField,
+    UUIDField,
+    fn,
+)
 from playhouse.postgres_ext import ArrayField
 
 from .. import BaseModel
@@ -22,9 +35,8 @@ from . import catalogdb, database  # noqa
 
 
 class TargetdbBase(BaseModel):
-
     class Meta:
-        schema = 'targetdb'
+        schema = "targetdb"
         database = database
 
 
@@ -41,7 +53,7 @@ class Version(TargetdbBase):
     tag = TextField()
 
     class Meta:
-        table_name = 'version'
+        table_name = "version"
 
 
 class ObsMode(TargetdbBase):
@@ -53,7 +65,7 @@ class ObsMode(TargetdbBase):
     max_airmass_lco = FloatField(null=True)
 
     class Meta:
-        table_name = 'obsmode'
+        table_name = "obsmode"
 
 
 class Cadence(TargetdbBase):
@@ -73,7 +85,7 @@ class Cadence(TargetdbBase):
     obsmode_pk = ArrayField(field_class=TextField, null=True)
 
     class Meta:
-        table_name = 'cadence'
+        table_name = "cadence"
 
 
 class Observatory(TargetdbBase):
@@ -81,7 +93,7 @@ class Observatory(TargetdbBase):
     pk = AutoField()
 
     class Meta:
-        table_name = 'observatory'
+        table_name = "observatory"
 
 
 class Overplan(TargetdbBase):
@@ -90,35 +102,25 @@ class Overplan(TargetdbBase):
     plan = TextField()
 
     class Meta:
-        table_name = 'overplan'
+        table_name = "overplan"
 
 
 class Field(TargetdbBase):
-
     pk = AutoField()
     field_id = IntegerField(null=False)
     racen = DoubleField(null=False)
     deccen = DoubleField(null=False)
     position_angle = FloatField(null=True)
     slots_exposures = ArrayField(field_class=IntegerField, null=True)
-    cadence = ForeignKeyField(column_name='cadence_pk',
-                              field='pk',
-                              model=Cadence,
-                              null=True)
-    observatory = ForeignKeyField(column_name='observatory_pk',
-                                  field='pk',
-                                  model=Observatory,
-                                  null=True)
-    version = ForeignKeyField(column_name='version_pk',
-                              field='pk',
-                              model=Version)
-    overplan = ForeignKeyField(column_name='overplan_pk',
-                              field='pk',
-                              model=Overplan,
-                              null=True)
+    cadence = ForeignKeyField(column_name="cadence_pk", field="pk", model=Cadence, null=True)
+    observatory = ForeignKeyField(
+        column_name="observatory_pk", field="pk", model=Observatory, null=True
+    )
+    version = ForeignKeyField(column_name="version_pk", field="pk", model=Version)
+    overplan = ForeignKeyField(column_name="overplan_pk", field="pk", model=Overplan, null=True)
 
     class Meta:
-        table_name = 'field'
+        table_name = "field"
 
 
 class FieldReservation(TargetdbBase):
@@ -128,8 +130,7 @@ class FieldReservation(TargetdbBase):
     def requestNext(cls, N=1, commit=True, commissioning=False):
         """inserts N new ids after max id and returns list of new ids"""
         if commissioning:
-            next_id = cls.select(fn.MAX(cls.field_id))\
-                         .where(cls.field_id < 99999).scalar() + 1
+            next_id = cls.select(fn.MAX(cls.field_id)).where(cls.field_id < 99999).scalar() + 1
         else:
             next_id = cls.select(fn.MAX(cls.field_id)).scalar() + 1
         ids = [next_id + i for i in range(N)]
@@ -139,7 +140,7 @@ class FieldReservation(TargetdbBase):
         return ids
 
     class Meta:
-        table_name = 'field_reservation'
+        table_name = "field_reservation"
 
 
 class DesignMode(TargetdbBase):
@@ -165,7 +166,7 @@ class DesignMode(TargetdbBase):
     apogee_sky_neighbors_targets = ArrayField(field_class=DoubleField, null=True)
 
     class Meta:
-        table_name = 'design_mode'
+        table_name = "design_mode"
 
 
 class Design(TargetdbBase):
@@ -176,39 +177,40 @@ class Design(TargetdbBase):
     #                         backref="designs")
     # exposure = IntegerField(null=True)
     design_id = AutoField()
-    design_mode = ForeignKeyField(column_name='design_mode_label',
-                                  field='label',
-                                  model=DesignMode,
-                                  null=True)
+    design_mode = ForeignKeyField(
+        column_name="design_mode_label", field="label", model=DesignMode, null=True
+    )
     mugatu_version = TextField()
     run_on = DateTimeField(default=datetime.datetime.now())
     assignment_hash = UUIDField()
-    version = ForeignKeyField(column_name='design_version_pk',
-                              field='pk',
-                              model=Version)
+    version = ForeignKeyField(column_name="design_version_pk", field="pk", model=Version)
     # field_exposure = IntegerField()
 
     class Meta:
-        table_name = 'design'
+        table_name = "design"
 
     @property
     def field(self):
         """Gets the Field entry for a design."""
 
-        rs_version = os.environ.get('RS_VERSION', None)
+        rs_version = os.environ.get("RS_VERSION", None)
         if rs_version is None:
             raise ValueError("$RS_VERSION not defined.")
 
-        fields = (Field.select()
-                  .join(DesignToField)
-                  .join(Design)
-                  .where(Design.design_id == self.design_id))
+        fields = (
+            Field.select()
+            .join(DesignToField)
+            .join(Design)
+            .where(Design.design_id == self.design_id)
+        )
 
         # Fields that match the current RS version.
-        fields_version = (fields.switch(Field)
-                          .join(Version)
-                          .where(Version.plan == rs_version)
-                          .where(Version.robostrategy == True))  # noqa
+        fields_version = (
+            fields.switch(Field)
+            .join(Version)
+            .where(Version.plan == rs_version)
+            .where(Version.robostrategy == True)  # noqa
+        )  # noqa
 
         n_fields = fields_version.count()
         if n_fields > 1:
@@ -226,25 +228,24 @@ class Design(TargetdbBase):
 
 class DesignToField(TargetdbBase):
     pk = AutoField()
-    design = ForeignKeyField(model=Design,
-                             column_name='design_id',
-                             field='design_id',)
-    field = ForeignKeyField(column_name='field_pk',
-                            field='pk',
-                            model=Field)
+    design = ForeignKeyField(
+        model=Design,
+        column_name="design_id",
+        field="design_id",
+    )
+    field = ForeignKeyField(column_name="field_pk", field="pk", model=Field)
     exposure = IntegerField()
     field_exposure = IntegerField()
 
     class Meta:
-        table_name = 'design_to_field'
+        table_name = "design_to_field"
 
 
 class DesignModeCheckResults(TargetdbBase):
     pk = IntegerField(null=False, primary_key=True)
-    design = ForeignKeyField(Design,
-                             column_name='design_id',
-                             field='design_id',
-                             backref="design_mode_check_resultss")
+    design = ForeignKeyField(
+        Design, column_name="design_id", field="design_id", backref="design_mode_check_resultss"
+    )
     # whether or not design passes recent
     # validation and should be observed
     design_pass = BooleanField(null=False)
@@ -283,7 +284,7 @@ class DesignModeCheckResults(TargetdbBase):
     apogee_trace_diff_targets_pass = BooleanField(null=True)
 
     class Meta:
-        table_name = 'design_mode_check_results'
+        table_name = "design_mode_check_results"
 
 
 class Instrument(TargetdbBase):
@@ -292,20 +293,18 @@ class Instrument(TargetdbBase):
     default_lambda_eff = FloatField()
 
     class Meta:
-        table_name = 'instrument'
+        table_name = "instrument"
 
 
 class Hole(TargetdbBase):
     pk = IntegerField(null=False, primary_key=True)
-    observatory = ForeignKeyField(column_name='observatory_pk',
-                                  field='pk',
-                                  model=Observatory)
+    observatory = ForeignKeyField(column_name="observatory_pk", field="pk", model=Observatory)
     row = SmallIntegerField()
     column = SmallIntegerField()
     holeid = TextField()
 
     class Meta:
-        table_name = 'hole'
+        table_name = "hole"
 
 
 class Category(TargetdbBase):
@@ -313,7 +312,7 @@ class Category(TargetdbBase):
     pk = AutoField()
 
     class Meta:
-        table_name = 'category'
+        table_name = "category"
 
 
 class Mapper(TargetdbBase):
@@ -321,26 +320,20 @@ class Mapper(TargetdbBase):
     pk = AutoField()
 
     class Meta:
-        table_name = 'mapper'
+        table_name = "mapper"
 
 
 class Carton(TargetdbBase):
-    category = ForeignKeyField(column_name='category_pk',
-                               field='pk',
-                               model=Category)
+    category = ForeignKeyField(column_name="category_pk", field="pk", model=Category)
     carton = TextField()
     pk = AutoField()
-    mapper = ForeignKeyField(column_name='mapper_pk',
-                             field='pk',
-                             model=Mapper)
+    mapper = ForeignKeyField(column_name="mapper_pk", field="pk", model=Mapper)
     program = TextField()
-    version = ForeignKeyField(column_name='version_pk',
-                              field='pk',
-                              model=Version)
+    version = ForeignKeyField(column_name="version_pk", field="pk", model=Version)
     run_on = DateTimeField()
 
     class Meta:
-        table_name = 'carton'
+        table_name = "carton"
 
 
 class Target(TargetdbBase):
@@ -363,55 +356,41 @@ class Target(TargetdbBase):
     parallax = FloatField(null=True)
 
     class Meta:
-        table_name = 'target'
+        table_name = "target"
 
 
 class CartonToTarget(TargetdbBase):
-    cadence = ForeignKeyField(Cadence,
-                              column_name='cadence_pk',
-                              field='pk')
+    cadence = ForeignKeyField(Cadence, column_name="cadence_pk", field="pk")
     lambda_eff = FloatField(null=True)
     pk = AutoField()
-    carton = ForeignKeyField(Carton,
-                             column_name='carton_pk',
-                             field='pk')
-    target = ForeignKeyField(Target,
-                             column_name='target_pk',
-                             field='pk',
-                             on_delete='CASCADE')
+    carton = ForeignKeyField(Carton, column_name="carton_pk", field="pk")
+    target = ForeignKeyField(Target, column_name="target_pk", field="pk", on_delete="CASCADE")
     priority = IntegerField()
     value = FloatField()
-    instrument = ForeignKeyField(Instrument,
-                                 column_name='instrument_pk',
-                                 field='pk')
+    instrument = ForeignKeyField(Instrument, column_name="instrument_pk", field="pk")
     delta_ra = DoubleField()
     delta_dec = DoubleField()
     can_offset = BooleanField(default=False)
     inertial = BooleanField()
 
     class Meta:
-        table_name = 'carton_to_target'
+        table_name = "carton_to_target"
 
 
 class Assignment(TargetdbBase):
-    design = ForeignKeyField(Design,
-                             column_name='design_id',
-                             field='design_id',
-                             backref="assignments")
-    instrument = ForeignKeyField(Instrument,
-                                 column_name='instrument_pk',
-                                 field='pk')
+    design = ForeignKeyField(
+        Design, column_name="design_id", field="design_id", backref="assignments"
+    )
+    instrument = ForeignKeyField(Instrument, column_name="instrument_pk", field="pk")
     pk = AutoField()
-    hole = ForeignKeyField(Hole,
-                           column_name='hole_pk',
-                           field='pk')
-    carton_to_target = ForeignKeyField(CartonToTarget,
-                                       column_name='carton_to_target_pk',
-                                       field='pk')
+    hole = ForeignKeyField(Hole, column_name="hole_pk", field="pk")
+    carton_to_target = ForeignKeyField(
+        CartonToTarget, column_name="carton_to_target_pk", field="pk"
+    )
 
     class Meta:
-        table_name = 'assignment'
-        constraints = [SQL('UNIQUE(holeid, observatory_pk)')]
+        table_name = "assignment"
+        constraints = [SQL("UNIQUE(holeid, observatory_pk)")]
 
 
 class Magnitude(TargetdbBase):
@@ -427,13 +406,12 @@ class Magnitude(TargetdbBase):
     j = FloatField(null=True)
     k = FloatField(null=True)
     optical_prov = TextField(null=True)
-    carton_to_target = ForeignKeyField(column_name='carton_to_target_pk',
-                                       field='pk',
-                                       model=CartonToTarget,
-                                       backref='magnitudes')
+    carton_to_target = ForeignKeyField(
+        column_name="carton_to_target_pk", field="pk", model=CartonToTarget, backref="magnitudes"
+    )
 
     class Meta:
-        table_name = 'magnitude'
+        table_name = "magnitude"
 
 
 class RevisedMagnitude(TargetdbBase):
@@ -458,62 +436,44 @@ class RevisedMagnitude(TargetdbBase):
     j = FloatField(null=True)
     k = FloatField(null=True)
     optical_prov = TextField(null=True)
-    carton_to_target = ForeignKeyField(column_name='carton_to_target_pk',
-                                       field='pk',
-                                       model=CartonToTarget,
-                                       backref='revised_magnitudes')
+    carton_to_target = ForeignKeyField(
+        column_name="carton_to_target_pk",
+        field="pk",
+        model=CartonToTarget,
+        backref="revised_magnitudes",
+    )
 
     class Meta:
-        table_name = 'revised_magnitude'
+        table_name = "revised_magnitude"
 
 
 class AssignedTargets(TargetdbBase):
     program = TextField()
-    carton_pk = ForeignKeyField(column_name="carton_pk",
-                                field="pk",
-                                model=Carton)
-    c2t_pk = ForeignKeyField(column_name="c2t_pk",
-                             field="pk",
-                             model=CartonToTarget)
-    target_pk = ForeignKeyField(column_name="target_pk",
-                                field="pk",
-                                model=Target)
-    assignment_pk = ForeignKeyField(column_name="assignment_pk",
-                                    field="pk",
-                                    model=Assignment)
-    design_id = ForeignKeyField(column_name="design_id",
-                                field="design_id",
-                                model=Design)
+    carton_pk = ForeignKeyField(column_name="carton_pk", field="pk", model=Carton)
+    c2t_pk = ForeignKeyField(column_name="c2t_pk", field="pk", model=CartonToTarget)
+    target_pk = ForeignKeyField(column_name="target_pk", field="pk", model=Target)
+    assignment_pk = ForeignKeyField(column_name="assignment_pk", field="pk", model=Assignment)
+    design_id = ForeignKeyField(column_name="design_id", field="design_id", model=Design)
     field_id = IntegerField()
-    field_pk = ForeignKeyField(column_name="field_pk",
-                               field="pk",
-                               model=Field)
-    observatory_pk = ForeignKeyField(column_name="observatory_pk",
-                                     field="pk",
-                                     model=Observatory)
-    version_pk = ForeignKeyField(column_name="version_pk",
-                                 field="pk",
-                                 model=Version)
-    cadence_pk = ForeignKeyField(column_name="cadence_pk",
-                                 field="pk",
-                                 model=Cadence)
+    field_pk = ForeignKeyField(column_name="field_pk", field="pk", model=Field)
+    observatory_pk = ForeignKeyField(column_name="observatory_pk", field="pk", model=Observatory)
+    version_pk = ForeignKeyField(column_name="version_pk", field="pk", model=Version)
+    cadence_pk = ForeignKeyField(column_name="cadence_pk", field="pk", model=Cadence)
     mjd = FloatField()
     completion_status_pk = IntegerField()
 
     class Meta:
-        table_name = 'assigned_targets'
+        table_name = "assigned_targets"
 
 
 class AssignmentStatus(TargetdbBase):
     pk = AutoField()
-    assignment_pk = ForeignKeyField(column_name="assignment_pk",
-                                    field="pk",
-                                    model=Assignment)
+    assignment_pk = ForeignKeyField(column_name="assignment_pk", field="pk", model=Assignment)
     mjd = FloatField()
     status = IntegerField()
 
     class Meta:
-        table_name = 'assignment_status'
+        table_name = "assignment_status"
 
 
 class TargetingGeneration(TargetdbBase):
@@ -521,43 +481,36 @@ class TargetingGeneration(TargetdbBase):
     label = TextField()
     first_release = TextField()
 
-    cartons = ManyToManyField(Carton, backref='generations',
-                              through_model=TargetingGenerationToCartonDeferred)
+    cartons = ManyToManyField(
+        Carton, backref="generations", through_model=TargetingGenerationToCartonDeferred
+    )
 
     class Meta:
-        table_name = 'targeting_generation'
+        table_name = "targeting_generation"
 
 
 class TargetingGenerationToCarton(TargetdbBase):
     pk = AutoField()
-    targeting_generation_pk = ForeignKeyField(column_name="generation_pk",
-                                              field="pk",
-                                              model=TargetingGeneration,
-                                              backref='+')
-    carton_pk = ForeignKeyField(column_name="carton_pk",
-                                field="pk",
-                                model=Carton,
-                                backref='+')
+    targeting_generation_pk = ForeignKeyField(
+        column_name="generation_pk", field="pk", model=TargetingGeneration, backref="+"
+    )
+    carton_pk = ForeignKeyField(column_name="carton_pk", field="pk", model=Carton, backref="+")
     rs_stage = TextField()
     rs_active = BooleanField()
 
     class Meta:
-        table_name = 'targeting_generation_to_carton'
+        table_name = "targeting_generation_to_carton"
 
 
 class TargetingGenerationToVersion(TargetdbBase):
     pk = AutoField()
-    targeting_generation_pk = ForeignKeyField(column_name="generation_pk",
-                                              field="pk",
-                                              model=TargetingGeneration,
-                                              backref='+')
-    version_pk = ForeignKeyField(column_name="version_pk",
-                                 field="pk",
-                                 model=Version,
-                                 backref='+')
+    targeting_generation_pk = ForeignKeyField(
+        column_name="generation_pk", field="pk", model=TargetingGeneration, backref="+"
+    )
+    version_pk = ForeignKeyField(column_name="version_pk", field="pk", model=Version, backref="+")
 
     class Meta:
-        table_name = 'targeting_generation_to_version'
+        table_name = "targeting_generation_to_version"
 
 
 # AssignmentDeferred.set_model(Assignment)

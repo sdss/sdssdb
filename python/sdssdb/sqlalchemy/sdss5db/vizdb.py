@@ -7,30 +7,47 @@
 
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Date, Double, Integer,
-                        Numeric, SmallInteger, Text, text, DateTime)
+from sqlalchemy import (
+    ARRAY,
+    BigInteger,
+    Boolean,
+    Column,
+    Float,
+    Date,
+    Double,
+    Integer,
+    Numeric,
+    SmallInteger,
+    Text,
+    text,
+    DateTime,
+)
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 
-SCHEMA = 'vizdb'
+SCHEMA = "vizdb"
 
 
 class Base(AbstractConcreteBase, SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
-    _relations = 'define_relations'
+    _relations = "define_relations"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class DbMetadata(Base):
-    __tablename__ = 'db_metadata'
-    print_fields = ['schema', 'table_name', 'column_name', 'display_name']
+    __tablename__ = "db_metadata"
+    print_fields = ["schema", "table_name", "column_name", "display_name"]
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('vizdb.db_metadata_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('vizdb.db_metadata_pk_seq'::regclass)"),
+    )
     schema = Column(Text)
     table_name = Column(Text)
     column_name = Column(Text)
@@ -41,56 +58,55 @@ class DbMetadata(Base):
 
 
 class SDSSidFlat(Base):
-    __tablename__ = 'sdss_id_flat'
-    print_fields = ['sdss_id', 'catalogid', 'version_id', 'ra_sdss_id', 'dec_sdss_id']
+    __tablename__ = "sdss_id_flat"
+    print_fields = ["sdss_id", "catalogid", "version_id", "ra_sdss_id", "dec_sdss_id"]
 
-    sdss_id = Column('sdss_id', BigInteger)
-    catalogid = Column('catalogid', BigInteger)
-    version_id = Column('version_id', SmallInteger)
-    ra_sdss_id = Column('ra_sdss_id', Float(53))
-    dec_sdss_id = Column('dec_sdss_id', Float(53))
-    n_associated = Column('n_associated', SmallInteger)
-    pk = Column('pk', BigInteger, primary_key=True)
-    ra_catalogid = Column('ra_catalogid', Float(53))
-    dec_catalogid = Column('dec_catalogid', Float(53))
-    rank = Column('rank', Integer)
-
+    sdss_id = Column("sdss_id", BigInteger)
+    catalogid = Column("catalogid", BigInteger)
+    version_id = Column("version_id", SmallInteger)
+    ra_sdss_id = Column("ra_sdss_id", Float(53))
+    dec_sdss_id = Column("dec_sdss_id", Float(53))
+    n_associated = Column("n_associated", SmallInteger)
+    pk = Column("pk", BigInteger, primary_key=True)
+    ra_catalogid = Column("ra_catalogid", Float(53))
+    dec_catalogid = Column("dec_catalogid", Float(53))
+    rank = Column("rank", Integer)
 
 
 class SDSSidStacked(Base):
-    __tablename__ = 'sdss_id_stacked'
-    print_fields = ['sdss_id', 'ra_sdss_id', 'dec_sdss_id']
+    __tablename__ = "sdss_id_stacked"
+    print_fields = ["sdss_id", "ra_sdss_id", "dec_sdss_id"]
 
-    catalogid21 = Column('catalogid21', BigInteger)
-    catalogid25 = Column('catalogid25', BigInteger)
-    catalogid31 = Column('catalogid31', BigInteger)
-    ra_sdss_id = Column('ra_sdss_id', Float(53))
-    dec_sdss_id = Column('dec_sdss_id', Float(53))
-    sdss_id = Column('sdss_id', BigInteger, primary_key=True)
-    last_updated = Column('last_updated', Date)
+    catalogid21 = Column("catalogid21", BigInteger)
+    catalogid25 = Column("catalogid25", BigInteger)
+    catalogid31 = Column("catalogid31", BigInteger)
+    ra_sdss_id = Column("ra_sdss_id", Float(53))
+    dec_sdss_id = Column("dec_sdss_id", Float(53))
+    sdss_id = Column("sdss_id", BigInteger, primary_key=True)
+    last_updated = Column("last_updated", Date)
 
 
 class SDSSidToPipes(Base):
-    __tablename__ = 'sdssid_to_pipes'
-    print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra', 'has_been_observed']
+    __tablename__ = "sdssid_to_pipes"
+    print_fields = ["sdss_id", "in_boss", "in_apogee", "in_astra", "has_been_observed"]
 
-    pk = Column('pk', BigInteger, primary_key=True)
-    sdss_id = Column('sdss_id', BigInteger)
-    in_boss = Column('in_boss', Boolean)
-    in_apogee = Column('in_apogee', Boolean)
-    in_bvs = Column('in_bvs', Boolean)
-    in_astra = Column('in_astra', Boolean)
-    has_been_observed = Column('has_been_observed', Boolean)
-    release = Column('release', Text)
-    obs = Column('obs', Text)
-    mjd = Column('mjd', Integer)
+    pk = Column("pk", BigInteger, primary_key=True)
+    sdss_id = Column("sdss_id", BigInteger)
+    in_boss = Column("in_boss", Boolean)
+    in_apogee = Column("in_apogee", Boolean)
+    in_bvs = Column("in_bvs", Boolean)
+    in_astra = Column("in_astra", Boolean)
+    has_been_observed = Column("has_been_observed", Boolean)
+    release = Column("release", Text)
+    obs = Column("obs", Text)
+    mjd = Column("mjd", Integer)
 
 
 class Releases(Base):
-    __tablename__ = 'releases'
-    print_fields = ['release']
+    __tablename__ = "releases"
+    print_fields = ["release"]
 
-    pk = Column('pk', BigInteger, primary_key=True)
+    pk = Column("pk", BigInteger, primary_key=True)
     release = Column(Text)
     run2d = Column(ARRAY(Text()))
     run1d = Column(ARRAY(Text()))
@@ -107,109 +123,110 @@ class Releases(Base):
     mjd_cutoff_apo = Column(Integer)
     mjd_cutoff_lco = Column(Integer)
 
+
 class AllSpec(Base):
-    __tablename__ = 'allspec'
-    print_fields = ['allspec_id']
-    pk = Column('pk', Integer, primary_key=True)
-    allspec_id = Column('allspec_id', Text)
-    multiplex_id = Column('multiplex_id', Text)
-    releases_pk = Column('releases_pk', Integer)
-    sdss_phase = Column('sdss_phase', SmallInteger)
-    observatory = Column('observatory', Text)
-    instrument = Column('instrument', Text)
-    sdss_id = Column('sdss_id', BigInteger)
-    catalogid = Column('catalogid', BigInteger)
-    fiberid = Column('fiberid', Integer)
-    ifudsgn = Column('ifudsgn', Integer)
-    plate = Column('plate', Integer)
-    fps_field = Column('fps_field', Integer)
-    plate_or_fps_field = Column('plate_or_fps_field', Integer)
-    mjd = Column('mjd', Integer)
-    run2d = Column('run2d', Text)
-    run1d = Column('run1d', Text)
-    coadd = Column('coadd', Text)
-    apred_vers = Column('apred_vers', Text)
-    drpver = Column('drpver', Text)
-    version = Column('coadd', Text)
-    programname = Column('programname', Text)
-    survey = Column('survey', Text)
-    sas_file = Column('sas_file', Text)
-    cas_url = Column('cas_url', Text)
-    sas_url = Column('sas_url', Text)
-    ra = Column('ra', Double)
-    dec = Column('dec', Double)
-    ra_hms = Column('ra_hms', Text)
-    dec_dms = Column('dec_dms', Text)
-    healpix = Column('healpix', Integer)
-    healpixgrp = Column('healpixgrp', SmallInteger)
-    apogee_id = Column('apogee_id', Text)
-    apogee_field = Column('apogee_field', Text)
-    telescope = Column('telescope', Text)
-    file_spec = Column('file_spec', Text)
-    apstar_id = Column('apstar_id', Text)
-    visit_id = Column('visit_id', Text)
-    has_mwmstar = Column('has_mwmstar', Boolean)
-    mangaid = Column('mangaid', Text)
-    specobjid = Column('specobjid', Numeric(29))
-    created = Column('created', DateTime)
-    modified = Column('modified', DateTime)
+    __tablename__ = "allspec"
+    print_fields = ["allspec_id"]
+    pk = Column("pk", Integer, primary_key=True)
+    allspec_id = Column("allspec_id", Text)
+    multiplex_id = Column("multiplex_id", Text)
+    releases_pk = Column("releases_pk", Integer)
+    sdss_phase = Column("sdss_phase", SmallInteger)
+    observatory = Column("observatory", Text)
+    instrument = Column("instrument", Text)
+    sdss_id = Column("sdss_id", BigInteger)
+    catalogid = Column("catalogid", BigInteger)
+    fiberid = Column("fiberid", Integer)
+    ifudsgn = Column("ifudsgn", Integer)
+    plate = Column("plate", Integer)
+    fps_field = Column("fps_field", Integer)
+    plate_or_fps_field = Column("plate_or_fps_field", Integer)
+    mjd = Column("mjd", Integer)
+    run2d = Column("run2d", Text)
+    run1d = Column("run1d", Text)
+    coadd = Column("coadd", Text)
+    apred_vers = Column("apred_vers", Text)
+    drpver = Column("drpver", Text)
+    version = Column("coadd", Text)
+    programname = Column("programname", Text)
+    survey = Column("survey", Text)
+    sas_file = Column("sas_file", Text)
+    cas_url = Column("cas_url", Text)
+    sas_url = Column("sas_url", Text)
+    ra = Column("ra", Double)
+    dec = Column("dec", Double)
+    ra_hms = Column("ra_hms", Text)
+    dec_dms = Column("dec_dms", Text)
+    healpix = Column("healpix", Integer)
+    healpixgrp = Column("healpixgrp", SmallInteger)
+    apogee_id = Column("apogee_id", Text)
+    apogee_field = Column("apogee_field", Text)
+    telescope = Column("telescope", Text)
+    file_spec = Column("file_spec", Text)
+    apstar_id = Column("apstar_id", Text)
+    visit_id = Column("visit_id", Text)
+    has_mwmstar = Column("has_mwmstar", Boolean)
+    mangaid = Column("mangaid", Text)
+    specobjid = Column("specobjid", Numeric(29))
+    created = Column("created", DateTime)
+    modified = Column("modified", DateTime)
 
 
 class Multiplex(Base):
-    __tablename__ = 'multiplex'
-    print_fields = ['mutliplex_id']
-    pk = Column('pk', Integer, primary_key=True)
-    multiplex_id = Column('multiplex_id', Text)
-    releases_pk = Column('releases_pk', Integer)
-    design_id = Column('design_id', Integer)
-    sdss_phase = Column('sdss_phase', SmallInteger)
-    observatory = Column('observatory', Text)
-    telescope = Column('telescope', Text)
-    instrument = Column('instrument', Text)
-    plate = Column('plate', Integer)
-    fps_field = Column('fps_field', Integer)
-    plate_or_fps_field = Column('plate_or_fps_field', Integer)
-    mjd = Column('field', Integer)
-    run2d = Column('run2d', Text)
-    run1d = Column('run1d', Text)
-    apred_vers = Column('apred_vers', Text)
-    drpver = Column('drpver', Text)
-    racen = Column('racen', Double)
-    deccen = Column('deccen', Double)
-    position_angle = Column('position_angle', Double)
-    racen_hms = Column('racen_hms', Text)
-    deccen_dms = Column('deccen_dms', Text)
-    healpix = Column('sdss_phase', Integer)
-    healpixgrp = Column('sdss_phase', SmallInteger)
-    quality = Column('quality', Text)
-    programname = Column('programname', Text)
-    survey = Column('survey', Text)
-    cas_url = Column('cas_url', Text)
-    sas_url = Column('sas_url', Text)
-    created = Column('created', DateTime)
-    modified = Column('modified', DateTime)
+    __tablename__ = "multiplex"
+    print_fields = ["mutliplex_id"]
+    pk = Column("pk", Integer, primary_key=True)
+    multiplex_id = Column("multiplex_id", Text)
+    releases_pk = Column("releases_pk", Integer)
+    design_id = Column("design_id", Integer)
+    sdss_phase = Column("sdss_phase", SmallInteger)
+    observatory = Column("observatory", Text)
+    telescope = Column("telescope", Text)
+    instrument = Column("instrument", Text)
+    plate = Column("plate", Integer)
+    fps_field = Column("fps_field", Integer)
+    plate_or_fps_field = Column("plate_or_fps_field", Integer)
+    mjd = Column("field", Integer)
+    run2d = Column("run2d", Text)
+    run1d = Column("run1d", Text)
+    apred_vers = Column("apred_vers", Text)
+    drpver = Column("drpver", Text)
+    racen = Column("racen", Double)
+    deccen = Column("deccen", Double)
+    position_angle = Column("position_angle", Double)
+    racen_hms = Column("racen_hms", Text)
+    deccen_dms = Column("deccen_dms", Text)
+    healpix = Column("sdss_phase", Integer)
+    healpixgrp = Column("sdss_phase", SmallInteger)
+    quality = Column("quality", Text)
+    programname = Column("programname", Text)
+    survey = Column("survey", Text)
+    cas_url = Column("cas_url", Text)
+    sas_url = Column("sas_url", Text)
+    created = Column("created", DateTime)
+    modified = Column("modified", DateTime)
 
 
 class TargetFlags(Base):
-    __tablename__ = 'semaphore_sdssc2b'
-    print_fields = ['label', 'bit', 'program', 'name', 'mapper', 'sdssc2bv']
+    __tablename__ = "semaphore_sdssc2b"
+    print_fields = ["label", "bit", "program", "name", "mapper", "sdssc2bv"]
 
-    id = Column('id', Integer, primary_key=True)
-    label = Column('label', Text)
-    bit = Column('bit', Integer)
-    carton_pk = Column('carton_pk', Integer)
-    sdssc2bv = Column('sdssc2bv', Integer)
-    program = Column('program', Text)
-    version = Column('version', Text)
-    v1 = Column('v1', Float)
-    name = Column('name', Text)
-    mapper = Column('mapper', Text)
-    alt_program = Column('alt_program', Text)
-    alt_name = Column('alt_name', Text)
+    id = Column("id", Integer, primary_key=True)
+    label = Column("label", Text)
+    bit = Column("bit", Integer)
+    carton_pk = Column("carton_pk", Integer)
+    sdssc2bv = Column("sdssc2bv", Integer)
+    program = Column("program", Text)
+    version = Column("version", Text)
+    v1 = Column("v1", Float)
+    name = Column("name", Text)
+    mapper = Column("mapper", Text)
+    alt_program = Column("alt_program", Text)
+    alt_name = Column("alt_name", Text)
 
 
 def define_relations():
-    """ leaving this empty as relations were autogenerated """
+    """leaving this empty as relations were autogenerated"""
     pass
 
 
