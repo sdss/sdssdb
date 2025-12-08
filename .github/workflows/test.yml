@@ -39,3 +39,9 @@ jobs:
           uv run pytest -s
         env:
           PGSERVICE: ${{ steps.postgres.outputs.service-name }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
