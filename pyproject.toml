@@ -7,15 +7,14 @@ authors = [
 ]
 description = "SDSS product for database management"
 keywords = ["astronomy", "software", "database"]
-license = {text = "BSD 3-Clause License"}
-requires-python = ">=3.6"
+license = {text = "BSD 3-Clause License", file = "LICENSE.md"}
+requires-python = ">=3.9,<4.0"
 dependencies = [
     "pgpasslib>=1.1.0",
-    "psycopg2-binary>=2.7.7",
+    "psycopg2-binary>=2.9.11",
     "peewee>=3.17.6",
-    "sqlalchemy>=1.3.6",
-    'sdsstools>=1.7.0; python_version >= "3.8"',
-    'sdsstools>=0.1.0,<1.0.0; python_version < "3.8"',
+    "sqlalchemy>=1.3.6,<2.0.0",
+    "sdsstools>=1.9.6",
     "numpy>=1.18.2",
     "six>=1.12.0",
 ]
@@ -29,104 +28,53 @@ Documentation = "https://sdssdb.readthedocs.org"
 file = "README.md"
 content-type = "text/markdown"
 
-[project.optional-dependencies]
-all = [
-    "psycopg[binary]",
+[dependency-groups]
+extras = [
     "progressbar2>=3.46.1",
     "pydot>=1.4.1",
-    "astropy>=4.0.0",
-    "pandas>=1.0.0",
+    "astropy>=5.0.0",
+    "pandas>=2.0.0",
     "inflect>=4.1.0",
     "h5py>=3.8.0",
-    "sdssdb[dev]",
-    "sdssdb[docs]"
 ]
 dev = [
     "pytest>=5.2",
     "pytest-cov>=2.4.0",
     "pytest-sugar>=0.8.0",
-    "ipython>=7.13.0",
+    "ipython>=8.0.0",
     "ipdb>=0.13.2",
     "pytest-postgresql>=2.2.1,<6",
     "factory_boy>=2.12.0",
     "pytest-factoryboy>=2.0.3",
-    "astropy>=4.0.0",
-    "pydot>=1.4.2",
     "pyyaml>=5.1",
-    "ruff>=0.6.3",
-    "flake8>=7.1.1",
-    "flake8-pyproject>=1.2.3"
+    "ruff>=0.14.8",
 ]
 docs = [
     "Sphinx>=7.0.0",
-    "sphinx_bootstrap_theme>=0.4.12",
     "releases>=2.0.0",
+    "furo>=2021.9.22",
+    "myst-parser>=2.0.0",
+    "nox>=2021.6.12",
+    "sphinx-autobuild>=2021.3.14",
+    "sphinx-copybutton>=0.4.0",
+    "sphinx-click>=3.0.1",
+    "sphinx-jsonschema>=1.16.11",
+    "sphinx-autodoc-typehints>=1.23.2",
+    "doc8>=0.8.0",
+    "rstcheck>=3.3.1"
 ]
 
-[build-system]
-requires = ["setuptools>=61.2"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-zip-safe = false
-package-dir = {"" = "python"}
-license-files = ["LICENSE.md"]
-include-package-data = false
-
-[tool.setuptools.packages.find]
-where = ["python"]
-exclude = ["*.tests"]
-namespaces = false
-
-[tool.setuptools.package-data]
-sdssdb = ["etc/*"]
-
-[tool.isort]
-line_length = 79
-sections = [
-    "FUTURE",
-    "STDLIB",
-    "THIRDPARTY",
-    "SQLA",
-    "PEEWEE",
-    "SDSS",
-    "FIRSTPARTY",
-    "LOCALFOLDER",
-]
-default_section = "THIRDPARTY"
-known_first_party = ["sdssdb"]
-known_sqla = ["sqlalchemy"]
-known_peewee = [
-    "peewee",
-    "playhouse",
-]
-known_sdss = ["sdsstools"]
-balanced_wrapping = true
-include_trailing_comma = false
-lines_after_imports = 2
-use_parentheses = true
-
-[tool.flake8]
-ignore = [
-    "H101",
-    "E722",
-    "W503",
-    "W504",
-    "W505",
-    "E116",
-    "E114"
-]
-max-line-length = 99
-exclude = [
-    "python/sdssdb/sqlalchemy/operationsdb/tools",
-    "python/sdssdb/sqlalchemy/archive",
-    "python/sdssdb/sqlalchemy/mangadb"
-]
+[tool.uv]
+package = true
+default-groups = ["dev"]
 
 [tool.ruff]
 line-length = 99
 target-version = 'py312'
 exclude = ["typings/"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F403", "E402", "F401"]
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
@@ -147,8 +95,28 @@ sdss = ["sdsstools"]
 sqla = ["sqlalchemy"]
 peewee = ["peewee", "playhouse"]
 
-[tool.ruff.format]
-preview = true
+[tool.pytest.ini_options]
+addopts = "--cov sdssdb --cov-report xml --cov-report html --cov-report term -W ignore"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 
 [tool.coverage.run]
 branch = true
+include = ["python/sdssdb/*"]
+omit = [
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING:",
+    "# pragma: no cover"
+]
+
+[build-system]
+requires = ["uv_build>=0.9.15,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "sdssdb"
+module-root = "python"
