@@ -37,6 +37,7 @@ class BossVersion(Base):
     is_epoch = Column(Boolean)
     is_custom = Column(Boolean)
     custom_name = Column(String)
+    sdssc2bv = Column(Integer)
     created = Column(DateTime(True))
     modified = Column(DateTime(True), server_default=text("now()"))
 
@@ -155,6 +156,8 @@ class BossField(Base):
     qualcomments = Column(String)
     moon_frac = Column(Float)
     field_cadence = Column(String)
+    design_vers = Column(String)
+    design_mode = Column(String)
     created = Column(DateTime(True))
     modified = Column(DateTime(True), server_default=text("now()"))
 
@@ -287,6 +290,8 @@ class BossSpectrum(Base):
     xcsao_elogg = Column(Float)
     xcsao_feh = Column(Float)
     xcsao_efeh = Column(Float)
+    too = Column(Boolean)
+    too_id = Column(BigInteger)
     created = Column(DateTime(True))
     modified = Column(DateTime(True), server_default=text("now()"))
 
@@ -320,6 +325,7 @@ class BossSpectrumLine(Base):
     linedof = Column(Float)
     linechi2 = Column(Float)
     created = Column(DateTime(True))
+    obs = Column(String)
     modified = Column(DateTime(True), server_default=text("now()"))
 
     boss_version = relationship('BossVersion')
