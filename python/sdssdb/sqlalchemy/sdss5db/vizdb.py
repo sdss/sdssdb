@@ -191,22 +191,6 @@ class Multiplex(Base):
     created = Column('created', DateTime)
     modified = Column('modified', DateTime)
 
-class Semaphore_SDSSC2B(Base)
-    __tablename__ = 'semaphore_sdssc2b'
-    print_fields = ['label','bit','program','name','mapper','alt_program','alt_name']
-    id = Column(Integer, primary_key=True)
-    label = Column(Text)
-    bit = Column(Integer)
-    carton_pk = Column(Integer)
-    sdssc2bv = Column(Integer)
-    program = Column(Text)
-    version = Column(Text)
-    v1 = Float(53)
-    name = Column(Text)
-    mapper = Column(Text)
-    alt_program = Column(Text)
-    alt_name = Column(Text)
-
 
 class TargetFlags(Base):
     __tablename__ = 'semaphore_sdssc2b'
