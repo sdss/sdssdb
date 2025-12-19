@@ -109,6 +109,7 @@ class Releases(VizBase):
     public = BooleanField(null=False)
     mjd_cutoff_apo = IntegerField(null=False)
     mjd_cutoff_lco = IntegerField(null=False)
+    sdssc2bv = IntegerField(null=False)
 
     class Meta:
         table_name = 'releases'
@@ -555,3 +556,21 @@ class SpecObj(VizBase):
         table_name = 'specobj'
         print_fields = ['specobj_id', 'tree_id']
         #print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
+
+class Semaphore_SDSSC2B(VizBase)
+    id = AutoField()
+    label = TextField()
+    bit = IntegerField()
+    carton_pk = IntegerField()
+    sdssc2bv = IntegerField()
+    program = TextField()
+    version = TextField()
+    v1 = FloatField()
+    name = TextField()
+    mapper = TextField()
+    alt_program = TextField()
+    alt_name = TextField()
+    
+    class Meta:
+        table_name = 'semaphore_sdssc2b'
+        print_fields = ['label','bit','program','name','mapper','alt_program','alt_name']

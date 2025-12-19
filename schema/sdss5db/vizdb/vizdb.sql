@@ -201,3 +201,22 @@ GRANT USAGE ON SCHEMA vizdb TO sdss;
 GRANT SELECT ON vizdb.sdss_id_stacked TO sdss;
 GRANT SELECT ON vizdb.sdss_id_flat TO sdss;
 GRANT SELECT ON vizdb.sdssid_to_pipes TO sdss;
+
+
+
+CREATE TABLE vizdb.semaphore_sdssc2b (
+    id SERIAL NOT NULL PRIMARY KEY,
+    label VARCHAR,
+    bit integer,
+    carton_pk integer,
+    sdssc2bv integer,
+    program VARCHAR,
+    version VARCHAR,
+    v1 real,
+    name VARCHAR,
+    mapper VARCHAR,
+    alt_program VARCHAR,
+    alt_name VARCHAR
+);
+ALTER TABLE vizdb.semaphore_sdssc2bv OWNER TO sdss;
+ALTER INDEX vizdb.semaphore_sdssc2bv_pkey SET TABLESPACE nvme;

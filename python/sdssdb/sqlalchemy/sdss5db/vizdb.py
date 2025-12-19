@@ -106,6 +106,8 @@ class Releases(Base):
     public = Column(Boolean)
     mjd_cutoff_apo = Column(Integer)
     mjd_cutoff_lco = Column(Integer)
+    sdssc2bv = Column(Integer)
+
 
 class AllSpec(Base):
     __tablename__ = 'allspec'
@@ -186,6 +188,22 @@ class Multiplex(Base):
     sas_url = Column('sas_url', Text)
     created = Column('created', DateTime)
     modified = Column('modified', DateTime)
+
+class Semaphore_SDSSC2B(Base)
+    __tablename__ = 'semaphore_sdssc2b'
+    print_fields = ['label','bit','program','name','mapper','alt_program','alt_name']
+    id = Column(Integer, primary_key=True)
+    label = Column(Text)
+    bit = Column(Integer)
+    carton_pk = Column(Integer)
+    sdssc2bv = Column(Integer)
+    program = Column(Text)
+    version = Column(Text)
+    v1 = Float(53)
+    name = Column(Text)
+    mapper = Column(Text)
+    alt_program = Column(Text)
+    alt_name = Column(Text)
 
 
 
