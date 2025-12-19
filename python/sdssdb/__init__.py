@@ -3,12 +3,16 @@
 import os
 import warnings
 
-from sqlalchemy.exc import MovedIn20Warning
-
 from sdsstools import get_config, get_logger, get_package_version
 
 
-warnings.filterwarnings("ignore", category=MovedIn20Warning)
+try:
+    from sqlalchemy.exc import MovedIn20Warning
+
+    warnings.filterwarnings("ignore", category=MovedIn20Warning)
+except ModuleNotFoundError:  # We are using SQLA > 2.0
+    pass
+
 
 warnings.filterwarnings(
     "ignore",

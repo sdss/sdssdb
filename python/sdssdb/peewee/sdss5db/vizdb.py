@@ -123,6 +123,7 @@ class Multiplex(VizBase):
     design_id = IntegerField()
     sdss_phase = SmallIntegerField(null=True)
     observatory = TextField(null=True)
+    telescope = TextField(null=True)
     instrument = TextField(null=True)
     plate = IntegerField(null=True)
     fps_field = IntegerField(null=True)
@@ -195,6 +196,7 @@ class AllSpec(VizBase):
     apstar_id = TextField(null=True)
     visit_id = TextField(null=True)
     mangaid = TextField(null=True)
+    has_mwmstar = BooleanField(null=False)
     specobjid = DecimalField(29)
     created = DateTimeField(default=datetime.now)
     modified = DateTimeField()
@@ -557,20 +559,21 @@ class SpecObj(VizBase):
         print_fields = ['specobj_id', 'tree_id']
         #print_fields = ['specobj_id', 'tree_id', 'plate', 'fiberid', 'mjd', 'field', 'catalogid']
 
-class Semaphore_SDSSC2B(VizBase)
+
+class TargetFlags(VizBase):
     id = AutoField()
-    label = TextField()
-    bit = IntegerField()
-    carton_pk = IntegerField()
-    sdssc2bv = IntegerField()
-    program = TextField()
-    version = TextField()
-    v1 = FloatField()
-    name = TextField()
-    mapper = TextField()
-    alt_program = TextField()
-    alt_name = TextField()
-    
+    label = TextField(null=True)
+    bit = IntegerField(null=True)
+    carton_pk = IntegerField(null=True)
+    sdssc2bv = IntegerField(null=True)
+    program = TextField(null=True)
+    version = TextField(null=True)
+    v1 = FloatField(null=True)
+    name = TextField(null=True)
+    mapper = TextField(null=True)
+    alt_program = TextField(null=True)
+    alt_name = TextField(null=True)
+
     class Meta:
         table_name = 'semaphore_sdssc2b'
-        print_fields = ['label','bit','program','name','mapper','alt_program','alt_name']
+        print_fields = ['label', 'bit', 'program', 'name', 'mapper', 'sdssc2bv']

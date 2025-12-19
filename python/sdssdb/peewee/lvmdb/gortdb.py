@@ -84,6 +84,8 @@ class Exposure(GortDBBase):
     mjd = IntegerField()
     exposure_time = FloatField()
     header = JSONField()
+    reobserved = BooleanField()
+    ancillary = BooleanField()
 
     class Meta:
         table_name = "exposure"

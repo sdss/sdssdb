@@ -68,7 +68,7 @@ CREATE TABLE targetdb.carton_to_target (
     instrument_pk INTEGER,
     delta_ra DOUBLE PRECISION,
     delta_dec DOUBLE PRECISION,
-    can_offset BOOLEAN DEFAULT false,
+    can_offset BOOLEAN NOT NULL DEFAULT false,
     inertial BOOLEAN,
     value REAL,
     carton_pk INTEGER,

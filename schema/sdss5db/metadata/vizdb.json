@@ -768,6 +768,15 @@
     {
       "schema": "vizdb",
       "table_name": "allspec",
+      "column_name": "has_mwmStar",
+      "display_name": "has mwmStar",
+      "sql_type": "boolean",
+      "description": "Has MWM Star",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
       "column_name": "telescope",
       "display_name": "telescope",
       "sql_type": "text",
@@ -817,6 +826,15 @@
       "display_name": "observatory",
       "sql_type": "TEXT",
       "description": "observatory",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "telescope",
+      "display_name": "telescope",
+      "sql_type": "TEXT",
+      "description": "telescope",
       "unit": ""
     },
     {

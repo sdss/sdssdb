@@ -8,16 +8,17 @@
 # Database: sdss5db
 # Peewee version: 3.15.1
 
-
+import operator
+from functools import reduce
 from peewee import (AutoField, BigIntegerField, BigBitField, BooleanField,
                     CharField, DateTimeField, FloatField, ForeignKeyField,
-                    IntegerField, DoubleField, SmallIntegerField)
+                    IntegerField, DoubleField, SmallIntegerField, fn)
 from peewee import SQL
 from playhouse.postgres_ext import ArrayField
+from playhouse.hybrid import hybrid_method
 
 from .. import BaseModel
 from . import database  # noqa
-
 
 class BossBase(BaseModel):
 
@@ -295,6 +296,34 @@ class BossSpectrum(BossBase):
 
     class Meta:
         table_name = 'boss_spectrum'
+
+    @hybrid_method
+    def is_sdss5_target_bit_set(self, bit):
+        """
+        An expression to evaluate whether this source is assigned to the carton with the given bit position.
+
+        :param bit:
+            The carton bit position.
+        """
+        return (
+            (fn.length(self.sdss5_target_flags) > int(bit / 8))
+        &   (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+        )
+
+    @hybrid_method
+    def is_sdss5_target_any_bit_set(self, bits):
+        """
+        An expression to evaluate whether this source is assigned to any of the cartons with the given bit positions.
+
+        :param bits:
+            A list of carton bit positions.
+        """
+        conditions = [
+            (fn.length(self.sdss5_target_flags) > int(bit / 8)) &
+            (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+            for bit in bits
+        ]
+        return reduce(operator.or_, conditions)
 
 
 class BossSpectrumLine(BossBase):

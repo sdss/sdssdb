@@ -243,6 +243,11 @@ CREATE TABLE lvmopsdb.ln2_fill (
     valve_times JSONB
 );
 
+CREATE TABLE lvmopsdb.redo (
+    tile_id INTEGER PRIMARY KEY NOT NULL,
+    nexp INTEGER DEFAULT 1
+);
+
 -- constraints
 
 ALTER TABLE ONLY lvmopsdb.exposure
@@ -346,6 +351,13 @@ ALTER TABLE ONLY lvmopsdb.disabled
     FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY lvmopsdb.redo
+    ADD CONSTRAINT redo_tile_id_fk
+    FOREIGN KEY (tile_id) REFERENCES lvmopsdb.tile(tile_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
+
 
 INSERT INTO lvmopsdb.exposure_flavor VALUES
     (1, 'Science'), (2, 'Arc'), (3, 'Flat'), (4, 'Bias'),

@@ -150,6 +150,7 @@ class AllSpec(Base):
     file_spec = Column('file_spec', Text)
     apstar_id = Column('apstar_id', Text)
     visit_id = Column('visit_id', Text)
+    has_mwmstar = Column('has_mwmstar', Boolean)
     mangaid = Column('mangaid', Text)
     specobjid = Column('specobjid', Numeric(29))
     created = Column('created', DateTime)
@@ -165,6 +166,7 @@ class Multiplex(Base):
     design_id = Column('design_id', Integer)
     sdss_phase = Column('sdss_phase', SmallInteger)
     observatory = Column('observatory', Text)
+    telescope = Column('telescope', Text)
     instrument = Column('instrument', Text)
     plate = Column('plate', Integer)
     fps_field = Column('fps_field', Integer)
@@ -205,6 +207,23 @@ class Semaphore_SDSSC2B(Base)
     alt_program = Column(Text)
     alt_name = Column(Text)
 
+
+class TargetFlags(Base):
+    __tablename__ = 'semaphore_sdssc2b'
+    print_fields = ['label', 'bit', 'program', 'name', 'mapper', 'sdssc2bv']
+
+    id = Column('id', Integer, primary_key=True)
+    label = Column('label', Text)
+    bit = Column('bit', Integer)
+    carton_pk = Column('carton_pk', Integer)
+    sdssc2bv = Column('sdssc2bv', Integer)
+    program = Column('program', Text)
+    version = Column('version', Text)
+    v1 = Column('v1', Float)
+    name = Column('name', Text)
+    mapper = Column('mapper', Text)
+    alt_program = Column('alt_program', Text)
+    alt_name = Column('alt_name', Text)
 
 
 def define_relations():
