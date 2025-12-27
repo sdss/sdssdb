@@ -174,6 +174,9 @@ html_theme_options = {
 
 html_sidebars = {}
 
+html_static_path = ["_static"]
+html_css_files = []
+
 
 def generate_schema_graphs():
     """Generates schema graphs for a series of schemas."""
