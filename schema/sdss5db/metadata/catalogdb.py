@@ -67,6 +67,7 @@ def generate_catalogdb_metadata(
     # Change this connection profile as necessary.
     catalogdb.database.set_profile("tunnel_operations")
 
+    # Load minidb docs data.
     minidb_pickle_file = pathlib.Path(minidb_pickle_file)
 
     with minidb_pickle_file.open("rb") as f:
@@ -77,16 +78,19 @@ def generate_catalogdb_metadata(
     # The data release. Used to remove the prefix from the minidb table names.
     dr = minidb_docs["dr"]
 
-    # Check tables with catalodb models that we have not processed.
+    # Loop over each model in catalogdb.
     for model in catalogdb.CatalogdbModel.__subclasses__():
         model_meta = model._meta  # type: ignore[attr-defined]
         table_name = model_meta.table_name  # type: ignore[attr-defined]
 
+        # Exclude tables as necessary.
         if table_name in exclude_tables:
             continue
 
+        # Associated name of the table in minidb docs.
         minidb_table_name = f"{dr}_{table_name}"
 
+        # If the table exists in the minidb docs, extract metadata from there.
         if minidb_table_name in minidb_docs["tables"]:
             docs_table_info = minidb_docs["tables"][minidb_table_name]
 
@@ -108,6 +112,7 @@ def generate_catalogdb_metadata(
                         break
 
                 if minidb_col is None:
+                    # Emit a warning but include the column with empty description.
                     print(f"Warning: Column {col_name!r} not found in docs for {table_name!r}.")
                 else:
                     col_metadata["description"] = minidb_col.get("description", "")
@@ -123,16 +128,24 @@ def generate_catalogdb_metadata(
                 metadata.append(col_metadata)
 
         else:
+            # Table not found in minidb docs. Emit a warning and add stubs.
+            # We deal with catalog_to_ tables specially since those always have the same
+            # columns and we can include complete descriptions.
+
             if not table_name.startswith("catalog_to_"):
                 print(f"Warning: Model for table {table_name!r} not found in docs. Adding stub.")
 
             for col_name, field in model_meta.columns.items():
+                field_type = field.field_type.lower()
+                if isinstance(field, ArrayField):
+                    field_type += "[]"
+
                 col_metadata: dict[str, str] = {
                     "schema": "catalogdb",
                     "table_name": table_name,
                     "col_name": col_name,
                     "display_name": col_name,
-                    "sql_type": field.field_type.lower(),
+                    "sql_type": field_type,
                     "description": "",
                     "unit": "None",
                 }
