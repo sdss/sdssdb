@@ -13,6 +13,8 @@ import os
 import pathlib
 import pickle
 
+from playhouse.postgres_ext import ArrayField
+
 from sdssdb.peewee.sdss5db import catalogdb
 
 
@@ -107,14 +109,16 @@ def generate_catalogdb_metadata(
 
                 if minidb_col is None:
                     print(f"Warning: Column {col_name!r} not found in docs for {table_name!r}.")
-                    continue
                 else:
                     col_metadata["description"] = minidb_col.get("description", "")
                     col_metadata["unit"] = minidb_col.get("unit", "None") or "None"
 
                 col_metadata["column_name"] = col_name
                 col_metadata["display_name"] = col_name
+
                 col_metadata["sql_type"] = field.field_type.lower()
+                if isinstance(field, ArrayField):
+                    col_metadata["sql_type"] += "[]"
 
                 metadata.append(col_metadata)
 

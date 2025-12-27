@@ -36086,7 +36086,7 @@
       "table_name": "sdssv_plateholes_meta",
       "column_name": "ha",
       "display_name": "ha",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "the hour angle for which each pointing is designed (negative = rising, positive = setting, given in degrees)",
       "unit": "None"
     },
@@ -36095,7 +36095,7 @@
       "table_name": "sdssv_plateholes_meta",
       "column_name": "ha_observable_min",
       "display_name": "ha_observable_min",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "the minimum observable hour angle to guarantee no hole offsets due to refraction greater than value given by MAX_OFF_FIBER_FOR_HA header keyword in plateDefaults file (negative = rising, positive = setting, given in degrees)",
       "unit": "None"
     },
@@ -36104,7 +36104,7 @@
       "table_name": "sdssv_plateholes_meta",
       "column_name": "ha_observable_max",
       "display_name": "ha_observable_max",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "the minimum observable hour angle to guarantee no hole offsets due to refraction greater than value given by MAX_OFF_FIBER_FOR_HA header keyword in plateDefaults file (negative = rising, positive = setting, given in degrees)",
       "unit": "None"
     },
@@ -36313,6 +36313,24 @@
       "display_name": "guidetype",
       "sql_type": "text",
       "description": "for each pointing, the source to search for guide fibers from (can be \"SDSS\" or \"2MASS\")",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes_meta",
+      "column_name": "guidenums1",
+      "display_name": "guidenums1",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes_meta",
+      "column_name": "guidemag_minmax",
+      "display_name": "guidemag_minmax",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -36682,6 +36700,15 @@
       "display_name": "minstandardinblockboss_shared",
       "sql_type": "text",
       "description": "for the given instrument, specify if we have a minimum number of standards we want to assign per fiber block (default 0)",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes_meta",
+      "column_name": "reddeningmed",
+      "display_name": "reddeningmed",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -37380,6 +37407,24 @@
     {
       "schema": "catalogdb",
       "table_name": "sdssv_plateholes",
+      "column_name": "mfd_mag",
+      "display_name": "mfd_mag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "usnob_mag",
+      "display_name": "usnob_mag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
       "column_name": "source_id",
       "display_name": "source_id",
       "sql_type": "bigint",
@@ -37402,6 +37447,24 @@
       "display_name": "sp_param_source",
       "sql_type": "text",
       "description": "source for stellar parameters for MARVELS stars",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "sp_params",
+      "display_name": "sp_params",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "sp_param_err",
+      "display_name": "sp_param_err",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -37663,6 +37726,96 @@
       "display_name": "id",
       "sql_type": "int",
       "description": "SDSS imaging id, for SDSS imaging based targets",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "psfflux",
+      "display_name": "psfflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "psfflux_ivar",
+      "display_name": "psfflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "fiberflux",
+      "display_name": "fiberflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "fiberflux_ivar",
+      "display_name": "fiberflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "fiber2flux",
+      "display_name": "fiber2flux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "fiber2flux_ivar",
+      "display_name": "fiber2flux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "psfmag",
+      "display_name": "psfmag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "fibermag",
+      "display_name": "fibermag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "fiber2mag",
+      "display_name": "fiber2mag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_plateholes",
+      "column_name": "mag",
+      "display_name": "mag",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -38829,6 +38982,24 @@
     {
       "schema": "catalogdb",
       "table_name": "sdssv_boss_spall",
+      "column_name": "calibflux",
+      "display_name": "calibflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "calibflux_ivar",
+      "display_name": "calibflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
       "column_name": "gaia_bp",
       "display_name": "gaia_bp",
       "sql_type": "float",
@@ -38860,6 +39031,15 @@
       "display_name": "firstcarton",
       "sql_type": "text",
       "description": "Primary SDSS Carton for target",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "mag",
+      "display_name": "mag",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -39135,10 +39315,28 @@
     {
       "schema": "catalogdb",
       "table_name": "sdssv_boss_spall",
+      "column_name": "tcolumn",
+      "display_name": "tcolumn",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
       "column_name": "npoly",
       "display_name": "npoly",
       "sql_type": "int",
       "description": "# of polynomial terms with TFILE",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "theta",
+      "display_name": "theta",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -39243,6 +39441,15 @@
     {
       "schema": "catalogdb",
       "table_name": "sdssv_boss_spall",
+      "column_name": "sn_median",
+      "display_name": "sn_median",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
       "column_name": "sn_median_all",
       "display_name": "sn_median_all",
       "sql_type": "float",
@@ -39256,6 +39463,78 @@
       "display_name": "chi68p",
       "sql_type": "float",
       "description": "68% of abs(chi) of synthetic to actual spectrum",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "fracnsigma",
+      "display_name": "fracnsigma",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "fracnsighi",
+      "display_name": "fracnsighi",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "fracnsiglo",
+      "display_name": "fracnsiglo",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "spectroflux",
+      "display_name": "spectroflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "spectroflux_ivar",
+      "display_name": "spectroflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "spectrosynflux",
+      "display_name": "spectrosynflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "spectrosynflux_ivar",
+      "display_name": "spectrosynflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdssv_boss_spall",
+      "column_name": "spectroskyflux",
+      "display_name": "spectroskyflux",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -42708,6 +42987,24 @@
     {
       "schema": "catalogdb",
       "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "nvisit_apstar",
+      "display_name": "nvisit_apstar",
+      "sql_type": "smallint[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "weights",
+      "display_name": "weights",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
       "column_name": "visits",
       "display_name": "visits",
       "sql_type": "text",
@@ -42739,6 +43036,24 @@
       "display_name": "telescopes",
       "sql_type": "text",
       "description": "List of TELESCOPE flags from each of the star's allStar entries",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "location_id",
+      "display_name": "location_id",
+      "sql_type": "smallint[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "commiss",
+      "display_name": "commiss",
+      "sql_type": "smallint[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -42825,6 +43140,105 @@
     {
       "schema": "catalogdb",
       "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "param",
+      "display_name": "param",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "param_cov",
+      "display_name": "param_cov",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "fparam",
+      "display_name": "fparam",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "fparam_cov",
+      "display_name": "fparam_cov",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "param_symbol",
+      "display_name": "param_symbol",
+      "sql_type": "text[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "x_h",
+      "display_name": "x_h",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "x_h_err",
+      "display_name": "x_h_err",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "felem",
+      "display_name": "felem",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "felem_err",
+      "display_name": "felem_err",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "elem_symbol",
+      "display_name": "elem_symbol",
+      "sql_type": "text[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "felemtoh",
+      "display_name": "felemtoh",
+      "sql_type": "smallint[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
       "column_name": "startype",
       "display_name": "startype",
       "sql_type": "text",
@@ -42870,6 +43284,15 @@
     {
       "schema": "catalogdb",
       "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "dist_srclist",
+      "display_name": "dist_srclist",
+      "sql_type": "text",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
       "column_name": "mstar",
       "display_name": "mstar",
       "sql_type": "float",
@@ -42910,6 +43333,69 @@
       "display_name": "mstar_src",
       "sql_type": "text",
       "description": "Source of the star's Mass (if not derived)",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "jd",
+      "display_name": "jd",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "rv",
+      "display_name": "rv",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "rv_err",
+      "display_name": "rv_err",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "rv_src",
+      "display_name": "rv_src",
+      "sql_type": "text[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "snr",
+      "display_name": "snr",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "fiberid",
+      "display_name": "fiberid",
+      "sql_type": "smallint[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_apogeeallstarmerge_r13",
+      "column_name": "visit_pk",
+      "display_name": "visit_pk",
+      "sql_type": "int[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -47820,6 +48306,15 @@
     {
       "schema": "catalogdb",
       "table_name": "tycho2",
+      "column_name": "designation2",
+      "display_name": "designation2",
+      "sql_type": "text",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "tycho2",
       "column_name": "tyc1",
       "display_name": "tyc1",
       "sql_type": "int",
@@ -50264,6 +50759,15 @@
       "sql_type": "float",
       "description": "Inverse variance of DEC, excluding astrometric calibration errors",
       "unit": "1/deg^2"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "legacy_survey_dr8",
+      "column_name": "dchisq",
+      "display_name": "dchisq",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
     },
     {
       "schema": "catalogdb",
@@ -53706,6 +54210,33 @@
     {
       "schema": "catalogdb",
       "table_name": "ebosstarget_v5",
+      "column_name": "fibermag",
+      "display_name": "fibermag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "fiber2mag",
+      "display_name": "fiber2mag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "calib_status",
+      "display_name": "calib_status",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
       "column_name": "ra",
       "display_name": "ra",
       "sql_type": "double",
@@ -53827,6 +54358,114 @@
       "display_name": "flags2",
       "sql_type": "int",
       "description": "Additional target selection flags set by ebosstarget (?)",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "psf_fwhm",
+      "display_name": "psf_fwhm",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "psfflux",
+      "display_name": "psfflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "psfflux_ivar",
+      "display_name": "psfflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "extinction",
+      "display_name": "extinction",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "fiberflux",
+      "display_name": "fiberflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "fiberflux_ivar",
+      "display_name": "fiberflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "fiber2flux",
+      "display_name": "fiber2flux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "fiber2flux_ivar",
+      "display_name": "fiber2flux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "modelflux",
+      "display_name": "modelflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "modelflux_ivar",
+      "display_name": "modelflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "modelmag",
+      "display_name": "modelmag",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "ebosstarget_v5",
+      "column_name": "modelmag_ivar",
+      "display_name": "modelmag_ivar",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -67116,10 +67755,37 @@
     {
       "schema": "catalogdb",
       "table_name": "bhm_efeds_veto",
+      "column_name": "sn_median",
+      "display_name": "sn_median",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_efeds_veto",
       "column_name": "sn_median_all",
       "display_name": "sn_median_all",
       "sql_type": "float",
       "description": "Median S/N for all good pixels in all filters",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_efeds_veto",
+      "column_name": "spectroflux",
+      "display_name": "spectroflux",
+      "sql_type": "float[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_efeds_veto",
+      "column_name": "spectroflux_ivar",
+      "display_name": "spectroflux_ivar",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -70108,6 +70774,15 @@
       "display_name": "num_sectors",
       "sql_type": "float",
       "description": "The total number of sectors that this object was observed on as of the catalog date",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "tess_toi_v05",
+      "column_name": "pk",
+      "display_name": "pk",
+      "sql_type": "bigint",
+      "description": "",
       "unit": "None"
     },
     {
@@ -73623,6 +74298,51 @@
     {
       "schema": "catalogdb",
       "table_name": "bhm_rm_v0",
+      "column_name": "psfmag_des",
+      "display_name": "psfmag_des",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "psfmagerr_des",
+      "display_name": "psfmagerr_des",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "mag_auto_des",
+      "display_name": "mag_auto_des",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "magerr_auto_des",
+      "display_name": "magerr_auto_des",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "imaflags_iso",
+      "display_name": "imaflags_iso",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
       "column_name": "separation_des",
       "display_name": "separation_des",
       "sql_type": "double",
@@ -73672,6 +74392,51 @@
       "display_name": "class_ps1",
       "sql_type": "double",
       "description": "PS1 source classification = iPsfMag - iKronMag",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "psfmag_ps1",
+      "display_name": "psfmag_ps1",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "psfmagerr_ps1",
+      "display_name": "psfmagerr_ps1",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "kronmag_ps1",
+      "display_name": "kronmag_ps1",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "kronmagerr_ps1",
+      "display_name": "kronmagerr_ps1",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "infoflag2",
+      "display_name": "infoflag2",
+      "sql_type": "int[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -73731,6 +74496,24 @@
     {
       "schema": "catalogdb",
       "table_name": "bhm_rm_v0",
+      "column_name": "mag_nsc",
+      "display_name": "mag_nsc",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "magerr_nsc",
+      "display_name": "magerr_nsc",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
       "column_name": "flags_nsc",
       "display_name": "flags_nsc",
       "sql_type": "int",
@@ -73776,6 +74559,42 @@
     {
       "schema": "catalogdb",
       "table_name": "bhm_rm_v0",
+      "column_name": "psfmag_sdss",
+      "display_name": "psfmag_sdss",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "psfmagerr_sdss",
+      "display_name": "psfmagerr_sdss",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "modelmag_sdss",
+      "display_name": "modelmag_sdss",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "modelmagerr_sdss",
+      "display_name": "modelmagerr_sdss",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
       "column_name": "clean_sdss",
       "display_name": "clean_sdss",
       "sql_type": "int",
@@ -73799,6 +74618,24 @@
       "sql_type": "double",
       "description": "Gaia g-band magnitude (phot_g_mean_mag in Gaia catalog, Vega)",
       "unit": "mag"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "mag_gaia",
+      "display_name": "mag_gaia",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "magerr_gaia",
+      "display_name": "magerr_gaia",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
     },
     {
       "schema": "catalogdb",
@@ -73893,6 +74730,33 @@
     {
       "schema": "catalogdb",
       "table_name": "bhm_rm_v0",
+      "column_name": "mag_unwise",
+      "display_name": "mag_unwise",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "magerr_unwise",
+      "display_name": "magerr_unwise",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "flags_unwise",
+      "display_name": "flags_unwise",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
       "column_name": "separation_unwise",
       "display_name": "separation_unwise",
       "sql_type": "double",
@@ -73943,6 +74807,24 @@
       "sql_type": "double",
       "description": "NIR Declination (J2000)",
       "unit": "deg"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "mag_ir",
+      "display_name": "mag_ir",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "magerr_ir",
+      "display_name": "magerr_ir",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
     },
     {
       "schema": "catalogdb",
@@ -74235,10 +75117,100 @@
     {
       "schema": "catalogdb",
       "table_name": "bhm_rm_v0",
+      "column_name": "des_var_nepoch",
+      "display_name": "des_var_nepoch",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "des_var_status",
+      "display_name": "des_var_status",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "des_var_rms",
+      "display_name": "des_var_rms",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "des_var_sigrms",
+      "display_name": "des_var_sigrms",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "des_var_sn",
+      "display_name": "des_var_sn",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
       "column_name": "des_var_sn_max",
       "display_name": "des_var_sn_max",
       "sql_type": "double",
       "description": "The signal-to-noise ratio of the measured intrinsic RMS in grizy bands (DES).",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "ps1_var_nepoch",
+      "display_name": "ps1_var_nepoch",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "ps1_var_status",
+      "display_name": "ps1_var_status",
+      "sql_type": "int[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "ps1_var_rms",
+      "display_name": "ps1_var_rms",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "ps1_var_sigrms",
+      "display_name": "ps1_var_sigrms",
+      "sql_type": "double[]",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_v0",
+      "column_name": "ps1_var_sn",
+      "display_name": "ps1_var_sn",
+      "sql_type": "double[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -74662,6 +75634,15 @@
       "display_name": "firstcarton",
       "sql_type": "varchar",
       "description": "'firstcarton' that selected this target for observation in the SDSS-V plate-mode operations phase",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "bhm_rm_tweaks",
+      "column_name": "mag",
+      "display_name": "mag",
+      "sql_type": "float[]",
+      "description": "",
       "unit": "None"
     },
     {
@@ -78204,6 +79185,15 @@
     {
       "schema": "catalogdb",
       "table_name": "gaia_assas_sn_cepheids",
+      "column_name": "ref_epoch",
+      "display_name": "ref_epoch",
+      "sql_type": "float",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "gaia_assas_sn_cepheids",
       "column_name": "ra",
       "display_name": "ra",
       "sql_type": "double",
@@ -80202,6 +81192,15 @@
     {
       "schema": "catalogdb",
       "table_name": "sdss_id_stacked",
+      "column_name": "catalogid31",
+      "display_name": "catalogid31",
+      "sql_type": "bigint",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "sdss_id_stacked",
       "column_name": "ra_sdss_id",
       "display_name": "ra_sdss_id",
       "sql_type": "double",
@@ -81320,7 +82319,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "fparam_grid",
       "display_name": "fparam_grid",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Raw FERRE parameters for each grid for which fit was performed (see GRIDS tag in HDU3 for grid names",
       "unit": "None"
     },
@@ -81329,7 +82328,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "chi2_grid",
       "display_name": "chi2_grid",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "CHI2 for each grid for which fit was performed (see GRIDS tag in HDU3 for grid names",
       "unit": "None"
     },
@@ -81338,7 +82337,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "fparam",
       "display_name": "fparam",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Output parameter array from ASPCAP stellar parameters fit, in order given in PARAM_SYMBOL array in HDU3: Teff, logg, vmicro, [M/H], [C/M], [N/M], [alpha/M], vsini/vmacro",
       "unit": "None"
     },
@@ -81347,7 +82346,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "fparam_cov",
       "display_name": "fparam_cov",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Covariance of fitted parameters from FERRE",
       "unit": "None"
     },
@@ -81365,7 +82364,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "param",
       "display_name": "param",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Empirically calibrated parameter array, using ASPCAP stellar parameters fit + calibrations, in order given in PARAM_SYMBOL array in HDU3: Teff, logg, vmicro, [M/H], [C/M], [N/M], [alpha/M], vsini/vmacro",
       "unit": "None"
     },
@@ -81374,7 +82373,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "param_cov",
       "display_name": "param_cov",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Covariance of calibrated parameters, but with only diagonal elements from \"external\" uncertainty estimation",
       "unit": "None"
     },
@@ -81383,7 +82382,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "paramflag",
       "display_name": "paramflag",
-      "sql_type": "bigint",
+      "sql_type": "bigint[]",
       "description": "Individual parameter flag for ASPCAP analysis, see bitmask definitions",
       "unit": "None"
     },
@@ -81437,7 +82436,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "felem",
       "display_name": "felem",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Output individual element array from ASPCAP stellar abundances fit, in order given in ELEM_SYMBOL array in HDU3",
       "unit": "None"
     },
@@ -81446,7 +82445,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "felem_err",
       "display_name": "felem_err",
-      "sql_type": "double",
+      "sql_type": "double[]",
       "description": "Uncertainty from FERRE in individual element abundances",
       "unit": "None"
     },
@@ -81455,7 +82454,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "x_h",
       "display_name": "x_h",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Empirically calibrated individual element array, using ASPCAP stellar abundances fit + calibrations, all expressed in logarithmic abundance relative to H ([X/H]), in order given in ELEM_SYMBOL array in HDU3",
       "unit": "None"
     },
@@ -81464,7 +82463,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "x_h_err",
       "display_name": "x_h_err",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Empirical uncertainties in [X/H], derived from repeat observations of stars",
       "unit": "None"
     },
@@ -81473,7 +82472,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "x_m",
       "display_name": "x_m",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Empirically calibrated individual element array, using ASPCAP stellar abundances fit + calibrations, all expressed in logarithmic abundance relative to M ([X/M]) in order given in ELEM_SYMBOL array in HDU3",
       "unit": "None"
     },
@@ -81482,7 +82481,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "x_m_err",
       "display_name": "x_m_err",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Empirical uncertainties in [X/M], derived from repeat observations of stars",
       "unit": "None"
     },
@@ -81491,7 +82490,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "elem_chi2",
       "display_name": "elem_chi2",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "Chi^2 from ASPCAP fit of individual abundances",
       "unit": "None"
     },
@@ -81500,7 +82499,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "elemfrac",
       "display_name": "elemfrac",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "",
       "unit": "None"
     },
@@ -81509,7 +82508,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "elemflag",
       "display_name": "elemflag",
-      "sql_type": "bigint",
+      "sql_type": "bigint[]",
       "description": "Flags for analysis of individual abundances, see bitmask definitions",
       "unit": "None"
     },
@@ -81545,7 +82544,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "x_h_spec",
       "display_name": "x_h_spec",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "x_h_spec missing missing missing",
       "unit": "None"
     },
@@ -81554,7 +82553,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "x_m_spec",
       "display_name": "x_m_spec",
-      "sql_type": "float",
+      "sql_type": "float[]",
       "description": "x_m_spec missing missing missing",
       "unit": "None"
     },
@@ -82508,7 +83507,7 @@
       "table_name": "allstar_dr17_synspec_rev1",
       "column_name": "visit_pk",
       "display_name": "visit_pk",
-      "sql_type": "int",
+      "sql_type": "int[]",
       "description": "Index of visits (used in combined spectrum) in allVisit file",
       "unit": "None"
     },
@@ -84468,6 +85467,15 @@
     {
       "schema": "catalogdb",
       "table_name": "marvels_dr12_star",
+      "column_name": "pk",
+      "display_name": "pk",
+      "sql_type": "bigint",
+      "description": "",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "marvels_dr12_star",
       "column_name": "twomass_designation",
       "display_name": "twomass_designation",
       "sql_type": "text",
@@ -86092,6 +87100,15 @@
       "display_name": "plan_id",
       "sql_type": "text",
       "description": "Identifier of the cross-matching plan used to generate this file.",
+      "unit": "None"
+    },
+    {
+      "schema": "catalogdb",
+      "table_name": "catalog_to_allstar_dr17_synspec_rev1",
+      "column_name": "added_by_phase",
+      "display_name": "added_by_phase",
+      "sql_type": "int",
+      "description": "",
       "unit": "None"
     },
     {
