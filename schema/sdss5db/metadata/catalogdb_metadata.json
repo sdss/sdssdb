@@ -87342,7 +87342,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_catwise table.",
       "unit": "None"
     },
     {
@@ -87360,7 +87360,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87369,7 +87369,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and catwise.",
       "unit": "None"
     },
     {
@@ -87477,7 +87477,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_glimpse360 table.",
       "unit": "None"
     },
     {
@@ -87495,7 +87495,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87504,7 +87504,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and glimpse360.",
       "unit": "None"
     },
     {
@@ -87567,7 +87567,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_gaia_qso table.",
       "unit": "None"
     },
     {
@@ -87585,7 +87585,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87594,7 +87594,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and gaia_qso.",
       "unit": "None"
     },
     {
@@ -87657,7 +87657,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_gaia_dr2_wd_sdss table.",
       "unit": "None"
     },
     {
@@ -87675,7 +87675,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87684,7 +87684,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and gaia_dr2_wd_sdss.",
       "unit": "None"
     },
     {
@@ -87702,7 +87702,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_gaia_dr3_source table.",
       "unit": "None"
     },
     {
@@ -87720,7 +87720,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87729,7 +87729,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and gaia_dr3_source.",
       "unit": "None"
     },
     {
@@ -87747,7 +87747,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_gaia_unwise_agn table.",
       "unit": "None"
     },
     {
@@ -87765,7 +87765,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87774,7 +87774,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and gaia_unwise_agn.",
       "unit": "None"
     },
     {
@@ -87792,7 +87792,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_kepler_input_10 table.",
       "unit": "None"
     },
     {
@@ -87810,7 +87810,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87819,7 +87819,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and kepler_input_10.",
       "unit": "None"
     },
     {
@@ -87837,7 +87837,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_legacy_survey_dr10 table.",
       "unit": "None"
     },
     {
@@ -87855,7 +87855,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87864,7 +87864,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and legacy_survey_dr10.",
       "unit": "None"
     },
     {
@@ -87882,7 +87882,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_legacy_survey_dr10a table.",
       "unit": "None"
     },
     {
@@ -87900,7 +87900,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87909,7 +87909,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and legacy_survey_dr10a.",
       "unit": "None"
     },
     {
@@ -87972,7 +87972,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_milliquas_7_7 table.",
       "unit": "None"
     },
     {
@@ -87990,7 +87990,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -87999,7 +87999,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and milliquas_7_7.",
       "unit": "None"
     },
     {
@@ -88017,7 +88017,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_ps1_g18 table.",
       "unit": "None"
     },
     {
@@ -88035,7 +88035,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88044,7 +88044,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and ps1_g18.",
       "unit": "None"
     },
     {
@@ -88107,7 +88107,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_sdss_dr13_photoobj table.",
       "unit": "None"
     },
     {
@@ -88125,7 +88125,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88134,7 +88134,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and sdss_dr13_photoobj.",
       "unit": "None"
     },
     {
@@ -88197,7 +88197,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_sdss_dr16_apogeestar table.",
       "unit": "None"
     },
     {
@@ -88215,7 +88215,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88224,7 +88224,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and sdss_dr16_apogeestar.",
       "unit": "None"
     },
     {
@@ -88287,7 +88287,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_sdss_dr19p_speclite table.",
       "unit": "None"
     },
     {
@@ -88305,7 +88305,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88314,7 +88314,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and sdss_dr19p_speclite.",
       "unit": "None"
     },
     {
@@ -88422,7 +88422,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_skymapper_dr1_1 table.",
       "unit": "None"
     },
     {
@@ -88440,7 +88440,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88449,7 +88449,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and skymapper_dr1_1.",
       "unit": "None"
     },
     {
@@ -88602,7 +88602,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_tic_v8_extended table.",
       "unit": "None"
     },
     {
@@ -88620,7 +88620,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88629,7 +88629,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and tic_v8_extended.",
       "unit": "None"
     },
     {
@@ -88692,7 +88692,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_twoqz_sixqz table.",
       "unit": "None"
     },
     {
@@ -88710,7 +88710,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88719,7 +88719,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and twoqz_sixqz.",
       "unit": "None"
     },
     {
@@ -88872,7 +88872,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_xmm_om_suss_5_0 table.",
       "unit": "None"
     },
     {
@@ -88890,7 +88890,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -88899,7 +88899,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and xmm_om_suss_5_0.",
       "unit": "None"
     },
     {
@@ -89277,7 +89277,7 @@
       "col_name": "catalogid",
       "display_name": "catalogid",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The catalogid identifier in the catalog_to_too_target table.",
       "unit": "None"
     },
     {
@@ -89295,7 +89295,7 @@
       "col_name": "version_id",
       "display_name": "version_id",
       "sql_type": "int",
-      "description": "",
+      "description": "The internal version for the cross-match.",
       "unit": "None"
     },
     {
@@ -89304,7 +89304,7 @@
       "col_name": "best",
       "display_name": "best",
       "sql_type": "bool",
-      "description": "",
+      "description": "Whether this is considered the best match between the catalog entry and too_target.",
       "unit": "None"
     },
     {
@@ -89322,7 +89322,7 @@
       "col_name": "plan_id",
       "display_name": "plan_id",
       "sql_type": "text",
-      "description": "",
+      "description": "Identifier of the cross-matching plan used to generate this file.",
       "unit": "None"
     },
     {
@@ -89331,7 +89331,7 @@
       "col_name": "added_by_phase",
       "display_name": "added_by_phase",
       "sql_type": "int",
-      "description": "",
+      "description": "Phase of the cross-match that added this entry.",
       "unit": "None"
     }
   ]

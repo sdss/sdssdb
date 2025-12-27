@@ -123,7 +123,8 @@ def generate_catalogdb_metadata(
                 metadata.append(col_metadata)
 
         else:
-            print(f"Warning: Model for table {table_name!r} not found in docs. Adding stub.")
+            if not table_name.startswith("catalog_to_"):
+                print(f"Warning: Model for table {table_name!r} not found in docs. Adding stub.")
 
             for col_name, field in model_meta.columns.items():
                 col_metadata: dict[str, str] = {
@@ -135,6 +136,38 @@ def generate_catalogdb_metadata(
                     "description": "",
                     "unit": "None",
                 }
+
+                if table_name.startswith("catalog_to_"):
+                    associated_table = table_name.replace("catalog_to_", "")
+                    if col_name == "catalogid":
+                        col_metadata["description"] = (
+                            f"The catalogid identifier in the {table_name} table."
+                        )
+                    elif col_name == "targetid":
+                        col_metadata["description"] = (
+                            "The primary key identifier in the associated "
+                            f"table {associated_table}."
+                        )
+                    elif col_name == "version_id":
+                        col_metadata["description"] = "The internal version for the cross-match."
+                    elif col_name == "best":
+                        col_metadata["description"] = (
+                            "Whether this is considered the best match between "
+                            f"the catalog entry and {associated_table}."
+                        )
+                    elif col_name == "separation":
+                        col_metadata["description"] = (
+                            "The distance between the catalog and target coordinates if best=F."
+                        )
+                    elif col_name == "added_by_phase":
+                        col_metadata["description"] = (
+                            "Phase of the cross-match that added this entry."
+                        )
+                    elif col_name == "plan_id":
+                        col_metadata["description"] = (
+                            "Identifier of the cross-matching plan used to generate this file."
+                        )
+
                 metadata.append(col_metadata)
 
     if write_json:
