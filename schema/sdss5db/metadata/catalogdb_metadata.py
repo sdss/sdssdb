@@ -71,66 +71,60 @@ def generate_catalogdb_metadata(
         minidb_docs = pickle.load(f)
 
     metadata: list[dict[str, str]] = []
-    tables_done: list[str] = []
 
     # The data release. Used to remove the prefix from the minidb table names.
     dr = minidb_docs["dr"]
 
-    for dr_table_name, table_info in minidb_docs["tables"].items():
-        table_name: str = dr_table_name.replace(f"{dr}_", "", 1)
-        tables_done.append(table_name)
+    # Check tables with catalodb models that we have not processed.
+    for model in catalogdb.CatalogdbModel.__subclasses__():
+        model_meta = model._meta  # type: ignore[attr-defined]
+        table_name = model_meta.table_name  # type: ignore[attr-defined]
 
         if table_name in exclude_tables:
             continue
 
-        model = get_model(table_name)
-        if model is None:
-            print(f"Warning: No model found for table {table_name!r}.")
-            continue
+        minidb_table_name = f"{dr}_{table_name}"
 
-        model_meta = model._meta  # type: ignore[attr-defined]
-
-        for col_name, field in model_meta.columns.items():
-            col_metadata: dict[str, str] = {
-                "schema": "catalogdb",
-                "table_name": table_name,
-                "column_name": "",
-                "display_name": "",
-                "sql_type": "",
-                "description": "",
-                "unit": "None",
-            }
-
-            minidb_col: dict[str, str] | None = None
-            for col in table_info.get("columns", []):
-                if col["name"] == col_name:
-                    minidb_col = col
-                    break
-
-            if minidb_col is None:
-                print(f"Warning: Column {col_name!r} not found in docs for table {table_name!r}.")
-                continue
-            else:
-                col_metadata["description"] = minidb_col.get("description", "")
-                col_metadata["unit"] = minidb_col.get("unit", "None") or "None"
-
-            col_metadata["column_name"] = col_name
-            col_metadata["display_name"] = col_name
-            col_metadata["sql_type"] = field.field_type.lower()
-
-            metadata.append(col_metadata)
-
-    # Check tables with catalodb models that we have not processed.
-    for model in catalogdb.CatalogdbModel.__subclasses__():
-        model_meta = model._meta  # type: ignore[attr-defined]
-        model_table_name = model_meta.table_name  # type: ignore[attr-defined]
-        if model_table_name not in tables_done and model_table_name not in exclude_tables:
-            print(f"Warning: Model for table {model_table_name!r} not found in minidb docs.")
+        if minidb_table_name in minidb_docs["tables"]:
+            docs_table_info = minidb_docs["tables"][minidb_table_name]
 
             for col_name, field in model_meta.columns.items():
                 col_metadata: dict[str, str] = {
                     "schema": "catalogdb",
-                    "table_name": model_table_name,
+                    "table_name": table_name,
+                    "column_name": "",
+                    "display_name": "",
+                    "sql_type": "",
+                    "description": "",
+                    "unit": "None",
+                }
+
+                minidb_col: dict[str, str] | None = None
+                for col in docs_table_info.get("columns", []):
+                    if col["name"] == col_name:
+                        minidb_col = col
+                        break
+
+                if minidb_col is None:
+                    print(f"Warning: Column {col_name!r} not found in docs for {table_name!r}.")
+                    continue
+                else:
+                    col_metadata["description"] = minidb_col.get("description", "")
+                    col_metadata["unit"] = minidb_col.get("unit", "None") or "None"
+
+                col_metadata["column_name"] = col_name
+                col_metadata["display_name"] = col_name
+                col_metadata["sql_type"] = field.field_type.lower()
+
+                metadata.append(col_metadata)
+
+        else:
+            print(f"Warning: Model for table {table_name!r} not found in docs. Adding stub.")
+
+            for col_name, field in model_meta.columns.items():
+                col_metadata: dict[str, str] = {
+                    "schema": "catalogdb",
+                    "table_name": table_name,
                     "col_name": col_name,
                     "display_name": col_name,
                     "sql_type": field.field_type.lower(),
