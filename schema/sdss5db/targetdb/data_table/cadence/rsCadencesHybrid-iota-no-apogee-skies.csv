@@ -1,0 +1,8 @@
+mixed_no_apogee_skies_1x1+1x3;2;{0.,0.};{1.  ,0.35};{0.,0.};{0.,0.};{1,3};{0.2,14.};{"bright_time_no_apogee_skies","dark_faint_no_apogee_skies"};mixed_no_apogee_skies_1x1+1x3; 
+mixed_no_apogee_skies_1x1+1x3_v2;2;{0.,0.};{1.  ,0.35};{0.,0.};{0.,0.};{1,3};{0.2,14.};{"bright_time_no_apogee_skies","dark_faint_no_apogee_skies"};mixed_no_apogee_skies_1x1+1x3;_v2 
+mixed_no_apogee_skies_1x1+1x4;2;{0.,0.};{1.  ,0.35};{0.,0.};{0.,0.};{1,4};{0.2,14.};{"bright_time_no_apogee_skies","dark_monit_no_apogee_skies"};mixed_no_apogee_skies_1x1+1x4; 
+mixed_no_apogee_skies_1x1+1x4_v2;2;{0.,0.};{1.  ,0.35};{0.,0.};{0.,0.};{1,4};{0.2,14.};{"bright_time_no_apogee_skies","dark_monit_no_apogee_skies"};mixed_no_apogee_skies_1x1+1x4;_v2 
+mixed_no_apogee_skies_2x1+1x3;3;{0.,3.,0.};{1.  ,1.  ,0.35};{0.,1800.,   0.};{0. ,0.5,0.};{1,1,3};{0.2, 0.2,14.};{"bright_time_no_apogee_skies","bright_time_no_apogee_skies"," dark_faint_no_apogee_skies"};mixed_no_apogee_skies_2x1+1x3; 
+mixed_no_apogee_skies_2x1+1x3_v2;3;{0.,3.,0.};{1.  ,1.  ,0.35};{0.,1800.,   0.};{0. ,0.5,0.};{1,1,3};{0.2, 0.2,14.};{"bright_time_no_apogee_skies","bright_time_no_apogee_skies"," dark_faint_no_apogee_skies"};mixed_no_apogee_skies_2x1+1x3;_v2 
+mixed_no_apogee_skies_2x1+1x4;3;{0.,3.,0.};{1.  ,1.  ,0.35};{0.,1800.,   0.};{0. ,0.5,0.};{1,1,4};{0.2, 0.2,14.};{"bright_time_no_apogee_skies","bright_time_no_apogee_skies"," dark_monit_no_apogee_skies"};mixed_no_apogee_skies_2x1+1x4; 
+mixed_no_apogee_skies_2x1+1x4_v2;3;{0.,3.,0.};{1.  ,1.  ,0.35};{0.,1800.,   0.};{0. ,0.5,0.};{1,1,4};{0.2, 0.2,14.};{"bright_time_no_apogee_skies","bright_time_no_apogee_skies"," dark_monit_no_apogee_skies"};mixed_no_apogee_skies_2x1+1x4;_v2 

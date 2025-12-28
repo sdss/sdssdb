@@ -13,7 +13,7 @@ import numpy as np
 
 from peewee import (SQL, AutoField, BigIntegerField, BooleanField,
                     DateTimeField, DeferredThroughModel, DoubleField,
-                    FloatField, ForeignKeyField, IntegerField,
+                    FloatField, ForeignKeyField, IntegerField, ManyToManyField,
                     SmallIntegerField, TextField, UUIDField, fn)
 from playhouse.postgres_ext import ArrayField
 
@@ -30,6 +30,7 @@ class TargetdbBase(BaseModel):
 
 # AssignmentDeferred = DeferredThroughModel()
 CartonToTargetDeferred = DeferredThroughModel()
+TargetingGenerationToCartonDeferred = DeferredThroughModel()
 
 
 class Version(TargetdbBase):
@@ -83,6 +84,15 @@ class Observatory(TargetdbBase):
         table_name = 'observatory'
 
 
+class Overplan(TargetdbBase):
+    pk = AutoField()
+    input_file = TextField()
+    plan = TextField()
+
+    class Meta:
+        table_name = 'overplan'
+
+
 class Field(TargetdbBase):
 
     pk = AutoField()
@@ -102,6 +112,10 @@ class Field(TargetdbBase):
     version = ForeignKeyField(column_name='version_pk',
                               field='pk',
                               model=Version)
+    overplan = ForeignKeyField(column_name='overplan_pk',
+                              field='pk',
+                              model=Overplan,
+                              null=True)
 
     class Meta:
         table_name = 'field'
@@ -502,5 +516,50 @@ class AssignmentStatus(TargetdbBase):
         table_name = 'assignment_status'
 
 
+class TargetingGeneration(TargetdbBase):
+    pk = AutoField()
+    label = TextField()
+    first_release = TextField()
+
+    cartons = ManyToManyField(Carton, backref='generations',
+                              through_model=TargetingGenerationToCartonDeferred)
+
+    class Meta:
+        table_name = 'targeting_generation'
+
+
+class TargetingGenerationToCarton(TargetdbBase):
+    pk = AutoField()
+    targeting_generation_pk = ForeignKeyField(column_name="generation_pk",
+                                              field="pk",
+                                              model=TargetingGeneration,
+                                              backref='+')
+    carton_pk = ForeignKeyField(column_name="carton_pk",
+                                field="pk",
+                                model=Carton,
+                                backref='+')
+    rs_stage = TextField()
+    rs_active = BooleanField()
+
+    class Meta:
+        table_name = 'targeting_generation_to_carton'
+
+
+class TargetingGenerationToVersion(TargetdbBase):
+    pk = AutoField()
+    targeting_generation_pk = ForeignKeyField(column_name="generation_pk",
+                                              field="pk",
+                                              model=TargetingGeneration,
+                                              backref='+')
+    version_pk = ForeignKeyField(column_name="version_pk",
+                                 field="pk",
+                                 model=Version,
+                                 backref='+')
+
+    class Meta:
+        table_name = 'targeting_generation_to_version'
+
+
 # AssignmentDeferred.set_model(Assignment)
 CartonToTargetDeferred.set_model(CartonToTarget)
+TargetingGenerationToCartonDeferred.set_model(TargetingGenerationToCarton)

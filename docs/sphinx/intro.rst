@@ -51,6 +51,7 @@ Currently, we support the following databases and schemas:
     * *apogee_drpdb*: schema with the results of the MWM DRP
     * *boss_drp*: schema with the results of the BHM DRP
     * *vizdb*: primary schema for the data visualization webapp
+    * *astradb*: primary schema for the Astra pipeline
 * **archive**: the SDSS science archive database.
     * *sas*: schema for SAS.
 * **lvmdb**: the LVM database
@@ -164,6 +165,13 @@ Note that the level of readiness is not necessarily identical in both Peewee and
             <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/vizdb/sdss5db.vizdb.pdf"></a></td>
         </tr>
         <tr>
+            <td></td>
+            <td class="active">astradb</td>
+            <td class="success"></td>
+            <td class="success"></td>
+            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/astradb/sdss5db.astradb.pdf"></a></td>
+        </tr>
+        <tr>
             <td class="active">archive</td>
             <td class="active">sas</td>
             <td class="danger"></td>
@@ -237,7 +245,7 @@ There are two database connections, ``SQLADatabaseConnection`` and ``PeeWeeDatab
 
 
 A note about passwords
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 ``sdssdb`` does not allow you to pass plaintext passwords when creating a connection, or to store them in the profiles. Instead, you should use `pgpass <https://www.postgresql.org/docs/9.3/libpq-pgpass.html>`__ to set your passwords. A typical ``~/.pgpass`` file looks something like ::
 
@@ -246,6 +254,22 @@ A note about passwords
     operations-test.sdss.utah.edu:5432:sdss5db:sdss:ZZZZ
 
 where ``XXXX``, ``YYYY``, etc are the associated passwords for each set of parameters.
+
+
+Connection flags
+^^^^^^^^^^^^^^^^
+
+``sdssdb`` supports two flags that change the behaviour of the database connection.
+
+* **autoconnect**: if set to `False` the connection will not attempt to connect to the database when created. This is useful when you want to create a connection object but connect to the database later. ``autoconnect`` defaults to `True` and can be changed either by setting the environment variable ``SDSSDB_AUTOCONNECT=0`` before importing the model classes, or by doing ::
+
+        >>> import sdssdb
+        >>> sdssdb.autoconnect = False
+        ... import your model classes ...
+
+  When instantiating a `.DatabaseConnection` object manually, you can also pass the ``autoconnect=False`` keyword argument.
+
+* **use_psycopg3**: prefers to use `psycopg3 <https://www.psycopg.org/psycopg3/docs/>`__ instead of the default ``psycopg2``. If ``psycopg3`` is not installed, ``psycopg2`` will be used instead. This flag can be set via the environment variable ``SDSSDB_PSYCOPG3=1`` or by importing ``sdssdb`` and setting ``sdssdb.use_psycopg3 = True`` before importing the model classes.
 
 
 .. _profile:

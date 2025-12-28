@@ -68,7 +68,7 @@ CREATE TABLE targetdb.carton_to_target (
     instrument_pk INTEGER,
     delta_ra DOUBLE PRECISION,
     delta_dec DOUBLE PRECISION,
-    can_offset BOOLEAN DEFAULT false,
+    can_offset BOOLEAN NOT NULL DEFAULT false,
     inertial BOOLEAN,
     value REAL,
     carton_pk INTEGER,
@@ -144,7 +144,8 @@ CREATE TABLE targetdb.field (
     slots_exposures INTEGER[][],
     version_pk INTEGER,
     cadence_pk INTEGER,
-    observatory_pk INTEGER);
+    observatory_pk INTEGER,
+    overplan_pk INTEGER);
 
 CREATE TABLE targetdb.design_to_field (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -219,6 +220,33 @@ create table targetdb.design_mode_check_results (
     boss_sky_neighbors_targets_pass BOOLEAN,
     apogee_sky_neighbors_targets_pass BOOLEAN,
     apogee_trace_diff_targets_pass BOOLEAN);
+
+CREATE TABLE targetdb.targeting_generation (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    label TEXT,
+    first_release TEXT
+);
+
+CREATE TABLE targetdb.targeting_generation_to_carton (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    generation_pk INTEGER,
+    carton_pk INTEGER,
+    rs_stage TEXT,
+    rs_active BOOLEAN
+);
+
+CREATE TABLE targetdb.targeting_generation_to_version (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    generation_pk INTEGER,
+    version_pk INTEGER
+);
+
+CREATE TABLE targetdb.overplan (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    input_file TEXT,
+    plan TEXT
+);
+
 
 -- Table data
 
@@ -337,6 +365,26 @@ ALTER TABLE ONLY targetdb.design_to_field
     ADD CONSTRAINT d2f_design_id_fk
     FOREIGN KEY (design_id) REFERENCES targetdb.design(design_id);
 
+ALTER TABLE ONLY targetdb.targeting_generation_to_carton
+    ADD CONSTRAINT generation_fk
+    FOREIGN KEY (generation_pk) REFERENCES targetdb.targeting_generation(pk);
+
+ALTER TABLE ONLY targetdb.targeting_generation_to_carton
+    ADD CONSTRAINT carton_fk
+    FOREIGN KEY (carton_pk) REFERENCES targetdb.carton(pk);
+
+ALTER TABLE ONLY targetdb.targeting_generation_to_version
+    ADD CONSTRAINT generation_fk
+    FOREIGN KEY (generation_pk) REFERENCES targetdb.targeting_generation(pk);
+
+ALTER TABLE ONLY targetdb.targeting_generation_to_version
+    ADD CONSTRAINT version_fk
+    FOREIGN KEY (version_pk) REFERENCES targetdb.version(pk);
+
+ALTER TABLE ONLY targetdb.field
+    ADD CONSTRAINT overplan_fk
+    FOREIGN KEY (overplan_pk) REFERENCES targetdb.overplan(pk);
+
 -- Indices
 
 CREATE INDEX CONCURRENTLY carton_to_target_pk_idx
@@ -417,3 +465,19 @@ CREATE INDEX CONCURRENTLY field_fk_idx
 CREATE INDEX CONCURRENTLY d2f_design_id_fk_idx
     ON targetdb.design_to_field
     USING BTREE(design_id);
+
+CREATE INDEX CONCURRENTLY targeting_generation_to_carton_generation_pk_idx
+    ON targetdb.targeting_generation_to_carton
+    USING BTREE(generation_pk);
+
+CREATE INDEX CONCURRENTLY targeting_generation_to_carton_carton_pk_idx
+    ON targetdb.targeting_generation_to_carton
+    USING BTREE(carton_pk);
+
+CREATE INDEX CONCURRENTLY targeting_generation_to_version_generation_pk_idx
+    ON targetdb.targeting_generation_to_version
+    USING BTREE(generation_pk);
+
+CREATE INDEX CONCURRENTLY targeting_generation_to_version_carton_pk_idx
+    ON targetdb.targeting_generation_to_version
+    USING BTREE(version_pk);

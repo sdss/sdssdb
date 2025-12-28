@@ -107,12 +107,12 @@ from targetdb.design as des
 join targetdb.design_to_field as d2f on d2f.design_id = des.design_id
 join targetdb.field as f on d2f.field_pk = f.pk
 join targetdb.version as v on f.version_pk = v.pk
-where v.plan = 'eta-5';
+where v.plan = 'theta-1';
 
 --> 447859 this time
 
 insert into targetdb.assignment_status (pk, assignment_pk, status, mjd)
-select nextval('targetdb.assignment_status_pk_seq'), 
+select nextval('targetdb.assignment_status_pk_seq1'), 
 asn.pk, 0, null
 from targetdb.assignment as asn
 join targetdb.design as des on asn.design_id = des.design_id
@@ -121,5 +121,5 @@ join targetdb.observatory as obs on hole.observatory_pk = obs.pk
 join targetdb.design_to_field as d2f on d2f.design_id = des.design_id
 join targetdb.field as f on d2f.field_pk = f.pk
 join targetdb.version as v on f.version_pk = v.pk
-where v.plan = 'eta-6' and des.design_id > 447859
+where v.plan = 'iota-1' and des.design_id > 734759
 ON CONFLICT DO NOTHING;

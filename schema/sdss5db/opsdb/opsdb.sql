@@ -1,6 +1,6 @@
 /*
 
-opsDB schema version v0.1.0
+opsDB schema version v0.8.4
 
 Created Sep 2020 - J. Donor
 
@@ -24,7 +24,12 @@ CREATE TABLE opsdb.assignment_to_focal (
     configuration_id INTEGER,
     xfocal REAL,
     yfocal REAL,
-    positioner_id SMALLINT);
+    positioner_id SMALLINT,
+    fiber_type TEXT,
+    catalogid BIGINT,
+    assigned BOOLEAN,
+    collided BOOLEAN,
+    replaced BOOLEAN);
 
 CREATE TABLE opsdb.completion_status (
     pk SERIAL PRIMARY KEY NOT NULL,
@@ -67,6 +72,7 @@ CREATE TABLE opsdb.camera_frame (
     exposure_pk INTEGER NOT NULL,
     camera_pk SMALLINT NOT NULL,
     ql_sn2 REAL,
+    sn2_15 REAL,
     sn2 REAL,
     comment TEXT);
 
@@ -118,7 +124,7 @@ CREATE TABLE opsdb.base_priority(
     version_pk INTEGER);
 
 CREATE TABLE opsdb.priority_version(
-    pk SERIAL PRECISION KEY NOT NULL,
+    pk SERIAL PRIMARY KEY NOT NULL,
     label TEXT);
 
 CREATE TABLE opsdb.overhead(
@@ -132,7 +138,41 @@ CREATE TABLE opsdb.overhead(
     elapsed REAL,
     success BOOLEAN);
 
+CREATE TABLE opsdb.pred_snr (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    robodamus_version TEXT,
+    model_id TEXT,
+    pred_time TIMESTAMP,
+    camera_pk SMALLINT,
+    design_mode_label TEXT,
+    pred_type TEXT,
+    pred_value REAL,
+    pred_flag INTEGER,
+    num_gfas INTEGER,
+    gfa_expid INTEGER,
+    gfa_date_obs TIMESTAMP);
+
+CREATE TABLE opsdb.pred_snr_par (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    pred_snr_pk BIGINT,
+    label TEXT,
+    datatype TEXT,
+    value_f DOUBLE PRECISION,
+    value_i BIGINT,
+    value_s TEXT);
+
+CREATE TABLE opsdb.lst_hist(
+    pk SERIAL PRIMARY KEY NOT NULL,
+    field_pk INTEGER,
+    lst_counts INTEGER[][]);
+
 -- Foreign keys
+
+ALTER TABLE ONLY opsdb.lst_hist
+    ADD CONSTRAINT lst_field_fk
+    FOREIGN KEY (field_pk) REFERENCES targetdb.field(pk)
+    ON UPDATE CASCADE ON DELETE CASCADE
+    DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY opsdb.base_priority
     ADD CONSTRAINT field_fk
@@ -233,6 +273,19 @@ ALTER TABLE ONLY opsdb.overhead
     ON UPDATE CASCADE ON DELETE CASCADE
     DEFERRABLE INITIALLY DEFERRED;
 
+ALTER TABLE ONLY opsdb.pred_snr
+    ADD CONSTRAINT camera_fk
+    FOREIGN KEY (camera_pk) REFERENCES opsdb.camera(pk);
+
+ALTER TABLE ONLY opsdb.pred_snr
+    ADD CONSTRAINT design_mode_fk
+    FOREIGN KEY (design_mode_label) REFERENCES targetdb.design_mode(label);
+
+ALTER TABLE ONLY opsdb.pred_snr_par
+    ADD CONSTRAINT pred_snr_fk
+    FOREIGN KEY (pred_snr_pk) REFERENCES opsdb.pred_snr(pk);
+
+
 -- Table data
 
 INSERT INTO opsdb.exposure_flavor VALUES
@@ -288,6 +341,42 @@ CREATE INDEX CONCURRENTLY qr_exposure_pk_idx
 CREATE INDEX CONCURRENTLY overhead_configuration_id_idx
     ON opsdb.overhead
     USING BTREE(configuration_id);
+
+CREATE INDEX CONCURRENTLY pred_snr_camera_pk_idx
+    ON opsdb.pred_snr
+    USING BTREE(camera_pk);
+
+CREATE INDEX CONCURRENTLY pred_snr_design_mode_label_idx
+    ON opsdb.pred_snr
+    USING BTREE(design_mode_label);
+
+CREATE INDEX CONCURRENTLY pred_snr_pred_time_idx
+    ON opsdb.pred_snr
+    USING BTREE(pred_time);
+
+CREATE INDEX CONCURRENTLY pred_snr_pred_type_idx
+    ON opsdb.pred_snr
+    USING BTREE(pred_type);
+
+CREATE INDEX CONCURRENTLY pred_snr_gfa_date_obs_idx
+    ON opsdb.pred_snr
+    USING BTREE(gfa_date_obs);
+
+CREATE INDEX CONCURRENTLY pred_snr_model_id_idx
+    ON opsdb.pred_snr
+    USING BTREE(model_id);
+
+CREATE INDEX CONCURRENTLY pred_snr_robodamus_version_idx
+    ON opsdb.pred_snr
+    USING BTREE(robodamus_version);
+
+CREATE INDEX CONCURRENTLY pred_snr_par_pred_snr_pk_idx
+    ON opsdb.pred_snr_par
+    USING BTREE(pred_snr_pk);
+
+CREATE INDEX CONCURRENTLY pred_snr_label_idx
+    ON opsdb.pred_snr_par
+    USING BTREE(label);
 
 -- pop function to retrieve next in queue and increment
 

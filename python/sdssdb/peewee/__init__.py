@@ -143,22 +143,31 @@ class ReflectMeta(ModelBase):
         table_name = meta.table_name
         schema = meta.schema
 
+        opts = getattr(meta, 'reflection_options', {})
+
         if not database or not database.connected:
             return
 
         # Lists tables in the schema. This is a bit of a hack but
         # faster than using database.table_exists because it's cached.
-        database.get_fields(table_name, schema)
-        schema_tables = database._metadata[schema].keys()
+        metadata = database._metadata
+        force = opts.get('force', False)
+        if (schema not in metadata
+              or len(metadata[schema]) == 0
+              or table_name not in metadata[schema]
+              or force):
+
+            # Check if the table actually exists. If it does not, return now
+            # and don't waste time reloading the fields.
+            if not database.table_exists(table_name, schema=schema):
+                return
+
+            database.get_fields(table_name, schema, cache=False)
+
+        schema_tables = metadata[schema].keys()
 
         if table_name not in schema_tables:
-            # Give it another try without caching. This is sometimes necessary
-            # for tables things like catalog_to_X table that are created
-            # dynamically.
-            database.get_fields(table_name, schema, cache=False)
-            schema_tables = database._metadata[schema].keys()
-            if table_name not in schema_tables:
-                return
+            return
 
         for index in meta.indexes:
             if hasattr(index, 'reflected') and index.reflected:
@@ -167,8 +176,7 @@ class ReflectMeta(ModelBase):
         if not database.is_connection_usable():
             raise peewee.DatabaseError('database not connected.')
 
-        if hasattr(meta, 'reflection_options'):
-            opts = meta.reflection_options
+        if opts:
             skip_fks = opts.get('skip_foreign_keys', False)
             use_peewee_reflection = opts.get('use_peewee_reflection', True)
         else:

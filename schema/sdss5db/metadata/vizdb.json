@@ -7,7 +7,7 @@
       "display_name": "CatalogID 21",
       "sql_type": "bigint",
       "description": "Catalog id for v0.1 cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -16,7 +16,7 @@
       "display_name": "CatalogID 25",
       "sql_type": "bigint",
       "description": "Catalog id for v0.5 cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -25,7 +25,7 @@
       "display_name": "CatalogID 31",
       "sql_type": "bigint",
       "description": "Catalog id for v1 cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -52,7 +52,16 @@
       "display_name": "SDSS ID",
       "sql_type": "bigint",
       "description": "The common, unifiying, SDSS ID of an on-sky object",
-      "unit": "None"
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_stacked",
+      "column_name": "last_updated",
+      "display_name": "Last Updated",
+      "sql_type": "date",
+      "description": "The date when the row was last updated",
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -61,7 +70,7 @@
       "display_name": "SDSS ID",
       "sql_type": "bigint",
       "description": "The common, unifiying, SDSS ID of an on-sky object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -70,7 +79,7 @@
       "display_name": "Catalog ID",
       "sql_type": "bigint",
       "description": "catalog ID of an object in a given cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -79,7 +88,7 @@
       "display_name": "Version ID",
       "sql_type": "smallint",
       "description": "The version number of the cross-match",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -106,7 +115,7 @@
       "display_name": "N_Associated",
       "sql_type": "smallint",
       "description": "Total number of sdss_ids associated with that catalogid.  Proxy for the trustworthiness/uniqueness of the sdss_id process for that source.",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -133,7 +142,16 @@
       "display_name": "PK",
       "sql_type": "bigint",
       "description": "Primary Key of the sdss_id_flat table",
-      "unit": "None"
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_flat",
+      "column_name": "rank",
+      "display_name": "Rank",
+      "sql_type": "integer",
+      "description": "Ranking of when catalogid paired with multiple sdss_ids.  Lowest sdss_id is the preferred match, with rank 1",
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -142,7 +160,7 @@
       "display_name": "PK",
       "sql_type": "integer",
       "description": "Primary key of the db_metadata table",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -151,7 +169,7 @@
       "display_name": "Schema",
       "sql_type": "text",
       "description": "The database schema name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -160,7 +178,7 @@
       "display_name": "Table Name",
       "sql_type": "text",
       "description": "The database table name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -169,7 +187,7 @@
       "display_name": "Column Name",
       "sql_type": "text",
       "description": "The database column name",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -178,7 +196,7 @@
       "display_name": "Display Name",
       "sql_type": "text",
       "description": "A more user-friedly, human-readable name for the database column",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -187,7 +205,7 @@
       "display_name": "Description",
       "sql_type": "text",
       "description": "A description of the database column",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -196,7 +214,7 @@
       "display_name": "Unit",
       "sql_type": "text",
       "description": "The physical unit if any of the database column",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -205,9 +223,8 @@
       "display_name": "SQL Type",
       "sql_type": "text",
       "description": "The data type of the database column",
-      "unit": "None"
+      "unit": ""
     },
-
     {
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
@@ -215,7 +232,7 @@
       "display_name": "PK",
       "sql_type": "integer",
       "description": "Primary key of the sdssid_to_pipes table",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -224,7 +241,7 @@
       "display_name": "SDSS ID",
       "sql_type": "bigint",
       "description": "The common, unifiying, SDSS ID of an on-sky object",
-      "unit": "None"
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -232,8 +249,8 @@
       "column_name": "in_boss",
       "display_name": "In BOSS",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id is in the boss reduction tables",
-      "unit": "None"
+      "description": "Flag indicating if the sdss_id has been reduced by the SDSS-V boss pipeline",
+      "unit": ""
     },
     {
       "schema": "vizdb",
@@ -241,17 +258,764 @@
       "column_name": "in_apogee",
       "display_name": "In APOGEE",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id is in the apogee reduction tables",
-      "unit": "None"
+      "description": "Flag indicating if the sdss_id has been reduced by the SDSS-V apogee pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "in_bsv",
+      "display_name": "In Astra-Boss",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id has been reduced by the boss componenent of the Astra pipeline",
+      "unit": ""
     },
     {
       "schema": "vizdb",
       "table_name": "sdssid_to_pipes",
       "column_name": "in_astra",
-      "display_name": "In APOGEE",
+      "display_name": "In Astra",
       "sql_type": "boolean",
-      "description": "Flag indicating if the sdss_id is in the astra reduction tables",
-      "unit": "None"
+      "description": "Flag indicating if the sdss_id has been matched to an Astra source (i.e. in the Source table)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "has_been_observed",
+      "display_name": "Has Been Observed",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id target has been observed and reduced, or not, either in sdss5 or dr17 release data.",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "release",
+      "display_name": "Release",
+      "sql_type": "text",
+      "description": "the Astra release field indicating source reduction from sdss5 or dr17",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "obs",
+      "display_name": "Observatory",
+      "sql_type": "text",
+      "description": "the observatory of the observation, either APO or LCO",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "mjd",
+      "display_name": "MJD",
+      "sql_type": "integer",
+      "description": "the MJD when the target was reduced",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "release",
+      "display_name": "Data Release",
+      "sql_type": "text",
+      "description": "The SDSS Data Release",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "run2d",
+      "display_name": "Run2D",
+      "sql_type": "text",
+      "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "run1d",
+      "display_name": "Run1D",
+      "sql_type": "text",
+      "description": "Software tag for the eBOSS/BOSS data reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "apred_vers",
+      "display_name": "Apred Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "v_astra",
+      "display_name": "Astra Version",
+      "sql_type": "text",
+      "description": "Software tag for the MWM Astra pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "v_speccomp",
+      "display_name": "Speccomp Version",
+      "sql_type": "text",
+      "description": "Software tag for the EFEDS VAC",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "v_targ",
+      "display_name": "MOS Target Version",
+      "sql_type": "text",
+      "description": "Software tag for the MOS targeting catalogs",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "drpver",
+      "display_name": "DRP Version",
+      "sql_type": "text",
+      "description": "Software tag for the MaNGA data reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "dapver",
+      "display_name": "DAP Version",
+      "sql_type": "text",
+      "description": "Software tag for the MaNGA data analysis pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "apstar_vers",
+      "display_name": "Apstar Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "aspcap_vers",
+      "display_name": "ASPCAP Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "results_vers",
+      "display_name": "Results Version",
+      "sql_type": "text",
+      "description": "Software tag for the APOGEE/APOGEE-2 reduction pipeline",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "releases",
+      "column_name": "public",
+      "display_name": "Public",
+      "sql_type": "text",
+      "description": "Flag if the data release is public or not",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "releases_pk",
+      "display_name": "Releases Table PK",
+      "sql_type": "integer",
+      "description": "join to the pk of the vizdb.releases table",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "pk",
+      "display_name": "PK",
+      "sql_type": "integer",
+      "description": "(Internal) database table primary key",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "sdss_phase",
+      "display_name": "sdss_phase",
+      "sql_type": "text",
+      "description": "SDSS Phase from 1 to 5",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "observatory",
+      "display_name": "observatory",
+      "sql_type": "text",
+      "description": "observatory",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "instrument",
+      "display_name": "instrument",
+      "sql_type": "text",
+      "description": "instrument",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "allspec_id",
+      "display_name": "Allspec ID",
+      "sql_type": "text",
+      "description": "Unique allspec ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "multiplex_id",
+      "display_name": "multiplex ID",
+      "sql_type": "TEXT",
+      "description": "multiplex ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "sdss_id",
+      "display_name": "sdss_id",
+      "sql_type": "bigint",
+      "description": "sdss_id",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "catalogid",
+      "display_name": "catalogid",
+      "sql_type": "integer",
+      "description": "BHM catalogid",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "fiberid",
+      "display_name": "fiberid",
+      "sql_type": "smallint",
+      "description": "SDSS/BOSS/eBOSS fiberid",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "ifudsgn",
+      "display_name": "ifudsgn",
+      "sql_type": "smallint",
+      "description": "MaNGA IFU DESIGN ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "plate",
+      "display_name": "plate",
+      "sql_type": "integer",
+      "description": "SDSS/BOSS/eBOSS/BHM plate (before FPS era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "plate_or_fps_field",
+      "display_name": "Plate/FPS Field",
+      "sql_type": "integer",
+      "description": "Plate or FPS Field (merges pre/post Plate era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "fps_field",
+      "display_name": "FPS Field",
+      "sql_type": "integer",
+      "description": "FPS Field (post Plate era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "mjd",
+      "display_name": "MJD",
+      "sql_type": "integer",
+      "description": "MJD",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "run2d",
+      "display_name": "run2d",
+      "sql_type": "text",
+      "description": "idlspec2d version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "run1d",
+      "display_name": "run1d",
+      "sql_type": "text",
+      "description": "idlspec1d version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "coadd",
+      "display_name": "coadd",
+      "sql_type": "text",
+      "description": "either epoch, daily, or custom=allepoch",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "apred_vers",
+      "display_name": "apred_vers",
+      "sql_type": "text",
+      "description": "APOGEE DRP Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "drpver",
+      "display_name": "DRP version",
+      "sql_type": "text",
+      "description": "MaNGA (for e.g.) DRP Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "version",
+      "display_name": "Version",
+      "sql_type": "text",
+      "description": "All Pipeline Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "programname",
+      "display_name": "programname",
+      "sql_type": "text",
+      "description": "Spectroscopic program Name",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "survey",
+      "display_name": "survey",
+      "sql_type": "text",
+      "description": "Spectroscopic survey or sub-survey",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "sas_file",
+      "display_name": "SAS File",
+      "sql_type": "text",
+      "description": "SAS File",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "cas_url",
+      "display_name": "CAS URL",
+      "sql_type": "text",
+      "description": "CAS URL",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "sas_url",
+      "display_name": "SAS URL",
+      "sql_type": "text",
+      "description": "SAS URL",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "ra",
+      "display_name": "ra",
+      "sql_type": "double precision",
+      "description": "Right ascension",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "dec",
+      "display_name": "dec",
+      "sql_type": "double precision",
+      "description": "Declination",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "ra_hms",
+      "display_name": "ra_hms",
+      "sql_type": "text",
+      "description": "Right ascension",
+      "unit": "H:M:S"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "dec_dms",
+      "display_name": "dec_dms",
+      "sql_type": "text",
+      "description": "Declination in Degrees:M:S",
+      "unit": "Degrees:arcMin:arcSec"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "healpix",
+      "display_name": "healpix",
+      "sql_type": "integer",
+      "description": "healpix",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "healpixgrp",
+      "display_name": "healpixgrp",
+      "sql_type": "smallint",
+      "description": "healpixgrp",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "apstar_id",
+      "display_name": "apstar_id",
+      "sql_type": "text",
+      "description": "APOGEE (combined) star ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "visit_id",
+      "display_name": "visit_id",
+      "sql_type": "text",
+      "description": "APOGEE visit ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "mangaid",
+      "display_name": "mangaid",
+      "sql_type": "text",
+      "description": "MaNGA ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "apogee_id",
+      "display_name": "apogee_id",
+      "sql_type": "text",
+      "description": "APOGEE ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "apogee_field",
+      "display_name": "apogee_field",
+      "sql_type": "text",
+      "description": "APOGEE Field (prior to SDSS-V)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "has_mwmStar",
+      "display_name": "has mwmStar",
+      "sql_type": "boolean",
+      "description": "Has MWM Star",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "telescope",
+      "display_name": "telescope",
+      "sql_type": "text",
+      "description": "2.5m Telescope",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "file_spec",
+      "display_name": "file_spec",
+      "sql_type": "text",
+      "description": "sdss_access file species name",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "specobjid",
+      "display_name": "specObj ID",
+      "sql_type": "numeric[29]",
+      "description": "spectroscopic object id",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "design_id",
+      "display_name": "design_id",
+      "sql_type": "INT",
+      "description": "design_id",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "sdss_phase",
+      "display_name": "sdss_phase",
+      "sql_type": "SMALLINT",
+      "description": "SDSS Phase from 1 to 5",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "observatory",
+      "display_name": "observatory",
+      "sql_type": "TEXT",
+      "description": "observatory",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "telescope",
+      "display_name": "telescope",
+      "sql_type": "TEXT",
+      "description": "telescope",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "instrument",
+      "display_name": "instrument",
+      "sql_type": "TEXT",
+      "description": "instrument",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "multiplex_id",
+      "display_name": "multiplex ID",
+      "sql_type": "TEXT",
+      "description": "Unique multiplex ID",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "plate",
+      "display_name": "plate",
+      "sql_type": "INT",
+      "description": "SDSS/BOSS/eBOSS/BHM plate (before FPS era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "fps_field",
+      "display_name": "Plate/FPS Field",
+      "sql_type": "INT",
+      "description": "Plate or FPS Field (merges pre/post Plate era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "plate_or_fps_field",
+      "display_name": "Plate/FPS Field",
+      "sql_type": "INT",
+      "description": "Plate or FPS Field (merges pre/post Plate era)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "mjd",
+      "display_name": "mjd",
+      "sql_type": "INT",
+      "description": "MJD",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "run2d",
+      "display_name": "run2d",
+      "sql_type": "TEXT",
+      "description": "idlspec2d version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "apred_vers",
+      "display_name": "apred_vers",
+      "sql_type": "TEXT",
+      "description": "APOGEE DRP Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "drpver",
+      "display_name": "drpver",
+      "sql_type": "TEXT",
+      "description": "MaNGA (for e.g.) DRP Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "version",
+      "display_name": "Version",
+      "sql_type": "TEXT",
+      "description": "All Pipeline Version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "racen",
+      "display_name": "racen",
+      "sql_type": "DOUBLE",
+      "description": "Multiplex center's right ascension",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "deccen",
+      "display_name": "deccen",
+      "sql_type": "DOUBLE",
+      "description": "Multiplex center's declination",
+      "unit": "deg"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "position_angle",
+      "display_name": "position_angle",
+      "sql_type": "DOUBLE",
+      "description": "Multiplex position angle",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "healpix",
+      "display_name": "healpix",
+      "sql_type": "INT",
+      "description": "healpix",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "healpixgrp",
+      "display_name": "healpixgrp",
+      "sql_type": "SMALLINT",
+      "description": "healpixgrp",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "quality",
+      "display_name": "quality",
+      "sql_type": "TEXT",
+      "description": "Quality flag for spectroscopic reduction",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "programname",
+      "display_name": "programname",
+      "sql_type": "TEXT",
+      "description": "Spectroscopic program Name",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "survey",
+      "display_name": "survey",
+      "sql_type": "TEXT",
+      "description": "Spectroscopic survey or sub-survey",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "cas_url",
+      "display_name": "cas_url",
+      "sql_type": "TEXT",
+      "description": "CAS URL",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
+      "column_name": "sas_url",
+      "display_name": "sas_url",
+      "sql_type": "TEXT",
+      "description": "SAS URL",
+      "unit": ""
     }
   ]
 }

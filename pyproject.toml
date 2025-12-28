@@ -1,0 +1,154 @@
+[project]
+name = "sdssdb"
+version = "0.13.6b1"
+authors = [
+    {name = "José Sánchez-Gallego", email = "gallegoj@uw.edu"},
+    {name = "Brian Cherinka", email = "bcherinka@stsci.edu"}
+]
+description = "SDSS product for database management"
+keywords = ["astronomy", "software", "database"]
+license = {text = "BSD 3-Clause License"}
+requires-python = ">=3.6"
+dependencies = [
+    "pgpasslib>=1.1.0",
+    "psycopg2-binary>=2.7.7",
+    "peewee>=3.17.6",
+    "sqlalchemy>=1.3.6",
+    'sdsstools>=1.7.0; python_version >= "3.8"',
+    'sdsstools>=0.1.0,<1.0.0; python_version < "3.8"',
+    "numpy>=1.18.2",
+    "six>=1.12.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sdss/sdssdb"
+Repository = "https://github.com/sdss/sdssdb"
+Documentation = "https://sdssdb.readthedocs.org"
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.optional-dependencies]
+all = [
+    "psycopg[binary]",
+    "progressbar2>=3.46.1",
+    "pydot>=1.4.1",
+    "astropy>=4.0.0",
+    "pandas>=1.0.0",
+    "inflect>=4.1.0",
+    "h5py>=3.8.0",
+    "sdssdb[dev]",
+    "sdssdb[docs]"
+]
+dev = [
+    "pytest>=5.2",
+    "pytest-cov>=2.4.0",
+    "pytest-sugar>=0.8.0",
+    "ipython>=7.13.0",
+    "ipdb>=0.13.2",
+    "pytest-postgresql>=2.2.1,<6",
+    "factory_boy>=2.12.0",
+    "pytest-factoryboy>=2.0.3",
+    "astropy>=4.0.0",
+    "pydot>=1.4.2",
+    "pyyaml>=5.1",
+    "ruff>=0.6.3",
+    "flake8>=7.1.1",
+    "flake8-pyproject>=1.2.3"
+]
+docs = [
+    "Sphinx>=7.0.0",
+    "sphinx_bootstrap_theme>=0.4.12",
+    "releases>=2.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+zip-safe = false
+package-dir = {"" = "python"}
+license-files = ["LICENSE.md"]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["python"]
+exclude = ["*.tests"]
+namespaces = false
+
+[tool.setuptools.package-data]
+sdssdb = ["etc/*"]
+
+[tool.isort]
+line_length = 79
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "SQLA",
+    "PEEWEE",
+    "SDSS",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
+default_section = "THIRDPARTY"
+known_first_party = ["sdssdb"]
+known_sqla = ["sqlalchemy"]
+known_peewee = [
+    "peewee",
+    "playhouse",
+]
+known_sdss = ["sdsstools"]
+balanced_wrapping = true
+include_trailing_comma = false
+lines_after_imports = 2
+use_parentheses = true
+
+[tool.flake8]
+ignore = [
+    "H101",
+    "E722",
+    "W503",
+    "W504",
+    "W505",
+    "E116",
+    "E114"
+]
+max-line-length = 99
+exclude = [
+    "python/sdssdb/sqlalchemy/operationsdb/tools",
+    "python/sdssdb/sqlalchemy/archive",
+    "python/sdssdb/sqlalchemy/mangadb"
+]
+
+[tool.ruff]
+line-length = 99
+target-version = 'py312'
+exclude = ["typings/"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+exclude = [
+    "python/sdssdb/sqlalchemy/operationsdb/**/*.py",
+    "python/sdssdb/sqlalchemy/archive/*.py",
+    "python/sdssdb/sqlalchemy/mangadb/*.py"
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["sdssdb"]
+lines-after-imports = 2
+section-order = ["future", "standard-library", "typing", "third-party", "sqla", "peewee", "sdss", "first-party", "local-folder"]
+
+[tool.ruff.lint.isort.sections]
+typing = ["typing"]
+sdss = ["sdsstools"]
+sqla = ["sqlalchemy"]
+peewee = ["peewee", "playhouse"]
+
+[tool.ruff.format]
+preview = true
+
+[tool.coverage.run]
+branch = true

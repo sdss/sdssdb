@@ -6,11 +6,14 @@
 # @Filename: database.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+from __future__ import annotations
+
 import abc
 import importlib
 import os
 import re
 import socket
+import warnings
 
 import pgpasslib
 import six
@@ -22,27 +25,62 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 import peewee
 from peewee import OperationalError
-from playhouse.pool import PooledPostgresqlExtDatabase
 from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import Introspector, UnknownField
 
 import sdssdb
-from sdssdb import config, log
+from sdssdb import config, log, use_psycopg3
 from sdssdb.utils.internals import get_database_columns
 
 
-__all__ = ['DatabaseConnection', 'PeeweeDatabaseConnection', 'SQLADatabaseConnection']
+__all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnection"]
+
+
+if use_psycopg3 is True:
+    try:
+        import psycopg  # noqa
+        from playhouse.pool import PooledPsycopg3Database as PooledPostgresqlExtDatabase
+    except ImportError:
+        warnings.warn("psycopg3 is not installed. Using psycopg2.")
+        from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
+
+else:
+    from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
 
 
 def _should_autoconnect():
     """Determines whether we should autoconnect."""
 
-    if 'SDSSDB_AUTOCONNECT' in os.environ:
-        envvar_autoconnect = os.environ['SDSSDB_AUTOCONNECT'].lower()
-        if envvar_autoconnect == '0' or envvar_autoconnect == 'false':
+    if "SDSSDB_AUTOCONNECT" in os.environ:
+        envvar_autoconnect = os.environ["SDSSDB_AUTOCONNECT"].lower()
+        if envvar_autoconnect == "0" or envvar_autoconnect == "false":
             return False
     else:
         return sdssdb.autoconnect
+
+
+def get_database_uri(
+    dbname: str,
+    host: str | None = None,
+    port: int | None = None,
+    user: str | None = None,
+    password: str | None = None,
+):
+    """Returns the URI to the database."""
+
+    if user is None and password is None:
+        auth: str = ""
+    elif password is None:
+        auth: str = f"{user}@"
+    else:
+        auth: str = f"{user}:{password}@"
+
+    host_port: str = f"{host or ''}" if port is None else f"{host or ''}:{port}"
+
+    if auth == "" and host_port == "":
+        return f"postgresql://{dbname}"
+
+    return f"postgresql://{auth}{host_port}/{dbname}"
 
 
 class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
@@ -89,14 +127,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     auto_reflect = True
 
     def __init__(self, dbname=None, profile=None, autoconnect=None, dbversion=None):
-
         self.profile = None
         self._config = {}
 
         self.dbname = dbname if dbname else self.dbname
         self.dbversion = dbversion or self.dbversion
         if self.dbversion:
-            self.dbname = f'{self.dbname}_{self.dbversion}'
+            self.dbname = f"{self.dbname}_{self.dbversion}"
 
         self.set_profile(profile=profile, connect=False)
 
@@ -107,10 +144,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             self.connect(dbname=self.dbname, silent_on_fail=True)
 
     def __repr__(self):
-        return '<{} (dbname={!r}, profile={!r}, connected={})>'.format(
-            self.__class__.__name__, self.dbname, self.profile, self.connected)
+        return "<{} (dbname={!r}, profile={!r}, connected={})>".format(
+            self.__class__.__name__,
+            self.dbname,
+            self.profile,
+            self.connected,
+        )
 
-    def set_profile(self, profile=None, connect=True):
+    def set_profile(self, profile=None, connect=True, **params):
         """Sets the profile from the configuration file.
 
         Parameters
@@ -120,6 +161,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             determine the profile.
         connect : bool
             If True, tries to connect to the database using the new profile.
+        params
+            Connection parameters (``user``, ``host``, ``port``, ``password``)
+            that will override the profile values.
 
         Returns
         -------
@@ -131,32 +175,32 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         previous_profile = self.profile
 
         if profile is not None:
-
-            assert profile in config, 'profile not found in configuration file.'
+            assert profile in config, "profile not found in configuration file."
             self.profile = profile
             self._config = config[profile].copy()
 
         else:
-
             # Get hostname
             hostname = socket.getfqdn()
 
             # Initially set location to local.
-            self.profile = 'local'
+            self.profile = "local"
             self._config = config[self.profile].copy()
 
             # Tries to find a profile whose domain matches the hostname
             for profile in config:
-                if 'domain' in config[profile] and config[profile]['domain'] is not None:
-                    if re.match(config[profile]['domain'], hostname):
+                if "domain" in config[profile] and config[profile]["domain"] is not None:
+                    if re.match(config[profile]["domain"], hostname):
                         self.profile = profile
                         self._config = config[profile].copy()
                         # If the profile host matches the current hostname set the
                         # value to None to force using localhost to prevent cases
                         # in which the loopback is not configured properly in PostgreSQL.
-                        if hostname == self._config['host']:
-                            self._config['host'] = None
+                        if hostname == self._config["host"]:
+                            self._config["host"] = None
                         break
+
+        self._config.update(params)
 
         if connect:
             if self.connected and self.profile == previous_profile:
@@ -202,13 +246,15 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         """
 
         if self.profile is None:
-            raise RuntimeError('the profile was not set when '
-                               'DatabaseConnection was instantiated. Use '
-                               'set_profile to set the profile in runtime.')
+            raise RuntimeError(
+                "the profile was not set when "
+                "DatabaseConnection was instantiated. Use "
+                "set_profile to set the profile in runtime."
+            )
 
         # Gets the necessary configuration values from the profile
         db_configuration = {}
-        for item in ['user', 'host', 'port']:
+        for item in ["user", "host", "port"]:
             if item in connection_params:
                 db_configuration[item] = connection_params[item]
             else:
@@ -217,14 +263,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         dbname = dbname or self.dbname
         if dbname is None:
-            raise RuntimeError('the database name was not set when '
-                               'DatabaseConnection was instantiated. '
-                               'To set it in runtime change the dbname '
-                               'attribute.')
+            raise RuntimeError(
+                "the database name was not set when "
+                "DatabaseConnection was instantiated. "
+                "To set it in runtime change the dbname "
+                "attribute."
+            )
 
-        return self.connect_from_parameters(dbname=dbname,
-                                            silent_on_fail=silent_on_fail,
-                                            **db_configuration)
+        return self.connect_from_parameters(
+            dbname=dbname, silent_on_fail=silent_on_fail, **db_configuration
+        )
 
     def connect_from_parameters(self, dbname=None, **params):
         """Initialises the database from a dictionary of parameters.
@@ -245,18 +293,20 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         """
 
         # Make hostname an alias of host.
-        if 'hostname' in params:
-            if 'host' not in params:
-                params['host'] = params.pop('hostname')
+        if "hostname" in params:
+            if "host" not in params:
+                params["host"] = params.pop("hostname")
             else:
-                raise KeyError('cannot use hostname and host at the same time.')
+                raise KeyError("cannot use hostname and host at the same time.")
 
         dbname = dbname or self.dbname
         if dbname is None:
-            raise RuntimeError('the database name was not set when '
-                               'DatabaseConnection was instantiated. '
-                               'To set it in runtime change the dbname '
-                               'attribute.')
+            raise RuntimeError(
+                "the database name was not set when "
+                "DatabaseConnection was instantiated. "
+                "To set it in runtime change the dbname "
+                "attribute."
+            )
 
         return self._conn(dbname, **params)
 
@@ -277,7 +327,16 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         return config[profile]
 
-    @abc.abstractproperty
+    def get_connection_uri(self):
+        """Returns the URI to the database connection."""
+
+        params = self.connection_params
+        if not self.connected or params is None:
+            raise RuntimeError("The database is not connected.")
+
+        return get_database_uri(self.dbname, **params)
+
+    @abc.abstractmethod
     def connection_params(self):
         """Returns a dictionary with the connection parameters.
 
@@ -296,18 +355,17 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         """Change the connection to a certain user."""
 
         if not self.connected:
-            raise RuntimeError('DB has not been initialised.')
+            raise RuntimeError("DB has not been initialised.")
 
         dsn_params = self.connection_params
-        dsn_params.pop('password', None)  # Do not keep the password since it may change.
+        dsn_params.pop("password", None)  # Do not keep the password since it may change.
 
         if dsn_params is None:
-            raise RuntimeError('cannot determine the DSN parameters. '
-                               'The DB may be disconnected.')
+            raise RuntimeError("cannot determine the DSN parameters. The DB may be disconnected.")
 
-        dsn_params['user'] = user
-        if 'dbname' not in dsn_params:
-            dsn_params['dbname'] = self.dbname
+        dsn_params["user"] = user
+        if "dbname" not in dsn_params:
+            dsn_params["dbname"] = self.dbname
 
         self.connect_from_parameters(**dsn_params)
 
@@ -318,12 +376,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        assert self.profile is not None, \
-            'this connection was not initialised from a profile. Try using become().'
+        assert self.profile is not None, (
+            "this connection was not initialised from a profile. Try using become()."
+        )
 
-        assert 'admin' in self._config, 'admin user not defined in profile'
+        assert "admin" in self._config, "admin user not defined in profile"
 
-        self.become(admin or self._config['admin'])
+        self.become(admin or self._config["admin"])
 
     def become_user(self, user=None):
         """Becomes the read-only user.
@@ -332,24 +391,25 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        assert self.profile is not None, \
-            'this connection was not initialised from a profile. Try using become().'
+        assert self.profile is not None, (
+            "this connection was not initialised from a profile. Try using become()."
+        )
 
         if user is None:
-            user = self._config['user'] if 'user' in self._config else None
+            user = self._config["user"] if "user" in self._config else None
 
         self.become(user)
 
     def change_version(self, dbversion=None):
-        ''' Change database version and attempt to reconnect
+        """Change database version and attempt to reconnect
 
         Parameters:
             dbversion (str):
                 A database version
-        '''
+        """
         self.dbversion = dbversion
-        dbname, *dbver = self.dbname.split('_')
-        self.dbname = f'{dbname}_{self.dbversion}' if dbversion else dbname
+        dbname, *dbver = self.dbname.split("_")
+        self.dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
         self.connect(dbname=self.dbname, silent_on_fail=True)
 
     def post_connect(self):
@@ -370,19 +430,22 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
     """
 
     def __init__(self, *args, **kwargs):
-
         self.models = {}
         self.introspector = {}
 
         self._metadata = {}
 
-        autorollback = kwargs.pop('autorollback', True)
-        max_connections = kwargs.pop('max_connections', 10)
-        stale_timeout = kwargs.pop('stale_timeout', None)
+        autorollback = kwargs.pop("autorollback", True)
+        max_connections = kwargs.pop("max_connections", 10)
+        stale_timeout = kwargs.pop("stale_timeout", None)
 
-        PooledPostgresqlExtDatabase.__init__(self, None, autorollback=autorollback,
-                                             stale_timeout=stale_timeout,
-                                             max_connections=max_connections)
+        PooledPostgresqlExtDatabase.__init__(
+            self,
+            None,
+            autorollback=autorollback,
+            stale_timeout=stale_timeout,
+            max_connections=max_connections,
+        )
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
@@ -403,15 +466,15 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
     def _conn(self, dbname, silent_on_fail=False, **params):
         """Connects to the DB and tests the connection."""
 
-        if 'password' not in params:
-            pgpass_params = {key: value
-                             for key, value in params.copy().items()
-                             if value is not None}
+        if "password" not in params:
+            pgpass_params = {
+                key: value for key, value in params.copy().items() if value is not None
+            }
 
             try:
-                params['password'] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
+                params["password"] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
             except pgpasslib.FileNotFound:
-                params['password'] = None
+                params["password"] = None
 
         PooledPostgresqlExtDatabase.init(self, dbname, **params)
         self._metadata = {}
@@ -421,14 +484,14 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
             self.dbname = dbname
         except OperationalError as ee:
             if not silent_on_fail:
-                log.warning(f'failed to connect to database {self.database!r}: {ee}')
+                log.warning(f"failed to connect to database {self.database!r}: {ee}")
             PooledPostgresqlExtDatabase.init(self, None)
 
         if self.is_connection_usable() and self.auto_reflect:
             with self.atomic():
                 for model in self.models.values():
-                    if getattr(model._meta, 'use_reflection', False):
-                        if hasattr(model, 'reflect'):
+                    if getattr(model._meta, "use_reflection", False):
+                        if hasattr(model, "reflect"):
                             model.reflect()
 
         if self.connected:
@@ -466,18 +529,17 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
     def get_introspector(self, schema=None):
         """Gets a Peewee database :class:`peewee:Introspector`."""
 
-        schema_key = schema or ''
+        schema_key = schema or ""
 
         if schema_key not in self.introspector:
-            self.introspector[schema_key] = Introspector.from_database(
-                self, schema=schema)
+            self.introspector[schema_key] = Introspector.from_database(self, schema=schema)
 
         return self.introspector[schema_key]
 
     def get_fields(self, table_name, schema=None, cache=True):
         """Returns a list of Peewee fields for a table."""
 
-        schema = schema or 'public'
+        schema = schema or "public"
 
         if schema not in self._metadata or not cache:
             self._metadata[schema] = get_database_columns(self, schema=schema)
@@ -487,21 +549,21 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
 
         table_metadata = self._metadata[schema][table_name]
 
-        pk = table_metadata['pk']
+        pk = table_metadata["pk"]
         composite_key = pk is not None and len(pk) > 1
 
-        columns = table_metadata['columns']
+        columns = table_metadata["columns"]
 
         fields = []
         for col_name, field_type, array_type, nullable in columns:
+            is_pk = True if (pk is not None and not composite_key and pk[0] == col_name) else False
 
-            is_pk = True if (pk is not None and not composite_key and
-                             pk[0] == col_name) else False
-
-            params = {'column_name': col_name,
-                      'null': nullable,
-                      'primary_key': is_pk,
-                      'unique': is_pk}
+            params = {
+                "column_name": col_name,
+                "null": nullable,
+                "primary_key": is_pk,
+                "unique": is_pk,
+            }
 
             if array_type:
                 field = ArrayField(array_type, **params)
@@ -517,7 +579,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
     def get_primary_keys(self, table_name, schema=None, cache=True):
         """Returns the primary keys for a table."""
 
-        schema = schema or 'public'
+        schema = schema or "public"
 
         if schema not in self._metadata or not cache:
             self._metadata[schema] = get_database_columns(self, schema=schema)
@@ -525,11 +587,11 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
         if table_name not in self._metadata[schema]:
             return []
         else:
-            return self._metadata[schema][table_name]['pk'] or []
+            return self._metadata[schema][table_name]["pk"] or []
 
 
 class SQLADatabaseConnection(DatabaseConnection):
-    ''' SQLAlchemy database connection implementation '''
+    """SQLAlchemy database connection implementation"""
 
     engine = None
     bases = []
@@ -537,7 +599,6 @@ class SQLADatabaseConnection(DatabaseConnection):
     metadata = None
 
     def __init__(self, *args, **kwargs):
-
         #: Reports whether the connection is active.
         self.connected = False
 
@@ -551,7 +612,7 @@ class SQLADatabaseConnection(DatabaseConnection):
         return self._connect_params
 
     def _get_password(self, **params):
-        ''' Get a db password from a pgpass file
+        """Get a db password from a pgpass file
 
         Parameters:
             params (dict):
@@ -560,19 +621,23 @@ class SQLADatabaseConnection(DatabaseConnection):
         Returns:
             The database password for a given set of connection parameters
 
-        '''
+        """
 
-        password = params.get('password', None)
+        password = params.get("password", None)
         if not password:
             try:
-                password = pgpasslib.getpass(params['host'], params['port'],
-                                             params['database'], params['username'])
+                password = pgpasslib.getpass(
+                    params["host"],
+                    params["port"],
+                    params["database"],
+                    params["username"],
+                )
             except KeyError:
-                raise RuntimeError('ERROR: invalid server configuration')
+                raise RuntimeError("ERROR: invalid server configuration")
         return password
 
     def _make_connection_string(self, dbname, **params):
-        ''' Build a db connection string
+        """Build a db connection string
 
         Parameters:
             dbname (str):
@@ -583,33 +648,32 @@ class SQLADatabaseConnection(DatabaseConnection):
         Returns:
             A database connection string
 
-        '''
+        """
 
         db_params = params.copy()
-        db_params['drivername'] = 'postgresql+psycopg2'
-        db_params['database'] = dbname
-        db_params['username'] = db_params.pop('user', None)
-        db_params['host'] = db_params.pop('host', 'localhost')
-        db_params['port'] = db_params.pop('port', 5432)
-        if db_params['username']:
-            db_params['password'] = self._get_password(**db_params)
+        db_params["drivername"] = "postgresql+psycopg2"
+        db_params["database"] = dbname
+        db_params["username"] = db_params.pop("user", None)
+        db_params["host"] = db_params.pop("host", "localhost")
+        db_params["port"] = db_params.pop("port", 5432)
+        if db_params["username"]:
+            db_params["password"] = self._get_password(**db_params)
         db_connection_string = url.URL(**db_params)
         self._connect_params = params
         return db_connection_string
 
     def _conn(self, dbname, silent_on_fail=False, **params):
-        '''Connects to the DB and tests the connection.'''
+        """Connects to the DB and tests the connection."""
 
         # get connection string
         db_connection_string = self._make_connection_string(dbname, **params)
 
         try:
-            self.create_engine(db_connection_string, echo=False,
-                               pool_size=10, pool_recycle=1800)
+            self.create_engine(db_connection_string, echo=False, pool_size=10, pool_recycle=1800)
             self.engine.connect()
         except OpError:
             if not silent_on_fail:
-                log.warning('Failed to connect to database {0}'.format(dbname))
+                log.warning("Failed to connect to database {0}".format(dbname))
             self.engine.dispose()
             self.engine = None
             self.connected = False
@@ -626,7 +690,7 @@ class SQLADatabaseConnection(DatabaseConnection):
         return self.connected
 
     def reset_engine(self):
-        ''' Reset the engine, metadata, and session '''
+        """Reset the engine, metadata, and session"""
 
         self.bases = []
         if self.engine:
@@ -636,27 +700,37 @@ class SQLADatabaseConnection(DatabaseConnection):
             self.Session.close()
             self.Session = None
 
-    def create_engine(self, db_connection_string=None, echo=False, pool_size=10,
-                      pool_recycle=1800, expire_on_commit=True):
-        ''' Create a new database engine
+    def create_engine(
+        self,
+        db_connection_string=None,
+        echo=False,
+        pool_size=10,
+        pool_recycle=1800,
+        expire_on_commit=True,
+    ):
+        """Create a new database engine
 
         Resets and creates a new sqlalchemy database engine.  Also creates and binds
         engine metadata and a new scoped session.
 
-        '''
+        """
 
         self.reset_engine()
 
         if not db_connection_string:
             dbname = self.dbname or self.DATABASE_NAME
-            db_connection_string = self._make_connection_string(dbname,
-                                                                **self.connection_params)
+            db_connection_string = self._make_connection_string(dbname, **self.connection_params)
 
-        self.engine = create_engine(db_connection_string, echo=echo, pool_size=pool_size,
-                                    pool_recycle=pool_recycle)
+        self.engine = create_engine(
+            db_connection_string,
+            echo=echo,
+            pool_size=pool_size,
+            pool_recycle=pool_recycle,
+        )
         self.metadata = MetaData(bind=self.engine)
-        self.Session = scoped_session(sessionmaker(bind=self.engine, autocommit=True,
-                                                   expire_on_commit=expire_on_commit))
+        self.Session = scoped_session(
+            sessionmaker(bind=self.engine, autocommit=True, expire_on_commit=expire_on_commit)
+        )
 
     def add_base(self, base, prepare=True):
         """Binds a base to this connection."""
@@ -685,7 +759,7 @@ class SQLADatabaseConnection(DatabaseConnection):
             # If the base has an attribute _relations that's the function
             # to call to set up the relationships once the engine has been
             # bound to the base.
-            if hasattr(base, '_relations'):
+            if hasattr(base, "_relations"):
                 if isinstance(base._relations, str):
                     module = importlib.import_module(base.__module__)
                     relations_func = getattr(module, base._relations)
