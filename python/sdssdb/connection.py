@@ -484,6 +484,9 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
             except pgpasslib.FileNotFound:
                 params["password"] = None
 
+        if not self.is_closed() and (self.dbname != dbname or params != self.connection_params):
+            self.close_all()
+
         PooledPostgresqlExtDatabase.init(self, dbname, **params)
         self._metadata = {}
 
