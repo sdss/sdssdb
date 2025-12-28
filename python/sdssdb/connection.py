@@ -496,11 +496,10 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
             PooledPostgresqlExtDatabase.init(self, None)
 
         if self.is_connection_usable() and self.auto_reflect:
-            with self.atomic():
-                for model in self.models.values():
-                    if getattr(model._meta, "use_reflection", False):
-                        if hasattr(model, "reflect"):
-                            model.reflect()
+            for model in self.models.values():
+                if getattr(model._meta, "use_reflection", False):
+                    if hasattr(model, "reflect"):
+                        model.reflect()
 
         if self.connected:
             self.post_connect()
