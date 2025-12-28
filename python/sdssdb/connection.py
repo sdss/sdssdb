@@ -334,10 +334,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         if not self.connected or params is None:
             raise RuntimeError("The database is not connected.")
 
+        assert isinstance(self.dbname, str), "Database name is not set."
+
         return get_database_uri(self.dbname, **params)
 
+    @property
     @abc.abstractmethod
-    def connection_params(self):
+    def connection_params(self) -> dict:
         """Returns a dictionary with the connection parameters.
 
         Returns
@@ -407,9 +410,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             dbversion (str):
                 A database version
         """
+
+        assert self.dbname is not None, "Database name is not set."
+
         self.dbversion = dbversion
+
         dbname, *dbver = self.dbname.split("_")
         self.dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
+
         self.connect(dbname=self.dbname, silent_on_fail=True)
 
     def post_connect(self):
@@ -418,7 +426,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         pass
 
 
-class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
+class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):  # type: ignore
     """Peewee database connection implementation.
 
     Attributes
@@ -670,11 +678,13 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         try:
             self.create_engine(db_connection_string, echo=False, pool_size=10, pool_recycle=1800)
+            assert self.engine is not None, "engine is not initialised."
             self.engine.connect()
         except OpError:
             if not silent_on_fail:
                 log.warning("Failed to connect to database {0}".format(dbname))
-            self.engine.dispose()
+            if self.engine is not None:
+                self.engine.dispose()  # type: ignore
             self.engine = None
             self.connected = False
             self.Session = None
@@ -694,10 +704,11 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         self.bases = []
         if self.engine:
-            self.engine.dispose()
+            self.engine.dispose()  # type: ignore
             self.engine = None
             self.metadata = None
-            self.Session.close()
+            if self.Session:
+                self.Session.close()  # type: ignore
             self.Session = None
 
     def create_engine(
@@ -719,6 +730,7 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         if not db_connection_string:
             dbname = self.dbname or self.DATABASE_NAME
+            assert self.connection_params is not None, "connection parameters are not set."
             db_connection_string = self._make_connection_string(dbname, **self.connection_params)
 
         self.engine = create_engine(
