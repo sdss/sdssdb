@@ -20,6 +20,17 @@ from playhouse.postgres_ext import ArrayField
 from sdssdb.peewee.sdss5db import catalogdb
 
 
+CATALOG_TO_DESCRIPTIONS = {
+    "catalogid": "The catalogid identifier in the {table_name} table.",
+    "target_id": "The primary key identifier in the associated table {associated_table}.",
+    "version_id": "The internal version for the cross-match.",
+    "best": "Whether this is considered the best match between the catalog entry and {associated_table}.",
+    "distance": ("The distance between the catalog and target coordinates if best=F."),
+    "added_by_phase": "Phase of the cross-match that added this entry.",
+    "plan_id": "Identifier of the cross-matching plan used to generate this file.",
+}
+
+
 def get_model(table_name: str) -> type[catalogdb.CatalogdbModel] | None:
     """Returns the Peewee model for a given ``catalogdb`` table name.
 
@@ -120,6 +131,14 @@ def generate_catalogdb_metadata(
                     col_metadata["description"] = minidb_col.get("description", "")
                     col_metadata["unit"] = minidb_col.get("unit", "None") or "None"
 
+                if col_metadata["description"] == "" and table_name.startswith("catalog_to_"):
+                    associated_table = table_name.replace("catalog_to_", "")
+                    if col_name in CATALOG_TO_DESCRIPTIONS:
+                        col_metadata["description"] = CATALOG_TO_DESCRIPTIONS[col_name].format(
+                            table_name=table_name,
+                            associated_table=associated_table,
+                        )
+
                 col_metadata["column_name"] = col_name
                 col_metadata["display_name"] = col_name
 
@@ -152,36 +171,12 @@ def generate_catalogdb_metadata(
                     "unit": "None",
                 }
 
-                if table_name.startswith("catalog_to_"):
+                if table_name.startswith("catalog_to_") and col_name in CATALOG_TO_DESCRIPTIONS:
                     associated_table = table_name.replace("catalog_to_", "")
-                    if col_name == "catalogid":
-                        col_metadata["description"] = (
-                            f"The catalogid identifier in the {table_name} table."
-                        )
-                    elif col_name == "targetid":
-                        col_metadata["description"] = (
-                            "The primary key identifier in the associated "
-                            f"table {associated_table}."
-                        )
-                    elif col_name == "version_id":
-                        col_metadata["description"] = "The internal version for the cross-match."
-                    elif col_name == "best":
-                        col_metadata["description"] = (
-                            "Whether this is considered the best match between "
-                            f"the catalog entry and {associated_table}."
-                        )
-                    elif col_name == "separation":
-                        col_metadata["description"] = (
-                            "The distance between the catalog and target coordinates if best=F."
-                        )
-                    elif col_name == "added_by_phase":
-                        col_metadata["description"] = (
-                            "Phase of the cross-match that added this entry."
-                        )
-                    elif col_name == "plan_id":
-                        col_metadata["description"] = (
-                            "Identifier of the cross-matching plan used to generate this file."
-                        )
+                    col_metadata["description"] = CATALOG_TO_DESCRIPTIONS[col_name].format(
+                        table_name=table_name,
+                        associated_table=associated_table,
+                    )
 
                 metadata.append(col_metadata)
 
@@ -281,3 +276,87 @@ def update_catalogdb_metadata(
 
     with metadata_path.open("w") as f:
         json.dump(catalogdb_metadata, f, indent=2)
+
+
+def update_catalog_to_descriptions(
+    metadata_path: os.PathLike | pathlib.Path | None = None,
+) -> None:
+    """Updates all ``catalog_to_`` table descriptions in the metadata.
+
+    Parameters
+    ----------
+    metadata_path
+        The path to the JSON file containing the metadata. If :obj:`None`, assumes the default
+        location in ``sdssdb``.
+
+    """
+
+    if metadata_path is None:
+        cwd = pathlib.Path(__file__).parent
+        metadata_path = cwd / "catalogdb.json"
+    else:
+        metadata_path = pathlib.Path(metadata_path)
+
+    data = json.loads(open(metadata_path, "r").read())
+
+    updated_data: list[dict[str, str]] = []
+    for col in data["metadata"]:
+        if col["table_name"].startswith("catalog_to_") and col["description"].strip() == "":
+            associated_table = col["table_name"].replace("catalog_to_", "")
+            if col["column_name"] in CATALOG_TO_DESCRIPTIONS:
+                col["description"] = CATALOG_TO_DESCRIPTIONS[col["column_name"]].format(
+                    table_name=col["table_name"],
+                    associated_table=associated_table,
+                )
+                updated_data.append(col)
+
+    update_catalogdb_metadata(updated_data, metadata_path=metadata_path)
+
+
+def list_missing_descriptions(
+    metadata_path: os.PathLike | pathlib.Path | None = None,
+    only_tables: bool = False,
+    only_arrays: bool = False,
+) -> list[str]:
+    """Lists all columns in ``catalogdb`` missing descriptions.
+
+    Parameters
+    ----------
+    metadata_path
+        The path to the JSON file containing the metadata. If :obj:`None`, assumes the default
+        location in ``sdssdb``.
+    only_tables
+        Returns a list of tables in which at least one column is missing a description.
+    only_arrays
+        If :obj:`True`, only lists array columns missing descriptions.
+
+    Returns
+    -------
+    list
+        A list of column names missing descriptions.
+
+    """
+
+    if metadata_path is None:
+        cwd = pathlib.Path(__file__).parent
+        metadata_path = cwd / "catalogdb.json"
+    else:
+        metadata_path = pathlib.Path(metadata_path)
+
+    data = json.loads(open(metadata_path, "r").read())
+
+    missing: list[str] = []
+    for col in data["metadata"]:
+        if col["description"].strip() == "":
+            if only_arrays and not col["sql_type"].endswith("[]"):
+                continue
+            missing.append(f"{col['table_name']}.{col['column_name']}")
+
+    if only_tables:
+        tables = set()
+        for col in missing:
+            table_name = col.split(".")[0]
+            tables.add(table_name)
+        return sorted(list(tables))
+
+    return missing
