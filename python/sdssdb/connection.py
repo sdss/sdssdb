@@ -42,10 +42,10 @@ if use_psycopg3 is True:
         from playhouse.pool import PooledPsycopg3Database as PooledPostgresqlExtDatabase
     except ImportError:
         warnings.warn("psycopg3 is not installed. Using psycopg2.")
-        from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
+        from playhouse.pool import PooledPostgresqlExtDatabase
 
 else:
-    from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
+    from playhouse.pool import PooledPostgresqlExtDatabase
 
 
 def _should_autoconnect():
