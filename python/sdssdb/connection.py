@@ -39,13 +39,13 @@ __all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnec
 if use_psycopg3 is True:
     try:
         import psycopg  # noqa
-        from playhouse.psycopg3_ext import Psycopg3Database as PostgresqlDatabase
+        from playhouse.pool import PooledPsycopg3Database as PooledPostgresqlExtDatabase
     except ImportError:
         warnings.warn("psycopg3 is not installed. Using psycopg2.")
-        from peewee import PostgresqlDatabase
+        from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
 
 else:
-    from peewee import PostgresqlDatabase
+    from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
 
 
 def _should_autoconnect():
@@ -334,10 +334,13 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         if not self.connected or params is None:
             raise RuntimeError("The database is not connected.")
 
+        assert isinstance(self.dbname, str), "Database name is not set."
+
         return get_database_uri(self.dbname, **params)
 
+    @property
     @abc.abstractmethod
-    def connection_params(self):
+    def connection_params(self) -> dict:
         """Returns a dictionary with the connection parameters.
 
         Returns
@@ -407,9 +410,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             dbversion (str):
                 A database version
         """
+
+        assert self.dbname is not None, "Database name is not set."
+
         self.dbversion = dbversion
+
         dbname, *dbver = self.dbname.split("_")
         self.dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
+
         self.connect(dbname=self.dbname, silent_on_fail=True)
 
     def post_connect(self):
@@ -418,7 +426,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         pass
 
 
-class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
+class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):  # type: ignore
     """Peewee database connection implementation.
 
     Attributes
@@ -435,7 +443,17 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         self._metadata = {}
 
-        PostgresqlDatabase.__init__(self, None)
+        autorollback = kwargs.pop("autorollback", True)
+        max_connections = kwargs.pop("max_connections", 10)
+        stale_timeout = kwargs.pop("stale_timeout", None)
+
+        PooledPostgresqlExtDatabase.__init__(
+            self,
+            None,
+            autorollback=autorollback,
+            stale_timeout=stale_timeout,
+            max_connections=max_connections,
+        )
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
@@ -466,16 +484,16 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
             except pgpasslib.FileNotFound:
                 params["password"] = None
 
-        PostgresqlDatabase.init(self, dbname, **params)
+        PooledPostgresqlExtDatabase.init(self, dbname, **params)
         self._metadata = {}
 
         try:
-            PostgresqlDatabase.connect(self)
+            PooledPostgresqlExtDatabase.connect(self)
             self.dbname = dbname
         except OperationalError as ee:
             if not silent_on_fail:
-                log.warning(f"failed connecting to database {self.database!r}: {ee}")
-            PostgresqlDatabase.init(self, None)
+                log.warning(f"failed to connect to database {self.database!r}: {ee}")
+            PooledPostgresqlExtDatabase.init(self, None)
 
         if self.is_connection_usable() and self.auto_reflect:
             with self.atomic():
@@ -660,11 +678,13 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         try:
             self.create_engine(db_connection_string, echo=False, pool_size=10, pool_recycle=1800)
+            assert self.engine is not None, "engine is not initialised."
             self.engine.connect()
         except OpError:
             if not silent_on_fail:
                 log.warning("Failed to connect to database {0}".format(dbname))
-            self.engine.dispose()
+            if self.engine is not None:
+                self.engine.dispose()  # type: ignore
             self.engine = None
             self.connected = False
             self.Session = None
@@ -684,10 +704,11 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         self.bases = []
         if self.engine:
-            self.engine.dispose()
+            self.engine.dispose()  # type: ignore
             self.engine = None
             self.metadata = None
-            self.Session.close()
+            if self.Session:
+                self.Session.close()  # type: ignore
             self.Session = None
 
     def create_engine(
@@ -709,6 +730,7 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         if not db_connection_string:
             dbname = self.dbname or self.DATABASE_NAME
+            assert self.connection_params is not None, "connection parameters are not set."
             db_connection_string = self._make_connection_string(dbname, **self.connection_params)
 
         self.engine = create_engine(
