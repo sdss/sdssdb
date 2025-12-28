@@ -37734,8 +37734,8 @@
       "column_name": "psfflux",
       "display_name": "psfflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "PSF flux in nanomaggies, for SDSS imaging based targets",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -37743,8 +37743,8 @@
       "column_name": "psfflux_ivar",
       "display_name": "psfflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of PSF flux in nanomaggies, for SDSS imaging based targets",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -37752,8 +37752,8 @@
       "column_name": "fiberflux",
       "display_name": "fiberflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "3 arcsec fiber flux in nanomaggies, for SDSS imaging based targets",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -37761,8 +37761,8 @@
       "column_name": "fiberflux_ivar",
       "display_name": "fiberflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of 3 arcsec fiber flux in nanomaggies, for SDSS imaging based targets",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -37770,8 +37770,8 @@
       "column_name": "fiber2flux",
       "display_name": "fiber2flux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "2 arcsec fiber flux in nanomaggies, for SDSS imaging based targets",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -37779,8 +37779,8 @@
       "column_name": "fiber2flux_ivar",
       "display_name": "fiber2flux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of 2 arcsec fiber flux in nanomaggies, for SDSS imaging based targets",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -37788,8 +37788,8 @@
       "column_name": "psfmag",
       "display_name": "psfmag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "PSF magnitude, for SDSS imaging based targets",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -37797,8 +37797,8 @@
       "column_name": "fibermag",
       "display_name": "fibermag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "3 arcsec fiber magnitude, for SDSS imaging based targets",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -37806,8 +37806,8 @@
       "column_name": "fiber2mag",
       "display_name": "fiber2mag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "2 arcsec fiber magnitude, for SDSS imaging based targets",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -37815,8 +37815,8 @@
       "column_name": "mag",
       "display_name": "mag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "magnitude to use for the SOS software as the best known fiber magnitude for the object",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -38985,8 +38985,8 @@
       "column_name": "calibflux",
       "display_name": "calibflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Broad-band flux in SDSS-u from PSFmag",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -38994,8 +38994,8 @@
       "column_name": "calibflux_ivar",
       "display_name": "calibflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse var flux SDSS-u from PSFmag",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -39039,8 +39039,8 @@
       "column_name": "mag",
       "display_name": "mag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Optical magnitude",
+      "unit": "AB mag"
     },
     {
       "schema": "catalogdb",
@@ -39444,7 +39444,7 @@
       "column_name": "sn_median",
       "display_name": "sn_median",
       "sql_type": "float[]",
-      "description": "",
+      "description": "Median S/N for all good pixels",
       "unit": "None"
     },
     {
@@ -39498,8 +39498,8 @@
       "column_name": "spectroflux",
       "display_name": "spectroflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Spectrum projected onto SDSS filters",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -39507,8 +39507,8 @@
       "column_name": "spectroflux_ivar",
       "display_name": "spectroflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of spectrum projected onto SDSS filters",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -39516,8 +39516,8 @@
       "column_name": "spectrosynflux",
       "display_name": "spectrosynflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Best-fit template projected onto SDSS filters",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -39525,8 +39525,8 @@
       "column_name": "spectrosynflux_ivar",
       "display_name": "spectrosynflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of best-fit template projected onto SDSS filters",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -39534,8 +39534,8 @@
       "column_name": "spectroskyflux",
       "display_name": "spectroskyflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Sky spectrum projected onto SDSS filters",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -41712,7 +41712,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "text",
-      "description": "",
+      "description": "The primary key identifier in the associated table sdss_dr16_apogeestar.",
       "unit": "None"
     },
     {
@@ -42162,7 +42162,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "text",
-      "description": "",
+      "description": "The primary key identifier in the associated catalog table sdss_dr17_apogee_targetinfo.",
       "unit": "None"
     },
     {
@@ -46716,7 +46716,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "text",
-      "description": "",
+      "description": "The primary key identifier in the associated catalog table sdss_dr17_apogee_targetinfo.",
       "unit": "None"
     },
     {
@@ -50766,7 +50766,7 @@
       "column_name": "dchisq",
       "display_name": "dchisq",
       "sql_type": "float[]",
-      "description": "",
+      "description": "Difference in chi2 between successively more-complex model fits: PSF. The difference is versus no source.",
       "unit": "None"
     },
     {
@@ -54213,8 +54213,8 @@
       "column_name": "fibermag",
       "display_name": "fibermag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Magnitude in 3 arcsec diameter fiber radius",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -54222,8 +54222,8 @@
       "column_name": "fiber2mag",
       "display_name": "fiber2mag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Magnitude in 2 arcsec diameter fiber radius",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -54231,7 +54231,7 @@
       "column_name": "calib_status",
       "display_name": "calib_status",
       "sql_type": "int[]",
-      "description": "",
+      "description": "Calibration status",
       "unit": "None"
     },
     {
@@ -54366,8 +54366,8 @@
       "column_name": "psf_fwhm",
       "display_name": "psf_fwhm",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Imaging FWHM in SDSS bands",
+      "unit": "arcsec"
     },
     {
       "schema": "catalogdb",
@@ -54375,8 +54375,8 @@
       "column_name": "psfflux",
       "display_name": "psfflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "PSF flux in SDSS bands",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -54384,8 +54384,8 @@
       "column_name": "psfflux_ivar",
       "display_name": "psfflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of PSF flux in SDSS bands",
+      "unit": "nanomaggies^-2"
     },
     {
       "schema": "catalogdb",
@@ -54393,8 +54393,8 @@
       "column_name": "extinction",
       "display_name": "extinction",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Extinction in SDSS bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -54402,8 +54402,8 @@
       "column_name": "fiberflux",
       "display_name": "fiberflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Flux in 3 arcsec diameter fiber radius",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -54411,8 +54411,8 @@
       "column_name": "fiberflux_ivar",
       "display_name": "fiberflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of flux in 3 arcsec diameter fiber radius",
+      "unit": "nanomaggies^-2"
     },
     {
       "schema": "catalogdb",
@@ -54420,8 +54420,8 @@
       "column_name": "fiber2flux",
       "display_name": "fiber2flux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Flux in 2 arcsec diameter fiber radius",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -54429,8 +54429,8 @@
       "column_name": "fiber2flux_ivar",
       "display_name": "fiber2flux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of flux in 2 arcsec diameter fiber radius",
+      "unit": "nanomaggies^-2"
     },
     {
       "schema": "catalogdb",
@@ -54438,8 +54438,8 @@
       "column_name": "modelflux",
       "display_name": "modelflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Flux of best fitting model in SDSS bands",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -54447,8 +54447,8 @@
       "column_name": "modelflux_ivar",
       "display_name": "modelflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of model flux in SDSS bands",
+      "unit": "nanomaggies^-2"
     },
     {
       "schema": "catalogdb",
@@ -54456,8 +54456,8 @@
       "column_name": "modelmag",
       "display_name": "modelmag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Magnitude of best fitting model in SDSS bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -54465,8 +54465,8 @@
       "column_name": "modelmag_ivar",
       "display_name": "modelmag_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of magnitude of best fitting model in SDSS bands",
+      "unit": "mag^-2"
     },
     {
       "schema": "catalogdb",
@@ -67758,7 +67758,7 @@
       "column_name": "sn_median",
       "display_name": "sn_median",
       "sql_type": "float[]",
-      "description": "",
+      "description": "Median S/N for all good pixels in each SDSS band",
       "unit": "None"
     },
     {
@@ -67776,8 +67776,8 @@
       "column_name": "spectroflux",
       "display_name": "spectroflux",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Flux in spectroscopic fibers",
+      "unit": "nanomaggies"
     },
     {
       "schema": "catalogdb",
@@ -67785,8 +67785,8 @@
       "column_name": "spectroflux_ivar",
       "display_name": "spectroflux_ivar",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Inverse variance of flux in spectroscopic fibers",
+      "unit": "nanomaggies^-2"
     },
     {
       "schema": "catalogdb",
@@ -74301,8 +74301,8 @@
       "column_name": "psfmag_des",
       "display_name": "psfmag_des",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "DES PSF photometry",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74310,8 +74310,8 @@
       "column_name": "psfmagerr_des",
       "display_name": "psfmagerr_des",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "DES PSF photometry error",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74319,8 +74319,8 @@
       "column_name": "mag_auto_des",
       "display_name": "mag_auto_des",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "DES auto photometry",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74328,8 +74328,8 @@
       "column_name": "magerr_auto_des",
       "display_name": "magerr_auto_des",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "DES auto photometry error",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74337,7 +74337,7 @@
       "column_name": "imaflags_iso",
       "display_name": "imaflags_iso",
       "sql_type": "int[]",
-      "description": "",
+      "description": "DES flag identifying sources with missing/flagged pixels, considering all single epoch images",
       "unit": "None"
     },
     {
@@ -74400,8 +74400,8 @@
       "column_name": "psfmag_ps1",
       "display_name": "psfmag_ps1",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "PS1 PSF magnitudes",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74409,8 +74409,8 @@
       "column_name": "psfmagerr_ps1",
       "display_name": "psfmagerr_ps1",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "PS1 PSF magnitude errors",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74418,8 +74418,8 @@
       "column_name": "kronmag_ps1",
       "display_name": "kronmag_ps1",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "PS1 Kron magnitudes",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74427,8 +74427,8 @@
       "column_name": "kronmagerr_ps1",
       "display_name": "kronmagerr_ps1",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "PS1 Kron magnitude errors",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74436,7 +74436,7 @@
       "column_name": "infoflag2",
       "display_name": "infoflag2",
       "sql_type": "int[]",
-      "description": "",
+      "description": "PS1 flags, values listed in DetectionFlags2",
       "unit": "None"
     },
     {
@@ -74499,8 +74499,8 @@
       "column_name": "mag_nsc",
       "display_name": "mag_nsc",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Weighted-average magnitudes",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74508,8 +74508,8 @@
       "column_name": "magerr_nsc",
       "display_name": "magerr_nsc",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Weighted-average magnitude error",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74562,8 +74562,8 @@
       "column_name": "psfmag_sdss",
       "display_name": "psfmag_sdss",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "SDSS PSF magnitudes",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74571,8 +74571,8 @@
       "column_name": "psfmagerr_sdss",
       "display_name": "psfmagerr_sdss",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "SDSS PSF magnitude errors",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74580,8 +74580,8 @@
       "column_name": "modelmag_sdss",
       "display_name": "modelmag_sdss",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "SDSS model magnitudes",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74589,8 +74589,8 @@
       "column_name": "modelmagerr_sdss",
       "display_name": "modelmagerr_sdss",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "SDSS model magnitude errors",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74625,8 +74625,8 @@
       "column_name": "mag_gaia",
       "display_name": "mag_gaia",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Gaia DR2 magnitures in G, BP, RP bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74634,8 +74634,8 @@
       "column_name": "magerr_gaia",
       "display_name": "magerr_gaia",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Gaia DR2 magnitude errors in G, BP, RP bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74733,8 +74733,8 @@
       "column_name": "mag_unwise",
       "display_name": "mag_unwise",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": " unWISE (Vega) magnitudes in W1 and W2 bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74742,8 +74742,8 @@
       "column_name": "magerr_unwise",
       "display_name": "magerr_unwise",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "unWISE (Vega) magnitude errors in W1 and W2 bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74751,7 +74751,7 @@
       "column_name": "flags_unwise",
       "display_name": "flags_unwise",
       "sql_type": "int[]",
-      "description": "",
+      "description": "unWISE coadd flags",
       "unit": "None"
     },
     {
@@ -74814,8 +74814,8 @@
       "column_name": "mag_ir",
       "display_name": "mag_ir",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "(Vega) magnitude in NIR (Y, J, H, K bands)",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -74823,8 +74823,8 @@
       "column_name": "magerr_ir",
       "display_name": "magerr_ir",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "NIR magnitude errors in (Y, J, H, K bands)",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -75120,7 +75120,7 @@
       "column_name": "des_var_nepoch",
       "display_name": "des_var_nepoch",
       "sql_type": "int[]",
-      "description": "",
+      "description": " Number of DES single-epoch photometric datapoints per band",
       "unit": "None"
     },
     {
@@ -75129,7 +75129,7 @@
       "column_name": "des_var_status",
       "display_name": "des_var_status",
       "sql_type": "int[]",
-      "description": "",
+      "description": "Status of intrinsic variability calculation from DES",
       "unit": "None"
     },
     {
@@ -75138,8 +75138,8 @@
       "column_name": "des_var_rms",
       "display_name": "des_var_rms",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Intrinsic RMS from DES",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -75147,8 +75147,8 @@
       "column_name": "des_var_sigrms",
       "display_name": "des_var_sigrms",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Error of intrinsic RMS from DES",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -75156,7 +75156,7 @@
       "column_name": "des_var_sn",
       "display_name": "des_var_sn",
       "sql_type": "double[]",
-      "description": "",
+      "description": "The signal-to-noise ratio of the measured intrinsic RMS from DES",
       "unit": "None"
     },
     {
@@ -75174,7 +75174,7 @@
       "column_name": "ps1_var_nepoch",
       "display_name": "ps1_var_nepoch",
       "sql_type": "int[]",
-      "description": "",
+      "description": "Number of PS1 single-epoch photometric data points",
       "unit": "None"
     },
     {
@@ -75183,7 +75183,7 @@
       "column_name": "ps1_var_status",
       "display_name": "ps1_var_status",
       "sql_type": "int[]",
-      "description": "",
+      "description": "Status of intrinsic variability calculation from PS1",
       "unit": "None"
     },
     {
@@ -75192,8 +75192,8 @@
       "column_name": "ps1_var_rms",
       "display_name": "ps1_var_rms",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Intrinsic RMS from PS1",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -75201,8 +75201,8 @@
       "column_name": "ps1_var_sigrms",
       "display_name": "ps1_var_sigrms",
       "sql_type": "double[]",
-      "description": "",
-      "unit": "None"
+      "description": "Error of intrinsic RMS from PS1",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -75210,7 +75210,7 @@
       "column_name": "ps1_var_sn",
       "display_name": "ps1_var_sn",
       "sql_type": "double[]",
-      "description": "",
+      "description": "The signal-to-noise ratio of the measured intrinsic RMS from PS1",
       "unit": "None"
     },
     {
@@ -75642,8 +75642,8 @@
       "column_name": "mag",
       "display_name": "mag",
       "sql_type": "float[]",
-      "description": "",
-      "unit": "None"
+      "description": "Optical magnitude of the target in SDSS bands",
+      "unit": "mag"
     },
     {
       "schema": "catalogdb",
@@ -81447,7 +81447,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "text",
-      "description": "target id",
+      "description": "The primary key identifier in the associated catalog table sdss_dr17_apogee_targetinfo.",
       "unit": "None"
     },
     {
@@ -87018,7 +87018,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated catalog table sdss_dr19p_speclite.",
       "unit": "None"
     },
     {
@@ -87108,7 +87108,7 @@
       "column_name": "added_by_phase",
       "display_name": "added_by_phase",
       "sql_type": "int",
-      "description": "",
+      "description": "Phase of the cross-match that added this entry.",
       "unit": "None"
     },
     {
@@ -87351,7 +87351,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "char",
-      "description": "",
+      "description": "The primary key identifier in the associated table catwise.",
       "unit": "None"
     },
     {
@@ -87378,7 +87378,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87486,7 +87486,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table glimpse360.",
       "unit": "None"
     },
     {
@@ -87513,7 +87513,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87576,7 +87576,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table gaia_qso.",
       "unit": "None"
     },
     {
@@ -87603,7 +87603,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87666,7 +87666,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table gaia_dr2_wd_sdss.",
       "unit": "None"
     },
     {
@@ -87693,7 +87693,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87711,7 +87711,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table gaia_dr3_source.",
       "unit": "None"
     },
     {
@@ -87738,7 +87738,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87756,7 +87756,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table gaia_unwise_agn.",
       "unit": "None"
     },
     {
@@ -87783,7 +87783,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87801,7 +87801,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table kepler_input_10.",
       "unit": "None"
     },
     {
@@ -87828,7 +87828,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87846,7 +87846,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table legacy_survey_dr10.",
       "unit": "None"
     },
     {
@@ -87873,7 +87873,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87891,7 +87891,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table legacy_survey_dr10a.",
       "unit": "None"
     },
     {
@@ -87918,7 +87918,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -87981,7 +87981,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table milliquas_7_7.",
       "unit": "None"
     },
     {
@@ -88008,7 +88008,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88026,7 +88026,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table ps1_g18.",
       "unit": "None"
     },
     {
@@ -88053,7 +88053,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88116,7 +88116,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table sdss_dr13_photoobj.",
       "unit": "None"
     },
     {
@@ -88143,7 +88143,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88206,7 +88206,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "text",
-      "description": "",
+      "description": "The primary key identifier in the associated table sdss_dr16_apogeestar.",
       "unit": "None"
     },
     {
@@ -88233,7 +88233,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88296,7 +88296,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table sdss_dr19p_speclite.",
       "unit": "None"
     },
     {
@@ -88323,7 +88323,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88431,7 +88431,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table skymapper_dr1_1.",
       "unit": "None"
     },
     {
@@ -88458,7 +88458,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88611,7 +88611,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table tic_v8_extended.",
       "unit": "None"
     },
     {
@@ -88638,7 +88638,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88701,7 +88701,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table twoqz_sixqz.",
       "unit": "None"
     },
     {
@@ -88728,7 +88728,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -88881,7 +88881,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table xmm_om_suss_5_0.",
       "unit": "None"
     },
     {
@@ -88908,7 +88908,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
@@ -89286,7 +89286,7 @@
       "column_name": "target_id",
       "display_name": "target_id",
       "sql_type": "bigint",
-      "description": "",
+      "description": "The primary key identifier in the associated table too_target.",
       "unit": "None"
     },
     {
@@ -89313,7 +89313,7 @@
       "column_name": "distance",
       "display_name": "distance",
       "sql_type": "float",
-      "description": "",
+      "description": "The distance between the catalog and target coordinates if best=F.",
       "unit": "None"
     },
     {
