@@ -106,6 +106,7 @@ def database(request):
         janitor.init()
         db = sqla_prepdb() if issqla else pw_prepdb()
         yield db
+        db.close()
         db = None
         janitor.drop()
 
