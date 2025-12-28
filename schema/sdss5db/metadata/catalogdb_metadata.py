@@ -13,6 +13,8 @@ import os
 import pathlib
 import pickle
 
+from typing import Sequence
+
 from playhouse.postgres_ext import ArrayField
 
 from sdssdb.peewee.sdss5db import catalogdb
@@ -113,7 +115,7 @@ def generate_catalogdb_metadata(
 
                 if minidb_col is None:
                     # Emit a warning but include the column with empty description.
-                    print(f"Warning: Column {col_name!r} not found in docs for {table_name!r}.")
+                    print(f"Warning: Column '{table_name}.{col_name}' not found in minidb docs.")
                 else:
                     col_metadata["description"] = minidb_col.get("description", "")
                     col_metadata["unit"] = minidb_col.get("unit", "None") or "None"
@@ -133,7 +135,7 @@ def generate_catalogdb_metadata(
             # columns and we can include complete descriptions.
 
             if not table_name.startswith("catalog_to_"):
-                print(f"Warning: Model for table {table_name!r} not found in docs. Adding stub.")
+                print(f"Warning: Table {table_name!r} not found in minidb docs. Adding stub.")
 
             for col_name, field in model_meta.columns.items():
                 field_type = field.field_type.lower()
@@ -193,3 +195,89 @@ def generate_catalogdb_metadata(
             (json.dump({"metadata": metadata}, f, indent=2))
 
     return metadata
+
+
+def get_table_data(
+    table_name: str,
+    metadata_path: os.PathLike | pathlib.Path | None = None,
+) -> list[dict[str, str]]:
+    """Lists the columns of a given ``catalogdb`` table.
+
+    Parameters
+    ----------
+    table_name
+        The name of the table.
+    metadata_path
+        The path to the JSON file containing the metadata. If :obj:`None`, assumes the default
+        location in ``sdssdb``.
+
+    Returns
+    -------
+    list
+        A list of column data.
+
+    """
+
+    if metadata_path is None:
+        cwd = pathlib.Path(__file__).parent
+        metadata_path = cwd / "catalogdb.json"
+    else:
+        metadata_path = pathlib.Path(metadata_path)
+
+    data = json.loads(open(metadata_path, "r").read())
+
+    table_data: list[dict[str, str]] = []
+    for col in data["metadata"]:
+        if col["table_name"] == table_name:
+            table_data.append(col)
+
+    return table_data
+
+
+def update_catalogdb_metadata(
+    data: list[dict[str, str]] | dict[str, str],
+    metadata_path: os.PathLike | pathlib.Path | None = None,
+) -> None:
+    """Updates the metadata of a given column in a table.
+
+    Parameters
+    ----------
+    data
+        A dictionary with the fields to update, or a list of such dictionaries.
+    metadata_path
+        The path to the JSON file containing the metadata. If :obj:`None`, assumes the default
+        location in ``sdssdb``.
+
+    """
+
+    if metadata_path is None:
+        cwd = pathlib.Path(__file__).parent
+        metadata_path = cwd / "catalogdb.json"
+    else:
+        metadata_path = pathlib.Path(metadata_path)
+
+    if isinstance(data, dict):
+        data = [data]
+    elif isinstance(data, Sequence):
+        pass
+    else:
+        raise ValueError("data must be a dictionary or a list of dictionaries.")
+
+    catalogdb_metadata = json.loads(open(metadata_path, "r").read())
+
+    for data_col in data:
+        if not isinstance(data_col, dict):
+            raise ValueError("Each item in data must be a dictionary.")
+        if "table_name" not in data_col or "column_name" not in data_col:
+            raise ValueError("Each dictionary must contain 'table_name' and 'column_name' keys.")
+
+    for col in catalogdb_metadata["metadata"]:
+        for data_col in data:
+            if (
+                col["table_name"] == data_col["table_name"]
+                and col["column_name"] == data_col["column_name"]
+            ):
+                col.update(data_col)
+
+    with metadata_path.open("w") as f:
+        json.dump(catalogdb_metadata, f, indent=2)
