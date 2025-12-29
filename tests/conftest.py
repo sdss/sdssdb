@@ -109,7 +109,7 @@ def database(request):
         yield db
 
         try:
-            db.manual_close()
+            db.close_all()
         except Exception:
             pass
         finally:
