@@ -8,22 +8,19 @@
 
 from __future__ import annotations
 
-from sdssdb.sqlalchemy.archive import sas
-from sdssdb.sqlalchemy.mangadb import auxdb, dapdb, datadb, sampledb
-from sdssdb.sqlalchemy.operationsdb import apogeeqldb, mangadb, platedb
-from sdssdb.sqlalchemy.sdss5db import (
-    apogee_drpdb,
-    astradb,
-    boss_drp,
-    catalogdb,
-    opsdb,
-    targetdb,
-    vizdb,
-)
-
 
 def test_sdss5db_imports():
     """Test that all submodules of sdss5db can be imported."""
+
+    from sdssdb.sqlalchemy.sdss5db import (
+        apogee_drpdb,
+        astradb,
+        boss_drp,
+        catalogdb,
+        opsdb,
+        targetdb,
+        vizdb,
+    )
 
     assert boss_drp.BossSpectrum
     assert catalogdb.Catalog
@@ -37,12 +34,16 @@ def test_sdss5db_imports():
 def test_sas_imports():
     """Test that all submodules of sas can be imported."""
 
+    from sdssdb.sqlalchemy.archive import sas
+
     assert sas.File
     assert sas.Directory
 
 
 def test_mangadb_imports():
     """Test that all submodules of mangadb can be imported."""
+
+    from sdssdb.sqlalchemy.mangadb import auxdb, dapdb, datadb, sampledb
 
     assert auxdb.Cube
     assert dapdb.BinMode
@@ -52,6 +53,8 @@ def test_mangadb_imports():
 
 def test_operationsdb_imports():
     """Test that all submodules of operationsdb can be imported."""
+
+    from sdssdb.sqlalchemy.operationsdb import apogeeqldb, mangadb, platedb
 
     assert platedb.Plate
     assert apogeeqldb.ApogeeSnrGoals
