@@ -11,7 +11,7 @@
 # Modified By: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
 
 from sdssdb.connection import PeeweeDatabaseConnection
 from sdssdb.peewee import BaseModel
@@ -34,6 +34,6 @@ def prepare_testdb():
     """connect and set up test models after db initialization"""
     models = TmpModel.__subclasses__()
     database.bind(models, bind_refs=False, bind_backrefs=False)
-    database.connect()
+    database.connect(dbname="test")
     database.create_tables(models)
     return database
