@@ -256,6 +256,8 @@ except Exception:
     sptables = []
 
 # create the (clean)spaxel models from the DAP spaxelprop tables
+cleanclass = None
+newclass = None
 for sp in sptables:
     classname = sp.replace("spaxelprop", "SpaxelProp")
     newclass = spaxel_factory(classname)
