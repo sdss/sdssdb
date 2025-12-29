@@ -247,10 +247,13 @@ def spaxel_factory(classname, clean=None):
     return newclass
 
 
-# get the spaxelprop tables in the schema
-insp = reflection.Inspector.from_engine(database.engine)
-tables = insp.get_table_names(schema=SCHEMA)
-sptables = [t for t in tables if t.startswith("spaxelprop")]
+try:
+    # get the spaxelprop tables in the schema
+    insp = reflection.Inspector.from_engine(database.engine)
+    tables = insp.get_table_names(schema=SCHEMA)
+    sptables = [t for t in tables if t.startswith("spaxelprop")]
+except Exception:
+    sptables = []
 
 # create the (clean)spaxel models from the DAP spaxelprop tables
 for sp in sptables:
