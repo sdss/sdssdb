@@ -105,9 +105,16 @@ def database(request):
         )
         janitor.init()
         db = sqla_prepdb() if issqla else pw_prepdb()
+
         yield db
-        db = None
-        janitor.drop()
+
+        try:
+            db.close_all()
+        except Exception:
+            pass
+        finally:
+            db = None
+            janitor.drop()
 
 
 def determine_scope(fixture_name, config):

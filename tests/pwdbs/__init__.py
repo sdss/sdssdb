@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 
+#
 # Filename: __init__.py
 # Project: peewee
 # Author: Brian Cherinka
@@ -11,30 +11,29 @@
 # Modified By: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
 
 from sdssdb.connection import PeeweeDatabaseConnection
 from sdssdb.peewee import BaseModel
 
 
 class TmpDatabaseConnection(PeeweeDatabaseConnection):
-    dbname = 'test'
+    dbname = "test"
 
 
-database = TmpDatabaseConnection(autoconnect=False, profile='local')
+database = TmpDatabaseConnection(autoconnect=False, profile="local")
 
 
 # Create a new base temp model class
 class TmpModel(BaseModel):
-
     class Meta:
         database = database
 
 
 def prepare_testdb():
-    ''' connect and set up test models after db initialization ''' 
+    """connect and set up test models after db initialization"""
     models = TmpModel.__subclasses__()
     database.bind(models, bind_refs=False, bind_backrefs=False)
-    database.connect()
+    database.connect(dbname="test")
     database.create_tables(models)
     return database

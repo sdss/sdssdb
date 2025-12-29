@@ -42,10 +42,10 @@ if use_psycopg3 is True:
         from playhouse.pool import PooledPsycopg3Database as PooledPostgresqlExtDatabase
     except ImportError:
         warnings.warn("psycopg3 is not installed. Using psycopg2.")
-        from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
+        from playhouse.pool import PooledPostgresqlExtDatabase
 
 else:
-    from playhouse.pool import PooledPostgresqlExtDatabase as PooledPostgresqlExtDatabase
+    from playhouse.pool import PooledPostgresqlExtDatabase
 
 
 def _should_autoconnect():
@@ -271,7 +271,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             )
 
         return self.connect_from_parameters(
-            dbname=dbname, silent_on_fail=silent_on_fail, **db_configuration
+            dbname=dbname,
+            silent_on_fail=silent_on_fail,
+            **db_configuration,
         )
 
     def connect_from_parameters(self, dbname=None, **params):
@@ -416,9 +418,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         self.dbversion = dbversion
 
         dbname, *dbver = self.dbname.split("_")
-        self.dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
+        dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
 
-        self.connect(dbname=self.dbname, silent_on_fail=True)
+        self.connect(dbname=dbname, silent_on_fail=True)
 
     def post_connect(self):
         """Hook called after a successfull connection."""
@@ -484,12 +486,15 @@ class PeeweeDatabaseConnection(DatabaseConnection, PooledPostgresqlExtDatabase):
             except pgpasslib.FileNotFound:
                 params["password"] = None
 
+        if not self.is_closed() and (self.dbname != dbname or params != self.connection_params):
+            self.close_all()
+
         PooledPostgresqlExtDatabase.init(self, dbname, **params)
         self._metadata = {}
 
         try:
-            PooledPostgresqlExtDatabase.connect(self)
             self.dbname = dbname
+            PooledPostgresqlExtDatabase.connect(self)
         except OperationalError as ee:
             if not silent_on_fail:
                 log.warning(f"failed to connect to database {self.database!r}: {ee}")
