@@ -318,9 +318,12 @@ def add_catalogue(classname, tablename, has_manga_target=None):
         )
 
 
-# Now we create any remaining catalogue tables.
-insp = sa_inspect(database.engine)
-allTables = insp.get_table_names(schema=SCHEMA)
+try:
+    # Now we create any remaining catalogue tables.
+    insp = sa_inspect(database.engine)
+    allTables = insp.get_table_names(schema=SCHEMA)
+except Exception:
+    allTables = []
 
 done_names = list(Base.metadata.tables.keys())
 for tableName in allTables:
