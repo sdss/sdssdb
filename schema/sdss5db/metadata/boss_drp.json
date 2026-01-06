@@ -1110,6 +1110,24 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_spectrum",
+      "column_name": "too",
+      "display_name": "Target of Opportunity Flag",
+      "sql_type": "BOOLEAN",
+      "description": "the fiber is allocated to a TOO target",
+      "unit": "None"
+    },
+    {
+      "schema": "boss_drp",
+      "table_name": "boss_spectrum",
+      "column_name": "too_id",
+      "display_name": "Target of Opportunity ID",
+      "sql_type": "bigint",
+      "description": "SDSS-V Target of Opportunity ID (only if TOO)",
+      "unit": "None"
+    },
+    {
+      "schema": "boss_drp",
+      "table_name": "boss_spectrum",
       "column_name": "created",
       "display_name": "created",
       "sql_type": "timestamp",
@@ -1339,6 +1357,15 @@
       "display_name": "created",
       "sql_type": "timestamp",
       "description": "Time row was created",
+      "unit": "None"
+    },
+    {
+      "schema": "boss_drp",
+      "table_name": "boss_spectrum_line",
+      "column_name": "obs",
+      "display_name": "Observatory",
+      "sql_type": "VARCHAR",
+      "description": "Observatory of Observation",
       "unit": "None"
     },
     {
@@ -2316,6 +2343,24 @@
     {
       "schema": "boss_drp",
       "table_name": "boss_field",
+      "column_name": "design_vers",
+      "display_name": "Design Version",
+      "sql_type": "VARCHAR",
+      "description": "robostrategy Run or platedesign version",
+      "unit": "None"
+    },
+    {
+      "schema": "boss_drp",
+      "table_name": "boss_field",
+      "column_name": "design_mode",
+      "display_name": "SDSS-V Design Mode",
+      "sql_type": "VARCHAR",
+      "description": "SDSS-V Design Mode",
+      "unit": "None"
+    },
+    {
+      "schema": "boss_drp",
+      "table_name": "boss_field",
       "column_name": "public",
       "display_name": "Public",
       "sql_type": "VARCHAR",
@@ -2428,6 +2473,15 @@
       "display_name": "Name of Custom",
       "sql_type": "VARCHAR",
       "description": "Name of Custom Coadd Schema",
+      "unit": "None"
+    },
+    {
+      "schema": "boss_drp",
+      "table_name": "boss_version",
+      "column_name": "sdssc2bv",
+      "display_name": "SDSSV Carton to Bit Version",
+      "sql_type": "integer",
+      "description": "SDSSV Carton to Bit Version used for semaphore Targeting (SDSS5_TARGET_FLAG) flags",
       "unit": "None"
     },
     {
