@@ -36,6 +36,7 @@ class BossVersion(BossBase):
     is_epoch = BooleanField(null=True)
     is_custom = BooleanField(null=True)
     custom_name = CharField(null=True)
+    sdssc2bv = IntegerField(null=True)
     created = DateTimeField(null=True)
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
@@ -155,6 +156,8 @@ class BossField(BossBase):
     qualcomments = CharField(null=True)
     moon_frac = FloatField(null=True)
     field_cadence = CharField(null=True)
+    design_vers = CharField(null=True)
+    design_mode = CharField(null=True)
     created = DateTimeField(null=True)
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
@@ -286,6 +289,8 @@ class BossSpectrum(BossBase):
     xcsao_elogg = FloatField(null=True)
     xcsao_feh = FloatField(null=True)
     xcsao_efeh = FloatField(null=True)
+    too = BooleanField(null=True)
+    too_id = BigIntegerField(null=True)
     created = DateTimeField(null=True)
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
@@ -346,6 +351,7 @@ class BossSpectrumLine(BossBase):
     linedof = FloatField(null=True)
     linechi2 = FloatField(null=True)
     created = DateTimeField(null=True)
+    obs = CharField(null=True)
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
     class Meta:

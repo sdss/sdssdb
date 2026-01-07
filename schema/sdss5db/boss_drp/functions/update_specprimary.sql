@@ -10,103 +10,113 @@ DECLARE
     version_id INTEGER;
     jfilt INTEGER;
 BEGIN
-    -- Log the start of the function
-    RAISE NOTICE 'Starting update_specprimary with run2d=%, is_epoch=%, custom_name=%, is_custom=%', t_run2d, t_is_epoch, t_custom_name, t_is_custom;
+    -- Log start
+    RAISE NOTICE 'Starting update_specprimary(run2d=%, is_epoch=%, custom_name=%, is_custom=%)', t_run2d, t_is_epoch, t_custom_name, t_is_custom;
 
-    -- Find the version_id
+    -- Get version_id
     SELECT id INTO version_id
     FROM boss_drp.boss_version
-    WHERE boss_drp.boss_version.run2d = t_run2d
-    AND boss_drp.boss_version.is_epoch = t_is_epoch
-    AND (NOT t_is_custom OR (t_custom_name IS NOT NULL AND boss_drp.boss_version.custom_name = t_custom_name));
+    WHERE run2d = t_run2d
+      AND is_epoch = t_is_epoch
+      AND (NOT t_is_custom OR (custom_name = t_custom_name));
 
     IF version_id IS NULL THEN
-        RAISE EXCEPTION 'No version found with run2d=%, is_epoch=%, custom_name=%, is_custom=%', t_run2d, t_is_epoch, t_custom_name, t_is_custom;
+        RAISE EXCEPTION 'No version found for given parameters.';
     END IF;
 
-    -- Start transaction block
-    BEGIN
-        -- Check and add temp_zw_primtest and temp_score columns if they don't exist
-        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'boss_spectrum' AND column_name = 'temp_zw_primtest') THEN
-            RAISE NOTICE 'Adding temp_zw_primtest column to boss_drp.boss_spectrum';
-            EXECUTE 'ALTER TABLE boss_drp.boss_spectrum ADD COLUMN temp_zw_primtest INTEGER';
-        END IF;
+    PERFORM set_config('max_parallel_workers_per_gather', '4', true);
 
-        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'boss_spectrum' AND column_name = 'temp_score') THEN
-            RAISE NOTICE 'Adding temp_score column to boss_drp.boss_spectrum';
-            EXECUTE 'ALTER TABLE boss_drp.boss_spectrum ADD COLUMN temp_score DOUBLE PRECISION';
-        END IF;
 
-        -- Update temp_zw_primtest column based on conditions
-        RAISE NOTICE 'Updating temp_zw_primtest column based on conditions';
-        UPDATE boss_drp.boss_spectrum
-        SET temp_zw_primtest = CASE
-            WHEN OBJTYPE LIKE 'GALAXY%' THEN ZWARNING_NOQSO
-            ELSE ZWARNING
-        END
-        WHERE boss_version_id = version_id
-        AND (t_sdss_id_list IS NULL OR SDSS_ID = ANY(t_sdss_id_list));
+    -- Determine SN_MEDIAN dimension
+    SELECT array_length(SN_MEDIAN, 1)
+    INTO jfilt
+    FROM boss_drp.boss_spectrum
+    WHERE SN_MEDIAN IS NOT NULL AND boss_version_id = version_id
+    LIMIT 1;
 
-        -- Update temp_score column based on conditions
-        RAISE NOTICE 'Updating temp_score column based on conditions';
+    IF jfilt = 1 THEN
+        jfilt := 0;
+    ELSE
+        jfilt := 2;
+    END IF;
 
-        -- Determine jfilt based on SN_MEDIAN
-        IF (SELECT array_length(SN_MEDIAN, 1) FROM boss_drp.boss_spectrum LIMIT 1) = 1 THEN
-            jfilt := 0;
-        ELSE
-            jfilt := 2;
-        END IF;
+    -- Use a temp table for efficient staging
+    DROP TABLE IF EXISTS tmp_spec_score CASCADE;
+    CREATE TEMP TABLE tmp_spec_score (
+        id INTEGER PRIMARY KEY,
+        sdss_id BIGINT,
+        score DOUBLE PRECISION,
+        rank INTEGER,
+        nspecobs SMALLINT
+    ) ON COMMIT DROP;
 
-        UPDATE boss_drp.boss_spectrum
-        SET temp_score = (
-            (4 * CASE WHEN SN_MEDIAN[jfilt] > 0 THEN 1 ELSE 0 END) +  -- First part: (SN_MEDIAN > 0)
-               (2 * CASE WHEN FIELDQUALITY LIKE 'good%' THEN 1 ELSE 0 END) +  -- Second part: FIELDQUALITY check
-            (CASE WHEN temp_zw_primtest = 0 THEN 1 ELSE 0 END) +  -- Third part: zw_primtest check
-            (CASE WHEN SN_MEDIAN[jfilt] > 0 THEN 1 ELSE 0 END)  -- Fourth part: SN_MEDIAN > 0 again
-        ) / (GREATEST(SN_MEDIAN[jfilt], 0) + 1)  -- Use GREATEST to avoid divide by zero
-        WHERE boss_version_id = version_id
-        AND (t_sdss_id_list IS NULL OR SDSS_ID = ANY(t_sdss_id_list));
+    -- Populate temp table with score, rank, and count per sdss_id
+    WITH scored_spectra AS (
+        SELECT
+            bs.id,
+            bs.sdss_id,
+            (
+                (4 * CASE WHEN bs.SN_MEDIAN[jfilt] > 0 THEN 1 ELSE 0 END) +
+                (2 * CASE WHEN bs.FIELDQUALITY LIKE 'good%' THEN 1 ELSE 0 END) +
+                (CASE
+                    WHEN bs.OBJTYPE LIKE 'GALAXY%' THEN
+                        CASE WHEN bs.ZWARNING_NOQSO = 0 THEN 1 ELSE 0 END
+                    ELSE
+                        CASE WHEN bs.ZWARNING = 0 THEN 1 ELSE 0 END
+                END) +
+                (CASE WHEN bs.SN_MEDIAN[jfilt] > 0 THEN 1 ELSE 0 END)
+            )::DOUBLE PRECISION / (GREATEST(bs.SN_MEDIAN[jfilt], 0) + 1) AS score,
+            bs.SN_MEDIAN,
+            bs.FIELDQUALITY,
+            bs.OBJTYPE,
+            bs.ZWARNING_NOQSO,
+            bs.ZWARNING
+        FROM boss_drp.boss_spectrum bs
+        WHERE bs.boss_version_id = version_id
+          AND bs.sdss_id != -999
+          AND (t_sdss_id_list IS NULL OR bs.sdss_id = ANY(t_sdss_id_list))
+    )
+    INSERT INTO tmp_spec_score (id, sdss_id, score, rank, nspecobs)
+    SELECT
+        s.id,
+        s.sdss_id,
+        s.score,
+        ROW_NUMBER() OVER (PARTITION BY s.sdss_id ORDER BY s.score DESC),
+        COUNT(*) OVER (PARTITION BY s.sdss_id)::SMALLINT
+    FROM scored_spectra s;
 
-        -- Create a CTE for ranking the scores
-        RAISE NOTICE 'Creating CTE for ranking the scores and using it to update SPECPRIMARY, SPECBOSS, and NSPECOBS columns';
-        WITH RankedScores AS (
-            SELECT id, SDSS_ID, ROW_NUMBER() OVER (PARTITION BY SDSS_ID ORDER BY temp_score DESC) AS rank
-            FROM boss_drp.boss_spectrum
-            WHERE boss_version_id = version_id
-            AND (t_sdss_id_list IS NULL OR SDSS_ID = ANY(t_sdss_id_list))
-            AND SDSS_ID != -999  -- Exclude rows where SDSS_ID = -999
-        ),
-        CountPerID AS (
-            SELECT SDSS_ID, COUNT(*) AS nspectobs
-            FROM boss_drp.boss_spectrum
-            WHERE boss_version_id = version_id
-            AND (t_sdss_id_list IS NULL OR SDSS_ID = ANY(t_sdss_id_list))
-            AND SDSS_ID != -999  -- Exclude rows where SDSS_ID = -999
-            GROUP BY SDSS_ID
+    FROM boss_drp.boss_spectrum bs
+    WHERE bs.boss_version_id = version_id
+      AND bs.sdss_id != -999
+      AND (t_sdss_id_list IS NULL OR bs.sdss_id = ANY(t_sdss_id_list));
+
+    -- Update only rows that have changed
+    IF EXISTS (SELECT 1 FROM tmp_spec_score) THEN
+        WITH updates AS (
+            SELECT
+                t.id,
+                t.rank,
+                t.nspecobs
+            FROM tmp_spec_score t
+            JOIN boss_drp.boss_spectrum bs ON bs.id = t.id
+            WHERE bs.boss_version_id = version_id
+              AND (bs.specprimary IS DISTINCT FROM (CASE WHEN t.rank = 1 THEN 1 ELSE 0 END)
+                   OR bs.specboss IS DISTINCT FROM (CASE WHEN t.rank = 1 THEN 1 ELSE 0 END)
+                   OR bs.nspecobs IS DISTINCT FROM t.nspecobs)
         )
-        UPDATE boss_drp.boss_spectrum AS bs
+        UPDATE boss_drp.boss_spectrum bs
         SET
-            SPECPRIMARY = CASE WHEN RS.rank = 1 THEN 1 ELSE 0 END,
-            SPECBOSS = CASE WHEN RS.rank = 1 THEN 1 ELSE 0 END,
-            NSPECOBS = CP.nspectobs::smallint
-        FROM RankedScores RS
-        JOIN CountPerID CP
-            ON RS.SDSS_ID = CP.SDSS_ID
-        WHERE bs.id = RS.id
-        AND bs.SDSS_ID != -999;  -- Exclude rows where SDSS_ID = -999
+            specprimary = CASE WHEN u.rank = 1 THEN 1 ELSE 0 END,
+            specboss = CASE WHEN u.rank = 1 THEN 1 ELSE 0 END,
+            nspecobs = u.nspecobs
+        FROM updates u
+        WHERE bs.id = u.id;
+    END IF;
 
-        -- Drop the temporary columns
-        RAISE NOTICE 'Dropping temporary columns temp_zw_primtest and temp_score';
-        EXECUTE 'ALTER TABLE boss_drp.boss_spectrum DROP COLUMN IF EXISTS temp_zw_primtest, DROP COLUMN IF EXISTS temp_score';
+    RAISE NOTICE 'Completed optimized update_specprimary()';
 
-        -- Log the end of the function
-        RAISE NOTICE 'Completed update_specprimary function';
-
-    EXCEPTION
-        WHEN OTHERS THEN
-            -- Handle errors: Let Peewee manage transaction commit/rollback
-            RAISE;
-    END;
+    -- At the end, after the update
+    EXECUTE 'ANALYZE boss_drp.boss_spectrum';
 
 END;
 $$ LANGUAGE plpgsql;

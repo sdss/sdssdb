@@ -109,6 +109,7 @@ class Releases(VizBase):
     public = BooleanField(null=False)
     mjd_cutoff_apo = IntegerField(null=False)
     mjd_cutoff_lco = IntegerField(null=False)
+    sdssc2bv = IntegerField(null=False)
 
     class Meta:
         table_name = 'releases'
