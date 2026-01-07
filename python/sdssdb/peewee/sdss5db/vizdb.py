@@ -8,22 +8,23 @@
 # Database: sdss5db
 # Peewee version: 3.13.2
 
+from datetime import datetime
+
 from peewee import (
     AutoField,
     BigIntegerField,
     BooleanField,
     CharField,
     DateField,
+    DateTimeField,
     DecimalField,
     DoubleField,
     FloatField,
     IntegerField,
     SmallIntegerField,
     TextField,
-    DateTimeField,
 )
 from playhouse.postgres_ext import ArrayField
-from datetime import datetime
 
 from .. import BaseModel
 from . import database  # noqa
@@ -115,6 +116,7 @@ class Releases(VizBase):
     public = BooleanField(null=False)
     mjd_cutoff_apo = IntegerField(null=False)
     mjd_cutoff_lco = IntegerField(null=False)
+    sdssc2bv = IntegerField(null=False)
 
     class Meta:
         table_name = "releases"

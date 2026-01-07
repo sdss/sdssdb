@@ -121,6 +121,8 @@ class Releases(Base):
     public = Column(Boolean)
     mjd_cutoff_apo = Column(Integer)
     mjd_cutoff_lco = Column(Integer)
+    sdssc2bv = Column(Integer)
+
 
 
 class AllSpec(Base):
