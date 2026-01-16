@@ -682,7 +682,6 @@ class SQLADatabaseConnection(DatabaseConnection):
     def reset_engine(self):
         """Reset the engine, metadata, and session"""
 
-        self.bases = []
         if self.engine:
             self.engine.dispose()
             self.engine = None
