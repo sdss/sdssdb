@@ -6,6 +6,14 @@ Contributing to sdssdb
 
 Contributions to ``sdssdb`` are most welcome. Product development happens on its `GitHub repository <https://www.github.com/sdss/sdssdb>`__. For details on how to develop for an SDSS product refer to the `coding style guide <https://sdss-python-template.readthedocs.io/en/latest/standards.html>`__. All contributions to ``sdssdb`` need to be done as pull requests against the ``main`` branch.
 
+Code style
+----------
+
+``sdssdb`` uses `uv <https://docs.astral.sh/uv/>`__ for package management. Please, review the `uv` documentation if you need to add or update package dependencies. A GitHub action checks that the `uv` lock file is up to date.
+
+We use `ruff <https://ruff.rs/>`__ as a linter to enforce code style. Please, make sure your code passes the linter before submitting a pull request. You can run the linter locally with ::
+
+    uv run ruff check python/
 
 Contributing a new database or schema
 -------------------------------------
@@ -63,7 +71,7 @@ For an example of how to implement a database with Peewee you can look at the `s
 
 The first two lines simply import the base classes for the database connection and base model class. We then subclass `~sdssdb.connection.PeeweeDatabaseConnection` to create the connection for ``awesomedb``, overriding the `~sdssdb.connection.PeeweeDatabaseConnection.dbname` attribute. We then instantiate the database connection as ``database``. Note the ``autoconnect=True`` parameter which tells the database connection to try to use the best available profile to connect when the class gets instantiated. Finally, we subclass `~sdssdb.peewee.BaseModel` and we bind the database connection to it.
 
-Next we need to creates the model classes themselves. At its simplest, a model class represents a table in a given schema and contains a list of the columns in the table, each one as a class attribute. Model classes must subclass from a base class (``AwesomedbModel`` in our example) that has been linked to the database connection. The default mode in Peewee is to explicitely define all columns, as opposed to autoloaded. To help with this task you can use the `pwiz <http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#pwiz-a-model-generator>`__ model generator. For example, to create a file with the list of model classes for ``stupendous`` you would run, from a terminal ::
+Next we need to create the model classes themselves. At its simplest, a model class represents a table in a given schema and contains a list of the columns in the table, each one as a class attribute. Model classes must subclass from a base class (``AwesomedbModel`` in our example) that has been linked to the database connection. The default mode in Peewee is to explicitely define all columns, as opposed to autoloaded. To help with this task you can use the `pwiz <http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#pwiz-a-model-generator>`__ model generator. For example, to create a file with the list of model classes for ``stupendous`` you would run, from a terminal ::
 
     python -m pwiz -e postgresql -s stupendous awesomedb > stupendous.py
 

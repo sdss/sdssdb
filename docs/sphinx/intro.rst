@@ -61,122 +61,122 @@ Note that the level of readiness is not necessarily identical in both Peewee and
 
 .. raw:: html
 
-    <table class="table" style="width: 80%">
+    <table class="table" style="width: 90%; justify-self: center">
         <thead>
         <tr>
-            <th style="width: 30%">Database</th>
-            <th style="width: 20%">Schema</th>
-            <th style="width: 25%">Peewee</th>
+            <th style="width: 30%; text-align: left">Database</th>
+            <th style="width: 20%; text-align: left">Schema</th>
+            <th style="width: 15%">Peewee</th>
             <th style="width: 25%">SQLAlchemy</th>
-            <th style="width: 20%">Graph</th>
+            <th style="width: 10%">Graph</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td class="active">operationsdb</td>
+            <td class="active">sdss5db</td>
+            <td class="active">catalogdb</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" title="catalogdb full version">⬇️</a> <a style="color:green" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" title="catalogdb reduced version">⬇️</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">targetdb</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/targetdb/sdss5db.targetdb.pdf">⬇️</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">opsdb</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/opsdb/sdss5db.opsdb.pdf">⬇️</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">apogee_drpdb</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/apogee_drpdb/sdss5db.apogee_drpdb.pdf">⬇️</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">boss_drp</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/boss_drp/sdss5db.boss_drp.pdf">⬇️</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">vizdb</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/vizdb/sdss5db.vizdb.pdf">⬇️</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="active">astradb</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/astradb/sdss5db.astradb.pdf">⬇️</a></td>
+        </tr>
+        <tr>
+            <td class="active">operationsdb (SDSS-IV)</td>
             <td class="active">platedb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.platedb.pdf"></a></td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="_static/schema_graphs/auto/operationsdb.platedb.pdf">⬇️</a></td>
 
         </tr>
         <tr>
             <td></td>
             <td class="active">mangadb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.mangadb.pdf"></a></td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="_static/schema_graphs/auto/operationsdb.mangadb.pdf">⬇️</a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">apogeeqldb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="_static/schema_graphs/auto/operationsdb.apogeeqldb.pdf"></a></td>
+            <td class="active" style="text-align: center">✅</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="_static/schema_graphs/auto/operationsdb.apogeeqldb.pdf">⬇️</a></td>
         </tr>
         <tr>
-            <td class="active">manga</td>
+            <td class="active">manga (SDSS-IV)</td>
             <td class="active">auxdb</td>
-            <td class="danger"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangaauxdb_schema.pdf"></a></td>
+            <td class="active" style="text-align: center">❌</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangaauxdb_schema.pdf">⬇️</a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">dapdb</td>
-            <td class="danger"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangadapdb_schema.pdf"></a></td>
+            <td class="active" style="text-align: center">❌</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangadapdb_schema.pdf">⬇️</a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">datadb</td>
-            <td class="danger"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangadatadb_schema.pdf"></a></td>
+            <td class="active" style="text-align: center">❌</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangadatadb_schema.pdf">⬇️</a></td>
         </tr>
         <tr>
             <td></td>
             <td class="active">sampledb</td>
-            <td class="danger"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangasampledb_schema.pdf"></a></td>
-        </tr>
-        <tr>
-            <td class="active">sdss5db</td>
-            <td class="active">catalogdb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb.pdf" alt="catalogdb full version"></a> <a class="glyphicon glyphicon-download-alt" style="color:green" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/catalogdb/sdss5db.catalogdb_lite.pdf" alt="catalogdb reduced version"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="active">targetdb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/targetdb/sdss5db.targetdb.pdf"></a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="active">opsdb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/opsdb/sdss5db.opsdb.pdf"></a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="active">apogee_drpdb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/apogee_drpdb/sdss5db.apogee_drpdb.pdf"></a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="active">boss_drp</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/boss_drp/sdss5db.boss_drp.pdf"></a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="active">vizdb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/vizdb/sdss5db.vizdb.pdf"></a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="active">astradb</td>
-            <td class="success"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/sdss5db/astradb/sdss5db.astradb.pdf"></a></td>
+            <td class="active" style="text-align: center">❌</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/marvin/blob/main/docs/dbschema/mangasampledb_schema.pdf">⬇️</a></td>
         </tr>
         <tr>
             <td class="active">archive</td>
             <td class="active">sas</td>
-            <td class="danger"></td>
-            <td class="success"></td>
-            <td align="center"><a class="glyphicon glyphicon-download-alt" href="https://github.com/sdss/sdssdb/raw/main/schema/archive/archive_sas.pdf"></a></td>
+            <td class="active" style="text-align: center">❌</td>
+            <td class="active" style="text-align: center">✅</td>
+            <td align="center"><a href="https://github.com/sdss/sdssdb/raw/main/schema/archive/archive_sas.pdf">⬇️</a></td>
         </tr>
         </tbody>
     </table>

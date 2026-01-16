@@ -6,22 +6,21 @@
 # flake8: noqa: E501,E741
 
 
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy import (
     ARRAY,
     BigInteger,
     Boolean,
     Column,
-    Float,
     Date,
-    Double,
+    DateTime,
+    Float,
     Integer,
     Numeric,
     SmallInteger,
     Text,
     text,
-    DateTime,
 )
+from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -122,6 +121,8 @@ class Releases(Base):
     public = Column(Boolean)
     mjd_cutoff_apo = Column(Integer)
     mjd_cutoff_lco = Column(Integer)
+    sdssc2bv = Column(Integer)
+
 
 
 class AllSpec(Base):
@@ -153,8 +154,8 @@ class AllSpec(Base):
     sas_file = Column("sas_file", Text)
     cas_url = Column("cas_url", Text)
     sas_url = Column("sas_url", Text)
-    ra = Column("ra", Double)
-    dec = Column("dec", Double)
+    ra = Column("ra", Float)
+    dec = Column("dec", Float)
     ra_hms = Column("ra_hms", Text)
     dec_dms = Column("dec_dms", Text)
     healpix = Column("healpix", Integer)
@@ -191,9 +192,9 @@ class Multiplex(Base):
     run1d = Column("run1d", Text)
     apred_vers = Column("apred_vers", Text)
     drpver = Column("drpver", Text)
-    racen = Column("racen", Double)
-    deccen = Column("deccen", Double)
-    position_angle = Column("position_angle", Double)
+    racen = Column("racen", Float)
+    deccen = Column("deccen", Float)
+    position_angle = Column("position_angle", Float)
     racen_hms = Column("racen_hms", Text)
     deccen_dms = Column("deccen_dms", Text)
     healpix = Column("sdss_phase", Integer)

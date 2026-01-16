@@ -14,7 +14,6 @@ from sqlalchemy import (
     Column,
     DateTime,
     Float,
-    Double,
     ForeignKey,
     Integer,
     SmallInteger,
@@ -411,7 +410,7 @@ class PredSnrPar(Base):
     pred_snr_pk = Column(ForeignKey(f"{Base._schema}.pred_snr.pk"), index=True)
     label = Column(Text, index=True)
     datatype = Column(Text)
-    value_f = Column(Double)
+    value_f = Column(Float)
     value_i = Column(BigInteger)
     value_s = Column(Text)
 

@@ -1016,6 +1016,114 @@
       "sql_type": "TEXT",
       "description": "SAS URL",
       "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "id",
+      "display_name": "id",
+      "sql_type": "integer",
+      "description": "(Internal) database table primary key",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "label",
+      "display_name": "Carton label",
+      "sql_type": "TEXT",
+      "description": "Carton label (mix of name and version)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "bit",
+      "display_name": "Target Flag bit",
+      "sql_type": "integer",
+      "description": "Target Flag bit set for this carton",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "carton_pk",
+      "display_name": "carton_pk",
+      "sql_type": "integer",
+      "description": "SDSSV TargetDB Carton PK",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "sdssc2bv",
+      "display_name": "SDSSC2B Version",
+      "sql_type": "integer",
+      "description": "SDSSC2B Version for this row",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "program",
+      "display_name": "program",
+      "sql_type": "TEXT",
+      "description": "SDSSV Targeting program for this carton",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "version",
+      "display_name": "Targeting version",
+      "sql_type": "TEXT",
+      "description": "SDSSV Targeting Version for this carton version",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "v1",
+      "display_name": "Targeting version (as float)",
+      "sql_type": "FLOAT",
+      "description": "Targeting version converted to float for easier comparisons",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "name",
+      "display_name": "Carton name",
+      "sql_type": "TEXT",
+      "description": "SDSSV TargetDB Carton name",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "mapper",
+      "display_name": "SDSSV Mapper",
+      "sql_type": "TEXT",
+      "description": "SDSSV Mapper associated with this carton",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "alt_program",
+      "display_name": "Alternate program name",
+      "sql_type": "TEXT",
+      "description": "Simplified form of program names",
+      "unit": ""
+    },  
+    {
+      "schema": "vizdb",
+      "table_name": "semaphore_sdssc2b",
+      "column_name": "alt_name",
+      "display_name": "Alternate carton name",
+      "sql_type": "TEXT",
+      "description": "Simplified and unified form of carton names",
+      "unit": ""
     }
   ]
 }
