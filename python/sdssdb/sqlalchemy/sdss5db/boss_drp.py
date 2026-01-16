@@ -19,7 +19,7 @@ from sqlalchemy import (
     String,
     text,
 )
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
+from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
@@ -28,7 +28,7 @@ from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 SCHEMA = "boss_drp"
 
 
-class Base(AbstractConcreteBase, SDSS5dbBase):
+class Base(SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
     _relations = "define_relations"
