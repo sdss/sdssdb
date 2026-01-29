@@ -744,7 +744,7 @@ class SQLADatabaseConnection(DatabaseConnection):
         do_bases = [base] if base else self.bases
 
         for base in do_bases:
-            base.prepare(self.engine)
+            base.prepare(self.engine, views=True)
 
             # If the base has an attribute _relations that's the function
             # to call to set up the relationships once the engine has been
