@@ -321,3 +321,21 @@ CREATE TABLE vizdb.semaphore_sdssc2b (
 );
 ALTER TABLE vizdb.semaphore_sdssc2bv OWNER TO sdss;
 ALTER INDEX vizdb.semaphore_sdssc2bv_pkey SET TABLESPACE nvme;
+
+
+CREATE TABLE vizdb.sdss_id_to_astra_pipeline (
+    pk SERIAL PRIMARY KEY NOT NULL,
+    sdss_id BIGINT NOT NULL,
+    pipeline_name TEXT NOT NULL,
+    v_astra TEXT NOT NULL,
+    source_pk INTEGER NOT NULL,
+    spectrum_pk INTEGER NOT NULL
+);
+
+CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(sdss_id);
+CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(v_astra);
+CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(sdss_id, v_astra);
+
+ALTER TABLE vizdb.sdss_id_to_astra_pipeline ADD CONSTRAINT sdss_id_to_astra_pipeline_unique UNIQUE (sdss_id, pipeline_name, v_astra, source_pk, spectrum_pk);
+
+ALTER TABLE vizdb.sdss_id_to_astra_pipeline OWNER TO sdss;

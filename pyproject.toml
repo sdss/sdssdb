@@ -36,6 +36,7 @@ extras = [
     "pandas>=2.0.0",
     "inflect>=4.1.0",
     "h5py>=3.8.0",
+    "psycopg[binary]>=3.2.13",
 ]
 
 [dependency-groups]
@@ -46,6 +47,7 @@ extras = [
     "pandas>=2.0.0",
     "inflect>=4.1.0",
     "h5py>=3.8.0",
+    "psycopg[binary]>=3.2.13",
 ]
 dev = [
     "pytest>=5.2",
