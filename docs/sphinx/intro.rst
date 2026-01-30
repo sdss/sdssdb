@@ -335,8 +335,12 @@ The database handling with SQLAlchemy is mostly the same as with Peewee. The mai
     # start a session
     session = database.Session()
 
-    # write a query
+    # write a query - legacy syntax sqlalchemy <=1.4
+    # will eventually be deprecated
     cube = session.query(datadb.Cube).first()
+
+    # write a query - new syntax sqlalchemy >=2.0
+    cube = session.scalars(select(datadb.Cube).limit(1)).first()
 
 If you connect to a different database, you must recreate the database session ::
 
@@ -344,6 +348,11 @@ If you connect to a different database, you must recreate the database session :
     database.connect('other-mangadb')
     session = database.Session()
 
+.. note::
+
+    With ``sqlalchemy 2.0``, there have been changes to the query syntax, with the use of ``session.query`` no longer recommended.
+    See `ORM Usage <https://docs.sqlalchemy.org/en/21/changelog/migration_20.html#migration-orm-usage>`_
+    for examples of query syntax translations from the 1.0-style to the 2.0-style.
 
 The case of ``operationsdb``
 ----------------------------
