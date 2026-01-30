@@ -578,3 +578,16 @@ class TargetFlags(VizBase):
     class Meta:
         table_name = "semaphore_sdssc2b"
         print_fields = ["label", "bit", "program", "name", "mapper", "sdssc2bv"]
+
+
+class SDSSidToAstraPipeline(VizBase):
+    pk = AutoField()
+    sdss_id = BigIntegerField(null=False)
+    pipeline_name = TextField(null=False)
+    v_astra = TextField(null=False)
+    source_pk = IntegerField(null=False)
+    spectrum_pk = IntegerField(null=False)
+
+    class Meta:
+        table_name = "sdss_id_to_astra_pipeline"
+        print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk"]
