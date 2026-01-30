@@ -5,6 +5,7 @@ This document records the main changes to the `sdssdb` code.
 
 ## Next release
 
+* [#303](https://github.com/sdss/sdssdb/pull/303): Add `vizdb.sdss_id_to_astra_pipeline` table and update script.
 * Explicitly add table name for `gaia_assas_sn_cepheids`.
 * Support SQLAlchemy 2.0.
 
