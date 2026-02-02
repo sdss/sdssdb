@@ -7,8 +7,11 @@
 # this file has been updated to showcase orm syntax of recommended sqlalchemy 2.0 style
 # see https://docs.sqlalchemy.org/en/20/changelog/whatsnew_20.html#migrating-an-existing-mapping
 import datetime
-from typing_extensions import Annotated
+
 from typing import Optional
+
+from typing_extensions import Annotated
+
 from sqlalchemy import (
     ARRAY,
     BigInteger,
@@ -22,7 +25,7 @@ from sqlalchemy import (
     String,
     text,
 )
-from sqlalchemy.orm import declared_attr, Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, declared_attr, mapped_column, relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -45,9 +48,9 @@ class Base(SDSS5dbBase):
         return {"schema": cls._schema}
 
 
-
 class BossVersion(Base):
     """model for boss version table"""
+
     __tablename__ = "boss_version"
 
     id: Mapped[intpk]
@@ -59,20 +62,27 @@ class BossVersion(Base):
     is_custom: Mapped[Optional[bool]] = mapped_column(Boolean)
     custom_name: Mapped[Optional[str]] = mapped_column(String)
     created: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True))
-    modified: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True), server_default=text('now()'))
+    modified: Mapped[Optional[datetime.datetime]] = mapped_column(
+        DateTime(True), server_default=text("now()")
+    )
     sdssc2bv: Mapped[Optional[int]] = mapped_column(Integer)
 
-    boss_field: Mapped[list['BossField']] = relationship(back_populates='boss_version')
-    boss_spectrum: Mapped[list['BossSpectrum']] = relationship(back_populates='boss_version')
-    boss_spectrum_line: Mapped[list['BossSpectrumLine']] = relationship(back_populates='boss_version')
+    boss_field: Mapped[list["BossField"]] = relationship(back_populates="boss_version")
+    boss_spectrum: Mapped[list["BossSpectrum"]] = relationship(back_populates="boss_version")
+    boss_spectrum_line: Mapped[list["BossSpectrumLine"]] = relationship(
+        back_populates="boss_version"
+    )
 
 
 class BossField(Base):
     """model for boss field table"""
+
     __tablename__ = "boss_field"
 
     id: Mapped[intpk]
-    boss_version_id: Mapped[int] = mapped_column(ForeignKey("boss_drp.boss_version.id"), nullable=False)
+    boss_version_id: Mapped[int] = mapped_column(
+        ForeignKey("boss_drp.boss_version.id"), nullable=False
+    )
     field: Mapped[Optional[int]] = mapped_column(Integer)
     designs: Mapped[Optional[str]] = mapped_column(String)
     configs: Mapped[Optional[str]] = mapped_column(String)
@@ -183,7 +193,9 @@ class BossField(Base):
     moon_frac: Mapped[Optional[float]] = mapped_column(Float)
     field_cadence: Mapped[Optional[str]] = mapped_column(String)
     created: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True))
-    modified: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True), server_default=text("now()"))
+    modified: Mapped[Optional[datetime.datetime]] = mapped_column(
+        DateTime(True), server_default=text("now()")
+    )
     design_vers: Mapped[Optional[str]] = mapped_column(String)
     design_mode: Mapped[Optional[str]] = mapped_column(String)
 
@@ -194,7 +206,9 @@ class BossSpectrum(Base):
     __tablename__ = "boss_spectrum"
 
     id: Mapped[intpk]
-    boss_version_id: Mapped[int] = mapped_column(ForeignKey("boss_drp.boss_version.id"), nullable=False)
+    boss_version_id: Mapped[int] = mapped_column(
+        ForeignKey("boss_drp.boss_version.id"), nullable=False
+    )
     field: Mapped[Optional[int]] = mapped_column(Integer)
     mjd: Mapped[Optional[int]] = mapped_column(Integer)
     mjd_final: Mapped[Optional[float]] = mapped_column(Float)
@@ -317,11 +331,13 @@ class BossSpectrum(Base):
     xcsao_feh: Mapped[Optional[float]] = mapped_column(Float)
     xcsao_efeh: Mapped[Optional[float]] = mapped_column(Float)
     created: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True))
-    modified: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True), server_default=text("now()"))
+    modified: Mapped[Optional[datetime.datetime]] = mapped_column(
+        DateTime(True), server_default=text("now()")
+    )
     gri_gaia_transform: Mapped[Optional[int]] = mapped_column(BigInteger)
     delta_ra: Mapped[Optional[float53]]
     delta_dec: Mapped[Optional[float53]]
-    too: Mapped[Optional[bool]] = mapped_column(Boolean, server_default=text('false'))
+    too: Mapped[Optional[bool]] = mapped_column(Boolean, server_default=text("false"))
     too_id: Mapped[Optional[int]] = mapped_column(BigInteger)
 
     boss_version: Mapped["BossVersion"] = relationship(back_populates="boss_spectrum")
@@ -331,7 +347,9 @@ class BossSpectrumLine(Base):
     __tablename__ = "boss_spectrum_line"
 
     id: Mapped[intpk]
-    boss_version_id: Mapped[int] = mapped_column(ForeignKey("boss_drp.boss_version.id"), nullable=False)
+    boss_version_id: Mapped[int] = mapped_column(
+        ForeignKey("boss_drp.boss_version.id"), nullable=False
+    )
     field: Mapped[Optional[int]] = mapped_column(Integer)
     mjd: Mapped[Optional[int]] = mapped_column(Integer)
     target_index: Mapped[Optional[int]] = mapped_column(Integer)
@@ -354,7 +372,9 @@ class BossSpectrumLine(Base):
     linedof: Mapped[Optional[float]] = mapped_column(Float)
     linechi2: Mapped[Optional[float]] = mapped_column(Float)
     created: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True))
-    modified: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True), server_default=text("now()"))
+    modified: Mapped[Optional[datetime.datetime]] = mapped_column(
+        DateTime(True), server_default=text("now()")
+    )
     obs: Mapped[Optional[str]] = mapped_column(String)
     boss_version: Mapped["BossVersion"] = relationship(back_populates="boss_spectrum_line")
 
