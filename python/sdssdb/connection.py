@@ -21,6 +21,7 @@ import six
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.engine import url
 from sqlalchemy.exc import OperationalError as OpError
+from sqlalchemy.ext.declarative import DeferredReflection
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import peewee
@@ -744,7 +745,8 @@ class SQLADatabaseConnection(DatabaseConnection):
         do_bases = [base] if base else self.bases
 
         for base in do_bases:
-            base.prepare(self.engine, views=True)
+            if issubclass(base, DeferredReflection):
+                base.prepare(self.engine, views=True)
 
             # If the base has an attribute _relations that's the function
             # to call to set up the relationships once the engine has been

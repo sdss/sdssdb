@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 #
 
-from sdssdb.connection import SQLADatabaseConnection
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.declarative import DeferredReflection
+from sqlalchemy.orm import DeclarativeBase
+
+from sdssdb.connection import SQLADatabaseConnection
 from sdssdb.sqlalchemy import BaseModel
 
+
 # we need a shared common Base when joining across multiple schema
-class SDSS5dbBase(DeferredReflection, BaseModel, DeclarativeBase):
+class SDSS5dbBase(BaseModel, DeclarativeBase):
     pass
 
 
