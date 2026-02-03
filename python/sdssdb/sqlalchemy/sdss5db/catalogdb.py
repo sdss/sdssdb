@@ -424,7 +424,7 @@ class Mangatarget(Base):
     esrweight: Mapped[float] = mapped_column(REAL, nullable=False)
     psweight: Mapped[float] = mapped_column(REAL, nullable=False)
     esweight: Mapped[float] = mapped_column(REAL, nullable=False)
-    ranflag: Mapped[Any] = mapped_column(BIT(1), nullable=False)
+    ranflag: Mapped[Optional[Any]] = mapped_column(BIT(1), nullable=False)
     manga_tileids_0: Mapped[int] = mapped_column(Integer, nullable=False)
     manga_tileids_1: Mapped[int] = mapped_column(Integer, nullable=False)
     manga_tileids_2: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -732,7 +732,7 @@ class CatalogFromSDSS_DR19p_Speclite(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -923,7 +923,7 @@ class CatalogToGaia_DR2(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -962,7 +962,7 @@ class CatalogToGaia_DR3(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -1128,7 +1128,7 @@ class CatalogToLegacy_Survey_DR10(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -1144,7 +1144,7 @@ class CatalogToLegacy_Survey_DR10a(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -1185,7 +1185,7 @@ class CatalogToMILLIQUAS_7_7(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -1349,7 +1349,7 @@ class CatalogToSDSS_DR19p_Speclite(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -1705,7 +1705,7 @@ class CatalogToTwoMassPSC(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -1842,7 +1842,7 @@ class CatalogToXMM_OM_SUSS_5_0(Base):
     catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
-    target_id: Mapped[Any] = mapped_column(
+    target_id: Mapped[Optional[int]] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
     version_id: Mapped[Optional[int]] = mapped_column(
@@ -9331,7 +9331,7 @@ class Gaia_dr3_nss_two_body_orbit(Base):
         index=True,
         primary_key=True,
     )
-    nss_solution_type: Mapped[Any] = mapped_column("nss_solution_type", Text)
+    nss_solution_type: Mapped[Optional[str]] = mapped_column("nss_solution_type", Text)
     ra: Mapped[Optional[float]] = mapped_column("ra", Float)
     ra_error: Mapped[Optional[float]] = mapped_column("ra_error", Float)
     dec: Mapped[Optional[float]] = mapped_column("dec", Float)
@@ -9347,7 +9347,7 @@ class Gaia_dr3_nss_two_body_orbit(Base):
     b_thiele_innes: Mapped[Optional[float]] = mapped_column("b_thiele_innes", Float)
     b_thiele_innes_error: Mapped[Optional[float]] = mapped_column("b_thiele_innes_error", Float)
     f_thiele_innes: Mapped[Optional[float]] = mapped_column("f_thiele_innes", Float)
-    f_thiele_innes_error: Mapped[Any] = mapped_column("f_thiele_innes_error", Float)
+    f_thiele_innes_error: Mapped[Optional[float]] = mapped_column("f_thiele_innes_error", Float)
     g_thiele_innes: Mapped[Optional[float]] = mapped_column("g_thiele_innes", Float)
     g_thiele_innes_error: Mapped[Optional[float]] = mapped_column("g_thiele_innes_error", Float)
     c_thiele_innes: Mapped[Optional[float]] = mapped_column("c_thiele_innes", Float)
@@ -11336,7 +11336,7 @@ class SkyMapper_DR1_1(Base):
     twomass_key2: Mapped[Optional[int]] = mapped_column(BigInteger)
     twomass_dist2: Mapped[Optional[float]] = mapped_column(Float)
     twomass_cat2: Mapped[Optional[str]] = mapped_column(String(3))
-    allwise_cntr: Mapped[Any] = mapped_column(
+    allwise_cntr: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.allwise.cntr", ondelete="CASCADE", onupdate="CASCADE"), index=True
     )
     allwise_dist: Mapped[Optional[float]] = mapped_column(Float)
@@ -11350,11 +11350,11 @@ class SkyMapper_DR1_1(Base):
     ps1_dr1_dist: Mapped[Optional[float]] = mapped_column(Float)
     galex_bcs_id: Mapped[Optional[int]] = mapped_column(BigInteger)
     galex_bcs_dist: Mapped[Optional[float]] = mapped_column(Float)
-    gaia_dr2_id1: Mapped[Any] = mapped_column(
+    gaia_dr2_id1: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     gaia_dr2_dist1: Mapped[Optional[float]] = mapped_column(Float)
-    gaia_dr2_id2: Mapped[Any] = mapped_column(
+    gaia_dr2_id2: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     gaia_dr2_dist2: Mapped[Optional[float]] = mapped_column(Float)
@@ -11372,10 +11372,10 @@ class SkyMapperGaia(Base):
     __tablename__ = "skymapper_gaia"
     __table_args__ = {"schema": "catalogdb", "comment": "skymapper_gaia_dr1_1"}
 
-    skymapper_object_id: Mapped[Any] = mapped_column(
+    skymapper_object_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.skymapper_dr1_1.object_id", ondelete="CASCADE"), primary_key=True
     )
-    gaia_source_id: Mapped[int] = mapped_column(
+    gaia_source_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE"), index=True
     )
     teff: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -11778,12 +11778,16 @@ class SDSS_ID_To_Catalog(Base):
     tycho2__designation: Mapped[Optional[str]] = mapped_column(String(20))
     unwise__unwise_objid: Mapped[Optional[str]] = mapped_column(String(20))
 
-    allstar_dr17_synspec_rev1__apstar_id: Mapped[Any] = mapped_column(
+    allstar_dr17_synspec_rev1__apstar_id: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.allstar_dr17_synspec_rev1.apstar_id"), index=True
     )
-    allwise__cntr: Mapped[Any] = mapped_column(ForeignKey("catalogdb.allwise.cntr"), index=True)
-    bhm_rm_v0__pk: Mapped[Any] = mapped_column(ForeignKey("catalogdb.bhm_rm_v0.pk"), index=True)
-    bhm_rm_v0_2__pk: Mapped[Any] = mapped_column(
+    allwise__cntr: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.allwise.cntr"), index=True
+    )
+    bhm_rm_v0__pk: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.bhm_rm_v0.pk"), index=True
+    )
+    bhm_rm_v0_2__pk: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.bhm_rm_v0_2.pk"), index=True
     )
     catwise__source_id: Mapped[int] = mapped_column(
@@ -11798,53 +11802,61 @@ class SDSS_ID_To_Catalog(Base):
     gaia_dr3_source__source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
-    glimpse__pk: Mapped[Any] = mapped_column(ForeignKey("catalogdb.glimpse.pk"), index=True)
-    guvcat__objid: Mapped[Any] = mapped_column(ForeignKey("catalogdb.guvcat.objid"), index=True)
+    glimpse__pk: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.glimpse.pk"), index=True
+    )
+    guvcat__objid: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.guvcat.objid"), index=True
+    )
     legacy_survey_dr10__ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
     legacy_survey_dr8__ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True
     )
-    mangatarget__mangaid: Mapped[Any] = mapped_column(
+    mangatarget__mangaid: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.mangatarget.mangaid"), index=True
     )
-    marvels_dr11_star__starname: Mapped[Any] = mapped_column(
+    marvels_dr11_star__starname: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.marvels_dr11_star.starname"), index=True
     )
-    marvels_dr12_star__pk: Mapped[Any] = mapped_column(
+    marvels_dr12_star__pk: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.marvels_dr12_star.pk"), index=True
     )
-    mastar_goodstars__mangaid: Mapped[Any] = mapped_column(
+    mastar_goodstars__mangaid: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.mastar_goodstars.mangaid"), index=True
     )
-    panstarrs1__catid_objid: Mapped[Any] = mapped_column(
+    panstarrs1__catid_objid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True
     )
-    ps1_g18__objid: Mapped[Any] = mapped_column(ForeignKey("catalogdb.ps1_g18.objid"), index=True)
-    sdss_dr13_photoobj__objid: Mapped[Any] = mapped_column(
+    ps1_g18__objid: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.ps1_g18.objid"), index=True
+    )
+    sdss_dr13_photoobj__objid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True
     )
-    sdss_dr17_specobj__specobjid: Mapped[Any] = mapped_column(
+    sdss_dr17_specobj__specobjid: Mapped[Optional[Decimal]] = mapped_column(
         ForeignKey("sdss_dr17_specobj.specobjid"), index=True
     )
-    skymapper_dr1_1__object_id: Mapped[Any] = mapped_column(
+    skymapper_dr1_1__object_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.skymapper_dr1_1.object_id"), index=True
     )
-    skymapper_dr2__object_id: Mapped[Any] = mapped_column(
+    skymapper_dr2__object_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.skymapper_dr2.object_id"), index=True
     )
-    supercosmos__objid: Mapped[Any] = mapped_column(
+    supercosmos__objid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.supercosmos.objid"), index=True
     )
-    tic_v8__id: Mapped[Any] = mapped_column(ForeignKey("catalogdb.tic_v8.id"), index=True)
-    twomass_psc__pts_key: Mapped[Any] = mapped_column(
+    tic_v8__id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.tic_v8.id"), index=True
+    )
+    twomass_psc__pts_key: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.pts_key"), index=True
     )
-    tycho2__designation: Mapped[Any] = mapped_column(
+    tycho2__designation: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.tycho2.designation"), index=True
     )
-    unwise__unwise_objid: Mapped[Any] = mapped_column(
+    unwise__unwise_objid: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.unwise.unwise_objid"), index=True
     )
 
