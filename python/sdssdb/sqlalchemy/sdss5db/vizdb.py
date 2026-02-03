@@ -6,9 +6,12 @@
 # flake8: noqa: E501,E741
 
 
-from typing import Optional
-from typing_extensions import Annotated
 import datetime
+
+from typing import Optional
+
+from typing_extensions import Annotated
+
 from sqlalchemy import (
     ARRAY,
     BigInteger,
@@ -19,9 +22,9 @@ from sqlalchemy import (
     Integer,
     Numeric,
     SmallInteger,
-    Text
+    Text,
 )
-from sqlalchemy.orm import declared_attr, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, declared_attr, mapped_column
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -231,12 +234,12 @@ class SDSSidToAstraPipeline(Base):
     __tablename__ = "sdss_id_to_astra_pipeline"
     print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk"]
 
-    pk = Column("pk", BigInteger, primary_key=True)
-    sdss_id = Column("sdss_id", BigInteger)
-    pipeline_name = Column("pipeline_name", Text)
-    v_astra = Column("v_astra", Text)
-    source_pk = Column("source_pk", Integer)
-    spectrum_pk = Column("spectrum_pk", Integer)
+    pk: Mapped[intpk]
+    sdss_id: Mapped[Optional[int]] = mapped_column("sdss_id", BigInteger)
+    pipeline_name: Mapped[Optional[str]] = mapped_column("pipeline_name", Text)
+    v_astra: Mapped[Optional[str]] = mapped_column("v_astra", Text)
+    source_pk: Mapped[Optional[int]] = mapped_column("source_pk", Integer)
+    spectrum_pk: Mapped[Optional[int]] = mapped_column("spectrum_pk", Integer)
 
 
 def define_relations():
