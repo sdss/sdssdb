@@ -5,9 +5,13 @@ This document records the main changes to the `sdssdb` code.
 
 ## Next release
 
+* [#296](https://github.com/sdss/sdssdb/issues/296): Support SQLAlchemy 2.0.
 * [#303](https://github.com/sdss/sdssdb/pull/303): Add `vizdb.sdss_id_to_astra_pipeline` table and update script.
+* [#297](https://github.com/sdss/sdssdb/issues/297): Update documentation.
+* [#298](https://github.com/sdss/sdssdb/issues/298): Support connection pooling in Peewee.
+* [#299](https://github.com/sdss/sdssdb/issues/299): Improve testing
+* [#300](https://github.com/sdss/sdssdb/issues/300): Add GitHub action to check the `uv.lock` file.
 * Explicitly add table name for `gaia_assas_sn_cepheids`.
-* Support SQLAlchemy 2.0.
 
 
 ## 0.13.5 (2025-10-23)
