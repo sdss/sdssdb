@@ -8,6 +8,10 @@
 
 from __future__ import annotations
 
+import sys
+
+import pytest
+
 from sdssdb.peewee.lvmdb import gortdb, lvmopsdb
 from sdssdb.peewee.operationsdb import apogeeqldb, mangadb, platedb
 from sdssdb.peewee.sdss5db import (
@@ -23,6 +27,9 @@ from sdssdb.peewee.sdss5db import (
 
 def test_sdss5db_imports():
     """Test that all submodules of sdss5db can be imported."""
+
+    if sys.version_info.major == 3 and sys.version_info.minor < 10:
+        pytest.xfail("Mapped types require Python 3.10+")
 
     assert boss_drp.BossSpectrum
     assert catalogdb.Catalog
