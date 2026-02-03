@@ -121,12 +121,13 @@ SQLAlchemy
 Creating a database connection and model classes for SQLALchemy is quite similar to Peewee. As before, refer to the implementation of `sdss5db <https://github.com/sdss/sdssdb/tree/main/python/sdssdb/sqlalchemy/sdss5db>`__ for a good example. In this case the ``__init__.py`` file would look like ::
 
     from sdssdb.connection import SQLADatabaseConnection
-    from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
+    from sqlalchemy.orm import DeclarativeBase
+    from sqlalchemy.ext.declarative import DeferredReflection
     from sdssdb.sqlalchemy import BaseModel
 
     # we need a shared common Base when joining across multiple schema
-    AwesomedbBase = declarative_base(cls=(DeferredReflection, BaseModel,))
-
+    class AwesomedbBase(DeferredReflection, BaseModel, DeclarativeBase):
+        pass
 
     class AwesomedbDatabaseConnection(SQLADatabaseConnection):
         dbname = 'sdss5db'
@@ -135,18 +136,20 @@ Creating a database connection and model classes for SQLALchemy is quite similar
 
     database = AwesomedbDatabaseConnection(autoconnect=True)
 
-Note that we define ``AwesomedbBase`` as a `~sqlalchemy.ext.declarative.declarative_base` using the SQLAlchemy ``sdssdb`` base class and a `~sqlalchemy.ext.declarative.DeferredReflection` base class. The latter allows for the autoloading of table columns but only at the time at which the model classes are prepared.
+Note that we define ``AwesomedbBase`` as a `~sqlalchemy.orm.DeclarativeBase` using the SQLAlchemy ``sdssdb`` base class and a `~sqlalchemy.ext.declarative.DeferredReflection` base class. The latter allows for the autoloading of table columns but only at the time at which the model classes are prepared.
 
 For the model classes you will need to write the files manually but there is no need to fill out all the column names. The deferred reflection will take care of that. An example of how the ``stupendous.py`` file would look is ::
 
+    from typing_extensions import Annotated
     from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-    from sqlalchemy.orm import relationship
+    from sqlalchemy.orm import declared_attr, relationship, Mapped, mapped_column,
 
     from sdssdb.sqlalchemy.awesome import AwesomedbBase, database
 
+    # define and annotated type for common, reused column types
+    intpk = Annotated[int, mapped_column(primary_key=True)]
 
-    class Base(AbstractConcreteBase, AwesomedbBase):
+    class Base(AwesomedbBase):
         __abstract__ = True
         _schema = 'stupendous'
         _relations = 'define_relations'
@@ -158,16 +161,23 @@ For the model classes you will need to write the files manually but there is no 
 
     class User(Base):
         __tablename__ = 'user'
+        first_name =
+        pk: Mapped[intpk]
+        age: Mapped[Optional[int]] = mapped_column(Integer)
+        first_name: Mapped[Optional[str]] = mapped_column(String)
+        last_name: Mapped[Optional[str]] = mapped_column(String)
 
 
     class Address(Base):
         __tablename__ = 'address'
         print_fields = ['zipcode']
+        pk: Mapped[intpk]
+        zipcode: Mapped[Optional[str]] = mapped_column(String)
 
 
     def define_relations():
 
-        User.address = relationship(Address, backref='user')
+        User.addresses: Mapped[List["Address"]] = relationship(back_populates="user")
 
 
     database.add_base(Base)
@@ -176,7 +186,7 @@ For the model classes you will need to write the files manually but there is no 
 In this example we have two tables, ``user`` and ``address`` that we model as ``User`` and ``Address``
 respectively. Note that we don't need to specify any column at this point, just the ``__tablename__``
 metadata property. All model classes need to subclass from ``Base``, which in turn subclasses from
-`~sqlalchemy.ext.declarative.AbstractConcreteBase` and ``AwesomedbBase``. We can use the special attribute
+``AwesomedbBase``. We can use the special attribute
 ``print_fields`` to define a list of fields that will be output in the standard representation of the model
 instances (primary keys and ``label`` fields are always output).
 
@@ -185,6 +195,14 @@ case there only one relationship that allows to retrieve the address for a given
 back reference). We need to encapsulate the relationships in a function so that they can be recreated if
 we change the database connection to point to a different database. Finally, we add the
 ``database.add_base(Base)`` statement to bind the base to the database connection.
+
+.. note::
+
+    With ``slqlalchemy 2.0``, there have been changes to the recommended syntax for defining ORMs.
+    See `Migrating an Existing Mapping <https://docs.sqlalchemy.org/en/20/changelog/whatsnew_20.html#migrating-an-existing-mapping>`_
+    for details on how to update your model definitions.  The legacy ORM syntax will still work with
+    ``sqlalchemy 2.0``.
+
 
 Testing Your New Database
 -------------------------

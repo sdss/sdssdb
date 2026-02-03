@@ -14,7 +14,7 @@ from textwrap import TextWrapper
 import sqlalchemy
 from sqlalchemy import func
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relation
+from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.orm.session import Session
 
@@ -1238,106 +1238,106 @@ def define_relations():
 
     """
 
-    PlateRun.plates = relation(Plate, order_by=Plate.plate_id, backref="platerun")
+    PlateRun.plates = relationship(Plate, order_by=Plate.plate_id, backref="platerun")
 
-    Plate.design = relation(Design, primaryjoin=(Plate.design_pk == Design.pk), backref="plate")
-    Plate.location = relation(PlateLocation, backref="plates")
-    Plate.surveys = relation(Survey, secondary=PlateToSurvey.__table__, backref="plates")
-    Plate.pluggings = relation(Plugging, order_by=Plugging.fscan_mjd, backref="plate")
-    Plate.cmmMeasurements = relation(CmmMeas, backref="plate")
-    Plate.currentSurveyMode = relation(
+    Plate.design = relationship(Design, primaryjoin=(Plate.design_pk == Design.pk), backref="plate")
+    Plate.location = relationship(PlateLocation, backref="plates")
+    Plate.surveys = relationship(Survey, secondary=PlateToSurvey.__table__, backref="plates")
+    Plate.pluggings = relationship(Plugging, order_by=Plugging.fscan_mjd, backref="plate")
+    Plate.cmmMeasurements = relationship(CmmMeas, backref="plate")
+    Plate.currentSurveyMode = relationship(
         SurveyMode, primaryjoin=(Plate.current_survey_mode_pk == SurveyMode.pk), backref="plates"
     )
 
-    PlatePointing.plate = relation(Plate, backref="plate_pointings")
-    PlatePointing.pointing = relation(Pointing, backref="plate_pointings")
-    PlatePointing.observations = relation(
+    PlatePointing.plate = relationship(Plate, backref="plate_pointings")
+    PlatePointing.pointing = relationship(Pointing, backref="plate_pointings")
+    PlatePointing.observations = relationship(
         Observation, order_by="Observation.mjd.desc()", backref="plate_pointing"
     )
 
-    Plate.statuses = relation(
+    Plate.statuses = relationship(
         "PlateStatus", secondary=PlateToPlateStatus.__table__, backref="plates"
     )
-    Plate.completionStatus = relation(PlateCompletionStatus, backref="plates")
+    Plate.completionStatus = relationship(PlateCompletionStatus, backref="plates")
 
-    PlateCompletionStatusHistory.plate = relation(Plate, backref="completionStatusHistory")
-    PlateCompletionStatusHistory.completionStatus = relation(
+    PlateCompletionStatusHistory.plate = relationship(Plate, backref="completionStatusHistory")
+    PlateCompletionStatusHistory.completionStatus = relationship(
         PlateCompletionStatus, backref="completionStatusHistory"
     )
 
-    Tile.plates = relation(Plate, order_by=Plate.plate_id, backref="tile")
-    Tile.status = relation(TileStatus, backref="tiles")
+    Tile.plates = relationship(Plate, order_by=Plate.plate_id, backref="tile")
+    Tile.status = relationship(TileStatus, backref="tiles")
 
-    TileStatusHistory.tile = relation(Tile, backref="statusHistory")
-    TileStatusHistory.status = relation(TileStatus, backref="statusHistory")
+    TileStatusHistory.tile = relationship(Tile, backref="statusHistory")
+    TileStatusHistory.status = relationship(TileStatus, backref="statusHistory")
 
     Tile.ra = lambda self: self.plates[0].plate_pointings[0].pointing.center_ra
     Tile.dec = lambda self: self.plates[0].plate_pointings[0].pointing.center_dec
 
-    Design.pointings = relation(Pointing, backref="design")
-    Design.values = relation(DesignValue, backref="design")
-    Design.inputs = relation(PlateInput, backref="design")
+    Design.pointings = relationship(Pointing, backref="design")
+    Design.values = relationship(DesignValue, backref="design")
+    Design.inputs = relationship(PlateInput, backref="design")
 
-    DesignValue.field = relation(DesignField, backref="design_values")
+    DesignValue.field = relationship(DesignField, backref="design_values")
 
-    Plugging.cartridge = relation(Cartridge, backref="pluggings")
-    Plugging.plplugmapm = relation(PlPlugMapM, backref="plugging")
-    Plugging.instruments = relation(
+    Plugging.cartridge = relationship(Cartridge, backref="pluggings")
+    Plugging.plplugmapm = relationship(PlPlugMapM, backref="plugging")
+    Plugging.instruments = relationship(
         Instrument, secondary=PluggingToInstrument.__table__, backref="pluggings"
     )
-    Plugging.observations = relation(Observation, backref="plugging")
-    Plugging.activePlugging = relation(ActivePlugging, backref="plugging")
-    Plugging.status = relation(PluggingStatus, backref="pluggings")
+    Plugging.observations = relationship(Observation, backref="plugging")
+    Plugging.activePlugging = relationship(ActivePlugging, backref="plugging")
+    Plugging.status = relationship(PluggingStatus, backref="pluggings")
 
-    Observation.status = relation(ObservationStatus, backref="observations")
-    Observation.exposures = relation(
+    Observation.status = relationship(ObservationStatus, backref="observations")
+    Observation.exposures = relationship(
         Exposure, backref="observation", order_by=(Exposure.start_time, Exposure.exposure_no)
     )
 
-    Exposure.camera = relation(Camera, backref="exposures")
-    Exposure.survey = relation(Survey, backref="exposures")
-    Exposure.flavor = relation(ExposureFlavor, backref="exposures")
-    Exposure.status = relation(ExposureStatus, backref="exposures")
-    Exposure.headerValues = relation(
+    Exposure.camera = relationship(Camera, backref="exposures")
+    Exposure.survey = relationship(Survey, backref="exposures")
+    Exposure.flavor = relationship(ExposureFlavor, backref="exposures")
+    Exposure.status = relationship(ExposureStatus, backref="exposures")
+    Exposure.headerValues = relationship(
         ExposureHeaderValue, order_by="ExposureHeaderValue.index", backref="exposure"
     )
-    ExposureHeaderValue.header = relation(ExposureHeaderKeyword, backref="headerValues")
-    Exposure.surveyMode = relation(SurveyMode, backref="exposures")
+    ExposureHeaderValue.header = relationship(ExposureHeaderKeyword, backref="headerValues")
+    Exposure.surveyMode = relationship(SurveyMode, backref="exposures")
 
-    Camera.instrument = relation(Instrument, backref="cameras")
+    Camera.instrument = relationship(Instrument, backref="cameras")
 
-    CameraFrame.camera = relation(Camera, backref="cameraFrames")
-    CameraFrame.exposure = relation(Exposure, backref="cameraFrames")
+    CameraFrame.camera = relationship(Camera, backref="cameraFrames")
+    CameraFrame.exposure = relationship(Exposure, backref="cameraFrames")
 
-    Gprobe.cartridge = relation(Cartridge, backref="gprobes")
+    Gprobe.cartridge = relationship(Cartridge, backref="gprobes")
 
-    BossPluggingInfo.plugging = relation(Plugging, backref="bossPluggingInfo")
+    BossPluggingInfo.plugging = relationship(Plugging, backref="bossPluggingInfo")
 
-    BossSN2Threshold.camera = relation(Camera, backref="bossSN2Threshold")
+    BossSN2Threshold.camera = relationship(Camera, backref="bossSN2Threshold")
 
-    Profilometry.plugging = relation(Plugging, backref="profilometries")
-    Profilometry.measurements = relation(
+    Profilometry.plugging = relationship(Plugging, backref="profilometries")
+    Profilometry.measurements = relationship(
         ProfilometryMeasurement,
         backref="profilometry",
         order_by="ProfilometryMeasurement.number",
         cascade="all, delete, delete-orphan",
     )
-    Profilometry.tolerances = relation(ProfilometryTolerances, backref="profilometry")
-    ProfilometryTolerances.survey = relation(Survey, backref="profilometry_tolerances")
+    Profilometry.tolerances = relationship(ProfilometryTolerances, backref="profilometry")
+    ProfilometryTolerances.survey = relationship(Survey, backref="profilometry_tolerances")
 
-    PlateHolesFile.plate = relation(Plate, backref="plateHolesFile")
+    PlateHolesFile.plate = relationship(Plate, backref="plateHolesFile")
 
-    PlPlugMapM.fibers = relation(Fiber, backref="plPlugMapM")
+    PlPlugMapM.fibers = relationship(Fiber, backref="plPlugMapM")
 
-    Fiber.plateHoles = relation(PlateHole, backref="fiber")
+    Fiber.plateHoles = relationship(PlateHole, backref="fiber")
 
-    PlateHole.plateHoleType = relation(PlateHoleType, backref="plateHole")
-    PlateHole.plateHolesFile = relation(PlateHolesFile, backref="plateHole")
-    PlateHole.objectType = relation(ObjectType, backref="plateHole")
+    PlateHole.plateHoleType = relationship(PlateHoleType, backref="plateHole")
+    PlateHole.plateHolesFile = relationship(PlateHolesFile, backref="plateHole")
+    PlateHole.objectType = relationship(ObjectType, backref="plateHole")
 
-    CmmMeas.measHoles = relation(HoleMeas, backref="cmmMeas")
+    CmmMeas.measHoles = relationship(HoleMeas, backref="cmmMeas")
 
-    HoleMeas.plateHole = relation(PlateHole, backref="holeMeas")
+    HoleMeas.plateHole = relationship(PlateHole, backref="holeMeas")
 
 
 # Adds the base to the database connection.
