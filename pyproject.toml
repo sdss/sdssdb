@@ -87,6 +87,7 @@ exclude = ["typings/"]
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
+ignore = ["E741"]
 exclude = [
     "python/sdssdb/sqlalchemy/operationsdb/**/*.py",
     "python/sdssdb/sqlalchemy/archive/*.py",
