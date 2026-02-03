@@ -25,11 +25,9 @@ from sdssdb.peewee.sdss5db import (
 )
 
 
+@pytest.mark.xfail(sys.version_info < (3, 10), reason="Mapped types require Python 3.10+")
 def test_sdss5db_imports():
     """Test that all submodules of sdss5db can be imported."""
-
-    if sys.version_info.major == 3 and sys.version_info.minor < 10:
-        pytest.xfail("Mapped types require Python 3.10+")
 
     assert boss_drp.BossSpectrum
     assert catalogdb.Catalog
