@@ -126,7 +126,6 @@ class Releases(Base):
     sdssc2bv: Mapped[Optional[int]] = mapped_column(Integer)
 
 
-
 class AllSpec(Base):
     __tablename__ = "allspec"
     print_fields = ["allspec_id"]
@@ -226,6 +225,18 @@ class TargetFlags(Base):
     mapper: Mapped[Optional[str]] = mapped_column("mapper", Text)
     alt_program: Mapped[Optional[str]] = mapped_column("alt_program", Text)
     alt_name: Mapped[Optional[str]] = mapped_column("alt_name", Text)
+
+
+class SDSSidToAstraPipeline(Base):
+    __tablename__ = "sdss_id_to_astra_pipeline"
+    print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk"]
+
+    pk = Column("pk", BigInteger, primary_key=True)
+    sdss_id = Column("sdss_id", BigInteger)
+    pipeline_name = Column("pipeline_name", Text)
+    v_astra = Column("v_astra", Text)
+    source_pk = Column("source_pk", Integer)
+    spectrum_pk = Column("spectrum_pk", Integer)
 
 
 def define_relations():
