@@ -8,12 +8,7 @@
 
 from __future__ import annotations
 
-import sys
 
-import pytest
-
-
-@pytest.mark.skipif(sys.version_info < (3, 10), reason="Mapped types require Python 3.10+")
 def test_sdss5db_imports():
     """Test that all submodules of sdss5db can be imported."""
 
