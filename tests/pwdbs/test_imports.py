@@ -12,22 +12,20 @@ import sys
 
 import pytest
 
-from sdssdb.peewee.lvmdb import gortdb, lvmopsdb
-from sdssdb.peewee.operationsdb import apogeeqldb, mangadb, platedb
-from sdssdb.peewee.sdss5db import (
-    apogee_drpdb,
-    astradb,
-    boss_drp,
-    catalogdb,
-    opsdb,
-    targetdb,
-    vizdb,
-)
-
 
 @pytest.mark.xfail(sys.version_info < (3, 10), reason="Mapped types require Python 3.10+")
 def test_sdss5db_imports():
     """Test that all submodules of sdss5db can be imported."""
+
+    from sdssdb.peewee.sdss5db import (
+        apogee_drpdb,
+        astradb,
+        boss_drp,
+        catalogdb,
+        opsdb,
+        targetdb,
+        vizdb,
+    )
 
     assert boss_drp.BossSpectrum
     assert catalogdb.Catalog
@@ -41,6 +39,8 @@ def test_sdss5db_imports():
 def test_operationsdb_imports():
     """Test that all submodules of operationsdb can be imported."""
 
+    from sdssdb.peewee.operationsdb import apogeeqldb, mangadb, platedb
+
     assert platedb.Plate
     assert apogeeqldb.ApogeeSnrGoals
     assert mangadb.DataCube
@@ -48,6 +48,8 @@ def test_operationsdb_imports():
 
 def test_lvmopsdb_imports():
     """Test that all submodules of lvmopsdb can be imported."""
+
+    from sdssdb.peewee.lvmdb import gortdb, lvmopsdb
 
     assert lvmopsdb.Exposure
     assert gortdb.NightLog
