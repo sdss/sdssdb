@@ -60,6 +60,7 @@ dev = [
     "pytest-factoryboy>=2.0.3",
     "pyyaml>=5.1",
     "ruff>=0.14.8",
+    "ty>=0.0.14",
 ]
 docs = [
     "Sphinx>=7.0.0",
