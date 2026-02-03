@@ -729,17 +729,17 @@ class Catalog(Base):
 class CatalogFromSDSS_DR19p_Speclite(Base):
     __tablename__ = "catalog_from_sdss_dr19p_speclite"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToAllWise(Base):
@@ -920,17 +920,17 @@ class CatalogToCatWISE2020(Base):
 class CatalogToGaia_DR2(Base):
     __tablename__ = "catalog_to_gaia_dr2_source"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToGaia_DR2_WD_SDSS(Base):
@@ -959,17 +959,17 @@ class CatalogToGaia_DR2_WD_SDSS(Base):
 class CatalogToGaia_DR3(Base):
     __tablename__ = "catalog_to_gaia_dr3_source"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToGaiaQSO(Base):
@@ -1125,33 +1125,33 @@ class CatalogToKeplerInput_DR10(Base):
 class CatalogToLegacy_Survey_DR10(Base):
     __tablename__ = "catalog_to_legacy_survey_dr10"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToLegacy_Survey_DR10a(Base):
     __tablename__ = "catalog_to_legacy_survey_dr10a"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToLegacy_Survey_DR8(Base):
@@ -1182,17 +1182,17 @@ class CatalogToLegacy_Survey_DR8(Base):
 class CatalogToMILLIQUAS_7_7(Base):
     __tablename__ = "catalog_to_milliquas_7_7"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToPanstarrs1(Base):
@@ -1346,17 +1346,17 @@ class CatalogToSDSS_DR16_SpecObj(Base):
 class CatalogToSDSS_DR19p_Speclite(Base):
     __tablename__ = "catalog_to_sdss_dr19p_speclite"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToSkies_v1(Base):
@@ -1702,17 +1702,17 @@ class CatalogToSDSS_DR17_SpecObj(Base):
 class CatalogToTwoMassPSC(Base):
     __tablename__ = "catalog_to_twomass_psc"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class CatalogToTwoqz_sixqz(Base):
@@ -1839,17 +1839,17 @@ class CatalogToXMM_OM_SUSS_4_1(Base):
 class CatalogToXMM_OM_SUSS_5_0(Base):
     __tablename__ = "catalog_to_xmm_om_suss_5_0"
 
-    catalogid: Mapped[Any] = mapped_column(
+    catalogid: Mapped[Optional[int]] = mapped_column(
         "catalogid", BigInteger, index=True, primary_key=True, nullable=False
     )
     target_id: Mapped[Any] = mapped_column(
         "target_id", BigInteger, index=True, primary_key=True, nullable=False
     )
-    version_id: Mapped[Any] = mapped_column(
+    version_id: Mapped[Optional[int]] = mapped_column(
         "version_id", Integer, index=True, primary_key=True, nullable=False
     )
-    distance: Mapped[Any] = mapped_column("distance", Float)
-    best: Mapped[Any] = mapped_column("best", Boolean, index=True)
+    distance: Mapped[Optional[float]] = mapped_column("distance", Float)
+    best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
 class Catalog_ver25_to_ver31_full_all(Base):
@@ -2744,7 +2744,7 @@ class GAIA_ASSAS_SN_Cepheids(Base):
     amp_v: Mapped[Optional[float]] = mapped_column(Float)
     mean_v: Mapped[Optional[float]] = mapped_column(Float)
     a1_v: Mapped[Optional[float]] = mapped_column(Float)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
     random_index: Mapped[Optional[int]] = mapped_column(Integer)
@@ -2822,7 +2822,7 @@ class GAIA_ASSAS_SN_Cepheids(Base):
 class Gaia_DR2_Clean(Base):
     __tablename__ = "gaia_dr2_clean"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
 
@@ -2832,7 +2832,7 @@ class Gaia_DR2_WD(Base):
 
     wd: Mapped[Optional[str]] = mapped_column(Text, unique=True)
     dr2name: Mapped[Optional[str]] = mapped_column(Text)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
     source: Mapped[Optional[int]] = mapped_column(Integer)
@@ -2948,7 +2948,7 @@ class Gaia_DR2_TwoMass_Best_Neighbour(Base):
     number_of_neighbours: Mapped[Optional[int]] = mapped_column(Integer)
     number_of_mates: Mapped[Optional[int]] = mapped_column(Integer)
     best_neighbour_multiplicity: Mapped[Optional[int]] = mapped_column(Integer)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
         primary_key=True,
         index=True,
@@ -2956,7 +2956,7 @@ class Gaia_DR2_TwoMass_Best_Neighbour(Base):
     original_ext_source_id: Mapped[Optional[str]] = mapped_column(CHAR(17), index=True)
     angular_distance: Mapped[Optional[float]] = mapped_column(Float, index=True)
     gaia_astrometric_params: Mapped[Optional[int]] = mapped_column(Integer)
-    tmass_pts_key: Mapped[Any] = mapped_column(
+    tmass_pts_key: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.pts_key", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
@@ -2967,7 +2967,7 @@ class Gaia_DR2_TwoMass_Best_Neighbour(Base):
 class GeometricDistances_Gaia_DR2(Base):
     __tablename__ = "geometric_distances_gaia_dr2"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
     r_est: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -2981,7 +2981,7 @@ class GeometricDistances_Gaia_DR2(Base):
 class MWM_TESS_OB(Base):
     __tablename__ = "mwm_tess_ob"
 
-    gaia_dr2_id: Mapped[Any] = mapped_column(
+    gaia_dr2_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
     ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -2994,7 +2994,7 @@ class MWM_TESS_OB(Base):
 class Sagitta(Base):
     __tablename__ = "sagitta"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
     ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -3020,7 +3020,7 @@ class TransitionalMillisecondPulsars(Base):
     gaia_dec: Mapped[Optional[float]] = mapped_column(Float)
     gaia_gmag: Mapped[Optional[float]] = mapped_column(Float)
     gaia_dist: Mapped[Optional[float]] = mapped_column(Float)
-    gaia_source_id: Mapped[Any] = mapped_column(
+    gaia_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
         primary_key=True,
     )
@@ -3029,7 +3029,7 @@ class TransitionalMillisecondPulsars(Base):
 class YSO_Clustering(Base):
     __tablename__ = "yso_clustering"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), primary_key=True
     )
     twomass: Mapped[Optional[str]] = mapped_column(Text)
@@ -3212,7 +3212,7 @@ class Gaia_dr3_astrophysical_parameters(Base):
     __tablename__ = "gaia_dr3_astrophysical_parameters"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     classprob_dsc_combmod_quasar: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -3445,7 +3445,7 @@ class Gaia_dr3_galaxy_candidates(Base):
     __tablename__ = "gaia_dr3_galaxy_candidates"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     vari_best_class_name: Mapped[Optional[str]] = mapped_column(Text)
@@ -3490,7 +3490,7 @@ class Gaia_dr3_nss_acceleration_astro(Base):
     __tablename__ = "gaia_dr3_nss_acceleration_astro"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     nss_solution_type: Mapped[Optional[str]] = mapped_column(Text)
@@ -3526,7 +3526,7 @@ class Gaia_dr3_nss_non_linear_spectro(Base):
     __tablename__ = "gaia_dr3_nss_non_linear_spectro"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     nss_solution_type: Mapped[Optional[str]] = mapped_column(Text)
@@ -3549,7 +3549,7 @@ class Gaia_dr3_qso_candidates(Base):
     __tablename__ = "gaia_dr3_qso_candidates"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     astrometric_selection_flag: Mapped[Optional[bool]] = mapped_column(Boolean)
@@ -3596,7 +3596,7 @@ class Gaia_dr3_qso_candidates(Base):
 class Gaia_dr3_ravedr6_best_neighbour(Base):
     __tablename__ = "gaia_dr3_ravedr6_best_neighbour"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     original_ext_source_id: Mapped[Optional[str]] = mapped_column(Text, index=True)
@@ -3609,7 +3609,7 @@ class Gaia_dr3_ravedr6_best_neighbour(Base):
 class Gaia_dr3_ravedr6_neighbourhood(Base):
     __tablename__ = "gaia_dr3_ravedr6_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     original_ext_source_id: Mapped[Optional[str]] = mapped_column(Text, index=True)
@@ -3622,7 +3622,7 @@ class Gaia_dr3_ravedr6_neighbourhood(Base):
 class Gaia_dr3_synthetic_photometry_gspc(Base):
     __tablename__ = "gaia_dr3_synthetic_photometry_gspc"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     c_star: Mapped[Optional[float]] = mapped_column(Float)
@@ -3684,7 +3684,7 @@ class Gaia_dr3_vari_agn(Base):
     __tablename__ = "gaia_dr3_vari_agn"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     fractional_variability_g: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -3698,7 +3698,7 @@ class Gaia_dr3_vari_rrlyrae(Base):
     __tablename__ = "gaia_dr3_vari_rrlyrae"
 
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     pf: Mapped[Optional[float]] = mapped_column(Float)
@@ -3782,7 +3782,7 @@ class Gaia_dr3_vari_rrlyrae(Base):
 class Gaia_dr3_xp_sampled_mean_spectrum(Base):
     __tablename__ = "gaia_dr3_xp_sampled_mean_spectrum"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
@@ -3795,7 +3795,7 @@ class Gaia_dr3_xp_sampled_mean_spectrum(Base):
 class Gaia_dr3_xp_summary(Base):
     __tablename__ = "gaia_dr3_xp_summary"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
@@ -3822,7 +3822,7 @@ class Gaia_dr3_xp_summary(Base):
 class Gaia_edr3_panstarrs1_best_neighbour(Base):
     __tablename__ = "gaia_edr3_panstarrs1_best_neighbour"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     clean_panstarrs1_oid: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
@@ -3836,11 +3836,11 @@ class Gaia_edr3_panstarrs1_best_neighbour(Base):
 class Gaia_edr3_sdssdr13_best_neighbour(Base):
     __tablename__ = "gaia_edr3_sdssdr13_best_neighbour"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     clean_sdssdr13_oid: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    original_ext_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True
     )
     angular_distance: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -3854,7 +3854,7 @@ class Gaia_edr3_sdssdr13_best_neighbour(Base):
 class Gaia_edr3_tmass_psc_xsc_best_neighbour(Base):
     __tablename__ = "gaia_edr3_tmass_psc_xsc_best_neighbour"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     original_ext_source_id: Mapped[Optional[str]] = mapped_column(Text, index=True)
@@ -3868,10 +3868,10 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour(Base):
 class Gaia_edr3_tmass_psc_xsc_best_neighbour2(Base):
     __tablename__ = "gaia_edr3_tmass_psc_xsc_best_neighbour2"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    original_ext_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.designation"), index=True
     )
     angular_distance: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -3886,7 +3886,7 @@ class Gaia_edr3_tmass_psc_xsc_best_neighbour2(Base):
 class LvmMagnitude(Base):
     __tablename__ = "lvm_magnitude"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -3901,10 +3901,10 @@ class Visual_binary_gaia_dr3(Base):
 
     solution_id1: Mapped[Optional[int]] = mapped_column(BigInteger)
     solution_id2: Mapped[Optional[int]] = mapped_column(BigInteger)
-    source_id1: Mapped[Any] = mapped_column(
+    source_id1: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
-    source_id2: Mapped[Any] = mapped_column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
+    source_id2: Mapped[int] = mapped_column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
     random_index1: Mapped[Optional[int]] = mapped_column(BigInteger)
     random_index2: Mapped[Optional[int]] = mapped_column(BigInteger)
     ref_epoch1: Mapped[Optional[float]] = mapped_column(Float)
@@ -4102,8 +4102,8 @@ class Visual_binary_gaia_dr3(Base):
     binary_type: Mapped[Optional[str]] = mapped_column(Text)
     sigma18: Mapped[Optional[float]] = mapped_column(Float)
     r_chance_align: Mapped[Optional[float]] = mapped_column(Float)
-    dr2_source_id1: Mapped[Any] = mapped_column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
-    dr2_source_id2: Mapped[Any] = mapped_column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
+    dr2_source_id1: Mapped[int] = mapped_column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
+    dr2_source_id2: Mapped[int] = mapped_column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
     dr2_parallax1: Mapped[Optional[float]] = mapped_column(Float)
     dr2_parallax2: Mapped[Optional[float]] = mapped_column(Float)
     dr2_parallax_error1: Mapped[Optional[float]] = mapped_column(Float)
@@ -4145,7 +4145,7 @@ class WD_gaia_dr3(Base):
     __tablename__ = "wd_gaia_dr3"
 
     wdjname: Mapped[Optional[str]] = mapped_column(Text)
-    gaiaedr3: Mapped[Any] = mapped_column(
+    gaiaedr3: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     gaiadr2: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
@@ -4312,7 +4312,7 @@ class WD_gaia_dr3(Base):
 class Xpfeh_gaia_dr3(Base):
     __tablename__ = "xpfeh_gaia_dr3"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
     in_training_sample: Mapped[Optional[str]] = mapped_column(Text, index=True)
@@ -4324,10 +4324,10 @@ class Xpfeh_gaia_dr3(Base):
 class Gaia_edr3_allwise_best_neighbour(Base):
     __tablename__ = "gaia_edr3_allwise_best_neighbour"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), primary_key=True
     )
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    original_ext_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.allwise.designation"), index=True
     )
     angular_distance: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -4342,40 +4342,48 @@ class Gaia_edr3_allwise_best_neighbour(Base):
 class Gaia_edr3_allwise_neighbourhood(Base):
     __tablename__ = "gaia_edr3_allwise_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
-    original_ext_source_id: Mapped[Any] = mapped_column("original_ext_source_id", Text, index=True)
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    score: Mapped[Any] = mapped_column("score", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
-    allwise_oid: Mapped[Any] = mapped_column("allwise_oid", BigInteger, index=True)
+    source_id: Mapped[int] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id: Mapped[int] = mapped_column("original_ext_source_id", Text, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    score: Mapped[Optional[float]] = mapped_column("score", Float, index=True)
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
+    allwise_oid: Mapped[Optional[int]] = mapped_column("allwise_oid", BigInteger, index=True)
 
 
 class Gaia_edr3_panstarrs1_neighbourhood(Base):
     __tablename__ = "gaia_edr3_panstarrs1_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
-    clean_panstarrs1_oid: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
+    clean_panstarrs1_oid: Mapped[Optional[int]] = mapped_column(
         "clean_panstarrs1_oid", BigInteger, index=True
     )
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    original_ext_source_id: Mapped[int] = mapped_column(
         "original_ext_source_id", BigInteger, index=True
     )
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    score: Mapped[Any] = mapped_column("score", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    score: Mapped[Optional[float]] = mapped_column("score", Float, index=True)
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
 
 
 class Gaia_edr3_sdssdr13_neighbourhood(Base):
     __tablename__ = "gaia_edr3_sdssdr13_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
-    clean_sdssdr13_oid: Mapped[Any] = mapped_column("clean_sdssdr13_oid", BigInteger, index=True)
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
+    clean_sdssdr13_oid: Mapped[Optional[int]] = mapped_column(
+        "clean_sdssdr13_oid", BigInteger, index=True
+    )
+    original_ext_source_id: Mapped[int] = mapped_column(
         "original_ext_source_id", BigInteger, index=True
     )
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    score: Mapped[Any] = mapped_column("score", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    score: Mapped[Optional[float]] = mapped_column("score", Float, index=True)
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
 
 
 class Gaia_edr3_SkyMapper_DR2_best_neighbour(Base):
@@ -4392,13 +4400,15 @@ class Gaia_edr3_SkyMapper_DR2_best_neighbour(Base):
 class Gaia_edr3_SkyMapper_DR2_neighbourhood(Base):
     __tablename__ = "gaia_edr3_SkyMapper_DR2_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id: Mapped[int] = mapped_column(
         "original_ext_source_id", BigInteger, index=True
     )
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    score: Mapped[Any] = mapped_column("score", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    score: Mapped[Optional[float]] = mapped_column("score", Float, index=True)
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
 
 
 class Gaia_EDR3(Base):
@@ -4508,12 +4518,14 @@ class Gaia_EDR3(Base):
 class Gaia_edr3_tmass_psc_xsc_neighbourhood(Base):
     __tablename__ = "gaia_edr3_tmass_psc_xsc_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
-    original_ext_source_id: Mapped[Any] = mapped_column("original_ext_source_id", Text, index=True)
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    score: Mapped[Any] = mapped_column("score", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
-    clean_tmass_psc_xsc_oid: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id: Mapped[int] = mapped_column("original_ext_source_id", Text, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    score: Mapped[Optional[float]] = mapped_column("score", Float, index=True)
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
+    clean_tmass_psc_xsc_oid: Mapped[Optional[int]] = mapped_column(
         "clean_tmass_psc_xsc_oid", BigInteger, index=True
     )
 
@@ -4521,12 +4533,14 @@ class Gaia_edr3_tmass_psc_xsc_neighbourhood(Base):
 class Gaia_edr3_tycho2tdsc_merge_neighbourhood(Base):
     __tablename__ = "gaia_edr3_tycho2tdsc_merge_neighbourhood"
 
-    source_id: Mapped[Any] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
-    original_ext_source_id: Mapped[Any] = mapped_column("original_ext_source_id", Text, index=True)
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    score: Mapped[Any] = mapped_column("score", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
-    tycho2tdsc_merge_oid: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column("source_id", BigInteger, index=True, primary_key=True)
+    original_ext_source_id: Mapped[int] = mapped_column("original_ext_source_id", Text, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    score: Mapped[Optional[float]] = mapped_column("score", Float, index=True)
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
+    tycho2tdsc_merge_oid: Mapped[Optional[int]] = mapped_column(
         "tycho2tdsc_merge_oid", BigInteger, index=True
     )
 
@@ -5507,9 +5521,11 @@ class SDSS_DR13_PhotoObj(Base):
 class SDSS_DR13_PhotoObj_Primary(Base):
     __tablename__ = "sdss_dr13_photoobj_primary"
 
-    objid: Mapped[Any] = mapped_column("objid", BigInteger, unique=True, primary_key=True)
-    ra: Mapped[Any] = mapped_column("ra", Float)
-    dec: Mapped[Any] = mapped_column("dec", Float)
+    objid: Mapped[Optional[int]] = mapped_column(
+        "objid", BigInteger, unique=True, primary_key=True
+    )
+    ra: Mapped[Optional[float]] = mapped_column("ra", Float)
+    dec: Mapped[Optional[float]] = mapped_column("dec", Float)
 
 
 class SDSS_DR14_QSO(Base):
@@ -5566,13 +5582,13 @@ class SDSS_DR14_QSO(Base):
     rass_counts: Mapped[Optional[float]] = mapped_column(Float)
     rass_counts_snr: Mapped[Optional[float]] = mapped_column(Float)
     sdss2rosat_sep: Mapped[Optional[float]] = mapped_column(Float)
-    flux_0_2_2_0kev: Mapped[Any] = mapped_column("flux_0.2_2.0kev", Float)
-    flux_0_2_2_0kev_err: Mapped[Any] = mapped_column("flux_0.2_2.0kev_err", Float)
-    flux_2_0_12_0kev: Mapped[Any] = mapped_column("flux_2.0_12.0kev", Float)
-    flux_2_0_12_0kev_err: Mapped[Any] = mapped_column("flux_2.0_12.0kev_err", Float)
-    flux_0_2_12_0kev: Mapped[Any] = mapped_column("flux_0.2_12.0kev", Float)
-    flux_0_2_12_0kev_err: Mapped[Any] = mapped_column("flux_0.2_12.0kev_err", Float)
-    lum_0_2_12_0kev: Mapped[Any] = mapped_column("lum_0.2_12.0kev", Float)
+    flux_0_2_2_0kev: Mapped[Optional[float]] = mapped_column("flux_0.2_2.0kev", Float)
+    flux_0_2_2_0kev_err: Mapped[Optional[float]] = mapped_column("flux_0.2_2.0kev_err", Float)
+    flux_2_0_12_0kev: Mapped[Optional[float]] = mapped_column("flux_2.0_12.0kev", Float)
+    flux_2_0_12_0kev_err: Mapped[Optional[float]] = mapped_column("flux_2.0_12.0kev_err", Float)
+    flux_0_2_12_0kev: Mapped[Optional[float]] = mapped_column("flux_0.2_12.0kev", Float)
+    flux_0_2_12_0kev_err: Mapped[Optional[float]] = mapped_column("flux_0.2_12.0kev_err", Float)
+    lum_0_2_12_0kev: Mapped[Optional[float]] = mapped_column("lum_0.2_12.0kev", Float)
     sdss2xmm_sep: Mapped[Optional[float]] = mapped_column(Float)
     galex_matched: Mapped[Optional[float]] = mapped_column(Float)
     fuv: Mapped[Optional[float]] = mapped_column(Float)
@@ -5696,7 +5712,7 @@ class SDSS_DR14_SpecObj(Base):
     z: Mapped[Optional[float]] = mapped_column(Float)
     zerr: Mapped[Optional[float]] = mapped_column(Float)
     zwarning: Mapped[Optional[int]] = mapped_column(Integer)
-    _class: Mapped[Any] = mapped_column("class", String(32))
+    _class: Mapped[Optional[str]] = mapped_column("class", String(32))
     subclass: Mapped[Optional[str]] = mapped_column(String(32))
     rchi2: Mapped[Optional[float]] = mapped_column(Float)
     dof: Mapped[Optional[float]] = mapped_column(Float)
@@ -6156,7 +6172,7 @@ class SDSS_DR16_SpecObj(Base):
     z: Mapped[Optional[float]] = mapped_column(Float, index=True)
     zerr: Mapped[Optional[float]] = mapped_column(Float, index=True)
     zwarning: Mapped[Optional[int]] = mapped_column(Integer, index=True)
-    _class: Mapped[Any] = mapped_column("class", String(32))
+    _class: Mapped[Optional[str]] = mapped_column("class", String(32))
     subclass: Mapped[Optional[str]] = mapped_column(String(32))
     rchi2: Mapped[Optional[float]] = mapped_column(Float)
     dof: Mapped[Optional[float]] = mapped_column(Float)
@@ -6646,7 +6662,7 @@ class SDSSV_BOSS_SPALL(Base):
     objtype: Mapped[Optional[str]] = mapped_column(Text)
     plug_ra: Mapped[Optional[float]] = mapped_column(Float)
     plug_dec: Mapped[Optional[float]] = mapped_column(Float)
-    _class: Mapped[Any] = mapped_column("class", Text)
+    _class: Mapped[Optional[str]] = mapped_column("class", Text)
     subclass: Mapped[Optional[str]] = mapped_column(Text)
     z: Mapped[Optional[float]] = mapped_column(Float)
     z_err: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -6972,136 +6988,136 @@ class TESS_TOI_v1(Base):
 class TIC_v8_Extended(Base):
     __tablename__ = "tic_v8_extended"
 
-    id: Mapped[Any] = mapped_column("id", BigInteger, primary_key=True)
-    version: Mapped[Any] = mapped_column("version", String(8))
-    hip: Mapped[Any] = mapped_column("hip", Integer)
-    tyc: Mapped[Any] = mapped_column("tyc", String(12))
-    ucac: Mapped[Any] = mapped_column("ucac", String(10))
-    twomass: Mapped[Any] = mapped_column("twomass", String(20))
-    sdss: Mapped[Any] = mapped_column("sdss", BigInteger)
-    allwise: Mapped[Any] = mapped_column("allwise", String(20))
-    gaia: Mapped[Any] = mapped_column("gaia", String(20))
-    apass: Mapped[Any] = mapped_column("apass", String(30))
-    kic: Mapped[Any] = mapped_column("kic", Integer)
-    objtype: Mapped[Any] = mapped_column("objtype", String(16))
-    typesrc: Mapped[Any] = mapped_column("typesrc", String(16))
-    ra: Mapped[Any] = mapped_column("ra", Float)
-    dec: Mapped[Any] = mapped_column("dec", Float)
-    posflag: Mapped[Any] = mapped_column("posflag", String(12))
-    pmra: Mapped[Any] = mapped_column("pmra", Float)
-    e_pmra: Mapped[Any] = mapped_column("e_pmra", Float)
-    pmdec: Mapped[Any] = mapped_column("pmdec", Float)
-    e_pmdec: Mapped[Any] = mapped_column("e_pmdec", Float)
-    pmflag: Mapped[Any] = mapped_column("pmflag", String(12))
-    plx: Mapped[Any] = mapped_column("plx", Float)
-    e_plx: Mapped[Any] = mapped_column("e_plx", Float)
-    parflag: Mapped[Any] = mapped_column("parflag", String(12))
-    gallong: Mapped[Any] = mapped_column("gallong", Float)
-    gallat: Mapped[Any] = mapped_column("gallat", Float)
-    eclong: Mapped[Any] = mapped_column("eclong", Float)
-    eclat: Mapped[Any] = mapped_column("eclat", Float)
-    bmag: Mapped[Any] = mapped_column("bmag", Float)
-    e_bmag: Mapped[Any] = mapped_column("e_bmag", Float)
-    vmag: Mapped[Any] = mapped_column("vmag", Float)
-    e_vmag: Mapped[Any] = mapped_column("e_vmag", Float)
-    umag: Mapped[Any] = mapped_column("umag", Float)
-    e_umag: Mapped[Any] = mapped_column("e_umag", Float)
-    gmag: Mapped[Any] = mapped_column("gmag", Float)
-    e_gmag: Mapped[Any] = mapped_column("e_gmag", Float)
-    rmag: Mapped[Any] = mapped_column("rmag", Float)
-    e_rmag: Mapped[Any] = mapped_column("e_rmag", Float)
-    imag: Mapped[Any] = mapped_column("imag", Float)
-    e_imag: Mapped[Any] = mapped_column("e_imag", Float)
-    zmag: Mapped[Any] = mapped_column("zmag", Float)
-    e_zmag: Mapped[Any] = mapped_column("e_zmag", Float)
-    jmag: Mapped[Any] = mapped_column("jmag", Float)
-    e_jmag: Mapped[Any] = mapped_column("e_jmag", Float)
-    hmag: Mapped[Any] = mapped_column("hmag", Float)
-    e_hmag: Mapped[Any] = mapped_column("e_hmag", Float)
-    kmag: Mapped[Any] = mapped_column("kmag", Float)
-    e_kmag: Mapped[Any] = mapped_column("e_kmag", Float)
-    twomflag: Mapped[Any] = mapped_column("twomflag", String(20))
-    prox: Mapped[Any] = mapped_column("prox", Float)
-    w1mag: Mapped[Any] = mapped_column("w1mag", Float)
-    e_w1mag: Mapped[Any] = mapped_column("e_w1mag", Float)
-    w2mag: Mapped[Any] = mapped_column("w2mag", Float)
-    e_w2mag: Mapped[Any] = mapped_column("e_w2mag", Float)
-    w3mag: Mapped[Any] = mapped_column("w3mag", Float)
-    e_w3mag: Mapped[Any] = mapped_column("e_w3mag", Float)
-    w4mag: Mapped[Any] = mapped_column("w4mag", Float)
-    e_w4mag: Mapped[Any] = mapped_column("e_w4mag", Float)
-    gaiamag: Mapped[Any] = mapped_column("gaiamag", Float)
-    e_gaiamag: Mapped[Any] = mapped_column("e_gaiamag", Float)
-    tmag: Mapped[Any] = mapped_column("tmag", Float)
-    e_tmag: Mapped[Any] = mapped_column("e_tmag", Float)
-    tessflag: Mapped[Any] = mapped_column("tessflag", String(20))
-    spflag: Mapped[Any] = mapped_column("spflag", String(20))
-    teff: Mapped[Any] = mapped_column("teff", Float)
-    e_teff: Mapped[Any] = mapped_column("e_teff", Float)
-    logg: Mapped[Any] = mapped_column("logg", Float)
-    e_logg: Mapped[Any] = mapped_column("e_logg", Float)
-    mh: Mapped[Any] = mapped_column("mh", Float)
-    e_mh: Mapped[Any] = mapped_column("e_mh", Float)
-    rad: Mapped[Any] = mapped_column("rad", Float)
-    e_rad: Mapped[Any] = mapped_column("e_rad", Float)
-    mass: Mapped[Any] = mapped_column("mass", Float)
-    e_mass: Mapped[Any] = mapped_column("e_mass", Float)
-    rho: Mapped[Any] = mapped_column("rho", Float)
-    e_rho: Mapped[Any] = mapped_column("e_rho", Float)
-    lumclass: Mapped[Any] = mapped_column("lumclass", String(10))
-    lum: Mapped[Any] = mapped_column("lum", Float)
-    e_lum: Mapped[Any] = mapped_column("e_lum", Float)
-    d: Mapped[Any] = mapped_column("d", Float)
-    e_d: Mapped[Any] = mapped_column("e_d", Float)
-    ebv: Mapped[Any] = mapped_column("ebv", Float)
-    e_ebv: Mapped[Any] = mapped_column("e_ebv", Float)
-    numcont: Mapped[Any] = mapped_column("numcont", Integer)
-    contratio: Mapped[Any] = mapped_column("contratio", Float)
-    disposition: Mapped[Any] = mapped_column("disposition", String(10))
-    duplicate_id: Mapped[Any] = mapped_column("duplicate_id", BigInteger)
-    priority: Mapped[Any] = mapped_column("priority", Float)
-    eneg_ebv: Mapped[Any] = mapped_column("eneg_ebv", Float)
-    epos_ebv: Mapped[Any] = mapped_column("epos_ebv", Float)
-    ebvflag: Mapped[Any] = mapped_column("ebvflag", String(20))
-    eneg_mass: Mapped[Any] = mapped_column("eneg_mass", Float)
-    epos_mass: Mapped[Any] = mapped_column("epos_mass", Float)
-    eneg_rad: Mapped[Any] = mapped_column("eneg_rad", Float)
-    epos_rad: Mapped[Any] = mapped_column("epos_rad", Float)
-    eneg_rho: Mapped[Any] = mapped_column("eneg_rho", Float)
-    epos_rho: Mapped[Any] = mapped_column("epos_rho", Float)
-    eneg_logg: Mapped[Any] = mapped_column("eneg_logg", Float)
-    epos_logg: Mapped[Any] = mapped_column("epos_logg", Float)
-    eneg_lum: Mapped[Any] = mapped_column("eneg_lum", Float)
-    epos_lum: Mapped[Any] = mapped_column("epos_lum", Float)
-    eneg_dist: Mapped[Any] = mapped_column("eneg_dist", Float)
-    epos_dist: Mapped[Any] = mapped_column("epos_dist", Float)
-    distflag: Mapped[Any] = mapped_column("distflag", String(20))
-    eneg_teff: Mapped[Any] = mapped_column("eneg_teff", Float)
-    epos_teff: Mapped[Any] = mapped_column("epos_teff", Float)
-    tefflag: Mapped[Any] = mapped_column("tefflag", String(20))
-    gaiabp: Mapped[Any] = mapped_column("gaiabp", Float)
-    e_gaiabp: Mapped[Any] = mapped_column("e_gaiabp", Float)
-    gaiarp: Mapped[Any] = mapped_column("gaiarp", Float)
-    e_gaiarp: Mapped[Any] = mapped_column("e_gaiarp", Float)
-    gaiaqflag: Mapped[Any] = mapped_column("gaiaqflag", Integer)
-    starchareflag: Mapped[Any] = mapped_column("starchareflag", String(20))
-    vmagflag: Mapped[Any] = mapped_column("vmagflag", String(20))
-    bmagflag: Mapped[Any] = mapped_column("bmagflag", String(20))
-    splits: Mapped[Any] = mapped_column("splits", String(20))
-    e_ra: Mapped[Any] = mapped_column("e_ra", Float)
-    e_dec: Mapped[Any] = mapped_column("e_dec", Float)
-    ra_orig: Mapped[Any] = mapped_column("ra_orig", Float)
-    dec_orig: Mapped[Any] = mapped_column("dec_orig", Float)
-    e_ra_orig: Mapped[Any] = mapped_column("e_ra_orig", Float)
-    e_dec_orig: Mapped[Any] = mapped_column("e_dec_orig", Float)
-    raddflag: Mapped[Any] = mapped_column("raddflag", Integer)
-    wdflag: Mapped[Any] = mapped_column("wdflag", Integer)
-    objid: Mapped[Any] = mapped_column("objid", BigInteger)
-    gaia_int: Mapped[Any] = mapped_column("gaia_int", BigInteger)
-    twomass_psc: Mapped[Any] = mapped_column("twomass_psc", Text)
-    twomass_psc_pts_key: Mapped[Any] = mapped_column("twomass_psc_pts_key", Integer)
-    tycho2_tycid: Mapped[Any] = mapped_column("tycho2_tycid", Integer)
-    allwise_cntr: Mapped[Any] = mapped_column("allwise_cntr", BigInteger)
+    id: Mapped[Optional[int]] = mapped_column("id", BigInteger, primary_key=True)
+    version: Mapped[Optional[str]] = mapped_column("version", String(8))
+    hip: Mapped[Optional[int]] = mapped_column("hip", Integer)
+    tyc: Mapped[Optional[str]] = mapped_column("tyc", String(12))
+    ucac: Mapped[Optional[str]] = mapped_column("ucac", String(10))
+    twomass: Mapped[Optional[str]] = mapped_column("twomass", String(20))
+    sdss: Mapped[Optional[int]] = mapped_column("sdss", BigInteger)
+    allwise: Mapped[Optional[str]] = mapped_column("allwise", String(20))
+    gaia: Mapped[Optional[str]] = mapped_column("gaia", String(20))
+    apass: Mapped[Optional[str]] = mapped_column("apass", String(30))
+    kic: Mapped[Optional[int]] = mapped_column("kic", Integer)
+    objtype: Mapped[Optional[str]] = mapped_column("objtype", String(16))
+    typesrc: Mapped[Optional[str]] = mapped_column("typesrc", String(16))
+    ra: Mapped[Optional[float]] = mapped_column("ra", Float)
+    dec: Mapped[Optional[float]] = mapped_column("dec", Float)
+    posflag: Mapped[Optional[str]] = mapped_column("posflag", String(12))
+    pmra: Mapped[Optional[float]] = mapped_column("pmra", Float)
+    e_pmra: Mapped[Optional[float]] = mapped_column("e_pmra", Float)
+    pmdec: Mapped[Optional[float]] = mapped_column("pmdec", Float)
+    e_pmdec: Mapped[Optional[float]] = mapped_column("e_pmdec", Float)
+    pmflag: Mapped[Optional[str]] = mapped_column("pmflag", String(12))
+    plx: Mapped[Optional[float]] = mapped_column("plx", Float)
+    e_plx: Mapped[Optional[float]] = mapped_column("e_plx", Float)
+    parflag: Mapped[Optional[str]] = mapped_column("parflag", String(12))
+    gallong: Mapped[Optional[float]] = mapped_column("gallong", Float)
+    gallat: Mapped[Optional[float]] = mapped_column("gallat", Float)
+    eclong: Mapped[Optional[float]] = mapped_column("eclong", Float)
+    eclat: Mapped[Optional[float]] = mapped_column("eclat", Float)
+    bmag: Mapped[Optional[float]] = mapped_column("bmag", Float)
+    e_bmag: Mapped[Optional[float]] = mapped_column("e_bmag", Float)
+    vmag: Mapped[Optional[float]] = mapped_column("vmag", Float)
+    e_vmag: Mapped[Optional[float]] = mapped_column("e_vmag", Float)
+    umag: Mapped[Optional[float]] = mapped_column("umag", Float)
+    e_umag: Mapped[Optional[float]] = mapped_column("e_umag", Float)
+    gmag: Mapped[Optional[float]] = mapped_column("gmag", Float)
+    e_gmag: Mapped[Optional[float]] = mapped_column("e_gmag", Float)
+    rmag: Mapped[Optional[float]] = mapped_column("rmag", Float)
+    e_rmag: Mapped[Optional[float]] = mapped_column("e_rmag", Float)
+    imag: Mapped[Optional[float]] = mapped_column("imag", Float)
+    e_imag: Mapped[Optional[float]] = mapped_column("e_imag", Float)
+    zmag: Mapped[Optional[float]] = mapped_column("zmag", Float)
+    e_zmag: Mapped[Optional[float]] = mapped_column("e_zmag", Float)
+    jmag: Mapped[Optional[float]] = mapped_column("jmag", Float)
+    e_jmag: Mapped[Optional[float]] = mapped_column("e_jmag", Float)
+    hmag: Mapped[Optional[float]] = mapped_column("hmag", Float)
+    e_hmag: Mapped[Optional[float]] = mapped_column("e_hmag", Float)
+    kmag: Mapped[Optional[float]] = mapped_column("kmag", Float)
+    e_kmag: Mapped[Optional[float]] = mapped_column("e_kmag", Float)
+    twomflag: Mapped[Optional[str]] = mapped_column("twomflag", String(20))
+    prox: Mapped[Optional[float]] = mapped_column("prox", Float)
+    w1mag: Mapped[Optional[float]] = mapped_column("w1mag", Float)
+    e_w1mag: Mapped[Optional[float]] = mapped_column("e_w1mag", Float)
+    w2mag: Mapped[Optional[float]] = mapped_column("w2mag", Float)
+    e_w2mag: Mapped[Optional[float]] = mapped_column("e_w2mag", Float)
+    w3mag: Mapped[Optional[float]] = mapped_column("w3mag", Float)
+    e_w3mag: Mapped[Optional[float]] = mapped_column("e_w3mag", Float)
+    w4mag: Mapped[Optional[float]] = mapped_column("w4mag", Float)
+    e_w4mag: Mapped[Optional[float]] = mapped_column("e_w4mag", Float)
+    gaiamag: Mapped[Optional[float]] = mapped_column("gaiamag", Float)
+    e_gaiamag: Mapped[Optional[float]] = mapped_column("e_gaiamag", Float)
+    tmag: Mapped[Optional[float]] = mapped_column("tmag", Float)
+    e_tmag: Mapped[Optional[float]] = mapped_column("e_tmag", Float)
+    tessflag: Mapped[Optional[str]] = mapped_column("tessflag", String(20))
+    spflag: Mapped[Optional[str]] = mapped_column("spflag", String(20))
+    teff: Mapped[Optional[float]] = mapped_column("teff", Float)
+    e_teff: Mapped[Optional[float]] = mapped_column("e_teff", Float)
+    logg: Mapped[Optional[float]] = mapped_column("logg", Float)
+    e_logg: Mapped[Optional[float]] = mapped_column("e_logg", Float)
+    mh: Mapped[Optional[float]] = mapped_column("mh", Float)
+    e_mh: Mapped[Optional[float]] = mapped_column("e_mh", Float)
+    rad: Mapped[Optional[float]] = mapped_column("rad", Float)
+    e_rad: Mapped[Optional[float]] = mapped_column("e_rad", Float)
+    mass: Mapped[Optional[float]] = mapped_column("mass", Float)
+    e_mass: Mapped[Optional[float]] = mapped_column("e_mass", Float)
+    rho: Mapped[Optional[float]] = mapped_column("rho", Float)
+    e_rho: Mapped[Optional[float]] = mapped_column("e_rho", Float)
+    lumclass: Mapped[Optional[str]] = mapped_column("lumclass", String(10))
+    lum: Mapped[Optional[float]] = mapped_column("lum", Float)
+    e_lum: Mapped[Optional[float]] = mapped_column("e_lum", Float)
+    d: Mapped[Optional[float]] = mapped_column("d", Float)
+    e_d: Mapped[Optional[float]] = mapped_column("e_d", Float)
+    ebv: Mapped[Optional[float]] = mapped_column("ebv", Float)
+    e_ebv: Mapped[Optional[float]] = mapped_column("e_ebv", Float)
+    numcont: Mapped[Optional[int]] = mapped_column("numcont", Integer)
+    contratio: Mapped[Optional[float]] = mapped_column("contratio", Float)
+    disposition: Mapped[Optional[str]] = mapped_column("disposition", String(10))
+    duplicate_id: Mapped[Optional[int]] = mapped_column("duplicate_id", BigInteger)
+    priority: Mapped[Optional[float]] = mapped_column("priority", Float)
+    eneg_ebv: Mapped[Optional[float]] = mapped_column("eneg_ebv", Float)
+    epos_ebv: Mapped[Optional[float]] = mapped_column("epos_ebv", Float)
+    ebvflag: Mapped[Optional[str]] = mapped_column("ebvflag", String(20))
+    eneg_mass: Mapped[Optional[float]] = mapped_column("eneg_mass", Float)
+    epos_mass: Mapped[Optional[float]] = mapped_column("epos_mass", Float)
+    eneg_rad: Mapped[Optional[float]] = mapped_column("eneg_rad", Float)
+    epos_rad: Mapped[Optional[float]] = mapped_column("epos_rad", Float)
+    eneg_rho: Mapped[Optional[float]] = mapped_column("eneg_rho", Float)
+    epos_rho: Mapped[Optional[float]] = mapped_column("epos_rho", Float)
+    eneg_logg: Mapped[Optional[float]] = mapped_column("eneg_logg", Float)
+    epos_logg: Mapped[Optional[float]] = mapped_column("epos_logg", Float)
+    eneg_lum: Mapped[Optional[float]] = mapped_column("eneg_lum", Float)
+    epos_lum: Mapped[Optional[float]] = mapped_column("epos_lum", Float)
+    eneg_dist: Mapped[Optional[float]] = mapped_column("eneg_dist", Float)
+    epos_dist: Mapped[Optional[float]] = mapped_column("epos_dist", Float)
+    distflag: Mapped[Optional[str]] = mapped_column("distflag", String(20))
+    eneg_teff: Mapped[Optional[float]] = mapped_column("eneg_teff", Float)
+    epos_teff: Mapped[Optional[float]] = mapped_column("epos_teff", Float)
+    tefflag: Mapped[Optional[str]] = mapped_column("tefflag", String(20))
+    gaiabp: Mapped[Optional[float]] = mapped_column("gaiabp", Float)
+    e_gaiabp: Mapped[Optional[float]] = mapped_column("e_gaiabp", Float)
+    gaiarp: Mapped[Optional[float]] = mapped_column("gaiarp", Float)
+    e_gaiarp: Mapped[Optional[float]] = mapped_column("e_gaiarp", Float)
+    gaiaqflag: Mapped[Optional[int]] = mapped_column("gaiaqflag", Integer)
+    starchareflag: Mapped[Optional[str]] = mapped_column("starchareflag", String(20))
+    vmagflag: Mapped[Optional[str]] = mapped_column("vmagflag", String(20))
+    bmagflag: Mapped[Optional[str]] = mapped_column("bmagflag", String(20))
+    splits: Mapped[Optional[str]] = mapped_column("splits", String(20))
+    e_ra: Mapped[Optional[float]] = mapped_column("e_ra", Float)
+    e_dec: Mapped[Optional[float]] = mapped_column("e_dec", Float)
+    ra_orig: Mapped[Optional[float]] = mapped_column("ra_orig", Float)
+    dec_orig: Mapped[Optional[float]] = mapped_column("dec_orig", Float)
+    e_ra_orig: Mapped[Optional[float]] = mapped_column("e_ra_orig", Float)
+    e_dec_orig: Mapped[Optional[float]] = mapped_column("e_dec_orig", Float)
+    raddflag: Mapped[Optional[int]] = mapped_column("raddflag", Integer)
+    wdflag: Mapped[Optional[int]] = mapped_column("wdflag", Integer)
+    objid: Mapped[Optional[int]] = mapped_column("objid", BigInteger)
+    gaia_int: Mapped[Optional[int]] = mapped_column("gaia_int", BigInteger)
+    twomass_psc: Mapped[Optional[str]] = mapped_column("twomass_psc", Text)
+    twomass_psc_pts_key: Mapped[Optional[int]] = mapped_column("twomass_psc_pts_key", Integer)
+    tycho2_tycid: Mapped[Optional[int]] = mapped_column("tycho2_tycid", Integer)
+    allwise_cntr: Mapped[Optional[int]] = mapped_column("allwise_cntr", BigInteger)
 
 
 class TwoMassPSC(Base):
@@ -8214,7 +8230,7 @@ class AllstarDr17SynspecRev1(Base):
     max_h: Mapped[Optional[float]] = mapped_column(Float)
     min_jk: Mapped[Optional[float]] = mapped_column(Float)
     max_jk: Mapped[Optional[float]] = mapped_column(Float)
-    gaiaedr3_source_id: Mapped[Any] = mapped_column(
+    gaiaedr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id")
     )
     gaiaedr3_parallax: Mapped[Optional[float]] = mapped_column(Float)
@@ -8368,7 +8384,7 @@ class AllstarDr17SynspecRev1(Base):
     yb_fe_err: Mapped[Optional[float]] = mapped_column(Float)
     yb_fe_flag: Mapped[Optional[int]] = mapped_column(Integer)
     visit_pk: Mapped[Optional[list]] = mapped_column(ARRAY(Integer()))
-    twomass_designation: Mapped[Any] = mapped_column(
+    twomass_designation: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.designation")
     )
 
@@ -8662,7 +8678,7 @@ class AllWise(Base):
     w4gmag: Mapped[Optional[Decimal]] = mapped_column(Numeric(5, 3))
     w4gerr: Mapped[Optional[Decimal]] = mapped_column(Numeric(4, 3))
     w4gflg: Mapped[Optional[int]] = mapped_column(Integer)
-    tmass_key: Mapped[Any] = mapped_column(ForeignKey("catalogdb.twomass_psc.pts_key"))
+    tmass_key: Mapped[Optional[int]] = mapped_column(ForeignKey("catalogdb.twomass_psc.pts_key"))
     r_2mass: Mapped[Optional[Decimal]] = mapped_column(Numeric(5, 3))
     pa_2mass: Mapped[Optional[Decimal]] = mapped_column(Numeric(4, 1))
     n_2mass: Mapped[Optional[int]] = mapped_column(Integer)
@@ -8684,7 +8700,7 @@ class AllWise(Base):
 class BestBrightest(Base):
     __tablename__ = "best_brightest"
 
-    designation: Mapped[Any] = mapped_column(
+    designation: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.allwise.designation"), nullable=False
     )
     ra_1: Mapped[Optional[float]] = mapped_column(Float)
@@ -8721,7 +8737,9 @@ class BestBrightest(Base):
     ebv: Mapped[Optional[float]] = mapped_column(Float)
     version: Mapped[Optional[int]] = mapped_column(Integer, index=True)
     original_ext_source_id: Mapped[Optional[str]] = mapped_column(String(16))
-    cntr: Mapped[Any] = mapped_column(ForeignKey("catalogdb.allwise.cntr"), primary_key=True)
+    cntr: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.allwise.cntr"), primary_key=True
+    )
 
     allwise = relationship(
         "AllWise", primaryjoin="BestBrightest.designation == AllWise.designation"
@@ -8742,7 +8760,7 @@ class ATNF(Base):
     gaia_dec: Mapped[Optional[float]] = mapped_column(Float)
     gaia_gmag: Mapped[Optional[float]] = mapped_column(Float)
     gaia_dist: Mapped[Optional[float]] = mapped_column(Float)
-    gaia_source_id: Mapped[Any] = mapped_column(
+    gaia_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
 
@@ -8790,7 +8808,7 @@ class BHM_RM_v0(Base):
     flags_nsc: Mapped[Optional[int]] = mapped_column(Integer)
     separation_nsc: Mapped[Optional[float]] = mapped_column(Float)
     sdss: Mapped[Optional[int]] = mapped_column(Integer)
-    objid_sdss: Mapped[Any] = mapped_column(
+    objid_sdss: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid"),
         index=True,
     )
@@ -8804,7 +8822,7 @@ class BHM_RM_v0(Base):
     clean_sdss: Mapped[Optional[int]] = mapped_column(Integer)
     separation_sdss: Mapped[Optional[float]] = mapped_column(Float)
     gaia: Mapped[Optional[int]] = mapped_column(Integer)
-    source_id_gaia: Mapped[Any] = mapped_column(
+    source_id_gaia: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"),
         index=True,
     )
@@ -8820,7 +8838,7 @@ class BHM_RM_v0(Base):
     pmdec_error: Mapped[Optional[float]] = mapped_column(Float)
     pmsig: Mapped[Optional[float]] = mapped_column(Float, index=True)
     unwise: Mapped[Optional[int]] = mapped_column(Integer)
-    objid_unwise: Mapped[Any] = mapped_column(
+    objid_unwise: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.unwise.unwise_objid"),
         index=True,
     )
@@ -8831,7 +8849,7 @@ class BHM_RM_v0(Base):
     flags_unwise: Mapped[Optional[list]] = mapped_column(ARRAY(Integer()))
     separation_unwise: Mapped[Optional[float]] = mapped_column(Float)
     near_ir: Mapped[Optional[int]] = mapped_column(Integer)
-    survey_ir: Mapped[Optional[str]] = mapped_column(String(6))
+    survey_ir: Mapped[Optional[Optional[str]]] = mapped_column(String(6))
     sourceid_ir: Mapped[Optional[int]] = mapped_column(BigInteger)
     ra_ir: Mapped[Optional[float]] = mapped_column(Float)
     dec_ir: Mapped[Optional[float]] = mapped_column(Float)
@@ -8940,7 +8958,7 @@ class BHM_RM_v2(Base):
     flags_nsc: Mapped[Optional[int]] = mapped_column(Integer)
     separation_nsc: Mapped[Optional[float]] = mapped_column(Float)
     sdss: Mapped[Optional[int]] = mapped_column(Integer)
-    objid_sdss: Mapped[Any] = mapped_column(
+    objid_sdss: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True
     )
     ra_sdss: Mapped[Optional[float]] = mapped_column(Float)
@@ -8953,7 +8971,7 @@ class BHM_RM_v2(Base):
     clean_sdss: Mapped[Optional[int]] = mapped_column(Integer)
     separation_sdss: Mapped[Optional[float]] = mapped_column(Float)
     gaia: Mapped[Optional[int]] = mapped_column(Integer)
-    source_id_gaia: Mapped[Any] = mapped_column(
+    source_id_gaia: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     mg: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -8968,7 +8986,7 @@ class BHM_RM_v2(Base):
     pmdec_error: Mapped[Optional[float]] = mapped_column(Float)
     pmsig: Mapped[Optional[float]] = mapped_column(Float, index=True)
     unwise: Mapped[Optional[int]] = mapped_column(Integer)
-    objid_unwise: Mapped[Any] = mapped_column(
+    objid_unwise: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.unwise.unwise_objid"), index=True
     )
     ra_unwise: Mapped[Optional[float]] = mapped_column(Float)
@@ -9051,11 +9069,11 @@ class CantatGaudinNodup(Base):
 
     radeg: Mapped[Optional[float]] = mapped_column(Float)
     dedeg: Mapped[Optional[float]] = mapped_column(Float)
-    gaiadr2: Mapped[Any] = mapped_column(
+    gaiadr2: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     proba: Mapped[Optional[float]] = mapped_column(Float, index=True)
-    cluster: Mapped[Any] = mapped_column(
+    cluster: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.cantat_gaudin_table1.cluster"), index=True
     )
     pkey: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
@@ -9070,7 +9088,7 @@ class CataclysmicVariables(Base):
     ref_id: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
     solution_id: Mapped[Optional[int]] = mapped_column(BigInteger)
     designation: Mapped[Optional[str]] = mapped_column(Text)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     random_index: Mapped[Optional[int]] = mapped_column(Integer)
@@ -9213,7 +9231,7 @@ class eBOSS_Target_v5(Base):
     w2_nanomaggies: Mapped[Optional[float]] = mapped_column(Float)
     w2_nanomaggies_ivar: Mapped[Optional[float]] = mapped_column(Float)
     has_wise_phot: Mapped[Optional[bool]] = mapped_column(Boolean)
-    objid_targeting: Mapped[Any] = mapped_column(
+    objid_targeting: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True
     )
     pk: Mapped[Optional[int]] = mapped_column(
@@ -9248,7 +9266,7 @@ class ElbadryRix(Base):
     radial_velocity2: Mapped[Optional[float]] = mapped_column(Float, index=True)
     radial_velocity_error2: Mapped[Optional[float]] = mapped_column(Float)
     rv_nb_transits2: Mapped[Optional[int]] = mapped_column(Integer, index=True)
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -9285,10 +9303,10 @@ class ElbadryRix(Base):
 class Gaia_DR2_Neighbourhood(Base):
     __tablename__ = "gaia_dr2_neighbourhood"
 
-    dr2_source_id: Mapped[Any] = mapped_column(
+    dr2_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
-    dr3_source_id: Mapped[Any] = mapped_column(
+    dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     angular_distance: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -9306,114 +9324,132 @@ class Gaia_DR2_Neighbourhood(Base):
 class Gaia_dr3_nss_two_body_orbit(Base):
     __tablename__ = "gaia_dr3_nss_two_body_orbit"
 
-    solution_id: Mapped[Any] = mapped_column("solution_id", BigInteger, primary_key=True)
-    source_id: Mapped[Any] = mapped_column(
+    solution_id: Mapped[Optional[int]] = mapped_column("solution_id", BigInteger, primary_key=True)
+    source_id: Mapped[Optional[int]] = mapped_column(
         "source_id",
         ForeignKey("catalogdb.gaia_dr3_source.source_id"),
         index=True,
         primary_key=True,
     )
     nss_solution_type: Mapped[Any] = mapped_column("nss_solution_type", Text)
-    ra: Mapped[Any] = mapped_column("ra", Float)
-    ra_error: Mapped[Any] = mapped_column("ra_error", Float)
-    dec: Mapped[Any] = mapped_column("dec", Float)
-    dec_error: Mapped[Any] = mapped_column("dec_error", Float)
-    parallax: Mapped[Any] = mapped_column("parallax", Float)
-    parallax_error: Mapped[Any] = mapped_column("parallax_error", Float)
-    pmra: Mapped[Any] = mapped_column("pmra", Float)
-    pmra_error: Mapped[Any] = mapped_column("pmra_error", Float)
-    pmdec: Mapped[Any] = mapped_column("pmdec", Float)
-    pmdec_error: Mapped[Any] = mapped_column("pmdec_error", Float)
-    a_thiele_innes: Mapped[Any] = mapped_column("a_thiele_innes", Float)
-    a_thiele_innes_error: Mapped[Any] = mapped_column("a_thiele_innes_error", Float)
-    b_thiele_innes: Mapped[Any] = mapped_column("b_thiele_innes", Float)
-    b_thiele_innes_error: Mapped[Any] = mapped_column("b_thiele_innes_error", Float)
-    f_thiele_innes: Mapped[Any] = mapped_column("f_thiele_innes", Float)
+    ra: Mapped[Optional[float]] = mapped_column("ra", Float)
+    ra_error: Mapped[Optional[float]] = mapped_column("ra_error", Float)
+    dec: Mapped[Optional[float]] = mapped_column("dec", Float)
+    dec_error: Mapped[Optional[float]] = mapped_column("dec_error", Float)
+    parallax: Mapped[Optional[float]] = mapped_column("parallax", Float)
+    parallax_error: Mapped[Optional[float]] = mapped_column("parallax_error", Float)
+    pmra: Mapped[Optional[float]] = mapped_column("pmra", Float)
+    pmra_error: Mapped[Optional[float]] = mapped_column("pmra_error", Float)
+    pmdec: Mapped[Optional[float]] = mapped_column("pmdec", Float)
+    pmdec_error: Mapped[Optional[float]] = mapped_column("pmdec_error", Float)
+    a_thiele_innes: Mapped[Optional[float]] = mapped_column("a_thiele_innes", Float)
+    a_thiele_innes_error: Mapped[Optional[float]] = mapped_column("a_thiele_innes_error", Float)
+    b_thiele_innes: Mapped[Optional[float]] = mapped_column("b_thiele_innes", Float)
+    b_thiele_innes_error: Mapped[Optional[float]] = mapped_column("b_thiele_innes_error", Float)
+    f_thiele_innes: Mapped[Optional[float]] = mapped_column("f_thiele_innes", Float)
     f_thiele_innes_error: Mapped[Any] = mapped_column("f_thiele_innes_error", Float)
-    g_thiele_innes: Mapped[Any] = mapped_column("g_thiele_innes", Float)
-    g_thiele_innes_error: Mapped[Any] = mapped_column("g_thiele_innes_error", Float)
-    c_thiele_innes: Mapped[Any] = mapped_column("c_thiele_innes", Float)
-    c_thiele_innes_error: Mapped[Any] = mapped_column("c_thiele_innes_error", Float)
-    h_thiele_innes: Mapped[Any] = mapped_column("h_thiele_innes", Float)
-    h_thiele_innes_error: Mapped[Any] = mapped_column("h_thiele_innes_error", Float)
-    period: Mapped[Any] = mapped_column("period", Float, index=True)
-    period_error: Mapped[Any] = mapped_column("period_error", Float)
-    t_periastron: Mapped[Any] = mapped_column("t_periastron", Float)
-    t_periastron_error: Mapped[Any] = mapped_column("t_periastron_error", Float)
-    eccentricity: Mapped[Any] = mapped_column("eccentricity", Float)
-    eccentricity_error: Mapped[Any] = mapped_column("eccentricity_error", Float)
-    center_of_mass_velocity: Mapped[Any] = mapped_column("center_of_mass_velocity", Float)
-    center_of_mass_velocity_error: Mapped[Any] = mapped_column(
+    g_thiele_innes: Mapped[Optional[float]] = mapped_column("g_thiele_innes", Float)
+    g_thiele_innes_error: Mapped[Optional[float]] = mapped_column("g_thiele_innes_error", Float)
+    c_thiele_innes: Mapped[Optional[float]] = mapped_column("c_thiele_innes", Float)
+    c_thiele_innes_error: Mapped[Optional[float]] = mapped_column("c_thiele_innes_error", Float)
+    h_thiele_innes: Mapped[Optional[float]] = mapped_column("h_thiele_innes", Float)
+    h_thiele_innes_error: Mapped[Optional[float]] = mapped_column("h_thiele_innes_error", Float)
+    period: Mapped[Optional[float]] = mapped_column("period", Float, index=True)
+    period_error: Mapped[Optional[float]] = mapped_column("period_error", Float)
+    t_periastron: Mapped[Optional[float]] = mapped_column("t_periastron", Float)
+    t_periastron_error: Mapped[Optional[float]] = mapped_column("t_periastron_error", Float)
+    eccentricity: Mapped[Optional[float]] = mapped_column("eccentricity", Float)
+    eccentricity_error: Mapped[Optional[float]] = mapped_column("eccentricity_error", Float)
+    center_of_mass_velocity: Mapped[Optional[float]] = mapped_column(
+        "center_of_mass_velocity", Float
+    )
+    center_of_mass_velocity_error: Mapped[Optional[float]] = mapped_column(
         "center_of_mass_velocity_error", Float
     )
-    semi_amplitude_primary: Mapped[Any] = mapped_column("semi_amplitude_primary", Float)
-    semi_amplitude_primary_error: Mapped[Any] = mapped_column(
+    semi_amplitude_primary: Mapped[Optional[float]] = mapped_column(
+        "semi_amplitude_primary", Float
+    )
+    semi_amplitude_primary_error: Mapped[Optional[float]] = mapped_column(
         "semi_amplitude_primary_error", Float
     )
-    semi_amplitude_secondary: Mapped[Any] = mapped_column("semi_amplitude_secondary", Float)
-    semi_amplitude_secondary_error: Mapped[Any] = mapped_column(
+    semi_amplitude_secondary: Mapped[Optional[float]] = mapped_column(
+        "semi_amplitude_secondary", Float
+    )
+    semi_amplitude_secondary_error: Mapped[Optional[float]] = mapped_column(
         "semi_amplitude_secondary_error", Float
     )
-    mass_ratio: Mapped[Any] = mapped_column("mass_ratio", Float)
-    mass_ratio_error: Mapped[Any] = mapped_column("mass_ratio_error", Float)
-    fill_factor_primary: Mapped[Any] = mapped_column("fill_factor_primary", Float)
-    fill_factor_primary_error: Mapped[Any] = mapped_column("fill_factor_primary_error", Float)
-    fill_factor_secondary: Mapped[Any] = mapped_column("fill_factor_secondary", Float)
-    fill_factor_secondary_error: Mapped[Any] = mapped_column("fill_factor_secondary_error", Float)
-    inclination: Mapped[Any] = mapped_column("inclination", Float)
-    inclination_error: Mapped[Any] = mapped_column("inclination_error", Float)
-    arg_periastron: Mapped[Any] = mapped_column("arg_periastron", Float)
-    arg_periastron_error: Mapped[Any] = mapped_column("arg_periastron_error", Float)
-    temperature_ratio: Mapped[Any] = mapped_column("temperature_ratio", Float)
-    temperature_ratio_error: Mapped[Any] = mapped_column("temperature_ratio_error", Float)
-    temperature_ratio_definition: Mapped[Any] = mapped_column(
+    mass_ratio: Mapped[Optional[float]] = mapped_column("mass_ratio", Float)
+    mass_ratio_error: Mapped[Optional[float]] = mapped_column("mass_ratio_error", Float)
+    fill_factor_primary: Mapped[Optional[float]] = mapped_column("fill_factor_primary", Float)
+    fill_factor_primary_error: Mapped[Optional[float]] = mapped_column(
+        "fill_factor_primary_error", Float
+    )
+    fill_factor_secondary: Mapped[Optional[float]] = mapped_column("fill_factor_secondary", Float)
+    fill_factor_secondary_error: Mapped[Optional[float]] = mapped_column(
+        "fill_factor_secondary_error", Float
+    )
+    inclination: Mapped[Optional[float]] = mapped_column("inclination", Float)
+    inclination_error: Mapped[Optional[float]] = mapped_column("inclination_error", Float)
+    arg_periastron: Mapped[Optional[float]] = mapped_column("arg_periastron", Float)
+    arg_periastron_error: Mapped[Optional[float]] = mapped_column("arg_periastron_error", Float)
+    temperature_ratio: Mapped[Optional[float]] = mapped_column("temperature_ratio", Float)
+    temperature_ratio_error: Mapped[Optional[float]] = mapped_column(
+        "temperature_ratio_error", Float
+    )
+    temperature_ratio_definition: Mapped[Optional[int]] = mapped_column(
         "temperature_ratio_definition", SmallInteger
     )
-    astrometric_n_obs_al: Mapped[Any] = mapped_column("astrometric_n_obs_al", Integer)
-    astrometric_n_good_obs_al: Mapped[Any] = mapped_column("astrometric_n_good_obs_al", Integer)
-    rv_n_obs_primary: Mapped[Any] = mapped_column("rv_n_obs_primary", Integer)
-    rv_n_good_obs_primary: Mapped[Any] = mapped_column("rv_n_good_obs_primary", Integer)
-    rv_n_obs_secondary: Mapped[Any] = mapped_column("rv_n_obs_secondary", Integer)
-    rv_n_good_obs_secondary: Mapped[Any] = mapped_column("rv_n_good_obs_secondary", Integer)
-    phot_g_n_obs: Mapped[Any] = mapped_column("phot_g_n_obs", Integer)
-    phot_g_n_good_obs: Mapped[Any] = mapped_column("phot_g_n_good_obs", Integer)
-    bit_index: Mapped[Any] = mapped_column("bit_index", BigInteger)
-    corr_vec: Mapped[Any] = mapped_column("corr_vec", Text)
-    obj_func: Mapped[Any] = mapped_column("obj_func", Float)
-    goodness_of_fit: Mapped[Any] = mapped_column("goodness_of_fit", Float)
-    efficiency: Mapped[Any] = mapped_column("efficiency", Float)
-    significance: Mapped[Any] = mapped_column("significance", Float)
-    flags: Mapped[Any] = mapped_column("flags", BigInteger)
-    conf_spectro_period: Mapped[Any] = mapped_column("conf_spectro_period", Float)
-    r_pole_sum: Mapped[Any] = mapped_column("r_pole_sum", Float)
-    r_l1_point_sum: Mapped[Any] = mapped_column("r_l1_point_sum", Float)
-    r_spher_sum: Mapped[Any] = mapped_column("r_spher_sum", Float)
-    ecl_time_primary: Mapped[Any] = mapped_column("ecl_time_primary", Float)
-    ecl_time_secondary: Mapped[Any] = mapped_column("ecl_time_secondary", Float)
-    ecl_dur_primary: Mapped[Any] = mapped_column("ecl_dur_primary", Float)
-    ecl_dur_secondary: Mapped[Any] = mapped_column("ecl_dur_secondary", Float)
-    g_luminosity_ratio: Mapped[Any] = mapped_column("g_luminosity_ratio", Float)
-    input_period_error: Mapped[Any] = mapped_column("input_period_error", Float)
-    g_rank: Mapped[Any] = mapped_column("g_rank", Float)
-    astrometric_jitter: Mapped[Any] = mapped_column("astrometric_jitter", Float)
+    astrometric_n_obs_al: Mapped[Optional[int]] = mapped_column("astrometric_n_obs_al", Integer)
+    astrometric_n_good_obs_al: Mapped[Optional[int]] = mapped_column(
+        "astrometric_n_good_obs_al", Integer
+    )
+    rv_n_obs_primary: Mapped[Optional[int]] = mapped_column("rv_n_obs_primary", Integer)
+    rv_n_good_obs_primary: Mapped[Optional[int]] = mapped_column("rv_n_good_obs_primary", Integer)
+    rv_n_obs_secondary: Mapped[Optional[int]] = mapped_column("rv_n_obs_secondary", Integer)
+    rv_n_good_obs_secondary: Mapped[Optional[int]] = mapped_column(
+        "rv_n_good_obs_secondary", Integer
+    )
+    phot_g_n_obs: Mapped[Optional[int]] = mapped_column("phot_g_n_obs", Integer)
+    phot_g_n_good_obs: Mapped[Optional[int]] = mapped_column("phot_g_n_good_obs", Integer)
+    bit_index: Mapped[Optional[int]] = mapped_column("bit_index", BigInteger)
+    corr_vec: Mapped[Optional[Any]] = mapped_column("corr_vec", Text)
+    obj_func: Mapped[Optional[Any]] = mapped_column("obj_func", Float)
+    goodness_of_fit: Mapped[Optional[Any]] = mapped_column("goodness_of_fit", Float)
+    efficiency: Mapped[Optional[Any]] = mapped_column("efficiency", Float)
+    significance: Mapped[Optional[Any]] = mapped_column("significance", Float)
+    flags: Mapped[Optional[Any]] = mapped_column("flags", BigInteger)
+    conf_spectro_period: Mapped[Optional[Any]] = mapped_column("conf_spectro_period", Float)
+    r_pole_sum: Mapped[Optional[Any]] = mapped_column("r_pole_sum", Float)
+    r_l1_point_sum: Mapped[Optional[Any]] = mapped_column("r_l1_point_sum", Float)
+    r_spher_sum: Mapped[Optional[Any]] = mapped_column("r_spher_sum", Float)
+    ecl_time_primary: Mapped[Optional[Any]] = mapped_column("ecl_time_primary", Float)
+    ecl_time_secondary: Mapped[Optional[Any]] = mapped_column("ecl_time_secondary", Float)
+    ecl_dur_primary: Mapped[Optional[Any]] = mapped_column("ecl_dur_primary", Float)
+    ecl_dur_secondary: Mapped[Optional[Any]] = mapped_column("ecl_dur_secondary", Float)
+    g_luminosity_ratio: Mapped[Optional[Any]] = mapped_column("g_luminosity_ratio", Float)
+    input_period_error: Mapped[Optional[Any]] = mapped_column("input_period_error", Float)
+    g_rank: Mapped[Optional[Any]] = mapped_column("g_rank", Float)
+    astrometric_jitter: Mapped[Optional[Any]] = mapped_column("astrometric_jitter", Float)
 
 
 class Gaia_edr3_tycho2tdsc_merge_best_neighbour(Base):
     __tablename__ = "gaia_edr3_tycho2tdsc_merge_best_neighbour"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         "source_id",
         ForeignKey("catalogdb.gaia_dr3_source.source_id"),
         index=True,
         primary_key=True,
     )
-    original_ext_source_id: Mapped[Any] = mapped_column("original_ext_source_id", Text, index=True)
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
-    tycho2tdsc_merge_oid: Mapped[Any] = mapped_column(
+    original_ext_source_id: Mapped[int] = mapped_column("original_ext_source_id", Text, index=True)
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
+    tycho2tdsc_merge_oid: Mapped[Optional[int]] = mapped_column(
         "tycho2tdsc_merge_oid", BigInteger, index=True
     )
-    number_of_neighbours: Mapped[Any] = mapped_column(
+    number_of_neighbours: Mapped[Optional[int]] = mapped_column(
         "number_of_neighbours", SmallInteger, index=True
     )
 
@@ -9421,21 +9457,23 @@ class Gaia_edr3_tycho2tdsc_merge_best_neighbour(Base):
 class Gaia_edr3_tycho2tdsc_merge_best_neighbour2(Base):
     __tablename__ = "gaia_edr3_tycho2tdsc_merge_best_neighbour2"
 
-    source_id: Mapped[Any] = mapped_column(
+    source_id: Mapped[int] = mapped_column(
         "source_id",
         ForeignKey("catalogdb.gaia_dr3_source.source_id"),
         index=True,
         primary_key=True,
     )
-    original_ext_source_id: Mapped[Any] = mapped_column(
+    original_ext_source_id: Mapped[int] = mapped_column(
         "original_ext_source_id", ForeignKey("catalogdb.tycho2.designation2"), index=True
     )
-    angular_distance: Mapped[Any] = mapped_column("angular_distance", Float, index=True)
-    xm_flag: Mapped[Any] = mapped_column("xm_flag", SmallInteger, index=True)
-    tycho2tdsc_merge_oid: Mapped[Any] = mapped_column(
+    angular_distance: Mapped[Optional[float]] = mapped_column(
+        "angular_distance", Float, index=True
+    )
+    xm_flag: Mapped[Optional[int]] = mapped_column("xm_flag", SmallInteger, index=True)
+    tycho2tdsc_merge_oid: Mapped[Optional[int]] = mapped_column(
         "tycho2tdsc_merge_oid", BigInteger, index=True
     )
-    number_of_neighbours: Mapped[Any] = mapped_column(
+    number_of_neighbours: Mapped[Optional[int]] = mapped_column(
         "number_of_neighbours", SmallInteger, index=True
     )
 
@@ -9445,8 +9483,8 @@ class Galah_dr3(Base):
 
     star_id: Mapped[Optional[str]] = mapped_column(Text, index=True)
     sobject_id: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
-    dr2_source_id: Mapped[Any] = mapped_column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
-    dr3_source_id: Mapped[Any] = mapped_column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
+    dr2_source_id: Mapped[int] = mapped_column(ForeignKey("catalogdb.gaia_dr2_source.source_id"))
+    dr3_source_id: Mapped[int] = mapped_column(ForeignKey("catalogdb.gaia_dr3_source.source_id"))
     survey_name: Mapped[Optional[str]] = mapped_column(Text)
     field_id: Mapped[Optional[int]] = mapped_column(BigInteger)
     flag_repeat: Mapped[Optional[int]] = mapped_column(BigInteger)
@@ -9650,7 +9688,7 @@ class GLIMPSE(Base):
 
     designation: Mapped[Optional[str]] = mapped_column(Text)
     tmass_designation: Mapped[Optional[str]] = mapped_column(String(18))
-    tmass_cntr: Mapped[Any] = mapped_column(
+    tmass_cntr: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.pts_key", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
@@ -9742,7 +9780,7 @@ class GLIMPSE360(Base):
 
     designation: Mapped[Optional[str]] = mapped_column(CHAR(26))
     tmass_designation: Mapped[Optional[str]] = mapped_column(CHAR(16))
-    tmass_cntr: Mapped[Any] = mapped_column(
+    tmass_cntr: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.pts_key"), index=True
     )
     l: Mapped[Optional[float]] = mapped_column(Float)
@@ -9831,49 +9869,49 @@ class GLIMPSE360(Base):
 class Lamost_dr6(Base):
     __tablename__ = "lamost_dr6"
 
-    obsid: Mapped[Any] = mapped_column("obsid", Integer, index=True, primary_key=True)
-    designation: Mapped[Any] = mapped_column("designation", Text)
-    obsdate: Mapped[Any] = mapped_column("obsdate", Text)
-    lmjd: Mapped[Any] = mapped_column("lmjd", Integer)
-    mjd: Mapped[Any] = mapped_column("mjd", Integer)
-    planid: Mapped[Any] = mapped_column("planid", Text)
-    spid: Mapped[Any] = mapped_column("spid", SmallInteger)
-    fiberid: Mapped[Any] = mapped_column("fiberid", SmallInteger)
-    ra_obs: Mapped[Any] = mapped_column("ra_obs", Float)
-    dec_obs: Mapped[Any] = mapped_column("dec_obs", Float)
-    snru: Mapped[Any] = mapped_column("snru", Float)
-    snrg: Mapped[Any] = mapped_column("snrg", Float)
-    snrr: Mapped[Any] = mapped_column("snrr", Float)
-    snri: Mapped[Any] = mapped_column("snri", Float)
-    snrz: Mapped[Any] = mapped_column("snrz", Float)
-    objtype: Mapped[Any] = mapped_column("objtype", Text)
-    cclass: Mapped[Any] = mapped_column("class", Text)
-    subclass: Mapped[Any] = mapped_column("subclass", Text)
-    z: Mapped[Any] = mapped_column("z", Float)
-    z_err: Mapped[Any] = mapped_column("z_err", Float)
-    magtype: Mapped[Any] = mapped_column("magtype", Text)
-    mag1: Mapped[Any] = mapped_column("mag1", Float)
-    mag2: Mapped[Any] = mapped_column("mag2", Float)
-    mag3: Mapped[Any] = mapped_column("mag3", Float)
-    mag4: Mapped[Any] = mapped_column("mag4", Float)
-    mag5: Mapped[Any] = mapped_column("mag5", Float)
-    mag6: Mapped[Any] = mapped_column("mag6", Float)
-    mag7: Mapped[Any] = mapped_column("mag7", Float)
-    tsource: Mapped[Any] = mapped_column("tsource", Text)
-    fibertype: Mapped[Any] = mapped_column("fibertype", Text)
-    tfrom: Mapped[Any] = mapped_column("tfrom", Text)
-    tcomment: Mapped[Any] = mapped_column("tcomment", Text)
-    offsets: Mapped[Any] = mapped_column("offsets", SmallInteger)
-    offsets_v: Mapped[Any] = mapped_column("offsets_v", Float)
-    ra: Mapped[Any] = mapped_column("ra", Float)
-    dec: Mapped[Any] = mapped_column("dec", Float)
-    fibermask: Mapped[Any] = mapped_column("fibermask", SmallInteger)
-    ra_x: Mapped[Any] = mapped_column("ra_x", Float)
-    dec_x: Mapped[Any] = mapped_column("dec_x", Float)
-    errhalfmaj: Mapped[Any] = mapped_column("errhalfmaj", Float)
-    errhalfmin: Mapped[Any] = mapped_column("errhalfmin", Float)
-    errposang: Mapped[Any] = mapped_column("errposang", Float)
-    source_id: Mapped[Any] = mapped_column(
+    obsid: Mapped[Optional[int]] = mapped_column("obsid", Integer, index=True, primary_key=True)
+    designation: Mapped[Optional[str]] = mapped_column("designation", Text)
+    obsdate: Mapped[Optional[str]] = mapped_column("obsdate", Text)
+    lmjd: Mapped[Optional[int]] = mapped_column("lmjd", Integer)
+    mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
+    planid: Mapped[Optional[str]] = mapped_column("planid", Text)
+    spid: Mapped[Optional[int]] = mapped_column("spid", SmallInteger)
+    fiberid: Mapped[Optional[int]] = mapped_column("fiberid", SmallInteger)
+    ra_obs: Mapped[Optional[float]] = mapped_column("ra_obs", Float)
+    dec_obs: Mapped[Optional[float]] = mapped_column("dec_obs", Float)
+    snru: Mapped[Optional[float]] = mapped_column("snru", Float)
+    snrg: Mapped[Optional[float]] = mapped_column("snrg", Float)
+    snrr: Mapped[Optional[float]] = mapped_column("snrr", Float)
+    snri: Mapped[Optional[float]] = mapped_column("snri", Float)
+    snrz: Mapped[Optional[float]] = mapped_column("snrz", Float)
+    objtype: Mapped[Optional[str]] = mapped_column("objtype", Text)
+    cclass: Mapped[Optional[str]] = mapped_column("class", Text)
+    subclass: Mapped[Optional[str]] = mapped_column("subclass", Text)
+    z: Mapped[Optional[float]] = mapped_column("z", Float)
+    z_err: Mapped[Optional[float]] = mapped_column("z_err", Float)
+    magtype: Mapped[Optional[str]] = mapped_column("magtype", Text)
+    mag1: Mapped[Optional[float]] = mapped_column("mag1", Float)
+    mag2: Mapped[Optional[float]] = mapped_column("mag2", Float)
+    mag3: Mapped[Optional[float]] = mapped_column("mag3", Float)
+    mag4: Mapped[Optional[float]] = mapped_column("mag4", Float)
+    mag5: Mapped[Optional[float]] = mapped_column("mag5", Float)
+    mag6: Mapped[Optional[float]] = mapped_column("mag6", Float)
+    mag7: Mapped[Optional[float]] = mapped_column("mag7", Float)
+    tsource: Mapped[Optional[str]] = mapped_column("tsource", Text)
+    fibertype: Mapped[Optional[str]] = mapped_column("fibertype", Text)
+    tfrom: Mapped[Optional[str]] = mapped_column("tfrom", Text)
+    tcomment: Mapped[Optional[str]] = mapped_column("tcomment", Text)
+    offsets: Mapped[Optional[int]] = mapped_column("offsets", SmallInteger)
+    offsets_v: Mapped[Optional[float]] = mapped_column("offsets_v", Float)
+    ra: Mapped[Optional[float]] = mapped_column("ra", Float)
+    dec: Mapped[Optional[float]] = mapped_column("dec", Float)
+    fibermask: Mapped[Optional[int]] = mapped_column("fibermask", SmallInteger)
+    ra_x: Mapped[Optional[float]] = mapped_column("ra_x", Float)
+    dec_x: Mapped[Optional[float]] = mapped_column("dec_x", Float)
+    errhalfmaj: Mapped[Optional[float]] = mapped_column("errhalfmaj", Float)
+    errhalfmin: Mapped[Optional[float]] = mapped_column("errhalfmin", Float)
+    errposang: Mapped[Optional[float]] = mapped_column("errposang", Float)
+    source_id: Mapped[Optional[int]] = mapped_column(
         "source_id", ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
 
@@ -10012,10 +10050,10 @@ class Legacy_Survey_DR10(Base):
     sersic_ivar: Mapped[Optional[float]] = mapped_column(Float)
     survey_primary: Mapped[Optional[bool]] = mapped_column(Boolean, index=True)
     ls_id: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
-    gaia_dr2_source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
 
@@ -10158,7 +10196,7 @@ class Legacy_Survey_DR10a(Base):
     shape_e2: Mapped[Optional[float]] = mapped_column(Float)
     shape_e2_ivar: Mapped[Optional[float]] = mapped_column(Float)
     ls_id: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
-    gaia_sourceid: Mapped[Any] = mapped_column(
+    gaia_sourceid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     tycho_ref: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
@@ -10291,7 +10329,7 @@ class Legacy_Survey_DR8(Base):
     maskbits: Mapped[Optional[int]] = mapped_column(Integer, index=True)
     ls_id: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
     tycho_ref: Mapped[Optional[int]] = mapped_column(BigInteger)
-    gaia_sourceid: Mapped[Any] = mapped_column(
+    gaia_sourceid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
 
@@ -10310,7 +10348,7 @@ class MIPSGAL(Base):
     e_s24: Mapped[Optional[float]] = mapped_column(Float)
     mag_24: Mapped[Optional[float]] = mapped_column(Float)
     e_mag_24: Mapped[Optional[float]] = mapped_column(Float)
-    twomass_name: Mapped[Any] = mapped_column(
+    twomass_name: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.designation"), index=True
     )
     sj: Mapped[Optional[float]] = mapped_column(Float)
@@ -10374,7 +10412,7 @@ class RAVE_DR6_Gaia_DR3_XMatch(Base):
     __tablename__ = "rave_dr6_xgaiae3"
 
     obsid: Mapped[Optional[str]] = mapped_column(Text, primary_key=True)
-    gaiae3: Mapped[Any] = mapped_column(
+    gaiae3: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     id: Mapped[Optional[str]] = mapped_column(Text)
@@ -10449,7 +10487,7 @@ class SDSS_DR16_APOGEE_Star(Base):
     chi2_threshold: Mapped[Optional[float]] = mapped_column(Float)
     stablerv_chi2_prob: Mapped[Optional[float]] = mapped_column(Float)
     apstar_version: Mapped[Optional[str]] = mapped_column(Text)
-    gaia_source_id: Mapped[Any] = mapped_column(
+    gaia_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", deferrable=True, initially="DEFERRED"),
         index=True,
     )
@@ -10485,7 +10523,7 @@ class SDSS_DR19p_Speclite(Base):
     fiberid: Mapped[Optional[int]] = mapped_column(Integer)
     field: Mapped[Optional[int]] = mapped_column(Integer)
     catalogid: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
-    bestobjid: Mapped[Any] = mapped_column(
+    bestobjid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid"), index=True
     )
     targetobjid: Mapped[Optional[int]] = mapped_column(BigInteger)
@@ -10510,7 +10548,7 @@ class SDSS_DR19p_Speclite(Base):
     z_err: Mapped[Optional[float]] = mapped_column(Float, index=True)
     zwarning: Mapped[Optional[int]] = mapped_column(Integer, index=True)
     zwarning_noqso: Mapped[Optional[int]] = mapped_column(Integer)
-    _class: Mapped[Any] = mapped_column("class", Text)
+    _class: Mapped[Optional[str]] = mapped_column("class", Text)
     subclass: Mapped[Optional[str]] = mapped_column(Text)
     tfile: Mapped[Optional[str]] = mapped_column(Text)
     specprimary: Mapped[Optional[int]] = mapped_column(Integer)
@@ -10626,7 +10664,7 @@ class SDSSV_Plateholes(Base):
     firstcarton: Mapped[Optional[str]] = mapped_column(Text, index=True)
     xfocal: Mapped[Optional[float]] = mapped_column(Float)
     yfocal: Mapped[Optional[float]] = mapped_column(Float)
-    yanny_uid: Mapped[Any] = mapped_column(
+    yanny_uid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdssv_plateholes_meta.yanny_uid"), index=True
     )
     yanny_filename: Mapped[Optional[str]] = mapped_column(Text)
@@ -10648,10 +10686,10 @@ class BHM_CSC_v3(Base):
     best_oir_cat: Mapped[Optional[str]] = mapped_column(Text, index=True)
     best_mag: Mapped[Optional[float]] = mapped_column(Float, index=True)
     mag_type: Mapped[Optional[str]] = mapped_column(Text)
-    gaia_dr3_srcid: Mapped[Any] = mapped_column(
+    gaia_dr3_srcid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
-    ls_dr10_lsid: Mapped[Any] = mapped_column(
+    ls_dr10_lsid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
     ls_dr10_objid: Mapped[Optional[int]] = mapped_column(Integer)
@@ -10659,7 +10697,7 @@ class BHM_CSC_v3(Base):
     ls_dr10_release: Mapped[Optional[int]] = mapped_column(SmallInteger)
     ps21p_objid: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
     ps21p_ippobjid: Mapped[Optional[int]] = mapped_column(BigInteger, index=True)
-    tmass_designation: Mapped[Any] = mapped_column(
+    tmass_designation: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.designation"), index=True
     )
     tmass_ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -10700,19 +10738,19 @@ class BHM_RM_v1(Base):
     gaia_g: Mapped[Optional[float]] = mapped_column(Float, index=True)
     gaia_bp: Mapped[Optional[float]] = mapped_column(Float)
     gaia_rp: Mapped[Optional[float]] = mapped_column(Float)
-    ls_id_dr8: Mapped[Any] = mapped_column(
+    ls_id_dr8: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True
     )
-    ls_id_dr10: Mapped[Any] = mapped_column(
+    ls_id_dr10: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
-    gaia_dr2_source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
-    panstarrs1_catid_objid: Mapped[Any] = mapped_column(
+    panstarrs1_catid_objid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True
     )
     rm_unsuitable: Mapped[Optional[bool]] = mapped_column(Boolean, index=True)
@@ -10747,19 +10785,19 @@ class BHM_RM_v1_1(Base):
     gaia_g: Mapped[Optional[float]] = mapped_column(Float, index=True)
     gaia_bp: Mapped[Optional[float]] = mapped_column(Float)
     gaia_rp: Mapped[Optional[float]] = mapped_column(Float)
-    ls_id_dr8: Mapped[Any] = mapped_column(
+    ls_id_dr8: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True
     )
-    ls_id_dr10: Mapped[Any] = mapped_column(
+    ls_id_dr10: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
-    gaia_dr2_source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
-    panstarrs1_catid_objid: Mapped[Any] = mapped_column(
+    panstarrs1_catid_objid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True
     )
     rm_unsuitable: Mapped[Optional[bool]] = mapped_column(Boolean, index=True)
@@ -10794,19 +10832,19 @@ class BHM_RM_v1_3(Base):
     gaia_g: Mapped[Optional[float]] = mapped_column(Float, index=True)
     gaia_bp: Mapped[Optional[float]] = mapped_column(Float)
     gaia_rp: Mapped[Optional[float]] = mapped_column(Float)
-    ls_id_dr8: Mapped[Any] = mapped_column(
+    ls_id_dr8: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True
     )
-    ls_id_dr10: Mapped[Any] = mapped_column(
+    ls_id_dr10: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
-    gaia_dr2_source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
-    panstarrs1_catid_objid: Mapped[Any] = mapped_column(
+    panstarrs1_catid_objid: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.panstarrs1.catid_objid"), index=True
     )
     rm_unsuitable: Mapped[Optional[bool]] = mapped_column(Boolean, index=True)
@@ -10850,12 +10888,12 @@ class BhmSpidersAgnSuperset(Base):
     target_priority: Mapped[Optional[int]] = mapped_column(Integer)
     target_has_spec: Mapped[Optional[int]] = mapped_column(Integer)
     best_opt: Mapped[Optional[str]] = mapped_column(Text)
-    ls_id: Mapped[Any] = mapped_column(
+    ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
     ps1_dr2_objid: Mapped[Optional[int]] = mapped_column(BigInteger)
-    gaia_dr2_source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
@@ -10907,12 +10945,12 @@ class BhmSpidersClustersSuperset(Base):
     target_priority: Mapped[Optional[int]] = mapped_column(Integer)
     target_has_spec: Mapped[Optional[int]] = mapped_column(Integer)
     best_opt: Mapped[Optional[str]] = mapped_column(Text)
-    ls_id: Mapped[Any] = mapped_column(
+    ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
     ps1_dr2_objid: Mapped[Optional[int]] = mapped_column(BigInteger)
-    gaia_dr2_source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
@@ -10968,10 +11006,10 @@ class EROSITASupersetv1AGN(Base):
     target_priority: Mapped[Optional[int]] = mapped_column(Integer)
     target_has_spec: Mapped[Optional[int]] = mapped_column(BigInteger)
     opt_cat: Mapped[Optional[str]] = mapped_column(Text, index=True)
-    ls_id: Mapped[Any] = mapped_column(
+    ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     opt_ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -11019,10 +11057,10 @@ class EROSITASupersetv1Clusters(Base):
     target_priority: Mapped[Optional[int]] = mapped_column(Integer, index=True)
     target_has_spec: Mapped[Optional[int]] = mapped_column(BigInteger)
     opt_cat: Mapped[Optional[str]] = mapped_column(Text, index=True)
-    ls_id: Mapped[Any] = mapped_column(
+    ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id")
     )
     opt_ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -11072,8 +11110,8 @@ class EROSITASupersetv1Compactobjects(Base):
     target_priority: Mapped[Optional[int]] = mapped_column(Integer)
     target_has_spec: Mapped[Optional[int]] = mapped_column(BigInteger)
     opt_cat: Mapped[Optional[str]] = mapped_column(Text, index=True)
-    ls_id: Mapped[Any] = mapped_column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"))
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    ls_id: Mapped[Optional[int]] = mapped_column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"))
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     opt_ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -11121,8 +11159,8 @@ class EROSITASupersetv1Stars(Base):
     target_priority: Mapped[Optional[int]] = mapped_column(Integer)
     target_has_spec: Mapped[Optional[int]] = mapped_column(BigInteger)
     opt_cat: Mapped[Optional[str]] = mapped_column(Text, index=True)
-    ls_id: Mapped[Any] = mapped_column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"))
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    ls_id: Mapped[Optional[int]] = mapped_column(ForeignKey("catalogdb.legacy_survey_dr10.ls_id"))
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     opt_ra: Mapped[Optional[float]] = mapped_column(Float)
@@ -11186,13 +11224,13 @@ class Gaia_DR2_WD_SDSS(Base):
 class SDSS_DR16_APOGEE_Star_Visit(Base):
     __tablename__ = "sdss_dr16_apogeestarvisit"
 
-    visit_id: Mapped[Any] = mapped_column(
+    visit_id: Mapped[Optional[str]] = mapped_column(
         ForeignKey(
             "catalogdb.sdss_dr16_apogeevisit.visit_id", deferrable=True, initially="DEFERRED"
         ),
         index=True,
     )
-    apstar_id: Mapped[Any] = mapped_column(
+    apstar_id: Mapped[Optional[str]] = mapped_column(
         ForeignKey(
             "catalogdb.sdss_dr16_apogeestar.apstar_id", deferrable=True, initially="DEFERRED"
         ),
@@ -11337,7 +11375,7 @@ class SkyMapperGaia(Base):
     skymapper_object_id: Mapped[Any] = mapped_column(
         ForeignKey("catalogdb.skymapper_dr1_1.object_id", ondelete="CASCADE"), primary_key=True
     )
-    gaia_source_id: Mapped[Any] = mapped_column(
+    gaia_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE"), index=True
     )
     teff: Mapped[Optional[float]] = mapped_column(Float, index=True)
@@ -11437,7 +11475,9 @@ class SkyMapper_DR2(Base):
     dr1_dist: Mapped[Optional[float]] = mapped_column(Float)
     twomass_key: Mapped[Optional[int]] = mapped_column(BigInteger)
     twomass_dist: Mapped[Optional[float]] = mapped_column(Float)
-    allwise_cntr: Mapped[Any] = mapped_column(ForeignKey("catalogdb.allwise.cntr"), index=True)
+    allwise_cntr: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.allwise.cntr"), index=True
+    )
     allwise_dist: Mapped[Optional[float]] = mapped_column(Float)
     ucac4_mpos: Mapped[Optional[int]] = mapped_column(BigInteger)
     ucac4_dist: Mapped[Optional[float]] = mapped_column(Float)
@@ -11447,11 +11487,11 @@ class SkyMapper_DR2(Base):
     ps1_dr1_dist: Mapped[Optional[float]] = mapped_column(Float)
     galex_guv_id: Mapped[Optional[int]] = mapped_column(BigInteger)
     galex_guv_dist: Mapped[Optional[float]] = mapped_column(Float)
-    gaia_dr2_id1: Mapped[Any] = mapped_column(
+    gaia_dr2_id1: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     gaia_dr2_dist1: Mapped[Optional[float]] = mapped_column(Float)
-    gaia_dr2_id2: Mapped[Any] = mapped_column(
+    gaia_dr2_id2: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
     gaia_dr2_dist2: Mapped[Optional[float]] = mapped_column(Float)
@@ -11471,22 +11511,22 @@ class TIC_v8(Base):
     id: Mapped[Optional[int]] = mapped_column(BigInteger, primary_key=True)
     version: Mapped[Optional[str]] = mapped_column(String(8))
     hip: Mapped[Optional[int]] = mapped_column(Integer)
-    tyc: Mapped[Any] = mapped_column(
+    tyc: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.tycho2.designation", ondelete="CASCADE", onupdate="CASCADE")
     )
     ucac: Mapped[Optional[str]] = mapped_column(String(10))
     twomass: Mapped[Optional[str]] = mapped_column(String(20))
-    sdss: Mapped[Any] = mapped_column(
+    sdss: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.sdss_dr13_photoobj.objid", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
-    allwise: Mapped[Any] = mapped_column(
+    allwise: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.allwise.designation", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
     gaia: Mapped[Optional[str]] = mapped_column(String(20))
     apass: Mapped[Optional[str]] = mapped_column(String(30))
-    kic: Mapped[Any] = mapped_column(
+    kic: Mapped[Optional[int]] = mapped_column(
         ForeignKey(
             "catalogdb.kepler_input_10.kic_kepler_id", ondelete="CASCADE", onupdate="CASCADE"
         ),
@@ -11606,16 +11646,18 @@ class TIC_v8(Base):
     raddflag: Mapped[Optional[int]] = mapped_column(Integer)
     wdflag: Mapped[Optional[int]] = mapped_column(Integer)
     objid: Mapped[Optional[int]] = mapped_column(BigInteger)
-    gaia_int: Mapped[Any] = mapped_column(
+    gaia_int: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
-    twomass_psc: Mapped[Any] = mapped_column(
+    twomass_psc: Mapped[Optional[str]] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.designation", ondelete="CASCADE", onupdate="CASCADE"),
         index=True,
     )
     twomass_psc_pts_key: Mapped[Optional[int]] = mapped_column(Integer, index=True)
-    tycho2_tycid: Mapped[Any] = mapped_column(ForeignKey("catalogdb.tycho2.tycid"), index=True)
+    tycho2_tycid: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("catalogdb.tycho2.tycid"), index=True
+    )
     allwise_cntr: Mapped[Optional[int]] = mapped_column(BigInteger)
 
     allwise1 = relationship("AllWise")
@@ -11630,7 +11672,7 @@ class TIC_v8(Base):
 class TESS_TOI(Base):
     __tablename__ = "tess_toi"
 
-    ticid: Mapped[Any] = mapped_column(ForeignKey("catalogdb.tic_v8.id"), index=True)
+    ticid: Mapped[Optional[int]] = mapped_column(ForeignKey("catalogdb.tic_v8.id"), index=True)
     target_type: Mapped[Optional[str]] = mapped_column(String(8))
     toi: Mapped[Optional[str]] = mapped_column(String(32))
     tess_disposition: Mapped[Optional[str]] = mapped_column(String(2))
@@ -11664,10 +11706,10 @@ class ToO_Target(Base):
     parallax: Mapped[Optional[float]] = mapped_column(Float)
     added_date: Mapped[Optional[datetime]] = mapped_column(DateTime)
 
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3.source_id"), index=True
     )
-    gaia_dr3_source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.twomass_psc.pts_key"), index=True
     )
 
@@ -11744,24 +11786,24 @@ class SDSS_ID_To_Catalog(Base):
     bhm_rm_v0_2__pk: Mapped[Any] = mapped_column(
         ForeignKey("catalogdb.bhm_rm_v0_2.pk"), index=True
     )
-    catwise__source_id: Mapped[Any] = mapped_column(
+    catwise__source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.catwise.source_id"), index=True
     )
-    catwise2020__source_id: Mapped[Any] = mapped_column(
+    catwise2020__source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.catwise2020.source_id"), index=True
     )
-    gaia_dr2_source__source_id: Mapped[Any] = mapped_column(
+    gaia_dr2_source__source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr2_source.source_id"), index=True
     )
-    gaia_dr3_source__source_id: Mapped[Any] = mapped_column(
+    gaia_dr3_source__source_id: Mapped[int] = mapped_column(
         ForeignKey("catalogdb.gaia_dr3_source.source_id"), index=True
     )
     glimpse__pk: Mapped[Any] = mapped_column(ForeignKey("catalogdb.glimpse.pk"), index=True)
     guvcat__objid: Mapped[Any] = mapped_column(ForeignKey("catalogdb.guvcat.objid"), index=True)
-    legacy_survey_dr10__ls_id: Mapped[Any] = mapped_column(
+    legacy_survey_dr10__ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr10.ls_id"), index=True
     )
-    legacy_survey_dr8__ls_id: Mapped[Any] = mapped_column(
+    legacy_survey_dr8__ls_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("catalogdb.legacy_survey_dr8.ls_id"), index=True
     )
     mangatarget__mangaid: Mapped[Any] = mapped_column(
