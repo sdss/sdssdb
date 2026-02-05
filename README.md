@@ -1,12 +1,10 @@
 # sdssdb
 
-![Versions](https://img.shields.io/badge/python->=3.6-blue)
+![Versions](https://img.shields.io/badge/python->=3.9-blue)
 [![Documentation Status](https://readthedocs.org/projects/sdssdb/badge/?version=latest)](https://sdssdb.readthedocs.io/en/latest/?badge=latest)
 [![Test](https://github.com/sdss/sdssdb/actions/workflows/test.yml/badge.svg)](https://github.com/sdss/sdssdb/actions/workflows/test.yml)
 
 [SDSS](https://sdss.org>) product for database management.
-
-**sdssdb is in active development. Although the code is stable and can be used for production, the implementation of existing features may be changed without previous notice. This will change when we reach version 1.0.0.**
 
 ## Useful links
 
