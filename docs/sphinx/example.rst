@@ -93,15 +93,15 @@ The previous query can also be written in SQLAlchemy. We try to keep the Peewee 
     >>> from sqlalchemy import select
     >>> session = database.Session
     >>> results = session.execute(select(Gaia_DR2.source_id,
-            TwoMassPSC.designation,
-            Gaia_DR2.ra,
-            Gaia_DR2.dec,
-            Gaia_DR2.phot_g_mean_mag,
-            TwoMassPSC.h_m).select_from(Gaia_DR2).join(
-                Gaia_DR2_TwoMass_Best_Neighbour).join(
-                TwoMassPSC).filter(
-                    TwoMassPSC.h_m < 11,
-                    (Gaia_DR2.phot_g_mean_mag - TwoMassPSC.h_m) > 3.5).limit(10))
+    >>>     TwoMassPSC.designation,
+    >>>     Gaia_DR2.ra,
+    >>>     Gaia_DR2.dec,
+    >>>     Gaia_DR2.phot_g_mean_mag,
+    >>>     TwoMassPSC.h_m).select_from(Gaia_DR2).join(
+    >>>         Gaia_DR2_TwoMass_Best_Neighbour).join(
+    >>>         TwoMassPSC).filter(
+    >>>             TwoMassPSC.h_m < 11,
+    >>>             (Gaia_DR2.phot_g_mean_mag - TwoMassPSC.h_m) > 3.5).limit(10))
     >>> list(results)
     [(4677205714463552128, '04364544-6204379', 69.18934307102185, -62.0774800805411, 7.623046, -3.732),
      (6177092406867764352, '13490199-2822034', 207.2580876327441, -28.367904770332707, 5.9145684,  -2.689),
