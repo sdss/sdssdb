@@ -3090,7 +3090,7 @@ wheels = [
 
 [[package]]
 name = "sdssdb"
-version = "1.0.0"
+version = "1.0.1a1"
 source = { editable = "." }
 dependencies = [
     { name = "numpy", version = "1.26.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
