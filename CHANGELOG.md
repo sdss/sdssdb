@@ -3,7 +3,7 @@
 This document records the main changes to the `sdssdb` code.
 
 
-## Next release
+## 1.0.0 (2026-02-05)
 
 * [#296](https://github.com/sdss/sdssdb/issues/296): Support SQLAlchemy 2.0.
 * [#303](https://github.com/sdss/sdssdb/pull/303): Add `vizdb.sdss_id_to_astra_pipeline` table and update script.
