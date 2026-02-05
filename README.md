@@ -14,6 +14,48 @@
 - Documentation: [https://sdssdb.readthedocs.org](https://sdssdb.readthedocs.org)
 - Issues: [https://github.com/sdss/sdssdb/issues](https://github.com/sdss/sdssdb/issues)
 
+## Installation
+
+To install `sdssdb` for regular usage, from PyPi,
+
+```bash
+pip install sdssdb
+```
+
+### Developer Install
+
+```bash
+git clone https://github.com/sdss/sdssdb
+cd sdssdb
+uv sync --python 3.12 --locked
+```
+
+This only installs the dependencies needed to run the code. For development, you can install extra dependencies needed for building docs or running tests with the `--all-groups` keyword.
+```
+uv sync --all-groups --python=3.12 --locked
+```
+
+If you don't have `uv` installed, you can install directly with pip:
+```
+git clone https://github.com/sdss/sdssdb
+cd sdssdb
+pip install -e .
+```
+
+### Building Sphinx Docs locally
+
+Within the `sdssdb` directory, run
+```
+sdss docs.build
+```
+To have the docs autobuild and watch for changes, use `nox`.  To build and run the local docs server, run
+```
+nox
+```
+This will start a local docs server at http://localhost:53992/
+
+
+
 ## How to use
 
 ```python
