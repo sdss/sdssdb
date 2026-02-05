@@ -50,8 +50,12 @@ To have the docs autobuild and watch for changes, use `nox`.  To build and run t
 ```
 nox
 ```
-This will start a local docs server at http://localhost:53992/
-
+This will start a local docs server on a random port. You should see something like,
+```
+[sphinx-autobuild] Serving on http://127.0.0.1:54429
+[sphinx-autobuild] Waiting to detect changes...
+```
+It should open the site automatically in a new browser window.  If `127.0.0.1:[port]` fails to load, try `localhost:[port]`.
 
 
 ## How to use
