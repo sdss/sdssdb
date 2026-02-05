@@ -14,7 +14,7 @@ dependencies = [
     "psycopg2-binary>=2.9.11",
     "peewee>=3.17.6",
     "sqlalchemy>=2.0.0",
-    "sdsstools>=1.9.6",
+    "sdsstools>=1.9.7",
     "numpy>=1.18.2",
     "six>=1.12.0",
 ]
