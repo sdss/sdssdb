@@ -1157,7 +1157,7 @@
       "table_name": "sdss_id_to_astra_pipeline",
       "column_name": "v_astra",
       "display_name": "Astra version",
-      "sql_type": "FLOAT",
+      "sql_type": "TEXT",
       "description": "Version of the Astra pipeline that produced the data",
       "unit": ""
     },
