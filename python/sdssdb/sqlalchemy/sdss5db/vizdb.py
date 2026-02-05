@@ -6,212 +6,244 @@
 # flake8: noqa: E501,E741
 
 
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy import (ARRAY, BigInteger, Boolean, Column, Float, Date, Double, Integer,
-                        Numeric, SmallInteger, Text, text, DateTime)
+import datetime
+
+from typing import Optional
+
+from typing_extensions import Annotated
+
+from sqlalchemy import (
+    ARRAY,
+    BigInteger,
+    Boolean,
+    Date,
+    DateTime,
+    Float,
+    Integer,
+    Numeric,
+    SmallInteger,
+    Text,
+)
+from sqlalchemy.orm import Mapped, declared_attr, mapped_column
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 
-SCHEMA = 'vizdb'
+SCHEMA = "vizdb"
+float53 = Annotated[float, 53]
+intpk = Annotated[int, mapped_column(primary_key=True)]
 
 
-class Base(AbstractConcreteBase, SDSS5dbBase):
+class Base(SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
-    _relations = 'define_relations'
+    _relations = "define_relations"
+    type_annotation_map = {
+        float53: Float(53),
+    }
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class DbMetadata(Base):
-    __tablename__ = 'db_metadata'
-    print_fields = ['schema', 'table_name', 'column_name', 'display_name']
+    __tablename__ = "db_metadata"
+    print_fields = ["schema", "table_name", "column_name", "display_name"]
 
-    pk = Column(Integer, primary_key=True, server_default=text("nextval('vizdb.db_metadata_pk_seq'::regclass)"))
-    schema = Column(Text)
-    table_name = Column(Text)
-    column_name = Column(Text)
-    display_name = Column(Text)
-    description = Column(Text)
-    unit = Column(Text)
-    sql_type = Column(Text)
+    pk: Mapped[intpk]
+    schema: Mapped[Optional[str]] = mapped_column(Text)
+    table_name: Mapped[Optional[str]] = mapped_column(Text)
+    column_name: Mapped[Optional[str]] = mapped_column(Text)
+    display_name: Mapped[Optional[str]] = mapped_column(Text)
+    description: Mapped[Optional[str]] = mapped_column(Text)
+    unit: Mapped[Optional[str]] = mapped_column(Text)
+    sql_type: Mapped[Optional[str]] = mapped_column(Text)
 
 
 class SDSSidFlat(Base):
-    __tablename__ = 'sdss_id_flat'
-    print_fields = ['sdss_id', 'catalogid', 'version_id', 'ra_sdss_id', 'dec_sdss_id']
+    __tablename__ = "sdss_id_flat"
+    print_fields = ["sdss_id", "catalogid", "version_id", "ra_sdss_id", "dec_sdss_id"]
 
-    sdss_id = Column('sdss_id', BigInteger)
-    catalogid = Column('catalogid', BigInteger)
-    version_id = Column('version_id', SmallInteger)
-    ra_sdss_id = Column('ra_sdss_id', Float(53))
-    dec_sdss_id = Column('dec_sdss_id', Float(53))
-    n_associated = Column('n_associated', SmallInteger)
-    pk = Column('pk', BigInteger, primary_key=True)
-    ra_catalogid = Column('ra_catalogid', Float(53))
-    dec_catalogid = Column('dec_catalogid', Float(53))
-    rank = Column('rank', Integer)
-
+    sdss_id: Mapped[Optional[int]] = mapped_column("sdss_id", BigInteger)
+    catalogid: Mapped[Optional[int]] = mapped_column("catalogid", BigInteger)
+    version_id: Mapped[Optional[int]] = mapped_column("version_id", SmallInteger)
+    ra_sdss_id: Mapped[Optional[float53]]
+    dec_sdss_id: Mapped[Optional[float53]]
+    n_associated: Mapped[Optional[int]] = mapped_column("n_associated", SmallInteger)
+    pk: Mapped[intpk]
+    ra_catalogid: Mapped[Optional[float53]]
+    dec_catalogid: Mapped[Optional[float53]]
+    rank: Mapped[Optional[int]] = mapped_column("rank", Integer)
 
 
 class SDSSidStacked(Base):
-    __tablename__ = 'sdss_id_stacked'
-    print_fields = ['sdss_id', 'ra_sdss_id', 'dec_sdss_id']
+    __tablename__ = "sdss_id_stacked"
+    print_fields = ["sdss_id", "ra_sdss_id", "dec_sdss_id"]
 
-    catalogid21 = Column('catalogid21', BigInteger)
-    catalogid25 = Column('catalogid25', BigInteger)
-    catalogid31 = Column('catalogid31', BigInteger)
-    ra_sdss_id = Column('ra_sdss_id', Float(53))
-    dec_sdss_id = Column('dec_sdss_id', Float(53))
-    sdss_id = Column('sdss_id', BigInteger, primary_key=True)
-    last_updated = Column('last_updated', Date)
+    catalogid21: Mapped[Optional[int]] = mapped_column("catalogid21", BigInteger)
+    catalogid25: Mapped[Optional[int]] = mapped_column("catalogid25", BigInteger)
+    catalogid31: Mapped[Optional[int]] = mapped_column("catalogid31", BigInteger)
+    ra_sdss_id: Mapped[Optional[float53]]
+    dec_sdss_id: Mapped[Optional[float53]]
+    sdss_id: Mapped[int] = mapped_column("sdss_id", primary_key=True)
+    last_updated: Mapped[Optional[datetime.date]] = mapped_column("last_updated", Date)
 
 
 class SDSSidToPipes(Base):
-    __tablename__ = 'sdssid_to_pipes'
-    print_fields = ['sdss_id', 'in_boss', 'in_apogee', 'in_astra', 'has_been_observed']
+    __tablename__ = "sdssid_to_pipes"
+    print_fields = ["sdss_id", "in_boss", "in_apogee", "in_astra", "has_been_observed"]
 
-    pk = Column('pk', BigInteger, primary_key=True)
-    sdss_id = Column('sdss_id', BigInteger)
-    in_boss = Column('in_boss', Boolean)
-    in_apogee = Column('in_apogee', Boolean)
-    in_bvs = Column('in_bvs', Boolean)
-    in_astra = Column('in_astra', Boolean)
-    has_been_observed = Column('has_been_observed', Boolean)
-    release = Column('release', Text)
-    obs = Column('obs', Text)
-    mjd = Column('mjd', Integer)
+    pk: Mapped[intpk]
+    sdss_id: Mapped[Optional[int]] = mapped_column("sdss_id", BigInteger)
+    in_boss: Mapped[Optional[bool]] = mapped_column("in_boss", Boolean)
+    in_apogee: Mapped[Optional[bool]] = mapped_column("in_apogee", Boolean)
+    in_bvs: Mapped[Optional[bool]] = mapped_column("in_bvs", Boolean)
+    in_astra: Mapped[Optional[bool]] = mapped_column("in_astra", Boolean)
+    has_been_observed: Mapped[Optional[bool]] = mapped_column("has_been_observed", Boolean)
+    release: Mapped[Optional[str]] = mapped_column("release", Text)
+    obs: Mapped[Optional[str]] = mapped_column("obs", Text)
+    mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
 
 
 class Releases(Base):
-    __tablename__ = 'releases'
-    print_fields = ['release']
+    __tablename__ = "releases"
+    print_fields = ["release"]
 
-    pk = Column('pk', BigInteger, primary_key=True)
-    release = Column(Text)
-    run2d = Column(ARRAY(Text()))
-    run1d = Column(ARRAY(Text()))
-    apred_vers = Column(ARRAY(Text()))
-    v_astra = Column(Text)
-    v_speccomp = Column(Text)
-    v_targ = Column(Text)
-    drpver = Column(Text)
-    dapver = Column(Text)
-    apstar_vers = Column(Text)
-    aspcap_vers = Column(Text)
-    results_vers = Column(Text)
-    public = Column(Boolean)
-    mjd_cutoff_apo = Column(Integer)
-    mjd_cutoff_lco = Column(Integer)
-    sdssc2bv = Column(Integer)
+    pk: Mapped[intpk]
+    release: Mapped[Optional[str]] = mapped_column(Text)
+    run2d: Mapped[Optional[list[str]]] = mapped_column(ARRAY(Text()))
+    run1d: Mapped[Optional[list[str]]] = mapped_column(ARRAY(Text()))
+    apred_vers: Mapped[Optional[list[str]]] = mapped_column(ARRAY(Text()))
+    v_astra: Mapped[Optional[str]] = mapped_column(Text)
+    v_speccomp: Mapped[Optional[str]] = mapped_column(Text)
+    v_targ: Mapped[Optional[str]] = mapped_column(Text)
+    drpver: Mapped[Optional[str]] = mapped_column(Text)
+    dapver: Mapped[Optional[str]] = mapped_column(Text)
+    apstar_vers: Mapped[Optional[str]] = mapped_column(Text)
+    aspcap_vers: Mapped[Optional[str]] = mapped_column(Text)
+    results_vers: Mapped[Optional[str]] = mapped_column(Text)
+    public: Mapped[Optional[bool]] = mapped_column(Boolean)
+    mjd_cutoff_apo: Mapped[Optional[int]] = mapped_column(Integer)
+    mjd_cutoff_lco: Mapped[Optional[int]] = mapped_column(Integer)
+    sdssc2bv: Mapped[Optional[int]] = mapped_column(Integer)
 
 
 class AllSpec(Base):
-    __tablename__ = 'allspec'
-    print_fields = ['allspec_id']
-    pk = Column('pk', Integer, primary_key=True)
-    allspec_id = Column('allspec_id', Text)
-    multiplex_id = Column('multiplex_id', Text)
-    releases_pk = Column('releases_pk', Integer)
-    sdss_phase = Column('sdss_phase', SmallInteger)
-    observatory = Column('observatory', Text)
-    instrument = Column('instrument', Text)
-    sdss_id = Column('sdss_id', BigInteger)
-    catalogid = Column('catalogid', BigInteger)
-    fiberid = Column('fiberid', Integer)
-    ifudsgn = Column('ifudsgn', Integer)
-    plate = Column('plate', Integer)
-    fps_field = Column('fps_field', Integer)
-    plate_or_fps_field = Column('plate_or_fps_field', Integer)
-    mjd = Column('mjd', Integer)
-    run2d = Column('run2d', Text)
-    run1d = Column('run1d', Text)
-    coadd = Column('coadd', Text)
-    apred_vers = Column('apred_vers', Text)
-    drpver = Column('drpver', Text)
-    version = Column('coadd', Text)
-    programname = Column('programname', Text)
-    survey = Column('survey', Text)
-    sas_file = Column('sas_file', Text)
-    cas_url = Column('cas_url', Text)
-    sas_url = Column('sas_url', Text)
-    ra = Column('ra', Double)
-    dec = Column('dec', Double)
-    ra_hms = Column('ra_hms', Text)
-    dec_dms = Column('dec_dms', Text)
-    healpix = Column('healpix', Integer)
-    healpixgrp = Column('healpixgrp', SmallInteger)
-    apogee_id = Column('apogee_id', Text)
-    apogee_field = Column('apogee_field', Text)
-    telescope = Column('telescope', Text)
-    file_spec = Column('file_spec', Text)
-    apstar_id = Column('apstar_id', Text)
-    visit_id = Column('visit_id', Text)
-    has_mwmstar = Column('has_mwmstar', Boolean)
-    mangaid = Column('mangaid', Text)
-    specobjid = Column('specobjid', Numeric(29))
-    created = Column('created', DateTime)
-    modified = Column('modified', DateTime)
+    __tablename__ = "allspec"
+    print_fields = ["allspec_id"]
+    pk: Mapped[intpk]
+    allspec_id: Mapped[Optional[str]] = mapped_column("allspec_id", Text)
+    multiplex_id: Mapped[Optional[str]] = mapped_column("multiplex_id", Text)
+    releases_pk: Mapped[Optional[int]] = mapped_column("releases_pk", Integer)
+    sdss_phase: Mapped[Optional[int]] = mapped_column("sdss_phase", SmallInteger)
+    observatory: Mapped[Optional[str]] = mapped_column("observatory", Text)
+    instrument: Mapped[Optional[str]] = mapped_column("instrument", Text)
+    sdss_id: Mapped[Optional[int]] = mapped_column("sdss_id", BigInteger)
+    catalogid: Mapped[Optional[int]] = mapped_column("catalogid", BigInteger)
+    fiberid: Mapped[Optional[int]] = mapped_column("fiberid", Integer)
+    ifudsgn: Mapped[Optional[int]] = mapped_column("ifudsgn", Integer)
+    plate: Mapped[Optional[int]] = mapped_column("plate", Integer)
+    fps_field: Mapped[Optional[int]] = mapped_column("fps_field", Integer)
+    plate_or_fps_field: Mapped[Optional[int]] = mapped_column("plate_or_fps_field", Integer)
+    mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
+    run2d: Mapped[Optional[str]] = mapped_column("run2d", Text)
+    run1d: Mapped[Optional[str]] = mapped_column("run1d", Text)
+    coadd: Mapped[Optional[str]] = mapped_column("coadd", Text)
+    apred_vers: Mapped[Optional[str]] = mapped_column("apred_vers", Text)
+    drpver: Mapped[Optional[str]] = mapped_column("drpver", Text)
+    version: Mapped[Optional[str]] = mapped_column("version", Text)
+    programname: Mapped[Optional[str]] = mapped_column("programname", Text)
+    survey: Mapped[Optional[str]] = mapped_column("survey", Text)
+    sas_file: Mapped[Optional[str]] = mapped_column("sas_file", Text)
+    cas_url: Mapped[Optional[str]] = mapped_column("cas_url", Text)
+    sas_url: Mapped[Optional[str]] = mapped_column("sas_url", Text)
+    ra: Mapped[Optional[float]] = mapped_column("ra", Float)
+    dec: Mapped[Optional[float]] = mapped_column("dec", Float)
+    ra_hms: Mapped[Optional[str]] = mapped_column("ra_hms", Text)
+    dec_dms: Mapped[Optional[str]] = mapped_column("dec_dms", Text)
+    healpix: Mapped[Optional[int]] = mapped_column("healpix", Integer)
+    healpixgrp: Mapped[Optional[int]] = mapped_column("healpixgrp", SmallInteger)
+    apogee_id: Mapped[Optional[str]] = mapped_column("apogee_id", Text)
+    apogee_field: Mapped[Optional[str]] = mapped_column("apogee_field", Text)
+    telescope: Mapped[Optional[str]] = mapped_column("telescope", Text)
+    file_spec: Mapped[Optional[str]] = mapped_column("file_spec", Text)
+    apstar_id: Mapped[Optional[str]] = mapped_column("apstar_id", Text)
+    visit_id: Mapped[Optional[str]] = mapped_column("visit_id", Text)
+    has_mwmstar: Mapped[Optional[bool]] = mapped_column("has_mwmstar", Boolean)
+    mangaid: Mapped[Optional[str]] = mapped_column("mangaid", Text)
+    specobjid: Mapped[Optional[float]] = mapped_column("specobjid", Numeric(29))
+    created: Mapped[Optional[datetime.datetime]] = mapped_column("created", DateTime)
+    modified: Mapped[Optional[datetime.datetime]] = mapped_column("modified", DateTime)
 
 
 class Multiplex(Base):
-    __tablename__ = 'multiplex'
-    print_fields = ['mutliplex_id']
-    pk = Column('pk', Integer, primary_key=True)
-    multiplex_id = Column('multiplex_id', Text)
-    releases_pk = Column('releases_pk', Integer)
-    design_id = Column('design_id', Integer)
-    sdss_phase = Column('sdss_phase', SmallInteger)
-    observatory = Column('observatory', Text)
-    telescope = Column('telescope', Text)
-    instrument = Column('instrument', Text)
-    plate = Column('plate', Integer)
-    fps_field = Column('fps_field', Integer)
-    plate_or_fps_field = Column('plate_or_fps_field', Integer)
-    mjd = Column('field', Integer)
-    run2d = Column('run2d', Text)
-    run1d = Column('run1d', Text)
-    apred_vers = Column('apred_vers', Text)
-    drpver = Column('drpver', Text)
-    racen = Column('racen', Double)
-    deccen = Column('deccen', Double)
-    position_angle = Column('position_angle', Double)
-    racen_hms = Column('racen_hms', Text)
-    deccen_dms = Column('deccen_dms', Text)
-    healpix = Column('sdss_phase', Integer)
-    healpixgrp = Column('sdss_phase', SmallInteger)
-    quality = Column('quality', Text)
-    programname = Column('programname', Text)
-    survey = Column('survey', Text)
-    cas_url = Column('cas_url', Text)
-    sas_url = Column('sas_url', Text)
-    created = Column('created', DateTime)
-    modified = Column('modified', DateTime)
+    __tablename__ = "multiplex"
+    print_fields = ["mutliplex_id"]
+    pk: Mapped[intpk]
+    multiplex_id: Mapped[Optional[str]] = mapped_column("multiplex_id", Text)
+    releases_pk: Mapped[Optional[int]] = mapped_column("releases_pk", Integer)
+    design_id: Mapped[Optional[int]] = mapped_column("design_id", Integer)
+    sdss_phase: Mapped[Optional[int]] = mapped_column("sdss_phase", SmallInteger)
+    observatory: Mapped[Optional[str]] = mapped_column("observatory", Text)
+    telescope: Mapped[Optional[str]] = mapped_column("telescope", Text)
+    instrument: Mapped[Optional[str]] = mapped_column("instrument", Text)
+    plate: Mapped[Optional[int]] = mapped_column("plate", Integer)
+    fps_field: Mapped[Optional[int]] = mapped_column("fps_field", Integer)
+    plate_or_fps_field: Mapped[Optional[int]] = mapped_column("plate_or_fps_field", Integer)
+    mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
+    run2d: Mapped[Optional[str]] = mapped_column("run2d", Text)
+    run1d: Mapped[Optional[str]] = mapped_column("run1d", Text)
+    apred_vers: Mapped[Optional[str]] = mapped_column("apred_vers", Text)
+    drpver: Mapped[Optional[str]] = mapped_column("drpver", Text)
+    racen: Mapped[Optional[float]] = mapped_column("racen", Float)
+    deccen: Mapped[Optional[float]] = mapped_column("deccen", Float)
+    position_angle: Mapped[Optional[float]] = mapped_column("position_angle", Float)
+    racen_hms: Mapped[Optional[str]] = mapped_column("racen_hms", Text)
+    deccen_dms: Mapped[Optional[str]] = mapped_column("deccen_dms", Text)
+    healpix: Mapped[Optional[int]] = mapped_column("healpix", Integer)
+    healpixgrp: Mapped[Optional[int]] = mapped_column("healpixgrp", SmallInteger)
+    quality: Mapped[Optional[str]] = mapped_column("quality", Text)
+    programname: Mapped[Optional[str]] = mapped_column("programname", Text)
+    survey: Mapped[Optional[str]] = mapped_column("survey", Text)
+    cas_url: Mapped[Optional[str]] = mapped_column("cas_url", Text)
+    sas_url: Mapped[Optional[str]] = mapped_column("sas_url", Text)
+    created: Mapped[Optional[datetime.datetime]] = mapped_column("created", DateTime)
+    modified: Mapped[Optional[datetime.datetime]] = mapped_column("modified", DateTime)
 
 
 class TargetFlags(Base):
-    __tablename__ = 'semaphore_sdssc2b'
-    print_fields = ['label', 'bit', 'program', 'name', 'mapper', 'sdssc2bv']
+    __tablename__ = "semaphore_sdssc2b"
+    print_fields = ["label", "bit", "program", "name", "mapper", "sdssc2bv"]
 
-    id = Column('id', Integer, primary_key=True)
-    label = Column('label', Text)
-    bit = Column('bit', Integer)
-    carton_pk = Column('carton_pk', Integer)
-    sdssc2bv = Column('sdssc2bv', Integer)
-    program = Column('program', Text)
-    version = Column('version', Text)
-    v1 = Column('v1', Float)
-    name = Column('name', Text)
-    mapper = Column('mapper', Text)
-    alt_program = Column('alt_program', Text)
-    alt_name = Column('alt_name', Text)
+    id: Mapped[intpk]
+    label: Mapped[Optional[str]] = mapped_column("label", Text)
+    bit: Mapped[Optional[int]] = mapped_column("bit", Integer)
+    carton_pk: Mapped[Optional[int]] = mapped_column("carton_pk", Integer)
+    sdssc2bv: Mapped[Optional[int]] = mapped_column("sdssc2bv", Integer)
+    program: Mapped[Optional[str]] = mapped_column("program", Text)
+    version: Mapped[Optional[str]] = mapped_column("version", Text)
+    v1: Mapped[Optional[float]] = mapped_column("v1", Float)
+    name: Mapped[Optional[str]] = mapped_column("name", Text)
+    mapper: Mapped[Optional[str]] = mapped_column("mapper", Text)
+    alt_program: Mapped[Optional[str]] = mapped_column("alt_program", Text)
+    alt_name: Mapped[Optional[str]] = mapped_column("alt_name", Text)
+
+
+class SDSSidToAstraPipeline(Base):
+    __tablename__ = "sdss_id_to_astra_pipeline"
+    print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk"]
+
+    pk: Mapped[intpk]
+    sdss_id: Mapped[Optional[int]] = mapped_column("sdss_id", BigInteger)
+    pipeline_name: Mapped[Optional[str]] = mapped_column("pipeline_name", Text)
+    v_astra: Mapped[Optional[str]] = mapped_column("v_astra", Text)
+    source_pk: Mapped[Optional[int]] = mapped_column("source_pk", Integer)
+    spectrum_pk: Mapped[Optional[int]] = mapped_column("spectrum_pk", Integer)
 
 
 def define_relations():
-    """ leaving this empty as relations were autogenerated """
+    """leaving this empty as relations were autogenerated"""
     pass
 
 

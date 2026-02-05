@@ -1115,7 +1115,7 @@
       "sql_type": "TEXT",
       "description": "Simplified form of program names",
       "unit": ""
-    },  
+    },
     {
       "schema": "vizdb",
       "table_name": "semaphore_sdssc2b",
@@ -1123,6 +1123,60 @@
       "display_name": "Alternate carton name",
       "sql_type": "TEXT",
       "description": "Simplified and unified form of carton names",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "pk",
+      "display_name": "Primary key",
+      "sql_type": "integer",
+      "description": "Primary key identifier",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "sdss_id",
+      "display_name": "SDSS ID",
+      "sql_type": "BIGINT",
+      "description": "SDSS unique identifier",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "pipeline_name",
+      "display_name": "Pipeline name",
+      "sql_type": "TEXT",
+      "description": "Name of the Astra pipeline that produced the data",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "v_astra",
+      "display_name": "Astra version",
+      "sql_type": "TEXT",
+      "description": "Version of the Astra pipeline that produced the data",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "source_pk",
+      "display_name": "Source PK",
+      "sql_type": "integer",
+      "description": "Primary key of the target in the Astra source table",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "spectrum_pk",
+      "display_name": "Spectrum PK",
+      "sql_type": "integer",
+      "description": "Primary key of the associated spectrum in the Astra spectrum table",
       "unit": ""
     }
   ]

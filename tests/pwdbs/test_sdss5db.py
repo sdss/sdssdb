@@ -17,25 +17,23 @@ import pytest
 from sdssdb.peewee.sdss5db import database, targetdb
 
 
-@pytest.mark.parametrize('database', [database], indirect=True)
+@pytest.mark.parametrize("database", [database], indirect=True)
 class TestTargetDb(object):
-
     def test_category_fake_count(self, category_factory):
-        ''' test to count category select results
+        """test to count category select results
 
-            creates an additional (or initial) batch of 10 fake
-            rows in the category table
-        '''
+        creates an additional (or initial) batch of 10 fake
+        rows in the category table
+        """
         category_factory.create_batch(10)
         nt = targetdb.Category.select().count()
         assert nt > 0
 
 
-@pytest.mark.parametrize('database', [database], indirect=True)
+@pytest.mark.parametrize("database", [database], indirect=True)
 class TestAllWise(object):
-
     def test_allwise_model_creation(self, aw_factory):
         aw = aw_factory.build()
         assert aw.cntr is not None
         assert isinstance(aw.ra, decimal.Decimal)
-        assert aw.ra > decimal.Decimal('0') and aw.ra < decimal.Decimal('360')
+        assert aw.ra > decimal.Decimal("0") and aw.ra < decimal.Decimal("360")

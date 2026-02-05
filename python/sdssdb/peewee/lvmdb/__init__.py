@@ -10,8 +10,7 @@ from sdssdb.connection import PeeweeDatabaseConnection
 
 
 class LVMdbDatabaseConnection(PeeweeDatabaseConnection):
-
-    dbname = 'lvmdb'
+    dbname = "lvmdb"
     auto_reflect = False
 
 

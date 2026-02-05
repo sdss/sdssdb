@@ -14,13 +14,13 @@
 from __future__ import absolute_import, division, print_function
 
 import factory
-from tests.helpers import create_factory, create_fake_columns
+from tests.helpers import create_factory
 from tests.sqladbs import database as db
 from tests.sqladbs import get_model_from_database, models
 
 from sdssdb.sqlalchemy.archive import database as archive
 from sdssdb.sqlalchemy.mangadb import database as mangadb
-#from sdssdb.sqlalchemy.sdss5db import database as sdss5db
+# from sdssdb.sqlalchemy.sdss5db import database as sdss5db
 
 
 # can use factory.Faker to create simple fake items
@@ -31,9 +31,9 @@ from sdssdb.sqlalchemy.mangadb import database as mangadb
 faker = factory.faker.faker.Factory().create()
 
 # need to load Model Classes this way for cases where the database does not exist for a test
-datadb = get_model_from_database(mangadb, 'datadb')
-sas = get_model_from_database(archive, 'sas')
-#targetdb = get_model_from_database(sdss5db, 'targetdb')
+datadb = get_model_from_database(mangadb, "datadb")
+sas = get_model_from_database(archive, "sas")
+# targetdb = get_model_from_database(sdss5db, 'targetdb')
 
 #
 # This file contains factories used to generate fake data when needed.  Each factory has a db, a Model
@@ -44,40 +44,46 @@ sas = get_model_from_database(archive, 'sas')
 
 # manually specify class factories for test or real ORM models
 class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
-    ''' factory for testdb user table'''
+    """factory for testdb user table"""
+
     class Meta:
         model = models.User
-        sqlalchemy_session = db.Session   # the SQLAlchemy session object
+        sqlalchemy_session = db.Session  # the SQLAlchemy session object
 
     id = factory.Sequence(lambda n: n)
-    name = factory.Faker('first_name')
-    essence = 'human'
+    name = factory.Faker("first_name")
+    essence = "human"
 
 
 if datadb:
+
     class WaveFactory(factory.alchemy.SQLAlchemyModelFactory):
-        ''' factory for mangadb wavelength table '''
+        """factory for mangadb wavelength table"""
+
         class Meta:
             model = datadb.Wavelength
-            sqlalchemy_session = mangadb.Session   # the SQLAlchemy session object
+            sqlalchemy_session = mangadb.Session  # the SQLAlchemy session object
 
         pk = factory.Sequence(lambda n: n)
-        wavelength = faker.pylist(10, False, 'float')
-        bintype = 'NAN'
+        wavelength = faker.pylist(10, False, "float")
+        bintype = "NAN"
 
     # auto generate a factory class with fake data generators for all columns
-    ObsinfoFactory = create_factory('ObsinfoFactory', mangadb, datadb.ObsInfo,
-                                    base=factory.alchemy.SQLAlchemyModelFactory)
+    ObsinfoFactory = create_factory(
+        "ObsinfoFactory", mangadb, datadb.ObsInfo, base=factory.alchemy.SQLAlchemyModelFactory
+    )
 
 if sas:
+
     class TreeFactory(factory.alchemy.SQLAlchemyModelFactory):
-        ''' factory for archive db tree table '''
+        """factory for archive db tree table"""
+
         class Meta:
             model = sas.Tree
             sqlalchemy_session = archive.Session
 
         id = factory.Sequence(lambda n: n)
-        version = factory.Sequence(lambda n: 'dr{0}'.format(30 + n))
+        version = factory.Sequence(lambda n: "dr{0}".format(30 + n))
 
 
 # if targetdb:

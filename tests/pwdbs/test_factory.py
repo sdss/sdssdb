@@ -22,20 +22,19 @@ def batchit(user_factory):
 
 
 class TestFactory(object):
-
     def test_factory_fixture(self, transaction, user_factory):
-        ''' test the factory can create new entries '''
+        """test the factory can create new entries"""
         user = user_factory(name="Test Human")
         assert user.id == 1
         assert user.name == "Test Human"
-        assert user.essence == 'human'
+        assert user.essence == "human"
 
     def test_a_transaction(self, transaction, batchit):
         rows = list(models.User.select())
         assert len(rows) >= 10
 
     def test_model_fixture(self, transaction, user):
-        ''' test a single new instance of model User is created '''
+        """test a single new instance of model User is created"""
         assert isinstance(user, models.User)
-        assert user.essence == 'human'
-        assert user.name != 'Test Human'
+        assert user.essence == "human"
+        assert user.name != "Test Human"

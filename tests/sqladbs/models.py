@@ -23,9 +23,9 @@ from tests.sqladbs import TmpBase
 
 
 class User(TmpBase):
-    ''' model for user on test database '''
-    __tablename__ = 'user'
+    """model for user on test database"""
+
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True)
     name = Column(String(80))
     essence = Column(String(10))
-

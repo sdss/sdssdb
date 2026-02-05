@@ -17,9 +17,9 @@ import pytest
 from tests.sqladbs import models, database
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def fix_session(user_factory):
-    ''' fixture to replace factory session with real db session after initialization '''
+    """fixture to replace factory session with real db session after initialization"""
     user_factory._meta.sqlalchemy_session = database.Session
 
 
@@ -29,20 +29,19 @@ def batchit(user_factory):
 
 
 class TestFactory(object):
-
     def test_factory_fixture(self, session, user_factory):
-        ''' test the factory can create new entries '''
+        """test the factory can create new entries"""
         user = user_factory(name="Test Human")
         assert user.id == 0
         assert user.name == "Test Human"
-        assert user.essence == 'human'
+        assert user.essence == "human"
 
     def test_a_transaction(self, session, batchit):
         rows = session.query(models.User).all()
         assert len(rows) >= 10
 
     def test_model_fixture(self, user):
-        ''' test a single new instance of model User is created '''
+        """test a single new instance of model User is created"""
         assert isinstance(user, models.User)
-        assert user.essence == 'human'
-        assert user.name != 'Test Human'
+        assert user.essence == "human"
+        assert user.name != "Test Human"

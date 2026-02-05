@@ -117,20 +117,19 @@ class ReflectMeta(ModelBase):
     """
 
     def __new__(cls, name, bases, attrs):
-
         Model = super(ReflectMeta, cls).__new__(cls, name, bases, attrs)
         meta = Model._meta
 
         database = meta.database
-        if database and hasattr(database, 'models'):
+        if database and hasattr(database, "models"):
             if Model not in database.models.values():
                 schema = meta.schema
                 table_name = meta.table_name
-                fpath = schema + '.' + table_name if schema else table_name
+                fpath = schema + "." + table_name if schema else table_name
                 database.models[fpath] = Model
 
         # Don't do anything if this model doesn't want reflection.
-        if getattr(meta, 'use_reflection', True):
+        if getattr(meta, "use_reflection", True):
             cls.reflect(Model)
 
         return Model
@@ -143,7 +142,7 @@ class ReflectMeta(ModelBase):
         table_name = meta.table_name
         schema = meta.schema
 
-        opts = getattr(meta, 'reflection_options', {})
+        opts = getattr(meta, "reflection_options", {})
 
         if not database or not database.connected:
             return
@@ -151,12 +150,13 @@ class ReflectMeta(ModelBase):
         # Lists tables in the schema. This is a bit of a hack but
         # faster than using database.table_exists because it's cached.
         metadata = database._metadata
-        force = opts.get('force', False)
-        if (schema not in metadata
-              or len(metadata[schema]) == 0
-              or table_name not in metadata[schema]
-              or force):
-
+        force = opts.get("force", False)
+        if (
+            schema not in metadata
+            or len(metadata[schema]) == 0
+            or table_name not in metadata[schema]
+            or force
+        ):
             # Check if the table actually exists. If it does not, return now
             # and don't waste time reloading the fields.
             if not database.table_exists(table_name, schema=schema):
@@ -170,35 +170,36 @@ class ReflectMeta(ModelBase):
             return
 
         for index in meta.indexes:
-            if hasattr(index, 'reflected') and index.reflected:
+            if hasattr(index, "reflected") and index.reflected:
                 meta.indexes.remove(index)
 
         if not database.is_connection_usable():
-            raise peewee.DatabaseError('database not connected.')
+            raise peewee.DatabaseError("database not connected.")
 
         if opts:
-            skip_fks = opts.get('skip_foreign_keys', False)
-            use_peewee_reflection = opts.get('use_peewee_reflection', True)
+            skip_fks = opts.get("skip_foreign_keys", False)
+            use_peewee_reflection = opts.get("use_peewee_reflection", True)
         else:
             skip_fks = False
             use_peewee_reflection = True
 
         try:
-
             if use_peewee_reflection:
-
                 # Check for locks. We only need to do this if using the Peewee
                 # reflection because one of the queries it does can be blocked
                 # by a AccessExclusiveLock lock.
                 locks = is_table_locked(database, table_name)
-                if locks and 'AccessExclusiveLock' in locks:
-                    warnings.warn(f'table {schema}.{table_name} is locked and '
-                                  'will not be reflected.', SdssdbUserWarning)
+                if locks and "AccessExclusiveLock" in locks:
+                    warnings.warn(
+                        f"table {schema}.{table_name} is locked and will not be reflected.",
+                        SdssdbUserWarning,
+                    )
                     return
 
                 introspector = database.get_introspector(schema)
-                reflected_model = introspector.generate_models(
-                    table_names=[table_name])[table_name]
+                reflected_model = introspector.generate_models(table_names=[table_name])[
+                    table_name
+                ]
                 fields = reflected_model._meta.fields
 
             else:
@@ -206,24 +207,23 @@ class ReflectMeta(ModelBase):
                 fields = {field.column_name: field for field in fields}
 
         except KeyError as ee:
-            warnings.warn(f'reflection failed for {table_name}: '
-                          f'table or column {ee} not found.',
-                          SdssdbUserWarning)
+            warnings.warn(
+                f"reflection failed for {table_name}: table or column {ee} not found.",
+                SdssdbUserWarning,
+            )
             return
 
         except Exception as ee:
-            warnings.warn(f'reflection failed for {table_name}: {ee}',
-                          SdssdbUserWarning)
+            warnings.warn(f"reflection failed for {table_name}: {ee}", SdssdbUserWarning)
             return
 
         for field_name, field in fields.items():
-
             if field_name in keyword.kwlist:
-                field_name += '_'
+                field_name += "_"
 
             if field_name in meta.fields:
                 meta_field = meta.fields[field_name]
-                if not getattr(meta_field, 'reflected', False):
+                if not getattr(meta_field, "reflected", False):
                     continue
 
             if isinstance(field, peewee.ForeignKeyField) and skip_fks:
@@ -248,7 +248,7 @@ class ReflectMeta(ModelBase):
                 pk = database.get_primary_keys(table_name, schema)
                 if len(pk) > 1:
                     pk = peewee.CompositeKey(*pk)
-                    meta.set_primary_key('__composite_key__', pk)
+                    meta.set_primary_key("__composite_key__", pk)
 
 
 class BaseModel(Model, metaclass=ReflectMeta):
@@ -270,15 +270,15 @@ class BaseModel(Model, metaclass=ReflectMeta):
 
         if self._meta.primary_key:
             if self._meta.composite_key:
-                pk_field = '(' + ', '.join(self._meta.primary_key.field_names) + ')'
+                pk_field = "(" + ", ".join(self._meta.primary_key.field_names) + ")"
             else:
                 pk_field = self._meta.primary_key.name
-            fields = ['{0}={1!r}'.format(pk_field, self.get_id())]
+            fields = ["{0}={1!r}".format(pk_field, self.get_id())]
         else:
             pk_field = None
             fields = []
 
-        for extra_field in ['label', 'name']:
+        for extra_field in ["label", "name"]:
             if extra_field not in self._meta.print_fields:
                 self._meta.print_fields.append(extra_field)
 
@@ -286,16 +286,17 @@ class BaseModel(Model, metaclass=ReflectMeta):
             if ff == pk_field:
                 continue
             if hasattr(self, ff):
-                fields.append('{0}={1!r}'.format(ff, getattr(self, ff)))
+                fields.append("{0}={1!r}".format(ff, getattr(self, ff)))
 
-        return ', '.join(fields)
+        return ", ".join(fields)
 
     @hybrid_method
-    def cone_search(self, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):
+    def cone_search(self, ra, dec, a, b=None, pa=None, ra_col="ra", dec_col="dec"):
         """Returns a query with the rows inside a region on the sky."""
 
-        assert hasattr(self, ra_col) and hasattr(self, dec_col), \
-            'this model class does not have ra/dec columns.'
+        assert hasattr(self, ra_col) and hasattr(self, dec_col), (
+            "this model class does not have ra/dec columns."
+        )
 
         ra_attr = getattr(self, ra_col)
         dec_attr = getattr(self, dec_col)
@@ -308,7 +309,7 @@ class BaseModel(Model, metaclass=ReflectMeta):
             return fn.q3c_ellipse_query(ra_attr, dec_attr, ra, dec, a, ratio, pa)
 
     @cone_search.expression
-    def cone_search(cls, ra, dec, a, b=None, pa=None, ra_col='ra', dec_col='dec'):  # noqa
+    def cone_search(cls, ra, dec, a, b=None, pa=None, ra_col="ra", dec_col="dec"):  # noqa
         """Returns a query with the rows inside a region on the sky.
 
         Defines a sky ellipse and returns the targets within. By default it
@@ -337,8 +338,9 @@ class BaseModel(Model, metaclass=ReflectMeta):
 
         """
 
-        assert hasattr(cls, ra_col) and hasattr(cls, dec_col), \
-            'this model class does not have ra/dec columns.'
+        assert hasattr(cls, ra_col) and hasattr(cls, dec_col), (
+            "this model class does not have ra/dec columns."
+        )
 
         ra_attr = getattr(cls, ra_col)
         dec_attr = getattr(cls, dec_col)

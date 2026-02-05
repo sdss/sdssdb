@@ -15,13 +15,18 @@ from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
 from sdssdb.sqlalchemy import BaseModel
 
 # we need a shared common Base when joining across multiple schema
-ArchiveBase = declarative_base(cls=(DeferredReflection, BaseModel,))
+ArchiveBase = declarative_base(
+    cls=(
+        DeferredReflection,
+        BaseModel,
+    )
+)
 
 
 class ArchiveDatabaseConnection(SQLADatabaseConnection):
-    dbname = 'archive'
-    dbversion = '20200302'
+    dbname = "archive"
+    dbversion = "20200302"
     base = ArchiveBase
 
 
-database = ArchiveDatabaseConnection(profile='local')
+database = ArchiveDatabaseConnection(profile="local")

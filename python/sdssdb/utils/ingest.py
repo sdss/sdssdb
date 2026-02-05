@@ -36,22 +36,28 @@ except ImportError:
     inflect = None
 
 
-__all__ = ('to_csv', 'copy_data', 'drop_table', 'create_model_from_table',
-           'bulk_insert', 'file_to_db', 'create_adhoc_database')
+__all__ = (
+    "to_csv",
+    "copy_data",
+    "drop_table",
+    "create_model_from_table",
+    "bulk_insert",
+    "file_to_db",
+    "create_adhoc_database",
+)
 
 
 DTYPE_TO_FIELD = {
-    'i2': peewee.SmallIntegerField,
-    'i4': peewee.IntegerField,
-    'i8': peewee.BigIntegerField,
-    'f4': peewee.FloatField,
-    'f8': peewee.DoubleField,
-    'S([0-9]+)': peewee.CharField
+    "i2": peewee.SmallIntegerField,
+    "i4": peewee.IntegerField,
+    "i8": peewee.BigIntegerField,
+    "f4": peewee.FloatField,
+    "f8": peewee.DoubleField,
+    "S([0-9]+)": peewee.CharField,
 }
 
 
-def to_csv(table, path, header=True, delimiter='\t',
-           use_multiprocessing=False, workers=4):
+def to_csv(table, path, header=True, delimiter="\t", use_multiprocessing=False, workers=4):
     """Creates a PostgreSQL-valid CSV file from a table, handling arrays.
 
     Parameters
@@ -74,18 +80,18 @@ def to_csv(table, path, header=True, delimiter='\t',
 
     if use_multiprocessing:
         pool = multiprocessing.Pool(workers)
-        tmp_list = pool.map(functools.partial(convert_row_to_psql,
-                                              delimiter=delimiter),
-                            table, chunksize=1000)
+        tmp_list = pool.map(
+            functools.partial(convert_row_to_psql, delimiter=delimiter), table, chunksize=1000
+        )
     else:
         tmp_list = [convert_row_to_psql(row, delimiter=delimiter) for row in table]
 
-    csv_str = '\n'.join(tmp_list)
+    csv_str = "\n".join(tmp_list)
 
     if header:
-        csv_str = delimiter.join(table.colnames) + '\n' + csv_str
+        csv_str = delimiter.join(table.colnames) + "\n" + csv_str
 
-    unit = open(path, 'w')
+    unit = open(path, "w")
     unit.write(csv_str)
 
 
@@ -131,14 +137,12 @@ def drop_table(table_name, connection, cascade=False, schema=None):
     if not table_exists(table_name, connection, schema=schema):
         return False
 
-    connection.execute_sql(f'DROP TABLE {schema}.{table_name}' +
-                           (' CASCADE;' if cascade else ';'))
+    connection.execute_sql(f"DROP TABLE {schema}.{table_name}" + (" CASCADE;" if cascade else ";"))
 
     return True
 
 
-def create_model_from_table(table_name, table, schema=None, lowercase=False,
-                            primary_key=None):
+def create_model_from_table(table_name, table, schema=None, lowercase=False, primary_key=None):
     """Returns a `~peewee:Model` from the columns in a table.
 
     Parameters
@@ -169,7 +173,6 @@ def create_model_from_table(table_name, table, schema=None, lowercase=False,
             primary_key = False
 
     for ii, column_name in enumerate(table.dtype.names):
-
         if lowercase:
             column_name = column_name.lower()
 
@@ -187,37 +190,44 @@ def create_model_from_table(table_name, table, schema=None, lowercase=False,
         for dtype, Field in DTYPE_TO_FIELD.items():
             match = re.match(dtype, column_dtype.base.str[1:])
             if match:
-                if column_dtype.base.str[1] == 'S':
-                    field_kwargs['max_length'] = int(match.group(1))
+                if column_dtype.base.str[1] == "S":
+                    field_kwargs["max_length"] = int(match.group(1))
                     ColumnField = Field
                 else:
                     ColumnField = Field
 
                 if len(column_dtype.shape) == 1:
-                    ColumnField = ArrayField(ColumnField, field_kwargs=field_kwargs,
-                                             dimensions=column_dtype.shape[0],
-                                             null=True, primary_key=primary_key)
+                    ColumnField = ArrayField(
+                        ColumnField,
+                        field_kwargs=field_kwargs,
+                        dimensions=column_dtype.shape[0],
+                        null=True,
+                        primary_key=primary_key,
+                    )
                 elif len(column_dtype.shape) > 1:
-                    raise ValueError(f'column {column_name} with dtype '
-                                     f'{column_dtype}: multidimensional arrays '
-                                     'are not supported.')
+                    raise ValueError(
+                        f"column {column_name} with dtype "
+                        f"{column_dtype}: multidimensional arrays "
+                        "are not supported."
+                    )
                 else:
-                    ColumnField = ColumnField(**field_kwargs, null=True,
-                                              primary_key=primary_key)
+                    ColumnField = ColumnField(**field_kwargs, null=True, primary_key=primary_key)
 
                 type_found = True
                 break
 
         if not type_found:
-            raise ValueError(f'cannot find an appropriate field type for '
-                             f'column {column_name} with dtype {column_dtype}.')
+            raise ValueError(
+                f"cannot find an appropriate field type for "
+                f"column {column_name} with dtype {column_dtype}."
+            )
 
         attrs[column_name] = ColumnField
 
     return type(str(table_name), (BaseModel,), attrs)
 
 
-def convert_row_to_psql(row, delimiter='\t', null='\\N'):
+def convert_row_to_psql(row, delimiter="\t", null="\\N"):
     """Concerts an astropy table row to a Postgresql-valid CSV string."""
 
     row_data = []
@@ -228,19 +238,20 @@ def convert_row_to_psql(row, delimiter='\t', null='\\N'):
         elif numpy.ma.is_masked(col_value):
             row_data.append(null)
         else:
-            if col_value.dtype.base.str[1] == 'S':
-                col_value = col_value.astype('U')
+            if col_value.dtype.base.str[1] == "S":
+                col_value = col_value.astype("U")
             row_data.append(
                 str(col_value.tolist())
-                .replace('\n', '')
-                .replace('\'', '\"')
-                .replace('[', '\"{').replace(']', '}\"'))
+                .replace("\n", "")
+                .replace("'", '"')
+                .replace("[", '"{')
+                .replace("]", '}"')
+            )
 
     return delimiter.join(row_data)
 
 
-def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
-              show_progress=False):
+def copy_data(data, connection, table_name, schema=None, chunk_size=10000, show_progress=False):
     """Loads data into a DB table using ``COPY``.
 
     Parameters
@@ -263,15 +274,14 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
 
     """
 
-    table_sql = '{0}.{1}'.format(schema, table_name) if schema else table_name
+    table_sql = "{0}.{1}".format(schema, table_name) if schema else table_name
 
     cursor = connection.cursor()
 
     # If the progressbar package is installed, uses it to create a progress bar.
     if show_progress:
         if progressbar is None:
-            warnings.warn('progressbar2 is not installed. '
-                          'Will not show a progress bar.')
+            warnings.warn("progressbar2 is not installed. Will not show a progress bar.")
         else:
             bar = progressbar.ProgressBar()
             iterable = bar(range(len(data)))
@@ -285,7 +295,6 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
     chunk = 0
     tmp_list = []
     for ii in iterable:
-
         row = data[ii]
         tmp_list.append(convert_row_to_psql(row))
         chunk += 1
@@ -294,7 +303,7 @@ def copy_data(data, connection, table_name, schema=None, chunk_size=10000,
         # copy and commits to the database.
         last_item = ii == len(data) - 1
         if chunk == chunk_size or (last_item and len(tmp_list) > 0):
-            ss = io.StringIO('\n'.join(tmp_list))
+            ss = io.StringIO("\n".join(tmp_list))
             cursor.copy_from(ss, table_sql)
             connection.commit()
             tmp_list = []
@@ -330,8 +339,7 @@ def bulk_insert(data, connection, model, chunk_size=100000, show_progress=False)
 
     if show_progress:
         if progressbar is None:
-            warnings.warn('progressbar2 is not installed. '
-                          'Will not show a progress bar.')
+            warnings.warn("progressbar2 is not installed. Will not show a progress bar.")
         else:
             bar = progressbar.ProgressBar(max_value=len(data)).start()
     else:
@@ -348,10 +356,21 @@ def bulk_insert(data, connection, model, chunk_size=100000, show_progress=False)
     return
 
 
-def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
-               create=False, drop=False, truncate=False, primary_key=None,
-               load_data=True, use_copy=True, chunk_size=100000,
-               show_progress=False):
+def file_to_db(
+    input_,
+    connection,
+    table_name,
+    schema=None,
+    lowercase=False,
+    create=False,
+    drop=False,
+    truncate=False,
+    primary_key=None,
+    load_data=True,
+    use_copy=True,
+    chunk_size=100000,
+    show_progress=False,
+):
     """Loads a table from a file to a database.
 
     Loads a file or a `~astropy.table.Table` object into a database. If
@@ -423,17 +442,18 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
         drop_table(table_name, connection, schema=schema)
 
     if table_exists(table_name, connection, schema=schema):
-        Model = generate_models(connection, schema=schema,
-                                table_names=[table_name])[table_name]
+        Model = generate_models(connection, schema=schema, table_names=[table_name])[table_name]
     else:
         if not create:
-            raise ValueError(f'table {table_name} does not exist. '
-                             'Call the function with create=True '
-                             'if you want to create it.')
+            raise ValueError(
+                f"table {table_name} does not exist. "
+                "Call the function with create=True "
+                "if you want to create it."
+            )
 
-        Model = create_model_from_table(table_name, table, schema=schema,
-                                        lowercase=lowercase,
-                                        primary_key=primary_key)
+        Model = create_model_from_table(
+            table_name, table, schema=schema, lowercase=lowercase, primary_key=primary_key
+        )
         Model._meta.database = connection
 
         Model.create_table()
@@ -443,17 +463,24 @@ def file_to_db(input_, connection, table_name, schema=None, lowercase=False,
 
     if load_data:
         if use_copy:
-            copy_data(table, connection, table_name, schema=schema,
-                      chunk_size=chunk_size, show_progress=show_progress)
+            copy_data(
+                table,
+                connection,
+                table_name,
+                schema=schema,
+                chunk_size=chunk_size,
+                show_progress=show_progress,
+            )
         else:
-            bulk_insert(table, connection, Model, chunk_size=chunk_size,
-                        show_progress=show_progress)
+            bulk_insert(
+                table, connection, Model, chunk_size=chunk_size, show_progress=show_progress
+            )
 
     return Model
 
 
-def create_adhoc_database(dbname, schema=None, profile='local'):
-    """ Creates an adhoc SQLA database and models, given an existing db
+def create_adhoc_database(dbname, schema=None, profile="local"):
+    """Creates an adhoc SQLA database and models, given an existing db
 
     Creates an in-memory SQLA database connection given a database name
     to connect to, along with auto-generated models for the a given schema
@@ -488,27 +515,39 @@ def create_adhoc_database(dbname, schema=None, profile='local'):
     """
 
     # create the database
-    dbclass = f'{dbname.title()}DatabaseConnection'
-    base = declarative_base(cls=(DeferredReflection, BaseModel,))
-    tempdb_class = type(dbclass, (SQLADatabaseConnection,),
-                        {'dbname': dbname, 'base': automap_base(base)})
+    dbclass = f"{dbname.title()}DatabaseConnection"
+    base = declarative_base(
+        cls=(
+            DeferredReflection,
+            BaseModel,
+        )
+    )
+    tempdb_class = type(
+        dbclass, (SQLADatabaseConnection,), {"dbname": dbname, "base": automap_base(base)}
+    )
     tempdb = tempdb_class(profile=profile, autoconnect=True)
 
     if tempdb.connected is False:
-        log.warning(f'Could not connect to database: {dbname}. '
-                    'Please check that the database exists. Cannot automap models.')
+        log.warning(
+            f"Could not connect to database: {dbname}. "
+            "Please check that the database exists. Cannot automap models."
+        )
         return tempdb, None
 
     # automap the models
-    tempdb.base.prepare(tempdb.engine, reflect=True, schema=schema,
-                        classname_for_table=camelize_classname,
-                        name_for_collection_relationship=pluralize_collection)
+    tempdb.base.prepare(
+        tempdb.engine,
+        reflect=True,
+        schema=schema,
+        classname_for_table=camelize_classname,
+        name_for_collection_relationship=pluralize_collection,
+    )
     models = tempdb.base.classes
     return tempdb, models
 
 
 def camelize_classname(base, tablename, table):
-    """ Produce a 'camelized' class name, e.g.
+    """Produce a 'camelized' class name, e.g.
 
     Converts a database table name to camelcase. Uses underscores to denote a
     new hump. E.g. 'words_and_underscores' -> 'WordsAndUnderscores'
@@ -529,13 +568,13 @@ def camelize_classname(base, tablename, table):
         A string class name
 
     """
-    return str(tablename[0].upper() + re.sub(r'_([a-z])',
-                                             lambda m: m.group(1).upper(),
-                                             tablename[1:]))
+    return str(
+        tablename[0].upper() + re.sub(r"_([a-z])", lambda m: m.group(1).upper(), tablename[1:])
+    )
 
 
 def pluralize_collection(base, local_cls, referred_cls, constraint):
-    """ Produce an 'uncamelized', 'pluralized' class name
+    """Produce an 'uncamelized', 'pluralized' class name
 
     Converts a camel-cased class name into a uncamelized, pluralized class
     name, e.g. ``'SomeTerm' -> 'some_terms'``. Used when auto-defining
@@ -561,12 +600,10 @@ def pluralize_collection(base, local_cls, referred_cls, constraint):
 
     """
 
-    assert inflect, 'pluralize_collection requires the inflect library.'
+    assert inflect, "pluralize_collection requires the inflect library."
 
     referred_name = referred_cls.__name__
-    uncamelized = re.sub(r'[A-Z]',
-                         lambda m: "_%s" % m.group(0).lower(),
-                         referred_name)[1:]
+    uncamelized = re.sub(r"[A-Z]", lambda m: "_%s" % m.group(0).lower(), referred_name)[1:]
     _pluralizer = inflect.engine()
     pluralized = _pluralizer.plural(uncamelized)
     return pluralized

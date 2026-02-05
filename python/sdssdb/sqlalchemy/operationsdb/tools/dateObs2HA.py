@@ -23,20 +23,18 @@ from astropy.units import cds
 def convertTai(tai):
     """Convert tai in seconds to an appropriate date time isot format."""
 
-    dateobs = time.Time((tai * cds.s).to(cds.MJD), format='mjd').isot
+    dateobs = time.Time((tai * cds.s).to(cds.MJD), format="mjd").isot
     return dateobs
 
 
 def jd2lst(jd, longitude=0.0):
-
     jd0 = int(jd) + 0.5
-    dd0 = jd0 - 2451545.
-    dd = jd - 2451545.
+    dd0 = jd0 - 2451545.0
+    dd = jd - 2451545.0
     tt = dd / 36525
-    hh = (jd - jd0) * 24.
+    hh = (jd - jd0) * 24.0
 
-    gmst = 6.697374558 + 0.06570982441908 * dd0 + 1.00273790935 * hh + \
-        0.000026 * tt**2
+    gmst = 6.697374558 + 0.06570982441908 * dd0 + 1.00273790935 * hh + 0.000026 * tt**2
     gmstL = coo.Longitude(gmst * uu.hour)
     lon = coo.Longitude(longitude * uu.degree)
     return coo.Longitude(gmstL + lon)
@@ -70,19 +68,19 @@ def dateObs2HA(dateObs, ra, longitude=254.179722):
     """
 
     if not isinstance(dateObs, str):
-        raise TypeError('dateObs is not a string.')
+        raise TypeError("dateObs is not a string.")
 
-    dateObs = dateObs.replace('T', ' ')
+    dateObs = dateObs.replace("T", " ")
 
-    dd = time.Time(dateObs, scale='tai', format='iso')
+    dd = time.Time(dateObs, scale="tai", format="iso")
 
     lst = jd2lst(dd.jd, longitude=longitude)
 
-    ha = coo.Longitude(lst.hour - ra / 15., unit=uu.hour)
+    ha = coo.Longitude(lst.hour - ra / 15.0, unit=uu.hour)
 
     haDeg = ha.degree % 360
 
-    if haDeg > 180.:
+    if haDeg > 180.0:
         haDeg -= 360
 
-    return(haDeg)
+    return haDeg

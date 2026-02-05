@@ -22,8 +22,9 @@ from tests.pwdbs import TmpModel
 
 
 class User(TmpModel):
-    ''' model for user on test database '''
-    __tablename__ = 'user'
+    """model for user on test database"""
+
+    __tablename__ = "user"
     id = AutoField()
     name = CharField()
     essence = CharField()

@@ -20,27 +20,27 @@ from __future__ import print_function, division, absolute_import
 import factory
 import pytest
 from sdssdb.sqlalchemy.mangadb import database
+
 if database.connected:
     from sdssdb.sqlalchemy.mangadb import datadb
 
 faker = factory.faker.faker.Factory().create()
 
 
-@pytest.mark.parametrize('database', [database], indirect=True)
+@pytest.mark.parametrize("database", [database], indirect=True)
 class TestDataDB(object):
-
     def test_added_wavelength(self, session, wave_factory):
-        ''' test that we can add fake rows to real dbs that are undone '''
+        """test that we can add fake rows to real dbs that are undone"""
         wave_factory.create()
         rows = session.query(datadb.Wavelength).all()
         assert len(rows) == 2
-        assert rows[0].bintype == 'LOG'
+        assert rows[0].bintype == "LOG"
         assert rows[0].wavelength[0] == 3621.6
-        assert rows[1].bintype == 'NAN'
+        assert rows[1].bintype == "NAN"
         assert rows[1].wavelength[0] != 3621.6
 
     def test_cube_count(self, session):
-        ''' test of a simple table count '''
+        """test of a simple table count"""
         cc = session.query(datadb.Cube).count()
         assert cc > 1
 

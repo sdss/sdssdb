@@ -20,32 +20,35 @@ except ImportError:
     pydot = None
 
 
-__all__ = ['create_schema_graph', 'show_schema_graph']
+__all__ = ["create_schema_graph", "show_schema_graph"]
 
 
-field_type_psql = {'AUTO': 'SERIAL',
-                   'BIGAUTO': 'BIGSERIAL',
-                   'BIGINT': 'BIGINT',
-                   'BLOB': 'BYTEA',
-                   'BOOL': 'BOOLEAN',
-                   'CHAR': 'CHAR',
-                   'DATE': 'DATE',
-                   'DATETIME': 'TIMESTAMP',
-                   'DECIMAL': 'NUMERIC',
-                   'DEFAULT': '',
-                   'DOUBLE': 'DOUBLE PRECISION',
-                   'FLOAT': 'REAL',
-                   'INT': 'INTEGER',
-                   'SMALLINT': 'SMALLINT',
-                   'TEXT': 'TEXT',
-                   'TIME': 'TIME',
-                   'UUID': 'UUID',
-                   'UUIDB': 'BYTEA',
-                   'VARCHAR': 'VARCHAR'}
+field_type_psql = {
+    "AUTO": "SERIAL",
+    "BIGAUTO": "BIGSERIAL",
+    "BIGINT": "BIGINT",
+    "BLOB": "BYTEA",
+    "BOOL": "BOOLEAN",
+    "CHAR": "CHAR",
+    "DATE": "DATE",
+    "DATETIME": "TIMESTAMP",
+    "DECIMAL": "NUMERIC",
+    "DEFAULT": "",
+    "DOUBLE": "DOUBLE PRECISION",
+    "FLOAT": "REAL",
+    "INT": "INTEGER",
+    "SMALLINT": "SMALLINT",
+    "TEXT": "TEXT",
+    "TIME": "TIME",
+    "UUID": "UUID",
+    "UUIDB": "BYTEA",
+    "VARCHAR": "VARCHAR",
+}
 
 
-def _render_table_html(model, show_columns=True, show_pks=True,
-                       show_indices=True, show_datatypes=True):
+def _render_table_html(
+    model, show_columns=True, show_pks=True, show_indices=True, show_datatypes=True
+):
     """Creates the HTML tags for a table, including PKs, FKs, and indices.
 
     Parameters
@@ -78,28 +81,30 @@ def _render_table_html(model, show_columns=True, show_pks=True,
         suffixes = []
 
         column_name = field.column_name
-        if column_name == '__composite_key__':
-            column_name = '(' + ', '.join(pk.field_names) + ')'
-            suffixes.append('PK')  # Composite keys get .primary_key == False
+        if column_name == "__composite_key__":
+            column_name = "(" + ", ".join(pk.field_names) + ")"
+            suffixes.append("PK")  # Composite keys get .primary_key == False
 
         if field.primary_key:
-            suffixes.append('PK')
+            suffixes.append("PK")
         if isinstance(field, ForeignKeyField):
-            suffixes.append('FK')
+            suffixes.append("FK")
 
-        suffix = ' (' + ', '.join(suffixes) + ')' if len(suffixes) > 0 else ''
+        suffix = " (" + ", ".join(suffixes) + ")" if len(suffixes) > 0 else ""
 
-        if show_datatypes and field.column_name != '__composite_key__':
+        if show_datatypes and field.column_name != "__composite_key__":
             field_type = field.field_type
             if field_type in field_type_psql:
                 field_type = field_type_psql[field_type]
-            return f'- {column_name}{suffix} : {field_type}'
+            return f"- {column_name}{suffix} : {field_type}"
         else:
-            return f'- {column_name}{suffix}'
+            return f"- {column_name}{suffix}"
 
-    html = (f'<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0">'
-            f'<TR><TD ALIGN="CENTER"><font face="Lucida Sans Demibold Roman">'
-            f'{table_name}</font><BR/>({model.__name__})</TD></TR>')
+    html = (
+        f'<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0">'
+        f'<TR><TD ALIGN="CENTER"><font face="Lucida Sans Demibold Roman">'
+        f"{table_name}</font><BR/>({model.__name__})</TD></TR>"
+    )
 
     added_col_name = []
     fields_html = []
@@ -107,17 +112,16 @@ def _render_table_html(model, show_columns=True, show_pks=True,
     pk = model._meta.primary_key
     if show_pks and pk:
         if model._meta.composite_key:
-            column_name = '(' + ', '.join(pk.field_names) + ')'
+            column_name = "(" + ", ".join(pk.field_names) + ")"
         else:
             column_name = pk.column_name
         fields_html.append(
-            '<TR><TD ALIGN="LEFT" PORT="{}">{}</TD></TR>'.format(
-                column_name, format_field_str(pk)))
+            '<TR><TD ALIGN="LEFT" PORT="{}">{}</TD></TR>'.format(column_name, format_field_str(pk))
+        )
 
     # Add a row for each column in the table.
     if show_columns:
         for field in fields.values():
-
             if field.primary_key:
                 continue
 
@@ -130,23 +134,28 @@ def _render_table_html(model, show_columns=True, show_pks=True,
 
             fields_html.append(
                 '<TR><TD ALIGN="LEFT" PORT="{}">{}</TD></TR>'.format(
-                    column_name, format_field_str(field)))
+                    column_name, format_field_str(field)
+                )
+            )
 
             added_col_name.append(column_name)
 
     if len(fields_html) > 0:
         html += '<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>'
-        html += ''.join(fields_html)
+        html += "".join(fields_html)
 
     # Add indexes and unique constraints
     if show_indices:
-
         if model._meta.database.connected:
-            indexes = model._meta.database.get_indexes(model._meta.table_name,
-                                                       schema=model._meta.schema)
+            indexes = model._meta.database.get_indexes(
+                model._meta.table_name, schema=model._meta.schema
+            )
         else:
-            indexes = [index._expressions[0] for index in model._meta.fields_to_index()
-                       if not isinstance(index._expressions[0], ForeignKeyField)]
+            indexes = [
+                index._expressions[0]
+                for index in model._meta.fields_to_index()
+                if not isinstance(index._expressions[0], ForeignKeyField)
+            ]
 
         if len(indexes) > 0:
             first = True
@@ -156,25 +165,24 @@ def _render_table_html(model, show_columns=True, show_pks=True,
                     continue
 
                 column_names = index.columns
-                ilabel = 'INDEX'
+                ilabel = "INDEX"
 
                 if len(column_names) == 1:
                     column_name = column_names[0]
-                    if column_name == '':
-                        match = re.match(r'.+q3c_ang2ipix\("*(\w+)"*, "*(\w+)"*\).+',
-                                         index.sql)
+                    if column_name == "":
+                        match = re.match(r'.+q3c_ang2ipix\("*(\w+)"*, "*(\w+)"*\).+', index.sql)
                         if match:
-                            column_name = '(' + ', '.join(match.groups()) + ')'
-                            ilabel = 'Q3C'
+                            column_name = "(" + ", ".join(match.groups()) + ")"
+                            ilabel = "Q3C"
                         else:
                             continue
                 else:
-                    column_name = '(' + ', '.join(column_names) + ')'
+                    column_name = "(" + ", ".join(column_names) + ")"
 
                 if index.unique:
                     if pk and column_name == pk.column_name:
                         continue
-                    ilabel = 'UNIQUE'
+                    ilabel = "UNIQUE"
 
                 if first:
                     html += '<TR><TD BORDER="1" CELLPADDING="0"></TD></TR>'
@@ -182,15 +190,24 @@ def _render_table_html(model, show_columns=True, show_pks=True,
 
                 html += f'<TR><TD ALIGN="LEFT">{ilabel} {column_name}</TD></TR>'
 
-    html += '</TABLE>>'
+    html += "</TABLE>>"
 
     return html
 
 
-def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
-                        show_pks=True, show_indices=True, show_datatypes=True,
-                        skip_tables=[], font='Bitstream-Vera Sans',
-                        graph_options={}, relation_options={}):
+def create_schema_graph(
+    models=None,
+    base=None,
+    schema=None,
+    show_columns=True,
+    show_pks=True,
+    show_indices=True,
+    show_datatypes=True,
+    skip_tables=[],
+    font="Bitstream-Vera Sans",
+    graph_options={},
+    relation_options={},
+):
     """Creates a graph visualisation from a series of Peewee models.
 
     Produces a `pydot <https://pypi.org/project/pydot/>`__ graph including the
@@ -239,11 +256,12 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
 
     """
 
-    assert models or base, 'either model or base must be passed.'
-    assert pydot, ('pydot is required for create_schema_graph. '
-                   'Try running "pip install sdssdb[all]"')
+    assert models or base, "either model or base must be passed."
+    assert pydot, (
+        'pydot is required for create_schema_graph. Try running "pip install sdssdb[all]"'
+    )
 
-    relation_kwargs = {'fontsize': '7.0'}
+    relation_kwargs = {"fontsize": "7.0"}
     relation_kwargs.update(relation_options)
 
     if base and not models:
@@ -258,17 +276,14 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
     if schema:
         models = [model for model in models if model._meta.schema == schema]
 
-    default_graph_options = dict(program='dot',
-                                 rankdir='TB',
-                                 sep='0.01',
-                                 mode='ipsep',
-                                 overlap='ipsep')
+    default_graph_options = dict(
+        program="dot", rankdir="TB", sep="0.01", mode="ipsep", overlap="ipsep"
+    )
     default_graph_options.update(graph_options)
 
-    graph = pydot.Dot(prog='dot', **graph_options)
+    graph = pydot.Dot(prog="dot", **graph_options)
 
     for model in models:
-
         if model._meta.table_name in skip_tables:
             continue
 
@@ -276,30 +291,32 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
             continue
 
         graph.add_node(
-            pydot.Node(str(model._meta.table_name),
-                       shape='plaintext',
-                       label=_render_table_html(model,
-                                                show_columns=show_columns,
-                                                show_pks=show_pks,
-                                                show_indices=show_indices,
-                                                show_datatypes=show_datatypes),
-                       fontname=font,
-                       fontsize='7.0')
+            pydot.Node(
+                str(model._meta.table_name),
+                shape="plaintext",
+                label=_render_table_html(
+                    model,
+                    show_columns=show_columns,
+                    show_pks=show_pks,
+                    show_indices=show_indices,
+                    show_datatypes=show_datatypes,
+                ),
+                fontname=font,
+                fontsize="7.0",
+            )
         )
 
         for field in model._meta.fields.values():
-
-            if (not isinstance(field, ForeignKeyField) or
-                    field.rel_model not in models):
+            if not isinstance(field, ForeignKeyField) or field.rel_model not in models:
                 continue
 
-            from_col_name = '+ ' + field.column_name
+            from_col_name = "+ " + field.column_name
 
             to_col_name = field.rel_field.column_name
             if field.rel_field.primary_key:
-                to_col_name = ''
+                to_col_name = ""
             else:
-                to_col_name = '+ ' + to_col_name
+                to_col_name = "+ " + to_col_name
 
             edge = [model._meta.table_name, field.rel_model._meta.table_name]
 
@@ -310,16 +327,16 @@ def create_schema_graph(models=None, base=None, schema=None, show_columns=True,
             # is_index = from_field.primary_key or from_field.unique
 
             graph_edge = pydot.Edge(
-                dir='both',
+                dir="both",
                 headlabel=to_col_name,
                 taillabel=from_col_name,
-                arrowhead='none',
-                arrowtail='none',
+                arrowhead="none",
+                arrowtail="none",
                 # arrowhead=is_inheritance and 'none' or 'odot',
                 # arrowtail=is_index and 'empty' or 'crow',
                 fontname=font,
                 *edge,
-                **relation_kwargs
+                **relation_kwargs,
             )
             graph.add_edge(graph_edge)
 
@@ -333,4 +350,4 @@ def show_schema_graph(*args, **kwargs):
     from PIL import Image
 
     iostream = StringIO(create_schema_graph(*args, **kwargs).create_png())
-    Image.open(iostream).show(command=kwargs.get('command', 'gwenview'))
+    Image.open(iostream).show(command=kwargs.get("command", "gwenview"))

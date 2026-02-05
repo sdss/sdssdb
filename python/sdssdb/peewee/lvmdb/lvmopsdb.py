@@ -26,7 +26,6 @@ from . import database  # noqa
 
 
 class LVMOpsBase(BaseModel):
-
     class Meta:
         schema = "lvmopsdb"
         database = database
@@ -38,7 +37,7 @@ class Version(LVMOpsBase):
     sched_tag = TextField(null=False)
 
     class Meta:
-        table_name = 'version'
+        table_name = "version"
 
 
 class Tile(LVMOpsBase):
@@ -57,44 +56,38 @@ class Tile(LVMOpsBase):
     moon_distance_limit = FloatField(null=True, default=0)
     total_exptime = FloatField(null=True, default=0)
     visit_exptime = FloatField(null=True, default=0)
-    version_pk = ForeignKeyField(column_name='version_pk',
-                                 field='pk',
-                                 model=Version)
+    version_pk = ForeignKeyField(column_name="version_pk", field="pk", model=Version)
     disabled = BooleanField(null=False, default=False)
 
     class Meta:
-        table_name = 'tile'
+        table_name = "tile"
 
 
 class Disabled(LVMOpsBase):
     pk = AutoField()
-    tile = ForeignKeyField(column_name='tile_id',
-                           field='tile_id',
-                           model=Tile, backref='disabled')
+    tile = ForeignKeyField(column_name="tile_id", field="tile_id", model=Tile, backref="disabled")
     time_stamp = DateTimeField(default=datetime.datetime.now())
     note = TextField(null=True)
 
     class Meta:
-        table_name = 'disabled'
+        table_name = "disabled"
 
 
 class Dither(LVMOpsBase):
     pk = AutoField()
-    tile = ForeignKeyField(column_name='tile_id',
-                           field='tile_id',
-                           model=Tile, backref='dithers')
+    tile = ForeignKeyField(column_name="tile_id", field="tile_id", model=Tile, backref="dithers")
     position = IntegerField(null=True)
 
     class Meta:
-        table_name = 'dither'
+        table_name = "dither"
 
 
 class Observation(LVMOpsBase):
     obs_id = AutoField()
     # presumably a tile will at some point be observed more than once
-    dither = ForeignKeyField(column_name='dither_pk',
-                             field='pk',
-                             model=Dither, backref='observations')
+    dither = ForeignKeyField(
+        column_name="dither_pk", field="pk", model=Dither, backref="observations"
+    )
     jd = FloatField(null=False)
     lst = FloatField(null=True)
     hz = FloatField(null=True)
@@ -102,30 +95,28 @@ class Observation(LVMOpsBase):
     lunation = FloatField(null=True)
 
     class Meta:
-        table_name = 'observation'
+        table_name = "observation"
 
 
 class Redo(LVMOpsBase):
-    tile = ForeignKeyField(column_name='tile_id',
-                           field='tile_id',
-                           model=Tile)
+    tile = ForeignKeyField(column_name="tile_id", field="tile_id", model=Tile)
     nexp = IntegerField(default=1)
 
     class Meta:
-        table_name = 'redo'
+        table_name = "redo"
 
 
 class Weather(LVMOpsBase):
     pk = AutoField()
-    observation = ForeignKeyField(column_name='obs_id',
-                                  field='obs_id',
-                                  model=Observation, backref='weather')
+    observation = ForeignKeyField(
+        column_name="obs_id", field="obs_id", model=Observation, backref="weather"
+    )
     seeing = FloatField(null=True)
     cloud_cover = FloatField(null=True)
     transparency = FloatField(null=True)
 
     class Meta:
-        table_name = 'weather'
+        table_name = "weather"
 
 
 class Standard(LVMOpsBase):
@@ -143,7 +134,7 @@ class Standard(LVMOpsBase):
     valid = TextField(null=True)
 
     class Meta:
-        table_name = 'standard'
+        table_name = "standard"
 
 
 class Sky(LVMOpsBase):
@@ -159,7 +150,7 @@ class Sky(LVMOpsBase):
     valid = TextField(null=True)
 
     class Meta:
-        table_name = 'sky'
+        table_name = "sky"
 
 
 class ExposureFlavor(LVMOpsBase):
@@ -167,52 +158,44 @@ class ExposureFlavor(LVMOpsBase):
     pk = AutoField()
 
     class Meta:
-        table_name = 'exposure_flavor'
+        table_name = "exposure_flavor"
 
 
 class Exposure(LVMOpsBase):
     pk = AutoField()
     # presumably a tile will at some point be observed more than once
-    observation = ForeignKeyField(column_name='obs_id',
-                                  field='obs_id',
-                                  model=Observation, backref='exposures')
+    observation = ForeignKeyField(
+        column_name="obs_id", field="obs_id", model=Observation, backref="exposures"
+    )
     exposure_no = BigIntegerField()
     start_time = DateTimeField(default=datetime.datetime.now())
     exposure_time = FloatField()
-    exposure_flavor = ForeignKeyField(column_name='exposure_flavor_pk',
-                                      field='pk',
-                                      model=ExposureFlavor)
+    exposure_flavor = ForeignKeyField(
+        column_name="exposure_flavor_pk", field="pk", model=ExposureFlavor
+    )
 
     class Meta:
-        table_name = 'exposure'
+        table_name = "exposure"
 
 
 class ObservationToStandard(LVMOpsBase):
     pk = AutoField()
     # presumably a tile will at some point be observed more than once
-    observation = ForeignKeyField(column_name='obs_id',
-                                  field='obs_id',
-                                  model=Observation)
-    standard = ForeignKeyField(column_name='standard_pk',
-                               field='pk',
-                               model=Standard)
+    observation = ForeignKeyField(column_name="obs_id", field="obs_id", model=Observation)
+    standard = ForeignKeyField(column_name="standard_pk", field="pk", model=Standard)
 
     class Meta:
-        table_name = 'observation_to_standard'
+        table_name = "observation_to_standard"
 
 
 class ObservationToSky(LVMOpsBase):
     pk = AutoField()
     # presumably a tile will at some point be observed more than once
-    observation = ForeignKeyField(column_name='obs_id',
-                                  field='obs_id',
-                                  model=Observation)
-    sky = ForeignKeyField(column_name='sky_pk',
-                          field='pk',
-                          model=Sky)
+    observation = ForeignKeyField(column_name="obs_id", field="obs_id", model=Observation)
+    sky = ForeignKeyField(column_name="sky_pk", field="pk", model=Sky)
 
     class Meta:
-        table_name = 'observation_to_sky'
+        table_name = "observation_to_sky"
 
 
 class Camera(LVMOpsBase):
@@ -220,33 +203,28 @@ class Camera(LVMOpsBase):
     pk = AutoField()
 
     class Meta:
-        table_name = 'camera'
+        table_name = "camera"
 
 
 class CameraFrame(LVMOpsBase):
     pk = AutoField()
-    exposure = ForeignKeyField(column_name='exposure_pk',
-                               field='pk',
-                               model=Exposure,
-                               backref="CameraFrames")
-    camera = ForeignKeyField(column_name='camera_pk',
-                             field='pk',
-                             model=Camera)
+    exposure = ForeignKeyField(
+        column_name="exposure_pk", field="pk", model=Exposure, backref="CameraFrames"
+    )
+    camera = ForeignKeyField(column_name="camera_pk", field="pk", model=Camera)
 
     class Meta:
-        table_name = 'camera'
+        table_name = "camera"
 
 
 class CompletionStatus(LVMOpsBase):
     pk = TextField()
     done = BooleanField()
     by_pipeline = BooleanField()
-    dither = ForeignKeyField(column_name='dither_pk',
-                             field='pk',
-                             model=Dither)
+    dither = ForeignKeyField(column_name="dither_pk", field="pk", model=Dither)
 
     class Meta:
-        table_name = 'completion_status'
+        table_name = "completion_status"
 
 
 class GuiderFrame(LVMOpsBase):
@@ -276,12 +254,10 @@ class GuiderFrame(LVMOpsBase):
     ax0_applied = FloatField()
     ax1_applied = FloatField()
     rot_applied = FloatField()
-    exposure_no = ForeignKeyField(column_name='exposure_no',
-                                  field='exposure_no',
-                                  model=Exposure)
+    exposure_no = ForeignKeyField(column_name="exposure_no", field="exposure_no", model=Exposure)
 
     class Meta:
-        table_name = 'guider_frame'
+        table_name = "guider_frame"
 
 
 class AGCamFrame(LVMOpsBase):
@@ -300,12 +276,10 @@ class AGCamFrame(LVMOpsBase):
     stacked = BooleanField()
     solved = BooleanField()
     wcs_mode = TextField()
-    exposure_no = ForeignKeyField(column_name='exposure_no',
-                                  field='exposure_no',
-                                  model=Exposure)
+    exposure_no = ForeignKeyField(column_name="exposure_no", field="exposure_no", model=Exposure)
 
     class Meta:
-        table_name = 'agcam_frame'
+        table_name = "agcam_frame"
 
 
 class GuiderCoAdd(LVMOpsBase):
@@ -341,12 +315,10 @@ class GuiderCoAdd(LVMOpsBase):
     warntran = BooleanField()
     warnmatc = BooleanField()
     warnfwhm = BooleanField()
-    exposure_no = ForeignKeyField(column_name='exposure_no',
-                                  field='exposure_no',
-                                  model=Exposure)
+    exposure_no = ForeignKeyField(column_name="exposure_no", field="exposure_no", model=Exposure)
 
     class Meta:
-        table_name = 'guider_coadd'
+        table_name = "guider_coadd"
 
 
 class LN2Fill(LVMOpsBase):
@@ -372,4 +344,4 @@ class LN2Fill(LVMOpsBase):
     valve_times = JSONField()
 
     class Meta:
-        table_name = 'ln2_fill'
+        table_name = "ln2_fill"

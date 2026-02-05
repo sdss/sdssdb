@@ -20,29 +20,29 @@ from sqlalchemy.types import JSON
 
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
-    _schema = 'mangaauxdb'
+    _schema = "mangaauxdb"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class CubeHeader(Base):
-    __tablename__ = 'cube_header'
-    print_fields = ['cube']
+    __tablename__ = "cube_header"
+    print_fields = ["cube"]
 
     header = Column(JSON)
-    cube = relationship(Cube, backref='hdr')
+    cube = relationship(Cube, backref="hdr")
 
 
 class MaskLabels(Base):
-    __tablename__ = 'maskbit_labels'
-    print_fields = ['maskbit']
+    __tablename__ = "maskbit_labels"
+    print_fields = ["maskbit"]
 
 
 class MaskBit(Base):
-    __tablename__ = 'maskbit'
-    print_fields = ['flag', 'bit', 'label']
+    __tablename__ = "maskbit"
+    print_fields = ["flag", "bit", "label"]
 
 
 database.add_base(Base)

@@ -29,24 +29,24 @@ from sqlalchemy.sql import column
 from sqlalchemy.types import Float, Integer, String
 
 
-SCHEMA = 'mangadatadb'
+SCHEMA = "mangadatadb"
 
 
 class Base(AbstractConcreteBase, MangaBase):
     __abstract__ = True
     _schema = SCHEMA
-    _relations = 'define_relations'
+    _relations = "define_relations"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class ArrayOps(object):
-    ''' this class adds array functionality '''
+    """this class adds array functionality"""
 
     __table__ = None
-    __tablename__ = 'arrayops'
+    __tablename__ = "arrayops"
 
     @property
     def cols(self):
@@ -54,13 +54,12 @@ class ArrayOps(object):
 
     @property
     def collist(self):
-        return ['wavelength', 'flux', 'ivar', 'mask', 'xpos', 'ypos', 'specres']
+        return ["wavelength", "flux", "ivar", "mask", "xpos", "ypos", "specres"]
 
     def getTableName(self):
         return self.__table__.name
 
     def matchIndex(self, name=None):
-
         # Get index of correct column
         incols = [x for x in self.cols if x in self.collist]
         if not any(incols):
@@ -69,7 +68,7 @@ class ArrayOps(object):
             idx = self.cols.index(incols[0])
         else:
             if not name:
-                print('Multiple columns found.  Column name must be specified!')
+                print("Multiple columns found.  Column name must be specified!")
                 return None
             elif name in self.collist:
                 idx = self.cols.index(name)
@@ -79,13 +78,16 @@ class ArrayOps(object):
         return idx
 
     def filter(self, start, end, name=None):
-
         # Check input types or map string operators
         startnum = type(start) == int or type(start) == float
         endnum = type(end) == int or type(end) == float
-        opdict = {'=': eq, '<': lt, '<=': le, '>': gt, '>=': ge, '!=': ne}
+        opdict = {"=": eq, "<": lt, "<=": le, ">": gt, ">=": ge, "!=": ne}
         if start in opdict.keys() or end in opdict.keys():
-            opind = list(opdict.keys()).index(start) if start in opdict.keys() else list(opdict.keys()).index(end)
+            opind = (
+                list(opdict.keys()).index(start)
+                if start in opdict.keys()
+                else list(opdict.keys()).index(end)
+            )
             if start in opdict.keys():
                 start = opdict[list(opdict.keys())[opind]]
             if end in opdict.keys():
@@ -110,13 +112,16 @@ class ArrayOps(object):
             elif startnum and not endnum:
                 arr = [x for x in data if end(x, start)]
             elif startnum == eq or endnum == eq:
-                arr = [x for x in data if start(x, end)] if start == eq else [x for x in data if end(x, start)]
+                arr = (
+                    [x for x in data if start(x, end)]
+                    if start == eq
+                    else [x for x in data if end(x, start)]
+                )
             return arr
         else:
             return None
 
     def equal(self, num, name=None):
-
         # Get matching index
         self.idx = self.matchIndex(name=name)
         if not self.idx:
@@ -135,7 +140,6 @@ class ArrayOps(object):
             return None
 
     def less(self, num, name=None):
-
         # Get matching index
         self.idx = self.matchIndex(name=name)
         if not self.idx:
@@ -154,7 +158,6 @@ class ArrayOps(object):
             return None
 
     def greater(self, num, name=None):
-
         # Get matching index
         self.idx = self.matchIndex(name=name)
         if not self.idx:
@@ -173,7 +176,6 @@ class ArrayOps(object):
             return None
 
     def getIndices(self, arr):
-
         if self.idx:
             indices = [self.__getattribute__(self.cols[self.idx]).index(a) for a in arr]
         else:
@@ -183,31 +185,34 @@ class ArrayOps(object):
 
 
 class Cube(ArrayOps, Base):
-    __tablename__ = 'cube'
-    print_fields = ['plateifu', 'pipelineInfo.version.version']
+    __tablename__ = "cube"
+    print_fields = ["plateifu", "pipelineInfo.version.version"]
 
     specres = deferred(Column(ARRAY(Float, zero_indexes=True)))
     specresd = deferred(Column(ARRAY(Float, zero_indexes=True)))
     prespecres = deferred(Column(ARRAY(Float, zero_indexes=True)))
     prespecresd = deferred(Column(ARRAY(Float, zero_indexes=True)))
 
-    target = relationship(sampledb.MangaTarget, backref='cubes')
-    carts = relationship('Cart', secondary='{0}.cart_to_cube'.format(SCHEMA), backref="cubes")
+    target = relationship(sampledb.MangaTarget, backref="cubes")
+    carts = relationship("Cart", secondary="{0}.cart_to_cube".format(SCHEMA), backref="cubes")
 
     @property
     def header(self):
-        '''Returns an astropy header'''
+        """Returns an astropy header"""
 
         session = database.Session.object_session(self)
-        data = session.query(FitsHeaderKeyword.label, FitsHeaderValue.value,
-                             FitsHeaderValue.comment).join(FitsHeaderValue).filter(
-            FitsHeaderValue.cube == self).all()
+        data = (
+            session.query(FitsHeaderKeyword.label, FitsHeaderValue.value, FitsHeaderValue.comment)
+            .join(FitsHeaderValue)
+            .filter(FitsHeaderValue.cube == self)
+            .all()
+        )
 
         hdr = fits.Header(data)
         return hdr
 
     def header_to_dict(self):
-        '''Returns a simple python dictionary header'''
+        """Returns a simple python dictionary header"""
 
         values = self.headervals
         hdrdict = {str(val.keyword.label): val.value for val in values}
@@ -215,14 +220,14 @@ class Cube(ArrayOps, Base):
 
     @property
     def plateclass(self):
-        '''Returns a plate class'''
+        """Returns a plate class"""
 
         plate = Plate(self)
 
         return plate
 
     def testhead(self, key):
-        ''' Test existence of header keyword'''
+        """Test existence of header keyword"""
 
         try:
             if self.header_to_dict()[key]:
@@ -232,16 +237,17 @@ class Cube(ArrayOps, Base):
 
     def getFlags(self, bits, name):
         from sdssdb.sqlalchemy.mangadb.auxdb import MaskBit
+
         session = database.Session.object_session(self)
 
         # if bits not a digit, return None
         if not str(bits).isdigit():
-            return 'NULL'
+            return "NULL"
         else:
             bits = int(bits)
 
         # Convert the integer value to list of bits
-        bitlist = [int(i) for i in '{0:08b}'.format(bits)]
+        bitlist = [int(i) for i in "{0:08b}".format(bits)]
         bitlist.reverse()
         indices = [i for i, bit in enumerate(bitlist) if bit]
 
@@ -252,18 +258,18 @@ class Cube(ArrayOps, Base):
 
         return labels
 
-    def getQualBits(self, stage='3d'):
-        ''' get quality flags '''
+    def getQualBits(self, stage="3d"):
+        """get quality flags"""
 
-        col = 'DRP2QUAL' if stage == '2d' else 'DRP3QUAL'
+        col = "DRP2QUAL" if stage == "2d" else "DRP3QUAL"
         hdr = self.header_to_dict()
         bits = hdr.get(col, None)
         return bits
 
-    def getQualFlags(self, stage='3d'):
-        ''' get quality flags '''
+    def getQualFlags(self, stage="3d"):
+        """get quality flags"""
 
-        name = 'MANGA_DRP2QUAL' if stage == '2d' else 'MANGA_DRP3QUAL'
+        name = "MANGA_DRP2QUAL" if stage == "2d" else "MANGA_DRP3QUAL"
         bits = self.getQualBits(stage=stage)
 
         if bits:
@@ -272,9 +278,15 @@ class Cube(ArrayOps, Base):
             return None
 
     def getTargFlags(self, targtype=1):
-        ''' get target flags '''
+        """get target flags"""
 
-        name = 'MANGA_TARGET1' if targtype == 1 else 'MANGA_TARGET2' if targtype == 2 else 'MANGA_TARGET3'
+        name = (
+            "MANGA_TARGET1"
+            if targtype == 1
+            else "MANGA_TARGET2"
+            if targtype == 2
+            else "MANGA_TARGET3"
+        )
         bits = self.getTargBits(targtype=targtype)
         if bits:
             return self.getFlags(bits, name)
@@ -282,17 +294,17 @@ class Cube(ArrayOps, Base):
             return None
 
     def getTargBits(self, targtype=1):
-        ''' get target bits '''
+        """get target bits"""
 
-        assert targtype in [1, 2, 3], 'target type can only 1, 2 or 3'
+        assert targtype in [1, 2, 3], "target type can only 1, 2 or 3"
 
         hdr = self.header_to_dict()
-        newcol = 'MNGTARG{0}'.format(targtype)
-        oldcol = 'MNGTRG{0}'.format(targtype)
+        newcol = "MNGTARG{0}".format(targtype)
+        oldcol = "MNGTRG{0}".format(targtype)
         bits = hdr.get(newcol, hdr.get(oldcol, None))
         return bits
 
-    def get3DCube(self, extension='flux'):
+    def get3DCube(self, extension="flux"):
         """Returns a 3D array of ``extension`` from the cube spaxels.
 
         For example, ``cube.get3DCube('flux')`` will return the original
@@ -304,8 +316,12 @@ class Cube(ArrayOps, Base):
         """
 
         session = database.Session.object_session(self)
-        spaxels = session.query(getattr(Spaxel, extension)).filter(
-            Spaxel.cube_pk == self.pk).order_by(Spaxel.x, Spaxel.y).all()
+        spaxels = (
+            session.query(getattr(Spaxel, extension))
+            .filter(Spaxel.cube_pk == self.pk)
+            .order_by(Spaxel.x, Spaxel.y)
+            .all()
+        )
 
         # Assumes cubes are always square (!)
         nx = ny = int(np.sqrt(len(spaxels)))
@@ -317,12 +333,12 @@ class Cube(ArrayOps, Base):
 
     @hybrid_property
     def plateifu(self):
-        '''Returns parameter plate-ifu'''
-        return '{0}-{1}'.format(self.plate, self.ifu.name)
+        """Returns parameter plate-ifu"""
+        return "{0}-{1}".format(self.plate, self.ifu.name)
 
     @plateifu.expression
     def plateifu(cls):
-        return func.concat(Cube.plate, '-', IFUDesign.name)
+        return func.concat(Cube.plate, "-", IFUDesign.name)
 
     @hybrid_property
     def restwave(self):
@@ -336,18 +352,21 @@ class Cube(ArrayOps, Base):
 
     @restwave.expression
     def restwave(cls):
-        restw = (func.rest_wavelength(sampledb.NSA.z))
+        restw = func.rest_wavelength(sampledb.NSA.z)
         return restw
 
     def has_modelspaxels(self, name=None):
         if not name:
-            name = '(SPX|HYB)'
+            name = "(SPX|HYB)"
         has_ms = False
-        model_cubes = [f.modelcube for f in self.dapfiles if re.search('LOGCUBE-{0}'.format(name), f.filename)]
+        model_cubes = [
+            f.modelcube for f in self.dapfiles if re.search("LOGCUBE-{0}".format(name), f.filename)
+        ]
         if model_cubes:
             mc = sum(model_cubes, [])
             if mc:
                 from marvin.database.models.DapModelClasses import ModelSpaxel
+
                 session = database.Session.object_session(mc[0])
                 ms = session.query(ModelSpaxel).filter_by(modelcube_pk=mc[0].pk).first()
                 has_ms = True if ms else False
@@ -367,10 +386,10 @@ class Cube(ArrayOps, Base):
 
 
 def set_quality(stage):
-    ''' produces cube quality flag '''
+    """produces cube quality flag"""
 
-    label = 'cubequal{0}'.format(stage)
-    kwarg = 'DRP{0}QUAL'.format(stage[0])
+    label = "cubequal{0}".format(stage)
+    kwarg = "DRP{0}QUAL".format(stage[0])
 
     @hybrid_property
     def quality(self):
@@ -379,19 +398,26 @@ def set_quality(stage):
 
     @quality.expression
     def quality(cls):
-        return select([FitsHeaderValue.value.cast(Integer)]).\
-            where(and_(FitsHeaderKeyword.pk == FitsHeaderValue.fits_header_keyword_pk,
-                       FitsHeaderKeyword.label.ilike(kwarg),
-                       FitsHeaderValue.cube_pk == cls.pk)).\
-            label(label)
+        return (
+            select([FitsHeaderValue.value.cast(Integer)])
+            .where(
+                and_(
+                    FitsHeaderKeyword.pk == FitsHeaderValue.fits_header_keyword_pk,
+                    FitsHeaderKeyword.label.ilike(kwarg),
+                    FitsHeaderValue.cube_pk == cls.pk,
+                )
+            )
+            .label(label)
+        )
+
     return quality
 
 
 def set_manga_target(targtype):
-    ''' produces manga_target flags '''
+    """produces manga_target flags"""
 
-    label = 'mngtrg{0}'.format(targtype)
-    kwarg = 'MNGT%RG{0}'.format(targtype)
+    label = "mngtrg{0}".format(targtype)
+    kwarg = "MNGT%RG{0}".format(targtype)
 
     @hybrid_property
     def target(self):
@@ -400,32 +426,39 @@ def set_manga_target(targtype):
 
     @target.expression
     def target(cls):
-        return select([FitsHeaderValue.value.cast(Integer)]).\
-            where(and_(FitsHeaderKeyword.pk == FitsHeaderValue.fits_header_keyword_pk,
-                       FitsHeaderKeyword.label.ilike(kwarg),
-                       FitsHeaderValue.cube_pk == cls.pk)).\
-            label(label)
+        return (
+            select([FitsHeaderValue.value.cast(Integer)])
+            .where(
+                and_(
+                    FitsHeaderKeyword.pk == FitsHeaderValue.fits_header_keyword_pk,
+                    FitsHeaderKeyword.label.ilike(kwarg),
+                    FitsHeaderValue.cube_pk == cls.pk,
+                )
+            )
+            .label(label)
+        )
+
     return target
 
 
-setattr(Cube, 'manga_target1', set_manga_target(1))
-setattr(Cube, 'manga_target2', set_manga_target(2))
-setattr(Cube, 'manga_target3', set_manga_target(3))
-setattr(Cube, 'quality', set_quality('3d'))
+setattr(Cube, "manga_target1", set_manga_target(1))
+setattr(Cube, "manga_target2", set_manga_target(2))
+setattr(Cube, "manga_target3", set_manga_target(3))
+setattr(Cube, "quality", set_quality("3d"))
 
 
 class Wavelength(Base):
-    __tablename__ = 'wavelength'
+    __tablename__ = "wavelength"
 
     wavelength = deferred(Column(ARRAY(Float, zero_indexes=True)))
 
     def __repr__(self):
-        return '<Wavelength (pk={0})>'.format(self.pk)
+        return "<Wavelength (pk={0})>".format(self.pk)
 
 
 class Spaxel(ArrayOps, Base):
-    __tablename__ = 'spaxel'
-    print_fields = ['x', 'y']
+    __tablename__ = "spaxel"
+    print_fields = ["x", "y"]
 
     flux = deferred(Column(ARRAY(Float, zero_indexes=True)))
     ivar = deferred(Column(ARRAY(Float, zero_indexes=True)))
@@ -440,12 +473,14 @@ class Spaxel(ArrayOps, Base):
 
     @sum.expression
     def sum(cls):
-        return select([func.sum(column('totalflux'))]).select_from(func.unnest(cls.flux).alias('totalflux'))
+        return select([func.sum(column("totalflux"))]).select_from(
+            func.unnest(cls.flux).alias("totalflux")
+        )
 
 
 class RssFiber(ArrayOps, Base):
-    __tablename__ = 'rssfiber'
-    print_fields = ['exposure_no', 'mjd', 'fiber.fiberid']
+    __tablename__ = "rssfiber"
+    print_fields = ["exposure_no", "mjd", "fiber.fiberid"]
 
     flux = deferred(Column(ARRAY(Float, zero_indexes=True)))
     ivar = deferred(Column(ARRAY(Float, zero_indexes=True)))
@@ -457,40 +492,40 @@ class RssFiber(ArrayOps, Base):
 
 
 class PipelineInfo(Base):
-    __tablename__ = 'pipeline_info'
-    print_fields = ['version.version', 'name.name']
+    __tablename__ = "pipeline_info"
+    print_fields = ["version.version", "name.name"]
 
     def __repr__(self):
-        return '<Pipeline_Info (pk={0})>'.format(self.pk)
+        return "<Pipeline_Info (pk={0})>".format(self.pk)
 
 
 class PipelineVersion(Base):
-    __tablename__ = 'pipeline_version'
-    print_fields = ['version']
+    __tablename__ = "pipeline_version"
+    print_fields = ["version"]
 
 
 class PipelineStage(Base):
-    __tablename__ = 'pipeline_stage'
+    __tablename__ = "pipeline_stage"
 
 
 class PipelineCompletionStatus(Base):
-    __tablename__ = 'pipeline_completion_status'
+    __tablename__ = "pipeline_completion_status"
 
 
 class PipelineName(Base):
-    __tablename__ = 'pipeline_name'
+    __tablename__ = "pipeline_name"
 
 
 class FitsHeaderValue(Base):
-    __tablename__ = 'fits_header_value'
+    __tablename__ = "fits_header_value"
 
 
 class FitsHeaderKeyword(Base):
-    __tablename__ = 'fits_header_keyword'
+    __tablename__ = "fits_header_keyword"
 
 
 class IFUDesign(Base):
-    __tablename__ = 'ifudesign'
+    __tablename__ = "ifudesign"
 
     @property
     def ifuname(self):
@@ -506,34 +541,34 @@ class IFUDesign(Base):
 
 
 class IFUToBlock(Base):
-    __tablename__ = 'ifu_to_block'
+    __tablename__ = "ifu_to_block"
 
 
 class SlitBlock(Base):
-    __tablename__ = 'slitblock'
+    __tablename__ = "slitblock"
 
 
 class Cart(Base):
-    __tablename__ = 'cart'
-    print_fields = ['id']
+    __tablename__ = "cart"
+    print_fields = ["id"]
 
 
 class Fibers(Base):
-    __tablename__ = 'fibers'
-    print_fields = ['fiberid', 'fnum']
+    __tablename__ = "fibers"
+    print_fields = ["fiberid", "fnum"]
 
 
 class FiberType(Base):
-    __tablename__ = 'fiber_type'
+    __tablename__ = "fiber_type"
 
 
 class TargetType(Base):
-    __tablename__ = 'target_type'
+    __tablename__ = "target_type"
 
 
 class Sample(Base, ArrayOps):
-    __tablename__ = 'sample'
-    print_fields = ['cube']
+    __tablename__ = "sample"
+    print_fields = ["cube"]
 
     @hybrid_property
     def nsa_logmstar(self):
@@ -563,27 +598,31 @@ class Sample(Base, ArrayOps):
 
 
 class CartToCube(Base):
-    __tablename__ = 'cart_to_cube'
-    print_fields = ['cube', 'cart']
+    __tablename__ = "cart_to_cube"
+    print_fields = ["cube", "cart"]
 
 
 class Wcs(Base, ArrayOps):
-    __tablename__ = 'wcs'
-    print_fields = ['cube']
+    __tablename__ = "wcs"
+    print_fields = ["cube"]
 
     def makeHeader(self):
         wcscols = self.cols[2:]
         newhdr = fits.Header()
         for c in wcscols:
-            newhdr[c] = float(self.__getattribute__(c)) if type(self.__getattribute__(c)) == Decimal else self.__getattribute__(c)
+            newhdr[c] = (
+                float(self.__getattribute__(c))
+                if type(self.__getattribute__(c)) == Decimal
+                else self.__getattribute__(c)
+            )
         return newhdr
 
 
 class ObsInfo(Base):
-    __tablename__ = 'obsinfo'
-    print_fields = ['cube']
+    __tablename__ = "obsinfo"
+    print_fields = ["cube"]
 
-    _expnum = Column('expnum', String)
+    _expnum = Column("expnum", String)
 
     @hybrid_property
     def expnum(self):
@@ -595,19 +634,19 @@ class ObsInfo(Base):
 
 
 class CubeShape(Base):
-    __tablename__ = 'cube_shape'
-    print_fields = ['size', 'total']
+    __tablename__ = "cube_shape"
+    print_fields = ["size", "total"]
 
     @property
     def shape(self):
         return (self.size, self.size)
 
     def makeIndiceArray(self):
-        ''' Return the indices array as a numpy array '''
+        """Return the indices array as a numpy array"""
         return np.array(self.indices)
 
     def getXY(self, index=None):
-        ''' Get the x,y elements from a single digit index '''
+        """Get the x,y elements from a single digit index"""
         if index is not None:
             if index > self.total:
                 return None, None
@@ -622,18 +661,18 @@ class CubeShape(Base):
 
     @hybrid_property
     def x(self):
-        '''Returns parameter plate-ifu'''
+        """Returns parameter plate-ifu"""
         x = self.getXY()[0]
         return x
 
     @x.expression
     def x(cls):
-        arrind = (func.unnest(cls.indices) / cls.size).label('xarrind')
+        arrind = (func.unnest(cls.indices) / cls.size).label("xarrind")
         return arrind
 
     @hybrid_property
     def y(self):
-        '''Returns parameter plate-ifu'''
+        """Returns parameter plate-ifu"""
         y = self.getXY()[1]
         return y
 
@@ -641,17 +680,17 @@ class CubeShape(Base):
     def y(cls):
         s = database.Session.object_session(cls)
         arrunnest = func.unnest(cls.indices)
-        xarr = (func.unnest(cls.indices) / cls.size).label('xarrind')
-        arrind = (arrunnest - xarr * cls.size).label('yarrind')
-        y = s.query(arrind).select_from(cls).subquery('yarr')
+        xarr = (func.unnest(cls.indices) / cls.size).label("xarrind")
+        arrind = (arrunnest - xarr * cls.size).label("yarrind")
+        y = s.query(arrind).select_from(cls).subquery("yarr")
         yagg = s.query(func.array_agg(y.c.yarrind))
         return yagg.as_scalar()
 
 
 class Plate(object):
-    ''' new plate class '''
+    """new plate class"""
 
-    __tablename__ = 'myplate'
+    __tablename__ = "myplate"
 
     def __init__(self, cube=None, id=None):
         self.id = cube.plate if cube else id if id else None
@@ -660,16 +699,16 @@ class Plate(object):
         if self.cube:
             self._hdr = self.cube.header_to_dict()
             self.type = self.getPlateType()
-            self.platetype = self._hdr.get('PLATETYP', None)
-            self.surveymode = self._hdr.get('SRVYMODE', None)
-            self.dateobs = self._hdr.get('DATE-OBS', None)
-            self.ra = self._hdr.get('CENRA', None)
-            self.dec = self._hdr.get('CENDEC', None)
-            self.designid = self._hdr.get('DESIGNID', None)
-            self.cartid = self._hdr.get('CARTID', None)
+            self.platetype = self._hdr.get("PLATETYP", None)
+            self.surveymode = self._hdr.get("SRVYMODE", None)
+            self.dateobs = self._hdr.get("DATE-OBS", None)
+            self.ra = self._hdr.get("CENRA", None)
+            self.dec = self._hdr.get("CENDEC", None)
+            self.designid = self._hdr.get("DESIGNID", None)
+            self.cartid = self._hdr.get("CARTID", None)
             self.drpver = self.cube.pipelineInfo.version.version
-            self.isbright = 'APOGEE' in self.surveymode
-            self.dir3d = 'mastar' if self.isbright else 'stack'
+            self.isbright = "APOGEE" in self.surveymode
+            self.dir3d = "mastar" if self.isbright else "stack"
 
             # cast a few
             self.ra = float(self.ra) if self.ra else None
@@ -681,36 +720,41 @@ class Plate(object):
         return self.__str__()
 
     def __str__(self):
-        return ('Plate (id={0}, ra={1}, dec={2}, '
-                ' designid={3})'.format(self.id, self.ra, self.dec, self.designid))
+        return "Plate (id={0}, ra={1}, dec={2},  designid={3})".format(
+            self.id, self.ra, self.dec, self.designid
+        )
 
     def getPlateType(self):
-        ''' Get the type of MaNGA plate '''
+        """Get the type of MaNGA plate"""
 
         # try galaxy
-        mngtrg = self._hdr.get('MNGTRG1', None)
-        pltype = 'Galaxy' if mngtrg else None
+        mngtrg = self._hdr.get("MNGTRG1", None)
+        pltype = "Galaxy" if mngtrg else None
 
         # try stellar
         if not pltype:
-            mngtrg = self._hdr.get('MNGTRG2', None)
-            pltype = 'Stellar' if mngtrg else None
+            mngtrg = self._hdr.get("MNGTRG2", None)
+            pltype = "Stellar" if mngtrg else None
 
         # try ancillary
         if not pltype:
-            mngtrg = self._hdr.get('MNGTRG3', None)
-            pltype = 'Ancillary' if mngtrg else None
+            mngtrg = self._hdr.get("MNGTRG3", None)
+            pltype = "Ancillary" if mngtrg else None
 
         return pltype
 
     @property
     def cubes(self):
-        ''' Get all cubes on this plate '''
+        """Get all cubes on this plate"""
 
         session = database.Session.object_session(self)
         if self.drpver:
-            cubes = session.query(Cube).join(PipelineInfo, PipelineVersion).\
-                filter(Cube.plate == self.id, PipelineVersion.version == self.drpver).all()
+            cubes = (
+                session.query(Cube)
+                .join(PipelineInfo, PipelineVersion)
+                .filter(Cube.plate == self.id, PipelineVersion.version == self.drpver)
+                .all()
+            )
         else:
             cubes = session.query(Cube).filter(Cube.plate == self.id).all()
         return cubes
@@ -723,28 +767,28 @@ def define_relations():
     Cube.wavelength = relationship(Wavelength, backref="cube")
     Cube.ifu = relationship(IFUDesign, backref="cubes")
     # Cube.carts = relationship(Cart, secondary=CartToCube.__table__, backref="cubes")
-    Cube.wcs = relationship(Wcs, backref='cube', uselist=False)
-    Cube.shape = relationship(CubeShape, backref='cubes', uselist=False)
-    Cube.obsinfo = relationship(ObsInfo, backref='cube', uselist=False)
+    Cube.wcs = relationship(Wcs, backref="cube", uselist=False)
+    Cube.shape = relationship(CubeShape, backref="cubes", uselist=False)
+    Cube.obsinfo = relationship(ObsInfo, backref="cube", uselist=False)
 
     Sample.cube = relationship(Cube, backref="sample", uselist=False)
 
     FitsHeaderValue.cube = relationship(Cube, backref="headervals")
     FitsHeaderValue.keyword = relationship(FitsHeaderKeyword, backref="value")
 
-    IFUDesign.blocks = relationship(SlitBlock, secondary=IFUToBlock.__table__, backref='ifus')
+    IFUDesign.blocks = relationship(SlitBlock, secondary=IFUToBlock.__table__, backref="ifus")
     Fibers.ifu = relationship(IFUDesign, backref="fibers")
     Fibers.fibertype = relationship(FiberType, backref="fibers")
     Fibers.targettype = relationship(TargetType, backref="fibers")
 
     insp = reflection.Inspector.from_engine(database.engine)
-    fks = insp.get_foreign_keys(Spaxel.__table__.name, schema='mangadatadb')
+    fks = insp.get_foreign_keys(Spaxel.__table__.name, schema="mangadatadb")
     if fks:
-        Spaxel.cube = relationship(Cube, backref='spaxels')
-    fks = insp.get_foreign_keys(RssFiber.__table__.name, schema='mangadatadb')
+        Spaxel.cube = relationship(Cube, backref="spaxels")
+    fks = insp.get_foreign_keys(RssFiber.__table__.name, schema="mangadatadb")
     if fks:
-        RssFiber.cube = relationship(Cube, backref='rssfibers')
-        RssFiber.fiber = relationship(Fibers, backref='rssfibers')
+        RssFiber.cube = relationship(Cube, backref="rssfibers")
+        RssFiber.fiber = relationship(Fibers, backref="rssfibers")
 
     PipelineInfo.name = relationship(PipelineName, backref="pipeinfo")
     PipelineInfo.stage = relationship(PipelineStage, backref="pipeinfo")

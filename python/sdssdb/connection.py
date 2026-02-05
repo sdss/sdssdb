@@ -21,6 +21,7 @@ import six
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.engine import url
 from sqlalchemy.exc import OperationalError as OpError
+from sqlalchemy.ext.declarative import DeferredReflection
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import peewee
@@ -361,9 +362,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         dsn_params.pop("password", None)  # Do not keep the password since it may change.
 
         if dsn_params is None:
-            raise RuntimeError(
-                "cannot determine the DSN parameters. " "The DB may be disconnected."
-            )
+            raise RuntimeError("cannot determine the DSN parameters. The DB may be disconnected.")
 
         dsn_params["user"] = user
         if "dbname" not in dsn_params:
@@ -378,9 +377,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        assert (
-            self.profile is not None
-        ), "this connection was not initialised from a profile. Try using become()."
+        assert self.profile is not None, (
+            "this connection was not initialised from a profile. Try using become()."
+        )
 
         assert "admin" in self._config, "admin user not defined in profile"
 
@@ -393,9 +392,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        assert (
-            self.profile is not None
-        ), "this connection was not initialised from a profile. Try using become()."
+        assert self.profile is not None, (
+            "this connection was not initialised from a profile. Try using become()."
+        )
 
         if user is None:
             user = self._config["user"] if "user" in self._config else None
@@ -650,7 +649,7 @@ class SQLADatabaseConnection(DatabaseConnection):
         db_params["port"] = db_params.pop("port", 5432)
         if db_params["username"]:
             db_params["password"] = self._get_password(**db_params)
-        db_connection_string = url.URL(**db_params)
+        db_connection_string = url.URL.create(**db_params)
         self._connect_params = params
         return db_connection_string
 
@@ -684,7 +683,6 @@ class SQLADatabaseConnection(DatabaseConnection):
     def reset_engine(self):
         """Reset the engine, metadata, and session"""
 
-        self.bases = []
         if self.engine:
             self.engine.dispose()
             self.engine = None
@@ -718,10 +716,11 @@ class SQLADatabaseConnection(DatabaseConnection):
             echo=echo,
             pool_size=pool_size,
             pool_recycle=pool_recycle,
+            future=True,
         )
-        self.metadata = MetaData(bind=self.engine)
+        self.metadata = MetaData()
         self.Session = scoped_session(
-            sessionmaker(bind=self.engine, autocommit=True, expire_on_commit=expire_on_commit)
+            sessionmaker(bind=self.engine, expire_on_commit=expire_on_commit, future=True)
         )
 
     def add_base(self, base, prepare=True):
@@ -746,7 +745,8 @@ class SQLADatabaseConnection(DatabaseConnection):
         do_bases = [base] if base else self.bases
 
         for base in do_bases:
-            base.prepare(self.engine)
+            if issubclass(base, DeferredReflection):
+                base.prepare(self.engine, views=True)
 
             # If the base has an attribute _relations that's the function
             # to call to set up the relationships once the engine has been

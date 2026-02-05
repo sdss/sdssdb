@@ -28,7 +28,7 @@ from ..conftest import determine_scope
 # @register class decorator. For docs on pytest_factoryboy,
 # see https://pytest-factoryboy.readthedocs.io/en/latest
 for item in dir(factories):
-    if item == 'PeeweeModelFactory':
+    if item == "PeeweeModelFactory":
         continue
     attr = getattr(factories, item)
     if inspect.isclass(attr) and issubclass(attr, factory.Factory):
@@ -37,7 +37,7 @@ for item in dir(factories):
 
 @pytest.fixture(scope=determine_scope, autouse=True)
 def transaction(database):
-    ''' Peewee transaction fixture. set autouse=True to ensure persistence '''
+    """Peewee transaction fixture. set autouse=True to ensure persistence"""
     with database.transaction() as txn:
         yield txn
         txn.rollback()

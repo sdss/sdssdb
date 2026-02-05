@@ -87,7 +87,32 @@ From a list such as that one it's easy to create a new database table or FITS fi
 Using SQLAlchemy
 ----------------
 
-.. warning:: At this time, there are not models implemented for ``sdss5db`` in SQLAlchemy.
+The previous query can also be written in SQLAlchemy. We try to keep the Peewee and SQLAlchemy models in sync, but there may be differences in what relationships and features are exposed. ::
+
+    >>> from sdssdb.sqlalchemy.sdss5db.catalogdb import database, Gaia_DR2, TwoMassPSC, Gaia_DR2_TwoMass_Best_Neighbour
+    >>> from sqlalchemy import select
+    >>> session = database.Session
+    >>> results = session.execute(select(Gaia_DR2.source_id,
+    >>>     TwoMassPSC.designation,
+    >>>     Gaia_DR2.ra,
+    >>>     Gaia_DR2.dec,
+    >>>     Gaia_DR2.phot_g_mean_mag,
+    >>>     TwoMassPSC.h_m).select_from(Gaia_DR2).join(
+    >>>         Gaia_DR2_TwoMass_Best_Neighbour).join(
+    >>>         TwoMassPSC).filter(
+    >>>             TwoMassPSC.h_m < 11,
+    >>>             (Gaia_DR2.phot_g_mean_mag - TwoMassPSC.h_m) > 3.5).limit(10))
+    >>> list(results)
+    [(4677205714463552128, '04364544-6204379', 69.18934307102185, -62.0774800805411, 7.623046, -3.732),
+     (6177092406867764352, '13490199-2822034', 207.2580876327441, -28.367904770332707, 5.9145684,  -2.689),
+     (6195030801635265152, '13294277-2316514', 202.4279980781557, -23.281270415054, 6.1792088, -2. 235),
+     (5559704601965624320, '07133229-4438233', 108.38530630875664, -44.63831868208708, 9.820806, -1. 873),
+     (1381118928134364544, '16283852+4152539', 247.16078883583947, 41.88165080884817, 2.6496756, -1. 85),
+     (612958873284128128, '09473348+1125436', 146.88954352397548, 11.428611190642572, 6.7826576, -1. 755),
+     (5786929090848333568, '14051986-7647483', 211.3311694267991, -76.79690261732371, 4.398383, -1. 739),
+     (3684575344281510912, '13140437-0248250', 198.5181124580159, -2.8069934463306, 3.868756, -1. 606),
+     (2106630885448872832, '18552010+4356463', 283.83388103133456, 43.94644004899289, 2.3839183, -1. 575),
+     (699870869412972032, '09103880+3057472', 137.6616009068021, 30.962990786503738, 3.2244558, -1.564)]
 
 
 Cone searches

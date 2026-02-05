@@ -14,12 +14,11 @@ from sqlalchemy import (
     Column,
     DateTime,
     Float,
-    Double,
     ForeignKey,
     Integer,
     SmallInteger,
     Text,
-    text
+    text,
 )
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.orm import relationship
@@ -29,121 +28,200 @@ from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 class Base(AbstractConcreteBase, SDSS5dbBase):
     __abstract__ = True
-    _schema = 'opsdb_apo' if os.getenv("OBSERVATORY") == 'APO' else 'opsdb_lco'
-    _relations = 'define_relations'
+    _schema = "opsdb_apo" if os.getenv("OBSERVATORY") == "APO" else "opsdb_lco"
+    _relations = "define_relations"
 
     @declared_attr
     def __table_args__(cls):
-        return {'schema': cls._schema}
+        return {"schema": cls._schema}
 
 
 class BasePriority(Base):
-    __tablename__ = 'base_priority'
+    __tablename__ = "base_priority"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.base_priority_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.base_priority_pk_seq'::regclass)"),
+    )
     field_pk = Column(Integer)
     priority = Column(Integer)
     version_pk = Column(Integer)
 
 
 class CompletionStatus(Base):
-    __tablename__ = 'completion_status'
+    __tablename__ = "completion_status"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.completion_status_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.completion_status_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class ExposureFlavor(Base):
-    __tablename__ = 'exposure_flavor'
+    __tablename__ = "exposure_flavor"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.exposure_flavor_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.exposure_flavor_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class FieldPriority(Base):
-    __tablename__ = 'field_priority'
+    __tablename__ = "field_priority"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.field_priority_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.field_priority_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class PriorityVersion(Base):
-    __tablename__ = 'priority_version'
+    __tablename__ = "priority_version"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.priority_version_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.priority_version_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class Survey(Base):
-    __tablename__ = 'survey'
+    __tablename__ = "survey"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.survey_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.survey_pk_seq'::regclass)"),
+    )
     label = Column(Text)
 
 
 class Camera(Base):
-    __tablename__ = 'camera'
+    __tablename__ = "camera"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.camera_pk_seq'::regclass)"))
-    instrument_pk = Column(ForeignKey('targetdb.instrument.pk'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.camera_pk_seq'::regclass)"),
+    )
+    instrument_pk = Column(ForeignKey("targetdb.instrument.pk"))
     label = Column(Text)
 
-    instrument = relationship('Instrument')
+    instrument = relationship("Instrument")
 
 
 class FieldToPriority(Base):
-    __tablename__ = 'field_to_priority'
+    __tablename__ = "field_to_priority"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.field_to_priority_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.field_to_priority_pk_seq'::regclass)"),
+    )
     field_pk = Column(Integer)
-    field_priority_pk = Column(ForeignKey(f'{Base._schema}.field_priority.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
+    field_priority_pk = Column(
+        ForeignKey(
+            f"{Base._schema}.field_priority.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        )
+    )
 
-    field_priority = relationship('FieldPriority')
+    field_priority = relationship("FieldPriority")
 
 
 class Configuration(Base):
-    __tablename__ = 'configuration'
+    __tablename__ = "configuration"
 
-    configuration_id = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.configuration_configuration_id_seq'::regclass)"))
-    design_id = Column(ForeignKey('targetdb.design.design_id'), index=True)
+    configuration_id = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(
+            f"nextval('{Base._schema}.configuration_configuration_id_seq'::regclass)"
+        ),
+    )
+    design_id = Column(ForeignKey("targetdb.design.design_id"), index=True)
     comment = Column(Text)
     temperature = Column(Text)
     epoch = Column(Float(53))
     calibration_version = Column(Text)
 
-    design = relationship('Design')
+    design = relationship("Design")
 
 
 class DesignToStatus(Base):
-    __tablename__ = 'design_to_status'
+    __tablename__ = "design_to_status"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.design_to_status_pk_seq'::regclass)"))
-    design_id = Column(ForeignKey('targetdb.design.design_id', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), unique=True)
-    completion_status_pk = Column(ForeignKey(f'{Base._schema}.completion_status.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.design_to_status_pk_seq'::regclass)"),
+    )
+    design_id = Column(
+        ForeignKey(
+            "targetdb.design.design_id", onupdate="CASCADE", deferrable=True, initially="DEFERRED"
+        ),
+        unique=True,
+    )
+    completion_status_pk = Column(
+        ForeignKey(
+            f"{Base._schema}.completion_status.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        )
+    )
     mjd = Column(Float)
     manual = Column(Boolean, server_default=text("false"))
 
-    completion_statu = relationship('CompletionStatus')
-    design = relationship('Design', uselist=False)
+    completion_statu = relationship("CompletionStatus")
+    design = relationship("Design", uselist=False)
 
 
 class Queue(Base):
-    __tablename__ = 'queue'
+    __tablename__ = "queue"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.queue_pk_seq'::regclass)"))
-    design_id = Column(ForeignKey('targetdb.design.design_id'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.queue_pk_seq'::regclass)"),
+    )
+    design_id = Column(ForeignKey("targetdb.design.design_id"))
     position = Column(SmallInteger)
     mjd_plan = Column(Float(53))
 
-    design = relationship('Design')
+    design = relationship("Design")
 
 
 class AssignmentToFocal(Base):
-    __tablename__ = 'assignment_to_focal'
+    __tablename__ = "assignment_to_focal"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.assignment_to_focal_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.assignment_to_focal_pk_seq'::regclass)"),
+    )
     assignment_pk = Column(Integer, index=True)
-    configuration_id = Column(ForeignKey(f'{Base._schema}.configuration.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'))
+    configuration_id = Column(
+        ForeignKey(
+            f"{Base._schema}.configuration.configuration_id",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        )
+    )
     xfocal = Column(Float)
     yfocal = Column(Float)
     positioner_id = Column(SmallInteger)
@@ -152,47 +230,80 @@ class AssignmentToFocal(Base):
     collided = Column(Boolean)
     replaced = Column(Boolean)
 
-    configuration = relationship('Configuration')
+    configuration = relationship("Configuration")
 
 
 class Exposure(Base):
-    __tablename__ = 'exposure'
+    __tablename__ = "exposure"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.exposure_pk_seq'::regclass)"))
-    configuration_id = Column(ForeignKey(f'{Base._schema}.configuration.configuration_id'), index=True)
-    survey_pk = Column(ForeignKey(f'{Base._schema}.survey.pk'))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.exposure_pk_seq'::regclass)"),
+    )
+    configuration_id = Column(
+        ForeignKey(f"{Base._schema}.configuration.configuration_id"), index=True
+    )
+    survey_pk = Column(ForeignKey(f"{Base._schema}.survey.pk"))
     exposure_no = Column(BigInteger)
     comment = Column(Text)
     start_time = Column(DateTime, index=True)
     exposure_time = Column(Float)
-    exposure_flavor_pk = Column(ForeignKey(f'{Base._schema}.exposure_flavor.pk'), nullable=False)
+    exposure_flavor_pk = Column(ForeignKey(f"{Base._schema}.exposure_flavor.pk"), nullable=False)
 
-    configuration = relationship('Configuration')
-    exposure_flavor = relationship('ExposureFlavor')
-    survey = relationship('Survey')
+    configuration = relationship("Configuration")
+    exposure_flavor = relationship("ExposureFlavor")
+    survey = relationship("Survey")
 
 
 class CameraFrame(Base):
-    __tablename__ = 'camera_frame'
+    __tablename__ = "camera_frame"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.camera_frame_pk_seq'::regclass)"))
-    exposure_pk = Column(ForeignKey(f'{Base._schema}.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), nullable=False, index=True)
-    camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), nullable=False)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.camera_frame_pk_seq'::regclass)"),
+    )
+    exposure_pk = Column(
+        ForeignKey(
+            f"{Base._schema}.exposure.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        nullable=False,
+        index=True,
+    )
+    camera_pk = Column(ForeignKey(f"{Base._schema}.camera.pk"), nullable=False)
     ql_sn2 = Column(Float)
     sn2 = Column(Float)
     comment = Column(Text)
 
-    camera = relationship('Camera')
-    exposure = relationship('Exposure')
+    camera = relationship("Camera")
+    exposure = relationship("Exposure")
 
 
 class Quicklook(Base):
-    __tablename__ = 'quicklook'
+    __tablename__ = "quicklook"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.quicklook_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.quicklook_pk_seq'::regclass)"),
+    )
     snr_standard = Column(Float)
     logsnr_hmag_coef = Column(ARRAY(Float()))
-    exposure_pk = Column(ForeignKey(f'{Base._schema}.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    exposure_pk = Column(
+        ForeignKey(
+            f"{Base._schema}.exposure.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        index=True,
+    )
     readnum = Column(Integer)
     exptype = Column(Text)
     hmag_standard = Column(Float)
@@ -201,14 +312,27 @@ class Quicklook(Base):
     logsnr_hmag_coef_all = Column(ARRAY(Float()))
     zeropt = Column(Float)
 
-    exposure = relationship('Exposure')
+    exposure = relationship("Exposure")
 
 
 class Quickred(Base):
-    __tablename__ = 'quickred'
+    __tablename__ = "quickred"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.quickred_pk_seq'::regclass)"))
-    exposure_pk = Column(ForeignKey(f'{Base._schema}.exposure.pk', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.quickred_pk_seq'::regclass)"),
+    )
+    exposure_pk = Column(
+        ForeignKey(
+            f"{Base._schema}.exposure.pk",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        index=True,
+    )
     snr_standard = Column(Float)
     logsnr_hmag_coef = Column(ARRAY(Float()))
     dither_pixpos = Column(Float)
@@ -219,14 +343,27 @@ class Quickred(Base):
     zeropt = Column(Float)
     dither_named = Column(Text)
 
-    exposure = relationship('Exposure')
+    exposure = relationship("Exposure")
 
 
 class Overhead(Base):
-    __tablename__ = 'overhead'
+    __tablename__ = "overhead"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.overhead_pk_seq'::regclass)"))
-    configuration_id = Column(ForeignKey(f'{Base._schema}.configuration.configuration_id', ondelete='CASCADE', onupdate='CASCADE', deferrable=True, initially='DEFERRED'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.overhead_pk_seq'::regclass)"),
+    )
+    configuration_id = Column(
+        ForeignKey(
+            f"{Base._schema}.configuration.configuration_id",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+            deferrable=True,
+            initially="DEFERRED",
+        ),
+        index=True,
+    )
     macro_id = Column(Integer)
     macro = Column(Text)
     stage = Column(Text)
@@ -235,18 +372,22 @@ class Overhead(Base):
     elapsed = Column(Float)
     success = Column(Boolean)
 
-    configuration = relationship('Configuration')
+    configuration = relationship("Configuration")
 
 
 class PredSnr(Base):
-    __tablename__ = 'pred_snr'
+    __tablename__ = "pred_snr"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_pk_seq'::regclass)"))
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.pred_snr_pk_seq'::regclass)"),
+    )
     robodamus_version = Column(Text, index=True)
     model_id = Column(Text, index=True)
     pred_time = Column(DateTime, index=True)
-    camera_pk = Column(ForeignKey(f'{Base._schema}.camera.pk'), index=True)
-    design_mode_label = Column(ForeignKey('targetdb.design_mode.label'), index=True)
+    camera_pk = Column(ForeignKey(f"{Base._schema}.camera.pk"), index=True)
+    design_mode_label = Column(ForeignKey("targetdb.design_mode.label"), index=True)
     pred_type = Column(Text, index=True)
     pred_value = Column(Float)
     pred_flag = Column(Integer)
@@ -254,26 +395,30 @@ class PredSnr(Base):
     gfa_expid = Column(Integer)
     gfa_date_obs = Column(DateTime, index=True)
 
-    camera = relationship('Camera')
-    design_mode = relationship('DesignMode')
+    camera = relationship("Camera")
+    design_mode = relationship("DesignMode")
 
 
 class PredSnrPar(Base):
-    __tablename__ = 'pred_snr_par'
+    __tablename__ = "pred_snr_par"
 
-    pk = Column(Integer, primary_key=True, server_default=text(f"nextval('{Base._schema}.pred_snr_par_pk_seq'::regclass)"))
-    pred_snr_pk = Column(ForeignKey(f'{Base._schema}.pred_snr.pk'), index=True)
+    pk = Column(
+        Integer,
+        primary_key=True,
+        server_default=text(f"nextval('{Base._schema}.pred_snr_par_pk_seq'::regclass)"),
+    )
+    pred_snr_pk = Column(ForeignKey(f"{Base._schema}.pred_snr.pk"), index=True)
     label = Column(Text, index=True)
     datatype = Column(Text)
-    value_f = Column(Double)
+    value_f = Column(Float)
     value_i = Column(BigInteger)
     value_s = Column(Text)
 
-    pred_snr = relationship('PredSnr')
+    pred_snr = relationship("PredSnr")
 
 
 def define_relations():
-    """ leaving this empty as relations were autogenerated """
+    """leaving this empty as relations were autogenerated"""
     pass
 
 

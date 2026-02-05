@@ -18,46 +18,47 @@ from sdssdb.utils.registry import list_databases, display_table
 
 
 class TestListDbs(object):
-
     def test_databases_noorm(self):
         data = list_databases()
         assert type(data) is dict
-        assert 'peewee' in data
-        assert 'sqlalchemy' in data
+        assert "peewee" in data
+        assert "sqlalchemy" in data
 
-    @pytest.mark.parametrize('orm', [('peewee'), ('sqlalchemy')])
+    @pytest.mark.parametrize("orm", [("peewee"), ("sqlalchemy")])
     def test_databases_orm(self, orm):
         data = list_databases(orm)
         assert type(data) is list
-        assert 'operationsdb' in data
-        if orm == 'peewee':
-            assert 'sdss5db' in data
+        assert "operationsdb" in data
+        if orm == "peewee":
+            assert "sdss5db" in data
         else:
-            assert 'mangadb' in data
-            assert 'archive' in data
+            assert "mangadb" in data
+            assert "archive" in data
 
     def test_database_schema(self):
-        data = list_databases('peewee', with_schema=True)
+        data = list_databases("peewee", with_schema=True)
         assert type(data) is dict
-        assert 'schema' in data['sdss5db']
-        assert 'targetdb' in data['sdss5db']['schema']
-        assert 'mangadb' in data['operationsdb']['schema']
+        assert "schema" in data["sdss5db"]
+        assert "targetdb" in data["sdss5db"]["schema"]
+        assert "mangadb" in data["operationsdb"]["schema"]
 
     def test_nosubdirs(self):
-        data = list_databases('sqla', with_schema=True)
-        assert 'operationsdb' in data
-        assert 'operationsdb.tools' not in data
-        assert 'tools' not in data
-        assert 'tools' not in data['operationsdb']['schema']
+        data = list_databases("sqla", with_schema=True)
+        assert "operationsdb" in data
+        assert "operationsdb.tools" not in data
+        assert "tools" not in data
+        assert "tools" not in data["operationsdb"]["schema"]
 
 
 class TestDisplay(object):
-
-    @pytest.mark.parametrize('mask', [(True), (False)], ids=['mask', 'nomask'])
+    @pytest.mark.parametrize("mask", [(True), (False)], ids=["mask", "nomask"])
     def test_table(self, mask):
         t = display_table(mask_dups=mask)
-        assert t.colnames == ['orm', 'db', 'schema']
+        assert t.colnames == ["orm", "db", "schema"]
 
-        assert set(t['orm']) == {'peewee', 'sqlalchemy'} \
-            or set(t['orm']) == {'', 'peewee', 'sqlalchemy'}
-        assert all(t['orm']) is not mask
+        assert set(t["orm"]) == {"peewee", "sqlalchemy"} or set(t["orm"]) == {
+            "",
+            "peewee",
+            "sqlalchemy",
+        }
+        assert all(t["orm"]) is not mask
