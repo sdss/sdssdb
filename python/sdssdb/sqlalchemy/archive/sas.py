@@ -12,15 +12,14 @@ from __future__ import absolute_import, division, print_function
 
 import pathlib
 from sdssdb.sqlalchemy.archive import database, ArchiveBase
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship, Session
+from sqlalchemy.orm import declared_attr, relationship, Session
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import func
 
 SCHEMA = "sas"
 
 
-class Base(AbstractConcreteBase, ArchiveBase):
+class Base(ArchiveBase):
     __abstract__ = True
     _schema = SCHEMA
     _relations = "define_relations"

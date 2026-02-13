@@ -13,8 +13,7 @@ from textwrap import TextWrapper
 
 import sqlalchemy
 from sqlalchemy import func
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declared_attr, relationship
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.orm.session import Session
 
@@ -32,7 +31,7 @@ warnings.filterwarnings("ignore", ".*Skipped unsupported reflection.*")
 warnings.filterwarnings("ignore", ".*Did not recognize type*")
 
 
-class Base(AbstractConcreteBase, OperationsBase):
+class Base(OperationsBase):
     __abstract__ = True
     _schema = "platedb"
     _relations = "define_relations"

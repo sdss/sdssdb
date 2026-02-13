@@ -20,13 +20,12 @@ from sqlalchemy import (
     Text,
     text,
 )
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declared_attr, relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
 
-class Base(AbstractConcreteBase, SDSS5dbBase):
+class Base(SDSS5dbBase):
     __abstract__ = True
     _schema = "opsdb_apo" if os.getenv("OBSERVATORY") == "APO" else "opsdb_lco"
     _relations = "define_relations"

@@ -8,20 +8,15 @@
 # @Last modified by: José Sánchez-Gallego (gallegoj@uw.edu)
 # @Last Modified time: 2018-10-10 11:25:13
 
-from __future__ import print_function, division, absolute_import
+from sqlalchemy.ext.declarative import DeferredReflection
+from sqlalchemy.orm import DeclarativeBase
 
 from sdssdb.connection import SQLADatabaseConnection
-from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
 from sdssdb.sqlalchemy import BaseModel
 
 # we need a shared common Base when joining across multiple schema
-ArchiveBase = declarative_base(
-    cls=(
-        DeferredReflection,
-        BaseModel,
-    )
-)
-
+class ArchiveBase(DeferredReflection, BaseModel, DeclarativeBase):
+    pass
 
 class ArchiveDatabaseConnection(SQLADatabaseConnection):
     dbname = "archive"
