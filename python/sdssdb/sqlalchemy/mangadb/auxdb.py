@@ -12,13 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 from sdssdb.sqlalchemy.mangadb import MangaBase, database
 from sdssdb.sqlalchemy.mangadb.datadb import Cube
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declared_attr, relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.types import JSON
 
 
-class Base(AbstractConcreteBase, MangaBase):
+class Base(MangaBase):
     __abstract__ = True
     _schema = "mangaauxdb"
 

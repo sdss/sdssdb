@@ -10,15 +10,14 @@ import math
 from decimal import Decimal
 
 from astropy.time import Time
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import backref, relationship
+from sqlalchemy.orm import backref, declared_attr, relationship
 
 from sdssdb.sqlalchemy.operationsdb import OperationsBase, database, platedb
 
 from .tools import dateObs2HA as ha
 
 
-class MangaDBBase(AbstractConcreteBase, OperationsBase):
+class MangaDBBase(OperationsBase):
     __abstract__ = True
     _schema = "mangadb"
     _relations = "define_relations"

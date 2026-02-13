@@ -17,10 +17,9 @@ import shutil
 import numpy as np
 from sdssdb.sqlalchemy.mangadb import MangaBase, database
 from sqlalchemy import Float, ForeignKey, ForeignKeyConstraint, case, cast, func
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.inspection import inspect as sa_inspect
-from sqlalchemy.orm import backref, relationship
+from sqlalchemy.orm import backref, declared_attr, relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer
 
@@ -34,7 +33,7 @@ except ImportError:
 SCHEMA = "mangasampledb"
 
 
-class Base(AbstractConcreteBase, MangaBase):
+class Base(MangaBase):
     __abstract__ = True
     _schema = SCHEMA
     _relations = "define_relations"

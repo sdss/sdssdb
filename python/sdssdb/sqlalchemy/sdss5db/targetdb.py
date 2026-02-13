@@ -21,8 +21,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declared_attr, relationship
 
 from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 
@@ -30,7 +29,7 @@ from sdssdb.sqlalchemy.sdss5db import SDSS5dbBase, database
 SCHEMA = "targetdb"
 
 
-class Base(AbstractConcreteBase, SDSS5dbBase):
+class Base(SDSS5dbBase):
     __abstract__ = True
     _schema = SCHEMA
     _relations = "define_relations"

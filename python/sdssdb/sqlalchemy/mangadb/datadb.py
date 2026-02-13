@@ -21,9 +21,8 @@ from sdssdb.sqlalchemy.mangadb import MangaBase, database, sampledb
 from sqlalchemy import and_, func, select
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.engine import reflection
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
-from sqlalchemy.orm import deferred, relationship
+from sqlalchemy.orm import declared_attr, deferred, relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.sql import column
 from sqlalchemy.types import Float, Integer, String
@@ -32,7 +31,7 @@ from sqlalchemy.types import Float, Integer, String
 SCHEMA = "mangadatadb"
 
 
-class Base(AbstractConcreteBase, MangaBase):
+class Base(MangaBase):
     __abstract__ = True
     _schema = SCHEMA
     _relations = "define_relations"

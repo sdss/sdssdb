@@ -15,16 +15,15 @@ from astropy.io import fits
 from sdssdb.sqlalchemy.mangadb import MangaBase, datadb, database
 from sqlalchemy import Column, Float, and_, case, cast, select
 from sqlalchemy.engine import reflection
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declared_attr, relationship
 from sqlalchemy.types import Integer
 
 
 SCHEMA = "mangadapdb"
 
 
-class Base(AbstractConcreteBase, MangaBase):
+class Base(MangaBase):
     __abstract__ = True
     _schema = SCHEMA
     _relations = "define_relations"

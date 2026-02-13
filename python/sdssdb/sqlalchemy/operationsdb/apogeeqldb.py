@@ -7,15 +7,14 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 from sqlalchemy import Column, ForeignKey, Integer
-from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declared_attr, relationship
 
 from sdssdb.sqlalchemy.operationsdb import OperationsBase, database
 
 from . import platedb
 
 
-class Base(AbstractConcreteBase, OperationsBase):
+class Base(OperationsBase):
     __abstract__ = True
     _schema = "apogeeqldb"
     _relations = "define_relations"
