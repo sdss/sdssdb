@@ -29,12 +29,14 @@ uv sync --python 3.12 --locked
 ```
 
 This only installs the dependencies needed to run the code. For development, you can install extra dependencies needed for building docs or running tests with the `--all-groups` keyword.
-```
+
+```console
 uv sync --all-groups --python=3.12 --locked
 ```
 
 If you don't have `uv` installed, you can install directly with pip:
-```
+
+```console
 git clone https://github.com/sdss/sdssdb
 cd sdssdb
 pip install -e .
@@ -43,18 +45,24 @@ pip install -e .
 ### Building Sphinx Docs locally
 
 Within the `sdssdb` directory, run
-```
+
+```console
 sdss docs.build
 ```
+
 To have the docs autobuild and watch for changes, use `nox`.  To build and run the local docs server, run
-```
+
+```console
 nox
 ```
+
 This will start a local docs server on a random port. You should see something like,
-```
+
+```console
 [sphinx-autobuild] Serving on http://127.0.0.1:54429
 [sphinx-autobuild] Waiting to detect changes...
 ```
+
 It should open the site automatically in a new browser window.  If `127.0.0.1:[port]` fails to load, try `localhost:[port]`.
 
 
