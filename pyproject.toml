@@ -11,8 +11,8 @@ license = {text = "BSD 3-Clause License", file = "LICENSE.md"}
 requires-python = ">=3.9,<4.0"
 dependencies = [
     "pgpasslib>=1.1.0",
-    "psycopg2-binary>=2.9.11",
-    "peewee>=3.17.6",
+    "psycopg[binary]>=3.2.13",
+    "peewee>=4.0.0",
     "sqlalchemy>=2.0.0",
     "sdsstools>=1.9.7",
     "numpy>=1.18.2",
@@ -36,7 +36,6 @@ extras = [
     "pandas>=2.0.0",
     "inflect>=4.1.0",
     "h5py>=3.8.0",
-    "psycopg[binary]>=3.2.13",
 ]
 
 [dependency-groups]

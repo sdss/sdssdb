@@ -13,7 +13,6 @@ import importlib
 import os
 import re
 import socket
-import warnings
 
 import pgpasslib
 import six
@@ -25,7 +24,7 @@ from sqlalchemy.ext.declarative import DeferredReflection
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import peewee
-from peewee import OperationalError
+from peewee import OperationalError, PostgresqlDatabase
 from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import Introspector, UnknownField
 
@@ -35,18 +34,6 @@ from sdssdb.utils.internals import get_database_columns
 
 
 __all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnection"]
-
-
-if use_psycopg3 is True:
-    try:
-        import psycopg  # noqa
-        from playhouse.psycopg3_ext import Psycopg3Database as PostgresqlDatabase
-    except ImportError:
-        warnings.warn("psycopg3 is not installed. Using psycopg2.")
-        from peewee import PostgresqlDatabase
-
-else:
-    from peewee import PostgresqlDatabase
 
 
 def _should_autoconnect():
@@ -272,7 +259,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             )
 
         return self.connect_from_parameters(
-            dbname=dbname, silent_on_fail=silent_on_fail, **db_configuration
+            dbname=dbname,
+            silent_on_fail=silent_on_fail,
+            **db_configuration,
         )
 
     def connect_from_parameters(self, dbname=None, **params):
@@ -436,7 +425,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         self._metadata = {}
 
-        PostgresqlDatabase.__init__(self, None)
+        PostgresqlDatabase.__init__(self, None, prefer_psycopg3=use_psycopg3)
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
@@ -457,18 +446,15 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
     def _conn(self, dbname, silent_on_fail=False, **params):
         """Connects to the DB and tests the connection."""
 
-        if "password" not in params:
-            pgpass_params = {
-                key: value for key, value in params.copy().items() if value is not None
-            }
+            PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=use_psycopg3)
 
             try:
                 params["password"] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
             except pgpasslib.FileNotFound:
                 params["password"] = None
 
-        PostgresqlDatabase.init(self, dbname, **params)
-        self._metadata = {}
+            PostgresqlDatabase.init(self, dbname, prefer_psycopg3=use_psycopg3, **params)
+            self._metadata = {}
 
         try:
             PostgresqlDatabase.connect(self)
