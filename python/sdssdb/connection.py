@@ -216,7 +216,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         Parameters
         ----------
         dbname : `str` or `None`
-            The database name. If `None`, defaults to `.dbname`.
+            The database name. If `None`, defaults to `.dbname`. ``dbname`` can also be
+            a full database URI, in which case the other connection parameters are ignored.
         user : str
             Overrides the profile database user.
         host : str
@@ -321,13 +322,21 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         """Returns the URI to the database connection."""
 
         params = self.connection_params
-        if not self.connected or params is None:
+        if not self.connected or params is None or self.dbname is None:
             raise RuntimeError("The database is not connected.")
 
-        return get_database_uri(self.dbname, **params)
+        valid_params = {
+            "user": params.get("user", None),
+            "host": params.get("host", None),
+            "port": params.get("port", None),
+            "password": params.get("password", None),
+        }
 
+        return get_database_uri(self.dbname, **valid_params)
+
+    @property
     @abc.abstractmethod
-    def connection_params(self):
+    def connection_params(self) -> dict | None:
         """Returns a dictionary with the connection parameters.
 
         Returns
@@ -344,10 +353,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     def become(self, user):
         """Change the connection to a certain user."""
 
-        if not self.connected:
+        dsn_params = self.connection_params
+
+        if not self.connected or dsn_params is None:
             raise RuntimeError("DB has not been initialised.")
 
-        dsn_params = self.connection_params
         dsn_params.pop("password", None)  # Do not keep the password since it may change.
 
         if dsn_params is None:
@@ -439,26 +449,50 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         """Returns a dictionary with the connection parameters."""
 
         if self.connected:
-            return self.connect_params.copy()
+            return self.connection().info.get_parameters()
 
         return None
+
+    @property
+    def psycopg_version(self):
+        """Returns the version of psycopg in use."""
+
+        if not self.connected:
+            raise RuntimeError("The database is not connected.")
+
+        if isinstance(self._adapter, self.psycopg2_adapter):
+            return "psycopg2"
+        elif isinstance(self._adapter, self.psycopg3_adapter):
+            return "psycopg3"
+        else:
+            return "unknown"
 
     def _conn(self, dbname, silent_on_fail=False, **params):
         """Connects to the DB and tests the connection."""
 
+        if dbname.startswith("postgresql://"):
             PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=use_psycopg3)
+        else:
+            if "password" not in params:
+                pgpass_params = {
+                    key: value for key, value in params.copy().items() if value is not None
+                }
 
-            try:
-                params["password"] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
-            except pgpasslib.FileNotFound:
-                params["password"] = None
+                try:
+                    params["password"] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
+                except pgpasslib.FileNotFound:
+                    params["password"] = None
 
             PostgresqlDatabase.init(self, dbname, prefer_psycopg3=use_psycopg3, **params)
             self._metadata = {}
 
         try:
             PostgresqlDatabase.connect(self)
+
+            conn_params = self.connection_params
+            dbname = conn_params.get("dbname", dbname)
             self.dbname = dbname
+
         except OperationalError as ee:
             if not silent_on_fail:
                 log.warning(f"failed connecting to database {self.database!r}: {ee}")
@@ -626,6 +660,9 @@ class SQLADatabaseConnection(DatabaseConnection):
             A database connection string
 
         """
+
+        if dbname.startswith("postgresql://") or dbname.startswith("postgresql+psycopg"):
+            return dbname
 
         db_params = params.copy()
         db_params["drivername"] = "postgresql+psycopg2"
