@@ -8,6 +8,7 @@ This document records the main changes to the `sdssdb` code.
 
 * [#310](https://github.com/sdss/sdssdb/pr/310) Support Peewee 4.0.
 * [#310](https://github.com/sdss/sdssdb/pr/310) Support passing a full database URI to `DatabaseConnection.connect()`.
+* [#311](https://github.com/sdss/sdssdb/pr/311) Update the `vizdb.sdss_id_to_astra_pipeline` update script.
 
 
 ## 1.0.0 (2026-02-05)
