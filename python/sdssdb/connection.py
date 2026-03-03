@@ -449,7 +449,12 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         """Returns a dictionary with the connection parameters."""
 
         if self.connected:
-            return self.connection().info.get_parameters()
+            if self.psycopg_version == "psycopg2":
+                return self._adapter.connection.info.get_dsn_parameters()
+            elif self.psycopg_version == "psycopg3":
+                return self.connection().info.get_parameters()
+            else:
+                raise RuntimeError("unknown psycopg version in use.")
 
         return None
 
