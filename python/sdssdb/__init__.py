@@ -37,7 +37,6 @@ log = get_logger(NAME)
 config = get_config(NAME)
 
 autoconnect = True
-use_psycopg3 = os.environ.get("SDSSDB_PSYCOPG3", "true").lower() in ["true", "1"]
 
 
 from .connection import PeeweeDatabaseConnection  # noqa

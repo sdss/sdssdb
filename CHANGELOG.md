@@ -7,8 +7,12 @@ This document records the main changes to the `sdssdb` code.
 ### ✨ Improved
 
 * [#310](https://github.com/sdss/sdssdb/pr/310) Support Peewee 4.0.
-* [#310](https://github.com/sdss/sdssdb/pr/310) Support passing a full database URI to `DatabaseConnection.connect()`.
+* [#310](https://github.com/sdss/sdssdb/pr/310) Support passing a full database URI to `PeeweeDatabaseConnection` and `SQLADatabaseConnection`.
 * [#311](https://github.com/sdss/sdssdb/pr/311) Update the `vizdb.sdss_id_to_astra_pipeline` update script.
+
+### 🏷️ Changed
+
+* The `sdssdb.use_psycopg3` parameter has been removed. `sdssdb` defaults to using `psycopg3` if available, but `psycopg2` can be used by passing `use_psycopg3=False` when creating a `DatabaseConnection` instance or by setting the environment variable `$SDSSDB_PSYCOPG3=0`.
 
 
 ## 1.0.0 (2026-02-05)

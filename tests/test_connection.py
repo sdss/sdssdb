@@ -13,8 +13,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-import sdssdb
-import sdssdb.connection
 from sdssdb.connection import PeeweeDatabaseConnection
 
 
@@ -53,18 +51,14 @@ class TestGenericDatabaseConnection(object):
 
 
 def test_db_uri_peewee_psycopg2():
-    sdssdb.use_psycopg3 = False
-
-    database = PeeweeDatabaseConnection("postgresql://localhost/test")
+    database = PeeweeDatabaseConnection("postgresql://localhost/test", use_psycopg3=False)
     assert database.dbname == "test"
     assert database.connected is True
     assert database.psycopg_version == "psycopg2"
 
 
 def test_db_uri_peewee_psycopg3():
-    sdssdb.use_psycopg3 = True
-
-    database = PeeweeDatabaseConnection("postgresql://localhost/test")
+    database = PeeweeDatabaseConnection("postgresql://localhost/test", use_psycopg3=True)
     assert database.dbname == "test"
     assert database.connected is True
     assert database.psycopg_version == "psycopg3"

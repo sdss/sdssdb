@@ -102,6 +102,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     dbversion : str
         A database version.  If specified, appends to dbname as
         "dbname_dbversion" and becomes the dbname used for connection strings.
+    use_psycopg3 : bool
+        Whether to use psycopg3 instead of psycopg2. If `None`, defaults to the value of the
+        environment variable ``$SDSSDB_PSYCOPG3`` (which defaults to `True` if not set).
 
     """
 
@@ -114,7 +117,14 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     #: # Whether to call Model.reflect() in Peewee after a connection.
     auto_reflect = True
 
-    def __init__(self, dbname=None, profile=None, autoconnect=None, dbversion=None):
+    def __init__(
+        self,
+        dbname=None,
+        profile=None,
+        autoconnect=None,
+        dbversion=None,
+        use_psycopg3=None,
+    ):
         self.profile = None
         self._config = {}
 
@@ -124,6 +134,10 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             self.dbname = f"{self.dbname}_{self.dbversion}"
 
         self.set_profile(profile=profile, connect=False)
+
+        if use_psycopg3 is None:
+            use_psycopg3 = os.environ.get("SDSSDB_PSYCOPG3", "true").lower() in ["true", "1"]
+        self.use_psycopg3 = use_psycopg3
 
         if autoconnect is None:
             autoconnect = _should_autoconnect()
@@ -429,16 +443,13 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
     """
 
-    def __init__(self, *args, use_psycopg3=None, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.models = {}
         self.introspector = {}
 
         self._metadata = {}
 
-        if use_psycopg3 is not None:
-            sdssdb.use_psycopg3 = use_psycopg3
-
-        PostgresqlDatabase.__init__(self, None, prefer_psycopg3=sdssdb.use_psycopg3)
+        PostgresqlDatabase.__init__(self, None)
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
@@ -479,7 +490,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         """Connects to the DB and tests the connection."""
 
         if dbname.startswith("postgresql://"):
-            PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=sdssdb.use_psycopg3)
+            PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=self.use_psycopg3)
         else:
             if "password" not in params:
                 pgpass_params = {
@@ -494,7 +505,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
             PostgresqlDatabase.init(
                 self,
                 dbname,
-                prefer_psycopg3=sdssdb.use_psycopg3,
+                prefer_psycopg3=self.use_psycopg3,
                 **params,
             )
             self._metadata = {}
@@ -660,12 +671,12 @@ class SQLADatabaseConnection(DatabaseConnection):
                 raise RuntimeError("ERROR: invalid server configuration")
         return password
 
-    def _make_connection_string(self, dbname, **params):
+    def _make_connection_string(self, dbname_or_uri, **params):
         """Build a db connection string
 
         Parameters:
-            dbname (str):
-                The name of the database to connect to
+            dbname_or_uri (str):
+                The name of the database or the URI to connect to
             params (dict):
                 A dictionary of database connection parameters
 
@@ -674,12 +685,21 @@ class SQLADatabaseConnection(DatabaseConnection):
 
         """
 
-        if dbname.startswith("postgresql://") or dbname.startswith("postgresql+psycopg"):
-            return dbname
+        # Handle the case dbname_or_uri is a URI.
+        if dbname_or_uri.startswith("postgresql://"):
+            dbname_or_uri = dbname_or_uri.replace("postgresql://", "postgresql+psycopg://")
+            if not self.use_psycopg3:
+                dbname_or_uri = dbname_or_uri.replace("psycopg", "psycopg2")
 
+        if dbname_or_uri.startswith("postgresql"):
+            return dbname_or_uri
+
+        # Now the case in which dbname_or_uri is a database name and parameters.
         db_params = params.copy()
-        db_params["drivername"] = "postgresql+psycopg"
-        db_params["database"] = dbname
+        db_params["drivername"] = (
+            "postgresql+psycopg" if self.use_psycopg3 else "postgresql+psycopg2"
+        )
+        db_params["database"] = dbname_or_uri
         db_params["username"] = db_params.pop("user", None)
         db_params["host"] = db_params.pop("host", "localhost")
         db_params["port"] = db_params.pop("port", 5432)
