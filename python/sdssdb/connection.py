@@ -665,7 +665,7 @@ class SQLADatabaseConnection(DatabaseConnection):
             return dbname
 
         db_params = params.copy()
-        db_params["drivername"] = "postgresql+psycopg2"
+        db_params["drivername"] = "postgresql+psycopg"
         db_params["database"] = dbname
         db_params["username"] = db_params.pop("user", None)
         db_params["host"] = db_params.pop("host", "localhost")
