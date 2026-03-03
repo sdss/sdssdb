@@ -53,7 +53,7 @@ class TestGenericDatabaseConnection(object):
 
 
 def test_db_uri_peewee_psycopg2():
-    sdssdb.connection.use_psycopg3 = False
+    sdssdb.use_psycopg3 = False
 
     database = PeeweeDatabaseConnection("postgresql://localhost/test")
     assert database.dbname == "test"
@@ -62,7 +62,7 @@ def test_db_uri_peewee_psycopg2():
 
 
 def test_db_uri_peewee_psycopg3():
-    sdssdb.connection.use_psycopg3 = True
+    sdssdb.use_psycopg3 = True
 
     database = PeeweeDatabaseConnection("postgresql://localhost/test")
     assert database.dbname == "test"
