@@ -2,6 +2,13 @@
 
 This document records the main changes to the `sdssdb` code.
 
+## Next release
+
+### ✨ Improved
+
+* [#310](https://github.com/sdss/sdssdb/pr/310) Support Peewee 4.0.
+* [#310](https://github.com/sdss/sdssdb/pr/310) Support passing a full database URI to `DatabaseConnection.connect()`.
+
 
 ## 1.0.0 (2026-02-05)
 
@@ -16,7 +23,7 @@ This document records the main changes to the `sdssdb` code.
 
 ## 0.13.5 (2025-10-23)
 
-* [#291](https://github.com/sdss/sdssdb/pull/291): smal ipl-4 tweaks
+* [#291](https://github.com/sdss/sdssdb/pull/291): small ipl-4 tweaks
 * [#290](https://github.com/sdss/sdssdb/pull/290): fix to spectrum_pk change in astra schema 0.5 v 0.8
 
 
