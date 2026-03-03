@@ -450,7 +450,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         if self.connected:
             if self.psycopg_version == "psycopg2":
-                return self.connection().info.get_dsn_parameters
+                return self.connection().info.dsn_parameters
             elif self.psycopg_version == "psycopg3":
                 return self.connection().info.get_parameters()
             else:
