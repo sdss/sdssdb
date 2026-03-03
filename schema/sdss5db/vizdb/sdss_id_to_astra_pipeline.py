@@ -249,6 +249,11 @@ def update_sdss_id_to_astra_pipeline_table(
         t3 = time()
 
         temp_table_2 = peewee.Table(f"tmp_astra_{pipeline}_2").bind(database)
+        coalesce_expr = peewee.fn.COALESCE(
+            *[getattr(temp_table_2.c, col) for col in drp_tmp_table_cols],
+            None,
+        )
+
         query = temp_table_2.select(
             temp_table_2.c.sdss_id,
             temp_table_2.c.pipeline_name,
@@ -266,11 +271,8 @@ def update_sdss_id_to_astra_pipeline_table(
                 ),
                 None,
             ).alias("drp_table"),
-            peewee.fn.COALESCE(
-                *[getattr(temp_table_2.c, col) for col in drp_tmp_table_cols],
-                None,
-            ).alias("drp_version"),
-        )
+            coalesce_expr.alias("drp_version"),
+        ).where(coalesce_expr.is_null(False))
 
         with conn.cursor() as cur:
             cur.execute(
