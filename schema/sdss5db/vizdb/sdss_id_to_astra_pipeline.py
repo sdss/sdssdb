@@ -139,18 +139,18 @@ def update_sdss_id_to_astra_pipeline_table(
                 continue
 
         # Check if the pipeline has already been processed. If so, skip it.
-        # with conn.cursor() as cur:
-        #     cur.execute(
-        #         """SELECT 1 FROM vizdb.sdss_id_to_astra_pipeline
-        #            WHERE pipeline_name = %s AND v_astra = %s LIMIT 1;""",
-        #         (pipeline, astra_version),
-        #     )
-        #     if cur.rowcount > 0:
-        #         console.print(
-        #             f"   [yellow]... Pipeline {pipeline!r} for Astra version {astra_version!r} "
-        #             "already processed. Skipping.[/]"
-        #         )
-        #         continue
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT 1 FROM vizdb.sdss_id_to_astra_pipeline
+                   WHERE pipeline_name = %s AND v_astra = %s LIMIT 1;""",
+                (pipeline, astra_version),
+            )
+            if cur.rowcount > 0:
+                console.print(
+                    f"   [yellow]... Pipeline {pipeline!r} for Astra version {astra_version!r} "
+                    "already processed. Skipping.[/]"
+                )
+                continue
 
         # For some versions astra uses "source_pk" and "spectrum_pk" in the pipeline tables,
         # for others "source_pk_id" and "spectrum_pk_id". We need to figure out which one to use.
