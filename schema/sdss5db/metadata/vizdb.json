@@ -1178,6 +1178,24 @@
       "sql_type": "integer",
       "description": "Primary key of the associated spectrum in the Astra spectrum table",
       "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "drp_table",
+      "display_name": "DRP table",
+      "sql_type": "TEXT",
+      "description": "The name of the associated DRP spectrum table in the Astra schema",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "drp_version",
+      "display_name": "DRP version",
+      "sql_type": "TEXT",
+      "description": "The version of the DRP pipeline that produced the associated DRP spectrum",
+      "unit": ""
     }
   ]
 }
