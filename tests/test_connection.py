@@ -11,7 +11,9 @@
 # Modified By: Brian Cherinka
 
 
-from __future__ import print_function, division, absolute_import
+from __future__ import absolute_import, division, print_function
+
+from sdssdb.connection import PeeweeDatabaseConnection
 
 
 def assert_testdb(database):
@@ -46,3 +48,21 @@ class TestGenericDatabaseConnection(object):
         # change back
         database.change_version()
         assert_testdb(database)
+
+
+def test_db_uri_peewee_psycopg2(monkeypatch):
+    monkeypatch.setenv("SDSSDB_PSYCOPG3", "0")
+
+    database = PeeweeDatabaseConnection("postgresql://localhost/test")
+    assert database.dbname == "test"
+    assert database.connected is True
+    assert database.psycopg_version == "psycopg2"
+
+
+def test_db_uri_peewee_psycopg3(monkeypatch):
+    monkeypatch.setenv("SDSSDB_PSYCOPG3", "1")
+
+    database = PeeweeDatabaseConnection("postgresql://localhost/test")
+    assert database.dbname == "test"
+    assert database.connected is True
+    assert database.psycopg_version == "psycopg3"
