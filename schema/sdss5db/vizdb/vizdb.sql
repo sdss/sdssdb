@@ -329,7 +329,9 @@ CREATE TABLE vizdb.sdss_id_to_astra_pipeline (
     pipeline_name TEXT NOT NULL,
     v_astra TEXT NOT NULL,
     source_pk INTEGER NOT NULL,
-    spectrum_pk INTEGER NOT NULL
+    spectrum_pk INTEGER NOT NULL,
+    drp_table TEXT,
+    drp_version TEXT
 );
 
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(sdss_id);
