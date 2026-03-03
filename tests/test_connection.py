@@ -52,8 +52,8 @@ class TestGenericDatabaseConnection(object):
         assert_testdb(database)
 
 
-def test_db_uri_peewee_psycopg2(monkeypatch):
-    monkeypatch.setattr(sdssdb.connection, "use_psycopg3", False)
+def test_db_uri_peewee_psycopg2():
+    sdssdb.connection.use_psycopg3 = False
 
     database = PeeweeDatabaseConnection("postgresql://localhost/test")
     assert database.dbname == "test"
@@ -61,8 +61,8 @@ def test_db_uri_peewee_psycopg2(monkeypatch):
     assert database.psycopg_version == "psycopg2"
 
 
-def test_db_uri_peewee_psycopg3(monkeypatch):
-    monkeypatch.setattr(sdssdb.connection, "use_psycopg3", True)
+def test_db_uri_peewee_psycopg3():
+    sdssdb.connection.use_psycopg3 = True
 
     database = PeeweeDatabaseConnection("postgresql://localhost/test")
     assert database.dbname == "test"
