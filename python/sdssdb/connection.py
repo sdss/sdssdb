@@ -29,7 +29,7 @@ from playhouse.postgres_ext import ArrayField
 from playhouse.reflection import Introspector, UnknownField
 
 import sdssdb
-from sdssdb import config, log, use_psycopg3
+from sdssdb import config, log
 from sdssdb.utils.internals import get_database_columns
 
 
@@ -429,13 +429,20 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, use_psycopg3=None, **kwargs):
         self.models = {}
         self.introspector = {}
 
         self._metadata = {}
 
+<<<<<<< HEAD
         PostgresqlDatabase.__init__(self, None, prefer_psycopg3=use_psycopg3)
+=======
+        if use_psycopg3 is not None:
+            sdssdb.use_psycopg3 = use_psycopg3
+
+        PostgresqlDatabase.__init__(self, None, prefer_psycopg3=sdssdb.use_psycopg3)
+>>>>>>> main
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
@@ -449,7 +456,16 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         """Returns a dictionary with the connection parameters."""
 
         if self.connected:
+<<<<<<< HEAD
             return self.connection().info.get_parameters()
+=======
+            if self.psycopg_version == "psycopg2":
+                return self.connection().info.dsn_parameters
+            elif self.psycopg_version == "psycopg3":
+                return self.connection().info.get_parameters()
+            else:
+                raise RuntimeError("unknown psycopg version in use.")
+>>>>>>> main
 
         return None
 
@@ -471,7 +487,11 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         """Connects to the DB and tests the connection."""
 
         if dbname.startswith("postgresql://"):
+<<<<<<< HEAD
             PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=use_psycopg3)
+=======
+            PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=sdssdb.use_psycopg3)
+>>>>>>> main
         else:
             if "password" not in params:
                 pgpass_params = {
@@ -483,7 +503,16 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
                 except pgpasslib.FileNotFound:
                     params["password"] = None
 
+<<<<<<< HEAD
             PostgresqlDatabase.init(self, dbname, prefer_psycopg3=use_psycopg3, **params)
+=======
+            PostgresqlDatabase.init(
+                self,
+                dbname,
+                prefer_psycopg3=sdssdb.use_psycopg3,
+                **params,
+            )
+>>>>>>> main
             self._metadata = {}
 
         try:
@@ -665,7 +694,7 @@ class SQLADatabaseConnection(DatabaseConnection):
             return dbname
 
         db_params = params.copy()
-        db_params["drivername"] = "postgresql+psycopg2"
+        db_params["drivername"] = "postgresql+psycopg"
         db_params["database"] = dbname
         db_params["username"] = db_params.pop("user", None)
         db_params["host"] = db_params.pop("host", "localhost")
