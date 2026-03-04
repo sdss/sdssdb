@@ -587,7 +587,8 @@ class SDSSidToAstraPipeline(VizBase):
     v_astra = TextField(null=False)
     source_pk = IntegerField(null=False)
     spectrum_pk = IntegerField(null=False)
-
+    drp_table = TextField(null=False)
+    drp_version = TextField(null=False)
     class Meta:
         table_name = "sdss_id_to_astra_pipeline"
-        print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk"]
+        print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk", "drp_table", "drp_version"]
