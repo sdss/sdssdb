@@ -218,7 +218,6 @@ def update_sdss_id_to_astra_pipeline_table(
         temp_table_1 = peewee.Table(f"tmp_astra_{pipeline}_1").bind(database)
 
         query = temp_table_1.select(temp_table_1.__star__)
-        drp_tmp_table_cols = []
 
         for drp_table_name in found_drp_tables:
             drp_table = peewee.Table(drp_table_name, schema=astra_schema).bind(database)
@@ -226,18 +225,14 @@ def update_sdss_id_to_astra_pipeline_table(
 
             if drp_table_name.startswith("apogee"):
                 drp_version_col = getattr(drp_table.c, "apred")
-                drp_alias = f"{drp_table_name}_apred"
             else:
                 drp_version_col = getattr(drp_table.c, "run2d")
-                drp_alias = f"{drp_table_name}_run2d"
-
-            drp_tmp_table_cols.append(drp_alias)
 
             query = query.join(
                 drp_table,
                 peewee.JOIN.LEFT_OUTER,
                 on=(temp_table_1.c.spectrum_pk == drp_table_spectrum_pk_col),
-            ).select_extend(drp_version_col.alias(drp_alias))
+            ).select_extend(drp_version_col.alias(drp_table_name))
 
         with conn.cursor() as cur:
             cur.execute(f"CREATE TEMP TABLE tmp_astra_{pipeline}_2 AS {query!s};")
@@ -250,7 +245,7 @@ def update_sdss_id_to_astra_pipeline_table(
 
         temp_table_2 = peewee.Table(f"tmp_astra_{pipeline}_2").bind(database)
         coalesce_expr = peewee.fn.COALESCE(
-            *[getattr(temp_table_2.c, col) for col in drp_tmp_table_cols],
+            *[getattr(temp_table_2.c, col) for col in found_drp_tables],
             None,
         )
 
@@ -267,7 +262,7 @@ def update_sdss_id_to_astra_pipeline_table(
                         getattr(temp_table_2.c, col).is_null(False),
                         peewee.Value(col),
                     )
-                    for col in drp_tmp_table_cols
+                    for col in found_drp_tables
                 ),
                 None,
             ).alias("drp_table"),
