@@ -87,6 +87,14 @@ def update_sdss_id_to_astra_pipeline_table(
     if astra_version == "0.6.0":
         astra_schema = "astra_050"  # Special case: astra 0.6.0 is included in the astra_050 schema
 
+    # The v_astra column in the astra tables is a string for 0.5.0 and 0.6.0 but an integer
+    # for at least 0.8.0 and 0.8.1.
+    v_astra = astra_version
+    if astra_version == "0.8.0":
+        v_astra = 8000
+    elif astra_version == "0.8.1":
+        v_astra = 8001
+
     if verbose:
         console.print(f"[gray]Using Astra schema '{astra_schema}'.[/]")
 
@@ -116,6 +124,38 @@ def update_sdss_id_to_astra_pipeline_table(
             f"[gray]Found {len(found_drp_tables)} DRP tables in schema "
             f"'{astra_schema}': {', '.join(found_drp_tables)}.[/]"
         )
+
+    # We need to create a mapping of tables in the schema and whether they use spectrum_pk or
+    # spectrum_pk_id, and source_pk or source_pk_id. There is no consistency across versions
+    # or between the tables in a schema.
+    table_to_spectrum_pk_col: dict[str, str] = {}
+    table_to_source_pk_col: dict[str, str] = {}
+    for table in found_drp_tables + list(pipeline_names):
+        query = """SELECT column_name
+                    FROM information_schema.columns
+                    WHERE table_name = %s AND table_schema = %s;
+        """
+
+        with conn.cursor() as cur:
+            cur.execute(query, (table, astra_schema))
+            columns = [row[0] for row in cur.fetchall()]
+
+        if "spectrum_pk" in columns:
+            table_to_spectrum_pk_col[table] = "spectrum_pk"
+        elif "spectrum_pk_id" in columns:
+            table_to_spectrum_pk_col[table] = "spectrum_pk_id"
+        else:
+            raise ValueError(f"Could not find spectrum_pk column in '{table}'.")
+
+        if "source_pk" in columns:
+            table_to_source_pk_col[table] = "source_pk"
+        elif "source_pk_id" in columns:
+            table_to_source_pk_col[table] = "source_pk_id"
+        else:
+            raise ValueError(f"Could not find source_pk column in '{table}'.")
+
+    if verbose:
+        console.print("[gray]Identified spectrum_pk[_id] and source_pk[_id] columns.[/]")
 
     sdss_id_table = peewee.Table("sdss_id_flat", schema="vizdb").bind(database)
     astra_source_table = peewee.Table("source", schema=astra_schema).bind(database)
@@ -152,28 +192,10 @@ def update_sdss_id_to_astra_pipeline_table(
                 )
                 continue
 
-        # For some versions astra uses "source_pk" and "spectrum_pk" in the pipeline tables,
-        # for others "source_pk_id" and "spectrum_pk_id". We need to figure out which one to use.
-        query = """SELECT column_name
-                    FROM information_schema.columns
-                    WHERE table_name = %s AND table_schema = %s;
-        """
-
-        with conn.cursor() as cur:
-            cur.execute(query, (pipeline, astra_schema))
-            columns = [row[0] for row in cur.fetchall()]
-
-        if "source_pk" in columns and "spectrum_pk" in columns:
-            source_pk_col = "source_pk"
-            spectrum_pk_col = "spectrum_pk"
-        elif "source_pk_id" in columns and "spectrum_pk_id" in columns:
-            source_pk_col = "source_pk_id"
-            spectrum_pk_col = "spectrum_pk_id"
-        else:
-            raise ValueError(f"Could not find source_pk and spectrum_pk columns in '{pipeline}'.")
-
         # Phase 1: Join sdss_id with the pipeline table and get the spectra associated with
         # that source. Store that in a temporary table.
+        spectrum_pk_col = table_to_spectrum_pk_col[pipeline]
+        source_pk_col = table_to_source_pk_col[pipeline]
 
         pipeline_table = peewee.Table(pipeline, schema=astra_schema).bind(database)
         pipeline_spectrum_col = getattr(pipeline_table.c, spectrum_pk_col)
@@ -183,7 +205,7 @@ def update_sdss_id_to_astra_pipeline_table(
                 *[
                     sdss_id_table.c.sdss_id,
                     peewee.Value(pipeline).alias("pipeline_name"),
-                    peewee.Value(astra_version).alias("v_astra"),
+                    peewee.Value(astra_version).alias("v_astra"),  # We use the string version
                     astra_source_table.c.pk.alias("source_pk"),
                     pipeline_spectrum_col.alias("spectrum_pk"),
                 ]
@@ -197,7 +219,7 @@ def update_sdss_id_to_astra_pipeline_table(
                 pipeline_table,
                 on=(astra_source_table.c.pk == getattr(pipeline_table.c, source_pk_col)),
             )
-            .where(pipeline_table.c.v_astra == astra_version)
+            .where(pipeline_table.c.v_astra == v_astra)
             .order_by(pipeline_spectrum_col.desc(), pipeline_table.c.created.desc())
             .group_by(
                 sdss_id_table.c.sdss_id,
@@ -228,7 +250,8 @@ def update_sdss_id_to_astra_pipeline_table(
 
         for drp_table_name in found_drp_tables:
             drp_table = peewee.Table(drp_table_name, schema=astra_schema).bind(database)
-            drp_table_spectrum_pk_col = getattr(drp_table.c, spectrum_pk_col)
+            drp_spectrum_pk_col = table_to_spectrum_pk_col[drp_table_name]
+            drp_table_spectrum_pk_col = getattr(drp_table.c, drp_spectrum_pk_col)
 
             if drp_table_name.startswith("apogee"):
                 drp_version_col = getattr(drp_table.c, "apred")
@@ -308,9 +331,6 @@ def update_sdss_id_to_astra_pipeline_table(
                     cur.execute(update_query, (pipeline, astra_version, drp_table_name))
                 continue
 
-            drp_table = peewee.Table(drp_table_name, schema=astra_schema).bind(database)
-            drp_table_spectrum_pk_col = getattr(drp_table.c, spectrum_pk_col)
-
             query = f"""
                 UPDATE vizdb.sdss_id_to_astra_pipeline AS t
                 SET mjd = d.mjd, is_coadd = FALSE
@@ -318,7 +338,7 @@ def update_sdss_id_to_astra_pipeline_table(
                 WHERE t.pipeline_name = %s
                 AND t.v_astra = %s
                 AND t.drp_table = %s
-                AND t.spectrum_pk = d.{drp_table_spectrum_pk_col.name};
+                AND t.spectrum_pk = d.{table_to_spectrum_pk_col[drp_table_name]};
             """
 
             with conn.cursor() as cur:
@@ -330,14 +350,15 @@ def update_sdss_id_to_astra_pipeline_table(
         )
 
         # All done for this pipeline.
-
         console.print(
             f"   [green]... Finished processing pipeline '{pipeline}' in "
             f"{time() - t1:.2f} seconds.[/]"
         )
 
+    # All done for all pipelines.
     console.print(
         "[blue]Finished updating 'sdss_id_to_astra_pipeline'"
         f" table in {time() - t0:.2f} seconds.[/]"
     )
+
     return
