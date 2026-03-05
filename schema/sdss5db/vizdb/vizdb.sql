@@ -344,6 +344,7 @@ CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(drp_tab
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(drp_version);
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(is_coadd);
 CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(mjd);
+CREATE INDEX CONCURRENTLY ON vizdb.sdss_id_to_astra_pipeline USING BTREE(v_astra, drp_table, spectrum_pk);
 
 ALTER TABLE vizdb.sdss_id_to_astra_pipeline ADD CONSTRAINT sdss_id_to_astra_pipeline_unique UNIQUE (sdss_id, pipeline_name, v_astra, source_pk, spectrum_pk);
 
