@@ -232,7 +232,17 @@ class TargetFlags(Base):
 
 class SDSSidToAstraPipeline(Base):
     __tablename__ = "sdss_id_to_astra_pipeline"
-    print_fields = ["sdss_id", "pipeline_name", "v_astra", "source_pk", "spectrum_pk", "drp_table", "drp_version"]
+    print_fields = [
+        "sdss_id",
+        "pipeline_name",
+        "v_astra",
+        "source_pk",
+        "spectrum_pk",
+        "drp_table",
+        "drp_version",
+        "is_coadd",
+        "mjd",
+    ]
 
     pk: Mapped[intpk]
     sdss_id: Mapped[Optional[int]] = mapped_column("sdss_id", BigInteger)
@@ -242,6 +252,8 @@ class SDSSidToAstraPipeline(Base):
     spectrum_pk: Mapped[Optional[int]] = mapped_column("spectrum_pk", Integer)
     drp_table: Mapped[Optional[str]] = mapped_column("drp_table", Text)
     drp_version: Mapped[Optional[str]] = mapped_column("drp_version", Text)
+    is_coadd: Mapped[bool] = mapped_column("is_coadd", Boolean, default=False)
+    mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
 
 
 def define_relations():

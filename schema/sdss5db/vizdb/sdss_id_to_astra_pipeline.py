@@ -172,6 +172,9 @@ def update_sdss_id_to_astra_pipeline_table(
         else:
             raise ValueError(f"Could not find source_pk and spectrum_pk columns in '{pipeline}'.")
 
+        # Phase 1: Join sdss_id with the pipeline table and get the spectra associated with
+        # that source. Store that in a temporary table.
+
         pipeline_table = peewee.Table(pipeline, schema=astra_schema).bind(database)
         pipeline_spectrum_col = getattr(pipeline_table.c, spectrum_pk_col)
 
@@ -213,6 +216,10 @@ def update_sdss_id_to_astra_pipeline_table(
                 f"in {time() - t1:.2f} seconds.[/]"
             )
 
+        # Phase 2: Left outer join each row in the temporary table with each one of the DRP
+        # tables and get the DRP version. Only one of the DRP tables should match. We'll get the
+        # valid result later.
+
         t2 = time()
 
         temp_table_1 = peewee.Table(f"tmp_astra_{pipeline}_1").bind(database)
@@ -240,6 +247,9 @@ def update_sdss_id_to_astra_pipeline_table(
                 f"   [green]... Matched pipeline results with DRP tables in "
                 f"{time() - t2:.2f} seconds.[/]"
             )
+
+        # Phase 3: Coalesce the DRP version columns and get the name of the DRP table that matched.
+        # Insert the information into the final sdss_id_to_astra_pipeline table.
 
         t3 = time()
 
@@ -279,6 +289,47 @@ def update_sdss_id_to_astra_pipeline_table(
                 f"   [green]... Inserted {cur.rowcount:,} rows into "
                 f"'vizdb.sdss_id_to_astra_pipeline' in {time() - t3:.2f} seconds.[/]"
             )
+
+        # Phase 4: Fil out the "is_coadd" and "mjd" columns for the rows we just inserted.
+        # For coadd tables we set "is_coadd" to True and leave "mjd" as NULL.
+        # For visit tables we set "is_coadd" to False and get the MJD from the DRP table.
+
+        t4 = time()
+
+        for drp_table_name in found_drp_tables:
+            is_coadd = "visit" not in drp_table_name
+            if is_coadd:
+                update_query = """
+                    UPDATE vizdb.sdss_id_to_astra_pipeline
+                    SET is_coadd = TRUE
+                    WHERE pipeline_name = %s AND v_astra = %s AND drp_table = %s;
+                """
+                with conn.cursor() as cur:
+                    cur.execute(update_query, (pipeline, astra_version, drp_table_name))
+                continue
+
+            drp_table = peewee.Table(drp_table_name, schema=astra_schema).bind(database)
+            drp_table_spectrum_pk_col = getattr(drp_table.c, spectrum_pk_col)
+
+            query = f"""
+                UPDATE vizdb.sdss_id_to_astra_pipeline AS t
+                SET mjd = d.mjd, is_coadd = FALSE
+                FROM {astra_schema}.{drp_table_name} AS d
+                WHERE t.pipeline_name = %s
+                AND t.v_astra = %s
+                AND t.drp_table = %s
+                AND t.spectrum_pk = d.{drp_table_spectrum_pk_col.name};
+            """
+
+            with conn.cursor() as cur:
+                cur.execute(query, (pipeline, astra_version, drp_table_name))
+
+        console.print(
+            f"   [green]... Updated 'is_coadd' and 'mjd' columns for pipeline '{pipeline}' in "
+            f"{time() - t4:.2f} seconds.[/]"
+        )
+
+        # All done for this pipeline.
 
         console.print(
             f"   [green]... Finished processing pipeline '{pipeline}' in "

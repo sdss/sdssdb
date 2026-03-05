@@ -1196,6 +1196,22 @@
       "sql_type": "TEXT",
       "description": "The version of the DRP pipeline that produced the associated DRP spectrum",
       "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "is_coadd",
+      "display_name": "Is coadd?",
+      "sql_type": "boolean",
+      "description": "Whether the spectrum is a coadd or an individual visit spectrum"
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "sdss_id_to_astra_pipeline",
+      "column_name": "mjd",
+      "display_name": "MJD",
+      "sql_type": "integer",
+      "description": "The MJD of the visit spectrum. Null for coadds."
     }
   ]
 }
