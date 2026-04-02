@@ -55,13 +55,6 @@ class SDSS5dbDatabaseConnection(PeeweeDatabaseConnection):
         if module not in sys.modules:
             return
 
-        mod = importlib.reload(sys.modules[module])
-        # patch peewee model classes: set their _meta.schema
-        for obj in list(vars(mod).values()):
-            meta = getattr(obj, "_meta", None)
-            if meta is not None:
-                # set schema (safe even if already set)
-                setattr(meta, "schema", schema)
-
+        importlib.reload(sys.modules[module])
 
 database = SDSS5dbDatabaseConnection()
