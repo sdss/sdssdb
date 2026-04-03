@@ -18,13 +18,18 @@ def _select_module(schema_name: str):
         return ".astra.v081"
     raise ValueError(f"Unsupported astra schema: {schema_name}")
 
+# remove previously loaded models from the namespace
+for _old_name in list(globals().get('_astra_model_names', [])):
+    globals().pop(_old_name, None)
 
 _SELECTED = _select_module(ASTRA_SCHEMA)
 _mod = importlib.import_module(_SELECTED, package=__package__)
 
+_astra_model_names = []
 for _name, _value in vars(_mod).items():
     if _name.startswith("_"):
         continue
     globals()[_name] = _value
+    _astra_model_names.append(_name)
 
-__all__ = [name for name in globals() if not name.startswith("_")]
+__all__ = _astra_model_names
