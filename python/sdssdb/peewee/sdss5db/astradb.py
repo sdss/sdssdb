@@ -5,9 +5,7 @@ import importlib
 
 from . import database
 
-
 ASTRA_SCHEMA = getattr(database, "astra_schema", "astra_050")
-
 
 def _select_module(schema_name: str):
     """Select the correct astra ORM module"""

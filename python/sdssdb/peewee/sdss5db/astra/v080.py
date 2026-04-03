@@ -8,6 +8,7 @@ from peewee import (
     BooleanField,
     DateTimeField,
     FloatField,
+    ForeignKeyField,
     IntegerField,
     SQL,
     TextField,
@@ -23,10 +24,51 @@ class AstraBase(common.AstraCommon):
         schema = "astra_080"
 
 
-class ApogeeCoaddedSpectrumInApStar(AstraBase, common.ApogeeCoaddedSpectrumInApStar):
+class Source(AstraBase, common.Source):
+    pk = AutoField()
+    gaia_dr2_source_id = BigIntegerField(null=True, unique=True)
+    gaia_dr3_source_id = BigIntegerField(null=True, unique=True)
+    catalogid = BigIntegerField(index=True, null=True)
+    catalogid21 = BigIntegerField(index=True, null=True)
+    catalogid25 = BigIntegerField(index=True, null=True)
+    catalogid31 = BigIntegerField(index=True, null=True)
+    l = FloatField(null=True)
+    b = FloatField(null=True)
+    w1_mag = FloatField(null=True)
+    e_w1_mag = FloatField(null=True)
+    w2_mag = FloatField(null=True)
+    e_w2_mag = FloatField(null=True)
+    c_star = FloatField(null=True)
+    u_jkc_mag = FloatField(null=True)
+    b_jkc_mag = FloatField(null=True)
+    v_jkc_mag = FloatField(null=True)
+    r_jkc_mag = FloatField(null=True)
+    i_jkc_mag = FloatField(null=True)
+    u_sdss_mag = FloatField(null=True)
+    g_sdss_mag = FloatField(null=True)
+    r_sdss_mag = FloatField(null=True)
+    i_sdss_mag = FloatField(null=True)
+    z_sdss_mag = FloatField(null=True)
+    y_ps1_mag = FloatField(null=True)
     created = DateTimeField()
     modified = DateTimeField()
-    spectrum_pk = IntegerField(null=True, unique=True)
+    crossmatch_flags = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
+    class Meta:
+        table_name = 'source'
+
+
+class Spectrum(AstraBase, common.Spectrum):
+    pk = AutoField()
+    spectrum_flags = BigIntegerField()
+    class Meta:
+        table_name = 'spectrum'
+
+
+class ApogeeCoaddedSpectrumInApStar(AstraBase, common.ApogeeCoaddedSpectrumInApStar):
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_coadded_spectrum_in_ap_star')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='apogee_coadded_spectrum_in_ap_star')
+    created = DateTimeField()
+    modified = DateTimeField()
     field = TextField()
     prefix = TextField()
     starver = IntegerField(null=True)
@@ -42,7 +84,8 @@ class ApogeeCoaddedSpectrumInApStar(AstraBase, common.ApogeeCoaddedSpectrumInApS
 
 class ApogeeCombinedSpectrum(AstraBase, common.ApogeeCombinedSpectrum):
     pk = AutoField()
-    spectrum_pk = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_combined_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='apogee_combined_spectrum')
     created = DateTimeField()
     modified = DateTimeField()
     class Meta:
@@ -54,8 +97,8 @@ class ApogeeCombinedSpectrum(AstraBase, common.ApogeeCombinedSpectrum):
         )
 
 class ApogeeNet(AstraBase, common.ApogeeNet):
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_net')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='apogee_net')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -72,7 +115,8 @@ class ApogeeNet(AstraBase, common.ApogeeNet):
 
 class ApogeeRestFrameVisitSpectrum(AstraBase, common.ApogeeRestFrameVisitSpectrum):
     pk = AutoField()
-    spectrum_pk = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_rest_frame_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='apogee_rest_frame_visit_spectrum')
     in_stack = BooleanField()
     created = DateTimeField()
     modified = DateTimeField()
@@ -86,7 +130,8 @@ class ApogeeRestFrameVisitSpectrum(AstraBase, common.ApogeeRestFrameVisitSpectru
         )
 
 class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
-    spectrum_pk = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='apogee_visit_spectrum')
     created = DateTimeField()
     modified = DateTimeField()
     class Meta:
@@ -104,7 +149,8 @@ class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
         )
 
 class ApogeeVisitSpectrumInApStar(AstraBase, common.ApogeeVisitSpectrumInApStar):
-    spectrum_pk = IntegerField(unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_visit_spectrum_in_ap_star')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='apogee_visit_spectrum_in_ap_star')
     drp_spectrum_pk = IntegerField(unique=True)
     created = DateTimeField()
     modified = DateTimeField()
@@ -121,8 +167,8 @@ class ApogeeVisitSpectrumInApStar(AstraBase, common.ApogeeVisitSpectrumInApStar)
 
 class Aspcap(AstraBase):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='aspcap')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='aspcap')
     v_astra = IntegerField()
     created = DateTimeField()
     modified = DateTimeField()
@@ -340,8 +386,8 @@ class Aspcap(AstraBase):
 
 class AstroNn(AstraBase, common.AstroNn):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='astro_nn')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='astro_nn')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -398,8 +444,8 @@ class AstroNn(AstraBase, common.AstroNn):
 
 class AstroNnDist(AstraBase, common.AstroNnDist):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='astro_nn_dist')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='astro_nn_dist')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -415,6 +461,8 @@ class AstroNnDist(AstraBase, common.AstroNnDist):
 
 class BossCombinedSpectrum(AstraBase, common.BossCombinedSpectrum):
     pk = AutoField()
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_combined_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='boss_combined_spectrum')
     created = DateTimeField()
     modified = DateTimeField()
     class Meta:
@@ -427,8 +475,8 @@ class BossCombinedSpectrum(AstraBase, common.BossCombinedSpectrum):
 
 class BossNet(AstraBase, common.BossNet):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_net')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='boss_net')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -444,6 +492,8 @@ class BossNet(AstraBase, common.BossNet):
 
 class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
     pk = AutoField()
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_rest_frame_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='boss_rest_frame_visit_spectrum')
     created = DateTimeField()
     modified = DateTimeField()
     class Meta:
@@ -456,7 +506,8 @@ class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
         )
 
 class BossVisitSpectrum(AstraBase, common.BossVisitSpectrum):
-    spectrum_pk = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, unique=True, backref='boss_visit_spectrum')
     created = DateTimeField()
     modified = DateTimeField()
     catalogid = BigIntegerField(index=True)
@@ -477,8 +528,8 @@ class BossVisitSpectrum(AstraBase, common.BossVisitSpectrum):
 
 class Corv(AstraBase, common.Corv):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='corv')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='corv')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -492,8 +543,8 @@ class Corv(AstraBase, common.Corv):
 
 class LineForest(AstraBase, common.LineForest):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='line_forest')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='line_forest')
     v_astra = IntegerField()
     modified = DateTimeField()
     tag = TextField(index=True)
@@ -611,8 +662,8 @@ class LineForest(AstraBase, common.LineForest):
 
 class MDwarfType(AstraBase, common.MDwarfType):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='m_dwarf_type')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='m_dwarf_type')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -628,7 +679,7 @@ class MDwarfType(AstraBase, common.MDwarfType):
 
 class MwmSpectrumProductStatus(AstraBase):
     task_pk = AutoField()
-    source_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='mwm_spectrum_product_status')
     v_astra = IntegerField()
     created = DateTimeField()
     modified = DateTimeField()
@@ -646,8 +697,8 @@ class MwmSpectrumProductStatus(AstraBase):
         )
 
 class Slam(AstraBase, common.Slam):
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='slam')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='slam')
 
     class Meta:
         table_name = 'slam'
@@ -658,8 +709,8 @@ class Slam(AstraBase, common.Slam):
 
 class SnowWhite(AstraBase, common.SnowWhite):
     #task_pk = AutoField()
-    source_pk = IntegerField(index=True, null=True)
-    spectrum_pk = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='snow_white')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk', null=True, index=True, backref='snow_white')
     v_astra = IntegerField()
     modified = DateTimeField()
     v_astra_major_minor = IntegerField()
@@ -671,39 +722,3 @@ class SnowWhite(AstraBase, common.SnowWhite):
             (('spectrum_pk', 'v_astra_major_minor'), True),
             (('spectrum_pk', 'v_astra_major_minor'), True),
         )
-
-class Source(AstraBase, common.Source):
-    gaia_dr2_source_id = BigIntegerField(null=True, unique=True)
-    gaia_dr3_source_id = BigIntegerField(null=True, unique=True)
-    catalogid = BigIntegerField(index=True, null=True)
-    catalogid21 = BigIntegerField(index=True, null=True)
-    catalogid25 = BigIntegerField(index=True, null=True)
-    catalogid31 = BigIntegerField(index=True, null=True)
-    l = FloatField(null=True)
-    b = FloatField(null=True)
-    w1_mag = FloatField(null=True)
-    e_w1_mag = FloatField(null=True)
-    w2_mag = FloatField(null=True)
-    e_w2_mag = FloatField(null=True)
-    c_star = FloatField(null=True)
-    u_jkc_mag = FloatField(null=True)
-    b_jkc_mag = FloatField(null=True)
-    v_jkc_mag = FloatField(null=True)
-    r_jkc_mag = FloatField(null=True)
-    i_jkc_mag = FloatField(null=True)
-    u_sdss_mag = FloatField(null=True)
-    g_sdss_mag = FloatField(null=True)
-    r_sdss_mag = FloatField(null=True)
-    i_sdss_mag = FloatField(null=True)
-    z_sdss_mag = FloatField(null=True)
-    y_ps1_mag = FloatField(null=True)
-    created = DateTimeField()
-    modified = DateTimeField()
-    crossmatch_flags = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
-    class Meta:
-        table_name = 'source'
-
-class Spectrum(AstraBase, common.Spectrum):
-    spectrum_flags = BigIntegerField()
-    class Meta:
-        table_name = 'spectrum'

@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import copy
+import inspect
+
 from peewee import (
     AutoField,
     BigBitField,
@@ -9,6 +12,7 @@ from peewee import (
     DateTimeField,
     DoubleField,
     FloatField,
+    ForeignKeyField,
     IntegerField,
     TextField,
 )
@@ -16,6 +20,11 @@ from playhouse.postgres_ext import ArrayField
 
 from ... import BaseModel
 from .. import database
+
+
+# ASTRA_SCHEMA = getattr(database, "astra_schema", "astra_050")
+# SOURCE_COLUMN = "source_pk_id" if ASTRA_SCHEMA.startswith("astra_050") else "source_pk"
+# SPECTRUM_COLUMN = "spectrum_pk_id" if ASTRA_SCHEMA.startswith("astra_050") else "spectrum_pk"
 
 class AstraCommon(BaseModel):
     class Meta:
@@ -968,3 +977,84 @@ class Spectrum(AstraCommon):
 
     class Meta:
         table_name = 'spectrum'
+
+
+# def _ensure_pk_registered(model_class):
+#     """Register the pk AutoField in the model's _meta if it was lost due to multiple
+#     inheritance with a BaseModel that sets primary_key = False."""
+#     meta = model_class._meta  # pyright: ignore[reportPrivateUsage]
+#     if meta.primary_key and meta.primary_key is not False:
+#         return
+#     for base in model_class.__mro__[1:]:
+#         if not hasattr(base, '_meta'):
+#             continue
+#         base_pk = getattr(base._meta, 'primary_key', None)  # pyright: ignore[reportPrivateUsage]
+#         if base_pk and base_pk is not False:
+#             pk_copy = copy.copy(base_pk)
+#             meta.set_primary_key(base_pk.name, pk_copy)  # pyright: ignore[reportPrivateUsage]
+#             return
+
+
+# def _replace_with_foreign_key(model_class, field_name, target_model, column_candidates):
+#     """Rebind a raw integer FK column as a peewee ForeignKeyField."""
+
+#     meta = model_class._meta  # pyright: ignore[reportPrivateUsage]
+
+#     if field_name in meta.fields:
+#         return
+
+#     raw_field_name = next(
+#         (candidate for candidate in column_candidates if candidate in meta.fields),
+#         None,
+#     )
+#     if raw_field_name is None:
+#         return
+
+#     raw_field = meta.fields[raw_field_name]
+#     meta.remove_field(raw_field_name)
+#     meta.add_field(
+#         field_name,
+#         ForeignKeyField(
+#             target_model,
+#             backref="+",
+#             column_name=raw_field.column_name,
+#             index=getattr(raw_field, "index", False),
+#             null=raw_field.null,
+#             unique=getattr(raw_field, "unique", False),
+#         ),
+#     )
+
+
+# def normalize_relationship_fields(namespace):
+#     """Normalizes ASTRA models so source/spectrum resolve to schema-specific FK columns."""
+
+#     astra_base = namespace.get("AstraBase")
+#     source_model = namespace.get("Source")
+#     spectrum_model = namespace.get("Spectrum")
+
+#     if not astra_base or not source_model or not spectrum_model:
+#         return
+
+#     # Ensure Source and Spectrum have their pk AutoField visible in _meta so
+#     # ForeignKeyField can correctly bind rel_field to the versioned model.
+#     _ensure_pk_registered(source_model)
+#     _ensure_pk_registered(spectrum_model)
+
+#     for value in namespace.values():
+#         if not inspect.isclass(value) or not issubclass(value, astra_base):
+#             continue
+#         if value in {astra_base, source_model, spectrum_model}:
+#             continue
+
+#         _replace_with_foreign_key(
+#             value,
+#             "source",
+#             source_model,
+#             ("source_pk", "source_pk_id"),
+#         )
+#         _replace_with_foreign_key(
+#             value,
+#             "spectrum",
+#             spectrum_model,
+#             ("spectrum_pk", "spectrum_pk_id"),
+#         )

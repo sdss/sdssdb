@@ -3,11 +3,13 @@
 # Adapted for schema-dispatched ASTRA models
 
 from peewee import (
+    AutoField,
     BigIntegerField,
     BooleanField,
     DateTimeField,
     DoubleField,
     FloatField,
+    ForeignKeyField,
     IntegerField,
     SQL,
     TextField,
@@ -21,11 +23,49 @@ class AstraBase(common.AstraCommon):
         database = common.AstraCommon._meta.database
         schema = "astra_050"
 
+
+class Source(AstraBase, common.Source):
+    pk = AutoField()
+    gaia_dr2_source_id = BigIntegerField(null=True)
+    gaia_dr3_source_id = BigIntegerField(null=True)
+    catalogid = BigIntegerField(null=True)
+    catalogid21 = BigIntegerField(null=True)
+    catalogid25 = BigIntegerField(null=True)
+    catalogid31 = BigIntegerField(null=True)
+    c_star = DoubleField(null=True)
+    u_jkc_mag = DoubleField(null=True)
+    b_jkc_mag = DoubleField(null=True)
+    v_jkc_mag = DoubleField(null=True)
+    r_jkc_mag = DoubleField(null=True)
+    i_jkc_mag = DoubleField(null=True)
+    u_sdss_mag = DoubleField(null=True)
+    r_sdss_mag = DoubleField(null=True)
+    i_sdss_mag = DoubleField(null=True)
+    z_sdss_mag = DoubleField(null=True)
+    y_ps1_mag = DoubleField(null=True)
+    g_sdss_mag = DoubleField(null=True)
+    l = DoubleField(null=True)
+    b = DoubleField(null=True)
+    w1_mag = DoubleField(null=True)
+    w2_mag = DoubleField(null=True)
+    e_w2_mag = DoubleField(null=True)
+    e_w1_mag = DoubleField(null=True)
+    class Meta:
+        table_name = 'source'
+
+
+class Spectrum(AstraBase, common.Spectrum):
+    pk = AutoField()
+    spectrum_type_flags = BigIntegerField()
+    class Meta:
+        table_name = 'spectrum'
+
+
 class ApMadgicsDataDrivenSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ap_madgics_data_driven_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='ap_madgics_data_driven_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='ap_madgics_data_driven_spectrum')
     drp_spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
     release = TextField()
     telescope = TextField()
     field = TextField()
@@ -63,8 +103,8 @@ class ApMadgicsDataDrivenSpectrum(AstraBase):
 
 class ApMadgicsDataDrivenStarSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ap_madgics_data_driven_star_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='ap_madgics_data_driven_star_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='ap_madgics_data_driven_star_spectrum')
     release = TextField()
     telescope = TextField()
     mean_fiber = FloatField()
@@ -80,9 +120,9 @@ class ApMadgicsDataDrivenStarSpectrum(AstraBase):
 
 class ApMadgicsDataDrivenVisitSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ap_madgics_data_driven_visit_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='ap_madgics_data_driven_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='ap_madgics_data_driven_visit_spectrum')
     drp_spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
     release = TextField()
     telescope = TextField()
     field = TextField()
@@ -120,9 +160,9 @@ class ApMadgicsDataDrivenVisitSpectrum(AstraBase):
 
 class ApMadgicsTheorySpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ap_madgics_theory_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='ap_madgics_theory_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='ap_madgics_theory_spectrum')
     drp_spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
     release = TextField()
     telescope = TextField()
     field = TextField()
@@ -160,8 +200,8 @@ class ApMadgicsTheorySpectrum(AstraBase):
 
 class ApMadgicsTheoryStarSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ap_madgics_theory_star_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='ap_madgics_theory_star_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='ap_madgics_theory_star_spectrum')
     release = TextField()
     telescope = TextField()
     mean_fiber = FloatField()
@@ -177,9 +217,9 @@ class ApMadgicsTheoryStarSpectrum(AstraBase):
 
 class ApMadgicsTheoryVisitSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ap_madgics_theory_visit_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='ap_madgics_theory_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='ap_madgics_theory_visit_spectrum')
     drp_spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
     release = TextField()
     telescope = TextField()
     field = TextField()
@@ -216,7 +256,8 @@ class ApMadgicsTheoryVisitSpectrum(AstraBase):
         primary_key = False
 
 class ApogeeCoaddedSpectrumInApStar(AstraBase, common.ApogeeCoaddedSpectrumInApStar):
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_coadded_spectrum_in_ap_star')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_coadded_spectrum_in_ap_star')
     field = TextField(null=True)
     prefix = TextField(null=True)
     class Meta:
@@ -227,7 +268,8 @@ class ApogeeCoaddedSpectrumInApStar(AstraBase, common.ApogeeCoaddedSpectrumInApS
 
 class ApogeeCombinedSpectrum(AstraBase, common.ApogeeCombinedSpectrum):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_combined_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_combined_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_combined_spectrum')
     input_spectrum_pks = ArrayField(field_class=IntegerField, index=True, null=True)
     class Meta:
         table_name = 'apogee_combined_spectrum'
@@ -238,9 +280,9 @@ class ApogeeCombinedSpectrum(AstraBase, common.ApogeeCombinedSpectrum):
 
 class ApogeeMadgicsRestFrameTheorySpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_madgics_rest_frame_theory_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_madgics_rest_frame_theory_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_madgics_rest_frame_theory_spectrum')
     drp_spectrum_pk_id = IntegerField(null=True, unique=True)
-    source_pk = IntegerField(index=True, null=True)
     release = TextField()
     telescope = TextField()
     field = TextField()
@@ -278,9 +320,9 @@ class ApogeeMadgicsRestFrameTheorySpectrum(AstraBase):
 
 class ApogeeMadgicsVisitSpectrum(AstraBase):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_madgics_visit_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_madgics_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_madgics_visit_spectrum')
     drp_spectrum_pk_id = IntegerField(unique=True)
-    source_pk = IntegerField(index=True, null=True)
     release = TextField()
     telescope = TextField()
     field = TextField()
@@ -295,8 +337,8 @@ class ApogeeMadgicsVisitSpectrum(AstraBase):
         primary_key = False
 
 class ApogeeNet(AstraBase, common.ApogeeNet):
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='apogee_net')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='apogee_net')
     v_astra = TextField()
     teff_sample_median = FloatField(null=True)
     logg_sample_median = FloatField(null=True)
@@ -309,7 +351,8 @@ class ApogeeNet(AstraBase, common.ApogeeNet):
 
 class ApogeeRestFrameVisitSpectrum(AstraBase, common.ApogeeRestFrameVisitSpectrum):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.apogee_rest_frame_visit_spectrum_pk_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_rest_frame_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_rest_frame_visit_spectrum')
     class Meta:
         table_name = 'apogee_rest_frame_visit_spectrum'
         indexes = (
@@ -321,7 +364,8 @@ class ApogeeRestFrameVisitSpectrum(AstraBase, common.ApogeeRestFrameVisitSpectru
         primary_key = False
 
 class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_visit_spectrum')
     class Meta:
         table_name = 'apogee_visit_spectrum'
         indexes = (
@@ -334,7 +378,8 @@ class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
         )
 
 class ApogeeVisitSpectrumInApStar(AstraBase, common.ApogeeVisitSpectrumInApStar):
-    spectrum_pk_id = IntegerField(unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='apogee_visit_spectrum_in_ap_star')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='apogee_visit_spectrum_in_ap_star')
     drp_spectrum_pk_id = IntegerField(unique=True)
     field = TextField(constraints=[SQL("DEFAULT ''::text")])
     class Meta:
@@ -345,8 +390,8 @@ class ApogeeVisitSpectrumInApStar(AstraBase, common.ApogeeVisitSpectrumInApStar)
 
 class Aspcap(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.aspcap_task_pk_seq2'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField()
-    source_pk_id = IntegerField()
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, backref='aspcap')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, backref='aspcap')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -579,8 +624,8 @@ class AstroNNdist(AstraBase):
 
 class AstroNn(AstraBase, common.AstroNn):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.astro_nn_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='astro_nn')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='astro_nn')
     v_astra = TextField()
     raw_teff = DoubleField(null=True)
     raw_e_teff = DoubleField(null=True)
@@ -632,8 +677,8 @@ class AstroNn(AstraBase, common.AstroNn):
 
 class AstroNnDist(AstraBase, common.AstroNnDist):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.astro_nn_dist_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='astro_nn_dist')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='astro_nn_dist')
     v_astra = TextField()
     a_k_mag = FloatField(null=True)
     l_fakemag_err = FloatField(column_name='L_fakemag_err', null=True)
@@ -644,6 +689,8 @@ class AstroNnDist(AstraBase, common.AstroNnDist):
 
 class BossCombinedSpectrum(AstraBase, common.BossCombinedSpectrum):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.boss_combined_spectrum_pk_seq'::regclass)")], unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_combined_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='boss_combined_spectrum')
     class Meta:
         table_name = 'boss_combined_spectrum'
         indexes = (
@@ -653,8 +700,8 @@ class BossCombinedSpectrum(AstraBase, common.BossCombinedSpectrum):
 
 class BossNet(AstraBase, common.BossNet):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.b_net_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='boss_net')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='boss_net')
     v_astra = TextField()
     v_rad = FloatField(null=True)
     e_v_rad = FloatField(null=True)
@@ -664,6 +711,8 @@ class BossNet(AstraBase, common.BossNet):
 
 class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
     pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.boss_rest_frame_visit_spectrum_pk_seq'::regclass)")], unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_rest_frame_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='boss_rest_frame_visit_spectrum')
     class Meta:
         table_name = 'boss_rest_frame_visit_spectrum'
         indexes = (
@@ -675,7 +724,8 @@ class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
         primary_key = False
 
 class BossVisitSpectrum(AstraBase, common.BossVisitSpectrum):
-    spectrum_pk_id = IntegerField(null=True, unique=True)
+    source = ForeignKeyField(Source, column_name='source_pk', null=True, index=True, backref='boss_visit_spectrum')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='boss_visit_spectrum')
     catalogid = BigIntegerField()
     class Meta:
         table_name = 'boss_visit_spectrum'
@@ -690,8 +740,8 @@ class BossVisitSpectrum(AstraBase, common.BossVisitSpectrum):
 
 class Clam(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.clam_task_pk_seq2'::regclass)")], unique=True)
-    source_pk_id = IntegerField(null=True)
-    spectrum_pk_id = IntegerField()
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, backref='clam')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, backref='clam')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -726,8 +776,8 @@ class Clam(AstraBase):
 
 class Corv(AstraBase, common.Corv):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.corv_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='corv')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='corv')
     v_astra = TextField()
     result_flags = IntegerField(constraints=[SQL("DEFAULT 0")], null=True)
     class Meta:
@@ -736,8 +786,8 @@ class Corv(AstraBase, common.Corv):
 
 class FerreChemicalAbundances(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ferre_chemical_abundances_task_pk_seq1'::regclass)")], unique=True)
-    source_pk_id = IntegerField()
-    spectrum_pk_id = IntegerField()
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, backref='ferre_chemical_abundances')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, backref='ferre_chemical_abundances')
     upstream_pk = IntegerField()
     v_astra = TextField()
     created = DateTimeField()
@@ -799,8 +849,8 @@ class FerreChemicalAbundances(AstraBase):
 
 class FerreCoarse(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ferre_coarse_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='ferre_coarse')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='ferre_coarse')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -861,8 +911,8 @@ class FerreCoarse(AstraBase):
 
 class FerreStellarParameters(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.ferre_stellar_parameters_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='ferre_stellar_parameters')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='ferre_stellar_parameters')
     upstream_pk = IntegerField(index=True)
     v_astra = TextField()
     created = DateTimeField()
@@ -924,8 +974,8 @@ class FerreStellarParameters(AstraBase):
 
 class Grok(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.grok_task_pk_seq3'::regclass)")], unique=True)
-    source_pk_id = IntegerField(null=True)
-    spectrum_pk_id = IntegerField()
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, backref='grok')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, backref='grok')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -975,8 +1025,8 @@ class Grok(AstraBase):
 
 class GrokRotation(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.grok_rotation_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='grok_rotation')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='grok_rotation')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -991,8 +1041,8 @@ class GrokRotation(AstraBase):
 
 class HotPayne(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.hot_payne_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='hot_payne')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='hot_payne')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -1110,8 +1160,8 @@ class HotPayne(AstraBase):
 
 class LineForest(AstraBase, common.LineForest):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.line_forest_task_pk_seq1'::regclass)")], unique=True)
-    source_pk_id = IntegerField(null=True)
-    spectrum_pk_id = IntegerField()
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, backref='line_forest')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, backref='line_forest')
     v_astra = TextField()
     tag = TextField()
     eqw_percentiles_h_alpha = ArrayField(null=True)  # ARRAY
@@ -1224,8 +1274,8 @@ class LineForest(AstraBase, common.LineForest):
 
 class MDwarfType(AstraBase, common.MDwarfType):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.m_dwarf_type_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='m_dwarf_type')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='m_dwarf_type')
     v_astra = TextField()
     spectral_type = TextField()
     sub_type = FloatField()
@@ -1236,8 +1286,8 @@ class MDwarfType(AstraBase, common.MDwarfType):
 
 class MwmBest(AstraBase):
     id = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.mwm_best_id_seq2'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField()
-    source_pk_id = IntegerField()
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, backref='mwm_best')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, backref='mwm_best')
     v_astra = TextField()
     created = DateTimeField()
     modified = DateTimeField()
@@ -1440,8 +1490,8 @@ class MwmBest(AstraBase):
 
 class MwmBestV1(AstraBase):
     id = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.mwm_best_id_seq'::regclass)")], unique=True)
-    spectrum_pk_id = IntegerField(unique=True)
-    source_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='mwm_best_v1')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, unique=True, backref='mwm_best_v1')
     v_astra = TextField()
     created = DateTimeField()
     modified = DateTimeField()
@@ -1641,14 +1691,14 @@ class MwmBestV1(AstraBase):
     class Meta:
         table_name = 'mwm_best_v1'
         indexes = (
-            (('source_pk_id', 'v_astra'), True),
+            (('source', 'v_astra'), True),
         )
         primary_key = False
 
 class NmfRectify(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.nmf_rectify_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='nmf_rectify')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='nmf_rectify')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -1666,8 +1716,8 @@ class NmfRectify(AstraBase):
         primary_key = False
 
 class Slam(AstraBase, common.Slam):
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='slam')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='slam')
     bad_flag = BooleanField(constraints=[SQL("DEFAULT false")], null=True)
     warn_flag = BooleanField(constraints=[SQL("DEFAULT false")], null=True)
 
@@ -1718,51 +1768,18 @@ class Slam(AstraBase, common.Slam):
 
 class SnowWhite(AstraBase, common.SnowWhite):
     #task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.snow_white_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='snow_white')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='snow_white')
     v_astra = TextField()
     raw_e_teff = DoubleField(null=True)
     raw_e_logg = DoubleField(null=True)
     class Meta:
         table_name = 'snow_white'
 
-class Source(AstraBase, common.Source):
-    gaia_dr2_source_id = BigIntegerField(null=True)
-    gaia_dr3_source_id = BigIntegerField(null=True)
-    catalogid = BigIntegerField(null=True)
-    catalogid21 = BigIntegerField(null=True)
-    catalogid25 = BigIntegerField(null=True)
-    catalogid31 = BigIntegerField(null=True)
-    c_star = DoubleField(null=True)
-    u_jkc_mag = DoubleField(null=True)
-    b_jkc_mag = DoubleField(null=True)
-    v_jkc_mag = DoubleField(null=True)
-    r_jkc_mag = DoubleField(null=True)
-    i_jkc_mag = DoubleField(null=True)
-    u_sdss_mag = DoubleField(null=True)
-    r_sdss_mag = DoubleField(null=True)
-    i_sdss_mag = DoubleField(null=True)
-    z_sdss_mag = DoubleField(null=True)
-    y_ps1_mag = DoubleField(null=True)
-    g_sdss_mag = DoubleField(null=True)
-    l = DoubleField(null=True)
-    b = DoubleField(null=True)
-    w1_mag = DoubleField(null=True)
-    w2_mag = DoubleField(null=True)
-    e_w2_mag = DoubleField(null=True)
-    e_w1_mag = DoubleField(null=True)
-    class Meta:
-        table_name = 'source'
-
-class Spectrum(AstraBase, common.Spectrum):
-    spectrum_type_flags = BigIntegerField()
-    class Meta:
-        table_name = 'spectrum'
-
 class SpectrumClassification(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.spectrum_classification_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='spectrum_classification')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='spectrum_classification')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -1787,8 +1804,8 @@ class SpectrumClassification(AstraBase):
 
 class TheCannon(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.the_cannon_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='the_cannon')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='the_cannon')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
@@ -1866,8 +1883,8 @@ class TheCannon(AstraBase):
 
 class ThePayne(AstraBase):
     task_pk = IntegerField(constraints=[SQL("DEFAULT nextval('astra_050.the_payne_task_pk_seq'::regclass)")], unique=True)
-    source_pk_id = IntegerField(index=True, null=True)
-    spectrum_pk_id = IntegerField(index=True)
+    source = ForeignKeyField(Source, column_name='source_pk_id', null=True, index=True, backref='the_payne')
+    spectrum = ForeignKeyField(Spectrum, column_name='spectrum_pk_id', null=True, index=True, backref='the_payne')
     v_astra = TextField()
     created = DateTimeField()
     t_elapsed = FloatField(null=True)
