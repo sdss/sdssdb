@@ -75,11 +75,7 @@ class ApogeeCoaddedSpectrumInApStar(AstraBase, common.ApogeeCoaddedSpectrumInApS
     class Meta:
         table_name = 'apogee_coadded_spectrum_in_ap_star'
         indexes = (
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix'), True),
+            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix'), True)
         )
 
 class ApogeeCombinedSpectrum(AstraBase, common.ApogeeCombinedSpectrum):
@@ -91,9 +87,7 @@ class ApogeeCombinedSpectrum(AstraBase, common.ApogeeCombinedSpectrum):
     class Meta:
         table_name = 'apogee_combined_spectrum'
         indexes = (
-            (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'apred'), True),
-            (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'apred'), True),
-            (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'apred'), True),
+            (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'apred'), True)
         )
 
 class ApogeeNet(AstraBase, common.ApogeeNet):
@@ -123,10 +117,7 @@ class ApogeeRestFrameVisitSpectrum(AstraBase, common.ApogeeRestFrameVisitSpectru
     class Meta:
         table_name = 'apogee_rest_frame_visit_spectrum'
         indexes = (
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
+            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True)
         )
 
 class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
@@ -137,15 +128,8 @@ class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
     class Meta:
         table_name = 'apogee_visit_spectrum'
         indexes = (
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('source_pk', 'telescope', 'mjd', 'fiber', 'plate', 'field'), False),
-            (('source_pk', 'telescope', 'mjd', 'fiber', 'plate', 'field'), False),
-            (('source_pk', 'telescope', 'mjd', 'fiber', 'plate', 'field'), False),
+            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True)
+            (('source_pk', 'telescope', 'mjd', 'fiber', 'plate', 'field'), False)
         )
 
 class ApogeeVisitSpectrumInApStar(AstraBase, common.ApogeeVisitSpectrumInApStar):
@@ -158,11 +142,7 @@ class ApogeeVisitSpectrumInApStar(AstraBase, common.ApogeeVisitSpectrumInApStar)
     class Meta:
         table_name = 'apogee_visit_spectrum_in_ap_star'
         indexes = (
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True),
-            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True),
+            (('release', 'apred', 'apstar', 'obj', 'telescope', 'field', 'prefix', 'plate', 'mjd', 'fiber'), True)
         )
 
 class Aspcap(AstraBase):
@@ -381,7 +361,6 @@ class Aspcap(AstraBase):
         table_name = 'aspcap'
         indexes = (
             (('spectrum_pk', 'v_astra_major_minor'), True),
-            (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
 class AstroNn(AstraBase, common.AstroNn):
@@ -439,7 +418,6 @@ class AstroNn(AstraBase, common.AstroNn):
         table_name = 'astro_nn'
         indexes = (
             (('spectrum_pk', 'v_astra_major_minor'), True),
-            (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
 class AstroNnDist(AstraBase, common.AstroNnDist):
@@ -456,7 +434,6 @@ class AstroNnDist(AstraBase, common.AstroNnDist):
         table_name = 'astro_nn_dist'
         indexes = (
             (('spectrum_pk', 'v_astra_major_minor'), True),
-            (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
 class BossCombinedSpectrum(AstraBase, common.BossCombinedSpectrum):
@@ -468,8 +445,6 @@ class BossCombinedSpectrum(AstraBase, common.BossCombinedSpectrum):
     class Meta:
         table_name = 'boss_combined_spectrum'
         indexes = (
-            (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'run2d'), True),
-            (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'run2d'), True),
             (('release', 'filetype', 'v_astra', 'healpix', 'sdss_id', 'telescope', 'run2d'), True),
         )
 
@@ -486,8 +461,6 @@ class BossNet(AstraBase, common.BossNet):
         table_name = 'boss_net'
         indexes = (
             (('spectrum_pk', 'v_astra_major_minor'), True),
-            (('spectrum_pk', 'v_astra_major_minor'), True),
-            (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
 class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
@@ -499,9 +472,6 @@ class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
     class Meta:
         table_name = 'boss_rest_frame_visit_spectrum'
         indexes = (
-            (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
             (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
         )
 
@@ -516,13 +486,6 @@ class BossVisitSpectrum(AstraBase, common.BossVisitSpectrum):
         table_name = 'boss_visit_spectrum'
         indexes = (
             (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('source_pk', 'telescope', 'mjd', 'fieldid', 'plateid'), False),
-            (('source_pk', 'telescope', 'mjd', 'fieldid', 'plateid'), False),
             (('source_pk', 'telescope', 'mjd', 'fieldid', 'plateid'), False),
         )
 
@@ -537,7 +500,6 @@ class Corv(AstraBase, common.Corv):
     class Meta:
         table_name = 'corv'
         indexes = (
-            (('spectrum_pk', 'v_astra_major_minor'), True),
             (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
@@ -657,7 +619,6 @@ class LineForest(AstraBase, common.LineForest):
         table_name = 'line_forest'
         indexes = (
             (('spectrum_pk', 'v_astra_major_minor'), True),
-            (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
 class MDwarfType(AstraBase, common.MDwarfType):
@@ -673,7 +634,6 @@ class MDwarfType(AstraBase, common.MDwarfType):
     class Meta:
         table_name = 'm_dwarf_type'
         indexes = (
-            (('spectrum_pk', 'v_astra_major_minor'), True),
             (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
@@ -692,8 +652,6 @@ class MwmSpectrumProductStatus(AstraBase):
         table_name = 'mwm_spectrum_product_status'
         indexes = (
             (('source_pk', 'v_astra_major_minor'), True),
-            (('source_pk', 'v_astra_major_minor'), True),
-            (('source_pk', 'v_astra_major_minor'), True),
         )
 
 class Slam(AstraBase, common.Slam):
@@ -703,7 +661,6 @@ class Slam(AstraBase, common.Slam):
     class Meta:
         table_name = 'slam'
         indexes = (
-            (('spectrum_pk', 'v_astra_major_minor'), True),
             (('spectrum_pk', 'v_astra_major_minor'), True),
         )
 
@@ -719,6 +676,5 @@ class SnowWhite(AstraBase, common.SnowWhite):
     class Meta:
         table_name = 'snow_white'
         indexes = (
-            (('spectrum_pk', 'v_astra_major_minor'), True),
             (('spectrum_pk', 'v_astra_major_minor'), True),
         )

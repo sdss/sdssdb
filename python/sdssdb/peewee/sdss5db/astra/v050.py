@@ -357,9 +357,6 @@ class ApogeeRestFrameVisitSpectrum(AstraBase, common.ApogeeRestFrameVisitSpectru
         table_name = 'apogee_rest_frame_visit_spectrum'
         indexes = (
             (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'v_astra', 'sdss_id', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
         )
         primary_key = False
 
@@ -369,11 +366,6 @@ class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
     class Meta:
         table_name = 'apogee_visit_spectrum'
         indexes = (
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
             (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
         )
 
@@ -717,9 +709,6 @@ class BossRestFrameVisitSpectrum(AstraBase, common.BossRestFrameVisitSpectrum):
         table_name = 'boss_rest_frame_visit_spectrum'
         indexes = (
             (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('v_astra', 'filetype', 'release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
         )
         primary_key = False
 
@@ -730,11 +719,6 @@ class BossVisitSpectrum(AstraBase, common.BossVisitSpectrum):
     class Meta:
         table_name = 'boss_visit_spectrum'
         indexes = (
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
-            (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
             (('release', 'run2d', 'fieldid', 'mjd', 'catalogid'), True),
         )
 
