@@ -16,6 +16,7 @@ import decimal
 import pytest
 from sdssdb.peewee.sdss5db import database, targetdb
 
+requires_connected_database = True
 
 @pytest.mark.parametrize("database", [database], indirect=True)
 class TestTargetDb(object):
