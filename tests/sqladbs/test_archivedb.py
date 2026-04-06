@@ -15,6 +15,8 @@ from __future__ import print_function, division, absolute_import
 import pytest
 from sdssdb.sqlalchemy.archive import database
 
+requires_connected_database = True
+
 if database.connected:
     from sdssdb.sqlalchemy.archive import sas
 

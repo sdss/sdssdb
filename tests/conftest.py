@@ -60,9 +60,9 @@ def pytest_ignore_collect(path, config):
         if "pwdbs" in str(path):
             return True
 
-    # identify and ignore test modules where no local
-    # database is set up for those tests
-    if re.search("test_[a-z]+.py", str(path)):
+    # identify and ignore test modules that explicitly require
+    # a connected real database
+    if re.search(r"test_.*\.py$", str(path)):
         # get module name
         modname = inspect.getmodulename(path)
         # find and load the underlying module
@@ -70,6 +70,12 @@ def pytest_ignore_collect(path, config):
         foo = importlib.util.module_from_spec(spec)
         # execute load
         spec.loader.exec_module(foo)
+
+        # only skip modules that explicitly require a live db
+        requires_connected_database = getattr(foo, "requires_connected_database", False)
+        if not requires_connected_database:
+             return False
+
         # get the database from the module
         db = getattr(foo, "database", None)
         # check if db is connected

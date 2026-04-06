@@ -21,6 +21,8 @@ import factory
 import pytest
 from sdssdb.sqlalchemy.mangadb import database
 
+requires_connected_database = True
+
 if database.connected:
     from sdssdb.sqlalchemy.mangadb import datadb
 
