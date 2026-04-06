@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# flake8: noqa: E501,E741
+import operator
+from functools import reduce
+
 from peewee import (
     AutoField,
     BigBitField,
@@ -11,7 +15,9 @@ from peewee import (
     FloatField,
     IntegerField,
     TextField,
+    fn
 )
+from playhouse.hybrid import hybrid_method
 from playhouse.postgres_ext import ArrayField
 
 from ... import BaseModel
@@ -962,6 +968,33 @@ class Source(AstraCommon):
 
     class Meta:
         table_name = 'source'
+
+    @hybrid_method
+    def is_sdss5_target_bit_set(self, bit):
+        """
+        An expression to evaluate whether this source is assigned to the carton with the given bit position.
+
+        :param bit:
+            The carton bit position.
+        """
+        return (fn.length(self.sdss5_target_flags) > int(bit / 8)) & (
+            fn.get_bit(self.sdss5_target_flags, int(bit)) > 0
+        )
+
+    @hybrid_method
+    def is_sdss5_target_any_bit_set(self, bits):
+        """
+        An expression to evaluate whether this source is assigned to any of the cartons with the given bit positions.
+
+        :param bits:
+            A list of carton bit positions.
+        """
+        conditions = [
+            (fn.length(self.sdss5_target_flags) > int(bit / 8))
+            & (fn.get_bit(self.sdss5_target_flags, int(bit)) > 0)
+            for bit in bits
+        ]
+        return reduce(operator.or_, conditions)
 
 class Spectrum(AstraCommon):
     pk = AutoField()
