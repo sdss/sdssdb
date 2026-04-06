@@ -15,7 +15,7 @@ from peewee import (
 )
 from playhouse.postgres_ext import ArrayField
 
-from sdssdb.peewee.sdss5db.astra import base as common
+from sdssdb.peewee.sdss5db._astra import base as common
 
 
 class AstraBase(common.AstraCommon):

@@ -11,11 +11,11 @@ def _select_module(schema_name: str):
     """Select the correct astra ORM module"""
     schema_name = schema_name or "astra_050"
     if schema_name.startswith("astra_050"):
-        return ".astra.v050"
+        return "._astra.v050"
     if schema_name.startswith("astra_080"):
-        return ".astra.v080"
+        return "._astra.v080"
     if schema_name.startswith("astra_081"):
-        return ".astra.v081"
+        return "._astra.v081"
     raise ValueError(f"Unsupported astra schema: {schema_name}")
 
 # remove previously loaded models from the namespace

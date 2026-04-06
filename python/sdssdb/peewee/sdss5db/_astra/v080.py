@@ -15,7 +15,7 @@ from peewee import (
 )
 from playhouse.postgres_ext import ArrayField
 
-from sdssdb.peewee.sdss5db.astra import base as common
+from sdssdb.peewee.sdss5db._astra import base as common
 
 
 class AstraBase(common.AstraCommon):
@@ -128,7 +128,7 @@ class ApogeeVisitSpectrum(AstraBase, common.ApogeeVisitSpectrum):
     class Meta:
         table_name = 'apogee_visit_spectrum'
         indexes = (
-            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True)
+            (('release', 'apred', 'mjd', 'plate', 'telescope', 'field', 'fiber', 'prefix', 'reduction'), True),
             (('source_pk', 'telescope', 'mjd', 'fiber', 'plate', 'field'), False)
         )
 
