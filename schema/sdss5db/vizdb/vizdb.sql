@@ -45,7 +45,7 @@ ANALYZE vizdb.sdss_id_flat;
 -- REFRESH MATERIALIZED VIEW CONCURRENTLY vizdb.astra_visits WITH DATA;
 -- REFRESH MATERIALIZED VIEW CONCURRENTLY vizdb.sdssid_to_pipes WITH DATA;
 
--- helper view of all sources in astra 0.5.0 and 0.8.0
+-- helper view of all sources in astra 0.5.0, 0.8.0 and 0.8.1
 DROP MATERIALIZED VIEW IF EXISTS vizdb.astra_sources;
 CREATE SEQUENCE IF NOT EXISTS vizdb.astra_sources_pk_seq;
 
@@ -57,12 +57,16 @@ UNION ALL
 SELECT nextval('vizdb.astra_sources_pk_seq'::regclass) AS pk,
 pk as source_pk, sdss_id, '0.8.0'::text AS v_astra
 FROM astra_080.source
+UNION ALL
+SELECT nextval('vizdb.astra_sources_pk_seq'::regclass) AS pk,
+pk as source_pk, sdss_id, '0.8.1'::text AS v_astra
+FROM astra_081.source
 WITH DATA;
 
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.astra_sources USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.astra_sources USING BTREE(sdss_id);
 
--- helper view of all astra apogee/boss visits across 0.5.0 and 0.8.0
+-- helper view of all astra apogee/boss visits across 0.5.0, 0.8.0 and 0.8.1
 DROP MATERIALIZED VIEW IF EXISTS vizdb.astra_visits;
 CREATE SEQUENCE IF NOT EXISTS vizdb.astra_visits_pk_seq;
 CREATE MATERIALIZED VIEW vizdb.astra_visits AS
@@ -79,6 +83,12 @@ SELECT nextval('vizdb.astra_visits_pk_seq'::regclass) AS pk,
 FROM astra_080.apogee_visit_spectrum v
 JOIN astra_080.source a ON v.source_pk = a.pk
 UNION ALL
+-- 0.8.1
+SELECT nextval('vizdb.astra_visits_pk_seq'::regclass) AS pk,
+  v.source_pk, a.sdss_id, v.release, v.apred as version, v.telescope, v.mjd, 'apogee'::text AS pipeline, '0.8.1'::text AS v_astra
+FROM astra_081.apogee_visit_spectrum v
+JOIN astra_081.source a ON v.source_pk = a.pk
+UNION ALL
 -- astra boss visits
 -- 0.5.0
 SELECT nextval('vizdb.astra_visits_pk_seq'::regclass) AS pk,
@@ -91,6 +101,12 @@ SELECT nextval('vizdb.astra_visits_pk_seq'::regclass) AS pk,
   o.source_pk, a.sdss_id, o.release, o.run2d as version, o.telescope, o.mjd, 'boss'::text AS pipeline, '0.8.0'::text AS v_astra
 FROM astra_080.boss_visit_spectrum o
 JOIN astra_080.source a ON o.source_pk = a.pk
+UNION ALL
+-- 0.8.1
+SELECT nextval('vizdb.astra_visits_pk_seq'::regclass) AS pk,
+  o.source_pk, a.sdss_id, o.release, o.run2d as version, o.telescope, o.mjd, 'boss'::text AS pipeline, '0.8.1'::text AS v_astra
+FROM astra_081.boss_visit_spectrum o
+JOIN astra_081.source a ON o.source_pk = a.pk
 WITH DATA;
 
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.astra_visits USING BTREE(pk);
