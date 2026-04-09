@@ -7,6 +7,7 @@ CREATE TABLE boss_drp.boss_version (
     is_epoch BOOLEAN,
     is_custom BOOLEAN,
     custom_name VARCHAR,
+    label VARCHAR,
     sdssc2bv integer
     created timestamp with time zone,
     modified timestamp with time zone default NOW()

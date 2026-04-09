@@ -61,6 +61,7 @@ class BossVersion(Base):
     is_epoch: Mapped[Optional[bool]] = mapped_column(Boolean)
     is_custom: Mapped[Optional[bool]] = mapped_column(Boolean)
     custom_name: Mapped[Optional[str]] = mapped_column(String)
+    label: Mapped[Optional[str]] = mapped_column(String)
     created: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(True))
     modified: Mapped[Optional[datetime.datetime]] = mapped_column(
         DateTime(True), server_default=text("now()")
