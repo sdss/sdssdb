@@ -48,6 +48,7 @@ class BossVersion(BossBase):
     is_custom = BooleanField(null=True)
     custom_name = CharField(null=True)
     sdssc2bv = IntegerField(null=True)
+    label = CharField(null=True)
     created = DateTimeField(null=True)
     modified = DateTimeField(constraints=[SQL("DEFAULT now()")], null=True)
 
