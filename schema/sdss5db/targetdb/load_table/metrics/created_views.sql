@@ -16,7 +16,7 @@ join catalogdb.sdss_id_flat as sdssid on sdssid.catalogid = t.catalogid
 join targetdb.design_to_field as d2f on d2f.design_id = assn.design_id
 join targetdb.field as f on f.pk = d2f.field_pk
 join targetdb.version as v on v.pk = f.version_pk
-where v.plan = 'iota-1';
+where v.plan = 'iota-1' and f.overplan_pk is null;
 
 CREATE MATERIALIZED VIEW sandbox.carton_to_sdssid
 AS
