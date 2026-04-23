@@ -283,6 +283,7 @@ CREATE TABLE vizdb.multiplex (
     plate_or_fps_field INT4,
     mjd INT4,
     run2d TEXT,
+    coadd TEXT,
     apred_vers TEXT,
     drpver TEXT,
     version TEXT,

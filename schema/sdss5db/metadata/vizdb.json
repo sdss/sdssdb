@@ -903,6 +903,15 @@
     {
       "schema": "vizdb",
       "table_name": "multiplex",
+      "column_name": "coadd",
+      "display_name": "coadd",
+      "sql_type": "text",
+      "description": "either epoch, daily",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "multiplex",
       "column_name": "apred_vers",
       "display_name": "apred_vers",
       "sql_type": "TEXT",
