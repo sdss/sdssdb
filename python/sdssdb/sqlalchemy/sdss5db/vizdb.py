@@ -193,7 +193,7 @@ class Multiplex(Base):
     plate_or_fps_field: Mapped[Optional[int]] = mapped_column("plate_or_fps_field", Integer)
     mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
     run2d: Mapped[Optional[str]] = mapped_column("run2d", Text)
-    run1d: Mapped[Optional[str]] = mapped_column("run1d", Text)
+    coadd: Mapped[Optional[str]] = mapped_column("coadd", Text)
     apred_vers: Mapped[Optional[str]] = mapped_column("apred_vers", Text)
     drpver: Mapped[Optional[str]] = mapped_column("drpver", Text)
     racen: Mapped[Optional[float]] = mapped_column("racen", Float)

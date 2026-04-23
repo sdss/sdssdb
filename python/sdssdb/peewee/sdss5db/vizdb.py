@@ -137,6 +137,7 @@ class Multiplex(VizBase):
     plate_or_fps_field = IntegerField(null=True)
     mjd = IntegerField(null=True)
     run2d = TextField(null=True)
+    coadd = TextField(null=True)
     apred_vers = TextField(null=True)
     drpver = TextField(null=True)
     version = TextField(null=True)
