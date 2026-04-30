@@ -170,7 +170,7 @@ class AllSpec(Base):
     file_spec: Mapped[Optional[str]] = mapped_column("file_spec", Text)
     apstar_id: Mapped[Optional[str]] = mapped_column("apstar_id", Text)
     visit_id: Mapped[Optional[str]] = mapped_column("visit_id", Text)
-    has_mwmstar: Mapped[Optional[bool]] = mapped_column("has_mwmstar", Boolean)
+    has_mwmstar: Mapped[Optional[list[str]]] = mapped_column(ARRAY(Text()))
     mangaid: Mapped[Optional[str]] = mapped_column("mangaid", Text)
     specobjid: Mapped[Optional[float]] = mapped_column("specobjid", Numeric(29))
     created: Mapped[Optional[datetime.datetime]] = mapped_column("created", DateTime)
