@@ -252,6 +252,7 @@ CREATE TABLE vizdb.allspec (
     telescope TEXT,
     apstar_id TEXT,
     visit_id TEXT,
+    has_mwmStar TEXT[],
     mangaid TEXT,
     file_spec TEXT,
     specobjid NUMERIC(29),

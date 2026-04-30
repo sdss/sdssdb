@@ -770,8 +770,8 @@
       "table_name": "allspec",
       "column_name": "has_mwmStar",
       "display_name": "has mwmStar",
-      "sql_type": "boolean",
-      "description": "Has MWM Star",
+      "sql_type": "text",
+      "description": "list of v_astra values if this sdss_id has MWM Star ",
       "unit": ""
     },
     {
