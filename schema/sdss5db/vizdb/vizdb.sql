@@ -253,7 +253,7 @@ CREATE TABLE vizdb.allspec (
     apstar_id TEXT,
     visit_id TEXT,
     has_mwmStar BOOLEAN,
-    has_mwmStar TEXT[],
+    astra_versions TEXT[],
     mangaid TEXT,
     file_spec TEXT,
     specobjid NUMERIC(29),
