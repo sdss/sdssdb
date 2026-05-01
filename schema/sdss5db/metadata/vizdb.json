@@ -770,8 +770,17 @@
       "table_name": "allspec",
       "column_name": "has_mwmStar",
       "display_name": "has mwmStar",
+      "sql_type": "boolean",
+      "description": "Has MWM Star",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
+      "table_name": "allspec",
+      "column_name": "astra_versions",
+      "display_name": "has astra_versions",
       "sql_type": "text",
-      "description": "list of v_astra values if this sdss_id has MWM Star ",
+      "description": "list of v_astra values if this sdss_id has_mwmStar=True",
       "unit": ""
     },
     {
