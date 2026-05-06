@@ -38,6 +38,8 @@ CREATE TABLE apogee_drp.rv_visit (
     XCORR_VREL  real,  --/U km/s --/D Doppler shift of individual visit spectrum relative to the best-fit Doppler model using cross-correlation
     XCORR_VRELERR real,  --/U km/s --/D Error in doppler shift for individual visi
     XCORR_VRAD  real,  --/U km/s --/D Barycentric radial velocity for individual visit using cross-correlation with best-fit Doppler model
+    RV_CCPFWHM  real, --/U km/s --/D FWHM of the cross-correlation peak of the spectrum and best-fit Doppler model
+    RV_AUTOFWHM real, --/U km/s --/D FWHM of the cross-correlation peak of best-fit Doppler model with itself
     N_COMPONENTS  int,  --/D Number of components from cross correlation 
     RV_COMPONENTS real[3],  --/U km/s --/D RV offset for components
     APRED_VERS  text,  --/D APOGEE reduction version
