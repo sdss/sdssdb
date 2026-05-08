@@ -2,13 +2,17 @@
 
 This document records the main changes to the `sdssdb` code.
 
-## Next release
+## 1.1.0 (2026-05-08)
 
 ### ✨ Improved
 
 * [#310](https://github.com/sdss/sdssdb/pr/310) Support Peewee 4.0.
 * [#310](https://github.com/sdss/sdssdb/pr/310) Support passing a full database URI to `PeeweeDatabaseConnection` and `SQLADatabaseConnection`.
 * [#311](https://github.com/sdss/sdssdb/pr/311) Update the `vizdb.sdss_id_to_astra_pipeline` update script.
+* [#312](https://github.com/sdss/sdssdb/pr/312) Updates columns to vizdb.sdssid_to_pipes table
+* [#314](https://github.com/sdss/sdssdb/pr/314) Splits peewee astra orm by schema version
+* [#315](https://github.com/sdss/sdssdb/pr/315) Adds label column to boss_drp.boss_version
+* [#316](https://github.com/sdss/sdssdb/pr/316) DR20 allspec updates
 
 ### 🏷️ Changed
 
