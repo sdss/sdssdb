@@ -22,17 +22,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Check lock file
+        run: |
+          uv lock --check
+
       - name: Create release
         uses: taiki-e/create-gh-release-action@v1
         with:
           title: sdssdb $version
           changelog: CHANGELOG.md
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          enable-cache: true
 
       - name: Set up Python
         uses: actions/setup-python@v6
