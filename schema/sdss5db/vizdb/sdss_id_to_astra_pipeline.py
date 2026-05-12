@@ -77,7 +77,7 @@ def update_sdss_id_to_astra_pipeline_table(
     except Exception as e:
         raise ConnectionError(f"Could not connect to the database: {e}")
 
-    if conn.closed:
+    if conn is None or conn.closed:
         raise ConnectionError("Could not connect to the database.")
 
     console.print(f"[green]Connected to database at {uri}.[/]")
