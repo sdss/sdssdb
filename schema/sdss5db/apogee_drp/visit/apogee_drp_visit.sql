@@ -84,6 +84,8 @@ CREATE TABLE apogee_drp.visit (
     STARFLAGS	text,  --/D Star-level quality flags as comma-delimited ASCII text
     DATEOBS	text,  --/D Date of observation (YYYY-MM-DDTHH:MM:SS.SSS)
     JD	double precision,  --/D Julian date of observation
+    RELFLUX real,  --/D Relative flux throughput for this fiber compared to other fibers in the exposure.
+    MTPFLUX real,  --/D Relative fiber throughput derived from MTP calibration flux measurements.
     CREATED timestamp with time zone DEFAULT now() NOT NULL,  --/D Timestamp the visit record was created
     UNIQUE(APRED_VERS,TELESCOPE,PLATE,MJD,FIBERID)
 );
