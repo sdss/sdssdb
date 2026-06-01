@@ -78,6 +78,7 @@ class SDSSidToPipes(VizBase):
     release = TextField(null=True)
     obs = TextField(null=True)
     mjd = IntegerField(null=True)
+    has_legacy_data = BooleanField(null=False)
 
     class Meta:
         table_name = "sdssid_to_pipes"
