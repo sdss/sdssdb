@@ -5,6 +5,7 @@
 from peewee import (
     AutoField,
     BigIntegerField,
+    BitField,
     BooleanField,
     DateTimeField,
     FloatField,
@@ -647,7 +648,13 @@ class MwmSpectrumProductStatus(AstraBase):
     t_overhead = FloatField(null=True)
     tag = TextField(index=True)
     v_astra_major_minor = IntegerField()
-    flags = BigIntegerField()
+    flags = BitField(default=0, help_text="Flags for the status of the spectrum products")
+    flag_skipped_because_no_sdss_id = flags.flag(2**0) # "Source was skipped because no SDSS ID exists"
+    flag_skipped_because_not_stellar_like = flags.flag(2**1) # "Source was skipped because it is not stellar-like"
+    flag_attempted_but_exception = flags.flag(2**2) # "An exception was raised during processing"
+    flag_created_mwm_visit = flags.flag(2**3) # "MWM visit spectrum was created"
+    flag_created_mwm_star = flags.flag(2**4) # "MWM star spectrum was created"
+
     class Meta:
         table_name = 'mwm_spectrum_product_status'
         indexes = (

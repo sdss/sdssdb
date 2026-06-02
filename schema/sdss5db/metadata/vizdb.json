@@ -317,6 +317,15 @@
     },
     {
       "schema": "vizdb",
+      "table_name": "sdssid_to_pipes",
+      "column_name": "has_legacy_data",
+      "display_name": "Has Legacy Data",
+      "sql_type": "boolean",
+      "description": "Flag indicating if the sdss_id has legacy data available (pre SDSS-V)",
+      "unit": ""
+    },
+    {
+      "schema": "vizdb",
       "table_name": "releases",
       "column_name": "release",
       "display_name": "Data Release",

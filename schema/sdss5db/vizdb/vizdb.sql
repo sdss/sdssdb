@@ -145,7 +145,15 @@ SELECT
   -- release / obs / mjd come from the joined observation rows
   o.release,
   lower(o.obs) AS obs,
-  o.mjd
+  o.mjd,
+
+  -- has legacy data from pre SDSS-V
+  EXISTS (
+    SELECT 1
+    FROM vizdb.allspec aspec
+    WHERE aspec.sdss_id = s.sdss_id
+      AND aspec.sdss_phase < 5
+  ) AS has_legacy_data
 
 FROM vizdb.sdss_id_stacked s
 LEFT JOIN (
@@ -174,7 +182,7 @@ WITH DATA;
 CREATE UNIQUE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(pk);
 CREATE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(sdss_id);
 CREATE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(mjd);
-
+CREATE INDEX CONCURRENTLY ON vizdb.sdssid_to_pipes USING BTREE(has_legacy_data);
 
 CREATE TABLE vizdb.db_metadata (
     pk SERIAL PRIMARY KEY NOT NULL,

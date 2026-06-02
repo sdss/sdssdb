@@ -104,6 +104,7 @@ class SDSSidToPipes(Base):
     release: Mapped[Optional[str]] = mapped_column("release", Text)
     obs: Mapped[Optional[str]] = mapped_column("obs", Text)
     mjd: Mapped[Optional[int]] = mapped_column("mjd", Integer)
+    has_legacy_data: Mapped[Optional[bool]] = mapped_column("has_legacy_data", Boolean)
 
 
 class Releases(Base):
