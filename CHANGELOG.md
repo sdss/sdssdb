@@ -2,6 +2,13 @@
 
 This document records the main changes to the `sdssdb` code.
 
+## 1.1.1 (2026-06-002)
+
+### Improved
+
+* [#318](https://github.com/sdss/sdssdb/pull/318) ORM tweaks to vizdb, astra
+* [#317](https://github.com/sdss/sdssdb/pull/317) idna cve bump
+
 ## 1.1.0 (2026-05-08)
 
 ### ✨ Improved
