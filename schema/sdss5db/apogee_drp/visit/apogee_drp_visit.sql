@@ -80,8 +80,8 @@ CREATE TABLE apogee_drp.visit (
     CATEGORY			text,  --/D SDSS-V category
     TARGFLAGS	text,  --/D Targeting flags
     SNR	real,  --/D Median signal-to-noise ratio per pixel
-    STARFLAG	integer,  --/D Star-level quality flags as integer
-    STARFLAGS	text,  --/D Star-level quality flags as comma-delimited ASCII text
+    VISITFLAG	integer,  --/D Visit-level quality flags as integer
+    VISITFLAGS	text,  --/D Visit-level quality flags as comma-delimited ASCII text
     DATEOBS	text,  --/D Date of observation (YYYY-MM-DDTHH:MM:SS.SSS)
     JD	double precision,  --/D Julian date of observation
     RELFLUX real,  --/D Relative flux throughput for this fiber compared to other fibers in the exposure.

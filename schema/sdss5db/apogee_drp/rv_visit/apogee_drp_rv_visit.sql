@@ -45,8 +45,8 @@ CREATE TABLE apogee_drp.rv_visit (
     APRED_VERS  text,  --/D APOGEE reduction version
     V_APRED     text,  --/D Git hash string of apogee_drp software used
     GOODVISIT   bool, --/D Boolean flag indicating this visit was used in the combined spectrum and average RV
-    STARFLAG	integer,  --/D Quality flags as integer
-    STARFLAGS	text,  --/D Quality flags as comma-delimited ASCII text
+    VISITFLAG	integer,  --/D Quality flags as integer
+    VISITFLAGS	text,  --/D Quality flags as comma-delimited ASCII text
     CREATED timestamp with time zone DEFAULT now() NOT NULL,  --/D Timestamp the rv_visit record was created
     UNIQUE(APRED_VERS,TELESCOPE,PLATE,MJD,FIBERID,STARVER)
 );
