@@ -3123,5 +3123,5 @@ class VIRAC2(CatalogdbModel):
     z_n_obs = SmallIntegerField(null=True)
 
     class Meta:
-        table_name = "sdss_id_to_catalog"
+        table_name = "virac2"
         use_reflection = False
