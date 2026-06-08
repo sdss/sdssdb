@@ -2,6 +2,13 @@
 
 This document records the main changes to the `sdssdb` code.
 
+## Next release
+
+## New
+
+* Models and schema for `virac2`.
+
+
 ## 1.1.1 (2026-06-002)
 
 ### Improved
