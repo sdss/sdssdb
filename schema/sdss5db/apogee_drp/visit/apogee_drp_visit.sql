@@ -30,6 +30,8 @@ CREATE TABLE apogee_drp.visit (
     TOO         boolean, --/D SDSS-V Target of Opportunity
     RA	double precision,  --/U deg --/D Right ascension, J2000
     DEC	double precision,  --/U deg --/D Declination, J2000
+    DELTA_RA   double precision, --/U deg --/D offset in RA
+    DELTA_DEC  double precision, --/U deg --/D offset in DEC
     GLON	double precision,  --/U deg --/D Galactic longitude
     GLAT	double precision,  --/U deg --/D Galactic latitude
     JMAG	real,  --/D 2MASS J magnitude
