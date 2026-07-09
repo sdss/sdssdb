@@ -1852,6 +1852,114 @@ class CatalogToXMM_OM_SUSS_5_0(Base):
     best: Mapped[Optional[bool]] = mapped_column("best", Boolean, index=True)
 
 
+class CatalogToVIRAC2(Base):
+    __tablename__ = "catalog_to_virac2"
+
+    catalogid: Mapped[int] = mapped_column(
+        BigInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    target_id: Mapped[str] = mapped_column(
+        Text,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    version_id: Mapped[int] = mapped_column(
+        SmallInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    distance: Mapped[Optional[float]] = mapped_column(Float)
+    best: Mapped[bool] = mapped_column(Boolean, nullable=False, index=True)
+    plan_id: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    added_by_phase: Mapped[Optional[int]] = mapped_column(SmallInteger, nullable=True)
+
+
+class CatalogToAPOGLIMPSE(Base):
+    __tablename__ = "catalog_to_apoglimpse"
+
+    catalogid: Mapped[int] = mapped_column(
+        BigInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    target_id: Mapped[str] = mapped_column(
+        Text,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    version_id: Mapped[int] = mapped_column(
+        SmallInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    distance: Mapped[Optional[float]] = mapped_column(Float)
+    best: Mapped[bool] = mapped_column(Boolean, nullable=False, index=True)
+    plan_id: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    added_by_phase: Mapped[Optional[int]] = mapped_column(SmallInteger, nullable=True)
+
+
+class CatalogToDeepGLIMPSE(Base):
+    __tablename__ = "catalog_to_deep_glimpse"
+
+    catalogid: Mapped[int] = mapped_column(
+        BigInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    target_id: Mapped[str] = mapped_column(
+        Text,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    version_id: Mapped[int] = mapped_column(
+        SmallInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    distance: Mapped[Optional[float]] = mapped_column(Float)
+    best: Mapped[bool] = mapped_column(Boolean, nullable=False, index=True)
+    plan_id: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    added_by_phase: Mapped[Optional[int]] = mapped_column(SmallInteger, nullable=True)
+
+
+class CatalogToGLIMPSE_Proper(Base):
+    __tablename__ = "catalog_to_glimpse_proper"
+
+    catalogid: Mapped[int] = mapped_column(
+        BigInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    target_id: Mapped[str] = mapped_column(
+        Text,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    version_id: Mapped[int] = mapped_column(
+        SmallInteger,
+        primary_key=True,
+        nullable=False,
+        index=True,
+    )
+    distance: Mapped[Optional[float]] = mapped_column(Float)
+    best: Mapped[bool] = mapped_column(Boolean, nullable=False, index=True)
+    plan_id: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    added_by_phase: Mapped[Optional[int]] = mapped_column(SmallInteger, nullable=True)
+
+
 class Catalog_ver25_to_ver31_full_all(Base):
     __tablename__ = "catalog_ver25_to_ver31_full_all"
 
@@ -12048,7 +12156,7 @@ class APOGLIMPSE(Base):
     hats_npix: Mapped[Optional[int]] = mapped_column(BigInteger)
 
 
-class Deep_GLIMPSE(Base):
+class DeepGLIMPSE(Base):
     __tablename__ = "deep_glimpse"
 
     designation: Mapped[Optional[str]] = mapped_column(Text, primary_key=True)
