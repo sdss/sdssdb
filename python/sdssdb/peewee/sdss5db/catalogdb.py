@@ -3128,7 +3128,7 @@ class VIRAC2(CatalogdbModel):
 
 
 class APOGLIMPSE(CatalogdbModel):
-    designation = TextField()
+    designation = TextField(primary_key=True)
     tmass_designation = TextField()
     tmass_cntr = BigIntegerField()
     l = DoubleField()
@@ -3140,12 +3140,12 @@ class APOGLIMPSE(CatalogdbModel):
     dra = DoubleField()
     ddec = DoubleField()
     csf = BigIntegerField()
-    mag_J = DoubleField()
-    dJ_m = DoubleField()
-    mag_H = DoubleField()
-    dH_m = DoubleField()
-    mag_Ks = DoubleField()
-    dKs_m = DoubleField()
+    mag_j = DoubleField()
+    dj_m = DoubleField()
+    mag_h = DoubleField()
+    dh_m = DoubleField()
+    mag_ks = DoubleField()
+    dks_m = DoubleField()
     mag3_6 = DoubleField()
     d3_6m = DoubleField()
     mag4_5 = DoubleField()
@@ -3154,12 +3154,12 @@ class APOGLIMPSE(CatalogdbModel):
     d5_8m = DoubleField()
     mag8_0 = DoubleField()
     d8_0m = DoubleField()
-    f_J = DoubleField()
-    df_J = DoubleField()
-    f_H = DoubleField()
-    df_H = DoubleField()
-    f_Ks = DoubleField()
-    df_Ks = DoubleField()
+    f_j = DoubleField()
+    df_j = DoubleField()
+    f_h = DoubleField()
+    df_h = DoubleField()
+    f_ks = DoubleField()
+    df_ks = DoubleField()
     f3_6 = DoubleField()
     df3_6 = DoubleField()
     f4_5 = DoubleField()
@@ -3176,9 +3176,9 @@ class APOGLIMPSE(CatalogdbModel):
     sky_4_5 = DoubleField()
     sky_5_8 = DoubleField()
     sky_8_0 = DoubleField()
-    sn_J = DoubleField()
-    sn_H = DoubleField()
-    sn_Ks = DoubleField()
+    sn_j = DoubleField()
+    sn_h = DoubleField()
+    sn_ks = DoubleField()
     sn_3_6 = DoubleField()
     sn_4_5 = DoubleField()
     sn_5_8 = DoubleField()
@@ -3195,9 +3195,9 @@ class APOGLIMPSE(CatalogdbModel):
     n4_5 = BigIntegerField()
     n5_8 = BigIntegerField()
     n8_0 = BigIntegerField()
-    sqf_J = BigIntegerField()
-    sqf_H = BigIntegerField()
-    sqf_Ks = BigIntegerField()
+    sqf_j = BigIntegerField()
+    sqf_h = BigIntegerField()
+    sqf_ks = BigIntegerField()
     sqf_3_6 = BigIntegerField()
     sqf_4_5 = BigIntegerField()
     sqf_5_8 = BigIntegerField()
@@ -3210,6 +3210,14 @@ class APOGLIMPSE(CatalogdbModel):
     hats_norder = SmallIntegerField()
     hats_dir = BigIntegerField()
     hats_npix = BigIntegerField()
+    tmass_cntr_sdss = BigIntegerField()
+
+    twomass = ForeignKeyField(
+        TwoMassPSC,
+        field="pts_key",
+        column_name="tmass_cntr_sdss",
+        backref="+",
+    )
 
     class Meta:
         table_name = "apoglimpse"
@@ -3217,7 +3225,7 @@ class APOGLIMPSE(CatalogdbModel):
 
 
 class Deep_GLIMPSE(CatalogdbModel):
-    designation = TextField()
+    designation = TextField(primary_key=True)
     tmass_designation = TextField()
     tmass_cntr = BigIntegerField()
     l = DoubleField()
@@ -3229,12 +3237,12 @@ class Deep_GLIMPSE(CatalogdbModel):
     dra = DoubleField()
     ddec = DoubleField()
     csf = BigIntegerField()
-    mag_J = DoubleField()
-    dJ_m = DoubleField()
-    mag_H = DoubleField()
-    dH_m = DoubleField()
-    mag_Ks = DoubleField()
-    dKs_m = DoubleField()
+    mag_j = DoubleField()
+    dj_m = DoubleField()
+    mag_h = DoubleField()
+    dh_m = DoubleField()
+    mag_ks = DoubleField()
+    dks_m = DoubleField()
     mag3_6 = DoubleField()
     d3_6m = DoubleField()
     mag4_5 = DoubleField()
@@ -3243,12 +3251,12 @@ class Deep_GLIMPSE(CatalogdbModel):
     d5_8m = DoubleField()
     mag8_0 = DoubleField()
     d8_0m = DoubleField()
-    f_J = DoubleField()
-    df_J = DoubleField()
-    f_H = DoubleField()
-    df_H = DoubleField()
-    f_Ks = DoubleField()
-    df_Ks = DoubleField()
+    f_j = DoubleField()
+    df_j = DoubleField()
+    f_h = DoubleField()
+    df_h = DoubleField()
+    f_ks = DoubleField()
+    df_ks = DoubleField()
     f3_6 = DoubleField()
     df3_6 = DoubleField()
     f4_5 = DoubleField()
@@ -3265,9 +3273,9 @@ class Deep_GLIMPSE(CatalogdbModel):
     sky_4_5 = DoubleField()
     sky_5_8 = DoubleField()
     sky_8_0 = DoubleField()
-    sn_J = DoubleField()
-    sn_H = DoubleField()
-    sn_Ks = DoubleField()
+    sn_j = DoubleField()
+    sn_h = DoubleField()
+    sn_ks = DoubleField()
     sn_3_6 = DoubleField()
     sn_4_5 = DoubleField()
     sn_5_8 = DoubleField()
@@ -3284,9 +3292,9 @@ class Deep_GLIMPSE(CatalogdbModel):
     n4_5 = BigIntegerField()
     n5_8 = BigIntegerField()
     n8_0 = BigIntegerField()
-    sqf_J = BigIntegerField()
-    sqf_H = BigIntegerField()
-    sqf_Ks = BigIntegerField()
+    sqf_j = BigIntegerField()
+    sqf_h = BigIntegerField()
+    sqf_ks = BigIntegerField()
     sqf_3_6 = BigIntegerField()
     sqf_4_5 = BigIntegerField()
     sqf_5_8 = BigIntegerField()
@@ -3299,6 +3307,14 @@ class Deep_GLIMPSE(CatalogdbModel):
     hats_norder = SmallIntegerField()
     hats_dir = BigIntegerField()
     hats_npix = BigIntegerField()
+    tmass_cntr_sdss = BigIntegerField()
+
+    twomass = ForeignKeyField(
+        TwoMassPSC,
+        field="pts_key",
+        column_name="tmass_cntr_sdss",
+        backref="+",
+    )
 
     class Meta:
         table_name = "deep_glimpse"
@@ -3306,7 +3322,7 @@ class Deep_GLIMPSE(CatalogdbModel):
 
 
 class GLIMPSE_Proper(CatalogdbModel):
-    designation = TextField()
+    designation = TextField(primary_key=True)
     tmass_designation = TextField()
     tmass_cntr = BigIntegerField()
     l = DoubleField()
@@ -3318,12 +3334,12 @@ class GLIMPSE_Proper(CatalogdbModel):
     dra = DoubleField()
     ddec = DoubleField()
     csf = BigIntegerField()
-    mag_J = DoubleField()
-    dJ_m = DoubleField()
-    mag_H = DoubleField()
-    dH_m = DoubleField()
-    mag_Ks = DoubleField()
-    dKs_m = DoubleField()
+    mag_j = DoubleField()
+    dj_m = DoubleField()
+    mag_h = DoubleField()
+    dh_m = DoubleField()
+    mag_ks = DoubleField()
+    dks_m = DoubleField()
     mag3_6 = DoubleField()
     d3_6m = DoubleField()
     mag4_5 = DoubleField()
@@ -3332,12 +3348,12 @@ class GLIMPSE_Proper(CatalogdbModel):
     d5_8m = DoubleField()
     mag8_0 = DoubleField()
     d8_0m = DoubleField()
-    f_J = DoubleField()
-    df_J = DoubleField()
-    f_H = DoubleField()
-    df_H = DoubleField()
-    f_Ks = DoubleField()
-    df_Ks = DoubleField()
+    f_j = DoubleField()
+    df_j = DoubleField()
+    f_h = DoubleField()
+    df_h = DoubleField()
+    f_ks = DoubleField()
+    df_ks = DoubleField()
     f3_6 = DoubleField()
     df3_6 = DoubleField()
     f4_5 = DoubleField()
@@ -3354,9 +3370,9 @@ class GLIMPSE_Proper(CatalogdbModel):
     sky_4_5 = DoubleField()
     sky_5_8 = DoubleField()
     sky_8_0 = DoubleField()
-    sn_J = DoubleField()
-    sn_H = DoubleField()
-    sn_Ks = DoubleField()
+    sn_j = DoubleField()
+    sn_h = DoubleField()
+    sn_ks = DoubleField()
     sn_3_6 = DoubleField()
     sn_4_5 = DoubleField()
     sn_5_8 = DoubleField()
@@ -3373,9 +3389,9 @@ class GLIMPSE_Proper(CatalogdbModel):
     n4_5 = BigIntegerField()
     n5_8 = BigIntegerField()
     n8_0 = BigIntegerField()
-    sqf_J = BigIntegerField()
-    sqf_H = BigIntegerField()
-    sqf_Ks = BigIntegerField()
+    sqf_j = BigIntegerField()
+    sqf_h = BigIntegerField()
+    sqf_ks = BigIntegerField()
     sqf_3_6 = BigIntegerField()
     sqf_4_5 = BigIntegerField()
     sqf_5_8 = BigIntegerField()
@@ -3388,6 +3404,14 @@ class GLIMPSE_Proper(CatalogdbModel):
     hats_norder = SmallIntegerField()
     hats_dir = BigIntegerField()
     hats_npix = BigIntegerField()
+    tmass_cntr_sdss = BigIntegerField()
+
+    twomass = ForeignKeyField(
+        TwoMassPSC,
+        field="pts_key",
+        column_name="tmass_cntr_sdss",
+        backref="+",
+    )
 
     class Meta:
         table_name = "glimpse_proper"
