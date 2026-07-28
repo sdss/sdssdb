@@ -54,6 +54,7 @@ DTYPE_TO_FIELD = {
     "f4": peewee.FloatField,
     "f8": peewee.DoubleField,
     "S([0-9]+)": peewee.CharField,
+    "U([0-9]+)": peewee.CharField,
 }
 
 

@@ -7,6 +7,7 @@ This document records the main changes to the `sdssdb` code.
 ## New
 
 * Models and schema for `virac2`, `apoglimpse`, `deep_glimpse`, and `glimpse_proper`.
+* Support unicode columns in `create_model_from_table()`.
 
 
 ## 1.1.1 (2026-06-002)
