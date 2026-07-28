@@ -2,7 +2,7 @@
 
 This document records the main changes to the `sdssdb` code.
 
-## Next release
+## 1.1.2 ((2026-07-28))
 
 ## New
 
