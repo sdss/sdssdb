@@ -26,12 +26,11 @@ if TYPE_CHECKING:
 def create_sdss_id_to_catalog_view(
     view_name: str = "sdss_id_to_catalog",
     schema: str = "catalogdb",
-    user: str | None = None,
+    uri: str | None = None,
     drop_existing: bool = False,
-    local: bool = False,
     show_query=False,
 ):
-    """Creates a view that maps SDSS IDs to parent catalogue PKs in ``pipelines.sdss.org``.
+    """Creates a view that maps SDSS IDs to parent catalogue PKs.
 
     Parameters
     ----------
@@ -39,13 +38,11 @@ def create_sdss_id_to_catalog_view(
         The name of the view to create.
     schema
         The schema where the view will be created.
-    user
-        The user to connect to the database. If not provided, the current user is used.
+    uri
+        The URI to connect to the database. If not provided, the default connection
+        to the pipelines database will be used.
     drop_existing
         Whether to drop the view if it already exists.
-    local
-        If `True`, will connect to the database in port 7602. This is useful if the ``pipelines``
-        database server port has been forwarded to the local machine.
     show_query
         If `True`, will print the query that will be executed.
 
@@ -55,13 +52,11 @@ def create_sdss_id_to_catalog_view(
     log.set_level(5)
     log.sh.setLevel(5)
 
-    if user is None:
+    if uri is None:
         user = getpass.getuser()
-
-    if local:
-        database.connect(user=user, host="localhost", port=7602)
-    else:
         database.connect(user=user, host="pipelines.sdss.org", port=5432)
+    else:
+        database.connect(uri)
 
     assert database.connected, "Database not connected."
 

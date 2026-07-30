@@ -2,9 +2,16 @@
 
 This document records the main changes to the `sdssdb` code.
 
+## Next release
+
+### ✨ Improved
+
+* The `create_sdss_id_to_catalog_view` now accepts an `uri` argument where a full PostgreSQL URI can be passed. The default behaviour, connecting to the pipelines database using the current user, has not changed. The `user` and `local` arguments have been removed as the same can be better accomplished using an URI.
+
+
 ## 1.1.2 ((2026-07-28))
 
-## New
+## 🚀 New
 
 * Models and schema for `virac2`, `apoglimpse`, `deep_glimpse`, and `glimpse_proper`.
 * Support unicode columns in `create_model_from_table()`.
@@ -12,7 +19,7 @@ This document records the main changes to the `sdssdb` code.
 
 ## 1.1.1 (2026-06-002)
 
-### Improved
+### ✨ Improved
 
 * [#318](https://github.com/sdss/sdssdb/pull/318) ORM tweaks to vizdb, astra
 * [#317](https://github.com/sdss/sdssdb/pull/317) idna cve bump
