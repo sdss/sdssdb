@@ -8,6 +8,10 @@ This document records the main changes to the `sdssdb` code.
 
 * The `create_sdss_id_to_catalog_view` now accepts an `uri` argument where a full PostgreSQL URI can be passed. The default behaviour, connecting to the pipelines database using the current user, has not changed. The `user` and `local` arguments have been removed as the same can be better accomplished using an URI.
 
+### 🔧 Fixed
+
+* Fix an issue in `DatabaseConnection.become()` with, at least, Peewee 4, in which `connection_params` returns parameters that are not accepted by `pgpasslib`.
+
 
 ## 1.1.2 ((2026-07-28))
 

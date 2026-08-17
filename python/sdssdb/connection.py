@@ -381,7 +381,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         if "dbname" not in dsn_params:
             dsn_params["dbname"] = self.dbname
 
-        self.connect_from_parameters(**dsn_params)
+        self.connect(**dsn_params)
 
     def become_admin(self, admin=None):
         """Becomes the admin user.
