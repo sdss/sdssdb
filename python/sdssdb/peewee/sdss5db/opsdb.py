@@ -204,7 +204,6 @@ class Quickred(OpsdbBase):
     snr_source = TextField()
     hmag_standard = FloatField()
     snr_standard_scale = FloatField()
-    snr_predict = FloatField()
     logsnr_hmag_coef_all = ArrayField(field_class=FloatField)
     zeropt = FloatField()
     dither_named = TextField()
