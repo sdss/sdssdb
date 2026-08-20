@@ -13,12 +13,15 @@ import importlib
 import os
 import re
 import socket
+import urllib.parse
 
-import pgpasslib
+from typing import TypedDict
+
 import six
+from typing_extensions import deprecated
 
 from sqlalchemy import MetaData, create_engine
-from sqlalchemy.engine import url
+from sqlalchemy.engine import URL
 from sqlalchemy.exc import OperationalError as OpError
 from sqlalchemy.ext.declarative import DeferredReflection
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -36,25 +39,59 @@ from sdssdb.utils.internals import get_database_columns
 __all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnection"]
 
 
-def _should_autoconnect():
+class ConnectionParams(TypedDict):
+    """Defines the connection parameters for a database connection."""
+
+    user: str | None
+    host: str | None
+    port: int | None
+    password: str | None
+    use_socket: bool
+
+
+def _evaluate_envvar_bool(envvar: str, default: bool = False) -> bool:
+    """Evaluates an environment variable as a boolean.
+
+    Returns False if the envvar is unset or set to "0" or "false", True otherwise.
+
+    """
+
+    envvar_value = os.environ.get(envvar, None)
+    if envvar_value is None:
+        return default
+
+    envvar_value = envvar_value.lower()
+    if envvar_value in ["0", "false"]:
+        return False
+
+    return True
+
+
+def _should_autoconnect() -> bool:
     """Determines whether we should autoconnect."""
 
-    if "SDSSDB_AUTOCONNECT" in os.environ:
-        envvar_autoconnect = os.environ["SDSSDB_AUTOCONNECT"].lower()
-        if envvar_autoconnect == "0" or envvar_autoconnect == "false":
-            return False
-    else:
-        return sdssdb.autoconnect
+    return _evaluate_envvar_bool("SDSSDB_AUTOCONNECT", default=sdssdb.autoconnect)
 
 
 def get_database_uri(
-    dbname: str,
+    connect_params: ConnectionParams | None = None,
+    dbname: str | None = None,
     host: str | None = None,
     port: int | None = None,
     user: str | None = None,
     password: str | None = None,
-):
+) -> str:
     """Returns the URI to the database."""
+
+    if connect_params is not None:
+        host = host if host is not None else connect_params.get("host", host)
+        port = port if port is not None else connect_params.get("port", port)
+        user = user if user is not None else connect_params.get("user", user)
+        password = password if password is not None else connect_params.get("password", password)
+        dbname = dbname if dbname is not None else connect_params.get("dbname", dbname)
+
+        if dbname is None:
+            raise ValueError("Database name is missing in connection parameters.")
 
     if user is None and password is None:
         auth: str = ""
@@ -71,6 +108,40 @@ def get_database_uri(
     return f"postgresql://{auth}{host_port}/{dbname}"
 
 
+def parse_uri(uri: str) -> tuple[str, ConnectionParams]:
+    """Parses a database URI and returns a dictionary with the parameters.
+
+    Returns a tuple with the database name and a dictionary with the connection parameters.
+
+    """
+
+    parsed = urllib.parse.urlparse(uri)
+
+    if parsed.scheme != "postgresql":
+        raise ValueError(f"Only PostgreSQL URIs are supported: {uri}")
+
+    dbname = parsed.path.strip("/")
+    if dbname == "":
+        raise ValueError("Database name is missing.")
+
+    return dbname, {
+        "user": parsed.username,
+        "password": parsed.password,
+        "host": parsed.hostname,
+        "port": parsed.port,
+        "use_socket": False,
+    }
+
+
+def is_uri(dbname_or_uri: str | None) -> bool:
+    """Returns whether a string is a database URI."""
+
+    if dbname_or_uri is None:
+        return False
+
+    return dbname_or_uri.startswith("postgresql://")
+
+
 class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     """A PostgreSQL database connection with profile and autoconnect features.
 
@@ -85,91 +156,134 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     Parameters
     ----------
-    dbname : str
-        The database name.
-    profile : str
+    dbname_or_uri
+        The database name or a connection URI.
+    profile
         The configuration profile to use. The profile defines the default
         user, database server hostname, and port for a given location. If
         not provided, the profile is automatically determined based on the
-        current domain, or defaults to ``local``.
-    autoconnect : bool or None
+        current domain, or defaults to ``local``. If an URI is provided, the
+        profile is ignored.
+    autoconnect
         Whether to autoconnect to the database using the profile parameters.
-        Requites `.dbname` to be set. If `None`, whether to autoconnect is
+        Requires `.dbname` to be set. If `None`, whether to autoconnect is
         defined, in order, by the existence of an environment variable
         ``$SDSSDB_AUTOCONNECT`` or by ``sdssdb.autoconnect``. If they are
         set to ``0`` or ``false`` the database won't autoconnect. Note that
         this must be set before importing any model classes.
-    dbversion : str
+    silent_on_fail
+        If `True`, does not show a warning if the connection fails.
+    dbversion
         A database version.  If specified, appends to dbname as
         "dbname_dbversion" and becomes the dbname used for connection strings.
-    use_psycopg3 : bool
-        Whether to use psycopg3 instead of psycopg2. If `None`, defaults to the value of the
-        environment variable ``$SDSSDB_PSYCOPG3`` (which defaults to `True` if not set).
+    use_socket
+        If `True`, uses a socket connection instead of TCP/IP.
+    use_psycopg3
+        Whether to use psycopg3 instead of psycopg2. If `None`, defaults to the
+        value of the environment variable ``$SDSSDB_PSYCOPG3`` (which defaults to
+        `True` if not set).
 
     """
 
     #: The database name.
-    dbname = None
+    dbname: str | None = None
 
     #: Database version
-    dbversion = None
+    dbversion: str | None = None
 
     #: # Whether to call Model.reflect() in Peewee after a connection.
-    auto_reflect = True
+    auto_reflect: bool = True
 
     def __init__(
         self,
-        dbname=None,
-        profile=None,
-        autoconnect=None,
-        dbversion=None,
-        use_psycopg3=None,
+        dbname_or_uri: str | None = None,
+        profile: str | None = None,
+        autoconnect: bool | None = None,
+        silent_on_fail: bool = False,
+        dbversion: str | None = None,
+        use_socket: bool = False,
+        use_psycopg3: bool | None = None,
     ):
-        self.profile = None
-        self._config = {}
+        self.profile: str | None = None
 
-        self.dbname = dbname if dbname else self.dbname
-        self.dbversion = dbversion or self.dbversion
-        if self.dbversion:
-            self.dbname = f"{self.dbname}_{self.dbversion}"
+        self._connection_params: ConnectionParams | None = None
 
-        self.set_profile(profile=profile, connect=False)
+        if is_uri(dbname_or_uri):
+            assert isinstance(dbname_or_uri, str)
+            self.dbname, self._connection_params = parse_uri(dbname_or_uri)
+        elif dbname_or_uri is not None:
+            self.dbname = dbname_or_uri
 
-        if use_psycopg3 is None:
-            use_psycopg3 = os.environ.get("SDSSDB_PSYCOPG3", "true").lower() in ["true", "1"]
-        self.use_psycopg3 = use_psycopg3
+        self.dbversion: str | None = dbversion or self.dbversion
+        if self.dbversion is not None and self.dbname is not None:
+            if not self.dbname.endswith(f"_{self.dbversion}"):
+                self.dbname = f"{self.dbname}_{self.dbversion}"
+
+        if profile is not None or self._connection_params is None:
+            self.set_profile(profile=profile, connect=False)
+
+        if self._connection_params is not None:
+            self._connection_params["use_socket"] = use_socket
+
+        self.use_psycopg3 = (
+            _evaluate_envvar_bool("SDSSDB_PSYCOPG3", default=True)
+            if use_psycopg3 is None
+            else use_psycopg3
+        )
 
         if autoconnect is None:
             autoconnect = _should_autoconnect()
 
         if autoconnect and self.dbname:
-            self.connect(dbname=self.dbname, silent_on_fail=True)
+            self.connect(silent_on_fail=silent_on_fail)
 
     def __repr__(self):
         return "<{} (dbname={!r}, profile={!r}, connected={})>".format(
             self.__class__.__name__,
             self.dbname,
-            self.profile,
+            self.profile if self.profile is not None else "none",
             self.connected,
         )
 
-    def set_profile(self, profile=None, connect=True, **params):
+    @property
+    def uri(self) -> str:
+        """Returns the URI to the database connection."""
+
+        if self._connection_params is None and self.dbname is None:
+            raise RuntimeError("Not enough information to generate URI.")
+
+        return get_database_uri(connect_params=self._connection_params, dbname=self.dbname)
+
+    def set_profile(
+        self,
+        profile: str | None = None,
+        user: str | None = None,
+        host: str | None = None,
+        port: int | None = None,
+        use_socket: bool | None = None,
+        connect: bool = True,
+    ) -> bool:
         """Sets the profile from the configuration file.
 
         Parameters
         -----------
-        profile : str
+        profile
             The profile to set. If `None`, uses the domain name to
             determine the profile.
-        connect : bool
-            If True, tries to connect to the database using the new profile.
-        params
-            Connection parameters (``user``, ``host``, ``port``, ``password``)
-            that will override the profile values.
+        user
+            Overrides the profile database user.
+        host
+            Overrides the profile database host.
+        port
+            Overrides the profile database port.
+        use_socket
+            If `True`, uses a socket connection instead of TCP/IP.
+        connect
+            If `True`, tries to connect to the database using the new profile.
 
         Returns
         -------
-        connected : bool
+        connected
             Returns True if the database is connected.
 
         """
@@ -177,143 +291,147 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         previous_profile = self.profile
 
         if profile is not None:
-            assert profile in config, "profile not found in configuration file."
+            if profile not in config:
+                raise ValueError("profile not found in configuration file.")
+
             self.profile = profile
-            self._config = config[profile].copy()
+            profile_config = config[profile].copy()
 
         else:
             # Get hostname
             hostname = socket.getfqdn()
-
-            # Initially set location to local.
-            self.profile = "local"
-            self._config = config[self.profile].copy()
 
             # Tries to find a profile whose domain matches the hostname
             for profile in config:
                 if "domain" in config[profile] and config[profile]["domain"] is not None:
                     if re.match(config[profile]["domain"], hostname):
                         self.profile = profile
-                        self._config = config[profile].copy()
+                        profile_config = config[profile].copy()
                         # If the profile host matches the current hostname set the
                         # value to None to force using localhost to prevent cases
                         # in which the loopback is not configured properly in PostgreSQL.
-                        if hostname == self._config["host"]:
-                            self._config["host"] = None
+                        if hostname == profile_config["host"]:
+                            profile_config["host"] = None
                         break
+            else:
+                # If no profile was found, use the local profile.
+                self.profile = "local"
+                profile_config = config[self.profile].copy()
 
-        self._config.update(params)
+        if user is not None:
+            profile_config["user"] = user
+        if host is not None:
+            profile_config["host"] = host
+        if port is not None:
+            profile_config["port"] = port
+        if use_socket is not None:
+            profile_config["use_socket"] = use_socket
+
+        self._connection_params: ConnectionParams = {
+            "user": profile_config.get("user", None),
+            "host": profile_config.get("host", None),
+            "port": profile_config.get("port", None),
+            "password": profile_config.get("password", None),
+            "use_socket": profile_config.get("use_socket", False),
+        }
 
         if connect:
             if self.connected and self.profile == previous_profile:
                 pass
             elif self.dbname is not None:
-                self.connect(**self._config)
+                self.connect()
 
         return self.connected
 
     @abc.abstractmethod
-    def _conn(self, dbname, **params):
+    def _conn(self) -> tuple[bool, ConnectionParams | None]:
         """Actually initialises the database connection.
 
         This method should be overridden depending on the ORM library being
         used. At the end, `.connected` should be set to True if the connection
         was successful.
 
+        Returns
+        -------
+        connected
+            Returns `True` if the database is connected.
+        connection_error
+            Returns the connection error if the connection failed, or `None` if
+            the connection was successful.
+
         """
 
         pass
 
-    def connect(self, dbname=None, silent_on_fail=False, **connection_params):
-        """Initialises the database using the profile information.
+    def connect(
+        self,
+        dbname: str | None = None,
+        user: str | None = None,
+        host: str | None = None,
+        port: int | None = None,
+        use_socket: bool | None = None,
+        silent_on_fail: bool = False,
+    ) -> bool:
+        """Initialises the database using the current connection information.
 
         Parameters
         ----------
-        dbname : `str` or `None`
-            The database name. If `None`, defaults to `.dbname`. ``dbname`` can also be
-            a full database URI, in which case the other connection parameters are ignored.
-        user : str
-            Overrides the profile database user.
-        host : str
-            Overrides the profile database host.
-        port : str
-            Overrides the profile database port.
-        silent_on_fail : `bool`
+        dbname
+            The database name. If `None`, defaults to the current configuration.
+        user
+            The user to connect to the database. Overrides the current configuration
+            if provided.
+        host
+            The host name of the database server. Overrides the current configuration
+            if provided.
+        port
+            The port of the database server. Overrides the current configuration
+            if provided.
+        use_socket
+            If `True`, uses a socket connection instead of TCP/IP.
+        silent_on_fail
             If `True`, does not show a warning if the connection fails.
 
         Returns
         -------
-        connected : bool
+        connected
             Returns True if the database is connected.
 
         """
 
-        if self.profile is None:
-            raise RuntimeError(
-                "the profile was not set when "
-                "DatabaseConnection was instantiated. Use "
-                "set_profile to set the profile in runtime."
-            )
+        if dbname and is_uri(dbname):
+            dbname, self._connection_params = parse_uri(dbname)
 
-        # Gets the necessary configuration values from the profile
-        db_configuration = {}
-        for item in ["user", "host", "port"]:
-            if item in connection_params:
-                db_configuration[item] = connection_params[item]
+        if dbname is not None:
+            if self.dbversion is not None:
+                self.dbname = f"{dbname}_{self.dbversion}"
             else:
-                profile_value = self._config.get(item, None)
-                db_configuration[item] = profile_value
+                self.dbname = dbname
 
-        dbname = dbname or self.dbname
-        if dbname is None:
-            raise RuntimeError(
-                "the database name was not set when "
-                "DatabaseConnection was instantiated. "
-                "To set it in runtime change the dbname "
-                "attribute."
-            )
+        if user is not None:
+            self._connection_params["user"] = user
+        if host is not None:
+            self._connection_params["host"] = host
+        if port is not None:
+            self._connection_params["port"] = port
+        if use_socket is not None:
+            self._connection_params["use_socket"] = use_socket
 
-        return self.connect_from_parameters(
-            dbname=dbname,
-            silent_on_fail=silent_on_fail,
-            **db_configuration,
-        )
+        connected, error = self._conn()
+        if not connected and not silent_on_fail:
+            log.warning(f"Failed connecting to database {self.dbname!r}: {error}")
 
-    def connect_from_parameters(self, dbname=None, **params):
+        return connected
+
+    @deprecated("connect_from_parameters is deprecated. Use connect() instead.")
+    def connect_from_parameters(self, *args, **kwargs):
         """Initialises the database from a dictionary of parameters.
 
-        Parameters
-        ----------
-        dbname : `str` or `None`
-            The database name. If `None`, defaults to `.dbname`.
-        params : dict
-            A dictionary of parameters, which should include ``user``,
-            ``host``, and ``port``.
-
-        Returns
-        -------
-        connected : bool
-            Returns True if the database is connected.
+        This function has been deprecated. Use `.connect()` instead.
 
         """
 
-        # Make hostname an alias of host.
-        if "hostname" in params:
-            if "host" not in params:
-                params["host"] = params.pop("hostname")
-            else:
-                raise KeyError("cannot use hostname and host at the same time.")
-
-        dbname = dbname or self.dbname
-        if dbname is None:
-            raise RuntimeError(
-                "the database name was not set when "
-                "DatabaseConnection was instantiated. "
-                "To set it in runtime change the dbname "
-                "attribute."
-            )
-
-        return self._conn(dbname, **params)
+        return self.connect(*args, **kwargs)
 
     @staticmethod
     def list_profiles(profile=None):
@@ -335,21 +453,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     def get_connection_uri(self):
         """Returns the URI to the database connection."""
 
-        params = self.connection_params
-        if not self.connected or params is None or self.dbname is None:
-            raise RuntimeError("The database is not connected.")
-
-        valid_params = {
-            "user": params.get("user", None),
-            "host": params.get("host", None),
-            "port": params.get("port", None),
-            "password": params.get("password", None),
-        }
-
-        return get_database_uri(self.dbname, **valid_params)
+        return self.uri
 
     @property
-    @abc.abstractmethod
     def connection_params(self) -> dict | None:
         """Returns a dictionary with the connection parameters.
 
@@ -362,9 +468,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         """
 
-        pass
+        return self._connection_params.copy()
 
-    def become(self, user):
+    def become(self, user: str | None):
         """Change the connection to a certain user."""
 
         dsn_params = self.connection_params
@@ -374,57 +480,63 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         dsn_params.pop("password", None)  # Do not keep the password since it may change.
 
-        if dsn_params is None:
-            raise RuntimeError("cannot determine the DSN parameters. The DB may be disconnected.")
-
         dsn_params["user"] = user
-        if "dbname" not in dsn_params:
-            dsn_params["dbname"] = self.dbname
 
         self.connect(**dsn_params)
 
-    def become_admin(self, admin=None):
+    def become_admin(self, admin: str | None = None):
         """Becomes the admin user.
 
         If ``admin=None`` defaults to the ``admin`` value in the current profile.
 
         """
 
-        assert self.profile is not None, (
-            "this connection was not initialised from a profile. Try using become()."
-        )
+        if self.profile is not None:
+            raise RuntimeError(
+                "The connection was not initialised from a profile. Try using become()."
+            )
 
-        assert "admin" in self._config, "admin user not defined in profile"
+        if "admin" not in self._config:
+            raise RuntimeError("admin user not defined in profile")
 
         self.become(admin or self._config["admin"])
 
-    def become_user(self, user=None):
+    def become_user(self, user: str | None = None):
         """Becomes the read-only user.
 
         If ``user=None`` defaults to the ``user`` value in the current profile.
 
         """
 
-        assert self.profile is not None, (
-            "this connection was not initialised from a profile. Try using become()."
-        )
+        if self.profile is not None:
+            raise RuntimeError(
+                "The connection was not initialised from a profile. Try using become()."
+            )
 
         if user is None:
             user = self._config["user"] if "user" in self._config else None
 
         self.become(user)
 
-    def change_version(self, dbversion=None):
+    def change_version(self, dbversion: str | None = None):
         """Change database version and attempt to reconnect
 
-        Parameters:
-            dbversion (str):
-                A database version
+        Parameters
+        ----------
+        dbversion
+            A database version.
+
         """
+
+        if self.dbname is None:
+            raise RuntimeError("Cannot change version if dbname is not set.")
+
         self.dbversion = dbversion
-        dbname, *dbver = self.dbname.split("_")
+
+        dbname, *_ = self.dbname.split("_")
         self.dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
-        self.connect(dbname=self.dbname, silent_on_fail=True)
+
+        self.connect(silent_on_fail=True)
 
     def post_connect(self):
         """Hook called after a successfull connection."""
@@ -432,7 +544,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         pass
 
 
-class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
+class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):  # type:ignore
     """Peewee database connection implementation.
 
     Attributes
@@ -459,20 +571,6 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         return self.is_connection_usable()
 
     @property
-    def connection_params(self):
-        """Returns a dictionary with the connection parameters."""
-
-        if self.connected:
-            if self.psycopg_version == "psycopg2":
-                return self.connection().info.dsn_parameters
-            elif self.psycopg_version == "psycopg3":
-                return self.connection().info.get_parameters()
-            else:
-                raise RuntimeError("unknown psycopg version in use.")
-
-        return None
-
-    @property
     def psycopg_version(self):
         """Returns the version of psycopg in use."""
 
@@ -486,41 +584,37 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         else:
             return "unknown"
 
-    def _conn(self, dbname, silent_on_fail=False, **params):
+    def _conn(self):
         """Connects to the DB and tests the connection."""
 
-        if dbname.startswith("postgresql://"):
-            PostgresqlDatabase.__init__(self, dbname, prefer_psycopg3=self.use_psycopg3)
-        else:
-            if "password" not in params:
-                pgpass_params = {
-                    key: value for key, value in params.copy().items() if value is not None
-                }
+        if not self._connection_params or not self.dbname:
+            raise RuntimeError("Not enough information to connect to the database.")
 
-                try:
-                    params["password"] = pgpasslib.getpass(dbname=dbname, **pgpass_params)
-                except pgpasslib.FileNotFound:
-                    params["password"] = None
+        host = self._connection_params.get("host", None)
 
-            PostgresqlDatabase.init(
-                self,
-                dbname,
-                prefer_psycopg3=self.use_psycopg3,
-                **params,
-            )
-            self._metadata = {}
+        # Handle socket connections. This is useful for local connections when the loopback is
+        # not configured properly in PostgreSQL and connecting on localhost fails.
+        use_socket = self._connection_params.get("use_socket", False)
+        if use_socket is True:
+            host = None
+
+        PostgresqlDatabase.__init__(
+            self,
+            self.dbname,
+            host=host,
+            user=self._connection_params.get("user", None),
+            password=self._connection_params.get("password", None),
+            port=None if host is None else self._connection_params.get("port", None),
+            prefer_psycopg3=self.use_psycopg3,
+        )
+
+        connection_error: str | None = None
 
         try:
             PostgresqlDatabase.connect(self)
-
-            conn_params = self.connection_params
-            dbname = conn_params.get("dbname", dbname)
-            self.dbname = dbname
-
-        except OperationalError as ee:
-            if not silent_on_fail:
-                log.warning(f"failed connecting to database {self.database!r}: {ee}")
+        except OperationalError as err:
             PostgresqlDatabase.init(self, None)
+            connection_error = str(err)
 
         if self.is_connection_usable() and self.auto_reflect:
             with self.atomic():
@@ -532,22 +626,22 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
         if self.connected:
             self.post_connect()
 
-        return self.connected
+        return self.connected, connection_error
 
-    def get_model(self, table_name, schema=None):
+    def get_model(self, table_name: str, schema: str | None = None) -> type[peewee.Model] | None:
         """Returns the model for a table.
 
         Parameters
         ----------
-        table_name : str
+        table_name
             The name of the table whose model will be returned.
-        schema : str
+        schema
             The schema for the table. If `None`, the first model that
             matches the table name will be returned.
 
         Returns
         -------
-        :class:`peewee:Model` or `None`
+        model
             The model associated with the table, or `None` if no model
             was found.
 
@@ -561,7 +655,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         return None
 
-    def get_introspector(self, schema=None):
+    def get_introspector(self, schema: str | None = None):
         """Gets a Peewee database :class:`peewee:Introspector`."""
 
         schema_key = schema or ""
@@ -571,7 +665,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         return self.introspector[schema_key]
 
-    def get_fields(self, table_name, schema=None, cache=True):
+    def get_fields(self, table_name: str, schema: str | None = None, cache: bool = True):
         """Returns a list of Peewee fields for a table."""
 
         schema = schema or "public"
@@ -611,7 +705,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         return fields
 
-    def get_primary_keys(self, table_name, schema=None, cache=True):
+    def get_primary_keys(self, table_name: str, schema: str | None = None, cache: bool = True):  # type: ignore
         """Returns the primary keys for a table."""
 
         schema = schema or "public"
@@ -637,104 +731,60 @@ class SQLADatabaseConnection(DatabaseConnection):
         #: Reports whether the connection is active.
         self.connected = False
 
-        self._connect_params = None
         DatabaseConnection.__init__(self, *args, **kwargs)
 
     @property
-    def connection_params(self):
-        """Returns a dictionary with the connection parameters."""
+    def uri(self) -> str:
+        """Returns the URI to the database connection."""
 
-        return self._connect_params
+        uri = super().uri
 
-    def _get_password(self, **params):
-        """Get a db password from a pgpass file
+        # If we want to use the socket connection we need to change the connection string.
+        use_socket = self._connection_params.get("use_socket", False)
+        host = self._connection_params.get("host", None)
 
-        Parameters:
-            params (dict):
-                A dictionary of database connection parameters
-
-        Returns:
-            The database password for a given set of connection parameters
-
-        """
-
-        password = params.get("password", None)
-        if not password:
-            try:
-                password = pgpasslib.getpass(
-                    params["host"],
-                    params["port"],
-                    params["database"],
-                    params["username"],
-                )
-            except KeyError:
-                raise RuntimeError("ERROR: invalid server configuration")
-        return password
-
-    def _make_connection_string(self, dbname_or_uri, **params):
-        """Build a db connection string
-
-        Parameters:
-            dbname_or_uri (str):
-                The name of the database or the URI to connect to
-            params (dict):
-                A dictionary of database connection parameters
-
-        Returns:
-            A database connection string
-
-        """
-
-        # Handle the case dbname_or_uri is a URI.
-        if dbname_or_uri.startswith("postgresql://"):
-            dbname_or_uri = dbname_or_uri.replace("postgresql://", "postgresql+psycopg://")
-            if not self.use_psycopg3:
-                dbname_or_uri = dbname_or_uri.replace("psycopg", "psycopg2")
-
-        if dbname_or_uri.startswith("postgresql"):
-            return dbname_or_uri
-
-        # Now the case in which dbname_or_uri is a database name and parameters.
-        db_params = params.copy()
-        db_params["drivername"] = (
-            "postgresql+psycopg" if self.use_psycopg3 else "postgresql+psycopg2"
+        uri = URL.create(
+            drivername="postgresql+" + ("psycopg" if self.use_psycopg3 else "psycopg2"),
+            username=self._connection_params.get("user", None),
+            host=None if use_socket else host,
+            port=None if use_socket else self._connection_params.get("port", None),
+            password=self._connection_params.get("password", None),
+            database=self.dbname,
+            query={"host": "/var/run/postgresql"} if use_socket else {},
         )
-        db_params["database"] = dbname_or_uri
-        db_params["username"] = db_params.pop("user", None)
-        db_params["host"] = db_params.pop("host", "localhost")
-        db_params["port"] = db_params.pop("port", 5432)
-        if db_params["username"]:
-            db_params["password"] = self._get_password(**db_params)
-        db_connection_string = url.URL.create(**db_params)
-        self._connect_params = params
-        return db_connection_string
 
-    def _conn(self, dbname, silent_on_fail=False, **params):
+        return str(uri)
+
+    def _conn(self):
         """Connects to the DB and tests the connection."""
 
-        # get connection string
-        db_connection_string = self._make_connection_string(dbname, **params)
+        connection_error: str | None = None
 
         try:
-            self.create_engine(db_connection_string, echo=False, pool_size=10, pool_recycle=1800)
+            self.create_engine(self.uri, echo=False, pool_size=10, pool_recycle=1800)
+
+            assert self.engine is not None
             self.engine.connect()
-        except OpError:
-            if not silent_on_fail:
-                log.warning("Failed to connect to database {0}".format(dbname))
-            self.engine.dispose()
+
+        except OpError as err:
+            connection_error = str(err)
+
+            if self.engine:
+                self.engine.dispose()
+
             self.engine = None
             self.connected = False
             self.Session = None
             self.metadata = None
+
         else:
             self.connected = True
-            self.dbname = dbname
             self.prepare_bases()
 
         if self.connected:
             self.post_connect()
 
-        return self.connected
+        return self.connected, connection_error
 
     def reset_engine(self):
         """Reset the engine, metadata, and session"""
@@ -743,29 +793,26 @@ class SQLADatabaseConnection(DatabaseConnection):
             self.engine.dispose()
             self.engine = None
             self.metadata = None
-            self.Session.close()
+            if self.Session:
+                self.Session.close()
             self.Session = None
 
     def create_engine(
         self,
-        db_connection_string=None,
-        echo=False,
-        pool_size=10,
-        pool_recycle=1800,
-        expire_on_commit=True,
+        db_connection_string: str | URL,
+        echo: bool = False,
+        pool_size: int = 10,
+        pool_recycle: int = 1800,
+        expire_on_commit: bool = True,
     ):
         """Create a new database engine
 
-        Resets and creates a new sqlalchemy database engine.  Also creates and binds
+        Resets and creates a new sqlalchemy database engine. Also creates and binds
         engine metadata and a new scoped session.
 
         """
 
         self.reset_engine()
-
-        if not db_connection_string:
-            dbname = self.dbname or self.DATABASE_NAME
-            db_connection_string = self._make_connection_string(dbname, **self.connection_params)
 
         self.engine = create_engine(
             db_connection_string,
@@ -776,10 +823,14 @@ class SQLADatabaseConnection(DatabaseConnection):
         )
         self.metadata = MetaData()
         self.Session = scoped_session(
-            sessionmaker(bind=self.engine, expire_on_commit=expire_on_commit, future=True)
+            sessionmaker(
+                bind=self.engine,
+                expire_on_commit=expire_on_commit,
+                future=True,
+            )
         )
 
-    def add_base(self, base, prepare=True):
+    def add_base(self, base, prepare: bool = True):
         """Binds a base to this connection."""
 
         if base not in self.bases:
