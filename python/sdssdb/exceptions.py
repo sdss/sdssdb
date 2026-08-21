@@ -14,8 +14,8 @@ from . import log
 class SdssdbError(Exception):
     """A custom core Sdssdb exception"""
 
-    def __init__(self, message=None):
-        message = "There has been an error" if not message else message
+    def __init__(self, message: str | None = None):
+        message = "There has been an error" if message is None else message
 
         super(SdssdbError, self).__init__(message)
 
@@ -23,8 +23,8 @@ class SdssdbError(Exception):
 class SdssdbNotImplemented(SdssdbError):
     """A custom exception for not yet implemented features."""
 
-    def __init__(self, message=None):
-        message = "This feature is not implemented yet." if not message else message
+    def __init__(self, message: str | None = None):
+        message = "This feature is not implemented yet." if message is None else message
 
         super(SdssdbNotImplemented, self).__init__(message)
 
@@ -32,7 +32,7 @@ class SdssdbNotImplemented(SdssdbError):
 class SdssdbAPIError(SdssdbError):
     """A custom exception for API errors"""
 
-    def __init__(self, message=None):
+    def __init__(self, message: str | None = None):
         if not message:
             message = "Error with Http Response from Sdssdb API"
         else:
