@@ -36,7 +36,15 @@ from sdssdb import config, log
 from sdssdb.utils.internals import get_database_columns
 
 
-__all__ = ["DatabaseConnection", "PeeweeDatabaseConnection", "SQLADatabaseConnection"]
+__all__ = [
+    "DatabaseConnection",
+    "PeeweeDatabaseConnection",
+    "SQLADatabaseConnection",
+    "get_database_uri",
+    "parse_uri",
+    "is_uri",
+    "ConnectionParams",
+]
 
 
 class ConnectionParams(TypedDict):
@@ -108,7 +116,7 @@ def get_database_uri(
     return f"postgresql://{auth}{host_port}/{dbname}"
 
 
-def parse_uri(uri: str) -> tuple[str, ConnectionParams]:
+def parse_uri(uri: str) -> tuple[str | None, ConnectionParams]:
     """Parses a database URI and returns a dictionary with the parameters.
 
     Returns a tuple with the database name and a dictionary with the connection parameters.
@@ -122,7 +130,7 @@ def parse_uri(uri: str) -> tuple[str, ConnectionParams]:
 
     dbname = parsed.path.strip("/")
     if dbname == "":
-        raise ValueError("Database name is missing.")
+        dbname = None
 
     return dbname, {
         "user": parsed.username,
@@ -344,7 +352,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         return self.connected
 
     @abc.abstractmethod
-    def _conn(self) -> tuple[bool, ConnectionParams | None]:
+    def _conn(self) -> tuple[bool, str | None]:
         """Actually initialises the database connection.
 
         This method should be overridden depending on the ORM library being
@@ -401,9 +409,11 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         if dbname and is_uri(dbname):
             dbname, self._connection_params = parse_uri(dbname)
+            if dbname is None:
+                dbname = self.dbname
 
         if dbname is not None:
-            if self.dbversion is not None:
+            if self.dbversion is not None and not dbname.endswith(f"_{self.dbversion}"):
                 self.dbname = f"{dbname}_{self.dbversion}"
             else:
                 self.dbname = dbname
@@ -419,9 +429,28 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         connected, error = self._conn()
         if not connected and not silent_on_fail:
-            log.warning(f"Failed connecting to database {self.dbname!r}: {error}")
+            self._log_connection_error(error)
 
         return connected
+
+    def _log_connection_error(self, error: str | None):
+        """Logs a connection error."""
+
+        if error is None:
+            msg = f"Failed connecting to database {self.dbname!r} with unknown error."
+        else:
+            msg = f"Failed connecting to database {self.dbname!r}: {error}"
+
+        msg = msg.strip()
+        if not msg.endswith("."):
+            msg += "."
+
+        if self._connection_params:
+            conn_params = self._connection_params.copy()
+            conn_params.pop("password", None)
+            msg += f" Connection parameters: {conn_params}."
+
+        log.warning(msg)
 
     @deprecated("connect_from_parameters is deprecated. Use connect() instead.")
     def connect_from_parameters(self, *args, **kwargs):
