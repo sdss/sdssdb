@@ -9,7 +9,6 @@
 from __future__ import annotations
 
 import abc
-import importlib
 import os
 import re
 import socket
@@ -20,26 +19,12 @@ from typing import TypedDict
 import six
 from typing_extensions import deprecated
 
-from sqlalchemy import MetaData, create_engine
-from sqlalchemy.engine import URL
-from sqlalchemy.exc import OperationalError as OpError
-from sqlalchemy.ext.declarative import DeferredReflection
-from sqlalchemy.orm import scoped_session, sessionmaker
-
-import peewee
-from peewee import OperationalError, PostgresqlDatabase
-from playhouse.postgres_ext import ArrayField
-from playhouse.reflection import Introspector, UnknownField
-
 import sdssdb
 from sdssdb import config, log
-from sdssdb.utils.internals import get_database_columns
 
 
 __all__ = [
     "DatabaseConnection",
-    "PeeweeDatabaseConnection",
-    "SQLADatabaseConnection",
     "get_database_uri",
     "parse_uri",
     "is_uri",
@@ -54,7 +39,7 @@ class ConnectionParams(TypedDict):
     host: str | None
     port: int | None
     password: str | None
-    use_socket: bool
+    use_socket_file: bool | None
 
 
 def _evaluate_envvar_bool(envvar: str, default: bool = False) -> bool:
@@ -137,7 +122,7 @@ def parse_uri(uri: str) -> tuple[str | None, ConnectionParams]:
         "password": parsed.password,
         "host": parsed.hostname,
         "port": parsed.port,
-        "use_socket": False,
+        "use_socket_file": None,
     }
 
 
@@ -164,7 +149,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     Parameters
     ----------
-    dbname_or_uri
+    dbname
         The database name or a connection URI.
     profile
         The configuration profile to use. The profile defines the default
@@ -184,8 +169,6 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
     dbversion
         A database version.  If specified, appends to dbname as
         "dbname_dbversion" and becomes the dbname used for connection strings.
-    use_socket
-        If `True`, uses a socket connection instead of TCP/IP.
     use_psycopg3
         Whether to use psycopg3 instead of psycopg2. If `None`, defaults to the
         value of the environment variable ``$SDSSDB_PSYCOPG3`` (which defaults to
@@ -204,23 +187,22 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
     def __init__(
         self,
-        dbname_or_uri: str | None = None,
+        dbname: str | None = None,
         profile: str | None = None,
         autoconnect: bool | None = None,
         silent_on_fail: bool = False,
         dbversion: str | None = None,
-        use_socket: bool = False,
         use_psycopg3: bool | None = None,
     ):
         self.profile: str | None = None
 
         self._connection_params: ConnectionParams | None = None
 
-        if is_uri(dbname_or_uri):
-            assert isinstance(dbname_or_uri, str)
-            self.dbname, self._connection_params = parse_uri(dbname_or_uri)
-        elif dbname_or_uri is not None:
-            self.dbname = dbname_or_uri
+        if is_uri(dbname):
+            assert isinstance(dbname, str)
+            self.dbname, self._connection_params = parse_uri(dbname)
+        elif dbname is not None:
+            self.dbname = dbname
 
         self.dbversion: str | None = dbversion or self.dbversion
         if self.dbversion is not None and self.dbname is not None:
@@ -229,9 +211,6 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
 
         if profile is not None or self._connection_params is None:
             self.set_profile(profile=profile, connect=False)
-
-        if self._connection_params is not None:
-            self._connection_params["use_socket"] = use_socket
 
         self.use_psycopg3 = (
             _evaluate_envvar_bool("SDSSDB_PSYCOPG3", default=True)
@@ -268,7 +247,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         user: str | None = None,
         host: str | None = None,
         port: int | None = None,
-        use_socket: bool | None = None,
+        use_socket_file: bool | None = None,
         connect: bool = True,
     ) -> bool:
         """Sets the profile from the configuration file.
@@ -284,8 +263,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             Overrides the profile database host.
         port
             Overrides the profile database port.
-        use_socket
-            If `True`, uses a socket connection instead of TCP/IP.
+        use_socket_file
+            If `True`, and ``host=None``, uses the socket file connection instead of TCP/IP.
         connect
             If `True`, tries to connect to the database using the new profile.
 
@@ -303,7 +282,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                 raise ValueError("profile not found in configuration file.")
 
             self.profile = profile
-            profile_config = config[profile].copy()
+            profile_config: ConnectionParams = config[profile].copy()
 
         else:
             # Get hostname
@@ -314,7 +293,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
                 if "domain" in config[profile] and config[profile]["domain"] is not None:
                     if re.match(config[profile]["domain"], hostname):
                         self.profile = profile
-                        profile_config = config[profile].copy()
+                        profile_config: ConnectionParams = config[profile].copy()
                         # If the profile host matches the current hostname set the
                         # value to None to force using localhost to prevent cases
                         # in which the loopback is not configured properly in PostgreSQL.
@@ -324,7 +303,17 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             else:
                 # If no profile was found, use the local profile.
                 self.profile = "local"
-                profile_config = config[self.profile].copy()
+
+                if self.profile in config:
+                    profile_config: ConnectionParams = config[self.profile].copy()
+                else:
+                    profile_config: ConnectionParams = {
+                        "user": None,
+                        "host": None,
+                        "port": 5432,
+                        "password": None,
+                        "use_socket_file": None,
+                    }
 
         if user is not None:
             profile_config["user"] = user
@@ -332,15 +321,15 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             profile_config["host"] = host
         if port is not None:
             profile_config["port"] = port
-        if use_socket is not None:
-            profile_config["use_socket"] = use_socket
+        if use_socket_file is not None:
+            profile_config["use_socket_file"] = use_socket_file
 
         self._connection_params: ConnectionParams = {
             "user": profile_config.get("user", None),
             "host": profile_config.get("host", None),
             "port": profile_config.get("port", None),
             "password": profile_config.get("password", None),
-            "use_socket": profile_config.get("use_socket", False),
+            "use_socket_file": profile_config.get("use_socket_file", None),
         }
 
         if connect:
@@ -377,7 +366,7 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         user: str | None = None,
         host: str | None = None,
         port: int | None = None,
-        use_socket: bool | None = None,
+        use_socket_file: bool | None = None,
         silent_on_fail: bool = False,
     ) -> bool:
         """Initialises the database using the current connection information.
@@ -395,8 +384,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         port
             The port of the database server. Overrides the current configuration
             if provided.
-        use_socket
-            If `True`, uses a socket connection instead of TCP/IP.
+        use_socket_file
+            If `True`, and `host=None`, uses the socket file connection instead of TCP/IP.
         silent_on_fail
             If `True`, does not show a warning if the connection fails.
 
@@ -424,8 +413,8 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             self._connection_params["host"] = host
         if port is not None:
             self._connection_params["port"] = port
-        if use_socket is not None:
-            self._connection_params["use_socket"] = use_socket
+        if use_socket_file is not None:
+            self._connection_params["use_socket_file"] = use_socket_file
 
         connected, error = self._conn()
         if not connected and not silent_on_fail:
@@ -571,328 +560,3 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
         """Hook called after a successfull connection."""
 
         pass
-
-
-class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):  # type:ignore
-    """Peewee database connection implementation.
-
-    Attributes
-    ----------
-    models : list
-        Models bound to this database. Only models that are bound using
-        `~sdssdb.peewee.BaseModel` are handled.
-
-    """
-
-    def __init__(self, *args, **kwargs):
-        self.models = {}
-        self.introspector = {}
-
-        self._metadata = {}
-
-        PostgresqlDatabase.__init__(self, None)
-        DatabaseConnection.__init__(self, *args, **kwargs)
-
-    @property
-    def connected(self):
-        """Reports whether the connection is active."""
-
-        return self.is_connection_usable()
-
-    @property
-    def psycopg_version(self):
-        """Returns the version of psycopg in use."""
-
-        if not self.connected:
-            raise RuntimeError("The database is not connected.")
-
-        if isinstance(self._adapter, self.psycopg2_adapter):
-            return "psycopg2"
-        elif isinstance(self._adapter, self.psycopg3_adapter):
-            return "psycopg3"
-        else:
-            return "unknown"
-
-    def _conn(self):
-        """Connects to the DB and tests the connection."""
-
-        if not self._connection_params or not self.dbname:
-            raise RuntimeError("Not enough information to connect to the database.")
-
-        host = self._connection_params.get("host", None)
-
-        # Handle socket connections. This is useful for local connections when the loopback is
-        # not configured properly in PostgreSQL and connecting on localhost fails.
-        use_socket = self._connection_params.get("use_socket", False)
-        if use_socket is True:
-            host = None
-
-        PostgresqlDatabase.__init__(
-            self,
-            self.dbname,
-            host=host,
-            user=self._connection_params.get("user", None),
-            password=self._connection_params.get("password", None),
-            port=None if host is None else self._connection_params.get("port", None),
-            prefer_psycopg3=self.use_psycopg3,
-        )
-
-        connection_error: str | None = None
-
-        try:
-            PostgresqlDatabase.connect(self)
-        except OperationalError as err:
-            PostgresqlDatabase.init(self, None)
-            connection_error = str(err)
-
-        if self.is_connection_usable() and self.auto_reflect:
-            with self.atomic():
-                for model in self.models.values():
-                    if getattr(model._meta, "use_reflection", False):
-                        if hasattr(model, "reflect"):
-                            model.reflect()
-
-        if self.connected:
-            self.post_connect()
-
-        return self.connected, connection_error
-
-    def get_model(self, table_name: str, schema: str | None = None) -> type[peewee.Model] | None:
-        """Returns the model for a table.
-
-        Parameters
-        ----------
-        table_name
-            The name of the table whose model will be returned.
-        schema
-            The schema for the table. If `None`, the first model that
-            matches the table name will be returned.
-
-        Returns
-        -------
-        model
-            The model associated with the table, or `None` if no model
-            was found.
-
-        """
-
-        for model in self.models.values():
-            if schema and model._meta.schema != schema:
-                continue
-            if model._meta.table_name == table_name:
-                return model
-
-        return None
-
-    def get_introspector(self, schema: str | None = None):
-        """Gets a Peewee database :class:`peewee:Introspector`."""
-
-        schema_key = schema or ""
-
-        if schema_key not in self.introspector:
-            self.introspector[schema_key] = Introspector.from_database(self, schema=schema)
-
-        return self.introspector[schema_key]
-
-    def get_fields(self, table_name: str, schema: str | None = None, cache: bool = True):
-        """Returns a list of Peewee fields for a table."""
-
-        schema = schema or "public"
-
-        if schema not in self._metadata or not cache:
-            self._metadata[schema] = get_database_columns(self, schema=schema)
-
-        if table_name not in self._metadata[schema]:
-            return []
-
-        table_metadata = self._metadata[schema][table_name]
-
-        pk = table_metadata["pk"]
-        composite_key = pk is not None and len(pk) > 1
-
-        columns = table_metadata["columns"]
-
-        fields = []
-        for col_name, field_type, array_type, nullable in columns:
-            is_pk = True if (pk is not None and not composite_key and pk[0] == col_name) else False
-
-            params = {
-                "column_name": col_name,
-                "null": nullable,
-                "primary_key": is_pk,
-                "unique": is_pk,
-            }
-
-            if array_type:
-                field = ArrayField(array_type, **params)
-            elif array_type is False and field_type is UnknownField:
-                field = peewee.BareField(**params)
-            else:
-                field = field_type(**params)
-
-            fields.append(field)
-
-        return fields
-
-    def get_primary_keys(self, table_name: str, schema: str | None = None, cache: bool = True):  # type: ignore
-        """Returns the primary keys for a table."""
-
-        schema = schema or "public"
-
-        if schema not in self._metadata or not cache:
-            self._metadata[schema] = get_database_columns(self, schema=schema)
-
-        if table_name not in self._metadata[schema]:
-            return []
-        else:
-            return self._metadata[schema][table_name]["pk"] or []
-
-
-class SQLADatabaseConnection(DatabaseConnection):
-    """SQLAlchemy database connection implementation"""
-
-    engine = None
-    bases = []
-    Session = None
-    metadata = None
-
-    def __init__(self, *args, **kwargs):
-        #: Reports whether the connection is active.
-        self.connected = False
-
-        DatabaseConnection.__init__(self, *args, **kwargs)
-
-    @property
-    def uri(self) -> str:
-        """Returns the URI to the database connection."""
-
-        uri = super().uri
-
-        # If we want to use the socket connection we need to change the connection string.
-        use_socket = self._connection_params.get("use_socket", False)
-        host = self._connection_params.get("host", None)
-
-        uri = URL.create(
-            drivername="postgresql+" + ("psycopg" if self.use_psycopg3 else "psycopg2"),
-            username=self._connection_params.get("user", None),
-            host=None if use_socket else host,
-            port=None if use_socket else self._connection_params.get("port", None),
-            password=self._connection_params.get("password", None),
-            database=self.dbname,
-            query={"host": "/var/run/postgresql"} if use_socket else {},
-        )
-
-        return str(uri)
-
-    def _conn(self):
-        """Connects to the DB and tests the connection."""
-
-        connection_error: str | None = None
-
-        try:
-            self.create_engine(self.uri, echo=False, pool_size=10, pool_recycle=1800)
-
-            assert self.engine is not None
-            self.engine.connect()
-
-        except OpError as err:
-            connection_error = str(err)
-
-            if self.engine:
-                self.engine.dispose()
-
-            self.engine = None
-            self.connected = False
-            self.Session = None
-            self.metadata = None
-
-        else:
-            self.connected = True
-            self.prepare_bases()
-
-        if self.connected:
-            self.post_connect()
-
-        return self.connected, connection_error
-
-    def reset_engine(self):
-        """Reset the engine, metadata, and session"""
-
-        if self.engine:
-            self.engine.dispose()
-            self.engine = None
-            self.metadata = None
-            if self.Session:
-                self.Session.close()
-            self.Session = None
-
-    def create_engine(
-        self,
-        db_connection_string: str | URL,
-        echo: bool = False,
-        pool_size: int = 10,
-        pool_recycle: int = 1800,
-        expire_on_commit: bool = True,
-    ):
-        """Create a new database engine
-
-        Resets and creates a new sqlalchemy database engine. Also creates and binds
-        engine metadata and a new scoped session.
-
-        """
-
-        self.reset_engine()
-
-        self.engine = create_engine(
-            db_connection_string,
-            echo=echo,
-            pool_size=pool_size,
-            pool_recycle=pool_recycle,
-            future=True,
-        )
-        self.metadata = MetaData()
-        self.Session = scoped_session(
-            sessionmaker(
-                bind=self.engine,
-                expire_on_commit=expire_on_commit,
-                future=True,
-            )
-        )
-
-    def add_base(self, base, prepare: bool = True):
-        """Binds a base to this connection."""
-
-        if base not in self.bases:
-            self.bases.append(base)
-
-        if prepare and self.connected:
-            self.prepare_bases(base=base)
-
-    def prepare_bases(self, base=None):
-        """Prepare a Model Base
-
-        Prepares a SQLalchemy Base for reflection. This binds a database
-        engine to a specific Base which maps to a set of ModelClasses.
-        If ``base`` is passed only that base will be prepared. Otherwise,
-        all the bases bound to this database connection will be prepared.
-
-        """
-
-        do_bases = [base] if base else self.bases
-
-        for base in do_bases:
-            if issubclass(base, DeferredReflection):
-                base.prepare(self.engine, views=True)
-
-            # If the base has an attribute _relations that's the function
-            # to call to set up the relationships once the engine has been
-            # bound to the base.
-            if hasattr(base, "_relations"):
-                if isinstance(base._relations, str):
-                    module = importlib.import_module(base.__module__)
-                    relations_func = getattr(module, base._relations)
-                    relations_func()
-                elif callable(base._relations):
-                    base._relations()
-                else:
-                    pass
