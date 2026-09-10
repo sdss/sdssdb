@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Moves a schema from a database to a new tablespace, including indices.
+# Requires being able to connect to the database as the postgres superuser.
+
+set -e
+
+usage() {
+    echo "Usage: $(basename "$0") [-U user] [-h host] [-p port] <database> <schema> <tablespace>"
+    echo ""
+    echo "Moves all tables and indices in <schema> to <tablespace> in <database>."
+    exit 1
+}
+
+PSQL_USER=postgres
+PSQL_HOST=
+PSQL_PORT=
+
+while getopts ":U:h:p:" opt; do
+    case ${opt} in
+        U) PSQL_USER=$OPTARG ;;
+        h) PSQL_HOST=$OPTARG ;;
+        p) PSQL_PORT=$OPTARG ;;
+        *) usage ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ $# -ne 3 ]; then
+    usage
+fi
+
+DBNAME=$1
+SCHEMA=$2
+TABLESPACE=$3
+
+PSQL_OPTS="-U $PSQL_USER -d $DBNAME -v ON_ERROR_STOP=1"
+[ -n "$PSQL_HOST" ] && PSQL_OPTS="$PSQL_OPTS -h $PSQL_HOST"
+[ -n "$PSQL_PORT" ] && PSQL_OPTS="$PSQL_OPTS -p $PSQL_PORT"
+
+echo "Moving tables and indices in schema '$SCHEMA' of database '$DBNAME' to tablespace '$TABLESPACE' ..."
+
+# Move all regular tables (and materialized views) in the schema.
+psql $PSQL_OPTS -Atq -c "
+    SELECT 'ALTER TABLE ' || quote_ident(schemaname) || '.' || quote_ident(tablename) ||
+           ' SET TABLESPACE ' || quote_ident('$TABLESPACE') || ';'
+    FROM pg_tables
+    WHERE schemaname = '$SCHEMA';
+" | psql $PSQL_OPTS
+
+# Move all indices in the schema.
+psql $PSQL_OPTS -Atq -c "
+    SELECT 'ALTER INDEX ' || quote_ident(schemaname) || '.' || quote_ident(indexname) ||
+           ' SET TABLESPACE ' || quote_ident('$TABLESPACE') || ';'
+    FROM pg_indexes
+    WHERE schemaname = '$SCHEMA';
+" | psql $PSQL_OPTS
+
+echo "Done."

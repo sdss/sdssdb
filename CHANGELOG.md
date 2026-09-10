@@ -4,6 +4,10 @@ This document records the main changes to the `sdssdb` code.
 
 ## Next release
 
+## 🚀 New
+
+* Added a script `bin/move_schema_to_tablespace` to move all tables in a schema to a different tablespace.
+
 ### ✨ Improved
 
 * The `create_sdss_id_to_catalog_view` now accepts an `uri` argument where a full PostgreSQL URI can be passed. The default behaviour, connecting to the pipelines database using the current user, has not changed. The `user` and `local` arguments have been removed as the same can be better accomplished using an URI.
