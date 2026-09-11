@@ -6,14 +6,6 @@ import warnings
 from sdsstools import get_config, get_logger, get_package_version
 
 
-try:
-    from sqlalchemy.exc import MovedIn20Warning
-
-    warnings.filterwarnings("ignore", category=MovedIn20Warning)
-except ModuleNotFoundError:  # We are using SQLA > 2.0
-    pass
-
-
 warnings.filterwarnings(
     "ignore",
     ".*Skipped unsupported reflection of expression-based index .*q3c.*",
@@ -39,5 +31,4 @@ config = get_config(NAME)
 autoconnect = True
 
 
-from .connection import PeeweeDatabaseConnection  # noqa
-from .connection import SQLADatabaseConnection  # noqa
+from .connection import *

@@ -8,16 +8,15 @@ authors = [
 description = "SDSS product for database management"
 keywords = ["astronomy", "software", "database"]
 license = {text = "BSD 3-Clause License", file = "LICENSE.md"}
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 dependencies = [
     "pgpasslib>=1.1.0",
     "psycopg[binary]>=3.2.13",
-    "peewee>=4.0.0",
-    "sqlalchemy>=2.0.0",
-    "sdsstools>=1.9.7",
-    "numpy>=1.18.2",
-    "six>=1.12.0",
     "psycopg2-binary>=2.9.11",
+    "sdsstools>=1.9.7",
+    "numpy>=2.0.0",
+    "six>=1.12.0",
+    "typing-extensions>=4.16.0",
 ]
 
 [project.urls]
@@ -30,6 +29,9 @@ file = "README.md"
 content-type = "text/markdown"
 
 [project.optional-dependencies]
+sqlalchemy = ["sqlalchemy>=2.0.0"]
+peewee = ["peewee>=4.0.0"]
+sqlmodel = ["sqlmodel>=0.0.39"]
 extras = [
     "progressbar2>=3.46.1",
     "pydot>=1.4.1",
@@ -50,17 +52,21 @@ extras = [
     "psycopg[binary]>=3.2.13",
 ]
 dev = [
-    "pytest>=5.2",
-    "pytest-cov>=2.4.0",
-    "pytest-sugar>=0.8.0",
     "ipython>=8.0.0",
     "ipdb>=0.13.2",
-    "pytest-postgresql>=2.2.1,<6",
-    "factory_boy>=2.12.0",
-    "pytest-factoryboy>=2.0.3",
     "pyyaml>=5.1",
     "ruff>=0.14.8",
     "ty>=0.0.14",
+]
+test = [
+    "pytest>=5.2",
+    "pytest-cov>=2.4.0",
+    "pytest-sugar>=0.8.0",
+    "pytest-mock>=3.15.1",
+    "pytest-factoryboy>=2.0.3",
+    "pytest-postgresql>=2.2.1,<6",
+    "factory_boy>=2.12.0",
+    "testcontainers[postgres]>=4.15.0",
 ]
 docs = [
     "Sphinx>=7.0.0",
@@ -117,7 +123,13 @@ asyncio_default_fixture_loop_scope = "function"
 branch = true
 include = ["python/sdssdb/*"]
 omit = [
-    "*/__init__.py",
+    "python/sdssdb/peewee/sdss5db/**/*.py",
+    "python/sdssdb/peewee/lvmdb/*.py",
+    "python/sdssdb/peewee/operationsdb/**/*.py",
+    "python/sdssdb/sqlalchemy/sdss5db/*.py",
+    "python/sdssdb/sqlalchemy/operationsdb/**/*.py",
+    "python/sdssdb/sqlalchemy/mangadb/*.py",
+    "python/sdssdb/sqlalchemy/archive/*.py",
 ]
 
 [tool.coverage.report]
