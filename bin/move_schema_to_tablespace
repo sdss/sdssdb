@@ -41,7 +41,7 @@ PSQL_OPTS="-U $PSQL_USER -d $DBNAME -v ON_ERROR_STOP=1"
 echo "Moving tables and indices in schema '$SCHEMA' of database '$DBNAME' to tablespace '$TABLESPACE' ..."
 
 # Move all regular tables (and materialized views) in the schema.
-psql $PSQL_OPTS -Atq -c "\timing off"  -c "
+psql $PSQL_OPTS -Atq -c "\set QUIET 1" -c "\timing off"  -c "
     SELECT 'ALTER TABLE ' || quote_ident(schemaname) || '.' || quote_ident(tablename) ||
            ' SET TABLESPACE ' || quote_ident('$TABLESPACE') || ';'
     FROM pg_tables
@@ -49,7 +49,7 @@ psql $PSQL_OPTS -Atq -c "\timing off"  -c "
 " | psql $PSQL_OPTS
 
 # Move all indices in the schema.
-psql $PSQL_OPTS -Atq -c "\timing off"  -c "
+psql $PSQL_OPTS -Atq -c "\set QUIET 1" -c "\timing off"  -c "
     SELECT 'ALTER INDEX ' || quote_ident(schemaname) || '.' || quote_ident(indexname) ||
            ' SET TABLESPACE ' || quote_ident('$TABLESPACE') || ';'
     FROM pg_indexes
