@@ -18,5 +18,6 @@ CREATE TABLE apogee_drp.plan (
     FIELDID     text,
     FPS         boolean,
     PLATETYPE	text,
+    PBSKEY      text,
     CREATED timestamp with time zone DEFAULT now() NOT NULL
 );
