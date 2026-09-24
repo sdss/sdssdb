@@ -5,3 +5,4 @@ CREATE INDEX CONCURRENTLY ON apogee_drp.plan USING BTREE (instrument);
 CREATE INDEX CONCURRENTLY ON apogee_drp.plan USING BTREE (mjd);
 CREATE INDEX CONCURRENTLY ON apogee_drp.plan USING BTREE (plate);
 CREATE INDEX CONCURRENTLY ON apogee_drp.plan USING BTREE (platetype);
+CREATE INDEX CONCURRENTLY ON apogee_drp.plan USING BTREE (pbskey);
