@@ -3,7 +3,7 @@ import pytest
 from sdssdb.peewee.sdss5db import database, astradb as astra
 from sdssdb.peewee.sdss5db.astradb import _select_module
 
-schemas = ['050', '080', '081']
+schemas = ['050', '080', '081', '100']
 
 @pytest.fixture(params=schemas)
 def schema(request):
@@ -35,6 +35,14 @@ def test_model_changes():
     assert hasattr(astra.BossNet, "spectrum_pk")
     assert hasattr(astra.BossNet, "bn_v_r")
     assert hasattr(astra.BossNet, "v_astra_major_minor")
+
+    database.set_astra_schema("astra_100")
+    assert astra.BossNet._meta.schema == "astra_100"
+    assert astra.BossNet.spectrum.column_name == "spectrum_pk"
+    assert astra.Source._meta.primary_key.name == "pk"
+    assert astra.BossNet._meta.primary_key.name == "task_pk"
+    assert hasattr(astra.BossNet, "bn_v_r")
+    assert hasattr(astra, "ArjlCoaddedSpectrum")
 
 
 def test_fk_accessors_exist(schema):
@@ -76,4 +84,8 @@ def test_schema_exclusive_models():
 
     database.set_astra_schema("astra_080")
     assert astra.MwmSpectrumProductStatus._meta.schema == "astra_080"
+    assert not hasattr(astra, 'Grok')
+
+    database.set_astra_schema("astra_100")
+    assert astra.MwmSpectrumProductStatus._meta.schema == "astra_100"
     assert not hasattr(astra, 'Grok')

@@ -16,6 +16,8 @@ def _select_module(schema_name: str):
         return "._astra.v080"
     if schema_name.startswith("astra_081"):
         return "._astra.v081"
+    if schema_name.startswith("astra_100"):
+        return "._astra.v100"
     raise ValueError(f"Unsupported astra schema: {schema_name}")
 
 # remove previously loaded models from the namespace
