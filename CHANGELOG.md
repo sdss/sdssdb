@@ -2,7 +2,7 @@
 
 This document records the main changes to the `sdssdb` code.
 
-## 1.1.3 ((2026-10-15))
+## 1.1.3 (2026-10-15)
 
 ## 🚀 New
 
