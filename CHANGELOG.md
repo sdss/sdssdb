@@ -17,7 +17,7 @@ This document records the main changes to the `sdssdb` code.
 * Fix an issue in `DatabaseConnection.become()` with, at least, Peewee 4, in which `connection_params` returns parameters that are not accepted by `pgpasslib`.
 
 
-## 1.1.2 ((2026-07-28))
+## 1.1.2 (2026-07-28)
 
 ## 🚀 New
 
