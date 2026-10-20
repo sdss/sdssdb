@@ -434,8 +434,8 @@ class BossRestFrameVisitSpectrum(AstraCommon):
     tai_end = BigIntegerField(null=True)
     fiber_offset = BooleanField(null=True)
     f_night_time = FloatField(null=True)
-    delta_ra = ArrayField(index=True, null=True)  # ARRAY
-    delta_dec = ArrayField(index=True, null=True)  # ARRAY
+    delta_ra = ArrayField(FloatField, index=True, null=True)  # ARRAY
+    delta_dec = ArrayField(FloatField, index=True, null=True)  # ARRAY
     snr = FloatField(null=True)
     in_stack = BooleanField()
     gri_gaia_transform_flags = BigIntegerField()
@@ -504,8 +504,8 @@ class BossVisitSpectrum(AstraCommon):
     tai_end = BigIntegerField(null=True)
     fiber_offset = BooleanField(null=True)
     f_night_time = FloatField(null=True)
-    delta_ra = ArrayField(index=True, null=True)  # ARRAY
-    delta_dec = ArrayField(index=True, null=True)  # ARRAY
+    delta_ra = ArrayField(FloatField, index=True, null=True)  # ARRAY
+    delta_dec = ArrayField(FloatField, index=True, null=True)  # ARRAY
     snr = FloatField(null=True)
     gri_gaia_transform_flags = BigIntegerField()
     zwarning_flags = BigIntegerField()
