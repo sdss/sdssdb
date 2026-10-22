@@ -7,11 +7,15 @@ where cfg.epoch < 2461235.1;
 
 select *
 into opsdb_lco_dr21.exposure
+from opsdb_lco_dr20.exposure;
+
+insert into opsdb_lco_dr21.exposure
+select *
 from opsdb_lco.exposure exp
 where exp.configuration_id in 
 (select cfg.configuration_id 
 from opsdb_lco_dr21.configuration cfg)
-and exp.exposure_no < 4000000;
+and exp.exposure_no > 4000000;
 
 select *
 into opsdb_lco_dr21.camera_frame
@@ -48,11 +52,15 @@ where cfg.epoch < 2461235.1;
 
 select *
 into opsdb_apo_dr21.exposure
+from opsdb_apo_dr20.exposure;
+
+insert into opsdb_apo_dr21.exposure
+select *
 from opsdb_apo.exposure exp
 where exp.configuration_id in 
 (select cfg.configuration_id 
 from opsdb_apo_dr21.configuration cfg)
-and exp.exposure_no < 3000000;
+and exp.exposure_no > 3000000;
 
 insert into opsdb_apo_dr21.exposure
 select *
