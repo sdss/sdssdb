@@ -36,7 +36,7 @@ update opsdb_lco_dr21.design_to_status
 set completion_status_pk = 1,
 mjd = null,
 manual = false
-where mjd > 61235;
+where mjd > 61230;
 
 select *
 into opsdb_lco_dr21.completion_status
@@ -85,7 +85,7 @@ update opsdb_apo_dr21.design_to_status
 set completion_status_pk = 1,
 mjd = null,
 manual = false
-where mjd > 61235;
+where mjd > 61230;
 
 select *
 into opsdb_apo_dr21.completion_status
