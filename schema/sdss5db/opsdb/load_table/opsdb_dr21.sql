@@ -3,7 +3,7 @@ create schema if not exists opsdb_lco_dr21;
 select *
 into opsdb_lco_dr21.configuration
 from opsdb_lco.configuration cfg
-where cfg.epoch < 2461235.1;
+where cfg.epoch < 2461230.1;
 
 select *
 into opsdb_lco_dr21.exposure
@@ -42,13 +42,17 @@ select *
 into opsdb_lco_dr21.completion_status
 from opsdb_lco.completion_status;
 
+select *
+into opsdb_lco_dr21.exposure_flavor
+from opsdb_lco.exposure_flavor;
+
 -- APO 
 create schema if not exists opsdb_apo_dr21;
 
 select *
 into opsdb_apo_dr21.configuration
 from opsdb_apo.configuration cfg
-where cfg.epoch < 2461235.1;
+where cfg.epoch < 2461230.1;
 
 select *
 into opsdb_apo_dr21.exposure
@@ -90,3 +94,7 @@ where mjd > 61230;
 select *
 into opsdb_apo_dr21.completion_status
 from opsdb_apo.completion_status;
+
+select *
+into opsdb_apo_dr21.exposure_flavor
+from opsdb_apo.exposure_flavor;
