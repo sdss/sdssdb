@@ -51,6 +51,7 @@ class Source(AstraBase, common.Source):
     y_ps1_mag = FloatField(null=True)
     created = DateTimeField()
     modified = DateTimeField()
+    sdss5_boss_dr20_flag = BooleanField(default=False)
 
     class Meta:
         table_name = 'source'
