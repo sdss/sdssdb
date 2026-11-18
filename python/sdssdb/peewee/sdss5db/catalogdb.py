@@ -3476,3 +3476,12 @@ class CatalogToGLIMPSE_Proper(CatalogdbModel):
         table_name = "catalog_to_glimpse_proper"
         primary_key = False
         use_reflection = False
+
+
+class MvApogeeIdToSdssId(CatalogdbModel):
+    apogee_id = TextField()
+    sdss_id = BigIntegerField()
+
+    class Meta:
+        table_name = "mv_apogee_id_to_sdss_id"
+        use_reflection = False
