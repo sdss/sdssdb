@@ -421,6 +421,9 @@ class DatabaseConnection(six.with_metaclass(abc.ABCMeta)):
             dbversion (str):
                 A database version
         """
+
+        assert self.dbname is not None, "database name must be set to change version"
+
         self.dbversion = dbversion
         dbname, *dbver = self.dbname.split("_")
         self.dbname = f"{dbname}_{self.dbversion}" if dbversion else dbname
