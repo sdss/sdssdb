@@ -614,7 +614,7 @@ class PeeweeDatabaseConnection(DatabaseConnection, PostgresqlDatabase):
 
         return fields
 
-    def get_primary_keys(self, table_name, schema=None, cache=True):
+    def get_primary_keys(self, table_name, schema=None, cache=True):  # ty:ignore[invalid-method-override]
         """Returns the primary keys for a table."""
 
         schema = schema or "public"
@@ -718,14 +718,18 @@ class SQLADatabaseConnection(DatabaseConnection):
         # get connection string
         db_connection_string = self._make_connection_string(dbname, **params)
 
+        assert db_connection_string is not None, "connection string must be set to connect"
+
         try:
             self.create_engine(db_connection_string, echo=False, pool_size=10, pool_recycle=1800)
+            assert self.engine is not None, "engine must be set to connect"
             self.engine.connect()
         except OpError:
             if not silent_on_fail:
                 log.warning("Failed to connect to database {0}".format(dbname))
-            self.engine.dispose()
-            self.engine = None
+            if self.engine:
+                self.engine.dispose()
+                self.engine = None
             self.connected = False
             self.Session = None
             self.metadata = None
@@ -746,7 +750,9 @@ class SQLADatabaseConnection(DatabaseConnection):
             self.engine.dispose()
             self.engine = None
             self.metadata = None
-            self.Session.close()
+
+            if self.Session:
+                self.Session.close()
             self.Session = None
 
     def create_engine(
