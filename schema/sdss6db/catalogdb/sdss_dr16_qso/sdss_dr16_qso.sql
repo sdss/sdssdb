@@ -1,4 +1,4 @@
-CREATE TABLE catalogdb.sdss_dr16_qso_v4 (
+CREATE TABLE catalogdb.sdss_dr16_qso (
   id BIGINT,
   sdss_name TEXT,
   ra DOUBLE PRECISION,
@@ -189,11 +189,11 @@ CREATE TABLE catalogdb.sdss_dr16_qso_v4 (
   hats_npix BIGINT
 );
 
-ALTER TABLE catalogdb.sdss_dr16_qso_v4 ADD PRIMARY KEY (id);
+ALTER TABLE catalogdb.sdss_dr16_qso ADD PRIMARY KEY (id);
 
-CREATE INDEX sdss_dr16_qso_v4_sdss_name_idx ON catalogdb.sdss_dr16_qso_v4 (sdss_name);
-CREATE INDEX sdss_dr16_qso_v4_q3c_ang2ipix_idx ON catalogdb.sdss_dr16_qso_v4 (q3c_ang2ipix(ra, "dec"));
-CREATE INDEX sdss_dr16_qso_v4_healpix_29_idx ON catalogdb.sdss_dr16_qso_v4 (healpix_29);
-CREATE INDEX sdss_dr16_qso_v4_hats_dir_idx ON catalogdb.sdss_dr16_qso_v4 (hats_dir);
-CREATE INDEX sdss_dr16_qso_v4_hats_norder_idx ON catalogdb.sdss_dr16_qso_v4 (hats_norder);
-CREATE INDEX sdss_dr16_qso_v4_hats_npix_idx ON catalogdb.sdss_dr16_qso_v4 (hats_npix);
+CREATE INDEX sdss_dr16_qso_v4_sdss_name_idx ON catalogdb.sdss_dr16_qso (sdss_name);
+CREATE INDEX sdss_dr16_qso_v4_q3c_ang2ipix_idx ON catalogdb.sdss_dr16_qso (q3c_ang2ipix(ra, "dec"));
+CREATE INDEX sdss_dr16_qso_v4_healpix_29_idx ON catalogdb.sdss_dr16_qso (healpix_29);
+CREATE INDEX sdss_dr16_qso_v4_hats_dir_idx ON catalogdb.sdss_dr16_qso (hats_dir);
+CREATE INDEX sdss_dr16_qso_v4_hats_norder_idx ON catalogdb.sdss_dr16_qso (hats_norder);
+CREATE INDEX sdss_dr16_qso_v4_hats_npix_idx ON catalogdb.sdss_dr16_qso (hats_npix);

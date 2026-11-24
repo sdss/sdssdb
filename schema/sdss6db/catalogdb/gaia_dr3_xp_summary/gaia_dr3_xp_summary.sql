@@ -22,4 +22,3 @@ CREATE TABLE catalogdb.gaia_dr3_xp_summary (
 );
 
 ALTER TABLE catalogdb.gaia_dr3_xp_summary ADD PRIMARY KEY (source_id);
-

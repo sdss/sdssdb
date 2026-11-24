@@ -314,3 +314,4 @@ CREATE INDEX allwise_w2mpro_idx ON catalogdb.allwise (w2mpro);
 CREATE INDEX allwise_w2sigmpro_idx ON catalogdb.allwise (w2sigmpro);
 CREATE INDEX allwise_w3mpro_idx ON catalogdb.allwise (w3mpro);
 CREATE INDEX allwise_w3sigmpro_idx ON catalogdb.allwise (w3sigmpro);
+CREATE INDEX allwise_hats_norder_idx ON catalogdb.allwise (hats_norder);

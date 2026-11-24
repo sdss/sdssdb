@@ -1,0 +1,22 @@
+CREATE TABLE catalogdb.yso_kounkel_2020 (
+  source_id BIGINT,
+  twomass TEXT,
+  ra DOUBLE PRECISION,
+  dec DOUBLE PRECISION,
+  parallax REAL,
+  id INTEGER,
+  g DOUBLE PRECISION,
+  bp DOUBLE PRECISION,
+  rp DOUBLE PRECISION,
+  j REAL,
+  h REAL,
+  k REAL,
+  age DOUBLE PRECISION,
+  eage DOUBLE PRECISION,
+  av DOUBLE PRECISION,
+  eav DOUBLE PRECISION,
+  dist DOUBLE PRECISION,
+  edist DOUBLE PRECISION
+);
+
+ALTER TABLE catalogdb.yso_kounkel_2020 ADD PRIMARY KEY (source_id);
