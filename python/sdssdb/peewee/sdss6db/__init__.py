@@ -19,7 +19,10 @@ class SDSS6dbDatabaseConnection(PeeweeDatabaseConnection):
     def post_connect(self):
         """Force reload of the schema modules after a successful connection."""
 
-        modules = ["sdssdb.peewee.sdss6db.catalogdb"]
+        modules = [
+            "sdssdb.peewee.sdss6db.catalogdb",
+            "sdssdb.peewee.sdss6db.targetdb",
+        ]
 
         for module in modules:
             if module in sys.modules:
