@@ -1591,3 +1591,27 @@ CREATE INDEX CONCURRENTLY targeting_generation_to_version_generation_pk_idx
 CREATE INDEX CONCURRENTLY targeting_generation_to_version_version_pk_idx
     ON targetdb.targeting_generation_to_version
     USING BTREE(version_pk);
+
+
+-- Permissions
+
+-- sdss: full access to the schema and its objects.
+GRANT ALL PRIVILEGES ON SCHEMA targetdb TO sdss;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA targetdb TO sdss;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA targetdb TO sdss;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA targetdb TO sdss;
+
+-- sdss_user: read-only access.
+GRANT USAGE ON SCHEMA targetdb TO sdss_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA targetdb TO sdss_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA targetdb TO sdss_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA targetdb TO sdss_user;
+
+-- Apply the same privileges to objects created in the future.
+ALTER DEFAULT PRIVILEGES IN SCHEMA targetdb GRANT ALL PRIVILEGES ON TABLES TO sdss;
+ALTER DEFAULT PRIVILEGES IN SCHEMA targetdb GRANT ALL PRIVILEGES ON SEQUENCES TO sdss;
+ALTER DEFAULT PRIVILEGES IN SCHEMA targetdb GRANT ALL PRIVILEGES ON FUNCTIONS TO sdss;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA targetdb GRANT SELECT ON TABLES TO sdss_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA targetdb GRANT SELECT ON SEQUENCES TO sdss_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA targetdb GRANT EXECUTE ON FUNCTIONS TO sdss_user;
