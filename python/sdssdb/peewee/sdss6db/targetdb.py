@@ -365,6 +365,7 @@ class Carton(TargetdbBase):
     )
     carton = TextField(null=True)
     program = TextField(null=True)
+    manual = BooleanField(null=False, default=False)
     run_on = DateField(null=True)
 
     class Meta:

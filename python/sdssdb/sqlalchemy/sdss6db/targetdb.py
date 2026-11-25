@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import datetime
 import uuid
+
 from typing import List, Optional
 
 from sqlalchemy import (
@@ -213,6 +214,7 @@ class Carton(Base):
     )
     carton: Mapped[Optional[str]] = mapped_column(Text)
     program: Mapped[Optional[str]] = mapped_column(Text)
+    manual: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("false"))
     run_on: Mapped[Optional[datetime.date]] = mapped_column(Date)
 
     explorer: Mapped[Optional["Explorer"]] = relationship("Explorer")

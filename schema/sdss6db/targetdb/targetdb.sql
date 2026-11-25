@@ -96,6 +96,7 @@ CREATE TABLE targetdb.carton (
     version_pk INTEGER,
     carton TEXT,
     program TEXT,
+    manual BOOLEAN NOT NULL DEFAULT false,
     run_on DATE);
 
 CREATE TABLE targetdb.explorer (
