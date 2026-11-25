@@ -260,7 +260,7 @@ CREATE TABLE targetdb.overplan (
 
 INSERT INTO targetdb.instrument (pk, label) VALUES (0, 'BOSS'), (1, 'APOGEE');
 
-INSERT INTO targetdb.explorer (pk, label) VALUES (0, 'MWM'), (1, 'BHM');
+INSERT INTO targetdb.explorer (pk, label) VALUES (0, 'DUE'), (1, 'HGE');
 
 INSERT INTO targetdb.observatory (pk, label) VALUES (0, 'APO'), (1, 'LCO');
 
